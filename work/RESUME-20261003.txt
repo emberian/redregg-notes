@@ -38,7 +38,7 @@ Root decision designs/OBJECTIVE-AUTHENTICATED-QUOTE-20261003.txt is current cont
 canonical independent signed resourceScope query envelopes bound inside Claim,
 exact ordered kind/resource/root/capability and full canonical input commitment;
 current reauthorization +complete CAS dependency guards, SAME fee-first accounting.
-Graded Claimv2 base qualified; signed-envelope successor now assigned. Performance
+Graded Claimv3 signed-envelope codec actual paired Lean/C PASS. Performance
 owns actual quote/local proposal producer; consent Core227/custody; World final gate;
 Doc actual source/publication/UI. Preserve original request before deriving Draft.
 Imported source must regenerate/compare core through pinned frontend just like
@@ -67,12 +67,16 @@ Agreement: originaldoc92a07 installed count2 in124s; four independent native rea
 same receipt0c9684e5. Originalinit00f711 pending. Frontier relay/cache/dedup/session
 qualified; samePID historical replay59.8s cold/2.1s warm. New outer Host would alter
 original attempt RPC pin, so resident held it. Frontier resumed finite Unix backend
-submitCommand adapter behind unchanged outerHost/client/pins. No new world/nonce.
+submitCommand adapter behind unchanged outerHost/client/pins. Adapter6checksPASS,
+actual oldoperator roomreplay30.29s/2.33s; brokeractive, resident sameinitretry now
+running. No new world/nonce.
 
 Private: explicit v4stablemembership/perjobPENDING split and coherent originalworld
 remain. Actual original sourcebirth offered only on replica0, checked0/application0
-everywhere despite26protocolcommits. Scenario+traffic inspect original native source
-validator/queue; views are not source progress. No positive63→205 completejourney.
+everywhere despite26protocolcommits. Actual native validator now refuses original
+bare birth; canonical admitBirth deliberately none. Scenario wires existing lawful
+funded BootstrapBundle, preserving original world/call and explicit successor
+lineage. No exception/reset. No positive63→205 completejourney.
 TripleKing composite preprocessing crashstore remains unfinished; output/ACSS/Sh2t
 WALs are not complete King durability. Current source Head/Applied/continuity helper
 096eae9e with full approved444row projection delivered to traffic/OO. Actualsigned67
@@ -109,4 +113,3 @@ wholebuilds/duplicate links. Preserve foreign fn/files/caches. No unrelated serv
 replacement, paid calls, external human messages or asset operations inferred.
 Old recurring heartbeat paused; one-time checkpoints deleted. No Claude takeover
 currently established; if it starts, coordinate before common-source mutation.
-

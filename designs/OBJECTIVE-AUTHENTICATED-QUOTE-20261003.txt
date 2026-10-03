@@ -100,3 +100,26 @@ protection. World owns actual guard construction/composition; graded owns codec,
 performance quote, consent227 and Doc caller. Root actual import read found
 NativeObservationController has no DeclaredResourceController import, allowing
 reuse of lower current authorization without a second policy interpreter.
+
+Consumer review — 19:17 UTC
+Root read new ObjectiveBendAuthenticatedInputs whole. First draft still indexed
+its reusable Query factory by final PreparedInvocation, reintroducing quotation's
+construction cycle. World/performance instructed to factor Context/profile/domain/
+subject/nonce/actual compute preparation independent of final Command, with a final
+PreparedInvocation adapter. The same private current-read/guard evidence must flow
+through both. Cheap decoded subject/nonce/query/grant shape checks should precede
+crypto/policy work, while all state-dependent reads stay signature-first. Query
+bytes/signatures/policy work must count in actual bounded selected capacity.
+
+Funding index review: RunComputeBudgetDomain.prepare uses supplied.index only in
+Prepared.fundingIndex; fee consent and budget preparation ignore it. Prove or
+factor budget-projection independence for index-only changes, assign final role
+index in derived Draft, then verify exact final funding selection. Do not claim
+full Prepared equality when its indexing metadata differs or restrict legitimate
+shared account/input/output roles merely to obtain a convenient target layout.
+
+Owner evidence: graded Claimv3 signed-envelope codec actual paired Lean/C PASS;
+World current-query/guard module source authored; Performance quote/deriveDraft
+actively producing. Core227 wrapper authored with default refusal, no accepting
+producer yet. Scenario r8 actual proposed content post and Review readback PASS,
+root read complete log and seven-module pins; signed native persistence open.
