@@ -29,3 +29,21 @@ Do not stall native implementation on global compiler theorem; do not substitute
 arbitrary caller-selected package/core pair. Current authority and actual usage
 remain checked independently. World informed before compaction; asked again for
 InputPrepared API/wake graded when actionable. No architecture pivot.
+
+Further actual source/log reading: frozen World r4 Controller1590–1750 full
+AcceptedInvocation/admitAuthority/finishAdmission/admitObjective/shared admit;
+check-controller-05.log actual OBJECTIVE CONTROLLER PASS/exit0. Actual native
+InputPrepared/prepareInput/contextBytes/outputgate source reviewed. No native
+execution claimed from this Lean qualification. Graded source-first r50/r51 PASS
+reported; resumed owner found exact forceWith/extraction cursor gap and owns fix.
+
+Captain explicitly delegated child intake. Root read complete a5d→386ade diff,
+verified actual pre/output hashes, copied exact child, added only parent reexport.
+Common current_source386ade; receipt_continuity191d4169; transport9f177. Diffcheck
+PASS. Consent owns missing one CLI arm then Rust13 frozen focused+production.
+Private sourcehelper registry approves exact legacy95928 reviewedcohort; newly
+linked continuity helper needs separately reviewed exact registration, not selfecho.
+
+Fresh publisher/source records private commits191536d/f302efc retain this state.
+Historical consent agent turn content-policy flag: instructed status/artifact/job
+recovery only, no rerun/workaround of rejected action. No jobs killed/restarted.
