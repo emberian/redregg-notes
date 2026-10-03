@@ -1,3 +1,10 @@
+LATEST ADDENDUM 15:05UTC: FHE and Activity original owners restored; three new
+Sol scenario builders now active (Objective-world/private-agreement/service-recovery).
+Full127-human-message recovery +10recent substantial root replies read; see
+work/INTENT-RECOVERY-20261003-1505.txt for exact local transcript paths and findings.
+WHY-OBJECTIVE-BEND and WHY-AGREEMENT now actually written under intent/.
+Obsolete one-time8:45 automation deleted; recurring checkin remains paused.
+
 LATEST HUMAN STEERING — 2026-10-03 14:53–14:57 UTC
 Ember asks to continue the interrupted swarm for another approximately 0.5–1.5h
 before Claude takeover, including substantial nextsteps and a complete rewrite of

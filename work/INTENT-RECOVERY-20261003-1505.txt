@@ -1,0 +1,46 @@
+ACTUAL FULL ROOT HUMAN RECOVERY — October3 2026 ~15:05UTC
+Source session01a0fa81-d479-7753-a1b3-1331d1ed53de, chronological cv unified IR.
+Root read ALL127 actual human messages through16479 across26 compactions.
+Local private transcript: /Users/ember/workbox/mini-session-recovery-20261003/EMBER-ONLY.txt
+Machine-readable exact messages: same directory EMBER-ONLY.json.
+Extraction manifest: EXTRACTION-MANIFEST.json.27 app/heartbeat envelopes excluded;
+two genuine screenshot-attached human prompts12852/12951 recovered from
+misclassified injected_context.15185 retains human answer only, not generated
+question. Human-supplied quotations remain in messages; no attachment body or
+assistant/subagent/tool transcript inserted. No duplicate compaction replay.
+Raw cv snapshots separately retained in this local workbox, not public Git.
+
+Root also read full10 substantial assistant replies across LAST FIVE completed
+windows22–26:13347,13823,14033,14149,14723,14945,15248,15672,16041,16165.
+Windows had781/688/556/615/498 messages respectively. Longest2 plain-text replies
+per window selected mechanically, then actually read; no claim every assistant
+reply was reviewed. Local ASSISTANT-RECENT-LARGE.txt keeps them separate.
+
+FINDINGS / consequential correction
+Human direction consistently combines ambitious semantic construction and actual
+joined experiences. Mini grows into Dregg; Objective Bend becomes authored world
+language, with full private computation/traffic/agreement and lived product worlds.
+Original no-compilation-ceiling instruction survives every correction: own language,
+Bend fork/type changes allowed, meaningful mechanized properties, strong Faré ideas.
+User wants efficiency/source-review fixes and optimistic batch publication, not an
+expanding procedural verification tax. Broad review should provoke substantial
+construction, not consume every lane with known defects or trivial refinements.
+Research rationale and alternatives matter independently of source/task preservation.
+
+Assistant drift was operational, not merely forgetting names. At13823 I described
+broader destinations as construction targets while consolidating ownership without
+preserving active builders. At14033/14149 I correctly stated semantic/proof standards;
+by16041 my own census admitted broad native joins still open. Reporting qualifiers
+did not repair overloaded allocation or component-first acceptance. Assistant status
+text must not be used as evidence a source/native semantic claim is established.
+
+CURRENT RESPONSE
+19 outage owners resumed, doc rewrite owner resumed, then original FHE+Activity
+builders restored and3newSol scenario builders with implementation ownership.
+Peak25 active; Faré bounded rationale author since completed. Dormant money/portable/
+Station not silently transferred. New scenario_objective_world instructed to take
+concrete native-family/effect implementation work from World, not stop at previews.
+Private agreement scenario joins actual transport+engine; service scenario implements
+compatible filesystem boundaries plus real recovery consumer. Captain owns common
+source/qualified artifacts, original resident/service retain sole live-world mutation.
+Known-WIP list separate from actual defended review claims. Full goal not reduced.

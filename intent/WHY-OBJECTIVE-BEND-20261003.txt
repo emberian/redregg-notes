@@ -1,0 +1,461 @@
+WHY OBJECTIVE BEND
+An architectural argument to preserve across retirements and compactions
+Primary-source scholar, 2026-10-03
+
+This document preserves reasons, not an implementation status or an agent plan.
+It distinguishes Ember's recorded direction, Faré's actual arguments, and our
+construction choices. A returning peer should be able to disagree with a choice
+without accidentally discarding the purpose it served. Contemporary source and
+execution claims belong to the active language owner. The source citations below
+refer to the preserved primary corpus; the October 3 census was read for the
+boundary between that purpose and what has actually been established.
+
+The experience comes before the evaluator
+
+The intended system is a place in which people and programs can keep doing things:
+inspect an ongoing computation, understand the objects and obligations involved,
+change a tool, combine it with another person's contribution, keep the useful
+history, and resume work without reconstructing its meaning from disconnected
+files. A member should be able to author behavior as part of using the world.
+An agent should have durable working context and explicitly granted means to act,
+not only a prompt and an ephemeral process. A shared document, a programmable
+instrument, an institution and a fictional place can inhabit the same semantic
+infrastructure without being reduced to one interaction style.
+
+There is direct human evidence for the breadth and for a correction to its imagery.
+In the May 24 exchange, Ember rejected an executor/circuit unification project as
+an adequate north star and described a Polis-like layer where models could have
+a home and coordinate under their own terms. In the June 24 exchange, Ember
+rejected the assistant's sentimental rendering and demanded technical, detailed,
+Pharo/Smalltalk-like actuation and composition with spatial persistence. Read those
+as compatible: continuity and agency are purposes; a particular home or pet
+metaphor is not prescribed. Nor does the aspiration establish present autonomy,
+security or model continuity. Exact read dialogue locators are recorded in [U1].
+
+Faré's Houyhnhnm argument supplies an unusually useful way to judge this ambition.
+The object of design is the entire interaction of users, development, execution,
+storage and change. A small language inside a vast, informal support arrangement
+is not thereby a simple computing system. Count the glue, recovery conventions,
+manual schema work and developer intervention too. His appeal to live systems is
+therefore not nostalgia for a particular image-based desktop; it is an argument
+about where meaning and responsibility reside. Our inference is that Mini becoming
+Dregg needs an authored world language whose concepts continue to mean something
+in its editor, running world, debugger, persistence and implementation strategies.
+A method registry behind a UI cannot by itself supply that continuity. [P1]
+
+Why the unit of construction is a partial specification
+
+A useful contribution is often deliberately incomplete. A review policy describes
+how to combine judgments but needs a provider of evidence. A notebook extension
+adds one behavior while relying on a storage interface. A geometry family adds a
+constructor and needs the rest of the family to agree about its recursive types.
+Requiring each contribution to be a closed executable before it can be passed,
+stored, inspected or combined turns the useful intermediate object into something
+outside the language. People then reconstruct its requirements and combination
+rules with build scripts, registries or conventions.
+
+Faré instead reconstructs OO as modularity and incrementality made available as
+ordinary in-language computation. A specification can be a value before it has a
+complete target. An extension expresses a change in terms of both its inherited
+starting point and the eventual context in which it will live. Programs can make,
+parameterize, return and compose such extensions. A factory can capture a reusable
+collaborator, not merely emit a fixed selector-to-code table. The important test is
+whether a member can write that factory and use its result inside the language;
+a host API capable of installing predefined methods is not equivalent evidence.
+This is the central argument of EOOMI and poof, developed in LTUO. [P2]
+
+Incrementality here first means constructing a new specification from existing
+ones without restating everything they contain. It does not automatically mean
+an incremental compiler, memoization of all calls, efficient dependency tracking,
+or live migration. Those can be enabled by preserving the relevant structure,
+but each needs its own semantics. Conflating these meanings makes it easy to claim
+the whole design after implementing only a cache or a sequence of overrides.
+
+Why self, super, mix and fix belong together
+
+Suppose one extension computes a bill-of-parts count from self.parts, while later
+extensions contribute more parts. The original count must see the final collection,
+including contributions that were unknown when it was written. If each stage sees
+only the prefix already constructed, the count is stale. Conversely, an override
+that intentionally wraps the inherited result needs that particular inherited
+meaning, not another lookup through final self. These two relationships explain
+self and super. They are not interchangeable aliases for current object state.
+Faré's bill-of-parts example makes their interaction concrete. [P3]
+
+An extension is therefore open in two directions: the eventual context and the
+inherited target. Using our self-first convention, its initial semantic shape is
+C → V → W. C is the final context, V the inherited target, W the provided result.
+The book writes the arguments super-first. Composition supplies the same final
+context to both extensions while feeding the earlier result into the later one:
+
+  compose parent child self base = child self (parent self base)
+
+Fix then ties the recursive context when a construction is ready to close. A
+homogeneous C=V=W algebra is a useful special case. It cannot define the general
+operation: a function target may be extended using a richer record context, or an
+extension may change representation. For fixed C, heterogeneous composition is a
+category; the endomorphisms form a monoid. This distinction affected the actual
+language discussion because a neat homogeneous theorem could otherwise conceal
+lost source expressiveness. [P4]
+
+Even C → V → W is only the first typing approximation. A reusable extension must
+work with future self and inherited TYPES satisfying its requirements, including
+fields it did not know about when compiled. Value-dependent families over one
+fixed C do not establish this future-type polymorphism. The pressure comes from
+ordinary recursive families, associated types and binary methods, not an exotic
+optional corner. Faré sketches row/subtyping and recursively constrained types;
+he does not deliver a complete checked type theory for us to adopt. We must choose
+an explicit tractable checking discipline and show which constructions it admits.
+Treating today's record examples as that theorem would lose the reason for the
+generalization. [P5]
+
+Why lazy meaning became a substantive correction
+
+Open recursion does not logically mandate one evaluation strategy for every
+language. Strict systems can support guarded recursive methods with explicit
+indirections. But our strongest reading aims to preserve arbitrary computational
+targets, incomplete recursive constructions and usable parts of partially defined
+objects. Eagerly demanding the whole construction can destroy that meaning before
+any wanted component is available. This is why laziness is a semantic choice here,
+not merely an optimization for recursive calls. [P6]
+
+Two small examples separate the choices. keep(7, fix(identity)) returns 7 if keep
+does not demand its second argument; a strict call evaluates the divergent argument
+before keep can run. Likewise {good=7, bad=self.bad}.good can yield 7 even though
+bad is cyclic. Suspending the whole record is insufficient if forcing the record
+then forces every field. A third example selects one expensive field twice: both
+pure call-by-name and call-by-need can yield the same result, but only the intended
+shared thunk implementation avoids repeating that field's initialization. This is
+per allocated thunk identity, not a promise to memoize every equal function call.
+The three independently authored Objective Bend source consumers preserve these
+questions concretely; their expectations are source observations, not borrowed
+backend premises. [E1]
+
+Fix also cannot mean merely “choose a solution to x=f(x).” Every value satisfies
+x=identity(x), yet operational fix(identity) produces no weak-head result. The
+algebraic equation is useful after choosing a semantics; its witnesses do not
+prove successful construction. Likewise finite approximants need to agree through
+appropriate observations, not return literally identical closure syntax: a closure
+containing the recursive fix and one containing a finite unrolling can be related
+without being the same syntax. Pure call-by-name and call-by-need have the same
+convergence behavior in the ordinary unbounded pure setting; their sharing/cost
+difference must not be falsely reported as a general termination difference.
+
+This motivates the new independent lazy source meaning and an explicit graph
+machine, rather than declaring the retained BendTT call-by-value machine to have
+become lazy because it skips erased arguments. Suspended/evaluating/cached cells,
+update frames and graph identity are plausible representations. They remain
+replaceable if another implementation preserves the observations, sharing and
+resource contract actually promised. Blackhole diagnostics, capacity suspension,
+errors, strict primitives and effect forcing still need deliberate boundaries.
+
+Why incomplete reflection is more than an object inspector
+
+If inspecting a specification first forces its incomplete target, reflection fails
+at exactly the point where someone needs it to finish the construction. Faré's
+prototype treatment keeps the specification available alongside a lazy target;
+recursive self must also retain access to the specification. Wrapping only the
+already-constructed result is too late. This gives a practical reason to retain
+specification identity and structure: users and programs can extend, inspect and
+repair a contribution before all its requirements are discharged. [P7]
+
+Our proposed organization keeps computational fix general and constructs reflective
+prototypes explicitly, tying the wrapper inside the recursion. The exact tuple,
+record or closure representation is not sacred. Neither is unrestricted syntax
+inspection automatically required: the language must say whether reflection exposes
+names and parent structure, extension functions, code/captures, abstract semantics,
+or some combination. Every exposed observer constrains valid optimizations.
+A descriptor listing names can help inspection but is not a substitute for the
+first-class computation that the specification performs.
+
+Inheritance order is also part of meaning, not housekeeping. Noncommuting replace
+and wrap operations produce different results in different orders. Shared DAG
+ancestry is different from explicitly composing the same extension twice. Suffix
+layout demands a contiguous tail, stronger than preserving ancestor subsequences.
+C4 is a serious candidate for expressing these requirements, not an article of
+faith. Our primary reading found that the book's bare-DAG shape-determinism wording
+is stronger than its implementation can support: equivalent partial orders with
+different ordered presentations can select different linearizations. The defensible
+invariance is under renaming of the ordered presentation, including its tie-break
+and suffix data. Preserving this correction matters more than preserving the name
+of the current algorithm. [P8]
+
+Interfaces, laws and authority answer different questions
+
+An incomplete contribution needs a way to say what it requires, and composition
+needs a way to establish that the resulting collaboration meets those requirements.
+A callable shape is often insufficient: a client may depend on an invariant, an
+ordering law or a relation between several operations. This motivates source-level
+interfaces and behavioral promises with actual evidence. Final-self assumptions
+must eventually be discharged for the closed object; a collection of per-method
+proofs under unproved assumptions is not a proof of the whole collaboration.
+
+It does not follow that every extension must preserve every law ever attached to
+an ancestor. Faré explicitly allows constructions that are not monotonic subtype
+refinements, and distinguishes inheritance from orthogonal protocols supplied after
+the fact. Our construction should separate unrestricted building from adoption as
+a particular compatible interface. A scoped protocol environment can allow new
+collaborations without requiring everyone to edit a common ancestor. Whether this
+uses dictionaries, rows, witnesses or another representation remains a design
+choice; silently changing the selected implementation is a governance concern too.
+[P5, P9]
+
+Authority is another question: who may invoke an effect, publish code, adopt an
+upgrade or disclose a result now? Behavioral conformance does not grant authority;
+permission to install code does not repair a false behavioral promise. Ownership
+is also distinct. Pure reusable closures can capture other reusable closures, but
+an immutable outer record cannot make a captured one-shot obligation duplicable.
+A copyable resource address is not evidence of possession. Across suspension,
+sharing and recovery, the system must preserve whichever ownership and custody
+contract it has chosen. “Consumed exactly once on every run” is too strong for a
+run that remains suspended forever; nonduplication, conserved obligations and
+justified terminal discharge are safety properties, with liveness stated separately.
+These are our world-language obligations, not consequences of the word object.
+
+Why Bend is a starting calculus, not a ceiling
+
+Bend supplies a valuable concrete calculus, explicit quantities, checking rules and
+metatheory to examine. It also supplies a useful retained executable fragment.
+But the October 3 human correction is explicit: Objective Bend is its own language;
+we need not preserve Bend's type system precisely. The earlier Data-only reusable
+capture, acyclic-linking and total-call restrictions were properties of one proposed
+embedding. When those restrictions obstruct the intended first-class construction,
+we should change or qualify the embedding, not redefine the destination. [U2]
+
+The Fable review was valuable because it asked whether the large collection of
+artifacts actually supplied that meaning. The first council proposal made existing
+restrictions do too much conceptual work: first-order Data targets, clocked strict
+CPS, retained ancestor laws and serialized residuals appeared to solve questions
+that they merely narrowed. The later exchange retracted Data-only source captures,
+affinity-by-Data and safe-point-by-serialization. Preserve both the criticism and
+the constructive possibility: defunctionalization can represent closures, and a
+total first-order interpreter can implement partial lazy programs if it represents
+suspensions, environments and effects faithfully. Tables and CPS are not inherently
+disqualified. Treating their current restricted instance as the full source language
+is what failed. [E2]
+
+General recursion cannot silently acquire the original total calculus's consistency
+or termination theorem. A total proof fragment and a partial computational fragment
+need a sound boundary. This does not prohibit proofs ABOUT partial programs:
+contextual equivalence, simulation, safety and partial correctness can be stated
+in total logic over program syntax and semantics. A successful finite trace proves
+termination of one computation; it is not the only legitimate law about recursion.
+Whether the final discipline uses judgment modes, Comp types, guarded fragments or
+a combination remains open. The essential condition is that running arbitrary
+recursive computation does not become a way to manufacture arbitrary logical
+proofs or make type conversion diverge without an explicit account.
+
+The larger reflection argument: changing how a running thing is implemented
+
+Prototype reflection is one level of the story. Houyhnhnm computing asks for a
+further capability: changing the implementation beneath a running computation
+without requiring its author to rewrite the computation around every persistence,
+debugging, distribution or optimization strategy. Otherwise every improvement
+creates another incompatible software stack and another manual migration. The
+point of a semantic tower is to make the relation between abstract behavior and
+concrete execution available to the system itself. [P10]
+
+First-Class Implementations and Climbing give this ambition a stronger formulation
+than a fashionable “meta-object protocol.” Concrete states include intermediate
+steps that may have no immediate abstract counterpart. An implementation therefore
+needs designated observable states and an interpretation of transitions/effects,
+not only a map of values. To recover a computation interrupted at an arbitrary
+reachable concrete state, observability must construct a safe route to an abstractly
+meaningful state, with bounds excluding unbounded work or blocking intervention.
+Soundness, completeness, progress and observability are distinct requirements;
+one forward simulation can leave the machine stuttering forever or omit wanted
+source behavior. [P11]
+
+This is why proof shape matters. A relation that already assumes the desired
+source evaluation has not explained execution. A theorem that returns a projection
+of its premise has not connected independently defined meanings. Conversely,
+requiring a decreasing administrative rank on terminal self-loops makes a proposed
+representation impossible to inhabit. Classify running, terminal, suspended and
+refused states; connect initialization and final observations; prove progress on
+the transitions where progress is required. The independent source is valuable
+because it gives these claims something external to their own implementation to
+answer to. Axiom counts and a compiled module are useful checks, not substitutes.
+
+Continuity forces persistence and evolution into the language argument
+
+If a resident's work is to survive, persisting a result or a state record is not
+enough. The computation includes its control state, environments, captured code
+revisions, heap sharing and outstanding interactions. If a person's tool is to
+evolve, keeping that computation forever pinned to the first program version is
+not enough either. Houyhnhnm chapters 4 and 5 connect these pressures: preserve
+code with data, represent upgrades as coherent changes, retain the distinction
+between renaming and deleting/recreating, and track incomplete transformations.
+These are proposals for making change intelligible inside the system, not claims
+that distributed upgrade becomes trivial. [P10, P12]
+
+A concrete counterexample guards the boundary. A residual continuation tag with
+{amount=100} remains perfectly serializable after a new version interprets amount
+as dollars rather than cents. It is not thereby the same continuing computation.
+A typed field converter alone does not relate the code that will consume it.
+Likewise a checkpoint that omits an uncertain outgoing action can replay it after
+recovery. Correct migration must relate continuation meaning, code/data coherence,
+effects already performed or pending, and ownership/fencing. A declared safe-point
+policy can defer upgrade until these relations are simple; a stronger migration
+may transfer complete recovery state without first resolving every uncertainty.
+Neither should be claimed from successful decoding alone. [P11, P13]
+
+Stable object identity, current revision, the code an in-flight invocation uses,
+and permission to adopt new behavior should remain distinguishable. Pinning old
+invocations while new ones adopt a revision is a coherent initial policy. Live
+frame transformation is a stronger policy with stronger obligations. Faré's LTUO
+code-upgrade discussion leaves such policy questions open; our multiuser world
+must choose them explicitly. Forked exploratory change must also confine actual
+external effects, not merely show a different history cursor. [P12, P14]
+
+Why multiple execution routes belong here, without becoming one vague promise
+
+The human direction calls for native, oblivious, proof-producing and specialized
+execution, with FHE among the broader routes. The semantic-tower argument explains
+how this can be one language project instead of several unrelated evaluators: a
+program's specified meaning can remain stable while its implementation strategy
+changes. It does not make those strategies interchangeable without qualification.
+Privacy depends on permitted observations, access patterns, scheduling, faults and
+release; proof soundness depends on the actual compilation and cryptographic chain;
+resource limits depend on an explicit cost model. A recursion-bounce count is not
+a bound on arbitrarily expensive work inside a single terminating arm. Extensional
+mix laws do not establish identical allocation or public charges. [U2, P10, P11]
+
+The strongest coherent construction therefore preserves a rich source meaning and
+makes backend coverage explicit. A specialized circuit may implement one sealed
+fragment extremely well. It need not pretend to execute arbitrary dynamic reflection
+to be useful. Nor may the existence of that fragment silently remove reflection
+from the language. The remaining work is real semantics, typing, executable
+refinement and governed interaction, not merely connecting components whose names
+look compatible. The October 3 census explicitly preserves that distinction.
+
+What must survive changes of representation
+
+The durable commitment is to in-language, reusable, partially specified construction;
+final-self collaboration with distinguishable inherited meaning; an explicit account
+of recursive/lazy observations; inspectable and evolvable ongoing computation; and
+interfaces, evidence, ownership and authority that retain their different meanings.
+The computing system should automate the repeated preservation work around these
+concepts rather than require every member to recreate it manually.
+
+Tuple layout, syntax, the particular row discipline, C4, thunk states, continuation
+encoding, Comp-versus-judgment modes, a chosen migration policy and current backends
+can change. Some will need to change as counterexamples and usable programs teach
+us more. There is no fully proved Objective Bend metatheory hidden in the corpus:
+Faré supplies powerful constructions, examples and research conjectures, while the
+current implementation still owes substantive correspondence and system obligations.
+Preserving that distinction keeps both ambition and criticism available. A returning
+peer should be free to find a better mechanism while still answering the original
+question: can people understand, compose, continue and change the computing they
+are living with, from within a system whose behavior remains accountable?
+
+Primary and dialogue references
+
+Local line locators refer to the preserved text, not a claim that later working
+copies retain those line numbers. The canonical LTUO mirror is exact HTML with a
+separate fetch/hash/asset manifest. No whole transcript is reproduced here.
+
+[U1] Actual bounded exchanges read for this document:
+  cv show claude:130628b0-ab87-41b8-8116-66d0de87ec49 --around 1434 --context 2
+  May 24, 2026: assistant's proposed executor/AIR north star, then Ember's expansion.
+  cv show claude:01c55763-cbb4-4af6-84cf-8e4e7ede1ad7 --around 4 --context 2
+  June 24, 2026: Ember's correction toward detailed technical actuation/composition.
+  These are distinct exchanges, not repeated fork summaries counted as new evidence.
+
+[U2] Current October 3 direction, read in full:
+  /Users/ember/dev/redregg/designs/BEND-DIRECTION-20261003.txt
+  Includes the recorded human correction around 12:37 UTC that Objective Bend is
+  its own language. No precise cv message index for that correction was recovered
+  by this scholar, so none is invented here. Original Bend reference:
+  https://github.com/bendlang/bend/blob/main/bend2/bendtt.lean
+  Contemporaneous boundary read in full:
+  /Users/ember/dev/redregg/work/CENSUS-20261003-1420.txt
+
+[P1] Houyhnhnm chapter 1, A Different Point of View and Simplicity:
+  /Users/ember/dev/fareoo/sources/houyhnhnm-ch01.md:26
+  https://ngnghm.github.io/blog/2015/08/02/chapter-1-the-way-houyhnhnms-compute/
+
+[P2] EOOMI, abstract and sections 3,5; poof, sections 1,3,4:
+  /Users/ember/dev/fareoo/sources/eoomi2024.md
+  https://fare.tunes.org/files/cs/poof/eoomi2024.pdf
+  /Users/ember/dev/fareoo/sources/poof-paper.md:26
+  https://fare.tunes.org/files/cs/poof.pdf
+
+[P3] LTUO 5.5.4, Interaction of Modularity and Extensibility:
+  /Users/ember/dev/fareoo/raw/mirrors/ltuo/2026-10-03/ltuo-readable.txt:2783
+  https://fare.tunes.org/files/cs/poof/ltuo.html#%28part._.Io.Ma.E%29
+
+[P4] LTUO 5.4.1-4, open modular extensions and composition:
+  /Users/ember/dev/fareoo/raw/mirrors/ltuo/2026-10-03/ltuo-readable.txt:2591
+  https://fare.tunes.org/files/cs/poof/ltuo.html#%28part._.M.E%29
+
+[P5] LTUO 8.2.1-4, 8.4.1.3-8.4.4:
+  /Users/ember/dev/fareoo/raw/mirrors/ltuo/2026-10-03/ltuo-readable.txt:3993
+  /Users/ember/dev/fareoo/raw/mirrors/ltuo/2026-10-03/ltuo-readable.txt:4143
+  https://fare.tunes.org/files/cs/poof/ltuo.html#%28part._.T.N.M.Tf.M.E%29
+  https://fare.tunes.org/files/cs/poof/ltuo.html#%28part._.Recursively_.Constrained_.Types%29
+
+[P6] LTUO 5.3.2.3-5 and 10.3.2, laziness and suspended fields:
+  /Users/ember/dev/fareoo/raw/mirrors/ltuo/2026-10-03/ltuo-readable.txt:2513
+  /Users/ember/dev/fareoo/raw/mirrors/ltuo/2026-10-03/ltuo-readable.txt:5750
+  https://fare.tunes.org/files/cs/poof/ltuo.html#%28part._.Lazy_.Y%29
+  https://fare.tunes.org/files/cs/poof/ltuo.html#%28part._.S.Ro.Ro.S%29
+
+[P7] LTUO 6.1.2.3-6.1.4, incomplete specifications and recursive conflation:
+  /Users/ember/dev/fareoo/raw/mirrors/ltuo/2026-10-03/ltuo-readable.txt:2901
+  https://fare.tunes.org/files/cs/poof/ltuo.html#%28part._.First_.Issue__.Incomplete_.Specifications%29
+  https://fare.tunes.org/files/cs/poof/ltuo.html#%28part._.R.C%29
+
+[P8] LTUO 7.3.5, 7.4.2-6, 10.4.2; ordered-presentation caveat:
+  /Users/ember/dev/fareoo/raw/mirrors/ltuo/2026-10-03/ltuo-readable.txt:3623
+  https://fare.tunes.org/files/cs/poof/ltuo.html#%28part._.Shape_.Determinism__.Consistency_across_.Equivalent_.Ancestries%29
+  https://fare.tunes.org/files/cs/poof/ltuo.html#%28part._.Suffix_.Specifications%29
+  Accompanying actual C4 code/tests read, not executed:
+  /Users/ember/workbox/fareoo-primary-scholar-20261003/pommette.scm:1396
+  /Users/ember/workbox/fareoo-primary-scholar-20261003/pommette-provenance.json
+  https://raw.githubusercontent.com/metareflection/poof/main/pommette/pommette.scm
+
+[P9] LTUO 9.2.9, Inherited Interfaces vs Orthogonal Protocols:
+  /Users/ember/dev/fareoo/raw/mirrors/ltuo/2026-10-03/ltuo-readable.txt:5194
+  https://fare.tunes.org/files/cs/poof/ltuo.html#%28part._.Inherited_.Interfaces_vs_.Orthogonal_.Protocols%29
+
+[P10] Houyhnhnm chapter 4, Meta-level Strategies and Building up vs building down:
+  /Users/ember/dev/fareoo/sources/houyhnhnm-ch04.md:26
+  https://ngnghm.github.io/blog/2015/08/24/chapter-4-turtling-down-the-tower-of-babel/
+
+[P11] First-Class Implementations sections 2-5; Climbing sections 2-5:
+  /Users/ember/dev/fareoo/sources/fci2017.md
+  https://fare.tunes.org/files/fci2017/fci.html
+  /Users/ember/dev/fareoo/sources/climbing.md:49
+  https://fare.tunes.org/files/climbing/climbing.html
+
+[P12] Houyhnhnm chapter 5, Change Comes from the Inside and Automating Live Upgrade:
+  /Users/ember/dev/fareoo/sources/houyhnhnm-ch05.md:36
+  /Users/ember/dev/fareoo/sources/houyhnhnm-ch05.md:56
+  https://ngnghm.github.io/blog/2015/09/08/chapter-5-non-stop-change/
+
+[P13] Persistence Model, atomicity/schema upgrade/persisting execution context:
+  /Users/ember/dev/fareoo/sources/persist-model.md:103
+  /Users/ember/dev/fareoo/sources/persist-model.md:361
+  /Users/ember/dev/fareoo/sources/persist-model.md:656
+  https://github.com/mighty-gerbils/gerbil-persist/blob/master/persist.md
+
+[P14] LTUO 6.3.2, Mutability of Inheritance as Code Upgrade:
+  /Users/ember/dev/fareoo/raw/mirrors/ltuo/2026-10-03/ltuo-readable.txt:3278
+  https://fare.tunes.org/files/cs/poof/ltuo.html#%28part._.Mo.Ia.C.U%29
+
+[E1] Independent source consumers and intended observations:
+  /Users/ember/workbox/fareoo-primary-scholar-20261003/source-consumers/
+  LazyUnusedArgument.obend, LazyUnusedField.obend, LazySharedField.obend,
+  EXPECTATIONS.txt. Compiler owner reports unchanged originals adopted into Mini
+  tests/objective-bend-source/, expectations as FARE-LAZY-EXPECTATIONS.txt, with
+  parser fixes preserving source intent. This report is not a runtime certificate.
+
+[E2] Actual first and second Fable council responses read in full:
+  /Users/ember/workbox/objective-bend-fable-council-20261003/response-1.txt
+  /Users/ember/workbox/objective-bend-fable-council-20261003/response-2.txt
+  Primary-reader response and exact counterexamples:
+  /Users/ember/workbox/fareoo-primary-scholar-20261003/COUNCIL-CRITIQUE.txt
+  Condensed technical construction synthesis:
+  /Users/ember/dev/fareoo/sources/ltuo-objective-bend-20261003.txt
+  Canonical book provenance:
+  /Users/ember/dev/fareoo/raw/mirrors/ltuo/2026-10-03/manifest.json
