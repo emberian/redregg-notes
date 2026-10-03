@@ -1,0 +1,58 @@
+Bend as Mini's world programming language — October 3, 2026
+
+HUMAN DIRECTION
+Ember: retain Nock support, but prefer Bend as broadly as possible; specifically
+https://github.com/bendlang/bend/blob/main/bend2/bendtt.lean.
+"like, the way the web uses js, we will use bend."
+Requested routes: oblivious executor (possibly a new abstract machine), ordinary
+zkVM execution, and recompile-from-logic/arithmetization through existing Mini
+and Bread machinery, specializing fixed Bend computations to reusable circuits.
+This is a primary authored world language, not merely an optional backend.
+
+SOURCE PIN AND INITIAL READ
+Root cloned https://github.com/bendlang/bend.git to /Users/ember/dev/bend.
+HEAD947db722640c86247849343657bf2f7ef01cb7f1. Upstream stays unmodified.
+AGENTS says bend.ts human-written and not to edit; kernel uses Lean4.34.0 while
+current Mini uses4.30.0. No silent whole-project toolchain migration.
+Exact file is a dependent affine calculus with Q0/Q1/Q2 quantities, a Book of
+definitions, case-tree calls and separate typing/live checks. It is not safe to
+substitute assumptions about older Bend/HVM/interaction-net implementations.
+Root read Term/Book definitions, runtime relation and main theorem statements.
+Term.wnf/run/fire/val are fuelled checking/reduction machinery; the proof's Eval
+and Walk give distinct live call-by-value semantics (Part2 ignores opaque flag).
+Claims include checker soundness, subject reduction, progress, termination and
+consistency of checked Books. Actual complete proof audit/compilation pending.
+comp.ts emits C/JS with special primitives and explicitly warns bugs expected;
+its equivalence is not established just by the BendTT consistency theorem.
+
+RECOMMENDED CONSTRUCTION SHAPE (PROPOSED, NOT ALREADY IMPLEMENTED)
+Source/elaboration -> pinned checked program + module dependencies -> faithful
+runtime/effect contract -> native, oblivious, trace-proof, specialized circuits.
+Program identity, supported semantics/profile, authority, exact observations,
+typed effects/results, resource bounds and overflow behavior must agree.
+Ordinary world program interfaces include modules, persistent objects/programs,
+capability-controlled effects, versioned behavior, authoring and inspection.
+Foreign IO/parallel runtime optimizations do not receive ambient Mini authority.
+Termination does not supply a public resource bound or private access pattern.
+For fixed-program circuits, public specialization and secret inputs/program
+choices must be explicit; semantics-preserving compilation cannot be replaced
+by an oracle callback or an unproved successful compiler invocation.
+
+OWNERS
+- astra_consensus_composition: faithful bounded Bend abstract machine/oblivious
+  lowering; generic heap/circuit/custody work carries forward.
+- bend_semantics_audit (fresh Astra): exact upstream semantics/proofs/compiler
+  chain and practical kernel import boundary.
+- bend_logic_compilation (Sol): actual Mini/Bread logic compilers, zkVM traces
+  and fixed-computation reusable circuit specialization; concrete adapters.
+- bend_world_language (Sol): module/program/effect profiles and ordinary member
+  authoring/OO integration; coordinate member_oo_construction/docuverse owners.
+- takeover_kernel: common integration/build ownership and exact source pins.
+
+CONTINUITY
+Further Nock-specific machine expansion stopped; authored work checkpointed,
+with uncompiled parts labelled as such. Existing checked Nock consumers and
+receipts stay supported. Current common v10 OO/cache/service candidate continues
+building; new Bend additions must not rewrite its profile mid-build.
+No backend/privacy/zk claim is established by this direction document.
+All construction/builds on isolated hbox sources under existing controls.
