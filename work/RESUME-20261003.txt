@@ -1,258 +1,159 @@
-CURRENT RE-ENTRY CHECKPOINT — October 3, 2026, ~10:32 UTC
-Root session 01a0fa81-d479-7753-a1b3-1331d1ed53de.
-Read work/REENTRY.txt, ACTIVE-GOAL and routed actual designs. This file is navigation,
-not proof. Superseded chronological status is preserved in Git through d50aa09.
-Do not reread obsolete status as current or restart a surviving job from a summary.
+CURRENT RE-ENTRY CHECKPOINT — October 3, 2026 ~11:55 UTC
+Root session01a0fa81-d479-7753-a1b3-1331d1ed53de. Read REENTRY.txt and its5core
+records; actual human dialogue beats this navigation. Older chronology in Git.
+Sixth receipt records recent and six older actual both-party dialogue ranges.
 
-LATEST HUMAN DIRECTION
-Full goal ACTIVE, no budget: Objective Bend/Houyhnhnm live programmable world;
-Oct13 shared multiuser agentic worldhost, traffic privacy/agreement explicit alpha
-conditions, full OO/stronger private execution prototypes actual construction.
-SPK, docuverse/deos, continuing residents, station/fiction, collective allocation,
-service commons and portability remain substantive. Workshop is one consumer.
-10am America/New_York TODAY (14:00 UTC Oct3) is next whole-system progress checkpoint,
-not completion or a narrowed destination. Ember available briefly for design.
-Prefer mostly Sol for new work; Astra rare strategic/coordinator work, current
-Astra owners explicitly allowed to finish. Existing owners resumed after account
-refresh. Do not spin a new scouting wave or preserve idle polling turns.
-Publish source to MAIN frequently, including honest WIP BEFORE qualification;
-keep tests/deployment separate. No new sidebranches/source silos. Preserve all
-foreign files/caches, no stash/reset/cleanup. Ordinary commits/pushes authorized.
-No paid provider calls, asset operations, external human messages or unrelated
-live-service replacement inferred. Persvati and hbox both authorized build hosts.
+DESTINATION / LATEST HUMAN
+ACTIVE-GOAL remains full, unbudgeted: Mini grows into Dregg; Objective Bend is
+primary authored world language, Nock compatible. Full OO/Houyhnhnm computing,
+persistent activity, native/oblivious/zkVM/specialized/FHE, privacy, agreement,
+SPK, docuverse/deos, residents, communities/worlds and governed portability.
+Oct13 shared multiuser agentic worldhost; traffic privacy/agreement alpha conditions.
+10amEDT today14UTC is progress checkpoint, not goalcompletion or scopeceiling.
+User explicitly permits FORKING/CHANGING Bend for concrete efficiency; old preserve
+upstream implementation restriction superseded. Version semantics/representations
+and connect actual optimized implementations to intended meaning with refinement.
+User asks aggressive pipelining/optimistic batching/sourcepublication/fixforward,
+not validation of every tiny lifecycle step. Meaningful checks at semantic/cohort
+boundaries, parallel authoring, no new approvalqueue. Substantial constructions
+and inhabited joined experiences BOTH matter; passing fragments are intermediate.
+Current broadcast through3leads asks allactiveowners actual last-hour outcomes,
+inertia, exact dependencies, lifecycle/flow improvements and narrowed ambition.
 
-REENTRY ACTUALLY PERFORMED / PRIVATE NOTES
-Fourth receipt records full eight core reads, repaired truncation and actual cv
-root[11050,11450) both sides. Latest human prefers lighter cv, primarily their
-messages and selected important assistant replies; earlier chains were read in
-prior receipts, not freshly replayed again. Current window retained both sides
-of account interruption/resume, Sol preference and10am instruction. Additional
-actual source read ResourceTransaction1050–1255, full BEND-WORLD-LANGUAGE, Mini
-AGENTS/HANDOFF; claudesplosion AGENTS/product brief and named reviewed diffs.
-redregg checkpoint2eb2473 was already present. Newly public redregg-notes remote
-made PRIVATE on explicit Ember instruction and verified with GitHub. Root
-receipts/status now committed/pushed there. No credential discovery/full secret
-scan claimed. Personal history/intent stays private, technical guides in Mini.
-Recurring Mini swarm check-in automation uses existing mini-overnight-construction
-id, ACTIVE every44min (77allowed ifburdensome), no obsolete overnightdeadline.
+PEOPLE / COUNTS / TIME
+runtime_lieutenant(Sol): language/OO/controller/compiler/FHE/Activity/money/perf/SPKgate.
+product_lieutenant(Sol): service/Studio/residents/worlds/collectives/portable/capacity.
+astra_multimodel_room: protocols, shared build-flow/publication coordination.
+takeover_kernel: common source/Git, shared Host integration and native cohorts.
+redregg_evidence: warm artifact placement and remote independent checks.
+Root architecture/crosssystem decisions; routine logs/directhandoffs stay withleads.
+Burst<=30ACTIVE now, additions Sol; <=16ACTIVE by08:45EDT/12:45UTC today. Product
+lead owns retained16/consolidated acceptance ownership plan by12:15. Don't abandon
+fronts or kill healthy builds to hit count. Existing Astra finish useful work.
+One-time8:40 local heartbeat created (mini-8-45-swarm-convergence); recurring
+mini-overnight-construction check now77minutes, obligations sweep included.
+No new userthreads. Ordinary main commits/pushes authorized, even honest WIP.
+No foreigncleanup/stash/reset/branches, unrelated live replacements, paid product
+provider calls, asset actions or external human messages inferred. redregg PRIVATE.
 
-SOURCE PUBLICATION — ACTUAL GITHUB VERIFICATION
-Common captain: hbox:/home/hbox/workbox/codex-unified-integration-20261003/src
-Mac Git-only push: /Users/ember/workbox/mini-unified-push-20261003.
-GitHub main7d501177 verified, then2ebce376 (329new paths/27owners), captain reports
-normal push e90edb23 (32shared reviewed paths: sourcegate/replay/Profile/birth,
-resident+Surface registration, SPK repairs). Source qualification distinct.
-Captain owns common Git. Coordinator astra_multimodel_room owns packet screening,
-per-owner path→commit accounting, dependency queue and exact producer callbacks.
-Canonical coordination/SOURCE-INBOX.jsonl; SCREENED-INBOX; SOURCE-COMMIT-MAP.json.
-Initial screened64rows447file records zero hash/path errors; later deltas continue.
-Old local Mini checkout is NOT current integration; preserve its untracked work.
-Root claudesplosion reviewed technical docs committed e4a5b6c and6c45f2e; localonly,
-no configured remote. Mini license/recovered Lean/PreoV2 packets at
-/Users/ember/workbox/source-publication-recovery-20261003, captain receiving pending.
-3,604 target/cache files, private research and accidental filenames preserved.
-
-RUNNING NATIVE BASELINE / SERVICES
-Last coherent native family a593a970, not newer WIP main. Host SHA740545eee8f59199e953c4053d8df24054bb6b54db4a9ee6c8da1873f1a42f50;
+SOURCE / DOCS / RUNNING FAMILY
+Construction source: hbox:/home/hbox/workbox/codex-unified-integration-20261003/src
+Git transport: /Users/ember/workbox/mini-unified-push-20261003. Old MacMini isSTALE.
+Captain reports GitHubmain3c9f66278d097660eccff346b0b648632536ae6b after ordinary
+merge retaining concurrentfe60a569AGPLlicense/NOTICE. Currentsource WIP intentionally
+published before qualification; no equivalence to deployedfamily.
+Root actually read both rewritten public guides and verified GitHub commits:
+OBJECTIVE-BEND.md9d9456d9; completeREADME d2b68997. Both userrequests DONE.
+Newdoc source self-contained, not private notes/history; proof qualification separate.
+Last coherent deployednative family a593a970, Host740545eee8f59199e953c4053d8df24054bb6b54db4a9ee6c8da1873f1a42f50,
 client1ad2ebe3688bcc602be8350a5877a0bc2f951cc1b75dc26253941d0ccefbbb24.
-Prior same-world OO51+35faces and doc69+62rows receiving PASS. Nativeperf51exchanges/
-3queries measured, not latency improvement claim. Common Store/Host/web remain;
-old Mac SSHforward58843 disappeared after relogin, remote demo intact.
-SPK sealed family /tank/dregg-build/codex-unified-service-family-a593a970/manifest.json
-SHA bb48699e902fbc98ea3684edd272c482e9d91dc900b1f623b63eddbfa1af7a5f.
-Infra main21a5a97ce... source roles/hooks matched. Four isolated r2 SYSTEM units
-survived unchanged (Store1337850,ingress1337866,sshd1340717,broker1346920).
-Service actual app INSTALL completed. Run739.749s then stopped grain-share-issue
-at retained102-ticket-issue: signer/issuer member0 but tool/parentcaps heldby8,
-definite refusal/noeffect. Service+existingSol historical_missing_junctions own
-real grant bridge preserving intended member-owner. No INSTALLrerun/kernelbypass.
-Then app→CSV→native doc→Hermes→retry/restart/restore/syntheticBYOK remains owned.
+OO51+faces35 and docs69+62 priorreceivingPASS, not newStudio qualification.
+Doc owner restored old immutable loopbackweb PID1702670/SSH89986 using sameStore
+1189048, no mutations; current privateURL in docowner report. Recheck actual PIDs.
+SPK isolatedr2originalfamily unchanged; app8502 INSTALL completed, bothticketsPASS.
+FirstSTARTg2 began/claimed then physicalpermissionfailure. Scoped namespace/mode
+fixPASS; actualg2stillfenced awaiting lawful source reconciliation, not freshworld.
 
-CRITICAL SHARED CONSTRUCTION / OWNERS
-World bend_world_language: actual Package7 bins PASS; PlanLowering and closed
-source invocation checker PASS. Native ResourceTransaction still Nock-run-specific.
-Own coherent explicit signed mutually-exclusive Bend claim, independently derived
-input, pure checked Run core below ResourceTransaction, typed Plan/effect matching,
-current laws and fixed capacity charge/Fits/funding. NO run:none wrapper authority.
-Composition owns exact BendInvocationAdmission; actual closed/live Book.check
-and typed accepted entry +source halts proof PASS. Native admission still pending.
-OO member_oo_construction owns concrete persistent native instance/CallContext/
-self/prototype/super/args/authinput binding +freshbirth/evolution. Composition4
-PASS; persistence/carrier/loader WIP, next checks; linker consumes exact packages.
-Scalar owner bend_bread_archaeology owns sequential native preimages/14def ABI/
-sourceTrace→Plan; now additionally delegated Host/BendReturnReleaseAuthoring
-current-image signing/assembly leaf. World retains semantic release driver.
-Money native_performance owns canonical global ordered Book operation batch,
-per-account signed position consent/currentlaw/controller/receiver shared hunks,
-fee-first original Book guards and jointroom/return effects. World Bend lowering.
-Repeated account ops cannot use scalar writes or fake singleton target semantics.
-Activity graded_execution owns actual start provenance/predecessor reexecution/
-phaseCAS/nullifier/native receiving. Joint receiver owns combined Config facets;
-private exemptions must preserve other protected-domain checks, no facet overwrite.
-Proof-statement projection bend_semantics_audit owns two current world-selected
-public-semantic policies and retained private relation; world owns disclosure
-admission. Randomized domain-separated commitments; fullResult never publicdefault.
-Public projection alone is not masking/commitment/security qualification.
+REAL BUILD FLOW
+Both hbox/Persvati24cores available; hbox use/tank, preservefn/foreignservices.
+Persvati verified exact3348module warmmirror; allowed6x4Gi2threadleafs +16Gi4thread
+main +2x8GiRust/jobs4 (56Gi/24threads), swap0, isolatedoutputs. Don'tserialize
+independent leaves or impose rootpermission anew. Placement delegates real launches.
+hbox main ready-DAG scheduler16Gi,2modulesx2threads, isolates source failures.
+Root found21 compiler-exit0 nodes markedENVFAULT solely EXDEV /tank→/home publication;
+room recovered ALL21 withoutrecompile plus146prioroutputs. Independentbranches now
+pass whileBirth fails. Actualr3 guardian1698871/child1698872 verifiedlive11:50;
+log/tank/dregg-build/receiver-dag-20261003/guardian-r3.log. Reverify, no stalePIDrestart.
+ContentControlFrame explicitDurableDataIntent importrepair gradedowned; Birthrepair
+joint_reserve_birth_authority. Common coherent native C/link/receiving stillneeded.
+One owner/module; no blanketgreen or repeated broadbuilds. Root doesn't relaunchjobs.
 
-PROOFS / PRIVATE EXECUTION / AGREEMENT — CURRENT MEANINGFUL EVIDENCE
-Data owner ALL10 representation modules PASS standard axioms; reverse byte/Nat/
-List/Word/typed Nat.add/BoolChoose handed directly to compiler/world/scalar.
-Controller+graded exact codec/Response/SourceJoin PASS; separate OS save/resume
-cuts7lookup/3evaluate/12complete with exactstate/result+wrongcontext/generation/
-canonical/capacity refusals PASS. NOT fullcontrollerproof or durableActivity yet.
-Controller real quantity beta/spine/allocation proof extensions still checking.
-Compiler3 fragments real BFV4096slots and depth2 PASS; NatAdd/PreludeMux source
-shipped, dependent check queued. FHE native current-key registration/result custody/
-current release pending world driver; manifest parser leaf separately owned.
-IR2 actual raw one-row proof PRIVACY FAILURE reproduced10:27: both same-public
-private witnesses prove/verify and public extension opening reconstructs each
-private trace. CSPRNG repair insufficient. Owner repairs real masking+parameter
-budget, keeps counterexample; no proof admission/private execution green claim.
-Private backend auth4+ACSS4 actualPASS; dZK8/8PASS. Malformed-dealer/open/recovery
-and ACSS WAL tests queued. Backend owns actual triples/authAND/bitness/evaluator.
-privacy_composition_review now explicitly owns Sh2t-Id§6.1 actualprotocol+WAL two
-files, not ideal degree2f callback; same existing coupled construction, no newAstra.
-Frontier r3core/native/signature/event checks PASS, selective fixture wrongleader
-fixed then native retry. Actual source participant/receiver coherent join pending.
-Adversarial proof actual AuditProjection,CountSupport,COMMIT-send certificate
-compatibility/next-record uniqueness PASS. Full Reachable→LocalFaithful OPEN.
-Existing Sol joint_reserve_birth_authority reassigned local causal invariants
-while birth checks wait; Astra composites/global, frontier nativeparticipant.
-Joint source receiver foundation~352 modules, reservebootstrap/current owner/
-maintenance/custodyYES/terminalsourceinstall remains actual coherent native cohort.
-Traffic144fixed1sTCP wire records passed physicalshape/timing after sender repair;
-all-cover relay guarded durable processing missed outputs under IOpressure.
-Owner public processing-latency pipeline construction;1Hz is not1sdelivery.
-Require sustained steady/drain capacity, inspect repeated journal/fsync recipes.
-Raw private ingress sourceenrollment/fundedoutcome ABI owner gap sent coordinator;
-must have actual builder and remain refused until admitted source contract exists.
+INTEGRATION LIFECYCLE
+work/integration-obligations/{runtime,product,protocol}.json:35capability joins,
+not perfileapprovalqueue. Producercompletion triggers actualconsumerfollowup;
+completedtoolturn doesNOT closejoin. send_message doesn'twake completedagent.
+sweep.py catches stoppedreadywork, unsupportedclosures and nonexistentagents with
+optional COMPLETE current --agent roster.6regressionsPASS. Private commits663db58,
+711f985. Rootfound wrongconsumer names mini_collective_construction and
+resume_recovery_construction; runtimecorrected first and owns second correction.
+Legitimate residentwait: matched4source Config/setup/readroute stillactiveproducer,
+so do not wake resident just to poll. Actualdeclaredreceipt+consumeruse closejoin.
 
-PRODUCT CONSUMERS / WAITING LIFECYCLE
-Docuverse generic actual sourceSurface decoder/JSON WIP +real Studio source views,
-no fabricated native Compile/Publish. Resident context owner source/native checks
-PASS, exact shared registrations landed; native matched roles still required.
-Explicit mini_doc_review selectedsupport→ordinary proposal/submit authored; ordinary
-mini_doc_append stays ordinary, no implicit allcontext guard or secondproposalstore.
-Workshop Card→typed independentreturn actualsource decoder authored, checkpointed;
-collective11 source modulesPASS, prior5BooksPASS, sharedaccount settlement nowauthored.
-Station3Books+provider6PASS; actual shared consequence/GM/typedPlan native joinpending.
-Portable native archive5PASS; source/API consumedfrontier but combinednative notyet.
-Lean4 module check movesPersvati once exactwarmimportmirror ready. No arbitraryRAM
-or fullworkertransfer claim. Fullhome service inventory and Activity joins active.
-Completed-waiting turns retain ownership. Producer must followup_task (message
-alone does not wake completed owner). No idle polling/rescouting for its own sake.
+CURRENT SUBSTANTIAL CONSTRUCTIONS / JOINS
+Bend world: source-authored exactinput/Plan/currentlaw/Fits/funding/nativeBendclaim;
+canonical event60joint61bootstrap62Activity63private64pending65portable66failedSTART.
+World remains owner full typedatomic create/evolve/message/returns, not stagedbirthceiling.
+OO/linker:6immutable Partials→realcheckedBooks+sixCard resultsPASS; algebra/source
+refs/currentInstance/loader/publicationhelpersPASS. Exact call/self/super/evolution
+nativecurrentauthority join continues with world/Studio. General captures not faked.
+Scalar: releaseauthoring+canonicalreversePASS; actual63bitID byteABIv2 nowPASS,
+strictcanonicalnativeNatbytes replaces unary source identity blowup; numericsemantics
+remain explicit. Actualproducer handedFHE/world/collective, captainpacket c2b61f2e.
+Controller: all12closurecontrols compiled, actualnetwork/codec64casesPASS. General
+source/graphrefinement stillopen. Beta/ValuePASS; central3next via exactcallback.
+Compiler: generic input/literal/add sourcegrammar+Air/Emit/charge+Q2custommethod+
+Q1bytewrapper/source-world relation authored; actualdoubleSum≤1020 sourcefee3a+b+4,
+reservation1024, sharedFHEschema. Generic numericartifact qualifier stillpending.
+FHE: priorrealBool/mux4096slots/depth2PASS; strictmanifestruntimePASS. Real currentkey/
+register/prepare/commit/session/nativecustody bridge sourceauthored, releaseproducer
+received. Authenticatedcursor/resultslineage/nativegovernedrun stillactualwork.
+ZK: raw1rowopening disclosedprivate witness (captured). Conditionedmask32/256 tests
+and generic proofs progress; full quotient/FRIhiding and source/DAG native statement
+join OPEN. No full ZK/privateexecution claim from profile names or minrows alone.
+Activity: source-origin/typedresponse/PendingAdmission+event64 sourceWIP; needsactual
+guarded applicationdispatch/pendingroot check and matchingreplay so stale worker
+cannot dispatch afteradvance/abort. Runtimeasked resumeauthoring ifnottrulyblocked.
+Money/collective: canonicalordered batch/consent/funding sourcechecksPASS;5actual
+collectiveBooksPASS; actualsettlement→typedroom/return Plan sourcewrapperPASS.
+World/currentlaw/atomicnativeuse remainsjoin, not disconnected scalarwrites.
 
-RESOURCE FLOW
-hbox main Lean capped40Gi/2threads; aux4Gi/2threads/180s warm new-only, guardian-held
-atomiclease survives outerwrappercrash; twoRust8Gi/jobs2. Named readyhandoffs via
-room/captain, no repeatedrootpermission for routine scoped repair inside bounds.
-Persvati2Rust slots8Gi/jobs2/swap0/CPU200%; actual portable,dZK,IR2 jobs captured.
-Placement owner redregg_evidence building targeted current4.30 warm Lean import
-mirror for portable4 under≤16Gi2threads, no duplicatehboxjob/fullcoldworkspace.
-Keep all160datamodels/foreigncaches. No fullrecursive inventory/cleanup.
+EFFICIENCY BUILDERS (NEW SOL)
+validation_replay_efficiency: exact fullpredecessor+typedCASreadback adoption,
+stalereadback retainsnewersession; removed duplicate storedimage/finaltipvalidation;
+11Hostcalls,6proofgates+9typeseamsPASS. Sourcepacketf209c00b captainintegration;
+newbinary historical/revokedcurrentlawreceiving pending, no speedgainclaim yet.
+bend_representation_efficiency: Bookmap once/run, generalcomplete/refused Execution
+equivalence;10kchain4735→32ms inclprep. Hashconsedindexedcode realWorkshop~5320→1223rows,
+sourcecheck+validatorPASS. ScopedLean measurements, notHostlatency. Newlayoutedition/
+exactcontext/invalidation consumer withcomposition/world remainsowned.
+multiuser_capacity: browser16workers/credential-separatedpersistentstreams,37Rust
+checks+releasePASS; actualfresh4members mixed doc/OO:3authorizedcomplete8/20/23s,
+restrictedreviewerrefusedwithoutcancelingothers, forbidden textabsent,Votes19.
+Currentallfields image/charge equalitylawPASS reduceswholeStore reserialization;
+newbinarygain unmeasured. Sharedcontention/recovery receivingcontinues.
 
-NEXT ROOT ACTION
-Keep shared publication/current source run admission +Config +native coherent
-build moving while independent privacy/protocol repairs run. Confirm actual queues
-rather than assuming pending logs mean producers alive. Follow service share fix
-and privacy backend masking refuter. Keep10am whole-system checkpoint and broad
-active goal; no finalcompletion until integrated capability evidence matches it.
+PROTOCOLS / PRIVACY
+ActualSimplex realTCP+MLDSA transferableCOMMIT/restart/archiveCAS/catchupPASS.
+ActualReachable→honestreceive has realSEND globalaudit kernelproofPASS. Localcausal
+andPreparedHistory start/step/pump invariants+executableisSafe→SafeAtPASS; global
+LocalFaithfuljoin pending. Signedcall/fourstore sourceharnessuncompiled untilcohort.
+Target realreview-note→authorizedappend→4stores→lostreply/restart→oneappend.
+Privateauth/ACSS/dZK/Sh2t actualchecksPASS, realKingtriplejoin4PASS. Fullmalicious
+AND/AMPC/GOD notcomplete; GF128/classicalROM assumptions explicit, notPQ proof.
+IMPORTANT actualnativeconfidentialitygap: sharedcontroller seesclearAUTH shares,
+PROGRESS also echoed fullSIGNpreimage. Backend/traffic/receiver nowownsealed
+recipient-only bidirectionalrequest/outbox, digest-onlyPROGRESSv2, boundederrors,
+endpoint-onlyWAL and retainedsourcecredential verification. Sharedsourcebindsopaque
+ciphertext/context. ReuseexistingMLKEM768+XChaCha primitive; traffic explicitlyowns
+factoring native/crypto_transit.rs, backendcapsule/runtime/refuter, receiversealedv2.
+Raw203/204 confidentialroute staysclosed until joined, no trustedmailbox substitute.
+Traffic64epochs1Hz yielded768/768fixedrecords butusefuloutputdecayedto33/64, so
+sustainedusefulserviceREFUTED. Outer readycachefsync removal/boundedselection repair
+under actualruntimecheck, durableinnerWAL/cover/noUNKNOWNredispatch preserved.
 
-LIEUTENANT STRUCTURE — explicitly requested by Ember after latest context concern
-Two new Sol6.1/high subagents, no newuserthreads: runtime_lieutenant and
-product_lieutenant. They received full activegoal/currentrecords/specificowners/
-sharedcontracts/checkpoint and authority to resolve routineengineering/handoffs.
-Runtime: Bend/OO/compilers/refinement/FHE/zkVM/Activity/scalar/money. Product:
-service/docs/Surface/residentcontext/portable/workshop/station/collective/grantfix.
-Existing astra_multimodel_room retains protocolcluster (agreement/global+causal/
-joint/privatebackend+dZK/traffic), crossclusterdependencies/resources/publication.
-Captain takeover_kernel retains commonGit/sourcecohort/nativebuild ownership.
-Routinepacket/check/lease updates stay withinclusters/captain/privateboards; root
-receives urgentsemanticfork/refutation/useraction/ownerlessblock or substantive
-batchedprogress30–44minutes. No rootrelay needed for ordinarydecisions. Root keeps
-architecture/priorities/broadgoal and genuine crosssystemchoices. This arrangement
-is specifically intended to stop frequentrootcompaction, notaddapprovallayers.
-Ember also says earlyfailures should lead to substantialimprovedconstructions,
-notmyopic smallfixes/ambitionreduction. Occasional empoweredClaude-Fable scholar
-rescueauthorized. Room mayarrange one bounded currentcontroller/privateprotocol
-review withruntimelead; CLIavailable, exactmodel mustbeverified, priorcouncil
-timeouts yieldednoopinion. No ongoingmultimodel reviewtax orduplicatecontroller.
-
-HUMAN CORRECTION AFTER FIFTH REENTRY — ~10:45–10:52 UTC
-Ember explicitly corrected root's narrowing of the next hours around native Bend
-admission. It remains a major constraint deserving concentrated help, while full
-OO/Houyhnhnm, controller/private modalities, agreement, traffic, products and
-portability continue substantial construction. Keep attention wide. Build demanding
-joined scenarios concurrently with deeper implementations. Avoid endless scrutiny
-and a task stream defined only by the next small reviewer recommendation.
-All three lieutenants received this correction and own execution, not another
-root approval cycle. Room reports cross-cluster chosen workdesk review-note ->
-guarded native append -> four agreement participants -> lostreply/restart -> one
-append; Station Activity/money and funded private fetch remain parallel deeper joins.
-Latest live list showed causal owner completed despite 'continuing'; room explicitly
-woke it. Receiver old status1 is stale: room observed repaired resumed build, root
-later found those PIDs exited and asked room for actual successor/outcome. Do not
-restart using old log. Common source HEAD root observed0f78f3d4; remote push not
-freshly verified. Service lawful grants installed, subsequent ticket still refuses
-on issuer0 vs payer8 mismatch; product owns normal member0 funding repair.
-
-SUBSTANTIAL OWNERSHIP GAPS CLOSED — ~11:00 UTC
-Product lieutenant assigned portable owner actual governed worker/home transfer
-construction: consent/history/currentlaw/epoch, durable quiesce, successor rekey,
-old-host fence, activation/ack/recovery; not waiting archive/import fixtures.
-Doc owner explicitly resumed to BUILD full module/package/import source workspace,
-editing/history and actual diagnostics/preview/publish/instantiate/evolve consumers.
-New single Sol6.1/high multiuser_capacity_construction reports product lieutenant:
-coherent persistent host/ordinary client reuse and useful multiuser throughput,
-fairness/recovery; no edit to shared transport/Host before owner coordination.
-Prior performance owner retains canonical money, traffic owner transport.
-Frontier native r3 actual selective Byzantine trace PASS (owner+room evidence):
-exactly one honest local doCommit, q durable COMMIT-send certificate after restart,
-two replicas catch up; real TCP/MLDSA/archive CAS. Actual source append still joins.
-Root reentry compulsory set reduced from8 to5 by routing full product/raisedbar/
-objective-recovery records to their decisions; records/locators preserved. This
-reduces repeated history load while retaining full goal and shared contracts.
-
-PERSVATI: USE THE MACHINE — explicit live Ember correction ~11UTC
-Screenshot shows24cores virtuallyidle,20.7/83.8GBused/load1.05. Roothadalready
-measured63.8Gi available/204Gi diskfree; conservative queue was wrongconstraint.
-User: 'practically idle. let er rip'. New allocation supersedes2leafplan:
-SIX concurrent Leanleafs4GiB/2threads +main16GiB/4threads +TWO Rust8GiB/jobs4,
-aggregate56GiB/24threads, swap0/isolatedwritableoutputs; dynamicunusedseat trade
-for largerjob withoutrootpermission, recheckactualheadroom. Placementowner
-redregg_evidence androom/captain/runtime/product leads implement/runreadywork.
-Actual obstacle ownerfound: SFTP~3MB/s cachetransfer, not CPU/memory. Preserved
-partials, now directSSH/dd remaining313MB; exactarchivehash beforeartifactreuse.
-Do not serialize portable4→money2→otherleafs as fakequalification prerequisite;
-afterimmutablemirrorverify independentjobs use separate overlays/guardianlocks.
-ExistingRustslots canrunreadyfrozenchanges duringtransfer. Assignment is not
-execution: firstactual jobs stillawaited at this append. No foreigncleanup.
-
-LATEST HUMAN / ACTIONS ~11:33UTC
-Burst ceiling30 active with Sol additions; converge<=16 by08:45EDT/12:45UTC Oct3.
-Product lieutenant coordinates retained owners/handoffs with runtime/protocol;
-one-time8:40 heartbeat created, recurring check-in77min retained and obligations
-audit added. No abandoning broad destination or interrupting healthy buildjobs.
-Ember explicitly permits forking/changing Bend for concrete efficiency. Two fresh
-Sol6.1/high implementation owners: validation_replay_efficiency (historical replay/
-validation/index), bend_representation_efficiency (indexed Book/term traversal),
-runtime lead coordinates. Existing capacity handles browser/streams/charge tuple.
-Ember explicitly wants OBJECTIVE-BEND.md rewritten/tightened, not appended. Existing
-doc owner resumed; captain must publish main. Keep actual source/receiving distinct.
-35 open integration obligations populated across all3clusters; root fresh live
-audit found scalar/controller/resident stopped dependencies. Runtime reports
-actual followup wakes for scalar/controller; product checking resident readiness.
-Full12-control fixed-access Bend controller now compiled,64/64 machine/codec checks;
-general refinement/privateAND join still open. Service failedSTART recovery needs
-actual lawful reconciliation endpoint, not manual reset/freshworld workaround.
-
-OBJECTIVE-BEND GUIDE DELIVERED ~11:39UTC
-Actual rewritten r5tar read fully byroot; captain pushed singlefile commit
-9d9456d91e89203790f65816853dee7a339dffd9. Root independently verified GitHub commit
-and sole docs/OBJECTIVE-BEND.md path via ghapi. Tightened~23percent; compose/check/
-admit/live flow, forkpermission, currentidentity/controller boundaries. Userrequest
-complete. Two efficiencybuilders stillactive, runtime handles actual rewrites.
-Product corrected residentwait: nativeConfig/setup/readroute producer active and
-notqualified, so no uselesswake. Scalar/controller actualfollowupresumed.
-SPKphysicalmode/namespace fixnowPASS; real signedfailedSTARTrecovery endpoint
-still runtimeowned. Headcountconsolidation plan productlead due12:15UTC.
+PRODUCT / BROADER BAR
+Studio fullsourceworkspace/editor/imports/entry/history/forks/staledrafts+capture
+sourceWIP, notnewregisterednativeStudio. SourceSurface Lowering/JSONPASS, byteIDv2
+receivingjoins. Station continuingworld/coauthoring/fiction sourcepublished, actual
+nativeauthoredcrossobjectexperience pending; avoid substituting morefixturebooks.
+Resident9RustchecksPASS, actual4storeconsumer waitingmatchedsourcefixture.
+Service physicalg2repair done; runtimeadapter~300lines exists withsamefailureaudit/
+onesubmit→UNKNOWNlookup. NEW Sol spk_recovery_endpoint ownscheckedKernel+Hostgate;
+runtime sendscontract, captain reserves206–209/sharedhooks. No longer ownerless.
+Then actualbrowser→CSV→nativeDoc→Hermes→retry/restart/restore on originalworld.
+Portable core/archive/home law/currentowner+renter admissionevent65PASS; realcut+
+independentHeld readback/sourceCAS construction. Actualquiesce/fullinventory,
+privatequalifiedsuccessor/resharing/oldhostfence/activation remain substantive.
+Backend owns privatecustody, servicephysicalinventory, portableconsumerguardedlife.
+FullOO/private/portable destinations retained. Root/lead attention must not collapse
+onto checks: usable changed-world experiences AND deeper semantics/proofs advance.
