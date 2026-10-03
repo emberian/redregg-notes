@@ -1,0 +1,51 @@
+Discord as an ordinary Mini entrance — October3 root source review
+
+Human reminder: existing Discord bot needs to navigate the growing world.
+Current source inspected in mini-unified-push-20261003:
+deploy/discord/README.md and commands.json; discord-entrance lib.rs;
+session.rs1–190; server.rs140–238; mirror.rs1–130/200–350; historical evidence
+README (combined output partially truncated). No network message sent or deployment
+changed. Real Discord deployment/current service state not verified.
+
+Present mechanisms:
+mini-discord signed interactions -> root-owned Discord-user/session roster ->
+same forced Mini shell as SSH. Commands /mini line and /mini-help. Session key
+held by service, not independent local user custody. Replies ephemeral by current
+implementation; this does not conceal their contents from Discord/provider.
+Separate mirror is an enrolled bridge principal with its own room rights; imported
+text retains Discord attribution and is signed by bridge, not impersonated author.
+Sept30 captured test used fakeDiscord endpoint/signatures with realMiniHost/Store;
+older fielddiff mirror evidence does not qualify today's roommirror implementation.
+
+Proposed common contract with web/shell/Hermes:
+viewer+delegation+context -> authorized object projection (identity/revision, source,
+relationships, supported actions, activity/result refs). Shared typed intents;
+different presentation per frontend. No bot-global discovery/superuser authority.
+Typed action selection binds exactobject/revision/actor/action/args/current rights,
+not arbitrary label interpreted as Mini command by a bot. New language methods
+remain unavailable until actualWorldgate; facade cannot conjure missing capability.
+Durable activity IDs let a Discord request continue/recover and open same result
+in web/source context. Mounted-command runner receives explicit resource capabilities,
+not ambient shell authority from Discord text. Discord is a disclosure destination:
+private response to requester and publishing into channel are distinct authorizations.
+
+Concrete next user journey:
+find held room -> open authorized document/source -> ask delegated Hermes review ->
+inspect retained activity/result -> accept exact sourceproposal under currentlaw ->
+reconnect/web inspect same outcome. Rich Discord controls can lower same intents
+as web; retain /mini as power interface without making duplicate domain APIs.
+
+Source-review recovery findings to repair before richer eventing:
+server seen interaction table is in-memory TTL; no durable semantic operation map.
+Mirror advances local cursor after remote publish/native say, so crash/lostreply
+can replay delivery; plain temp+rename state is not whole operation custody.
+Mirror down skips oldest entries when batch exceeds20; outbound also drops oldest
+selected messages. This is not a lossless catchup stream. Need bounded paginated
+drain, stable sourceevent/message identity, retained effect/outcome then cursor.
+Outbound Discord delivery may remain uncertain; don't promise exactly-once external
+posting without destination support. Existing internalMini exact operation custody
+should be reused for inboundeffects. No mutation refuter/test run this review.
+
+Ownership: root retains design/integration obligation; no implementation lane yet
+allocated, no source edits, no claim the bot gained new capabilities. Keep this
+alongside Surface/eventing/activity work in Claude takeover, not a forgotten frontend.
