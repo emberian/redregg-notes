@@ -531,9 +531,9 @@
       "consumer": "resume_private_construction",
       "coordinator": "root",
       "state": "building",
-      "next_action": "Traffic/OO consume published shared helper; captain runs coherent full-client targeted regression. Root extracted source regressions3/3 already passed; no need repeat unchanged checks.",
+      "next_action": "Consent owner includes exact relay/render/history three repaired decoder files and filters in next single warm batch; no renderer repeat.",
       "acceptance": "NonASCII/odd/invalid hex returns bounded refusal without panic across actual producer inputs; existing valid encodings preserved; interrupted staged JSON CAS preserves exactold/new prior with dirfsync, consumers ACK actual shared use.",
-      "progress_evidence": "Historical9path6f1c2d81 source with shared durableJSONCAS/6decoders awaits common integration. Root13:17 inspected actual common source: relay::unhex and renderer/history direct UTF8 slicing panic on 0\u00e90/emoji. Reserved with captain, replaced all3 with existing byte-safe crate::decode_hex preserving Option/empty/diagnostic fallback. Exact pre-edit hashes checked; no other hooks changed. Three tests added; extracted exact source functions/tests: original0/3 with char-boundary panic, repaired3/3 including all256bytes roundtrip. Shared source was never disarmed. shell::hex_bytes already ASCII-guards and hex_text uses get; no defect inferred there, left unchanged. Fullclient/native receiving remains captain batch. Captain confirms root3 decoder repairs plus historical9 helper paths published/pushed main76757030. Full client receiving still separate.",
+      "progress_evidence": "Historical9path6f1c2d81 source with shared durableJSONCAS/6decoders awaits common integration. Root13:17 inspected actual common source: relay::unhex and renderer/history direct UTF8 slicing panic on 0\u00e90/emoji. Reserved with captain, replaced all3 with existing byte-safe crate::decode_hex preserving Option/empty/diagnostic fallback. Exact pre-edit hashes checked; no other hooks changed. Three tests added; extracted exact source functions/tests: original0/3 with char-boundary panic, repaired3/3 including all256bytes roundtrip. Shared source was never disarmed. shell::hex_bytes already ASCII-guards and hex_text uses get; no defect inferred there, left unchanged. Fullclient/native receiving remains captain batch. Captain confirms root3 decoder repairs plus historical9 helper paths published/pushed main76757030. Full client receiving still separate. UPDATE15:56 captain confirmed previous fullclient batch did NOT include decodertrio; exact source/subtests being added to consent nextbatch.",
       "waits_for": [
         {
           "owner": "takeover_kernel",
@@ -586,10 +586,15 @@
       "owner": "root",
       "consumer": "takeover_kernel",
       "coordinator": "root",
-      "state": "building",
-      "next_action": "Receive root exact one-file render/text.rs patch, run full render scoped tests and publish coherent client.",
+      "state": "integrated",
+      "next_action": "Retain regression/repair callback; no redundant unchanged suite.",
       "acceptance": "OSC52, ESC/CSI, C1 and control-bearing metadata render visibly; independent actual renderer consumers preserve ordinary Unicode, renderer line breaks and byte-exact raw export.",
-      "progress_evidence": "Root actual extracted original functions fail2/2 and repaired pass2/2, including every Unicode control; full document/outline/raw consumer test authored. Exact base f34a7093 patch/manifest captain coordination, no live changes."
+      "progress_evidence": "Root actual extracted original functions fail2/2 and repaired pass2/2, including every Unicode control; full document/outline/raw consumer test authored. Exact base f34a7093 patch/manifest captain coordination, no live changes.",
+      "receiving_evidence": "Captain confirmed exactrender/text all3 fullnative testsPASS in consent rust02/04/05 including metadata+outline,linkdecorations,exhaustiveUnicodecontrols, plusproductionmini.",
+      "consumer_ack": {
+        "owner": "takeover_kernel",
+        "evidence": "Fresh rootcallback15:56UTC; exact source incorporated in fullresourceclient rather than extracted-only tests."
+      }
     },
     {
       "id": "product-resident-launch-isolation",

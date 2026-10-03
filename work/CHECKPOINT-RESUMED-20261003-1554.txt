@@ -78,3 +78,10 @@ Runtime/frontier repairing exactwrapper. No sourceeffect or newcall/re-admission
 original fdfc remains retained. Treat wrapperready report as refuted, fixtureELF
 qualification unchanged. World meanwhile received scalarbit prearithmetic/input
 bounds with exactsuspension/resume; gate8 compile stillinprogress.
+
+15:57 correction/update: runtime repaired wrapper by exactlocal source transfer;
+actual bash/Python --check-only PASS, wrapper5a5ef417; resident retryingSAMEcall.
+FHE three narrowMain/client sharedhooks nowAPPLIED, coherentHost qualification
+pending. Captain verified terminalrender fullnative3tests+productionPASS; rootrow
+nowintegrated. Decoder3 fullcrate testswereNOTinthatbatch; consent ownsnextbatch,
+no redundantterminalrerun. Capturedsource3/3+published fixesremain valid.
