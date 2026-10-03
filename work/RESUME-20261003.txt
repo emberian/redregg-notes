@@ -1,10 +1,10 @@
-MINI / OBJECTIVE BEND — ROOT NAVIGATION, October 3 ~17:45 UTC
+MINI / OBJECTIVE BEND — ROOT NAVIGATION, October 3 ~18:35 UTC
 Session01a0fa81-d479-7753-a1b3-1331d1ed53de. Navigation is not evidence.
 Supersedes earlier source/build status here; history remains in Git.
 
 REENTRY / DESTINATION
 Follow work/REENTRY.txt. Full objective ACTIVE-GOAL-20261003.txt remains active.
-Latest actual reading receipt14; earlier complete human recovery and rationale in
+Latest actual reading receipt16; earlier complete human recovery and rationale in
 INTENT-RECOVERY-20261003-1505.txt, WHY-OBJECTIVE-BEND, WHY-AGREEMENT and
 WHY-TRAFFIC-PRIVACY under intent/. Both human and assistant exchanges matter.
 Mini grows into Dregg: Objective authored OO/laws/evolution/persistent computation,
@@ -16,29 +16,37 @@ no new target pivot. New Objective semantics do not inherit old strict proofs.
 
 SOURCE / OWNERSHIP
 Canonical: hbox:/home/hbox/workbox/codex-unified-integration-20261003/src.
-Captain takeover_kernel owns shared Git/main/publication. Mac transport:
-/Users/ember/workbox/mini-unified-push-20261003. Original ~/dev/minidregg now
-safely FF694c84a8 preserving all untracked. Root verified actual GitHub main694c.
-694c includes bce707 source49paths + external Spw1bf101de25paths. Later dirty
-source batches actively converging: inspect fresh HEAD; do not reset/stash/branch.
-Source inbox is append-only packets; captain merges scoped paths, not whole old
-snapshots. Warm isolated builds are not product branches. Root may edit exact
-shared hunks only under handover; captain commits. Private redregg main3100abd
-at last verified push; raw dialogues/keys stay out of public Mini.
+Captain takeover_kernel owns shared Git/main/publication. Root independently read
+HEAD3f81c7db; captain reports pushed and both Mac copies safely FF preserving WIP.
+Includes client recovery, cached Store ordering, Objective r55 type safety/guide.
+New Objective native Host is NOT inferred from this source publication.
+Root reserved/applied client receipt_continuity71b106 and transport9f177; exact
+prehash and patchhash checked, diffcheckPASS. Traffic current_source386ade intake
+next, then consent owner immutable Rust13 focused+production batch. No root build.
+Root private redregg latest committed27e70df; current receipt15 additions/16 and
+this navigation update pending scoped commit. Preserve foreign untracked reports.
 
 CURRENT JOINS (SOURCE/RECEIVING DISTINCT)
-Objective: new Core4 parser/checker/lazy sharing runtime real; actual source
-mutual recursion, reflection, lazy fields and Studio typed previews exercised.
-Scenario source→checked fullData→native BoundPlan real, no new Objective Accepted.
-World owns current source/input/funding/execution/Controller; graded funding
-claim qualified, actual native gate still building. Compiler just qualified
-unapplied callable-definition r8 (not already-applied preview); Doc consumes
-with authenticated Notebook/Review wrapper; scenario_objective_world resumed
-for typed result/nonempty returns. These lead through actual signed acceptance,
-readback and second-member extension/stale-source refusal, not a scalar ceiling.
-Graded explicitly resumed Objective persistent checkpoint/response/CAS migration;
-old Activity path is not a qualified new-Objective continuation. Root closure map
-OBJECTIVE-MIGRATION-CLOSURE-20261003.json records old consumer owners.
+Objective: actual own Core4/parser/lazy sharing/checker; saved NotebookReview
+b4330909 passes pinned frontend/checker10 through Studio callablecanonical4c807bcc
+and retained readback (Doc9HTTP/4checks). Compiler independently samebytes; new
+pureObjective SourcePackage canonical identity emits full exact source/import/AST/
+tool/declaration capture. No historical Package947 identity reused.
+World InputPrepared gate actually PASS: current authorized Reads, exact selected
+source, actual native hostInput, applied checked term before demand, funded public
+18capacity. Controller check active; captain owns Main/Profile/227 native weld.
+Doc exclusively owns Host/ObjectiveStudioPublication actual regenerate-and-compare
+publisher/signing path. Source/core correspondence is trusted pinned frontend until
+proved; digest labels alone are insufficient. Native gate also checks livepackage.
+Scenario owns generic native canonical content/append Plan+structured return;
+current source-produced combined UNSIGNED proposal2effects/1read/1return works.
+No new Objective Accepted or durable result receipt yet. Whole running path is
+explicit human priority19323: Studio edit/publish/current invoke/atomic effects+
+result/reopen, then independently authored extension/evolution/recovery.
+Graded resumed actual InputPrepared API, adapting persistent state to SAME native
+forceWith/scalar guard/global budget (old runBounded-only resume is insufficient).
+Extraction fold continuation is explicit remaining work, not permanent WHNFceiling.
+Captain requested narrow r50 source-first recovery leaf; no duplicate root build.
 
 Backends: composition all18 sourceROM+sameDemandMachine checked; actual packed
 thunk controller/refinement still building. ZK89-module active source closure
@@ -49,43 +57,46 @@ Compiler new Objective numeric source+field equivalence qualified; FHE physical
 new-only worker built/refuses retiredTT artifacts, positive new carrier/native
 source signing pending. No private/zk guarantee inferred from codec or circuit.
 
-Agreement: first actual room admitted all4count1 and full64epoch fixed carrier
-replay/restart passed. Next original doc92a07 remains durable pending/absent.
-Production/test split and queue priority did not resolve it. Frontier identified
-repeated ~600event ENGINE replay on every receive/service, now implementing
-exact-context restored-state memo+replay-append law; no cached current authority.
-Resident callback-ready, no blind retry/reset. Source safety proof26module
-closure exists; native attribution/liveness/capacity remain explicit boundaries.
+Agreement: originaldoc92a07 actuallyinstalled count2 in124s; four independent
+native readers same receipt0c9684e5. Nextoriginalinit00f711 stillpending: node0
+checkedfull3prefix, othersprefix2; not sourceinvalid. Frontier fixes authenticated
+oldcertificate duplicate journal writes and actual retained applicationcandidate
+relay to other validators (protocol .candidate is only VA vote), preserving exact
+Context100s/nonce/authority. Resident retains exactoriginalcall, no newgenesis.
 
-Private: standalone205 native333a02 and real MPC arithmetic/restart work. Genuine
-four source7–10 and four distinct committee keys/bootstrap retained. Event60
-source author actual Lean+C PASS; freshfixture native5c744 linked. Setup found
-accountid collision for added9/10, owner repairing to1009/1010 before freshgenesis;
-failed unadmitted setup preserved. No fundedpositive63→205 whole journey yet.
-Backend needs actual source generation before outputStore bootstrap. Room67
-replay+Applied+recovery source qualified; dedicated currentrecipient ELF95928
-produced and delivered. Signed444→original67 fullpayload binding+native permit
-receiving still receiver-owned; OO delivery consumer callback retained.
+Private: explicit v4stablemembership/perjobPENDING split decision recorded in
+PRIVATE-ENROLLMENT-V4-DECISION. v4coherent LeanclosurePASS archive4fcf7ac8;
+actualprojectLoaded r36 supplies candidate/g/descriptor. Genuine source7–10 and
+fourdistinctkeys retained; correctedcap/bootstrap fixture currently linking.
+No positive63→205 completejourney yet; backend outputStore needs actualdescriptor.
+TripleKing composite preprocessing crashstore remains unfinished; output/ACSS/
+Sh2t WALs do not imply completeKingdurability. NewObjective graph requested from
+composition; retiredTT9420AND artifact explicitly not reused as newlanguage.
+Room6verbsource/Cready b42eba but NOT continuity151/profile/point/verify. Receiver
+now owns minimal matched373 continuation wrapper for actualtraffic currentsource;
+captainlink+trafficconsumer. This closes retiredruntime dependencyownershipgap.
+Actualsigned67→Applied→444 and legitimateOOrecoverystillopen.
 
-SPK: original failed STARTg2 exact recovery252bb442 installed receipt78/stoppedg3,
-root read both receipts and service independent signedg3. Warm18c Host2338225/
-operator2338143 remain. Service owns compatible security roles/launcher/g4 then
-actual browser→CSV→doc→Hermes→restore. Performance successor1900118a built14s
-with qualified equality+Store cached canonicalization; service samecut78 audit
-and comparison pending, no liveactivation by root. Original historical consent
-separate oldsem795 helper1213 built, source owner doing read-only genuineplan/
-malicious probes; no profile hash override.
+SPK: originalfailedSTARTg2 recovered receipt78/stoppedg3 remains. Rebind9b32
+and rootbroker2b5d healthy. Sourceconsumer for actual recoveredfailedSTART→stopped
+adoption supplement authored/focusedchecksPASS; boundedrelease active, then lawfulg4
+and browser/CSV/doc/Hermes/restore. Samecut78 fullaudit successor190 actual614.5s
+versus original1253s; oldwarm18c stilllive (newcold exceeds600deadline).
+Historical sameoldsem795 consent genuineplan18138B PASS938CPU seconds under1800s;
+maliciouscases stillrunning; no profilehashoverride/oldtargetsubstitution.
 
 CLIENT / SCOUTS / CHECKS
-Four horse-Sols produced actual .spw maps and source fixes. Published694c sparse
-board+replan+sealedimage/rotation; Rust09 ACTUAL58/58 plus releasePASS root logread.
-Next sharedsource rootmerged: numeric retry consumers/module; sealedCONFIG
-transport3e1d; corrected settlement job719e. Jobr1/r2 rejected for uncertainty
-loss; r3 fresh-only origin/per-send markers preserve unknown legacy requests.
-Next combined client/native scratch receiving consent-owned, no blanket rerun.
-Discord source30tests and simulatedDiscord actual native resume journey passed,
-published694c; no external deployment/message. Guide9 published, tinyguide10
-wire2 correction intake. Documentation is not admission qualification.
+Rust12 actualproductionPASS +room2 PASS; client19152795. Earlier10=47/48 (nonce
+regression),11actualjob6PASS after decimalu128 legacy nonce parser fix. Rust13 next
+sealed current-source/profile/key/continuity consumerintegration, not blanket rerun.
+Actualcorrectedclient1915 recovered native legacyrefund after missingconfirmation,
+exacttx/event/count7/root twice/no resubmit or secondcharge; runtime19.8s. Setup used
+originalmatched1ad2 because newlocalconsent lacksbootstrapfamilies. Modernnewsend,
+providerpayout/socketfault remainopen. Consent found job163 currently trusts operator
+confirmed shape; owns sourced exactreceipt/continuity repair after13. Honest receiving
+is not maliciousoperatorfalseconfirmationresistance.
+Source maps/scouts published; documentationguide r55 published3f. Dispatcher/Main
+and actualnewfamily receiving must converge before saying Objective runs natively.
 
 FLOW / BOUNDARIES
 Fresh roster and processes before wake/restart. Completed turn != completed join.
