@@ -1,3 +1,8 @@
+CURRENT POINTER — October3 14:57UTC
+Read START-HERE-CLAUDE-20261003.txt and work/HANDOFF-AFTER-OUTAGE-20261003.txt
+for outage/restart state and latest human steering. Older status below is historical.
+Research reasoning spine: designs/ARCHITECTURAL-ARGUMENT.txt.
+
 LATEST SUPERSEDING CONTINUATION — October 3, 2026, around 13:00 UTC
 Read work/COUNCIL-CONTINUATION-20261003.txt before relying on older state below.
 Human explicitly makes Objective Bend its OWN language; types/core may change.

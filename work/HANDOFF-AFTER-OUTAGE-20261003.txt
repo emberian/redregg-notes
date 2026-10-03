@@ -1,0 +1,272 @@
+LATEST HUMAN STEERING — 2026-10-03 14:53–14:57 UTC
+Ember asks to continue the interrupted swarm for another approximately 0.5–1.5h
+before Claude takeover, including substantial nextsteps and a complete rewrite of
+public docs/OBJECTIVE-BEND.md after the Fable intervention. Root resumed the19
+outage owners plus mini_objective_bend_documentation (20 lanes); deliberately
+checkpointed older domains remain inactive, not covertly assigned to World.
+This supersedes the no-restart wording in the historical outage snapshot below.
+No source or remote job was reset. Captain inspected hbox at14:54: no surviving
+owned compiler/native-phase jobs; resident services2083267/2083278/2083280 remain
+live under sole resident custody. Main3dd5a7b1 confirmed before broker publication.
+Takeover is not yet quiescent: coordinate with root/captain before editing common
+files while this resumed window runs. Next checkpoint target approximately15:45UTC;
+range15:25–16:25UTC, depending on useful closure. Not a claim all domains will finish.
+Goal tool unexpectedly reports blocked after outage; objective unchanged. API has
+no resume operation; root is continuing on direct user authorization regardless.
+
+DETAILED CONTINUATION — root, October3 ~14:44UTC
+Entry: ../START-HERE-CLAUDE-20261003.txt. This file preserves high-resolution current
+knowledge after an outage. Later verified source/job evidence supersedes it.
+
+FULL GOAL AND ORIENTATION
+Active unbudgeted goal text is in ACTIVE-GOAL-20261003.txt. User did NOT cancel it.
+10am was a progress checkpoint; user explicitly said keep powering through.
+Last turn materially progressed: checkpoint machinery+source commit, actual broker
+integration, real readiness-driven consumer resumption, architecture reasoning file.
+REENTRY.txt remains mandated for Codex postcompaction. Receipt10 records actual
+both-party cv [15400,15840), complete5corefiles, runtime census and audit response.
+This turn additionally read full LTUO source-linked synthesis, original council
+ROOT-SYNTHESIS, full joint semantics166lines (truncated middle re-read51..121),
+catalog/INDEX+coverage/READING-MAP, ALTERNATIVES (truncated middle recovered), and
+actual source for broker custody + hosted path escape. This is NOT fresh exhaustive
+primary research or a whole-tree source audit. Raw conversations stay private.
+
+SWARM AT OUTAGE (all reported terminal network-permission errors)
+World: bend_world_language. Source syntax/modules, new lazy core, native output/
+current-law contract. Important own-language direction: no obligation to preserve
+BendTT's type system. Retained CBV engine and new lazy calculus are distinct.
+Compiler: bend_logic_compilation. Captured-package source/parser/lowerer/preview.
+Demand proof: objective_demand_proof. Concrete graph/source adequacy, not fixtures.
+Type proof: objective_type_construction. Exact-machine typing/ownership preservation.
+Retained CBV/controller: astra_consensus_composition. Complete controls/refinement.
+ZK: bend_semantics_audit. Real AIR/native proofs+actual cryptographic boundaries.
+Agreement: astra_consensus_frontier. Engine/reader/operator/four-source recovery;
+also bounded WHY-AGREEMENT capture requested after real config-copy repair.
+Source receiver: joint_receiver_construction. Joint reservation, private source,
+current room keys and SAME Prepared release/Applied producer. Overloaded before;
+explicitly serializing urgent room release, not claiming three native jobs active.
+Private backend: private_backend_construction. MPC inventories/vector openings/WAL.
+Traffic: resume_private_construction. Schedule/useful-service, key rotation/custody.
+OO/room: member_oo_construction. Current room repair actively, new OO native call
+consumer awaiting World. Complete lineage/release client implementation accepted.
+Client consent: client_consent_construction. All signing paths, full-peer + thin debt.
+Runtime: runtime_lieutenant. Native artifacts/receiving/signature-first/root frontier.
+Captain: takeover_kernel. Common source/Git/build/seats/coherent receiving families.
+Service: takeover_service. SPK/app/browser/Hermes/restore and privileged launch repair.
+Recovery endpoint: spk_recovery_endpoint. Exact historical capsule/build/oldg2 gate.
+Resident: bread_programmable_archaeology. Actual original signed review/four stores.
+Studio: docuverse_deos_construction. Resumed on real generic source preview producer.
+Faré scholar: fareoo_primary_scholar. Bounded WHY essay, no new trawl/builds requested.
+Other old agents checkpointed. No agents restarted after outage by root.
+
+LANGUAGE — CONCRETE RECENT RESULTS / HARD OPEN WORK
+Compiler generic preview cohort02 actually passed:
+  Studio saved source→Nat8; captured reusable extension factories→Nat12;
+  heterogeneous shared-self extension projected z→Nat10.
+Actual typed packet→repaired proof-producing checker→runBounded SAME decoded Term.
+Changed capture / insufficient typing fuel refuse; ticks1 or heap1 suspend without
+fabricating a result. No generated-Lean equality fixture substituted for execution.
+hbox:/home/hbox/workbox/codex-bend-logic-20261003/run-typed-preview-cohort-02/
+outputs {Studio,GenericExtension,Heterogeneous,Ticks,Capacity}/preview.json;
+check-objective-preview-02.log; immutable preview-tooling-02/objective-preview.ts
+REQUEST OUTPUT_DIR tooling.json. Tooling SHA
+b82c620fffc5c6ea43e60f09e89d8cd9138a1e81b4327e3158087a0486a10820.
+Source packet30 SHA7a644edb…577603529 in canonical inbox; full hash there.
+Doc was explicitly followup-resumed and given compiler direct contract. UI native
+preview integration was not yet reported complete when interrupted.
+
+Type owner found and repaired REAL affine-capture hole in mix: generated reusable
+closure lacked lambda's capture/shareability restrictions. Original affine example
+and repaired refuser retained; legitimate reusable extension/factory still accepts.
+Then fixed named-row order equality rejecting legitimate heterogeneous composition,
+with first-shadow and unknown-tail semantics preserved. Latest Types ad52b078…bbada,
+Typing61a88c08…9ee0; check-row-r1 and generic-r2 actual3sourcePASS. Exact full pins
+in original type workbox. New exclusive files DemandTyping/DemandPreservation are
+its next substantial work: typed heap/env/frames and all-step ownership preservation.
+World found REAL Bool/String representation collision: both use label, so String
+"true"/"false" collides with Boolean. Chosen next change explicit Bool constructor;
+not silently modifying frozen Core3/r5 proof cohort. Current lowerer diagnoses
+reserved String collision. This remains a semantic repair, not optional cleanup.
+
+Demand proof: all closed reachable raw states exclude unbound/missingCell/
+invalidUpdate; concrete StackRealizes carries local source Steps for EVERY update
+segment. General graph enter-suspended/cache-update/admin transitions qualified.
+FinalStackInvariant excludes fabricated complete+nonempty stack. Ground complete
+soundness requires substantive GraphRepresents, not arbitrary trusted carrier.
+Latest adequacy17: general scoped substitution/rename commuting+composition over
+all syntax incl nested records/binders; lexical Scoped does not mean termination.
+Next allocation naming/actual beta transition, all cases, administrative rank and
+CBN completeness. Frozen invariant SHA5aa490c2…5f69f communicated to type owner.
+
+Retained CBV: r43 actual startup proves initial interpretation/cache/capture
+readiness; direct-value family generates Covered+Trace without assumed coverage.
+Case-tree lambda/projection source transitions PASS, central receiving cohort active
+before outage. Full general coverage/raw-network refinement still open. These
+proofs DO NOT certify new Objective Fix/sharing. Retained2tick graph26477gates,
+9420AND/58layers/max658 openings; exact142645byte fixture handed backend.
+
+PROTOCOLS / FOUR-STORE RECEIVING
+Matching reader r2 ELF:
+/tank/dregg-build/codex-runtime-reader-native-20261003/minidregg-source-agreement-reader-r2
+SHA361efa9f2f7b98c738ed8d87441b138e4cf52569b3a75bda47ebc6bca4b66074.
+Actual all4stores same real genesis/profile, distinct MAC/MLDSA keys; current keys7/8
+and birth91/key144/context views supported. Bad pins/direct reader submit refuse;
+ordinary mutation only actual agreement operator bridge. Native engine realTCP/
+MLDSA/lostreply/restart and global safety proofs exist, not full applicationliveness.
+Resident actual mini CLI now built8Gi/jobs2/180s,53s:
+SHAaf15ee77da7c0fba5c7ecb6144bc044c617fe90b52e0483400bfe520bac35afb.
+Runner frozen549file/239MiB overlay manifest52ed05b6…e2. Resident sole source mutator
+for original setup/review. Discovered legitimate serve copies byte-identical private
+Config beside socket; bridge pathname-only equality rejected it. Frontier repaired
+to accept exact-byte owned-private regular copy;9focusedchecksPASS, resident retrying.
+ZERO accepted source effects at last report. No seeded history or consensus-none
+substitution. Frontier now has real refusal callback; resident does original action.
+Global dynamic epoch liability handoff, fair inclusion, joint terminalNO/maintenance/
+privateRecoveryYES/install and complete cross-domain transactions are still open.
+
+PRIVATE / TRAFFIC / ZK
+Backend latest actual6PASS14:23: layer vector openings from real checked tuples;
+3AND/1wave, coherent n-f vectors, exact gate→tuple positions, pendingWAL outbox
+recovery. Full13237gate fixture parsed/reencoded29layers/max565. Source4d82a8bf inbox,
+graphbound65536. Full2tick graph with44input bits costs9464tuples→296stocks32.
+Full arithmetic/controller/native205 recipient-private output/funded lifecycle next;
+GOD, PQ/QROM and full active security NOT established (GF128/classicalROM/staticf).
+Source63 funding/policy exists; physical qualification and sourceYES not fabricated.
+Traffic v10: all768scheduled records; useful native63/64, E0miss~1.983s against25ms;
+steady/drain/lostreply no redispatch. Next source3c507493 makes final shared MPB1
+dummy independently available when custody slow; it MUST NOT invent cap-openable
+Pending/admission/result. Uncompiled. New16actualsource-op3 workload across64epochs
+with2repairpolls/job demands ALL16nativeoutcomes. Source32cc/PQ3bb1; receiving22e9.
+Key rotation4checks earlierPASS, actual interruption/native currentkey use stillopen.
+ZK: retained full-controller2ticks actualnativeproof7.182s, separate private-salt
+cSHAKE circuit55.001s; exact statement framing join ongoing. No full Fiat-Shamir/
+PCS/transcriptZK/QROM/nativeprivateproofadmission. Bread exact prover slice still
+external; self-contained Mini assembly unfinished.
+
+FABLE / CLIENT CONSENT / ROOM / LIVE ACCESS
+ONLY trusted development access per direct Ember answer. Paid enrollment inactive,
+4operatormanagedSSHkeys/0selfenrolled at last actual root check; no compromise claim.
+Terminal repair render/text.rs visible allcontrols inclmetadata/rawexportpreserved
+published2b51;2isolated original failures→2PASS, fullrenderer qualification pending.
+NativeClientConsent root helper qualified exact canonical Challenge/SigningPlan from
+independently verified prefix and retained intent. SourceSHA d6aaed259ef24e0cc3147bfd31cfd1bc7bde63e89d0ed0242f36931840bc3979.
+Client owner warm ClientConsentSession r4 actualLean+C PASS, core codec7–11 and
+every-role current-key binding. Native2C link and Rust ordinary submit/dryrun/batch
+qualification underway. Specialized35SigningKeyconsumers not all done. Enrollment
+direct transform/observe_factory bypass discovered; root authorized exact source
+repair under captain reservation, no active competing enrollment owner known.
+Main.rs/workspace.rs/client_consent.rs may be UNCOMMITTED WIP; do not overwrite.
+Thin consent architectural obstruction: worldRoot.cell_opens authenticates whole
+ResourceBirthCodec.rootBytes leaf; authority is single serialized Store cell.
+prepareLoaded consumes full durable/directory. Sparse defaults are NOT authenticated
+read completeness and full-cell disclosure violates protected projections. Need
+checked sparse/read-footprint planner+field commitment/schema epoch, or genuine
+preparation proof against authenticated frontier. No fake witness token accepted.
+Refs Compiler/NativeHostCodec50–82; CredentialAuthorityCell; Kernel/NativeHost137;
+NativeHostContext. Full-peer first is intermediate; thin mode remains required.
+
+Room r4 actual16RustPASS: substituted/stale recipient, mintednextwrap, rotor choice,
+pre-kick rollback, poisonedcachecommitment, forgottenkey oldseal refusal. Packet
+ef64a1b9/filebec7de31 inbox, not full native room privacy completion.
+OO owns signed148recipient /192epoch /444delivery lineage, latest durable heads,
+historical signer and release client. Receiver explicitly owns SAME Prepared
+source key/signature selection+guarded Applied producer. New source event67 reserved
+by captain for roomRelease; not activated. Exact ciphertext commitment/recipient/
+rotor/epoch/head must be authorized and Applied BEFORE used-key wrap disclosure,
+then retained permit→roomPublish. Existing complete domain guards reused; earlier
+query isn't authorization. First-contact latest-head and full lineage remain joins.
+Runtime signature-first exact Controller hunk published3dd5, actual native badsig
+receiving pending. Independent root-owned monotone frontier daemon+Store hooks
+authored isolated, qualification pending. Old sibling sameUID anchor is insufficient
+against joint rollback ofDB+anchor. Whole running Host refinement still absent.
+
+SPK / SOURCE MERGE / RECOVERY
+Originalapp8502 INSTALL/sharedtickets actual, STARTg2 admitted/claimed+physicalfailed.
+No reinstall/reset. Desired exactoldrecovery→stoppedg3readback→normalupgrade/g4.
+Frozen clientadapter1ffef960/privateServerdb98 compiled/rootstaged. No activation.
+Repeated native suffix attempts failed before Report366 qualification/ELF.
+Sealed NVMe capsule:
+/home/hbox/workbox/spk-recovery-sealed-prefix-20261003/capsule-r1
+SHA8f1ceaeb966a5c5aa1ec6bce560f72e5bfc7d0f2343d1517210e9f0baf702c63
+10494pinnedinputs/1.67GB,rootowned/chattr-i;10LinuxrefusersPASS.
+Latest r5 direct pinnedLean stopped ENV: missing Mathlib.FieldTheory.Finite.GaloisField
+.olean.private/.olean.server/.ir companions. Base has olean/C/object but omitted
+Lean4.30companions. Known761KB/9KB/2KB already onNVMe. Endpoint constructing anchored
+immutable supplement from original successful manifest; no10494recopy/HDDscan/
+packagefetch. No live guardian reported at14:37; inspect actual processes now.
+
+Broker fd custody source actual root integration at14:33:
+qualified archive /tank/dregg-build/codex-service-r2-20261003/service-broker-volume-custody-r3.tar
+SHA228d75cbea14ec00f7121d33485ba2e22a14d5200693a290822b0587fa4258d8.
+common broker preimage6afb3b39→4839996f2398849876265f683ae86b4e59b62daa717fdb9ae9d8c3b31669d759.
+helpera6e09070...bee7e4 + physicalscripta709667...53c0 alreadyexact. Root read448line
+helper andfullbrokerdiff. Sixchecks+actual32MiBloopfreezeSIGKILL/startupthaw PASS
+from owner. Source merged, captainpublication pendingconfirmation. No deployment.
+New service privilege packet must apply ONLY separate unit-generation hunk atopit.
+Service launch split physicalPASS: fixedroot bootstrap choosesIDs then BOTHparsers
+drop real/effective/savedUID/GID/allgroups/all5capsets/NNP. Operatornamespace denied;
+appworker permits bwrap namespacing under fixedunprivilegedappID. Actualchild launch,
+channelEOFkill/waitpid/reap,/procabsence .02s PASS. Threewire/FD/lostchannelchecksPASS.
+Source r3b4bc.. inbox; not a new deployedfamily/nativeappcompletion. Journal/status/
+digest7focusedPASS source25500fbe. Samebrowser/CSV/nativeDoc/Hermes/restore stillopen.
+
+ROOT PATH-ESCAPE WORK: INSPECTED, NOT EDITED
+Captain reserved chat.rs/job.rs/shell.rs, no activecompetingowners. Fable:
+say --operation-record acceptsANYabsolutepath then fleet::operation_record checks
+onlysameUIDprivateparent; tail --discover fs::read(anypath) unboundedbeforelencheck.
+Job record_path(name) joinsrawname; onlypost/claimvalidate, othersreadrecord first.
+Straightforward job fix: central name_ok before jobs_dir/path derivation, preserves
+validnames across allactions; meaningfulactualpath/regression needed, no codeyet.
+Chat confinement must preserve realresident consumers: grain-runtime/resource_tools
+operation_record uses config.workspace/room-operations, nothome/requests. Discovery
+cursor also originatesresident. A blanketHOME/requests restriction breaks them;
+trace exact sessionhome/workspace trust and introduce proper scopedpath/fd handling.
+Existing @FILE helper validatesplainname but openspaths; not full hostile-sameUID
+OS isolation. Don't call argument repair tenant isolation. No filesystemcleanupdone.
+Root local /Users/ember/workbox/root-broker-merge-20261003 has original/packet/diff
+inputs; no separate chat/job patch exists.
+
+RESEARCH CONTINUITY — CRITICAL TO HUMAN
+Read designs/ARCHITECTURAL-ARGUMENT.txt first. Original-reader WHY essays requested:
+Faré scholar read currentdirection+census and revisitedprimaryHouyhnhnmch1/4/5,
+actualcvMay24#1434/June24#4; noWHYfile existedpostoutage. Its detailed existing
+source-linked synthesis /Users/ember/dev/fareoo/sources/ltuo-objective-bend-20261003.txt
+is COMPLETE and valuable; offlineLTUO mirrormanifest pins4.26MB0644ab39...266c.
+Scholar workbox SYNTHESIS.txt/COUNCIL-CRITIQUE.txt and source-consumers expectations.
+Frontier WHY-AGREEMENT requested using existing versioned paper research, Bread
+comparison and local decision ledgers; cannot treat prototypeSimplex globallybest.
+Traffic WHY requested atnaturalboundary on unlinkability/observer/failure/service
+leakage/lifetime/cost and alternatives. No generalnewliteraturetrawlrequested.
+Service independently began reusable bootstrap/custody rationale, statusunknown.
+Root designmemory isn't linkedintoREENTRYmanifestyet. Intended nextedit: put compact
+argument before operatingstatus; tighten obsolete191lineRESUME insteadofappendmore.
+Do not say this planned reentry repair happened. No automatic script provesreading.
+Original root council /Users/ember/workbox/mini-private-capacity-review-20261002/design-room-20261003/ROOT-SYNTHESIS.txt
+capturesactualKimi/GLM/Grok crossreview, lastsignertradeoff, privacyfailureobservers,
+recoveryfunding and correctedcostsensitivities. Jointsemantics166lines captures
+completefootprints, authorityreservation vsrelease, hiddenmanifest andepochliability.
+Research files include lewis-pye-programme-astra.txt, astra-consensus-reconsideration.txt,
+consensus-constructions-scope.txt, astra-20261003-consensus-frontier.txt and Bread
+comparison in sameworkbox. Don'treplaceoriginalreferenceswithonlynewessays.
+
+CHECKPOINTED STREAMS / VERSION CONTROL
+work/integration-obligations/{product,runtime,protocol}.json. Newstatecheckpointed
+requires checkpoint_ref/restart_condition/unresolved_work; suppresses wake hints,
+doesNOTmeanintegrated.9testsPASS. Runtime updatedFHE/Activity/portable rowsbeforeoutage.
+Product8parkedrows committedc7ad13f: Studio broaderloop,capacitynewcohort,Surface,
+Station,collective,fiction,portableactivity,homeactivation. Studio explicitly resumed
+onactualpreview afterward; update row receiving onceactualexecutionconfirmed.
+Money WorldreceivingACK exists; distinguish active sharedtransaction work from
+full money/DrEXproductbuilder(stopped). FHEpacket12 ce1b4ef...uncompiled, nojob;
+Activityordinaryroute signaturegap leaves64disabled; portableprivateSuccessor/
+resharing/fenceactivationabsent. Sourcehand-offs preserved, notnewbuilderassignments.
+Currentcaptaincensus /Users/ember/workbox/CAPTAIN-CENSUS-20261003T1425.json
+SHA d083cffc55672364df30f0c9dd0154f7288937a347805192d80465e7a5879f2b
+523screenedpackets/1829records;60latestpathmismatches incldeliberateforks;26shared
+snapshotsminimalmergepending. Newerpacketsnotallscreened. Classification/proofhygiene
+passes are NOT aggregatebuildCI; realhyp3reds remain.
+Do not blanket-stage redreggdirty/untrackedfiles: originalFableaudits uncommitted,
+manypeerdesign/sourcepatches. Preserve them. Private redreggorigin emberian/redregg-notes.
+Two heartbeat IDs: mini-8-45-swarm-convergence (obsoleteone-time;delete),
+mini-overnight-construction (recurringcheckin;avoidcompetingorchestratorsduringhandoff).
+Goal is active, notcomplete. No pause/toolchange claimed unless actualtoolreceipt.

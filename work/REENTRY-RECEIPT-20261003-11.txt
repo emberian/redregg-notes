@@ -1,0 +1,15 @@
+Root re-entry / resumption, October3 14:57UTC
+Read complete REENTRY, manifest, redregg AGENTS; complete5 core files. Combined
+first read truncated BEND/SHARED; both re-read complete separately. Read actual
+both-party cv [15840,17000),19 messages including latest resumption request.
+Fresh full agent roster:19 errored/23completed before intervention. Resumed exact
+19 outage owners and original documentation owner; no new agents created.
+Detailed registry dump truncated: NOT a full fresh registry audit. Runtime and
+captain resumed ownership and received explicit surviving-job/no-duplicate mandate.
+Latest captain actual main3dd5, no own surviving compiler jobs; resident services
+remain live. No new architecture decision made from stale source. Full route reads
+remain required for root semantic changes. Prior receipt10 reading is historical.
+Saved handoff and architectural argument existed before compaction; now latest
+steering prepended so Claude does not mistake resumed swarm for quiescence.
+Goal tool reports blocked (not active as saved old text says); cannot resume with
+available goal API. Direct user instruction authorizes ongoing work.

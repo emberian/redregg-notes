@@ -1,0 +1,143 @@
+Why these constructions belong together
+Root, October 3, 2026. Read before operational state on re-entry.
+
+This is a compact reconstruction of the reasoning, not an implementation report
+or a claim to have freshly reread every primary source. Human corrections take
+precedence. The source-linked domain arguments below supply depth and disagreement.
+Keep revising this account when a premise changes; do not append a daily log.
+
+The desired computing world
+Ember is building a shared multiuser agentic worldhost whose inhabitants can author,
+inspect, extend and govern their tools and places. A source editor, research desk,
+community institution, resident and hosted application are demanding users of the
+same underlying medium. Independent people and communities retain different rights,
+private state and histories. The aim is not exhausted by a successful workshop
+example. Mini is the construction home; Bread supplies both valuable precedents
+and failures to understand. Nock remains supported; Objective Bend becomes central.
+
+The Houyhnhnm direction is a demand for coherence across the computing experience:
+computation, representation, persistence, reflection and extension should be things
+the environment can express and reason about. In this project's interpretation,
+that means source-authored tools and views, inspectable/recomposable behavior and
+continuing computation. It does not mean that a collection of OO feature names or
+a self-describing status record already realizes Faré's whole programme. Exact
+primary-source interpretation belongs in the Faré argument, not this shorthand.
+
+Why Faré changes the language design
+Open extensions have meaning before a complete object exists. Context/final self,
+inherited target and resulting target can vary independently. Composing extensions
+then closing their common self permits future overrides to affect inherited
+behavior; whole super and repeated composition have real operational consequences.
+First-class incomplete specifications must remain inspectable and extensible even
+when their target is incomplete or divergent. These requirements exceed the former
+acyclic link-time tables and numeric method carriers.
+
+An equation x=f(x) does not specify a useful operational construction. Lazy demand,
+shared thunk identity, cyclic self and independently delayed fields require actual
+semantics. The new call-by-need graph machine is one chosen implementation; proving
+it realizes an independent source meaning is required. The retained BendTT CBV
+machine is a distinct edition with distinct proofs, not an automatic backend for
+the new calculus. Ember explicitly permits changing Bend's types and core.
+
+Resource ownership and laws constrain this freedom without replacing it. A reusable
+closure cannot conceal a duplicated affine obligation. General recursion must not
+silently inhabit total logical proofs. An extension may intentionally change an
+old law; requiring preservation is a separately selected compatibility contract
+whose provider needs evidence. Code evolution, object identity, an in-flight
+continuation and authority to adopt a revision are separate relationships.
+
+Primary-reading synthesis with exact book sections and critical qualifications:
+/Users/ember/dev/fareoo/sources/ltuo-objective-bend-20261003.txt
+Mirrored primary book and provenance:
+/Users/ember/dev/fareoo/raw/mirrors/ltuo/2026-10-03/ltuo.html
+/Users/ember/dev/fareoo/raw/mirrors/ltuo/2026-10-03/manifest.json
+The book's C4 bare-DAG determinism wording, incomplete MOP outline and proposed
+type theory are not established theorems we can simply import. Preserve criticism.
+
+Why privacy is several constructions
+Keeping payload bytes secret does not hide who talks to whom, when they act, which
+objects conflict, whether an operation was refused, or which repair traffic follows.
+A packet observer, malicious operator, computation party and authorized probing
+caller have different observations and powers. Encryption, scheduled cover/mixes,
+private execution, authenticated audience changes and private recovery each address
+different parts of that problem. None supplies the others merely by sharing a key.
+
+Cover must include reads, control, replies and recovery. A schedule that emits
+perfect dummy traffic but cannot sustain useful service is an implementation
+failure, not successful privacy at an irrelevant cost. Capacity classes, cohorts,
+lifetimes, allowed failure leakage and corruption assumptions belong in the claim.
+PQ transport ingredients do not establish PQ security for classical-ROM MPC/zk
+constructions. Private computation backends must realize the chosen language's
+exact meaning, numeric/resource behavior and disclosure contract.
+
+Recovery is part of confidentiality: retries must not reuse consumed correlations,
+mix share generations or redispatch uncertain effects. Revocation cannot erase
+knowledge. Rewrapping an already-used key discloses irreversibly, so authorization
+must be committed before ciphertext leaves custody; a later failed CAS is too late.
+
+Why agreement is scoped to actual dependencies
+Independent objects and communities should not need one global governor or one
+worldwide order merely to coexist. Conversely, a method spanning several domains
+must include every real dependency: reads, absence predicates, aliases, overridden
+behavior, current law, fees and resource promises. A proof over an incomplete
+manifest is not permission to omit a necessary participant.
+
+Local agreement establishes a domain's durable decision. A joint protocol composes
+the necessary domains' actual promises, followed by installation and independently
+authorized release. Agreement on bytes, an installed effect, recoverable private
+custody and delivery to a caller are different facts. Ordinary asynchronous messages
+use durable outboxes and later recipient admission; they are not transactions that
+hold locks across arbitrary external IO.
+
+The current Simplex baseline is a concrete construction choice, not a literature
+verdict that it dominates all alternatives. Bread blocklace/joint-turn/interfederation
+remain substantive comparators. Preserve the research into fairness, synchrony,
+thresholds, committee changes and lower bounds, including reasons an alternative
+was deferred. Network liveness alone does not establish fair application inclusion.
+Changing epochs cannot erase old possible certificates, reservations or owed outputs.
+
+Important earlier choice and limitation: the designated required last signer can
+abort before its YES but introduces its own availability dependency. It is not
+universally nonblocking atomic commitment. The exact tradeoff and challenges from
+the multimodel discussion are in:
+/Users/ember/workbox/mini-private-capacity-review-20261002/design-room-20261003/ROOT-SYNTHESIS.txt
+The full proposed semantic relations and adversarial traces are in:
+/Users/ember/workbox/mini-private-capacity-review-20261002/architecture-20261003-joint-semantics.txt
+Those records contain historical implementation/status claims; read their reasoning
+with current source, not as current deployment reports.
+
+What makes the pieces one system
+One authored invocation must retain its program/source edition, exact authority,
+observations, resource contract, effects and result through execution, agreement,
+installation, private custody and release. A backend certificate is useful only
+when its statement is the statement the actual receiver needs. A common proof
+carrier, digest or opcode name is not that connection. This is why source-derived
+compilation, mechanized refinement and inhabited end-to-end scenarios are all
+necessary and why component PASS must not become a substitute destination.
+
+The experiences that test this argument are deliberately different: an extensible
+research/workdesk instrument; a shared contested object or authored institution;
+and a continuing home/service relationship with recoverable custody. None should
+require writing another operator-only runtime for each new behavior. Their fuller
+arguments and falsifiers live in designs/ALTERNATIVES-20261003.txt and
+designs/SHARED-CONTRACTS-20261003.txt.
+
+How to recover understanding instead of reciting a plan
+For the next substantive choice, be able to explain (1) the human capability it
+serves, (2) the source semantics and observer/fault model, (3) why the chosen
+construction addresses those, (4) the best rejected or deferred alternative and
+its tradeoff, (5) which claim is unproved or currently refuted, and (6) an experiment
+or theorem that would change the choice. Follow original paper/source passages for
+the disputed premise; an agent synopsis is navigation, not primary confirmation.
+
+Original-reader reasoning captures for Faré, agreement and traffic are being
+prepared under intent/WHY-*. They are not assumed complete or read until received.
+Do not retire design expertise with only a last build command. Preserve these
+arguments and counterexamples alongside source checkpoints, with unresolved
+branches still visible. Re-enter the relevant argument before changing it; the
+goal is recoverable understanding rather than a bigger compulsory reading ritual.
+
+Historical intent navigation: catalog/INDEX.txt and coverage/READING-MAP.txt.
+The catalog's thousands of entries are not thousands of conversations understood.
+Current work/deployment status belongs in work/CENSUS-20261003-1420.txt and current
+captain/runtime records, not in this design argument.
