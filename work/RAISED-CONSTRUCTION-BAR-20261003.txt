@@ -98,3 +98,34 @@ member authoring are the center; protocol/backends and views consume that meanin
 Root sent direction to OO, worldlanguage, composition, compiler, zkVM, proof,
 docuverse and workshop owners. No Objective-C syntax or unsupported implementation
 property inferred from the name.
+
+HOUYHNHNM COMPUTATION, NOT ONLY STORED OBJECTS — root09:17UTC
+Fresh root reading: FAREOO§§7–15 plus original sources/fci2017.md and main
+concept sections of sources/persist-model.md. These are design sources, not
+already established Mini implementation claims. Faré distinguishes persistence
+of execution context from merely restarting a transient database client, local
+nested atomic sections from author-owned global transaction boundaries, and
+post-durability message barriers from ordinary function return. He permits real
+transactions below the abstraction and explicit agreement across domains.
+First-class implementations require observable safe points and representation
+changes with the same abstract computation, not just backend labels.
+
+Root construction decision: graded_execution_architecture resumed to own actual
+safe-point/continuation/lifecycle bridge over the bounded Bend machine and native
+effects, paired with controller simulation, world language, async native custody,
+portable continuation and service. Start an actual bounded computation that can
+be interrupted/reified/serialized/resumed with a proved abstract-state relation;
+join effect continuation and durable post-barrier delivery through existing Mini
+custody. Move repeated per-application journal recipes into generated/shared
+language/controller facilities. This is additional active construction, not a
+replacement for present evaluator/source proofs or an abstract category-only
+exercise. Distinguish authority to inspect/change an implementation from rights
+the computation has to act or disclose. Backend switching must preserve privacy,
+custody, numeric and cost contracts as well as returned values.
+
+Persistent reactive lifetime remains separate from one total pure Eval invocation.
+SPK apps remain fully involved as governed hosted adapters; no unsupported claim
+that arbitrary legacy app RAM/process state is captured by a /var archive. Faré's
+critique of applications does not authorize removing SPK or existing useful tools.
+Full teardown/rebuild deployment remains allowed; it does not replace in-world
+source evolution and typed migration capabilities.
