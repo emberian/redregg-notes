@@ -1,0 +1,86 @@
+{
+  "time_utc": "2026-10-03T09:10:38.279823+00:00",
+  "session": "01a0fa81-d479-7753-a1b3-1331d1ed53de",
+  "both_sides_dialogue_read_half_open": [
+    [
+      6800,
+      7479
+    ],
+    [
+      7479,
+      8013
+    ],
+    [
+      8013,
+      8781
+    ],
+    [
+      8781,
+      9742
+    ],
+    [
+      9742,
+      10400
+    ]
+  ],
+  "truncated_ranges_refetched_and_read": [
+    [
+      7088,
+      7295
+    ],
+    [
+      9140,
+      9185
+    ]
+  ],
+  "prior_cv_show_read": [
+    {
+      "session": "01a0fae5-8eb3-7392-83ee-4179c7664edc",
+      "around": 7880,
+      "context": 3
+    },
+    {
+      "session": "df44288a-6539-4fb8-a6d5-2e7f78b3d751",
+      "around": 235,
+      "context": 3
+    },
+    {
+      "session": "0c315aee-e07a-499c-8bb4-fa36730510ca",
+      "around": 7569,
+      "context": 3
+    }
+  ],
+  "full_files_read": [
+    "/Users/ember/dev/redregg/work/RESUME-20261003.txt",
+    "/Users/ember/dev/redregg/work/ACTIVE-GOAL-20261003.txt",
+    "/Users/ember/dev/redregg/work/RAISED-CONSTRUCTION-BAR-20261003.txt",
+    "/Users/ember/workbox/mini-private-capacity-review-20261002/OCT13-OBJECTIVE-RECOVERY-20261003.txt",
+    "/Users/ember/dev/redregg/designs/BEND-DIRECTION-20261003.txt",
+    "/Users/ember/dev/redregg/designs/SHARED-CONTRACTS-20261003.txt",
+    "/Users/ember/dev/redregg/designs/BIGDREGG-PRODUCT-ARCHITECTURE-20261003.txt",
+    "/Users/ember/workbox/mini-private-capacity-review-20261002/INTEGRATION-20261003.txt",
+    "/Users/ember/dev/redregg/work/REENTRY.txt",
+    "/Users/ember/dev/redregg/designs/BEND-SEMANTICS-AUDIT-20261003.txt",
+    "/Users/ember/dev/redregg/designs/BEND-WORLD-LANGUAGE-20261003.txt",
+    "/Users/ember/dev/redregg/designs/BEND-LOGIC-COMPILATION-20261003.txt",
+    "/Users/ember/dev/redregg/examples/objective-bend-workshop/STATUS.txt",
+    "/Users/ember/dev/redregg/examples/objective-bend-workshop/Demonstration.bend",
+    "/Users/ember/dev/redregg/examples/objective-bend-workshop/ReusableWorkshop.bend"
+  ],
+  "qualification": "ACTIVE-GOAL and refreshed RESUME authored/read this turn; INTEGRATION read before captain refresh; source evidence elsewhere remains owner-reported, no fresh root test or full corpus comprehension claimed. Prompt catalogs extracted; selected dialogue bodies read.",
+  "changes": [
+    "replaced stale RESUME statuses",
+    "broadcast survey via resumed coordinator",
+    "added 4 requested focused Bend/authority owners and 2 orphaned product constructors",
+    "explicit active goal created without tokenbudget",
+    "SPK requirement routed service/captain",
+    "recoverable broad private and operation-scoped vision retained"
+  ],
+  "not_read_this_window": [
+    "full private_execution/agreement route records",
+    "original FAREOO corpus",
+    "all earlier history corpora",
+    "all latest implementation files"
+  ],
+  "hook": "Developer reentry reminder present this window; actual hook event provenance not independently checked."
+}

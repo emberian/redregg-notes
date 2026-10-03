@@ -6,6 +6,7 @@
   ],
   "always": [
     "/Users/ember/dev/redregg/work/RESUME-20261003.txt",
+    "/Users/ember/dev/redregg/work/ACTIVE-GOAL-20261003.txt",
     "/Users/ember/dev/redregg/work/RAISED-CONSTRUCTION-BAR-20261003.txt",
     "/Users/ember/workbox/mini-private-capacity-review-20261002/OCT13-OBJECTIVE-RECOVERY-20261003.txt",
     "/Users/ember/dev/redregg/designs/BEND-DIRECTION-20261003.txt",
@@ -75,5 +76,23 @@
         7911
       ]
     }
+  ],
+  "additional_dialogue_ranges": [
+    [
+      6800,
+      7479
+    ],
+    [
+      7479,
+      8013
+    ],
+    [
+      8013,
+      8781
+    ],
+    [
+      9742,
+      10400
+    ]
   ]
 }

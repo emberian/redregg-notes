@@ -1,262 +1,176 @@
-READ FIRST AFTER COMPACTION — root 01a0fa81-d479-7753-a1b3-1331d1ed53de
-October 3, 2026. This is continuity, not a substitute for actual cv/source.
-POST-COMPACTION: read /Users/ember/dev/redregg/work/REENTRY.txt and actually
-recover both sides of the dialogue. This checkpoint is only one required record.
+CURRENT RE-ENTRY CHECKPOINT — October 3, 2026, approximately09:10UTC
+Root session 01a0fa81-d479-7753-a1b3-1331d1ed53de.
+Follow work/REENTRY.txt. This replaces stale build/status paragraphs; older
+checkpoints remain in local Git. Reports and this file navigate actual evidence.
 
-LATEST HUMAN DIRECTION (supersedes earlier narrower designs)
-1 Mini grows into the NEW Dregg, importing/repairing/rebuilding useful Bread and
-  related work NOW. Possible later repo rename dregg-old/dregg; no rename now.
-  Earlier 'Mini as Bread subdir someday' is superseded as primary direction.
-2 BEND is central authored world language, 'like web uses JS'. Retain Nock
-  compatibility and existing work; stop further Nock-first architecture.
-  Exact requested file bendlang/bend/bend2/bendtt.lean, cloned ~/dev/bend.
-3 Support native, oblivious, zkVM, reusable fixed-program logic-compiled circuits
-  AND HOMOMORPHIC execution. Explore generalized graded execution modalities;
-  independent confidentiality/proof/trust/authority/resource/etc axes with
-  explicit compatibility, not one enum or promise all imaginable combinations.
-4 Investigate old FHEgg/DrEX and new Starbridge as real consumers joined to the
-  new kernel/Bend. New Astra exploration/design/synthesis expressly requested.
-5 Keep coding existing Mini work concurrently; source review can justify clear
-  fixes without a prerequisite measurement ritual. Complete/integrate native
-  user experiences, not only model/proof/demo or remaining-work documents.
-6 Delegate detail to agents to preserve root context. Redregg is a durable local
-  research home for recursive intent reconstruction, source archaeology and
-  counterfactual replay (intent->attempt->actual outcome->hindsight design).
+HUMAN DESTINATION / ACTIVE GOAL
+Read work/ACTIVE-GOAL-20261003.txt and RAISED-CONSTRUCTION-BAR-20261003.txt.
+Ember explicitly requested the goal, now ACTIVE with no requested token budget.
+Mini grows into new Dregg; Objective Bend is its central authored language/live
+computing environment, with Nock compatibility. More Faré/FAREOO/Houyhnhnm-like
+partial specifications, composition/finalself/super, required/provided interfaces,
+reflection, source-authored views, persistent effects/messages/private returns,
+fresh instances and governed evolution. Read actual Faré sources for semantics.
+Oct13: shared multiuser agentic worldhost, trafficprivacy and meaningfulagreement
+explicit alpha requirements, complete docuverse/substantial deos ambition, SPK
+hosted apps integrated, continuing residents, private computation and full OO
+prototypes built rather than parked in future-work reports. Workshop is ONE
+consumer, never replacement for fiction/station, research/workdesk, markets and
+servicecommons. Preserve independent sovereignty/portable homes/repair and the
+broader Oct26/November aspirations without inventing fixed deadlines.
+Latest Ember: preserve broad vision during nap, recover previous3–4compactions,
+ask Bend cluster about coordination/extraagents, review earlier bring-to-Mini
+streams, keep SPK involved/integrated. Lean may be upgraded by engineering choice.
 
-DESTINATION / HISTORICAL CORRECTIONS
-Oct13 alpha explicitly requires traffic privacy + some agreement. Full OO and
-strong private execution prototypes are requested construction, not parked
-future docs. Complete docuverse/substantial deos are real release ambitions.
-Variable multiuser world, apps, resident Hermes, authoring, knowledge/social/play,
-extensibility, recovery; friend+Hermes journey is intermediate, not scope ceiling.
-User does not choose only research/social/compute: outward-growing nexus.
-Oct26/November are forward ambition, not a recovered fixed feature checklist.
-No CometBFT convenience import. Bread joint-turn/interfederation source matters.
-Old DreggCloud explicitly unselected ChatGPT demo: mine useful mechanisms without
-inventing adoption. Mini already has StoryLaw/story + J15 evidence; shared
-collective consequences/authoring and actual GM remain useful joins.
+REORIENTATION ACTUALLY PERFORMED THIS WINDOW
+Read both human/assistant dialogue root [6800,10400), in bounded subranges.
+Truncation in7088–7295 and9140–9185 was explicitly refetched/read.
+Read actual correction windows in linked cloud session around7880, Claudehandoff
+around235, earlierClaude around7569. Those are selected predecessor windows,
+not full-session comprehension. Read all7 always records and all3 Bend route
+records in full; see dated receipt. Deeper original Faré/agreement/private route
+source must be read before changing their semantics. Hook reminder arrived in
+this context; transport/lifecycle provenance not independently verified.
 
-CURRENT SOURCE / BUILD / INTEGRATION
-Original GitHub base e851920e. Ember's ~/dev/minidregg older b57aceda UNTOUCHED.
-Mac mini-dev-opus e851920e on dev is read-only source, not main. Sonnet clone old.
-Integration captain takeover_kernel owns NEW hbox checkout:
- /home/hbox/workbox/codex-unified-integration-20261003/src
-First coherent main ba9f7b12, seven reviewed commits incl cache, service,
-OO framev10+exhaustive consumers, docuverse, transport, additive private/agreement.
-All26 joined scoped Lean checks PASS. Full independent Host build is RUNNING
-at last report; inspect actual state/log before claiming completion/relaunching.
-Native build outputs artifacts/minidregg-host; native-build.log under lane.
-First bundle on Mac workbox research root integration-first-ba9f7b12.bundle,
-sha5cdf81e62567affb339601f6520c9b84cfd0e535199f24d96f5c35a764733e30.
-Captain NOW explicitly deputized to normal-fast-forward GitHub push using a NEW
-Mac /Users/ember/workbox/mini-unified-push-20261003 main checkout; root authorized
-Git there, no force/no shared switches. DO NOT duplicate its push/checkout job.
-Captain confirmed GitHub main normal-fast-forward push to 66042a8c
-(66042a8ccae72815e922a266003694e3b7bf721e), including help/fixture fixes.
-Native receiving continues independently; pushed is not native-qualified.
-All source construction/builds hbox; Mac research/Git transport allowed.
-Captain controls one Lean seat and bounded Rust queue; direct handoffs permitted.
-Use swarm-build, cargo-bounded, explicit readonly warm oleans + independent
-outputs. lake env in copied package dirs reclones them: avoid that trap.
->=50GB free hbox /; never delete other files/caches, touch /tank/fn, stash/reset.
-Preserve160 Persvati datamodel dirs. No paid provider calls in service tests.
-No unrelated live replacement/asset operations; new isolated r2 world authorized.
-Old r1 services remain running OLD capsule2a075e68; don't qualify new work by them.
+CURRENT INTEGRATION / ACTUAL RECEIVING
+Captain takeover_kernel source:
+ hbox:/home/hbox/workbox/codex-unified-integration-20261003/src
+Mac Git-only push checkout /Users/ember/workbox/mini-unified-push-20261003.
+Latest verified pushed main cace986a9618ae11b5ca0c17ca345dd7e8b24da7.
+Common Host ALL548 Lean+C/link+sourceinput checks PASS. Immutable Host:
+ .../artifacts/minidregg-host SHA740545eee8f59199e953c4053d8df24054bb6b54db4a9ee6c8da1873f1a42f50
+Joined client .../artifacts/mini-ui-joined
+ SHA1ad2ebe3688bcc602be8350a5877a0bc2f951cc1b75dc26253941d0ccefbbb24.
+Exact source/profile/opaqueStore/verifier pins: parent receiving-manifest.json.
+No old/newprofile mix; fresh v10 world. New protocol/Bend cohorts stay separate
+until requalified. Current owner reports, not root-replayed fresh tests:
+- OO51 native actions PASS plus staleauthenticatedparent and realnarrowissuer
+  refusal preserving state/balances; inheritedlaw refusal and versions/finalself.
+- Docuverse35 objectchecks +69rows18assertions +62rows21assertions PASS on SAME
+  world. Current source/history/stale/recovery/restart/append/refusal/residentUI.
+- Perf member2target prepare/submit/readback PASS; owner-readable out-of-room
+  target refused/no intent; exactly3 op5 cycles,51 exchanges. No runtime speedup
+  claim (source comparison vs measured absolute exchange count kept separate).
+- Shared client40+3guards, UI22+release PASS.
+Actually viewable loopback UI owned by docuverse, SSHsession55648:
+ http://127.0.0.1:32944/81070028dbd0563e7a324d060d271ddf/
+Paths doc/browser-paper/inspect, object/construct-new/behavior,
+room/browser-chat/resident. This is a local receiving world, notproduction.
+Source example review copy examples/objective-bend-workshop/; all4 consumer
+sources pinnedparser/checker+safeemission PASS, coreBook.check still pending.
+Opened/queued UI and ReusableWorkshop.bend in Codex panel for Ember.
 
-ACTIVE CONSTRUCTION OWNERS / ACTUAL STATUS
-takeover_kernel — integration/build captain, common Host+client then receiving.
-takeover_service — service53-check patch integrated; now fresh r2 staging,
- optional SPK-root isolation, TLS connector helper, scripted controller,
- apps->CSV->doc->Hermes->restart/restore/BYOK. Ordinary source choices delegated.
-docuverse_deos_construction — first5-file tranche actual Chromium/native forms,
-17 assertions+recovery passed on its matched OLD Host; joinedv10 still to run.
- Now browsercreate/current-source/history/resident-output inspectors.
-member_oo_construction — authenticated kindRead/definition output, typed trace/IR,
- kind construct; scoped checks pass. Actual v10 constructor journey waiting
- commonbinaries; owner stays to repair it. Nockcompat, Bend nextlanguage.
-native_performance_construction — signed mixed-view coherentbatching/duplicate
-roomresolve removal, sourceauth preserved; authored, focused check queued.
-astra_consensus_frontier — first5 Lean modules/18 general claims pass; NOW full
- GenericSimplex protocol+quorums+MLDSA65 certs+durable outbox/realnetwork driver.
- Atomic current-law reservation and install co-CAS must join central receiver;
- old AcceptedInvocation is not future install authority. Not yet live consensus.
-astra_consensus_composition — first5 nativeinput/custody modules/28 checks pass.
- Authored Nock machine/circuits saved as UNCOMPILED compatibility checkpoint,
- STOPPED expansion. NOW exact Bend Eval/Walk live-machine + oblivious/circuits.
-private_backend_construction — malicious AMPC/coin/physical correlation service.
- Audited referenceBA raw first-threshold interpolation lacks verified share
- consistency/error correction; finitecoin stock lacks refill. No drop-in claim.
-resume_private_construction — scheduled encrypted native RPC passed actual
- selected release/restartrepair/signedread; no source anonymity/fullPQ claim.
- NOW ML-KEM768 onionbatch/mix+fullbroadcast reply capabilities. Active n-1/valid
- replacement attack found; exploring explicit honest noncolluding registrar
- per-stage commitment-set guard (strong trust assumption, not Outfox theorem).
-bend_semantics_audit (Astra) — exact upstream theorem/compiler/FFI boundary audit.
-bend_logic_compilation (Sol) — actual Mini logicAIR/Emit + Bread compiler stacks,
- exact source-linked Bend case specialization; authored additive modules,
- checks awaiting vendor+captain. Generic/runtime vs fixedcircuit distinguished.
-bend_world_language (Sol) — pinned module/program/backend profiles, native method
- source provenance, effect/private-return/program identity; no fake Bend admission.
+ACTIVE OWNERS / NEXT JOINS
+- takeover_kernel: common integration, immutable artifacts, queue, ordinaryGit.
+  Asked reconcile stale INTEGRATION paragraphs and prioritize SPK familyseal.
+- takeover_service: staging-v2patch00e7626897d9…6/6nativeSPKPASS;
+  credential-launcher-v2-incremental ba19a79cc38b…26focusedPASS. Import+sealedSPK
+  family required before actual r2 browserapp→CSV→doc→Hermes→recovery/restore.
+  Resumed to own SPK/ObjectiveBend activity and source-authority intersections
+  while sealpending. No paidcalls/r1replacement. use followup_task for wakeup.
+- member_oo_construction: native firstcohort received. Now actual
+  ObjectiveBendComposition/Elaboration/entry modules; partialspec lawfulancestry,
+  actualTerm bodies, finalself/super resolution, freshbirth/evolution integration.
+- bend_world_language: seven source/publication/Plan modules compiledPASScheck08;
+  exact Book parse/check+governed source publication. Actual core→typedPlan
+  lowering/evaluator registration/private return/capacity charge remains owned.
+  New MethodAttribution/OpaqueResultReceiver/ReturnRelease authored uncompiled.
+- docuverse_deos_construction: commonreceiving done; generic sourceSurface typed
+  projection/intent/newBend+Lean+Rust source authored, unbuilt/uninstalled. Studio
+  sourceeditor/nativecore→Surface/current prepare join remains. Real UIhashoverflow
+  fix next isolated cohort. No fixed per-domain Rusthandler as language substitute.
+- dreggnet_collective_fiction: actual Workshop domainmodules/generalconservation
+  and source-bound review/adoption, reusable affine callbacks, sourceSurface
+  consumers; pinnedparser/safeemit PASS. Native source/Plan/OOinstallation pending.
+- astra_consensus_composition: pinned Bend4.30 port7audit+referenceexecutor11PASS;
+  bounded Arena/Machine all18constructors source authored, simulation/lowering
+  active. Actual Term.called restrictions matter; safe.ts supports SOME selector
+  grouping, not arbitrary mutuallyrecursiveBooks. Avoid second interpreter.
+- graded_execution_architecture: actual CodeDenotes/heap extension/refinement
+  proofs authored frozen queued, repair responsibility retained. Proof map current.
+- bend_logic_compilation: actual literalcase arbitrarywitness soundness and
+  emitter PASS; artifact9ca8ad25… used by realBFV. Dynamic3inputmux+signednumeric
+  bounds+actual Bookentry adapter authored queued. SourceBool is not bareenum.
+- homomorphic_bend_construction: actual BFV4096slot artifact pipeline and malformed
+  exactreplay refusals PASS; dynamic ctct buildPASS1.75s awaiting actualartifact.
+  Lifetimeinputdepth≤1/output≤2 and refusalaftercap; lineage/noiseassumptions remain.
+  Governed result storage/release and full FHE source/refinement active join.
+- bend_semantics_audit: actual genericzkVM/IR2 integration, entropyrepair3PASS.
+  Sourcefound degreeone shorttrace opening disclosure; strengthened regression
+  now two valid witnesses samepublic/differentprivate, notyetcompiled/captured.
+  Fixedheight256 experiment not hidingqualification; needs real maskingargument.
+- astra_consensus_frontier: GenericSimplex fullengine+realTCP/pairwiseMAC/MLDSA65
+  nativeharness+restart PASS. Historical-prefix sourcevalidator/candidateavailability
+  with receiver now authored. actual sourcecontroller/integration still pending.
+- astra_adversarial_architecture: globalVA+outerprefix modules nowcompile with
+  axiomgates perfrontierreport; theorem conditional LocalFaithful extraction;
+  actual start/step/auth event refinement notyetclosed. Liveness depends eventual
+  sourcecheck at exactancestor, not mutablelatestlaw. No fake checked inputs.
+- joint_receiver_construction: foundation421imports/335affected/86warm queued;
+  native reserve ingress/currentlaw event60 authored, terminal/restart/installopen.
+  Source PENDING reserves first; physicalqualifiedcustody then sourceCAS YES.
+  Allocation receipt alone notYES. FullContext pins exactgenesis separately from
+  normalizedmembership semanticmanifest to avoidgenesis circularity.
+- private_backend_construction: ASKSsupportshareV2+IG/ICG14PASS, r3VABA/IndexACS/
+  wire+WAL crashdriver10PASS. RealAVSS/privatepreprocessing/fullAMPC stillactive.
+  Paperfallback/cryptoPQqualification gaps explicitlyowned, no inheritedproofclaim.
+- resume_private_construction: PQmix7PASS +actual4client/3relay pipeline5sPASS;
+  1sreceiverdeadlinefailureafterdurableclaim. Explicit registrar/honestmix/static
+  corruption/lifetime trust, not receiveranonymity/fullPQ/FS. Now livecohortTCP.
+- native_performance_construction: receivingdone; now actual asynchronous durable
+  acceptance/custody/recovery with traffic owner. No invented Pending/double dispatch.
 
-THREE COMPLETED ASTRA DESIGNS (explicit user request; implementation unfinished)
-graded_execution_architecture — constrained modality/grade contracts/composition,
- not universalrank/exclusiveenum. Found existing PrivacyProfile/IndexedProgram/
- ResourceCost/DisclosureDeclaration and Bread coordination grade worth reuse.
-fhe_bend_architecture — actual FHEgg/Drex crypto evidence, FHE+specialized Bend
- circuits/keycustody/release/verification, numeric semantics/costs/trust.
-bigdregg_product_architecture — FHEgg/Drex/private choice/markets/serviceexchange
- and new Starbridge worldprogramming client, coherent buildable consumer designs.
-All save redregg/designs/ named reports, coordinate active Bend/backend builders.
+FOCUSED NEW CAPACITY — REQUESTED BY EXISTING OWNERS, ROOT DISPATCHED
+- bend_controller_simulation (Astra): actual Control/Frame→Eval/Walk/Value proof.
+- objective_bend_linker (Sol): stable coredef dependency order + exact checkedBook
+  and methodentry binding; no changingdefinitionbodies or duplicateevaluator.
+- bend_data_representation (Sol): actual preludeSigmaBool↔bit, then Word/Nat
+  source-indexed codecs/operation refinement, consumed compiler/FHE/zkVM/MPC.
+- joint_reserve_birth_authority (Sol): explicit source-authorized reserve-birth
+  method; actual ownerconsent +creator/currentpolicy. DefaultownerVerbs unchanged;
+  no nominee=consent shortcut. Creatorowned convenience notwholefactoryscope.
+- bread_programmable_archaeology RESUMED AS CONSTRUCTOR: resident revision/
+  placement/context dependency invalidation + boundedprojection/proposallanding;
+  preserve started exactwork; use existing service/doc source, no shadowhistory.
+- bread_systems_archaeology RESUMED AS CONSTRUCTOR: portable continuation/archive
+  repair, acknowledgedprefix, successorcustody/rekey/fencing and uncertaincalls;
+  SPK/app/resident archives typed, not generic snapshot magic. Pair existing owners.
+- astra_multimodel_room: requested ownerbroadcast/survey & portfolio/obstructions;
+  retains current SWARM-LIFECYCLE-REVIEW. Root decides new semantic commitments.
 
-BEND PIN / CRITICAL SOURCE DISTINCTIONS
-/Users/ember/dev/bend HEAD947db722640c86247849343657bf2f7ef01cb7f1; upstreamreadonly.
-AGENTS prohibits edits human bend.ts. Upstream Lean4.34 vs Mini4.30: no silent
-globalupgrade. Exact dependent affine calculus; not old HVM/interaction-net lore.
-Checker wnf lazy/open honors opaque; declarative Eval/Walk liveCBV unfolds models.
-Q2 means unrestricted Data uses, not exactlytwo; Q0 erased, Rwt evidenceLIVE.
-Proof chain book_check=>WellTyped+Live, sr/progress/halts/consistent etc; not
-compiler/elaborator/C/JS equivalence. safe emits typed models for bodyless defs;
-public --verdict calls book_promises rejecting nonBase foreign/unsafe, BASE
-exempt. Earlier blanket 'verdict allows allFFI model' statement needs this correction.
-comp.ts warns bugs expected; no automatic backend/proofsemantic equivalence.
+PORTFOLIO GAPS — DO NOT LOSE THEM TO CURRENT EASIEST TRANCHE
+Newly assigned after survey: dreggcloud_product_archaeology is now STATION/GM
+construction owner, separate from Workshop. Existing story has per-player instances,
+StoryLaw and refused GM summon; shared consequence/resource/authorized narrative
+construction is its destination. bigdregg_product_architecture now owns actual
+COLLECTIVE ADOPTION/ALLOCATION domain construction with Workshop/sourcePlan/OO:
+exact atomic ballots/adoption, single-seller rule and distinct DrEX integer pro-rata,
+real resource effects and private results. Both begin source work now; no native
+completion or solved dependency implied. Existing source paths/interfaces agreed
+with peers before editing; small isolated source lanes authorized, builds queued.
+Independent sovereign peers/capability references, authored durable subscriptions,
+member-scoped Atlas/discovery, bounded rehearsal/selective lawfulinstallation,
+Matrix/mobile bodies and contributedhome serviceallocation remain tracked
+transfers. Keep concrete current owner/nextstep inventory in lifecycle report;
+these are not all suddenly fixed Oct13 mandates, nor discarded future-docs only.
 
-DURABLE RESEARCH HOME
-/Users/ember/dev/redregg local Git main, NO remote. Initial44d1b50 + Bend96c83dc.
-README.txt, work/PLAN.txt, catalog/imports.json15 immutable hashed snapshots.
-catalog/INDEX.txt + query.py lookup exactcvsession/index or terms in external
-private corpus, --text explicit. catalog/claim-schema+examplecards/provenance.
-coverage/READING-MAP.txt and PRIVACY-AUDIT.txt. Imported coveragemetadata includes
-private sessiontitles/paths; no rawtranscript/keys found. Keep repoLOCALPRIVATE.
-New peerfiles not all committed yet: inspect git status, namedstage only completed
-files; no sweeping ongoing report writes. __pycache__/raw/private ignored.
-intent/worlds-*, foundations-*; replays/*; designs/ALTERNATIVES/SHARED-CONTRACTS;
-landscape/second-pass-construction. Evidence librarian completed and verified
-hashes. Histories extracted far more than semanticallyread: never sayallabsorbed.
-Union4810 catalogsessionkeys,46overlap; counts variousreadunits notadditive.
+RESOURCE / CUSTODY / LIFECYCLE
+All source/build isolated hbox, Mac research/Gittransport allowed. Captain owns
+oneLean seat and two warm boundedRust seats8Gi/jobs2; use actual leases/wrappers,
+independent outputpaths and scopedchecks. >=50GBfree /; noforeignfiles/caches
+removed, no sharedstash/reset, no /tank/fn mutation. Preserve160Persvatidatamodels.
+Existing local Mini b57 tree notcurrent integration. Keep oldr1/liveothers intact.
+Ordinary commits/push authorized; no paidprovider/externalhumanmessage/assets.
+Sourceowner remains responsible through actualnativeuse. Completed agent turn
+is not capabilitycompletion; artifactready must followup_task, send_messageonly
+won'twake completedowner. No fullrebuild duplication or proofgateweakening.
+Old mini-overnight-construction heartbeat staysPAUSED. Newexplicitactivegoal now
+provides continuingobjective; no newheartbeat created. No tokenbudgetrequested.
 
-OTHER IMPORTANT RECORDS
-Private workbox /Users/ember/workbox/mini-private-capacity-review-20261002/
- root initialreports, sourcepatchmanifests, buildreceiving evidence, TAKEOVER*.txt,
- INTEGRATION-20261003.txt, BREAD-FUTURE-SYNTHESIS, OCT13-OBJECTIVE-RECOVERY.
-Claudehandback /Users/ember/dev/claudesplosion/planning/handoff-2026-10-03/START-CODEX.md.
-Product DREGGNET-CLOUD.md sameplanning. Original cloudsession01a0fae5-8eb3-7392-83ee-4179c7664edc;
-Claude df44288a-6539-4fb8-a6d5-2e7f78b3d751; historical0c315aee... undercv.
-Tracker01a0f9c0-521b-7400-bff7-5ca5fd59420f notes updated but title stale2friends.
-Use cv prompts01a0fa81 then targeted show to recover latest userturns.
-Old mini-overnight-construction heartbeat remains PAUSED, do not revive.
-No new /goal requested/set for this expandedwork.
-
-ROOT NEXT
-Read latest usersteering and check liveagents/updates. Keep construction converging,
-do not restart finished research or let proofs-onlyfirsttranches becomecompletion.
-ThreeAstras synthesize Bend/FHE/graded contracts and actual bigDregg consumers;
-read their full route records before accepting consequential contracts; integrate
-into redregg+native work with rootjudgment. Verify captain
-push/commoncandidate actual status, unblock native receiving/realprotocol gaps.
-Give user compact meaningfulprogress, not hugeeverytooloutput or stale laneclaims.
-
-POST-COMPACTION REFRESH — root, 2026-10-03 around08:15UTC
-Actual dialogue recovered cv [8781,9742), both human and assistant text, plus
-latest steering in live context. Re-entry record names exact coverage; do not
-claim that all of redregg or historical corpora were absorbed.
-
-Captain08:11UTC: healthy Host module338/548, PID1095670; short apparent no-Lean
-window was intermodule gap. No restart. Bend vendor/live/compiler short batch
-may use single Lean seat during pure C/link phase after548, by captain decision.
-Common Rust client40 tests+release PASS. Docuverse second22tests+release PASS;
-second binary distinct from common first. New Host receiving remains pending.
-OO found real fixture layoutDigest mismatch on changed kind/revision; receiver
-correct, source author codec repair owned by member_oo_construction. No need
-to weaken receiver or casually restart frozen Host. Service r2 tooling28 tests
-PASS; actual new service staging awaits common sealed capsule.
-
-Additional active owners after previous checkpoint:
-joint_receiver_construction — actual native reservation/install adapter. Explicit
-current per-target freeze/installPromise authority required IN ADDITION to
-ordinary effect admission. Latest reduced proposal uses purpose-specific reserve
-verbs and JointPromiseAuthorization/PreparationPlan with separate signature and
-exact candidate+selected command+promise version, avoiding Command wire change.
-Captain owns foundational integration. Not yet implemented/compiled/received.
-Semantic control reservations belong in replicated DataIntent/IntentRecord;
-replica-local Simplex input/outbox journal is separate. Normal governed writes
-must enter same agreement ordering. Export YES only after durable source Applied
-receipt for reservation. Independent maintenance capacity survives target freeze.
-homomorphic_bend_construction — real vendor/fhe-dregg BFV native evaluator/checker,
-owner conformance; source staged on hbox, scoped build pending. Signed integer/Rat
-constants before reduction fix BabyBear-to-BFV negative coefficient mismatch.
-Native receiving/current authority join remains actual work, not mock receipt.
-privacy_composition_review — completed designs/PRIVACY-COMPOSITION-REVIEW-20261003.txt.
-Found ASKS private-share replacement after Echo/delayed RA: owner froze supporting
-share, exact adversarial test pending captain. ASKS is not full AVSS/AMPC.
-Constant-function same-result source step counts1/2 leak input if publicly priced.
-Private profile needs real fixed capacity charge/no revealing refund, not fake
-padded RunClaim. Private code/dispatch needs fixed secret-PC/universal circuit or
-hidden bank selection; specializing secret syntax leaks topology.
-bend_bread_archaeology — actual Candle/compiler/logic/Bend reusable patterns;
-Candle closure swap exists, livekernel/compilecorrect bridge not completed.
-historical_missing_junctions — underread human conversations and source; recovered
-acceptorchosen freshness/offline channels, revocation, context/reload concerns.
-Cancelled Hermes certifier June1 is NOT a current promised task; keep chronology.
-bread_programmable_archaeology — resumed resident context/portable-OS inquiry.
-
-Graded/FHE/product Astra design reports are complete. Read them in full before
-changing those contracts. Their proposals are not completed implementations.
-Bend world source profiles/logic/live-machine modules still await shared check.
-Scheduled native RPC exists; registrar-guarded PQ mix source+five tests/process
-pipeline pending. Guard needs explicit honest noncolluding registrar, >=2honest
-clients and >=1honest shuffle; no inherited anonymity theorem/PQ-everything claim.
-
-Continuity assets: work/REENTRY.txt, reentry-manifest.json, reenter.py and local
-redregg/AGENTS.md. Thread-only breadstuffs/.codex/hooks.json adds SessionStart
-compact/resume reminder. Local5case tests pass; Codex trust/lifecycle firing not
-yet observed. Never selfapprove trusted_hash. Existing global Orca hooks untouched.
-
-SWARM OBSTRUCTION REVIEW — root, after Ember's live-status request
-Hook approved by Ember; actual next compact/resume firing not observed yet.
-Prior chain cv windows actually read: cloud7880 (variablemultiuser, teardown),
-Claudehandoff235 (main, not dev), earlierClaude7569 (intermediate not lowerbar).
-Full sessions remain larger than these windows; see reentry-manifest chain.
-
-Root actual hbox08:16UTC probe:123GiRAM,60Gi available,load3.54,disk72Gi free;
-swapfull (do not assume active thrash merely from occupancy). Healthy commonLean
-~4.9GiRSS. Root authorized second warm Rust slot8Gi/jobs2 now DIRECTLY assigned
-to private_backend V2+ICG; original Rust job may finish unchanged. Owner records
-lease/log to captain, obeys actual resourceguards. After release captain/frontier
-queue handles tiny crypto helper and FHE. No new fullbuild/unboundedparallelism.
-One short separate Bendprobe8Gi/oneLeanthread/4min budget requested to captain,
-conditional actualguard+isolatedoutputs; NOT yet confirmed running. Healthy
-commonHost never interrupted. No >50Gi free disk condition relaxed.
-
-Worldlanguage owner resumed actual sourcepublication/nativeauthority/BFVjoin;
-FHE receipt can use genuine governed storage first but that is NOT Computation
-CheckedRun. Registry currently Nockonly: no Rustcheck->CheckedRun shortcut.
-Semanticsaudit owner resumed GENERAL Bend zkVM/fulltrace proof receiver (not
-Sol's fixedcase specialization), actual chosen proofbackend entropy qualification
-included. No entropyrepair snapshot previously qualified. Closure/heap proof
-extraowner waits first machine elaboration; composition still owns that join.
-Service owns optional isolatedspkRoot broker + helper --root implementation now;
-captain only overlapping core/importreview. Runtimepaid/r1 limits unchanged.
-Obsolete pending_init astra_recommendation interrupted, not counted as activework.
-
-Lifecycle: sourceowner keeps native qualification/repair responsibility. A turn
-can finish while blocked on immutableHost; artifactready must use followup_task,
-not merely send_message, to wake completed/idle owner. Captain told this for OO,
-docuverse, service. Same immutableartifact manifest to allreceivers, current
-INTEGRATION row updates on phasechanges. No new tracker hierarchy needed.
-Lifecycleaudit /Users/ember/dev/redregg/work/SWARM-LIFECYCLE-REVIEW-20261003.txt.
-
-LATEST HUMAN STEERING: raise early-cut capability bar, mechanize correctness and
-other relevant properties, Mini Lean may be upgraded. Read entire
-work/RAISED-CONSTRUCTION-BAR-20261003.txt. Added actual workshop consumer owner
-(resumed dreggnet_collective_fiction), globalconsensusproof owner (resumed
-astra_adversarial_architecture), proof-contract owner (graded_execution_architecture).
-OO/worldlanguage/docuverse now own fullmember-authoredStudio/generaltypedPlan/
-sourceauthoredinterfaces objectives beyond current firstnativecandidate.
-Actual newer progress: common548/548Lean PASS, C/link ongoing; GitHubtip17d2ea28
-reportedverified captain. Bend source7audits+liveexecutor11checks PASS4.30, tiny
-proofsyntaxonlycompat. Logiccompiler nowhas seat; FHE releasebuildPASS23s, actual
-artifact executionpending. Agreement Rusthelper4/4PASS, Leanengine pending.
-
-LATEST: Ember explicitly names destination "Objective Bend". Read latest
-BEND-DIRECTION addition; coherent authored OO+Bend language/liveworld is primary.
-All language/OO/compiler/proof/experience/workshop owners explicitly informed.
+NEXT ROOT ACTION
+Continue coordination/actualintegration, especially SPKsealing+nativejourney,
+sourceOO/Plan/Surface and realprivateprotocol/sourcecustody joins. Reassess
+resource bottlenecks from actualprocesses; help repair focused compiler failures.
+Read routed original designs/source before consequential protocoldecisions.
+Keep broadportfolio visible and assign strong orphaned products as interfaces
+settle; don't turn orientation itself into a new endlessproject.
