@@ -1,0 +1,43 @@
+{
+  "session": "01a0fa81-d479-7753-a1b3-1331d1ed53de",
+  "alignment_range": [
+    8781,
+    9742
+  ],
+  "always": [
+    "/Users/ember/dev/redregg/work/RESUME-20261003.txt",
+    "/Users/ember/workbox/mini-private-capacity-review-20261002/OCT13-OBJECTIVE-RECOVERY-20261003.txt",
+    "/Users/ember/dev/redregg/designs/BEND-DIRECTION-20261003.txt",
+    "/Users/ember/dev/redregg/designs/SHARED-CONTRACTS-20261003.txt",
+    "/Users/ember/dev/redregg/designs/BIGDREGG-PRODUCT-ARCHITECTURE-20261003.txt",
+    "/Users/ember/workbox/mini-private-capacity-review-20261002/INTEGRATION-20261003.txt"
+  ],
+  "routes": {
+    "bend": [
+      "/Users/ember/dev/redregg/designs/BEND-SEMANTICS-AUDIT-20261003.txt",
+      "/Users/ember/dev/redregg/designs/BEND-WORLD-LANGUAGE-20261003.txt",
+      "/Users/ember/dev/redregg/designs/BEND-LOGIC-COMPILATION-20261003.txt"
+    ],
+    "private_execution": [
+      "/Users/ember/dev/redregg/designs/GRADED-EXECUTION-ARCHITECTURE-20261003.txt",
+      "/Users/ember/dev/redregg/designs/FHE-BEND-ARCHITECTURE-20261003.txt",
+      "/Users/ember/dev/redregg/designs/PRIVACY-COMPOSITION-REVIEW-20261003.txt"
+    ],
+    "agreement": [
+      "/Users/ember/workbox/mini-private-capacity-review-20261002/architecture-20261003-joint-semantics.txt",
+      "/Users/ember/workbox/mini-private-capacity-review-20261002/design-room-20261003/ROOT-SYNTHESIS.txt",
+      "/Users/ember/workbox/mini-private-capacity-review-20261002/bread-joint-interfederation-comparison-20261003.txt"
+    ],
+    "product": [
+      "/Users/ember/dev/redregg/designs/ALTERNATIVES-20261003.txt",
+      "/Users/ember/dev/claudesplosion/planning/DREGGNET-CLOUD.md",
+      "/Users/ember/dev/claudesplosion/planning/handoff-2026-10-03/START-CODEX.md"
+    ],
+    "history": [
+      "/Users/ember/dev/redregg/catalog/INDEX.txt",
+      "/Users/ember/dev/redregg/coverage/READING-MAP.txt",
+      "/Users/ember/dev/redregg/intent/worlds-second-pass-20261003.txt",
+      "/Users/ember/dev/redregg/intent/foundations-intent-model.txt"
+    ]
+  }
+}

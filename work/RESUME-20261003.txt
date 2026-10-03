@@ -1,5 +1,7 @@
 READ FIRST AFTER COMPACTION — root 01a0fa81-d479-7753-a1b3-1331d1ed53de
 October 3, 2026. This is continuity, not a substitute for actual cv/source.
+POST-COMPACTION: read /Users/ember/dev/redregg/work/REENTRY.txt and actually
+recover both sides of the dialogue. This checkpoint is only one required record.
 
 LATEST HUMAN DIRECTION (supersedes earlier narrower designs)
 1 Mini grows into the NEW Dregg, importing/repairing/rebuilding useful Bread and
@@ -39,7 +41,7 @@ Original GitHub base e851920e. Ember's ~/dev/minidregg older b57aceda UNTOUCHED.
 Mac mini-dev-opus e851920e on dev is read-only source, not main. Sonnet clone old.
 Integration captain takeover_kernel owns NEW hbox checkout:
  /home/hbox/workbox/codex-unified-integration-20261003/src
-Last reported clean main ba9f7b12, seven reviewed commits incl cache, service,
+First coherent main ba9f7b12, seven reviewed commits incl cache, service,
 OO framev10+exhaustive consumers, docuverse, transport, additive private/agreement.
 All26 joined scoped Lean checks PASS. Full independent Host build is RUNNING
 at last report; inspect actual state/log before claiming completion/relaunching.
@@ -49,7 +51,9 @@ sha5cdf81e62567affb339601f6520c9b84cfd0e535199f24d96f5c35a764733e30.
 Captain NOW explicitly deputized to normal-fast-forward GitHub push using a NEW
 Mac /Users/ember/workbox/mini-unified-push-20261003 main checkout; root authorized
 Git there, no force/no shared switches. DO NOT duplicate its push/checkout job.
-No confirmed push yet in root context. Native receiving continues independently.
+Captain confirmed GitHub main normal-fast-forward push to 66042a8c
+(66042a8ccae72815e922a266003694e3b7bf721e), including help/fixture fixes.
+Native receiving continues independently; pushed is not native-qualified.
 All source construction/builds hbox; Mac research/Git transport allowed.
 Captain controls one Lean seat and bounded Rust queue; direct handoffs permitted.
 Use swarm-build, cargo-bounded, explicit readonly warm oleans + independent
@@ -94,7 +98,7 @@ bend_logic_compilation (Sol) — actual Mini logicAIR/Emit + Bread compiler stac
 bend_world_language (Sol) — pinned module/program/backend profiles, native method
  source provenance, effect/private-return/program identity; no fake Bend admission.
 
-THREE JUST-LAUNCHED ASTRAS (explicit last user request)
+THREE COMPLETED ASTRA DESIGNS (explicit user request; implementation unfinished)
 graded_execution_architecture — constrained modality/grade contracts/composition,
  not universalrank/exclusiveenum. Found existing PrivacyProfile/IndexedProgram/
  ResourceCost/DisclosureDeclaration and Bread coordination grade worth reuse.
@@ -146,6 +150,63 @@ ROOT NEXT
 Read latest usersteering and check liveagents/updates. Keep construction converging,
 do not restart finished research or let proofs-onlyfirsttranches becomecompletion.
 ThreeAstras synthesize Bend/FHE/graded contracts and actual bigDregg consumers;
-merge their decisions into redregg+native work with rootjudgment. Verify captain
+read their full route records before accepting consequential contracts; integrate
+into redregg+native work with rootjudgment. Verify captain
 push/commoncandidate actual status, unblock native receiving/realprotocol gaps.
 Give user compact meaningfulprogress, not hugeeverytooloutput or stale laneclaims.
+
+POST-COMPACTION REFRESH — root, 2026-10-03 around08:15UTC
+Actual dialogue recovered cv [8781,9742), both human and assistant text, plus
+latest steering in live context. Re-entry record names exact coverage; do not
+claim that all of redregg or historical corpora were absorbed.
+
+Captain08:11UTC: healthy Host module338/548, PID1095670; short apparent no-Lean
+window was intermodule gap. No restart. Bend vendor/live/compiler short batch
+may use single Lean seat during pure C/link phase after548, by captain decision.
+Common Rust client40 tests+release PASS. Docuverse second22tests+release PASS;
+second binary distinct from common first. New Host receiving remains pending.
+OO found real fixture layoutDigest mismatch on changed kind/revision; receiver
+correct, source author codec repair owned by member_oo_construction. No need
+to weaken receiver or casually restart frozen Host. Service r2 tooling28 tests
+PASS; actual new service staging awaits common sealed capsule.
+
+Additional active owners after previous checkpoint:
+joint_receiver_construction — actual native reservation/install adapter. Explicit
+current per-target freeze/installPromise authority required IN ADDITION to
+ordinary effect admission. Latest reduced proposal uses purpose-specific reserve
+verbs and JointPromiseAuthorization/PreparationPlan with separate signature and
+exact candidate+selected command+promise version, avoiding Command wire change.
+Captain owns foundational integration. Not yet implemented/compiled/received.
+Semantic control reservations belong in replicated DataIntent/IntentRecord;
+replica-local Simplex input/outbox journal is separate. Normal governed writes
+must enter same agreement ordering. Export YES only after durable source Applied
+receipt for reservation. Independent maintenance capacity survives target freeze.
+homomorphic_bend_construction — real vendor/fhe-dregg BFV native evaluator/checker,
+owner conformance; source staged on hbox, scoped build pending. Signed integer/Rat
+constants before reduction fix BabyBear-to-BFV negative coefficient mismatch.
+Native receiving/current authority join remains actual work, not mock receipt.
+privacy_composition_review — completed designs/PRIVACY-COMPOSITION-REVIEW-20261003.txt.
+Found ASKS private-share replacement after Echo/delayed RA: owner froze supporting
+share, exact adversarial test pending captain. ASKS is not full AVSS/AMPC.
+Constant-function same-result source step counts1/2 leak input if publicly priced.
+Private profile needs real fixed capacity charge/no revealing refund, not fake
+padded RunClaim. Private code/dispatch needs fixed secret-PC/universal circuit or
+hidden bank selection; specializing secret syntax leaks topology.
+bend_bread_archaeology — actual Candle/compiler/logic/Bend reusable patterns;
+Candle closure swap exists, livekernel/compilecorrect bridge not completed.
+historical_missing_junctions — underread human conversations and source; recovered
+acceptorchosen freshness/offline channels, revocation, context/reload concerns.
+Cancelled Hermes certifier June1 is NOT a current promised task; keep chronology.
+bread_programmable_archaeology — resumed resident context/portable-OS inquiry.
+
+Graded/FHE/product Astra design reports are complete. Read them in full before
+changing those contracts. Their proposals are not completed implementations.
+Bend world source profiles/logic/live-machine modules still await shared check.
+Scheduled native RPC exists; registrar-guarded PQ mix source+five tests/process
+pipeline pending. Guard needs explicit honest noncolluding registrar, >=2honest
+clients and >=1honest shuffle; no inherited anonymity theorem/PQ-everything claim.
+
+Continuity assets: work/REENTRY.txt, reentry-manifest.json, reenter.py and local
+redregg/AGENTS.md. Thread-only breadstuffs/.codex/hooks.json adds SessionStart
+compact/resume reminder. Local5case tests pass; Codex trust/lifecycle firing not
+yet observed. Never selfapprove trusted_hash. Existing global Orca hooks untouched.

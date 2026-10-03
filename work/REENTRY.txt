@@ -1,0 +1,77 @@
+POST-COMPACTION RE-ENTRY — Ember / Mini / Dregg
+Root session 01a0fa81-d479-7753-a1b3-1331d1ed53de
+Requested in cv #9719 and #9742 on October 3, 2026.
+
+Purpose: restore working understanding from actual exchanges and current records.
+A compaction summary is a map. Do not infer that seeing its file list means the
+files have been read. This procedure is for the root; do not disrupt continuing
+builders or make every specialist reread the entire project.
+
+1. Recover our dialogue before making new direction/status claims.
+   cv prompts 01a0fa81-d479-7753-a1b3-1331d1ed53de --json
+   python3 /Users/ember/dev/redregg/work/reenter.py --dialogue 8781..9742
+   Read BOTH parties. This anchor includes Claude takeover, objective correction,
+   source-review authority, historical replay, Bend-as-JS, FHE and new-Dregg direction.
+   Then read later messages through the latest cv prompt and its following replies.
+   Use explicit ranges, not --pre-compaction alone (defaults to the first boundary).
+   Do not mistake injected role=user envelopes, quoted material or fork repetitions
+   for new human instructions. If a decision is uncertain, expand around its exact
+   locator with cv show --around INDEX --context K, including relevant tool evidence.
+   Extraction omits thinking and tools; it does not decide what is true or current.
+
+2. Read every file under "always" in reentry-manifest.json completely, in order.
+   RESUME gives navigation/owners, not a substitute for the remaining records.
+   Read in bounded chunks. Truncated output is unfinished reading; fetch the rest.
+   The product architecture is a proposal with dated source evidence, not a new
+   human feature mandate. Newer human corrections and current source take priority.
+   The manifest inventory reports missing files/hashes; it does not certify reading.
+
+3. Before consequential work in a route, read its complete named design records.
+   The routes are bend, private_execution, agreement, product, history. Follow
+   source references for the actual decision. For Bread source work also obey its
+   HORIZONLOG/memory/OVERVIEW instructions; for Mini inspect the active integration
+   checkout and local AGENTS. A summaries-only source audit is not a source audit.
+   Do not reread every specialist file for an unrelated small task, or create an
+   endless orientation project. Deep implementation stays with owners; the root
+   must understand the contracts it accepts and resolve contradictions itself.
+
+4. Check live agents and current captain evidence BEFORE spawning/restarting work.
+   Existing running owners continue across root compaction. Verify actual source
+   revision, build/process/queue, immutable binaries and receiving status. Keep
+   authored / compiled / executed / integrated / deployed claims distinct. Never
+   duplicate an active native build because a stale note said it was not started.
+   Read INTEGRATION plus captain's newest message: either can lag the other.
+
+5. Re-establish the destination and the next concrete joins.
+   Mini grows into Dregg; Bend is the central authored language, Nock compatibility.
+   Native/oblivious/zkVM/specialized circuits/FHE are active construction directions.
+   Traffic privacy and agreement are Oct13 conditions; full OO/private execution
+   prototypes, substantial docuverse/deos and the inhabited world remain real work.
+   First passing tranches are intermediate. Shared semantics and actual user
+   experiences matter. No repository rename, paid calls or unrelated service
+   replacement is implied. Preserve concurrent work and build resource ownership.
+
+6. Save a short dated re-entry receipt in work/ (not a transcript dump).
+   Record exact cv ranges read, whole files vs partial files, what changed from
+   the summary, unresolved questions and the next owned work. Do not let a script
+   automatically mark files 'read'. Mention the material recovered alignment to
+   Ember; don't recite every administrative check. Then continue construction.
+
+HOOK
+Official docs https://learn.chatgpt.com/docs/hooks establish SessionStart source
+compact runs before the next model request, including mid-turn compaction.
+A project-local hook is configured at breadstuffs/.codex/hooks.json; its script
+matches only this root session and compact/resume. It injects a short pointer to
+this procedure, not transcript contents, secrets or a huge context dump. Existing
+Orca global hooks are untouched. It never blocks work or writes state.
+Non-managed hooks require Codex trust review. A successful local script test is
+NOT proof the app loaded/trusted/fired it. Do not edit trusted_hash to self-approve.
+Until actual lifecycle firing is observed, this is configured, not qualified
+automatic recovery. The user's explicit instruction and this file are the manual
+fallback. redregg/AGENTS.md points here for subsequent work in that repository.
+
+Updating this procedure
+Keep exact dialogue anchors and current file paths. Move superseded source/build
+claims out of RESUME, retain reasons for changed direction, and add new contract
+routes when actual work needs them. Don't turn every incident into a permanent
+restriction. Hook output remains small and points to the current procedure.

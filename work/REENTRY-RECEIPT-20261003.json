@@ -1,0 +1,74 @@
+{
+  "time_utc": "2026-10-03T08:14:03.595864+00:00",
+  "session": "01a0fa81-d479-7753-a1b3-1331d1ed53de",
+  "dialogue_read": {
+    "range_half_open": [
+      8781,
+      9742
+    ],
+    "human_and_assistant_text": true,
+    "thinking_and_tool_blocks": false,
+    "machine_envelope_8852": "recognized as injected UI event, not human instruction"
+  },
+  "full_core_files_read": [
+    {
+      "path": "/Users/ember/dev/redregg/work/RESUME-20261003.txt",
+      "sha256_at_receipt": "fbdd1b7870fc210cee93dad0133d099a68ff663b4d04e91d1c9091b252952141"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/OCT13-OBJECTIVE-RECOVERY-20261003.txt",
+      "sha256_at_receipt": "ab1b1d50531070f7c583ca520fac4dc2c336e872527f4ec45a6f9f52eb5b11bb"
+    },
+    {
+      "path": "/Users/ember/dev/redregg/designs/BEND-DIRECTION-20261003.txt",
+      "sha256_at_receipt": "9e34484c2ebd0e99176d993352f2a09dcc814fb82191ef10fda69dd5fdfa319e"
+    },
+    {
+      "path": "/Users/ember/dev/redregg/designs/SHARED-CONTRACTS-20261003.txt",
+      "sha256_at_receipt": "fcfb9370f1aeff2bb7b007ecedec0c66950ec20c97d36a61c110a15fa213e31b"
+    },
+    {
+      "path": "/Users/ember/dev/redregg/designs/BIGDREGG-PRODUCT-ARCHITECTURE-20261003.txt",
+      "sha256_at_receipt": "5f91b5fa6922c8515416e223a799b0d9160ecbdff38744526d32e767a1d3c32b"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/INTEGRATION-20261003.txt",
+      "sha256_at_receipt": "2354119c91fb573447bca0223b49ad876068c1113021c270959a2881ba7b37ef"
+    }
+  ],
+  "additional_read": [
+    "BEND-SEMANTICS-AUDIT: report read in two chunks; its source claims not independently re-audited here",
+    "OpenAI official hooks docs: configuration, SessionStart compact, trust limits"
+  ],
+  "not_yet_reread_in_this_window": [
+    "BEND-WORLD-LANGUAGE full report",
+    "BEND-LOGIC-COMPILATION full report",
+    "GRADED-EXECUTION-ARCHITECTURE full report",
+    "FHE-BEND-ARCHITECTURE full report",
+    "original FAREOO sources and all historical corpora",
+    "full agreement source/design before new protocol judgment"
+  ],
+  "corrections": [
+    "first integrated tip pushed66042a8c, checkpoint stale",
+    "Host active338/548 at08:11UTC; no process observation during intermodule gap does not mean stopped",
+    "new six followup owners retained, completed Astra designs recorded",
+    "Bend/FHE execution and new-Dregg product direction explicitly confirmed in actual conversation"
+  ],
+  "hook_validation": {
+    "local_filtered_cases": 5,
+    "actual_codex_trust_or_lifecycle_observed": false
+  },
+  "next": [
+    "Captain finishes common Host and hands short Bend check seat during safe phase",
+    "Native OO/docuverse/service receive common binaries",
+    "FHE actual source artifact and current authority receiving join",
+    "Full design-route reading before further architectural acceptance"
+  ],
+  "additional_dialogue_read": {
+    "range_half_open": [
+      9719,
+      9743
+    ],
+    "purpose": "verified latest user compaction instruction and prior assistant promise"
+  }
+}
