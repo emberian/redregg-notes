@@ -1,0 +1,46 @@
+PRIVATE COMMITTEE ENROLLMENT / JOB AUTHORITY — root decision, October 3 2026
+
+Decision: separate stable source-authorized membership from the per-job Party
+context derived from genuine current funded PENDING. Implement as explicit v4.
+The source duplicates candidate/descriptor in v3 enrollment and reservation.
+A specific bootstrap circular dependency has NOT yet been proved; this decision
+removes an unnecessary future-job dependency and defines reusable membership.
+It deliberately changes which jobs a membership can serve under current law.
+
+Actual source read: scenario private native src/Compiler/JointBackendPartyCodec,
+JointBackendPartySealedCodec, Kernel/JointBackendPartyAdmission and Recovery;
+common Kernel/PrivateSuccessorCustody GenerationKey and surrounding definitions.
+Admission actually uses appendObject, DISPATCH.APPEND/v3, not invokeObject.
+Full private_execution route records read this window (all 1733 lines), after
+core/reentry reading receipt15. Historical reports do not override current code.
+
+Stable membership pins configuration, protocol, authority epoch, fixed source
+session/namespace, party and recipient/role, native subject, signing key epoch/
+binding, purpose and invocation capability. Sealed membership additionally pins
+recipient algorithm/key epoch/key ID/padding. Configuration must equal actual
+custody GenerationKey.configuration. No future command, candidate or descriptor
+is embedded in this stable credential.
+
+Prepared retains actual manifest membership AND derived per-job Party/candidate/
+participant/descriptor. Derive these from actual PENDING selected candidate and
+its full Generation; match exact carrier/request and existing descriptorMatches.
+Keep current consensus epoch, current signing key, complete source/clock/control/
+law read guards, native capability/revocation/composed law, funding and actual
+ordered source admission. A decoded record or arbitrary metadata cannot mint it.
+Bump manifest codec, credential purpose, source domain/projected version explicitly;
+no v3 empty-field reinterpretation. Old backend Party/envelope wire may stay exact
+where semantics have not changed; Rust receives source-derived opaque enrollment.
+
+Recovery must reconstruct ORIGINAL selected.before admission, exact whole native
+record and full verified certificate. Historical permission can recover that
+retained work only; it cannot authorize a new job, release or current dispatch.
+New operations require current admission. Preserve immutable333a/v3 evidence,
+new successful four-source zero-history v3 bootstrap and its separate source pins.
+No live accepted history is silently migrated.
+
+Owners: scenario_private_native ACK owns Lean schema/prepare/recovery/fixture;
+private_backend_construction ACK owns Rust consumer (currently opaque equality,
+no code change needed merely to project enrollment). Captain owns coherent native
+source/image/config publication. Test cross-job/config/session/key/recipient,
+missing PENDING, stale current authority and original-prefix recovery. Actual
+funded63->205/WAL/output/recovery remains the end-to-end requirement, still open.

@@ -1,0 +1,11 @@
+ROOT REENTRY RECEIPT 15 — 2026-10-03
+Current human question: depth of Objective integration and feasibility of BendTT elaboration.
+Read REENTRY and manifest fully. Read all five always records fully; recovered truncated SHARED-CONTRACTS with separate whole read. INTEGRATION is historical/stale, not current status.
+Read all four Bend route records, recovering truncated WorldLanguage lines35–112 separately; SemanticsAudit 1–210/211–end and LogicCompilation 1–240/241–495/496–end. Old TT recommendations are superseded by current human direction.
+Read actual cv17942 +/-5,18468 +/-12,18540 +/-5, human prompts tail. Both human question and assistant boundary-check reply read. Earlier receipt14 covers older dialogue; no fresh all-history claim.
+Read current common docs/OBJECTIVE-BEND.md lines1–195; actual ObjectiveBendOpenRecursion1–125 and DemandMachine1–115. Fresh roster checked, owners continuing. Captain confirms main694c84a, retry/config/job/umbrella and other source intake pending. Readback/drain intake done and consent10 released. No duplicate build or swarm restart.
+Actual schema has independent lazy Term and heap cells/frames/fix, not a general Objective->BendTT translation. Native complete authored admission remains World-owned and unfinished. Answer preserves direct Objective direction; fuelled TT interpreter or compatible fragment are prospective alternatives, not new implementation decisions.
+Previous pre-compaction reading of complete private_execution route recorded in summary is prior reading, not repeated this window. Manifest/candidate membership split awaits actual source review before root schema decision; backend now explicitly identifies appendObject/DISPATCH.APPEND v3, not invokeObject.
+No source implementation changed in this reentry. Captain intake unblock message sent, World warned against confusing old TT adapter migration with new Core4 path.
+
+Goal continuation: read ALL private_execution route records in this window, then actual PartyCodec, SealedCodec, Admission, Recovery, GenerationKey. Approved explicit v4 split; both owners ACK. Read actual job nonce/submission/recovery/test definitions and fixed canonical-decimal parser mismatch in shared source with exact predecessor hash. New job hash ddc9594c; focused test/production pending. Captain owns publication.
