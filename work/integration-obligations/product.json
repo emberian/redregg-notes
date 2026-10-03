@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-03T15:54:00Z",
+  "updated_at": "2026-10-03T16:48:07.227900+00:00",
   "obligations": [
     {
       "id": "product-spk-failed-start-reconciliation",
@@ -8,9 +8,9 @@
       "consumer": "takeover_service",
       "coordinator": "root",
       "state": "receiving",
-      "next_action": "Service owns sole original app8502/g2 op206 reconciliation using exact historical Host18c18; lookup209 on uncertain durable submit. No reset/reinstall/oldHost restoration after event66.",
+      "next_action": "Service sole owner awaits original native208 outcome; if uncertain use ONLY209 with retained original ingress, never reprepare/resubmit. Coherent local-consent historical profile seam remains separate.",
       "acceptance": "Actual failed START -> native authorized same-request reconciliation -> lawful retry or terminal readback, with service acknowledgement; four original r2 services preserved. No new INSTALL, fresh-world substitute, archive ACK or blind claimed-START retry.",
-      "progress_evidence": "Original app8502 STARTg2 admitted/claimed but physical spawn failed. Exact namespace permission repair passed. All13 additive recovery leaves plus exact old Replay/Main compiled. Runtime transport206\u2013209 client built/tested and orchestration source qualified. r1 terminated at1200s after about18min baseline validation; no OOM/source diagnostic. Endpoint exact bulk validator passes10 refuters; captain ACKed r2 builder1889640/timeout1889638 at2400s16GiB Lean2/C2, with old manifest equivalence before compilation. Runtime independently observed r2 live13:08UTC. Actual native ELF and same-g2 reconciliation remain OPEN. UPDATE15:54UTC: all561Lean/561C native bridge18c18f64 built; operator2256348/Host2256429 actually reopened same cfg1fbc/SQLite. CLI1ffe2258198 invoked once15:50:09, source admission CPU-bound, no final result yet.",
+      "progress_evidence": "Original app8502 STARTg2 admitted/claimed but physical spawn failed. Exact namespace permission repair passed. All13 additive recovery leaves plus exact old Replay/Main compiled. Runtime transport206\u2013209 client built/tested and orchestration source qualified. r1 terminated at1200s after about18min baseline validation; no OOM/source diagnostic. Endpoint exact bulk validator passes10 refuters; captain ACKed r2 builder1889640/timeout1889638 at2400s16GiB Lean2/C2, with old manifest equivalence before compilation. Runtime independently observed r2 live13:08UTC. Actual native ELF and same-g2 reconciliation remain OPEN. UPDATE15:54UTC: all561Lean/561C native bridge18c18f64 built; operator2256348/Host2256429 actually reopened same cfg1fbc/SQLite. CLI1ffe2258198 invoked once15:50:09, source admission CPU-bound, no final result yet. UPDATE16:46UTC owner: retained1800 prepare finished, plan/signatures/18241-byte ingress and submit-requested retained; original CLI invoked208 once. No terminalreceipt yet. Current373-based consent helper refuses historical genesis/head; not a qualified replacement for18c.",
       "waits_for": [
         {
           "owner": "takeover_service",
@@ -67,9 +67,9 @@
       "consumer": "bread_programmable_archaeology",
       "coordinator": "root",
       "state": "receiving",
-      "next_action": "Resident explicitly resumed by frontier on actual native fixture8485a1b6/wrapperba453117; continue SAME retained original signed room offer, then independent four-store readbacks and sequential carrier consumer.",
+      "next_action": "Frontier repairs reopened outbox scheduling and separates production completion from recovery-test restart. Resident callback resumes exact retained document call after operator ready; no resubmit/reset.",
       "acceptance": "Actual current signed source/readCapability support -> prepared original owner call -> ordinary agreed append -> lost response/restart -> exactly one append on four actual readbacks, including stale/revoked support refusal and retained original provider context. No consensus-none history clone or renamed anonymous bytes.",
-      "progress_evidence": "Resident scoped9/9 and original TCP/MLDSA consumer qualified separately. Exact receiver373 C+olean cohort exported b723a784; frontier consumes it. Runtime13:08 reports four independent physical stores/MAC/MLDSA keys, same normalized profile and exact anchored seed, genuine Ed25519 enrollments, zero accepted history. Genesis initialization is not an agreed append. First signed setup awaits matchedHost7 prepare/read bridge; resident remains correctly stopped pending it. 14:20UTC: reader ELF361efa9f actual four-store profile/current-key and direct-submit-refusal probes PASS. Resident explicitly resumed; no accepted source effect yet. UPDATE15:54UTC: native fixture linked after interpreter timeout; frontier dispatched actual resident followup. Zero acceptedsourceeffects remains latest verified precontinuation state; no new success claim.",
+      "progress_evidence": "Resident scoped9/9 and original TCP/MLDSA consumer qualified separately. Exact receiver373 C+olean cohort exported b723a784; frontier consumes it. Runtime13:08 reports four independent physical stores/MAC/MLDSA keys, same normalized profile and exact anchored seed, genuine Ed25519 enrollments, zero accepted history. Genesis initialization is not an agreed append. First signed setup awaits matchedHost7 prepare/read bridge; resident remains correctly stopped pending it. 14:20UTC: reader ELF361efa9f actual four-store profile/current-key and direct-submit-refusal probes PASS. Resident explicitly resumed; no accepted source effect yet. UPDATE15:54UTC: native fixture linked after interpreter timeout; frontier dispatched actual resident followup. Zero acceptedsourceeffects remains latest verified precontinuation state; no new success claim. UPDATE16:49UTC: initial room genuinely installed once on all4, carrier replay/restart both64-epoch poles passed withCOUNT1. Subsequent document call92a07c9e timed180s and all4lookupABSENT. Frontier found durable second offer but fresh cursor reset replays historical outbox before new traffic; repair active. Full resident document/context/review journey remains OPEN.",
       "waits_for": [
         {
           "owner": "bread_programmable_archaeology",
@@ -100,8 +100,8 @@
       "owner": "docuverse_deos_construction",
       "consumer": "docuverse_deos_construction",
       "coordinator": "root",
-      "state": "waiting",
-      "next_action": "Preview UI complete and published; World/scenario owners finish new-language native authority/effect producer, then followup_task Doc for actual publish/invoke/evolve receiving.",
+      "state": "building",
+      "next_action": "Doc actively receives wire2 typed preview and implements new Objective Surface adapters. World/graded complete native current-law/funding/profile/effect gate; full publish/instantiate/evolve still open.",
       "acceptance": "Actual member module/import editing+version CAS/history, genuine diagnostics/preview from checked artifacts, governed native publish/fresh instance/self-super/evolution and source/readback/history acknowledgement; old instances retain pins. Fixed inspector or unavailable UI alone does not satisfy full loop.",
       "progress_evidence": "Actual native Studio editing/import/history/fork/stale-draft retention PASS26HTTP/18assertions/57s using client c833b50d and Host740545; exact package capture9eabba7241ab6219413ce04f3e75e47508cea59bbb303a5b165ecbd3a08afa9e consumed unchanged by compiler. Named-import parser repaired and Notebook.remember emitted to new demand machine. World/type owners now report actual captured Notebook execution returns8 and exact parsed-source global recursive-knot term accepted by compiled Lean checker Nat/uses[], receiving-r1.log in objective-types lane. General source-elaboration correspondence and native typed effect/admission/UI diagnostics remain OPEN. Doc yielded with root-owned producer callback; no completed OO language claim. UPDATE October3 after outage: original Doc owner explicitly resumed on real preview cohort02 PASS (Nat8/capture12/heterogeneous10). User renews construction15UTC. scenario_objective_world additionally owns native adapter implementation coordination. New served preview not yet qualified. UPDATE15:54UTC: actual19HTTP/14checks savedNat8 -> ordinarynativeedit42 -> checkerrefusal -> retainedhistorical8/current42 PASS, live32946 HTTP200 rootchecked. r14client+guide published dd2086cd. Complete native publish/instantiate/evolve acceptance remains OPEN.",
       "waits_for": [
@@ -199,8 +199,8 @@
       "owner": "docuverse_deos_construction",
       "consumer": "docuverse_deos_construction",
       "coordinator": "root",
-      "state": "checkpointed",
-      "next_action": "INACTIVE AND INCOMPLETE. Actual source-output producer and explicit UI consumer allocation. Resume original domain owner explicitly; no active implementation inherited by World/runtime.",
+      "state": "building",
+      "next_action": "Doc explicitly resumed and owns two new Objective Core4 Surface adapters consuming checked Execution/Extraction. Old TT lowering is being replaced, not activated. Connect browser authorized observations and exact native prepared intents.",
       "acceptance": "Actual accepted provider/entry Trace+Value -> exact typed decode -> independent accepted origin/observations/prepared actions -> real browser/document mounts; third-party/stale/narrow/private action refusal preserves drafts. Smoke/source syntax doesn't grant rights.",
       "progress_evidence": "Surface base Lean PASS; Lowering+JSON2 actual scopedPASS/released0 log/tank/dregg-build/codex-surface-next-20261003/check-r2.log. Generic Rust5PASS earlier. HelperBook smoke ready, no installed native Surface authority. Actual smoke1 terminalFAIL only missing Json DecidableEq; source compare canonical compressed strings repair. Real-use blocker: unaryNat instance IDs cannot cheaply represent random63 native identities; doc+world paired compact nativeNat byte schema/decoder repair, shared source ABI must requalify. Doc frozen Surfacev2r3 07c96f source; exactASTdecoder/Book.check/63bit smoke unqualified, actual2emissions consumed is separate producer evidence. Root/captain frozenleaves custody; callback to stopped doc on coherent qualified outputs.",
       "waits_for": [
@@ -225,7 +225,7 @@
         }
       ],
       "checkpoint_ref": "/Users/ember/dev/redregg/work/CENSUS-20261003-1420.txt; retained exact source/evidence paths in this record and original owner handoff",
-      "restart_condition": "Actual source-output producer and explicit UI consumer allocation.",
+      "restart_condition": "Already resumed; no duplicate owner.",
       "unresolved_work": "Source-authored interactive faces through current-authority native effects; Surfacev2r3 scoped compilation now passes."
     },
     {
@@ -464,10 +464,10 @@
       "owner": "resume_private_construction",
       "consumer": "resume_private_construction",
       "coordinator": "root",
-      "state": "building",
-      "next_action": "After current cohort-auth batch freeze, inspect current key_rotation374\u2013378/456\u2013476; retain original attempt before submit, reconcile discover independent current epoch, crash-safe exact multi-file install via existing custody helper.",
+      "state": "receiving",
+      "next_action": "Captain import complete owned consumer packet213c7084. Horse-exits discovered common key_rotation still old20ff52 despite custody helper present. Verify actual common consumer callsites after import; historical native receiving PASS does not yet close integration.",
       "acceptance": "Actual crash after Host admits142/before key install reopens SAMEattempt, native lookup/currentepoch proves exact original rotation, successor installs durably; no newepoch attempt or lostprivatekey.",
-      "progress_evidence": "Fable reading finding; traffic explicitly accepts exclusive key_rotation after current coherent challenge-PSK/sourcecache batch; no edits/checks yet. Shared workspace JSON CAS/receiptcontinuity helper paired historical owner. Current inspection confirms143 PURElookup absence cannot submit. Traffic construction retains BEFORE142 intentpointer/NEXT/after private snapshots, uses143 unknown/admitted only, exact stagedreplace/fsync/sharedJSONCAS; keyring file+parent explicitdirsync before dailykey replacement. Decision sticky ordinary retry result, optional explicit --new-attempt stableID freshsuccession; sameID changedold/successor/destination refuses. No completed native crashreceiving yet.",
+      "progress_evidence": "Fable reading finding; traffic explicitly accepts exclusive key_rotation after current coherent challenge-PSK/sourcecache batch; no edits/checks yet. Shared workspace JSON CAS/receiptcontinuity helper paired historical owner. Current inspection confirms143 PURElookup absence cannot submit. Traffic construction retains BEFORE142 intentpointer/NEXT/after private snapshots, uses143 unknown/admitted only, exact stagedreplace/fsync/sharedJSONCAS; keyring file+parent explicitdirsync before dailykey replacement. Decision sticky ordinary retry result, optional explicit --new-attempt stableID freshsuccession; sameID changedold/successor/destination refuses. No completed native crashreceiving yet. UPDATE16:49UTC: root read actual receiving/qualification.json: one142/one143, epoch1\u21922, no preconfirmation install, retained install, sticky result, changed input refusal, old key no longer current; Mini32c93/Host740545. Owner confirms legacy continuity profile caveat. Common consumer patch still missing at inspection; source integration explicitly OPEN.",
       "waits_for": [
         {
           "owner": "historical_missing_junctions",
@@ -530,8 +530,8 @@
       "owner": "root",
       "consumer": "resume_private_construction",
       "coordinator": "root",
-      "state": "building",
-      "next_action": "Consent owner includes exact relay/render/history three repaired decoder files and filters in next single warm batch; no renderer repeat.",
+      "state": "receiving",
+      "next_action": "Decoder trio fully received and published; retain completed regression evidence. Broader durable JSON custody integration is tracked by rotation/credit consumers; do not mark all custody repaired from decoder tests.",
       "acceptance": "NonASCII/odd/invalid hex returns bounded refusal without panic across actual producer inputs; existing valid encodings preserved; interrupted staged JSON CAS preserves exactold/new prior with dirfsync, consumers ACK actual shared use.",
       "progress_evidence": "Historical9path6f1c2d81 source with shared durableJSONCAS/6decoders awaits common integration. Root13:17 inspected actual common source: relay::unhex and renderer/history direct UTF8 slicing panic on 0\u00e90/emoji. Reserved with captain, replaced all3 with existing byte-safe crate::decode_hex preserving Option/empty/diagnostic fallback. Exact pre-edit hashes checked; no other hooks changed. Three tests added; extracted exact source functions/tests: original0/3 with char-boundary panic, repaired3/3 including all256bytes roundtrip. Shared source was never disarmed. shell::hex_bytes already ASCII-guards and hex_text uses get; no defect inferred there, left unchanged. Fullclient/native receiving remains captain batch. Captain confirms root3 decoder repairs plus historical9 helper paths published/pushed main76757030. Full client receiving still separate. UPDATE15:56 captain confirmed previous fullclient batch did NOT include decodertrio; exact source/subtests being added to consent nextbatch.",
       "waits_for": [
@@ -542,7 +542,8 @@
           "ready": true,
           "evidence": "Captain confirmed named paths integrated and pushed in76757030; full native qualification separately outstanding."
         }
-      ]
+      ],
+      "receiving_evidence": "Root read actual rust-06.log lines131-133: all3 decoder regressions PASS plus productionrelease. Manifest RUST-CANDIDATE-06.json inspected; mini c1e07c92b376dd14caeb482cf168df719d9da9e631d7c40c3086066d477a89a0. hbox:/home/hbox/workbox/codex-client-consent-20261003/."
     },
     {
       "id": "product-independent-fare-object-semantics",
@@ -606,6 +607,28 @@
       "next_action": "Captain reconcile recovery3file packet3f6ece4a with privilege source and narrow dual-role release; service use after lawful originalg2 recovery, then actual app launch/parser isolation.",
       "acceptance": "Untrusted app parsing holds no CAP_SETUID/GID; valid launch still uses exact authorized UID/package/cgroup and recovers original uncertain generation; path/capability escape attempts refuse.",
       "progress_evidence": "Service rechecked current Ambient/Bounding capabilities and spawn dependency; removing unit caps alone breaks spawning, running whole resident as app cannot read custody. Correct separation design underway; no deployment modification. UPDATE15:54UTC: root merged exact five shared paths+Linuxcfg; helper unchangedc3aa9e88; source published dd2086cd. Owner scoped3+physical1 qualify split privileges. Newly built roles had inherited grain_export placeholder; service supplied exact runtime3file packet3f6ece4a for coherent role release. No finalapp/deployment closure."
+    },
+    {
+      "id": "product-discord-shared-world-entrance",
+      "outcome": "Discord navigates the same authorized world and retains exact interaction/mirror custody across failures without lost backlog.",
+      "owner": "discord_world_integration",
+      "consumer": "discord_world_integration",
+      "coordinator": "root",
+      "state": "building",
+      "next_action": "Finish actual mirror catchup against real native world and publish full consumer/docs.",
+      "acceptance": "Authorized shared navigation/read/action discovery, durable actor-bound interaction retry, lossless backlog and uncertain POST handling, no forged Mini authorship; separate Discord disclosure from Mini private custody.",
+      "progress_evidence": "Owner reports30focusedtests and actual native shared-home/document/stranger-refusal/restart receiving. Mirror cursor path compatibility repair in progress, no live Discord deployment."
+    },
+    {
+      "id": "product-objective-only-backend-migration",
+      "outcome": "Objective Bend is the sole active Bend language; useful oblivious/circuit/zk/FHE backends implement its actual lazy semantics rather than retained BendTT.",
+      "owner": "astra_consensus_composition",
+      "consumer": "bend_world_language",
+      "coordinator": "root",
+      "state": "building",
+      "next_action": "Composition owns machine/network migration, compiler TT-free arithmetic/source lowering, ZK owner actual lazy trace relation, FHE owner Objective specialization; documentation Astra rewrites guide. Captain integrates coherent imports/build targets and consumer changes.",
+      "acceptance": "No active parallel BendTT language/runtime onboarding; actual Objective authored programs reach native/private backend consumers under explicit semantics and resource contracts. Historical strict proofs do not count as lazy refinement. Preserve useful machinery and Git history.",
+      "progress_evidence": "Explicit latest human direction. Owners notified; composition/compiler acknowledged stopping old-target expansion. Docs replacement drafted, not yet published."
     }
   ]
 }

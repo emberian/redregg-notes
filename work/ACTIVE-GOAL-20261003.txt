@@ -2,6 +2,12 @@ ACTIVE THREAD GOAL — explicitly requested by Ember, October 3, 2026
 Session 01a0fa81-d479-7753-a1b3-1331d1ed53de. Goal tool status: active.
 No token budget requested or set. This is the saved objective, not completion evidence.
 
+October 3 ~16:45 UTC explicit refinement: Objective Bend is the ONLY Bend language
+target. Remove the active legacy BendTT path by migrating useful machinery and
+consumers to Objective semantics; keep historical provenance in Git. Nock compatibility
+remains requested. The new source-inspection quartet maps and repairs actual state
+machines using Mini's consumer-owned .spw and mounted workbench.
+
 Continue raising the bar on what gets built inside Mini as it grows into the new Dregg. Make Objective Bend a sophisticated, coherent, Faré/FAREOO- and Houyhnhnm-inspired language and live computing environment: composable first-class partial specifications, required/provided interfaces, final self/super, modules, reflective source-authored tools/views, fresh persistent instances, governed evolution, general typed atomic effects, durable messages and independent private results. Ground it in actual Faré sources and pinned Bend semantics. Retain Nock compatibility while Bend becomes the central authored language.
 
 Progress toward the October 13 shared multiuser agentic worldhost: substantial docuverse/deos and Starbridge-style authoring/inspection/actuation; integrated SPK hosted apps, sharing, export, recovery and restore; continuing residents with current revision-aware context, private notes and delegated tools; independently governed communities, authored worlds/collective fiction, research workdesks, allocation/exchange and service commons. The workshop and smaller joined journeys are demanding intermediate consumers, never the scope ceiling. Mine and repair useful Bread, Dreggnet, FHEgg/DrEX and other prior work; keep worthwhile transfers, portability and recovery explicitly owned.

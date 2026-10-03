@@ -1,5 +1,18 @@
 Bend as Mini's world programming language — October 3, 2026
 
+LATEST HUMAN CORRECTION — October 3, ~16:45 UTC
+"we should stop retaining the old BendTT code; Objective Bend is the only bend
+we're interested in". This supersedes the earlier retained parallel BendTT target.
+Objective Bend is the sole active Bend language. Migrate useful native, oblivious,
+circuit, zk and FHE machinery to its actual lazy semantics and remove old active
+language/runtime/import/onboarding paths. Preserve source history in Git and scope
+historical evidence accurately; strict-machine proofs do not prove lazy-machine
+correctness. Do not achieve deletion by abandoning requested backend capabilities.
+Composition owns machine/network migration, compiler owns arithmetic/source lowering,
+ZK and FHE owners own their actual consumers; captain integrates, docs Astra rewrites
+OBJECTIVE-BEND.md. Current immutable receiving jobs retain their exact artifact pins
+until terminal; this does not make old source a continuing development target.
+
 HUMAN DIRECTION
 Ember: retain Nock support, but prefer Bend as broadly as possible; specifically
 https://github.com/bendlang/bend/blob/main/bend2/bendtt.lean.

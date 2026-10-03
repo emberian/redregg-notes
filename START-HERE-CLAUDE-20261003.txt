@@ -1,9 +1,10 @@
 MINI / OBJECTIVE BEND — CLAUDE OR CODEX ENTRY
-Current checkpoint October 3, 2026, 15:54 UTC / 11:54 EDT.
+Current checkpoint October 3, 2026, after 16:50 UTC / 12:50 EDT.
 Root session 01a0fa81-d479-7753-a1b3-1331d1ed53de.
 
 READ FIRST
-1. work/CHECKPOINT-RESUMED-20261003-1554.txt — latest outcomes and actual custody.
+1. work/CHECKPOINT-OBJECTIVE-ONLY-20261003.txt — latest direction, owners and actual custody.
+   Previous receiving detail: work/CHECKPOINT-RESUMED-20261003-1554.txt.
 2. work/ACTIVE-GOAL-20261003.txt — full destination, not the passing subset.
 3. designs/ARCHITECTURAL-ARGUMENT.txt and intent/WHY-{OBJECTIVE-BEND,AGREEMENT,TRAFFIC-PRIVACY}-20261003.txt.
 4. work/RESUME-20261003.txt for navigation, then work/REENTRY.txt for actual dialogue
@@ -13,7 +14,7 @@ READ FIRST
 
 Source: hbox:/home/hbox/workbox/codex-unified-integration-20261003/src.
 Publication transport: /Users/ember/workbox/mini-unified-push-20261003.
-Mini main confirmed on GitHub dd2086cdbf2746ed258bd96846e081329d3d7497.
+Mini main confirmed96a4165f81ceee32452b381780970e54b9dce886; intake continues.
 Private reasoning repo: /Users/ember/dev/redregg; ordinary scoped commits/pushes
 are authorized. No blanket staging, resetting/stashing or foreign cache deletion.
 
@@ -22,18 +23,18 @@ original owners plus2–5Sol scenario builders. Five scenario builders were adde
 FHE and Activity original owners restored. Active workers continue. This checkpoint
 is NOT quiescence or a claim Claude has taken over. Coordinate actual shared-file,
 originalapp and four-store custody before editing or starting another native run.
-The obsolete headcount deadline is superseded. One-time checkpoint automation is
-being removed after handling; no unfinished goal is marked complete or paused.
+The obsolete headcount deadline is superseded. One-time checkpoint automation was
+deleted; periodic check-in remains paused. No unfinished goal is marked complete.
 
 RECOVERED HUMAN INTENT
 All127 genuine human messages through cv16479 across26compactions and10large
 assistant replies from last5windows were actually read before this latest window.
 Local transcripts: /Users/ember/workbox/mini-session-recovery-20261003/.
 Method/interpretation: work/INTENT-RECOVERY-20261003-1505.txt.
-Latest human discussion: actual Hermes/Objective/Unix hosting, optional OpenBSD
-bridge, retro workstation UI, richer deos views/eventing, agreement/privacy state,
-and compositional Lean Host. These are new product design questions, not an OS
-migration decision. Root response and fresh reading: receipt12 in work/.
+Latest human direction: Linux with explicit granted mounts, shared-world Discord
+entrance (Astra building), four Spw source-inspection/fix Sols, and Objective Bend
+as the ONLY Bend language target. Retire active legacy BendTT through useful
+backend migration. Root reading recorded in receipts12/13; new checkpoint above.
 
 Historical outage details remain in work/HANDOFF-AFTER-OUTAGE-20261003.txt and
 work/HANDOFF-ENTRY-HISTORICAL-OUTAGE-20261003.txt. Their no-live-build/failedbuild/

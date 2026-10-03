@@ -1,0 +1,66 @@
+October 3, after ~16:50 UTC. Live construction, not takeover/quiescence.
+
+Newest human decisions: four Sols read full executable definitions, mentally run
+entry/exit/state-machine/bounds interactions, FIX defects and build Mini .spw.
+Objective Bend sole Bend target; stop retaining old active BendTT code. Guide
+rewrite and backend migration explicitly owned, not mere documentation edits.
+
+Actual quartet: horse_entries, horse_exits, native_performance_construction
+(consistency), validation_replay_efficiency (bounds). Two fresh Sols, two reused
+completed confirmed Sols because agent service hit thread limit. Further followups
+can also fail at this limit; do not treat failed dispatch as active ownership.
+Shared brief /Users/ember/workbox/mini-four-horse-sols-20261003.txt.
+Entries initialized consumer .spw without hooks, owns shared index/map; all other
+audits disjoint. Local ~/dev/minidregg still fe60a569; captain asked safe fast-forward
+preserving untracked source/workbench. Canonical hbox source96a4165 at root inspection,
+publication checkout ~/workbox/mini-unified-push-20261003. No localsource parity implied.
+
+Real defects found already: sparse board renderer loops to maximum field id,
+allowing tiny accepted state to consume astronomical work; entries owns sparse fix.
+Rotation recovery implementation passed in own executable but common consumer still
+old20ff52; exits found missing join, original owner sends full213c7084 to captain.
+Frontier found reopened fresh-outbox cursor replays entire past before new offers,
+and a deliberate four-journal recovery test embedded in every real new proposal.
+It owns repairs; old traffic retains positive retries, no quorum/authority weakening.
+
+Backend migration: composition owns lazy machine→fixed-access network; compiler
+removed old TT lowerer from own arithmetic source while retaining generic ripple
+proof/Op API (qualification next). ZK owner resumed actual lazy trace migration;
+FHE owner informed no new TT admission; new Objective source authority producer
+must replace rather than relabel historical Binder. Doc r9 replacement SHA
+c5a5de465822cc8e39758190f06312f36efd11264275160a8e192887cd4ed7c6 in captain inbox,
+root read draft whole; publication remains to verify. Demand soundness r7 actual,
+type r30 new closure/spec calls+metadata/project qualified per owner, fullpreservation open.
+
+Current real joins:
+- Four-source room installedCOUNT1 and original-call carrier replay/restart passes;
+  actual later document call92a07c9e all4lookupABSENT after timeout. Preserve exactcall.
+  Resident stopped callback; frontier scheduling repair must wake it when ready.
+- SPK originalg2 preparation finally finished and sameCLI invoked208 ONCE with
+  retained18241-byte ingress. No terminal outcome yet. Service sole mutator; on
+  uncertainty ONLY209 exact-ingress lookup, no reprepare/resubmit/reset. Historical
+  equality leaf+IO source/C qualified successor, NEVER interrupt current request.
+- Modern local-consent15family ELF4c1b qualified, ordinary18/specialized9/attacks6
+  pass. Originalg2 snapshot refuses genesis/head; first investigate exact DB/anchor
+  prefix compatibility, NOT yet proof of semantic ABI mismatch. No anchor override.
+- Root verified actual fullRust06 decoder3PASS log+manifest; no repeat. Custody
+  wholeacceptance not inferred. Rotation actual native lostreply seven checksPASS
+  oldprofile, but common consumer missing as above; legacy continuity caveat remains.
+- Studio Doc receiving new wire2 on32947; old32946 intact. Core4 Surface adapters
+  explicitly staffed, no oldTT producer activation. Full native publish/evolve open.
+- MPC actual width8 source circuit255+1→256 (recipient-only recovery) passes;
+  private205 native linker running under runtime, actual lawful v3 source fixture
+  now owned scenario_private_native. Asked backend owner for missing event60
+  reservation/header author; ACK pending. No invented private permit/certificate.
+- Graded r42 repaired Transaction codec, World checks Transaction→Controller.
+  Runtime/captain asked pipeline coherent modern execution-critical Host/profile;
+  no need include unrelated proof-only research in that closure. No such ELF yet.
+- Discord Astra30tests+actual authorized home/document/restart reported; mirror
+  catchup native path final repair ongoing. No actual Discord external messages.
+
+Root product obligations updated with current owners, exact received scope and
+new Discord/Objective-only rows. Retired money/Station/fiction/portable domains
+remain explicitly checkpointed, not silently handed to World. Goal remains active.
+Prior goal turn classified progress: actual dispatches, source defect evidence and
+durable direction changes. This turn likewise advances receiving ownership and
+repairs stale integration status; broader requested capabilities still incomplete.
