@@ -212,3 +212,18 @@ two replicas catch up; real TCP/MLDSA/archive CAS. Actual source append still jo
 Root reentry compulsory set reduced from8 to5 by routing full product/raisedbar/
 objective-recovery records to their decisions; records/locators preserved. This
 reduces repeated history load while retaining full goal and shared contracts.
+
+PERSVATI: USE THE MACHINE — explicit live Ember correction ~11UTC
+Screenshot shows24cores virtuallyidle,20.7/83.8GBused/load1.05. Roothadalready
+measured63.8Gi available/204Gi diskfree; conservative queue was wrongconstraint.
+User: 'practically idle. let er rip'. New allocation supersedes2leafplan:
+SIX concurrent Leanleafs4GiB/2threads +main16GiB/4threads +TWO Rust8GiB/jobs4,
+aggregate56GiB/24threads, swap0/isolatedwritableoutputs; dynamicunusedseat trade
+for largerjob withoutrootpermission, recheckactualheadroom. Placementowner
+redregg_evidence androom/captain/runtime/product leads implement/runreadywork.
+Actual obstacle ownerfound: SFTP~3MB/s cachetransfer, not CPU/memory. Preserved
+partials, now directSSH/dd remaining313MB; exactarchivehash beforeartifactreuse.
+Do not serialize portable4→money2→otherleafs as fakequalification prerequisite;
+afterimmutablemirrorverify independentjobs use separate overlays/guardianlocks.
+ExistingRustslots canrunreadyfrozenchanges duringtransfer. Assignment is not
+execution: firstactual jobs stillawaited at this append. No foreigncleanup.
