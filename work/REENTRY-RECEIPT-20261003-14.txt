@@ -1,0 +1,51 @@
+Re-entry and root integration — October 3, ~17:25 UTC
+
+Actually read REENTRY, manifest, all five always/core records in full; Mini
+AGENTS and HANDOFF, redregg AGENTS, prior root-merges note. Actual dialogue:
+cv17606 +/-2,17658 +/-3,17942 +/-5 (human + assistant); current cv prompts recent
+range15805–17942. No fresh full product-route reading/architecture decision this
+window. Previous receipts remain provenance, not fresh verification.
+
+Live roster inspected; no errored agent visible. Docs pending_init was misleading:
+owner replied running normally, finished published guide verification and r10
+Studio correction. scenario_private_agreement pending restart interrupted; work
+already explicitly assigned to native/private producers, no active job killed.
+Discord pending_init reply still awaited. Existing World/privacy capacity failures
+had resumed; original SPK helper completed. Do not claim all past errors surveyed.
+
+Actual common/user checkout and GitHub main694c84a8 verified; includes source batch
+bce707 and external Spw1bf101de. No sidebranch. Read captain1718 process/ownership
+checkpoint; its duplicate publication.pushedHead field stale96a, captain notified.
+
+Root reviewed/appended next shared source under captain handover:
+- Retry numeric grammar/module plus main/workspace/publisher consumers. Excluded
+  archive's unrelated stale main invocation hunk, preserving consent.
+- Exits nonLinux metadata fence, then sealed config successor. Actual transport
+  final3e1d4b53c0a5a4fdb9f6e0725c7c1ac46b9c2cde013e1635477547f9cf22c375.
+  Read full patch + actual serve closure. Linux sealed original settings/image;
+  nonLinux checked pathname only. Scoped helper3 PASS owner evidence.
+- Held jobr1: initial lost reply had no durable marker, subsequent refusal could
+  falsely permit fresh semantic request. Owner accepted counterexample and is
+  constructing durable send/outcome pairing before merge. No job mutation yet.
+All applied patches git apply --check / git diff --check PASS. Captain owns Git.
+
+Independently read Rust09 actual log:58/58 tests PASS, production release finished,
+SCOPED-PASS-routing-horse-production and terminal0. This qualifies earlier combined
+Studio/signing/sealedIMAGE/replan/board/rotation cohort, not new retry/config/job.
+Consent owns one next receiving batch; no duplicate build launched by root.
+
+Broad destinations unchanged. World+graded now constructing genuine Objective
+source/current-input/funding/execution/Plan Controller replacement. No native
+Accepted claimed. Privacy source event60 actual compiling, keys all4 actual
+bootstrap/reopen received; full private205 source admission still open. SPK original
+g3 closure verified previously, next browser/Hermes journey ongoing. No generic
+legacyTT resurrection, no profile hash override, no live service restart by root.
+
+Human then asked depth of Objective integration and elaboration into BendTT.
+Read bend route RaisedConstructionBar, SemanticsAudit whole; WorldLanguage whole
+with truncated middle recovered103–136; LogicCompilation1–738 whole split chunks.
+These historical records contain superseded TT targets. Read actual main Core4
+constructors/mixBody and DemandMachine cells/stepRaw, consulted current composition
+and World owners. Current answer distinguishes deep language semantics from still
+unfinished native integration; TT bounded-interpreter/subset encoding possible,
+no general direct old total-CBV elaboration currently implemented. No target pivot.
