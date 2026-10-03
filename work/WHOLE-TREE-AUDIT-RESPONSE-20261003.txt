@@ -24,7 +24,8 @@ sufficient. Birth legitimately finalizes source; marker alone need not bind effe
 New additive Kernel/NativeClientConsent source delegates exact Challenge/SigningPlan
 construction to the SAME Lean functions on a locally verified pinned prefix and
 retained authored intent. It compares complete canonical frames including ordered
-incidences. This full-peer producer is unqualified at writing; common client use
+incidences. This full-peer producer now passes bounded Lean qualification (check-03.log,
+source d6aaed259ef24e0cc3147bfd31cfd1bc7bde63e89d0ed0242f36931840bc3979); common client use
 and thin-client selective-witness verification remain actual required work.
 Do not expose full private state to thin clients as a shortcut, or silently require
 full replay on every signature. Warm verified prefixes / incremental extension and
@@ -91,3 +92,12 @@ The real SPK failed START remains the ORIGINAL world/generation: no reinstall/re
 Captain transferred same live native bridge to a bounded phase guard after bulk I/O
 verification; compile progress preserved. Four-source reader receives matched native
 artifacts. Component successes do not constitute completion of these destinations.
+
+14:02 actual updates
+NativeClientConsent qualified against exact NativeHost7+373 existing imports;
+root reserved module and terminal repair received into common source, publication
+captain-owned. Local client invocation/signing and thin remote witnesses still OPEN.
+Studio actual captured Notebook returns8 AND same parsed core type-checks Nat/uses[].
+Compiler owns generic preview CLI to trigger actual Doc UI receiving callback.
+Second historical SPK build again terminal before ELF. Endpoint owns preserved
+prefix/NVMe capsule continuation; root asked exact runnable status, no third HDD scan.
