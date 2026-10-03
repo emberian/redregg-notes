@@ -7,15 +7,13 @@
   "always": [
     "/Users/ember/dev/redregg/work/RESUME-20261003.txt",
     "/Users/ember/dev/redregg/work/ACTIVE-GOAL-20261003.txt",
-    "/Users/ember/dev/redregg/work/RAISED-CONSTRUCTION-BAR-20261003.txt",
-    "/Users/ember/workbox/mini-private-capacity-review-20261002/OCT13-OBJECTIVE-RECOVERY-20261003.txt",
     "/Users/ember/dev/redregg/designs/BEND-DIRECTION-20261003.txt",
     "/Users/ember/dev/redregg/designs/SHARED-CONTRACTS-20261003.txt",
-    "/Users/ember/dev/redregg/designs/BIGDREGG-PRODUCT-ARCHITECTURE-20261003.txt",
     "/Users/ember/workbox/mini-private-capacity-review-20261002/INTEGRATION-20261003.txt"
   ],
   "routes": {
     "bend": [
+      "/Users/ember/dev/redregg/work/RAISED-CONSTRUCTION-BAR-20261003.txt",
       "/Users/ember/dev/redregg/designs/BEND-SEMANTICS-AUDIT-20261003.txt",
       "/Users/ember/dev/redregg/designs/BEND-WORLD-LANGUAGE-20261003.txt",
       "/Users/ember/dev/redregg/designs/BEND-LOGIC-COMPILATION-20261003.txt"
@@ -31,6 +29,7 @@
       "/Users/ember/workbox/mini-private-capacity-review-20261002/bread-joint-interfederation-comparison-20261003.txt"
     ],
     "product": [
+      "/Users/ember/dev/redregg/designs/BIGDREGG-PRODUCT-ARCHITECTURE-20261003.txt",
       "/Users/ember/dev/redregg/designs/ALTERNATIVES-20261003.txt",
       "/Users/ember/dev/claudesplosion/planning/DREGGNET-CLOUD.md",
       "/Users/ember/dev/claudesplosion/planning/handoff-2026-10-03/START-CODEX.md"
@@ -40,6 +39,9 @@
       "/Users/ember/dev/redregg/coverage/READING-MAP.txt",
       "/Users/ember/dev/redregg/intent/worlds-second-pass-20261003.txt",
       "/Users/ember/dev/redregg/intent/foundations-intent-model.txt"
+    ],
+    "intent": [
+      "/Users/ember/workbox/mini-private-capacity-review-20261002/OCT13-OBJECTIVE-RECOVERY-20261003.txt"
     ]
   },
   "prior_conversations": [
@@ -95,6 +97,7 @@
       10400
     ]
   ],
-  "latest_dialogue_start": 10400,
-  "latest_human_locator": 10792
+  "latest_dialogue_start": 12380,
+  "latest_human_locator": 12530,
+  "cadence_note": "Latest human corrections require sparse root context and lieutenants. Read complete core records, recent both-party dialogue and decision-relevant routes. Historical full design/intent records stay mandatory for decisions in those routes, not every routine build followup. Prior receipts are reading provenance, never fresh-state evidence."
 }

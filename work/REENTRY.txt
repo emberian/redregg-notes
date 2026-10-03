@@ -7,28 +7,34 @@ A compaction summary is a map. Do not infer that seeing its file list means the
 files have been read. This procedure is for the root; do not disrupt continuing
 builders or make every specialist reread the entire project.
 
-1. Recover our dialogue before making new direction/status claims.
+1. Recover recent actual dialogue before making new direction/status claims.
    cv prompts 01a0fa81-d479-7753-a1b3-1331d1ed53de --json
-   python3 /Users/ember/dev/redregg/work/reenter.py --dialogue 8781..9742
-   Read BOTH parties. This anchor includes Claude takeover, objective correction,
-   source-review authority, historical replay, Bend-as-JS, FHE and new-Dregg direction.
-   Then read later messages through the latest cv prompt and its following replies.
-   Use explicit ranges, not --pre-compaction alone (defaults to the first boundary).
-   Do not mistake injected role=user envelopes, quoted material or fork repetitions
-   for new human instructions. If a decision is uncertain, expand around its exact
-   locator with cv show --around INDEX --context K, including relevant tool evidence.
-   Extraction omits thinking and tools; it does not decide what is true or current.
-   Also follow EVERY prior_conversations entry in the manifest: cv prompts for
-   each, then both sides around its decision anchors and handoffs. These are
-   human-linked workstream predecessors, not verified cv fork lineage. Expand
-   beyond selected anchors when a question needs it; never claim whole-session
-   comprehension from a few windows. Preserve later corrections across the chain.
+   Read the recent human prompts AND consequential assistant replies since the
+   previous receipt, including corrections to that assistant's framing. Use
+   reenter.py --dialogue START..END or cv show --around INDEX --context K.
+   Prefer a bounded recent window, expanding only where meaning is uncertain.
+   Ember explicitly requested lighter cv at #11486 and lieutenant delegation at
+   #12399; rebuilding a huge historical context every compaction defeats that.
+
+   The alignment anchor 8781..9742 and EVERY prior_conversations manifest entry
+   remain required orientation for a fresh takeover that has not read them.
+   Existing exact receipts record which actual exchanges were read earlier in
+   this collaboration. On subsequent windows, revisit the particular anchors
+   relevant to a disputed decision or changed destination, rather than replaying
+   the entire chain. Never call old reading a fresh current-state verification.
+   The manifest retains all predecessor locators and broader recovery ranges.
+   Distinguish human prompts from envelopes/quotes/fork repetitions. Extraction
+   omits thinking and tools and does not establish that a claim remains true.
 
 2. Read every file under "always" in reentry-manifest.json completely, in order.
    RESUME gives navigation/owners, not a substitute for the remaining records.
    Read in bounded chunks. Truncated output is unfinished reading; fetch the rest.
-   The product architecture is a proposal with dated source evidence, not a new
-   human feature mandate. Newer human corrections and current source take priority.
+   Core keeps the full active objective, current navigation, Bend direction,
+   common contracts and integration state. The large product architecture,
+   raised construction bar and historical objective recovery are route records;
+   read them fully before decisions in those areas. This moves reading to the
+   decision it serves, without deleting scope or treating a summary as source.
+   Newer human corrections and current source take priority.
    The manifest inventory reports missing files/hashes; it does not certify reading.
 
 3. Before consequential work in a route, read its complete named design records.
@@ -81,3 +87,12 @@ Keep exact dialogue anchors and current file paths. Move superseded source/build
 claims out of RESUME, retain reasons for changed direction, and add new contract
 routes when actual work needs them. Don't turn every incident into a permanent
 restriction. Hook output remains small and points to the current procedure.
+
+LIGHTER ROOT CADENCE — October3 ~11:00UTC
+Three lieutenants own runtime, product and protocols; captain owns common source
+and native cohorts. Root reads actual cross-system contracts and resolves broad
+choices, while routine logs/leases/compiler repairs stay with owners. Recent
+Ember steering: keep attention wide, deepen substantial constructions alongside
+joined scenarios, and do not let endless review prescribe only tiny next fixes.
+This cadence is not permission to skip a required source/design read or count
+previously extracted text as read. Log the exact current reading honestly.
