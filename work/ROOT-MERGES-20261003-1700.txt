@@ -1,0 +1,55 @@
+Root integration work after 16:54 UTC, October3
+
+Previous goal turn is progress: actual shared-source sparse-board fix applied;
+this turn also applies two reviewed consumer fixes under captain's explicit handover.
+Canonical hbox:/home/hbox/workbox/codex-unified-integration-20261003/src, main96a4165
+at inspection. Unrelated active edits preserved. Root does not commit canonical
+source; captain includes these named paths in next publication.
+
+1. web.rs sparse board renderer
+   Reads only present even state fields, ordered map preserves prior first sorted
+   duplicate value and owner association. Avoids numeric address-space scan and
+   overflow. Added u128 maximum/sparse/duplicate/order regression.
+   SHA715a8cfc8a8eea160889f148636d2b92aef3583ef3bdf4d07c1285c9d434d17d.
+   Applied only on clean tracked web.rs; existing Studio route hooks retained.
+2. replan.rs
+   Clears previous attempt's thread-local Host verdict before new attempt, preventing
+   a prior stale-root refusal from authorizing retirement after lost reply/local error.
+   Recognizes exact recoveredAfterUncertainResponse as accepted, not retireable.
+   Reviewed complete loop and patch; original e97ea3fc checked before applying.
+   SHA c554d54ffb9a90cacd4bf77eb340408625b310476fc648ccc5fb5e220e44e3de.
+3. transport.rs
+   Each Host restart verifies advertised image hash; Linux runs held descriptor.
+   Preserved consent owner's current invoke_inner/local_host/direct-signer checks.
+   SHA c7ec7991a46b5528224f95593349139cf2c6d4de0f13c7dda869b7f553a4e24f.
+   This is WIP: held mutable inode leaves in-place writer gap. Root raised it;
+   exits owner now implements sealed memfd snapshot successor, not merely caveat.
+
+git apply --check and scoped git diff --check passed for all. Author standalone
+checks exist; whole-client regression joins consent's ONE combined warm batch,
+not yet qualified at this note. Captain and consent have exact path hashes/tests.
+
+Live ownership recovery: fresh roster26 running workers, no unattended capacity
+failure. Recent errors actual spk_recovery_endpoint, resume_private_construction,
+bend_world_language: first subsequently finished, other two active. Failed resumed
+scenario_private_agreement left pending_init; root interrupted pending start because
+lawful v3 fixture already assigned elsewhere, no live job interrupted.
+
+SPK service reports actual original request installed at16:54:47, stoppedg3 and
+acceptedCount78, same ingress252bb442, warm18c remains. Exact receipt requested for
+root independent read; browser/Hermes subsequent user journey still open.
+
+Private205 actual linker log/root inspected PASS333a02a7964dfd5de10ef5fde3d1f0b8149ba1ef53c560f53f12c135491772c1,
+3392 imported objects/16compiled, terminal0. Scenario owns lawful v3 genesis;
+backend ACKed event60 reserve author; privacy owner ACKed real recipientbootstrap.
+No fabricated private authorization or relabeled ordinary room fixture.
+
+Transaction codec general proofs actualPASS11s per graded; whole module earlier
+4Gi OOM. Root authorized runtime ONE warm bounded8Gi (16Gi if required by actual
+owner estimate),2threads/180s cohort with captain/World coordination, no duplicated
+or broad rebuild. This addresses environment rather than weakening the proof.
+
+Source publication backlog acknowledged; captain owns guide9/rotation fullconsumer/
+Discord14files/Objective r7 and usual intake. Local ~/dev/minidregg safe fast-forward
+to96a verified; all untracked including .spw preserved. Four Spw maps now linked,
+actuallint0/no broken links reported; partial coverage stays explicit.
