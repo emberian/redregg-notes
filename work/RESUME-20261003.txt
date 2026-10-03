@@ -365,3 +365,21 @@ pending. Placement slots free/warm; no reason for placement owner to poll.
 redregg checkpoint2eb2473 was already present. Its newly public remote was made
 PRIVATE on Ember's explicit request, verified via GitHub. Fresh receipt records
 actual reading limits. No credential discovery or complete secret scan claimed.
+
+ACCOUNT-REFRESH RESUMPTION — October3 ~10:30UTC
+Ember explicitly resumed interrupted agents/goal after freshaccount allocation.
+New staffing preference: mostly Sol; Astra rare/precious coordinators or strategic
+work; CURRENT Astra owners may finish. Do not replace them just to change models.
+Root resumed existing construction owners via followup_task; no newagents.
+Old research-only completed scouts need no redundant restart. Completed waiting
+turns keep ownership and exact producer-triggered resume (compiler/data/docs).
+Captain confirms preserved7d501177+70de276, GitHub stilla593 at probe, pushingnow.
+41+ sourceinbox rows survived interruption; coordinator doing packet→commitmap.
+Service actual four r2 units and ongoing app process survived unchanged; preserve.
+Doc remoteweb+Store/Host survive; old Macforward gone, no service restartneeded.
+Persvati actual IR2 proof/disclosure service r4PID3289380 running warm with checked
+fixture; dZK8testdelta receiving slot2. Constraints actual PASS current repaired
+module, earlier failure superseded. No auth errors observed among resumed replies.
+Source-run funding admission remains a REAL shared kernel join: current prepared
+run is Nock-specific. World owns coherent Bend source/charge/current-law extension
+with captain; no run:none wrapper claimed sufficient. Broadgoal remainsACTIVE.
