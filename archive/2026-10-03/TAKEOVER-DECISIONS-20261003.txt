@@ -1,0 +1,73 @@
+TAKEOVER DECISION MAP — recovered 2026-10-03
+Scope: prior Codex cloud root 01a0fae5-8eb3-7392-83ee-4179c7664edc and Claude takeover df44288a-6539-4fb8-a6d5-2e7f78b3d751. Read actual prompts and surrounding exchanges, selected current dossiers and cv tasks. No builds, Git mutations, deployment, paid calls, or remote deletions. This private synthesis is not a transcript dump. Actual human decisions outrank handoffs; reports are labeled separately.
+
+1. DESTINATION AND AUTHORIZATION THAT MUST SURVIVE
+
+Cloud [154] (2026-10-02 00:57 EDT): user asks project/pillar planning for Mini kernel, SSH, SPK hosting, mature robust Hermes, Dreggnet cloud with nominal DREGG via Solana mainnet, an SDF-like community. [189] selects Mini shell + hosted apps first. [199] explicitly rejects an actual Unix shell offering. SSH is an entrance to the distributed OS, not a Unix-account service.
+
+Cloud [46] (00:45): user explicitly authorizes pushes. Cloud [289] (01:05): consequential exact limited quote: 'anything "deferred to me" by claude, you can just take over the analysis and decisionmaking.' Assistant immediately accepts investigation/engineering ownership, retaining escalation for material preference/private information. This is blanket backlog delegation, not only permission for a named tariff. No later human prompt recovered here rescinds it. Normal engineering choices marked 'waiting on Ember' need investigation, recommendation and ownership, not a standing hold.
+
+Cloud [7880] (13:30): user specifies full teardown/rebuild deployment cycles, no sensitivity to transitionary states or migrations; explicitly rejects myopic fixed-capacity 'two' and asks tech-debt/missing/underwired review. Surrounding [7879] was an assistant proposal still treating checked public carry as cycle 3 and two members as the joined goal. The user's correction supersedes those prerequisites. Preserve checked carry as useful semantic capability; it does not gate fresh deployment. Restart, exact retry, backup, authority and accounting are still genuine product behavior.
+
+Cloud [214] (01:02), [8913] (14:50), [9929] (17:55): user insists ambition persist across compaction, top-level context/synthesis accumulate, detailed work delegated, very large Bigsteps converge/integrate and may be imperfect. Small fixes belong within capabilities people can use, not an endless substitute destination. [8041] (13:54) approves concrete seven-implementation-lane plus focused-reviewer plan after three scouts.
+
+The prior cloud assistant [242] and [409], supported by durable DREGGNET-CLOUD.md, explicitly preserve complete docuverse, substantial deos, world extension from within, laws/kinds, hosting and participant-operated nodes. These passages are recovery of earlier user exchanges, not themselves new human mandates. The stronger current root brief adds full OO, confidential/private computation, traffic privacy and distributed agreement; October 13 requires traffic privacy and agreement. Do not allow the cloud dossier's narrower same-world journey or two-friends tracker title to replace current scope. No CometBFT convenience import follows from the cloud history.
+
+Cloud [566] (01:22): BYOK Chutes/OpenRouter intended; later adaptation to Pug's heterogeneous homelab with model-aware allocation among users. 500–800 tok/s is user planning estimate, not measured guarantee. [619] provides limited-credit dev key and requests sparing use; local Qwen is then closed. Latest handoff carries no-new-paid-calls boundary. Retain BYOK and scheduling ambition without using credentials or treating previous test allowance as fresh spend permission.
+
+2. LATEST CLAUDE STEERING AND CONFLICTS
+
+Claude [139] (2026-10-03 00:09): user wants design/implementation alongside composed scenario tests on one world, plus tidy-up. Rust offloading and substantial different design are explicitly on table. This does not require trusted semantics to move into Rust; exact refinement and consumer joins still matter.
+
+Claude [210] (00:17) authorizes one Opus and one Sonnet overnight, says get everything onto dev even if temporarily broken and repair forward. [235] (00:38) corrects intended branch to main. Root responds by redirecting both lanes. This supersedes cloud branch codex/dreggnet-cloud-20261002 and any dev-branch instruction. Main is final integration home. Do not branch/reset/stash a shared checkout.
+
+Claude [303] (02:03) asks whether source review found performance causes; root [310] explains list/history reconstruction, helper forks, excessive exchanges and committed HTTP per request. HTTP recommendation at [310] is an ASSISTANT proposal: renewable browser-session lease instead of admission of every request, implying revocation within lease rather than next request. START-CODEX places this in 'Waiting on Ember'. There is no human demand in either recovered prompt list that it remain reserved. Under cloud [289], root can analyze and design this engineering choice; preserve authority/revocation/physical-effect contracts, quantify lease bounds, and distinguish a read/cache optimization from admitting newly authorized state-changing effects. Escalate only if an actual material user preference remains after analysis. Do not silently implement weakened revocation semantics merely to win latency.
+
+Datamodel preservation: START-CODEX and Claude final [353] say preserve all 160 Persvati predecessor directories; do not run remove_verified_batch.py. Supporting cv task 01a0f9c0-521b note event 01a1000f-9b73-7ad0-b9c6-193192fa14c9, by cv at 2026-10-03T04:39:45Z, records this as Ember's decision: removal NOT to proceed, disk not crisis; Hermes room creator has no preference. This is consistent latest recorded instruction, but the typed human decision is not exposed in the nine Claude-root prompts; do not claim recovered direct quotation. Cleanup subagent ac30bdb3 contains only root's verification-only assignment, not direct human preservation. The state file independently shows five live service pairs with environment references into five predecessor directories, including an omitted compiled NOCK_RUN artifact. Keep directories and historical services even though archive verified. Earlier CLEANUP.md removal recipe is superseded.
+
+Hbox-only: cloud [9969] supplies disk incident and hbox-only lane message; root reply commits all new work to hbox. [10131] explicitly asks cleanup stale predecessor trees. These authorized scoped stale cleanup then, not arbitrary deletion now. Latest preservation supersedes deletion of retained datamodel dirs. No new Persvati builds just because capacity recovered. Never touch fn's trees/processes or unrelated projects. Latest handoff says one Lean build at a time, swarm-build resource controls, min 50 GB hbox root free, named scoped tests, Rust through cargo-bounded.
+
+3. PUBLIC DEPLOYMENT, ASSETS AND DISCLOSURE BOUNDARIES
+
+Commits/pushes are authorized; main is integration home. Cloud [8041] approval specifically accepted tested GitHub checkpoint and multiuser composition. Do not turn an old handoff 'pushes stay with Ember' into a fresh ceremony. These exchanges do not supply real mainnet receiving address, actual payment environment or a named public-node teardown target. Existing source construction, private hbox worlds and synthetic rail qualification can continue; do not invent wallet information, send money or equate a fixture with public deployment.
+
+DREGGNET-CLOUD.md and PLATFORM-PAY.md explicitly distinguish mainnet from experimental/devnet social label. The advertised join bundle needs source-owned membership/birth-fee/remainder/total quote and real starter spendable credit. No duplicate client pricing formula, silent minting or made-up live token price. Root needs missing private address/environment when doing actual mainnet qualification.
+
+Latest START-CODEX: Ember's /Users/ember/dev/minidregg checkout is old b57aceda and must not be touched; working/push clones are /Users/ember/workbox/mini-dev-opus and mini-dev-sonnet. Ember's local /Users/ember/dev/dregg-infra contains overlapping uncommitted edge/mini WIP plus unrelated edge/tofu/main.tf and STOPGAP; inspect/reconcile, never broad-stage or overwrite. Source state, sealed bytes and running service state differ.
+
+Keep private reconstruction workspaces and transcript/personal material out of public repositories. CHANNELS-WORKSTREAM-INTERSECTION-2026-10-02.md explicitly says neighboring untracked research belongs to another session: read/preserve, do not incidentally overwrite or publish. It is a coordination entry, not accepted private agreement protocol. No permission to message other humans follows from engineering delegation.
+
+4. ACTIVE CONCEPTUAL WORK THAT MUST NOT DISAPPEAR
+
+A. Restrictive law inheritance is authenticated dependency DAG/conjunction, with stable provenance explanations; C3 is not required merely to combine restrictions. Ordered executable OO behavior is separate: shared final self, inherited super, member-authored reusable prototypes/programs, source-authorized construction, immutable pinned closure per instance. World kinds or static method dictionaries alone do not satisfy full deos/OO.
+B. Authenticated prototype construction remains incomplete. Existing Nock evaluator/authority/fees must be reused; no second evaluator or raw host-code backdoor. Read-only world definition/instance participants and checked canonical outputs must connect to owned kind revisions. Older self/super fixture receiving is real evidence but not completed construction API.
+C. Authorized law-origin naming remains source-only/prototype, op192, with no current receiver/client/live qualification. Hidden parent/range/historical origins must remain private; generic refusal is not a success for authorized explanation.
+D. Full document world includes protected ordinary authoring, source-owned live/pin/range references, private annotations/quotes, multiple useful views/inspectors, history and current-law behavior. Encrypting an app/document does not itself hide plaintext from hosted operator, prove confidential execution, supply transport traffic privacy or agreement.
+E. SPK + app exports + documents + Hermes should compose through actual delegated member/resident/connector authority in one world. First browser run, useful app-derived resident output, native checkpoint/restore and operational recovery remain required evidence. Existing scripted component successes do not prove these joins.
+F. Multiuser capacity is variable. Keep overlap/disjoint groups, join/leave/rejoin, independent budgets, fairness/noisy-neighbor/resource retention, one uid per app. Historical per-room roster slots (~499) and fixture member counts are concrete implementation limits/test choices, not platform population definition.
+G. Current root private construction must preserve delivery/order/admission distinctions, exact semantic retry, audience/epoch changes, private execution, availability/repair and fair cover/control capacity. Adjacent cloud retry machinery is useful, not a substitute for private agreement guarantees.
+
+5. TRACKERS AND DATED BASELINE
+
+Active umbrella: 01a0f9c0-521b-7400-bff7-5ca5fd59420f (open). Its title still says two friends; latest notes and current root scope supersede that narrow wording. Current root note event 01a10078-382b-7663-9ed6-5e4a5bbd7753 at 2026-10-03T06:34:01Z records unified cloud/private-computation/traffic-privacy/agreement takeover.
+Integrator: 01a0f52e-76a0-7673-9409-b52f889bcef2 (claimed codex:integrate-world), title still final; main supersedes branch naming.
+DEOS plan: 01a0f5e0-5a67-705c-b39e-052175367f84 (open).
+Prototype/self-super construction: 01a0fc34-8ba2-7343-844f-f934c281c984 (claimed codex:world-kinds).
+Kinds/method original: 01a0f99e-bbea-7413-adde-611cba4aeb0e.
+Law-origin diagnostics: 01a0fc50-4f28-7123-96d6-e264a663f1ef (open); corrects overbroad done law task 01a0f99e-98fe.
+SPK document connector: 01a0fc44-0146-77f3-b5ff-3c93c39e9798 (open).
+SPK powerbox: 01a0f84c-ec80-76eb-b489-94f8cee5eff2 (open).
+Hermes live: 01a0fb03-bc64-71b3-94c3-8a6f57d1a9b8 (claimed).
+Summon dispatcher: 01a0fc5d-4eba-71d1-b6af-8572ee9098ce (open).
+Local anchor/client continuity: 01a0fb03-bc7c-7992-b318-72a620920b27 (claimed).
+Private docs: 01a0fb20-e84b-7511-94ef-60b8c29b8265 (claimed).
+BYOK: 01a0fbc7-a94c-7ee2-8c76-868f51813fc3 (claimed).
+Homelab: 01a0fb11-e4db-7440-9023-a1f0206497a5 (claimed).
+Deployment: 01a0f52e-7711-71f4-80a1-7d4a5f8a8e07 (claimed); old title must not select new target blindly.
+Encrypted backups: 01a0f52e-771c-7417-a76d-f9c40bd8e0da (claimed; actual age key missing).
+
+Already resolved under delegated Codex identity on October 2: FAREOO adoption 01a0fa2a-8671; rollback composition 01a0f973-99a0 (local authenticated head + client receipt memory, external witnesses later); tariff 01a0fad9-93fe (1,000,000 steps free/subject/clock day, then 1 credit/step, experimental setting, not CPU cost claim and no live change by decision). Do not re-ask these as untouched Ember blockers.
+
+Dated Claude handoff, not reverified by this recovery lane: main e851920e, sealed family90562d76 24 roles at Rust90562d76 / Lean e8582196, Host f6500290..., first four private-store smoke steps pass. World r1 still old family2a075e68 with old rejoin/Hermes/browser defects. No controlled whole-action before/after, no first actual browser app, no completed joined app/document/Hermes world. Any fresher claim needs actual artifacts/current head.
+
+Retrieval commands: cv prompts 01a0fae5; cv show 01a0fae5 --around 289 --context 5; same around 7880, 8041, 8913, 9929, 9969, 10131. cv prompts df44288a; cv show df44288a --around 139 --context 5; same around 210, 235, 303, 336. cv task show <id> --brief --notes-last N; use --json then filter locally when exact note desired (show's JSON output does not honor every render note filter).

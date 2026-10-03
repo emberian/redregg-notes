@@ -1,0 +1,125 @@
+{
+  "imported_at_utc": "2026-10-03T07:34:18.175197+00:00",
+  "records": [
+    {
+      "source": "/Users/ember/workbox/mini-private-capacity-review-20261002/INTENT-MAY-JUNE-20261003.txt",
+      "snapshot": "archive/2026-10-03/INTENT-MAY-JUNE-20261003.txt",
+      "sha256": "f332923f99aa99228cf1df7bb5348a26afb59bca50af17e06391d69e9f5e63ec",
+      "bytes": 23240,
+      "source_mtime_utc": "2026-10-03T07:19:28.549061+00:00",
+      "kind": "agent_report_or_coverage_not_primary_evidence"
+    },
+    {
+      "source": "/Users/ember/workbox/mini-private-capacity-review-20261002/INTENT-JULY-AUGUST-20261003.txt",
+      "snapshot": "archive/2026-10-03/INTENT-JULY-AUGUST-20261003.txt",
+      "sha256": "a273c370e65aa12b8986424e8bff609659107e8ef8f44d5b8874ee8dab10e2b4",
+      "bytes": 21747,
+      "source_mtime_utc": "2026-10-03T07:20:34.057957+00:00",
+      "kind": "agent_report_or_coverage_not_primary_evidence"
+    },
+    {
+      "source": "/Users/ember/workbox/mini-private-capacity-review-20261002/INTENT-SEPTEMBER-OCTOBER-20261003.txt",
+      "snapshot": "archive/2026-10-03/INTENT-SEPTEMBER-OCTOBER-20261003.txt",
+      "sha256": "f2f959423152712cfb2f7f144ecbcf6f61fee1c8f73fce3a648b6cc9a6b74ce5",
+      "bytes": 23810,
+      "source_mtime_utc": "2026-10-03T07:18:23.835729+00:00",
+      "kind": "agent_report_or_coverage_not_primary_evidence"
+    },
+    {
+      "source": "/Users/ember/workbox/mini-private-capacity-review-20261002/INTENT-MAY-JUNE-COVERAGE-20261003.json",
+      "snapshot": "archive/2026-10-03/INTENT-MAY-JUNE-COVERAGE-20261003.json",
+      "sha256": "620822242d881a84fcae9a4ac7be3aa98836fe24ff9f904d997356f4a2252ecc",
+      "bytes": 6483595,
+      "source_mtime_utc": "2026-10-03T07:20:08.631860+00:00",
+      "kind": "agent_report_or_coverage_not_primary_evidence"
+    },
+    {
+      "source": "/Users/ember/workbox/mini-private-capacity-review-20261002/INTENT-JULY-AUGUST-COVERAGE-20261003.json",
+      "snapshot": "archive/2026-10-03/INTENT-JULY-AUGUST-COVERAGE-20261003.json",
+      "sha256": "7177b377af44d64dc21dc29f7b550471eb92dd1eb98dfeac0b9ea4dc1463717a",
+      "bytes": 4892647,
+      "source_mtime_utc": "2026-10-03T07:20:34.430812+00:00",
+      "kind": "agent_report_or_coverage_not_primary_evidence"
+    },
+    {
+      "source": "/Users/ember/workbox/mini-private-capacity-review-20261002/INTENT-SEPTEMBER-OCTOBER-COVERAGE-20261003.json",
+      "snapshot": "archive/2026-10-03/INTENT-SEPTEMBER-OCTOBER-COVERAGE-20261003.json",
+      "sha256": "6a8d8aa705d5bcb472fe5f6db1c07f808bb1859c403da357a9c494a3c12f1f08",
+      "bytes": 1306478,
+      "source_mtime_utc": "2026-10-03T07:14:38.126967+00:00",
+      "kind": "agent_report_or_coverage_not_primary_evidence"
+    },
+    {
+      "source": "/Users/ember/workbox/mini-private-capacity-review-20261002/BREAD-FUTURE-SYNTHESIS-20261003.txt",
+      "snapshot": "archive/2026-10-03/BREAD-FUTURE-SYNTHESIS-20261003.txt",
+      "sha256": "0f5f816c23a9bc50aa4fe35ee1a27cf31d179d6c8a3e7833082d017084c797c0",
+      "bytes": 47772,
+      "source_mtime_utc": "2026-10-03T07:24:03.018215+00:00",
+      "kind": "agent_report_or_coverage_not_primary_evidence"
+    },
+    {
+      "source": "/Users/ember/workbox/mini-private-capacity-review-20261002/BREAD-PROGRAMMABLE-ARCHAEOLOGY-20261003.txt",
+      "snapshot": "archive/2026-10-03/BREAD-PROGRAMMABLE-ARCHAEOLOGY-20261003.txt",
+      "sha256": "0398fb63ea8709e6e99837c959248c93be74e2ed562bf38a50859069e47fb63f",
+      "bytes": 37000,
+      "source_mtime_utc": "2026-10-03T07:21:41.010274+00:00",
+      "kind": "agent_report_or_coverage_not_primary_evidence"
+    },
+    {
+      "source": "/Users/ember/workbox/mini-private-capacity-review-20261002/BREAD-SYSTEMS-ARCHAEOLOGY-20261003.txt",
+      "snapshot": "archive/2026-10-03/BREAD-SYSTEMS-ARCHAEOLOGY-20261003.txt",
+      "sha256": "7d59fb6b45be6188f4033f579b42f540e1301ad459947935dadc2cfd2e844b79",
+      "bytes": 27192,
+      "source_mtime_utc": "2026-10-03T07:17:58.480879+00:00",
+      "kind": "agent_report_or_coverage_not_primary_evidence"
+    },
+    {
+      "source": "/Users/ember/workbox/mini-private-capacity-review-20261002/DREGGNET-COLLECTIVE-FICTION-20261003.txt",
+      "snapshot": "archive/2026-10-03/DREGGNET-COLLECTIVE-FICTION-20261003.txt",
+      "sha256": "d1f9cd06df2a9fa39c958c5450226670dd67672d0b39d8b11a2066c5720bb9ff",
+      "bytes": 29056,
+      "source_mtime_utc": "2026-10-03T07:18:46.402407+00:00",
+      "kind": "agent_report_or_coverage_not_primary_evidence"
+    },
+    {
+      "source": "/Users/ember/workbox/mini-private-capacity-review-20261002/DREGGCLOUD-PRODUCT-ARCHAEOLOGY-20261003.txt",
+      "snapshot": "archive/2026-10-03/DREGGCLOUD-PRODUCT-ARCHAEOLOGY-20261003.txt",
+      "sha256": "00a6bb82a910b3a3d6d942e9f11d9fdd7a7e543969f0fdbbc783f0c5548ea095",
+      "bytes": 23403,
+      "source_mtime_utc": "2026-10-03T07:22:11.953120+00:00",
+      "kind": "agent_report_or_coverage_not_primary_evidence"
+    },
+    {
+      "source": "/Users/ember/workbox/mini-private-capacity-review-20261002/OCT13-OBJECTIVE-RECOVERY-20261003.txt",
+      "snapshot": "archive/2026-10-03/OCT13-OBJECTIVE-RECOVERY-20261003.txt",
+      "sha256": "ab1b1d50531070f7c583ca520fac4dc2c336e872527f4ec45a6f9f52eb5b11bb",
+      "bytes": 21745,
+      "source_mtime_utc": "2026-10-03T06:51:25.846528+00:00",
+      "kind": "agent_report_or_coverage_not_primary_evidence"
+    },
+    {
+      "source": "/Users/ember/workbox/mini-private-capacity-review-20261002/TAKEOVER-DECISIONS-20261003.txt",
+      "snapshot": "archive/2026-10-03/TAKEOVER-DECISIONS-20261003.txt",
+      "sha256": "badf2dc4b3a43e532e7801c300aae680e0c3ff0c4c0e6f39f9eab5a3c8d8ee1b",
+      "bytes": 13854,
+      "source_mtime_utc": "2026-10-03T06:37:39.249872+00:00",
+      "kind": "agent_report_or_coverage_not_primary_evidence"
+    },
+    {
+      "source": "/Users/ember/workbox/mini-private-capacity-review-20261002/TAKEOVER-ARCHITECTURE-20261003.txt",
+      "snapshot": "archive/2026-10-03/TAKEOVER-ARCHITECTURE-20261003.txt",
+      "sha256": "8cf763d5c5d87851a733f21131adb20141e5f8f4248c1ab89db66794465e3ec3",
+      "bytes": 19520,
+      "source_mtime_utc": "2026-10-03T06:39:55.734604+00:00",
+      "kind": "agent_report_or_coverage_not_primary_evidence"
+    },
+    {
+      "source": "/Users/ember/workbox/mini-private-capacity-review-20261002/design-room-20261003/ROOT-SYNTHESIS.txt",
+      "snapshot": "archive/2026-10-03/ROOT-SYNTHESIS.txt",
+      "sha256": "c64edbd5f73cc4fbd5905e9e3b011da579c7d53e8012158f0ad85cb807468fab",
+      "bytes": 7375,
+      "source_mtime_utc": "2026-10-03T06:21:07.784739+00:00",
+      "kind": "agent_report_or_coverage_not_primary_evidence"
+    }
+  ]
+}

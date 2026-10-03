@@ -1,0 +1,358 @@
+DREGGCLOUD PRODUCT ARCHAEOLOGY — 2026-10-03
+Author: Codex, /root/dreggcloud_product_archaeology
+Scope: read-only source/product/conversation archaeology; no builds, remote
+probes, deployment, source edits, Git mutations or deletion. This private report
+is the only new artifact. Source tree main ref e9ff17a9a955af68afc0bbd7a537184a3656f6fb;
+Mini comparison ref dev e851920e92fe0a3c52ffd266715b4796e8eff47e. These identify
+checkout refs, not a clean-tree/build qualification; observations read files.
+
+EARLY FINDING
+
+DreggCloud is a substantial demonstration of an inhabited, inspectable operated
+world. It is not a recovered mandate to resurrect a separate cloud platform.
+Its useful contributions are concrete: archive-first recovery, exact prepared
+authorizations, explicit separation of semantic custody from display evidence,
+shared web/native evidence contracts, replayable signed collaborative actions,
+and forcing functions that found real upstream bugs. Transfer those mechanisms
+to useful Mini consumers, rather than mount every Bread application in another
+schema-specific House lane.
+
+The historical correction is load-bearing. Actual cv b7cdd58a [1176], July14:
+Ember says Cloud was a ChatGPT demo, never part of any plan, and rejects the
+assistant's attempt to make it the required home for DrEX/games. [1179] values
+the experience and leaves direct usefulness open. [1183] entertains a
+semirational opsplane beyond Terraform/AWS, while correcting the dismissal of
+laptops as load-bearing BFT nodes. Thus neither automatic resurrection nor
+automatic composting accurately reflects the exchange.
+
+WHAT PEOPLE COULD DO, AND WHAT ACTUALLY ENFORCES IT
+
+1. Inhabit and inspect a World.
+
+The browser is a dense custom-element desktop: World Explorer, object graph,
+object/proof inspector, Cell Observatory, transcript, Intent Market, continuations
+and membranes, cell-hosted surfaces, hosted Grain runs, Branch/Stitch/Powerbox,
+Forge, Expedition, typed Oracle and House Firmament. Tool actions create rooms
+and objects, post demand, prepare/settle placement, fork/share, and suspend/resume.
+This is richer than an admin resource list. See web/app.js:3670-3720 and the
+DCWorldExplorer/DCGraphView/DCInspector/DCCellObservatory classes.
+
+The House->World->Room->Object graph is real durable host state. A World retains
+room IDs/lineage; a Room retains membership/fork ancestry; an object names its
+kind/status/provider/parent and capability views. Object kinds are a closed enum:
+Grain, Service, Document, Storage, Surface, Mandate, OraclePortal. This is not
+member-authored full OO. Core lib.rs:128-285, 1402-1466.
+
+Placement is an inspectable proposal: typed demand reserves reported capacity;
+rewrite binds a provider and advances status only on settlement. Core:3210-3383
+is clear that this is host checked and does not launch a physical workload.
+ForkRoom copies objects, retains parents, strips provider placement, and marks
+them Available; it is not a substrate branch-and-stitch operation (3386-3436).
+The separate stitch exercise reconstructs a demonstration World and retains
+merge/conflict/revocation evidence; it does not apply a settled root to this room.
+
+Ordinary host transitions are anchored by genuine Bread EmitEvent receipts.
+Their narrower claim is receipt/state-hash commitment, not proof of host effects.
+Substrate lib.rs:2713-2901 executes this path. Exceptions deserve distinct credit:
+signed post-bootstrap object birth runs kind-specific CreateCellFromFactory with
+owner/room/world/token binding and ordered membership/birth events (4110-4255);
+factory-child suspend/resume verifies and executes the exact owner-signed Turn
+and checks status, nonce, head, owner and retained evidence (780-901, 1721,
+1787-1945). Legacy/bootstrap children retain a separate lifecycle path.
+
+Browser ordinary commands after enrollment require an active Cipherclerk profile
+and an exact current-tip prepared Turn; inner/outer Ed25519+ML-DSA are retained
+and audited. The bootstrap bearer is an operator capability, not member identity.
+Only one active profile exists, with predecessor-signed rotation and no lost-key
+or owner override. Grain/Forge/oracle/stitch special routes remain bearer paths.
+Native lifecycle browser acceptance was blocked on explicit nonzero-domain
+extension support; HORIZONLOG's next gate still names it. Source integration is
+not evidence that today's extension can sign this path.
+
+2. Investigate a dependency, review a graph rewrite, retain exact evidence.
+
+semantic-workflows composes a policy-pinned GitHub fact, signer-pinned Grain R2
+history (optional renter R1), and a dregg-doc proposal. The Grain's final root
+must contain the exact proposal intent. A dependency replacement is explicitly
+non-monotone: author a conflicting assignment, choose the target through Forge's
+resolution menu, retain a distinct reviewer superseding patch. Both patch IDs
+and graph root bind the proposal. It is not a magic one-patch overwrite.
+
+Modeled v1 and live-GitHub v2 have separate House custody/commands, archives and
+exact prepare/install/submit routes. House main.rs:1175-1220, 2930-3194; core
+RetainSemanticWorkflowProposal / RetainLiveSemanticWorkflowProposalV2. Web
+dc-semantic-workroom controller supplies preview, archive install, sign/submit,
+status, proposal detail and visible recovery. web/app.js:3727 connects actual
+operator-authenticated fetch and extension signing. Native semantic_workroom.rs
+consumes the same WorkflowResourceV1 and presentation adapter; main.rs:58 offers
+--semantic-status. Do not infer a full native mutation UI from this client API.
+
+The common workroom presentation is a valuable dependency-light design:
+workroom-presentation/src/lib.rs validates the canonical wire then projects graph,
+four assurance axes, commitments, patches, conflicts/checks, roots/refusals and
+links. Native/web serialization share the same portable mapping. It can inform
+Mini's two views over one object without importing the House executor.
+
+This semantic path stops at reviewed proposal custody: landing is NotAttempted,
+federation LocalHouseOnly (core:2465-2503). The finite Forge button separately runs
+real dregg-doc repository/proposal/review/required-check/pushout/land_checked paths
+and deep-replayable archives. House keeps bounded nonsemantic projections plus
+canonical archive checkpoint. Forge role keys bind full request/nonce; externally
+expected trust anchor authenticates archives; nullifier replay refuses. Its CI
+is in-process TrustedSigned, upstream cell seeds are u8 fixture identities, the
+epoch is bounded to64 runs, and this does not restore a live multiuser repository.
+Do not promote the successful finite Forge exercise into semantic workflow
+landing or a member code hosting product.
+
+3. Run bounded work under a mandate; share a budget across roles.
+
+dreggcloud-grain supports a finite hash-bound HumanGrainPlan or injected
+AgentBrain with step/budget/path bounds. It composes actual AgentPlatform,
+hosted lease, ToolGatewayMinter R2 links and local finalized-log membership;
+retains artifacts/attestation. The compatibility /grains/run route produces a
+deterministic report fixture (grain lib.rs:103-161), not useful live Hermes.
+Finite plans use an in-process PlannedBrain; injected brains require separate
+confinement if an OS jail is claimed. No R3 history/federation finality follows.
+Typed modeled zkOracle work adds exact policy/plan/artifact binding through the
+journal, and refuses ambiguous Prepared-session replay rather than duplicate
+potential effects. Machine access remains serialized through the bounded run.
+
+agent-workroom is a separate library, not a House/browser service. It genuinely
+composes an owner-signed investigator/reviewer mandate with a Bread orchestration
+board whose AffineLe predicate meters one shared budget; roles have Search vs
+Summarize scopes and exact work IDs. perform commits board/grain activity;
+accept_output verifies exact activity/output digest, service/tool result and R2
+link before sealing an accepted output and advancing workflow order.
+agent-workroom/src/lib.rs:417-535, 568-782. The output text is passed into the
+library; there is no live provider investigation hidden inside it. Owner mandate,
+workflow order and tombstone revocation are archive enforced; board and role
+grain are separate executors, so cross-runtime atomicity is unavailable. There
+is no economic settlement/external attestation/durable full warm-process restore.
+This is a good task/work-bound output acceptance contract to re-express in Mini,
+not a finished multiagent resident product.
+
+grain-serve is a thin operated wrapper over upstream sandstorm-serve. Signed SPK
+archive custody and cap-derived X-Sandstorm headers plus checkpoint-before-response
+are real upstream machinery; NoBody refuses and DemoNotesBody is in process.
+Packaged app execution is explicitly absent here. Mini already has spk-host/
+spk-rpc and actual prior packaged-app evidence; returning to this NoBody seam
+would regress the current construction.
+
+4. Co-author a campaign with signed decisions.
+
+The Expedition House path is the richest joined collaborative example. Founder
+and member keys, roster, exact campaign/repository heads, one bounded proposal
+round, strict-majority decisions, and per-operation Ed25519 envelopes constrain
+mutations. Creation/read/prepare are operator protected; scoped signed member
+mutation routes are public. Browser WASM reconstructs the canonical typed signing
+frame before signing, and can independently replay a protected canonical archive
+and compare the full projection. Seed custody is origin-local browser storage,
+not hardware/multidevice recovery.
+
+Accepted campaign actions install one House receipt and one signed multi-action
+substrate receipt. Factory campaign children advance/reroot using ordered faithful
+extended SetField payload commitments; heap_map is empty, not the payload claim.
+Archive-first settlement retains full signed admission plus base/candidate
+checkpoint, strict extension, disk reread, pending exclusion and idempotent ack.
+crates/dreggcloud-expedition-store/src/settlement.rs:132-537; substrate:2059-2477.
+Rich campaign projection is reconstructed, not the authoritative semantic object.
+
+Dated July11 deployment report includes create/join/open/propose/two-ballot/
+resolve and supervisor restart. No fresh runtime qualification performed here.
+Library bounds six members/256 decisions are bounded profile choices, not a
+general Mini community population policy. Founder-chosen deterministic randomness
+is grindable; engine-contract versioning is manual; original actor signature bytes
+are not retained in the later House-ingress projection, which says so explicitly.
+
+multiplayer-room is a different standalone signed-actor host over GameSession:
+shared avatar, nonce/generation checks and from-genesis replay. Its House snapshot
+attachment is not semantic Room custody. Do not merge these two maturity claims.
+The collective-fiction scout owns deeper engine/authoring archaeology.
+
+5. Admit an exact authored universe; operate prepaid services.
+
+Universe producer preserves Salt Shore canonical source, admission manifest,
+compiled CellProgram, genesis/native receipts and illegal-action inertia.
+verify_exact_artifact checks exact bytes/digests/program identity/receipt structure
+without recompilation or executor rerun. House v15+ source mounts this through
+AdmitUniverseWorldV1 and protected /universes/{status,prepare,install,submit}.
+Core:2140-2232 binds exact House tip, archive base/candidate, requesting principal
+and retained nonclaims; custom_leaf_verified and whole_history_verified must be
+false. The producer replay assertion remains producer-reported and unauthenticated.
+It is archival admission, not a general world compiler or proof promotion.
+
+service-cells uses actual GrainRegistry/ToolGateway/HostedLease/RingSolver/
+ServicePromiseExchange/WideLedger. Provider/renter role signatures, independent
+signed monotonic height, current-head settlement, native work/output binding,
+receipt nullifiers and conserving balances are retained in operator-signed
+archives. Adapter persists a compensating obligation before side effects and
+poisons readiness on uncertain installation. It is ordered compensation, not
+a compound executor transaction.
+
+Current seeded reopen reconstructs provider/Biscuit identity and re-drives every
+archived admission before FullProcessEpoch; mismatch degrades to settlement only
+with typed refusal (service adapter lib.rs:490, 961-1048; service-cells:327-356).
+Public-policy audit cannot prove the private seed restores capacity. House v16
+AdmitServiceArchiveV1 retains exact bytes/public policy and strict head extension;
+daemon operational mode stays producer reported. This does not custody live daemon
+capacity/seeds or make daemon work compound-atomic with House admission.
+
+EVIDENCE AND STALENESS — READ THESE AS DIFFERENT SCOPES
+
+- README, COMPLETION-AUDIT, proof-bridge README, Universe custody README and
+  service adapter README materially lag source. In particular, live-v2 House
+  source mounted, Universe v15 mounted, service16 mounted, seeded capacity reopen
+  implemented. Their old 'not integrated'/'unavailable' wording is false as a
+  source-state claim. HORIZONLOG is newer and source confirms these changes.
+- docs/DEPLOYMENT-VERIFICATION.md last section672 documents exact v14 deployment
+  at8ee7127b, state sequence24 and16 valid substrate receipts, controlled restart.
+  It does not qualify v15/v16 deployment. Actual cv b7cdd58a around1174 likewise
+  reports source16 green while operated House14 remains. No remote service check
+  was authorized/performed in this scout.
+- notary-live-client/verification/hbox-live-github-commit-2026-07-11.json retains
+  a real closed api.github.com TLSNotary presentation:28288 bytes with SHA256
+  892f8608..., typed commit fact, exact target/SHA/key/host and hostile offline
+  replay gates. Raw presentation and statement fixtures are present and their
+  local SHA256 values match the captured report (statement e747e67b...). It authenticates
+  disclosed provider bytes, not semantic truth or recursive history/finality.
+- service-house-adapter/verification/hbox-loopback-lifecycle-2026-07-11.json is
+  the older deployed settlement-only restart: agreement->restart->release100,
+  escrow0/nullifier1->restart/public audit. It is evidence for that old daemon,
+  not a live test of current seeded FullProcessEpoch.
+- proof-bridge has genuine32-PI leaf evidence (45.12s wall, ~1.8GiB peak) and a
+  caller-pinned history verifier. HORIZONLOG records upstream multichunk/geometry/
+  eight-felt fixes after stale README blockers. It still explicitly leaves the
+  multi-turn prove_turn_chain_recursive/verify_history drive unclaimed. No new
+  custom leaf/history or proof-system replacement is an Oct13 prerequisite.
+
+TRANSFER VERDICTS AGAINST MINI e851920e
+
+DIRECT REUSE / SMALL ADAPTER: dependency-light presentation/validation and
+bounded artifact readers, exact canonical signing-frame reconstruction, archive
+replay/source opening tools, hostile fixtures for substitution/stale head/replay/
+partial durability. Reuse requires new Mini wire/root/key binding, not accepting
+the House's self-published key as authority. The native client/presentation seam
+is a better starting point than embedding GPUI+House+Bread executor into Mini.
+
+RE-EXPRESS AS MINI CONTRACT: archive-first custody state machine, typed recovery
+obligation, current-tip prepared command, exact acknowledgement, monotonic external
+checkpoint and source/work-bound accepted output. Mini already owns admitted
+history/current authority/exact retry, SQLite custody, app/Hermes recovery and
+source resources. Put common contracts there; do not transplant a second Rust
+semantic House JSON alongside it. Generalize recurring Universe/Service/Forge/
+Workflow custody shape while preserving their distinct verification policy and
+effects. This is a candidate abstraction, not permission to collapse signatures,
+admission or finality into a single generic 'verified artifact' flag.
+
+PRODUCT INSPIRATION: room as a place containing documents/apps/residents/work,
+previewed resource demand->plan->settlement, graph/raw/source/behavior/evidence
+views over one identity, visible continuation/recovery/refusal, fact->agent work->
+reviewed proposal->authorized landing. These can become member-defined Mini
+objects using WorldKind descriptors/instances and Hyperdocument content/log/index,
+rather than a new closed ObjectKind registry. Current Mini Compiler/WorldKindDescriptor
+and WorldKindCell pin immutable definition revisions; HyperdocumentCell has ten
+typed namespaces on generic StoreCodec. Preserve actual live authority for
+protected doc links, search and source references, not a cached House view.
+
+DEFER / AVOID COPYING: modeled placement launch, host room copies presented as
+fork semantics, demo stitch receipts presented as live settlement, raw browser
+private seeds, single-profile operator identity as community membership,
+u8 Forge cell IDs,TrustedSigned CI promoted to jailed execution,NoBody grain path,
+manual per-app schema mount as organizing architecture,proof-bridge assurance
+inflation, and supplied hybrid roster treated as independently trusted agreement.
+
+AUTHORITY / RECOVERY / PRIVACY / PERFORMANCE IMPLICATIONS
+
+Authority: preserve separation between operator/bootstrap, actor consent, native
+object owner, admission signer, remote publisher, tool mandate and source audience.
+Mini grants face current law; DreggCloud's one active operator and no key recovery
+is not an adequate community key model. Inert signed discovery/parcels are useful
+until an independently authorized promotion; metadata does not import remote caps.
+
+Recovery: archive-before-ack, replayed exact candidate, ambiguous-outcome poison,
+detached settlement holding admission permit, explicit archive-ahead obligation,
+external head pin and last verified visibly stale snapshot are worth adopting.
+Archives alone cannot detect coordinated rollback if every independent checkpoint
+is lost. A UI projection/browser cache is never custody. Capability/work/body/
+artifact identity must survive retry, not merely display the same result string.
+
+Privacy: House plaintext JSON, protected source/review archives and origin-local
+keys are not confidential computation/traffic privacy. Public head certificates
+separate commitments from full content, but leak count/identity/timing. Mini's
+private evaluator and traffic protocol must include recovery/status/discovery
+footprints; porting this whole House would introduce an extra plaintext observer.
+
+Performance: replay-before-read and repeated whole archive verification are
+bounded but scale with history. Some House operations serialize Machine through
+CPU work. Expedition reroot touches other campaign children each mutation.
+Treat these as costs to inspect, not inferred bugs; small dated pass counts are
+not sustained-latency evidence. Preserve finite queue/work bounds and permits
+owned by actual blocking tasks; do not copy six-member/64-run/one-proposal bounds
+as permanent community capacities. Mini common native replay/caches should serve
+all consumers, with same-action measurements and privacy-compatible invalidation.
+
+HISTORICAL CHOICEPOINTS FOR 'REPLAY THE CREATION OF DREGG'
+
+Actual conversations, not retrospective board intent:
+
+cv b7cdd58a [0,30,48,59], July12: asks what Cloud does differently/usefully,
+how Starbridge/DEOS interacts, why Sandstorm integration absent, and permits
+upstream Bread changes including TEE/attestation. Outcome: useful forcing
+functions and slices; no complete app body/CI jail became real by naming them.
+Hindsight: begin with one native consumer and receive its useful output in the
+same world; preserve evidence axes, stop investing in disconnected shells.
+
+[339] July12: asks whether generic Grain work belongs upstream. Surrounding
+exchange redirects serving mechanism to Bread sandstorm-serve, leaves operated
+wrapper downstream. Outcome: thin grain-serve survives, mechanism upstream.
+Hindsight: choose substrate vs operator by semantic ownership and consumers,
+not where an agent happens to open its terminal. Mini is today's chosen home.
+
+[857] July13: asks why layouts aren't emitted by Lean and referenced by Rust
+FFI. Outcome reported in exchange is layout export/drift repair upstream.
+Hindsight: use one source of semantic truth and generated contracts early;
+strong interface checks save more than multiplying shadow adapters.
+
+[1160,1176,1179,1183] July14: asks Cloud status after DrEX/game progress;
+assistant invents hosting need, user corrects; user preserves possible value and
+explores opsplane. Hindsight: operational usefulness is a falsifiable consumer
+question, not proof that every program needs another custodian. Operations
+contracts can improve current Mini install/restart/restore directly.
+
+[1186,1195,1202,1205,1208] explores Nix/Guix,attested bootstrap,confidential VM
+hardware and reproducible developer supply chain. User corrects actual hardware
+(hbox i9,Persvati mobile Ryzen), provisionally prefers Nix over Guix. Final
+assistant reopens measured-image/pinned cargo+lake/stagex alternative with no
+subsequent answer. Do not narrate a final Nix/CVM architecture selection, actual
+rental, or implemented supply chain from this exchange; assess now against
+current needs/costs, not assistant's stale product recommendations.
+
+SUGGESTED SEQUENCING — ENGINEERING JUDGMENT, NOT NEW USER PROMISES
+
+Oct13: apply custody/presentation lessons to the existing app->authorized doc->
+Hermes consumer and member-authoring+private-action sequel. A small shared typed
+work resource can retain request/source authority,draft,review,exact result and
+recovery,rendered in two useful Mini views. Source-pinned install/restart/restore
+and separate member budgets/keys remain immediate operations work. Use one
+existing member journey to test whether the recovered mechanism improves it.
+Do not resurrect Cloud or require full Forge/games/proof crowns for this date.
+
+Oct26 candidate: a reusable Mini workroom/proposal object, governed review/check/
+landing, and a signed collective campaign/decision consumer can broaden the same
+contracts. Admit exact authored programs/rulesets only once member-authored
+definitions and pinned revision semantics are usable. Measure history growth;
+replace repeated replay with verified caches through common native semantics.
+
+November candidate: contributed heterogeneous hosting and resource placement
+as actual governed work; externally pinned custody/head exchange; multi-device
+recovery; warm tenants and independently checked build/CI/notary policy; a
+proof/attestation upgrade only where a real consumer requires it. A meaningful
+opsplane may then arise as ordinary Mini objects managing actual services,
+rather than a mandated separate DreggCloud executable. Full private execution,
+traffic privacy and distributed agreement construction remain active throughout,
+not automatically postponed by this product sequencing.
+
+Parent/root and Astra were sent early findings and the actual July14 correction.
+Collective-fiction peer coordinates deeper universe/engine intent; this scout
+does not overwrite their engine maturity assessment. All runtime results above
+are dated captured evidence or source-derived contracts, never a fresh green.

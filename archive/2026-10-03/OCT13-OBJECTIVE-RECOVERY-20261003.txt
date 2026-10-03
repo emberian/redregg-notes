@@ -1,0 +1,331 @@
+OCTOBER 13 OBJECTIVE RECOVERY AND ALIGNMENT REVIEW — 2026-10-03
+Author: Codex GPT-6.1 Sol, oct13_objective_recovery
+Private report. No source edits, builds, Git mutations, deployments, paid calls,
+tracker updates, goals, automations or nested agents. Only this report was saved.
+
+JUDGMENT
+
+The meaningful objective is a usable, extensible, private Mini community operating
+environment. People should inhabit the same durable world, author and connect
+knowledge, create useful kinds/behaviors, use hosted apps and resident Hermes,
+and continue safely through retries, authority changes and operational failures.
+Privacy and agreement must govern those real interactions. A two-person fixture,
+an EtherCalc export chain, a working-set circuit, or an agreement simulator is
+valuable evidence toward that objective; none is its replacement.
+
+Current six construction lanes attack genuine blockers. Their largest coverage
+gap is member-facing programmability and docuverse/deos depth. A kernel owner
+fixing observation performance cannot also silently become the sole owner of
+full OO, all document workflows, inspectors and deployment. Add explicit owners
+or explicit substantial assignments for those outcomes. Do not declare the
+objective achieved when the current fixes and first protocol tranches converge.
+
+The recovered record supports three distinct kinds of commitment:
+1. Traffic privacy and some consensus/agreement are an explicit October 13 alpha
+   condition. Shipping that alpha without them contradicts a direct instruction.
+2. Complete prototypes of full OO, stronger private execution, traffic privacy
+   and distributed agreement are explicitly requested construction work. They
+   must not be moved back into documentation-only remaining work.
+3. Complete docuverse and substantial deos are explicit October 13 ambitions,
+   with no recovered agreed exhaustive feature definition. Preserve them and
+   operationalize them visibly; neither shrink them to passed floor tests nor
+   claim every historical desktop/cryptographic ambition is a deadline mandate.
+
+RECOVERED HUMAN REQUIREMENTS — ACTUAL PROMPTS AND SURROUNDING EXCHANGES
+
+Session abbreviations:
+R = 01a0fa81-d479-7753-a1b3-1331d1ed53de, current research/cloud takeover.
+C = 01a0fae5-8eb3-7392-83ee-4179c7664edc, October 2 cloud Codex.
+F = 0c315aee-e07a-499c-8bb4-fa36730510ca, September 29–October 2 Claude root.
+H = df44288a-6539-4fb8-a6d5-2e7f78b3d751, October 3 Claude handoff root.
+U = 383d2fad, June 19 historical Starbridge/deos context.
+
+Exact retrieval: cv prompts SESSION, then cv show SESSION --around INDEX
+--context 3 (or 5). Message indices below are cv's displayed locators, not file
+line numbers. Forked F/d4bc histories are not independent supporting witnesses.
+
+A. Full programmable world; no fixture-sized destination.
+C[154], Oct2 00:57: Mini kernel, SSH/hosting Dreggnet cloud, nominal DREGG via
+Solana mainnet, "sorta our-SDF", good SPK hosting, mature/robust Hermes.
+C[189]/[199]: "Mini shell + hosted apps first"; no actual Unix shell offering.
+C[7880], 13:30: "the thing we deliver needs to be a multiuser platform, not
+fixed-capacity 'two' type interactions"; asks tech debt/missing/underwired review.
+Surrounding assistant had proposed two-member same-world milestone and legacy
+carry as release work. This human correction supersedes that narrowed plan.
+
+B. The four prototypes are real construction work.
+R[6864], Oct2 13:10: rejects the goal that puts full OO/private execution/traffic
+privacy/agreement into remaining work; asks "COMPLETED full prototypes of" them.
+R[6996], 13:22: asks review/integration of useful overnight construction and says
+"i dont want to ship our upcoming alpha on oct13 without traffic privacy and
+some kinda consensus/agreement". Bread blocklace may supply it, or another
+construction may. This is the clearest direct alpha gate.
+R[7089]: investigate existing private computation, form ambitious vision, execute
+as swarm; incremental changes are not the only acceptable strategy.
+R[7479]/[7481]: CometBFT convenience import explicitly rejected; other
+constructions may be evaluated. R[8419] requires Bread joint/interfederation
+comparison. This is not a prohibition on all external primitives or literature.
+
+C. Docuverse/deos is part of this release direction.
+F[3849], Oct1 00:54: asks a nice docuverse and rebuilding old deos in Mini better
+"as part of this upcoming release".
+F[4690], 06:05: "hopeful we can have a complete docuverse on the 13th ... and a
+substantial deos besides that"; ambitious, sophisticated, reasonably scoped
+compute in upcoming cycles. F[4748] says numeric jobs are a Hellas concern.
+F[7569], 19:13: "i dont wanna be lowering the bar"; one-friend+Hermes is allowed
+as an intermediate milestone. Surrounding assistant had expressly proposed
+lowering the final bar to that milestone. Human refuses the reduction.
+C[266] and F[7324]: FAREOO is wanted as insight integrated into Mini, not a
+standalone literature deliverable substituting for extensibility.
+
+D. Calendar and shipping policy.
+F[389] moves prior shellserver sprint to the 13th goal.
+F[2311], Sep30 16:41: proposes shipping real infrastructure over next cycles/days
+and Oct13 as soft launch rather than hard launch.
+F[5033], Oct1 06:37: says Oct13 need not be ready by that morning's 10am; there
+are two more weeks in the sprint. The 2pm correction is the immediate autonomous
+work window, NOT an Oct13 2pm public launch deadline.
+F[7895] asks redeploy newer work after more building; infrastructure is greenfield.
+F[7911] says "we dont need to do shipping on every single batch"; merge branches
+and finish designs/implementation. This overrides the goal file's rigid same-day
+per-lane shipping prescription. No exact launch time or announcement copy recovered.
+
+E. Service audiences and costs.
+C[566], Oct2 01:22: BYOK Chutes/OpenRouter; deployment in a week or two adapts to
+Pug's heterogeneous homelab, model-aware allocation/scheduling among users.
+500–800 tok/s is Ember's planning estimate, not a qualified capacity guarantee.
+F[1772], Sep30 15:12: affordable nominal DREGG, imagining 1000 for a week; says
+full semantic interchain interoperability is unnecessary just to bridge value.
+This is product direction, not permission to invent a receiving wallet or a
+current live conversion rate. Synthetic payment evidence is not mainnet.
+No recovered exact launch roster or promise of a named friend's attendance.
+Pug/operator portability matters, but Pug's inventory remains external input.
+
+F. Operational and implementation constraints.
+C[7880]: full teardown/rebuild upgrades; transitionary migrations not a release
+prerequisite. Ordinary runtime continuity/recovery and backup remain useful.
+C[289]: delegated analysis/decision-making for Claude's deferred-to-Ember backlog.
+H[139]: design/implementation WHILE testing composed scenarios on one world.
+H[235]: integration home corrected to main. R[8895]: obvious unwired/buggy/slow
+source can be fixed directly; measurements are not a prerequisite for noticing it.
+R[8805]/[8854]: unified takeover of cloud plus research; delegate detailed work
+to preserve top-level context. Latest ownership/resource/custody boundaries are
+in TAKEOVER-DECISIONS and TAKEOVER; do not revive superseded build/deploy rituals.
+
+G. Longer-term vision, without manufacturing an Oct13 feature mandate.
+U[149]: rich Pharo-like inspector windows/widgets covering protocol/data/behavior.
+U[482]/[521]/[532]: durable, snapshottable, rewindable, debuggable interactions;
+literate/self-explaining software; Smalltalk knot; replay/time travel first-class.
+These are actual user prompts read via cv, and explain what substantial deos
+means qualitatively. They do not independently require full seL4/native parity,
+every reflected UI primitive, or a complete debugger by October 13.
+F[4515]: full sender-receiver unlinkability/stronger properties plus broadcast
+should exist "someday"; F[4526] asks faster/stronger intermediate constructions.
+R[6996] later makes traffic privacy mandatory for alpha, but does not specify
+that all strongest historical unlinkability, mobile adversary, post-compromise,
+unbounded churn and every resource class must be production-qualified by then.
+The strong goals remain active; choose explicit alpha assumptions/leakage rather
+than silently downgrade the claim or treat the whole long-term vision as closed.
+
+WHAT THE OLD GOAL/TRACKER ACTUALLY MEANS
+
+planning/GOAL-2026-10-13.draft.md is dated September30 source. It has a genuine
+useful floor: same resources/client, independent provision, authority, Hermes,
+one app, portable candidate, retry, 1000-record write <=5s/reopen <=60s. Its
+two-friends framing and exact shipping ceremony do not incorporate later human
+corrections. Preserve its semantic tests and performance regression targets;
+rewrite the umbrella around the broader delivered world.
+
+Task01a0f9c0-521b body adds complete docuverse/substantial deos but retains stale
+two-friends title; body also demands two real friends' transcripts. That exact
+transcript requirement is agent-authored operationalization, not a recovered
+direct human stipulation. Real participant use is compelling acceptance evidence;
+do not make a person sending us a transcript an invented completion ceremony.
+The tracker inaccurately timestamps F[7569] as 19:40 instead of cv's19:13.
+
+PROPOSED OPERATIONAL OBJECTIVE — MY RECOMMENDATION, NOT A RECOVERED QUOTE
+
+Deliver a deployable and usable Mini alpha community world by October13: variable
+members can join with their own authority and budgets, inhabit shared/private
+places, author and navigate a substantial docuverse, define and reuse composed
+object behavior, use member-owned hosted apps and resident Hermes through the
+same durable contracts, and retain accountable work through crash/retry/restore.
+Implement and join confidential computation, traffic privacy and distributed
+agreement prototypes to real world operations, with exact supported guarantees,
+fault/availability/leakage assumptions and measured costs. Completion requires
+working native member experiences and a pinned integrated candidate, not separate
+protocol demos or documentation-only designs. Full OO/private execution/privacy/
+agreement stay construction destinations even where a particular alpha profile
+has a bounded lifetime, population, capacity or fault model.
+
+Recommended success scenarios (all consume one common semantics/candidate;
+protocol fixtures may first refute mechanisms independently):
+
+1. ARRIVE AND BELONG. An independently provisioned member enters Mini, sees what
+   places/actions are available under their actual authority, joins a shared
+   space, creates useful work, leaves and rejoins. Vary population and overlap:
+   2,5,20 are test inputs, not capacities. Members have separate budgets/keys;
+   parallel rooms/apps/residents do not use globally fixed member identities.
+
+2. AUTHOR AND CONNECT KNOWLEDGE. Members create/edit/read documents in shell and
+   browser, link and transclude live/pinned/range references, annotate/quote,
+   search/follow and inspect history/current law. Another member with narrower
+   authority gets a meaningful authorized view or private locked/refused result;
+   an old hit/source reference never grants new access. Concurrent/stale edits
+   retain drafts and exact outcomes. Protected content, key acceptance/revocation
+   and source-authorized disclosure join this ordinary workflow. Useful views
+   and inspectors matter; a command list alone does not deliver substantial deos.
+
+3. EXTEND THE WORLD FROM WITHIN. Ordinary members author authenticated prototypes,
+   compose real partial behavior using final self and super, create reusable
+   instances and inspect definitions/laws/effects. A derived poll/workroom/board
+   supplies actual behavior used by scenario2 or4. Prototype revision leaves old
+   instances' pinned meanings intact and permits new instances to adopt new
+   behavior. An inherited restriction refuses a real forbidden method effect.
+   Demonstrate at least two useful views/actions over the same object and exact
+   retry/accounting. A numeric ROM method table is a prerequisite, not full OO.
+
+4. APPS AND HERMES LIVE THERE. A member starts/shares a real browser app; its
+   output becomes an authorized document/source reference; an addressed resident
+   reads it, performs useful work under delegated authority/budget, writes a
+   summary/reply to the same world. Multiple authors, queue cancellation, running
+   recovery and ownership changes work. Lost reply/SIGKILL/restart recovers exact
+   already started work without second provider request/charge. Fake providers
+   are fine for crash tests; actual useful model operation and BYOK are separate
+   receiving evidence. No new paid calls under current instruction.
+
+5. PRIVATE DISTRIBUTED ACTIONS. The member-authored method performs hidden reads,
+   meaningful predicates, an atomic effect/message and private return across
+   relevant governed domains. The faithful evaluator, custody, agreement engine
+   and transport consume the same candidate/authority/result contracts. Delayed
+   evidence, contested decisions, audience change, a failed domain and restart
+   preserve exclusive outcome, exact installation and retained recovery. Traffic
+   traces cover discovery/read/status/retry/repair as well as payload send.
+   Confidential evaluation must qualify the actual chosen fault model; neither
+   encryption alone nor a plaintext toy earns that claim. Source anonymity and
+   endpoint probing leakage are distinguished. Whole-path proofs/refinements and
+   adversarial executions substantiate the stated guarantees.
+
+6. OPERATE A REAL SERVICE. Fresh source-pinned install, normal SYSTEM-managed
+   restart, checkpoint/restore with app+resident data, client continuity and
+   rollback checks, variable member/app uid allocation and bounded fair service
+   all run. Record usable full-action latency and history-growth measurements;
+   retain <=5s write/<=60s reopen at1000 as existing targets, add doc/app/resident
+   full-action budgets from actual experience. Portable artifacts support Pug's
+   deployment without recreating private fixtures. Mainnet entry must use a real
+   supplied address/environment and source-owned quote/credit accounting before
+   advertised paid public alpha; synthetic rail does not qualify it.
+
+OWNER/COVERAGE REVIEW — OBSERVED OCT3, NOT CLAIMS OF COMPLETION
+
+Live agent list plus TAKEOVER map show service, kernel, joint/agreement,
+private evaluator/custody and traffic construction owners, with root integration.
+Architecture facilitator finished; earlier historical assignees are not live
+owners. Specific allocation needed:
+
+- FULL OO / MEMBER AUTHORING: missing distinct live construction owner. Restore
+  task01a0fc34-8ba2 and its existing design/source history. Kernel performance
+  owner controls common interfaces; private IR owner must coordinate typed
+  effects/read participants with this owner. Full self/super execution was
+  reported received in the private r5 fixture, so do not erase it; authenticated
+  construction remains missing. Start with source-backed prototype read inputs
+  and checked canonical kind-definition output using existing evaluator/fees.
+  Consumers must be ordinary member commands and a useful reusable instance.
+
+- DOCUVERSE / DEOS EXPERIENCE: needs a separate substantive owner/assignment.
+  Reuse the already working editor/search/protected navigation checkpoints;
+  integrate to current family rather than restart an abstract UI project.
+  Own scenario2 and richer annotations/quotes/source navigation, affordances,
+  linked inspectors and two views of member-defined kind/instance. Task01a0f5e0
+  has old October26 parking and superseded evidence; that parking is not human
+  permission to discard complete-docuverse ambition for October13.
+
+- DEPLOYMENT / RESTORE / MULTIUSER OPERATIONS: service owns much, but current
+  adapter repairs are not this full outcome. Give explicit acceptance/owner for
+  fresh install, browser app+resident restart/checkpoint/restore, BYOK receiving,
+  uid pools, population/concurrency/fairness. Root should own public candidate
+  choice/deployment integration. Keep r1 and other people's service state intact.
+
+- PAID ENTRY / REAL PARTICIPANTS / HOMELAB: source-owned components exist; no
+  distinct current live owner shown. Reuse completed pay/platform work and a
+  bounded owner for common constructor/current-key/quote joins. Receiving
+  address/environment, actual backup recipient and homelab inventory are real
+  external inputs; engineering tariff/address plumbing is not an Ember-only
+  decision. A small real-use trial should inform usability, not become a fixed
+  population architecture. Do not send invitations/messages without permission.
+
+The present app->doc->Hermes scenario is the best first composition test. Its
+meaningful sequel is scenario3+5: a member-authored, governed object behavior
+consuming real knowledge and privately coordinating an action. Make that join
+an owned deliverable now so the first service journey is not the final stopping
+point. Build seats may serialize expensive compilation without serializing all
+design/implementation. Root decides actual lane count/resource allocation.
+
+DETOURS TO AVOID
+
+- More generic literature/model reviews after the chosen mechanisms already have
+  executable/proof obligations. New reading should answer a concrete mismatch.
+- Spending all effort on transport trace harnesses/IR/cache microbenchmarks while
+  their member-facing consumers and real protocols have no owners.
+- Legacy live migration/carry as a prerequisite to fresh deployment; full
+  teardown/rebuild is authorized. Deliberate in-world revision and normal backup
+  are still useful capabilities; do not erase them as a reaction.
+- Restoring Bread-wide parity, new numeric/ML job platform, extra trusted
+  evaluator, a proof-system replacement, or a whole native desktop rewrite as
+  newly invented alpha prerequisites. Mini is the new construction home.
+- Treating current source-level proof closure or old component evidence as the
+  completed running joined product; repeating whole expensive suites without a
+  discriminating question; measurement ritual before a plainly evident fix.
+
+OPEN CHOICES — WHAT ACTUALLY NEEDS RESOLUTION
+
+1. Root can publish this concrete interpretation of complete docuverse/substantial
+   deos, recommend the scenario set and keep working; ask Ember only about a
+   material mismatch/taste fork. No recovered reason to freeze until a single
+   exhaustive paragraph arrives. Prior deferred labels are not standing barriers.
+2. Exact alpha privacy/fault/lifetime/capacity profiles and allowed endpoint
+   observations need explicit engineering selection plus user-visible claims.
+   Full strong prototypes remain active. If completing a safe traffic/agreement
+   alpha by Oct13 is infeasible, surface that directly; do not rename a weaker
+   release the requested alpha without discussing the conflict.
+3. Mainnet receiving environment/address, backup recipient/key and homelab
+   inventory/access need private facts from Ember when their actual qualification
+   is next. They do not block OO/docs/privacy construction.
+4. Exact real-use participants/announcement timing/copy are not recovered. No
+   invented launch hour, mandatory daily deploy or mandatory transcript ceremony.
+
+RECOMMENDED ROOT NEXT ACTION
+
+Adopt a durable objective close to the proposed paragraph and six success
+scenarios, explicitly as root operationalization of the recovered requirements.
+Rename/rewrite stale umbrella scope; connect existing open tasks instead of
+creating another generic backlog. Assign full OO and docuverse/deos construction
+now, reserve service qualification/restore/pay ownership, and integrate private
+protocol work with those consumers. Continue current kernel/service fixes and
+expert protocol construction; they are necessary work, but not the destination.
+
+READ SOURCES / EVIDENCE LINKS
+
+- Actual conversations: cv show R around6864/6996/7089/7479/7481/8419/8805/8895;
+  C around154/189/199/289/566/7880; F around2311/3849/4515/4526/4690/5033/7569/
+  7895/7911; H around139/235; U prompts and around149/482/521/532.
+- Product: /Users/ember/dev/claudesplosion/planning/DREGGNET-CLOUD.md
+- Old floor: /Users/ember/dev/claudesplosion/planning/GOAL-2026-10-13.draft.md
+- Handoff: /Users/ember/dev/claudesplosion/planning/handoff-2026-10-03/START-CODEX.md
+- DEOS design: /Users/ember/dev/claudesplosion/planning/DEOS.md
+- Existing doc evidence: /Users/ember/dev/claudesplosion/product/docuverse-interface-2026-10-02.md
+  and docuverse-search-2026-10-02.md. These contain actual old/browser/private
+  receiving evidence; current common-family receiving must not be inferred.
+- OO foundations/audit: /Users/ember/dev/fareoo/FAREOO.md and AUDIT.md.
+  Audit is dated older Mini; its C3/security recommendation was refined later.
+- Native OO progression: /Users/ember/workbox/bigstep-deos-20261002/design.md
+  and task01a0fc34-8ba2. Reported r5 self/super/core success is not authenticated
+  prototype construction; original failed fixtures remain part of that record.
+- Operations/payment receiving: /Users/ember/dev/claudesplosion/planning/handoff-2026-10-02/PLATFORM-PAY.md
+- Current ownership/constraints: TAKEOVER-20261003.txt,
+  TAKEOVER-DECISIONS-20261003.txt, TAKEOVER-ARCHITECTURE-20261003.txt and
+  design-room-20261003/ROOT-SYNTHESIS.txt beside this report.
+
+No source state or remote deployment was freshly qualified by this recovery.
+Direct human requirements above were read in actual cv exchanges; architectural
+status is dated source/report evidence, and proposed acceptance is my judgment.

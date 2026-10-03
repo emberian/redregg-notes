@@ -1,0 +1,24 @@
+SECOND-PASS RESEARCH — October 3, 2026
+
+User asks deeper recursive processing/intent reconstruction, systems thinking and
+ideation, with durable organized capture in ~/dev/redregg.
+
+Root: synthesis, consequential choices, Mini convergence; no separate new goal.
+Planned four fresh Sol owners:
+1 redregg_evidence: durable indexes/claim schema, provenance/coverage audit,
+  accessible evidence links; own catalog/ and coverage/ (imports immutable).
+2 redregg_intent_worlds: deep cross-period reading of lived/social/creative and
+  agent-world intentions; own intent/worlds-*.txt, replays/worlds-*.txt.
+3 redregg_intent_foundations: deep reading of semantics/privacy/economics/control,
+  corrections and failed designs; own intent/foundations-*.txt and matching replays.
+4 redregg_systems_design: alternative coherent constructions drawing on BOTH
+  histories and actual code; own designs/ and landscape/second-pass-*.txt.
+
+Bounded recursive method: enumerate open questions -> primary-source reading ->
+evidence cards -> contradictions/corrections -> synthesis -> unresolved queue.
+Prioritize high-information and underread portions; accurately count read coverage.
+Don't claim all prompts interpreted. Each owner sends concise changed-understanding
+and concrete consumer implications; source details stay in this directory.
+No builds/source edits/deployments for these research owners. No automatic extra
+subagents; recommend additional independent cuts if evidence warrants them.
+Root handles local Git checkpoints, no remote. Mini work continues independently.

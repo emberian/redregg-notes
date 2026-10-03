@@ -1,0 +1,112 @@
+Root synthesis after the completed multimodel room — October 3, 2026
+
+STATUS
+Kimi, GLM and Grok each completed two actual responses. Round two included peer
+reviews and direct corrections. Both additional Astra reviewers completed their
+reviews; the facilitator finished its manifest. No model calls remain running.
+MULTIMODEL-STATUS.json and per-call status files record execution. GLM returned
+glm-5.3; Kimi/Grok used CLI defaults whose exact runtime model IDs were not exposed.
+No Mini/Bread source edits, builds or deployment actions were performed.
+
+ROOT JUDGMENT
+The architecture is worth pursuing, and is more concrete after this exercise.
+It retains Mini's full object semantics, Bread joint-turn/causal foundations,
+private computation and traffic privacy ambition. It is not yet a closed proved
+cryptographic protocol or a measured private Mini implementation. Agreement among
+models is not evidence of either. The next work is precise construction/proof and
+cost closure, not another general literature catalogue.
+
+CURRENT RECOMMENDED STRUCTURE
+One Mini invocation/effect/result relation; operation-specific joint identity and
+complete authority/resource dependencies; independently governed domains. Use
+local agreement for genuinely local choices, robust private computation for
+confidential evaluation, and a joint certificate rule over necessary domains.
+Retain the architecture report's Generic Simplex local-control choice as the
+concrete baseline; the room did not establish a new faster universal winner.
+MPC input agreement is not duplicated by a second public intake log. An explicit
+completion/generation choice stays until the stronger private-output composition
+proves it redundant. Bread CM remains a serious comparator with its identified
+ChainExtends and epoch-closure obligations, not an already-qualified substitute.
+
+REFINEMENT 1 — A REQUIRED PARTICIPANT VOTES LAST
+Prefer binding a designated final signer d* into the exact joint candidate,
+defaulting to the existing mandatory origin/nullifier domain. Prove d* is required;
+do not introduce an unrelated coordinator quorum. Other required domains finalize
+immutable YES or NO. d* stays undecided until it can durably retain all other YES
+and required body/custody evidence, revalidate/reserve its own projection, and
+atomically finalize its YES. Before that, its authoritative NO aborts the candidate.
+The underlying joint law remains all required YES => Commit; any required NO =>
+Abort. A delayed non-origin YES cannot override the final signer's NO.
+
+Tradeoff, not dominance: a live last signer can abort while another domain remains
+silent. Symmetric early YES cannot abort once all still-live domains already said
+YES. Conversely, an early origin YES can permit later commitment after the origin
+goes offline, where origin-last would block. Post-Commit installation and release
+still depend on required services. Polling cannot manufacture a missing decision.
+Do not market last-YES as universally nonblocking or finite-retention atomicity.
+
+REFINEMENT 2 — RECOVERY IS A PRIVATE DURABLE JOB
+Retain a source-authorized recovery continuation containing the secret participant
+mask, exact candidate/generation, evidence-access rights, phase and origin fence.
+It has reserved service and survives the caller/attempt. Public certificate
+availability alone does not let anyone recover a hidden decision. Responsibility
+includes log, installer, successor custody and repair, not merely ballot service.
+
+REFINEMENT 3 — AUTHORITY HAS EXPLICIT COMMIT POINTS
+Reservation grants exactly the later install obligation the current law permits;
+it is not an old PreparedInvocation bypassing Mini's current-authority check.
+Release admission separately authorizes one exact projection under then-current
+policy. Physical packet delivery is not the point at which learned information
+can be revoked. Do not default to unilateral YES expiry, compensating an arbitrary
+committed method, or stealing an irrevocable reservation through wound/wait.
+
+PRIVACY FINDING
+Packet observers and authorized probing callers have different observations.
+Padded encrypted reads can hide timing/contents from the first while plaintext
+Pending/staleness or follow-on actions disclose dependency membership to the
+second. A chosen partition can strengthen that distinction. The privacy claim
+must specify allowed output/failure leakage and prove the exact observation game.
+Correlated Pending is not proof of aliasing; distinct resources can share a joint
+operation. Neither added public manifests nor default failure leakage was approved
+as a shortcut. Fixed fanout and mixes still provide different association privacy.
+An arbitrary relay is not a qualified active/PQ anonymous transport construction.
+
+COST CORRECTION — SUPERSEDES THE EARLIER HARD 737/S WORDING
+The cited >100*n field-element comparison has not been established as a measured
+complete healthy steady-state coefficient or a universal bound for the selected
+implementation. B/(w*alpha*n) is a sensitivity model. With B=9MiB/s,w32,n4,
+alpha100 yields737.28/s, alpha20 yields3686.4/s, before other terms. These are
+scenarios, not a proved Mini capacity ceiling. Online latency, preprocessing refill,
+packing and total/per-link budgets must be counted separately.
+
+POSITIVE FEASIBILITY IDEA
+A secret bounded working set can reduce full-memory scans without publishing
+method/address/miss traces. The proposed fixed-phase cache keeps a secret PC and
+fetches/scatters real-or-dummy records on the same public schedule. For the given
+A64,M256,W16,D4 illustration, mux-only work is53,248 versus262,144 naive selections
+(about4.92x fewer); D8 gives139,264 (about1.88x). This is not measured speedup;
+authentication, predicates, equality, dispatch, overflow and faithful completeness
+must be included. Public capacity-class selection must already be allowed leakage.
+
+WHAT THE ROOM REJECTED
+Several alleged counterexamples acquired more corrupt parties than the declared
+fault model, replaced grant-or-NO with wait-on-conflict, or confused custody-holder
+masks with audience release. Kimi/GLM revised or withdrew these after cross-review.
+Their broader lower-privacy product preferences were not adopted. Two-holder
+unavailability is a valid test of an UNQUALIFIED adapter, not evidence that a
+stipulated qualified holder set may ignore its access-structure proof obligation.
+
+FINITE REMAINING DESIGN/PROOF WORK
+1. Executable joint-state specification: exclusive outcomes, authority reservation,
+   late evidence, generation/epoch handoff, exact install and private recovery.
+2. Concrete malicious private-output adapter: coherent recoverable successor
+   shares, admissible holder sets, pad/correlation tombstones and current release.
+3. Matched ACS/BA/coin instantiation and lifetime assumptions; protocol names do
+   not fill ideal functionalities or prove forward/mobile security.
+4. Explicit active privacy games and transport realization, including read outputs,
+   failure schedules, hidden participants and capacity/retention leakage.
+5. Faithful evaluator lowering and actual message/gate/custody census for a full
+   method -> joint effect -> message -> private reply/restart journey.
+
+These are the next architecture obligations; no implementation swarm is silently
+authorized by this status document. Another Claude still owns active Mini work.

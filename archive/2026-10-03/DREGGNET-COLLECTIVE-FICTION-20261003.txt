@@ -1,0 +1,441 @@
+DREGGNET / COLLECTIVE FICTION / PARTICIPATORY WORLD RECOVERY — 2026-10-03
+Author: Codex GPT-6.1 Sol, dedicated dreggnet_collective_fiction scout.
+Private archaeology and recommendations. No builds, tests, source edits, Git
+mutations, deploys, external messages or transcript exports. Only this report
+was written. Source inspected in Bread and siblings, plus read-only Mini
+/Users/ember/workbox/mini-dev-opus (root-assigned e851920e).
+
+JUDGMENT
+
+The missing product lineage is substantial: authors running universes, audiences
+collectively choosing and modifying worlds, players carrying identities and
+accomplishments between adventures, and people/agents inhabiting an ongoing
+social home. Ember explicitly names SS13 station as the ambition and a dungeon
+as an away mission. Treating this as a generic multiplayer chat or a colorful
+inspector example would lose the point. The platform's research workrooms,
+hyperdocuments, institutions, games and resident agents are meant to coexist.
+
+There is significant reusable construction, but not a finished station hidden
+behind a build flag. Bread contains real narrative compilers, collective voting,
+world/game modules, persistent sessions, cross-surface offerings, authored/remixed
+universes and progression handoffs. It also contains independent app executors,
+host-managed admission paths, fixed demo electorates and partially joined proof
+paths. Mini already has kernel-governed sealed stories and a retained native
+journey, which changes the best construction strategy: extend its existing
+authoring/law/room path, borrowing Bread's content, contracts and hostile cases.
+Do not port a private Bread executor into Mini and call that unification.
+
+ACTUAL HUMAN MOTIVATION AND CORRECTIONS — cv LOCATORS
+
+Retrieved with cv prompts followed by cv show SESSION --around N --context 2–4.
+These are direct human prompts with surrounding exchange, not summaries:
+
+1. June28 claude:017d1559-96a1-43d9-8470-0f3f6f4ac404 #408:
+   DreggNet begins as real operated infrastructure using Pug's polyana/Graal
+   container and networking assets, Hetzner resources and possible fly.io API.
+   Ember calls it a private/moat/revenue project with concrete material motives.
+   This was real Hosting ambition, not solely a fiction product.
+2. June30 claude:d103af55-ba4c-43bf-adc6-0ccd011982b8 #141:
+   corrects an assistant that reduced hosting to static hosting/verifiable-agent
+   runtime. Wants highly Dregg-native primitives extended into the real world,
+   full Hosting/resources available so agents act autonomously and interact
+   with the world; asks broader scholar-visionaries rather than a myopic clone.
+3. July6 claude:9699badf-6982-4b3d-9725-9b34868b6653 #401:
+   wants federations to govern themselves, community tools, ~/dev/spween
+   integrated for CYOA/MUDs and voting; Kanzokax wants to run that sort of thing.
+   The assistant had asked governance/community/Polis as alternatives; the
+   human supplies all three and the creative community use that was missing.
+4. July7 claude:4d416d46-65a5-4351-8127-538b2a05b0ab #489:
+   asks public account of decentralized Egan-like Polis via zkOracle/zkparsing/
+   graph rewriting, bringing Claude onchain, collective fiction, deos,
+   Dreggnet Cloud and Starbridge apps. People ask what Dregg can do. The human
+   repeats and expands the preceding #488; count as one direction.
+5. July9 claude:4daf72e8-9866-4969-9e32-f9463a8f3171 #482:
+   asks extension to quietly upgrade existing social-media plaintext payloads
+   into Dregg-native hyperinteractivity: build the new world atop the old.
+6. July11 claude:6088f1ae-7cac-4ea3-985c-b8a7925abc16 #1059, #1066/#1067:
+   rejects the collective-fiction platform's toy/LARP hash-chain, misnamed
+   light-client and important hard parts left undone. Requests rebuild toward
+   real Dregg rather than lowering scope with honest labels or time estimates.
+   #1094 answer explicitly selects full A→D spine and real model provenance.
+   #1127 at 10:49 says a few authors are interested in running universes and
+   players coordinating around ./discord-bot. This is the strongest concrete
+   audience evidence recovered here. Fork 7005c51a#709 repeats this history,
+   not a second human commitment. #1125 is the accepted goal body, but its
+   technical wording is an agent-generated operationalization; distinguish it
+   from the direct corrections and the answered choices.
+7. July25 claude:5f419eb8-39e3-40e3-848d-b26b65c31ab0 #455:
+   explicit ambition SS13 station; dungeon crawler should mature but doing a
+   dungeon is an away mission. Second Life, thirdroom.io, deos-matrix and
+   machine-to-machine uses are additional inspirations/ambitions, not a claim
+   of existing deployment or a mandate for all by a particular release.
+8. July25 claude:32190750-0dc4-4f51-8263-1d4035af10c5 #233:
+   wants actual complete drex/fhegg suite for game-engine completeness, real
+   Telegram/Discord/web surfaces and extension participation in MPC/FHE
+   ceremonies. Games are the proving/scaling gauntlet before someone might
+   launch financial products after several improvement versions. The human
+   supplies orient/design/redesign as an alternative in #235; this does not
+   turn the ambition into current market deployment evidence.
+9. July14 claude:b7cdd58a-95d0-4f4e-b623-6629f393f7ec #1176/#1179:
+   corrects an assistant trying to make DreggCloud the intended games/DrEX host:
+   DreggCloud was a ChatGPT demo, never part of a plan. Then says it was valuable
+   as experience and might still be directly useful, but how is not clear. Both
+   prompts and the intervening assistant response were read. Do not turn agent
+   entwinement proposals or later schema engineering into selected architecture.
+
+May–June historian provided other relevant leads not independently read here:
+May24 130628b0#1434 models having a home/agency; Jun23 1774dfce#867 friend's
+Matrix comfort and semantic objects; Jun15 7fc2e1f#16438/#16505 AOL exploration,
+live images/Pharo. They support the wider motivation but this report does not
+present them as freshly validated conversation evidence. July/Aug historian's
+corpus and report can supply further exact locators.
+
+WHAT THE NAMES ACTUALLY REFER TO
+
+A. ~/dev/DreggNet and DreggNet-pub: originally operated cloud, subsequently
+   extensive verified network/compiler work. Bread memory's abandonment note
+   applies to the operated-layer product/rehome, not every later repo activity.
+   Bread HORIZON newest entries correctly say Mini is new construction home.
+   Do not declare this repo dead based on an old supersession banner.
+B. ~/dev/dreggnet-engine: first model/formal rewrite skeleton; present docs
+   directory is empty on this checkout. Not the source of the fiction engine.
+C. ~/dev/drorb: Dragon's Orb verified network orchestrator, protocol parser/
+   proxy/cache/TLS/pipeline/IO and verified compiler ambitions. It is networking,
+   not the social-world runtime. README's compilation scope carefully limits
+   demonstrated Pancake lowering; do not import its assurance into Mini games.
+D. ~/dev/DreggCloud: experimental operated House hosting sovereign Worlds/Rooms,
+   consumes Bread; real expedition and signed multiplayer-room prototypes,
+   authored-universe retention contracts, Forge/Grain/semantic workrooms and
+   native/web surfaces. A substantial adjacent prototype whose experience and
+   source may be useful, not selected games hosting architecture (July14 human
+   correction above), nor another spelling of DreggNet or Mini.
+E. ~/dev/dclutch and dragons-clutch: Solana fully collateralized outcome-market
+   protocol; separate provenance restrictions and product. No recovered direct
+   fiction-engine relationship. Do not conflate dragon names or assume its
+   market program belongs in Mini without separate review.
+
+SOURCE MAP: EXPERIENCES, REAL CONSUMERS AND LIMITS
+
+1. Authored narrative, choice and law.
+
+~/dev/spween is a Rust narrative DSL with lexer/parser/AST/runtime and WASM
+playground. Scene contains metadata and passages; choices carry conditions,
+effects and navigation. World state is deliberately external behind
+EffectHandler. This is reusable authoring syntax, not a multiplayer platform.
+Read README and docs; Bread docs/deos/SPWEEN-ON-DREGG.md captures the original
+integration design written for Kanzokax. Its future-tense claims are design.
+
+Bread spween-dregg/src/lib.rs and compiler/world/collective/verify modules bind
+scenes to actual WorldCell/EmbeddedExecutor/CellProgram turns. Choice gating,
+certified decisions, receipt anchoring, replay and native durable checkpoint
+custody are actual exported APIs. Source consumers include dungeon-on-dregg,
+ugc-dregg, wasm story bindings and collective frontends. A stranger's replay is
+O(history), distinct from a succinct history proof.
+
+demo/stories/the-commons.scene and the-drowned-library.scene are actual authored
+fiction assets. demo author/forge/coauthor/party/vault/region surfaces and browser
+drivers preserve richer UX references. demo/real-dungeon-service exposes
+/validate and /author then authored-session moves and verification against
+real WorldCell. Rich .dungeon format covers NPC conversation, keys/flags,
+combat/spells/light/consumables/status. Crucial mismatch: dungeon-on-dregg/src/
+dsl/compile.rs:684–734 explicitly refuses constructs not lowered (spells, HP
+combat and others); parser expressiveness is not executor compiler coverage.
+Port supported constructs explicitly, fail on unsupported ones, expand general
+law/compiler semantics as needed rather than dropping content behavior.
+
+2. Collective choice is both story choice and institution, but not truth.
+
+collective-choice/src/lib.rs uses actual ballot/poll cells, WriteOnce ballots,
+monotone tallies, quorum admission, cap attenuation and weighted casting. It
+is consumed by narrative branch selection and governance. It answers which
+authorized choice a group made. It does not establish that a proposition is
+true, a narrator honest, a model's prose canon, or a poll fair under every
+electorate/economic regime. Preserve those distinctions when designing social
+institutions; the ResearchRegime work is another relevant source for a later
+governance scout.
+
+demo/dungeon-service/src/coauthor_api.rs:1–95 and :776 onward is a concrete
+collective world-editor: propose typed AddRoom/AddExit/PlaceItem/SetObjective;
+ballot/quorum certifies winner; shared-draft::Draft::dispose re-renders and
+re-validates, refusing/rolling back a breaking voted edit. It retains edit
+dispositions/history. Actual limits: five fixed demo names, derived demo keys,
+in-process draft; it does not implement production durable/custodial authoring.
+shared-draft is a useful typed data/validator pattern, not finished collaborative
+prose editing or a general canonical-world authority protocol.
+
+dreggnet-web/src/crowd_round.rs and overlay.rs add live crowd ingestion,
+transparent OBS overlay/SSE and timer close into a real world turn. make_app
+mounts it under OVERLAY_LIVE_WORLD; default is tally-only, configured live mode
+is demo Keep. Current source improves old public-name secrets to OS-entropy
+platform custody; viewer-held signing remains absent here. Weighted votes
+replicate shaped seats, cost O(sum shaped weights) under mutex despite weighted
+primitive existing below. Dynamic persistent electorate and async multi-group
+merge remain gaps. Good spectator/community experience inspiration; not a
+ready Mini transport/privacy/agreement substitute.
+
+3. Universe publishing, attribution, remix lineage and completion.
+
+ugc-dregg/src/lib.rs:535–725 UniversePlan signs a content commitment with
+verify_strict, binds author pubkey and optional parent into UniverseId. Registry
+:1093–1120 publishes roots/remixes, requires parent be present for derived
+worlds; completion verification freshly deploys/replays exact rules/genesis to
+win and checks claimed move count. IPFS module transports canonical payload and
+re-derives identity. This is actual author/remix mechanics, not just a document
+mention. Registry itself is in-memory; it is not yet a distributed creator
+economy/canon administration service. Premium worlds/royalties/sybil controls
+are named future work. The old infallible publish silently returns the id
+without insertion for unknown parent; use result-returning publish_derived as
+the semantic model for new APIs.
+
+ProofCompletion verifier exists, but module explicitly says driven proof source
+is lightclient recipe, not actual multi-turn Descent play→leaves→fold; pinned
+endpoints stand in for game endpoints. Moves-not-posted is not by itself ZK.
+Do not cite that route as complete private, succinct gameplay.
+
+No general narrative-canon engine was found under that exact name. Actual
+semantics are immutable authored universe versions, permitted transitions,
+certified branch choice, validators and receipt history. Proposal vs accepted
+state vs narrator projection is my recommended explicit model for a station;
+do not claim it is an already formalized Bread subsystem.
+
+4. Games/social hub/progression, not only mechanics demos.
+
+dreggnet-catalog/src/lib.rs:561 lists 23 routable offerings, :627 advertises
+three (descent/automatafl/tug). Catalog unifies dungeon/campaign/council/market/
+private raid, RPG features and doc/names/compute/grain/Hermes. PlayerWorlds
+separates identity-owned RPG state from shared tables; the common registry
+actually feeds web/Telegram/WeChat and Discord player surfaces. Catalog parity
+does not mean all products have the same maturity or public availability.
+
+dreggnet-offerings/src/lib.rs, host.rs and signed.rs define open/actions/
+advance/verify/render/price, preserve distinct associated session types, one
+ViewNode/Action affordance vocabulary, host-side signed attribution/epoch/
+replay counter, journal/resume/lifecycle/private projection. Plain identity
+String remains asserted metadata; signed path is a real verifier but bot-held
+keys remain bot custody. Reuse semantic surface/typed action contracts and
+viewer authority, not opaque string identity assumptions.
+
+discord-bot/src/commands/fiction.rs integrates actual DungeonOffering,
+collective mode, typed legal moves, paid narrator credit gate, refusal and
+receipt-bound narration/provenance. Narrative continuity is six recent beats
+bounded to 700 chars; narration is a bounded rendering/proposal after world
+resolution. SqliteCharacterStore actually implements load/save in
+discord-bot/src/character_store.rs:49–100, contrary to old character module
+docblock claiming durable bot store unbuilt. Returning character/class/XP,
+hardcore death/echoes/boon seams exist; session-level XP grant is separate turn,
+not atomic proof of whole character/world progression.
+
+dreggnet-saga/src/lib.rs and tests weave party/faction/quest/cheevo/guild/craft/
+trade with the SAME Completion, crafted note ledger and PlayerIdentity, and
+cross-cell faction gate. This is stronger than labels matched by script.
+Tavern graduation remains absent. dreggnet-adventure later consumes generic
+CompletionVerifier/VerifiedCompletion for native Descent; completion binds
+rules/program, genesis, terminal root/actor/metrics. Party/loadout are enforced
+preconditions outside native run, not authenticated input to run semantics.
+Campaign joins region clearance/travel to native replay; native run and region
+clear are separate commits, not atomic hyperedge or succinct proof. Completion
+constructor alone is no proof that its caller replayed: verifier boundary is
+explicit (dreggnet-verified-completion/src/lib.rs:1–45).
+
+dreggnet-tavern/src/lib.rs is actual live shared-place construction on node
+World: board/presence/party/stall cells; distinct clients sign actions, observe
+SSE receipts and refuse other people's stalls. Missing: multi-room lobby,
+spatial presence/furniture, live cockpit/bot render, graduation of inline party/
+stall cells into party/trade spines. dungeon-on-dregg/src/mud.rs models multiple
+actors/contested item/fork conflicts, but fixed Alice/Bob/Carol fixture with
+ephemeral world and no general onboarding. These are two different maturity
+steps, neither the completed station.
+
+5. Persistent realm/instances and shared law.
+
+realm-model/src/lib.rs and node/src/realm_service.rs are current source:
+realm/child instance/catalog/canonical surface-independent identity exists;
+node mounts /realm* with restart-durable REALM_LOG replay and identity succession.
+Old Hoardlight doc statement 'no durable realm service' is stale. Important
+current boundary: own realm ledger/lock, open cell permissions, gate in
+RealmWorld::admit; ruleset_root not in kernel Turn; no fee/block/node receipt
+pipeline. NodeRealms is real durable gate-routed hosting, not signed kernel
+shared-law finality. Read DESIGN-realm-kernel-perimeter rather than declaring
+new realm infrastructure already integrated. Mini should make realm/instance/
+ruleset roots ordinary governed resources under existing kernel rather than
+copying that separate ledger.
+
+6. Creatures/parameters beyond dungeon and chat.
+
+docs/design/DRAGON-DESCENT-VISION.md is Hoardlight cozy creature-raising design:
+safe failure, inherited/learned/hoard-dependent parameters, daily shared topic,
+inspectable reactions and provenance; mostly product ambition. Not proof of a
+finished dragon game. HOARDLIGHT-LIVING-WORLD.md gives the generality principle:
+realms outlive bounded child adventures, schemas/projections specify what
+other games can observe; new behavior is versioned content/law, not privileged
+mutation. Some status in it predates later realm-model integration.
+entity-compose/param-compose have actual generic parameter composition with
+roles/linear/cross terms and Lean-emitted custom proof/weld construction. They
+are an interesting later expressive/private-computation consumer, not an Oct13
+mandate to port their full proof stack. Creature ownership, consent and
+provenance can first be ordinary Mini object/doc/law behaviors.
+
+7. DreggCloud adjacent examples and clear authority limits.
+
+DreggCloud README describes durable House Worlds/Rooms/objects, shares, forks,
+placement and receipt log. House transitions genuinely EmitEvent-anchor state
+hash but effects remain host-modeled. Shared crash journal is actual recovery
+engineering, not evidence that world semantics are kernel enforced.
+crates/dreggcloud-expedition is signed bounded shared-party archive with founder,
+roster≤6, strict-majority decisions≤256, exact resolver replay and history roots.
+Randomness is reproducible, founder-grindable, not fair beacon claim.
+multiplayer-room README: signed join/actions,≤32 participants/4096 commands,
+startup replay of actor log, exact upstream save, one shared avatar; House
+attachment is pinned snapshot, not semantic House mutation or separate avatars.
+universe-admission retains actual compiler/program/source/receipt/refusal artifact;
+current producer is Salt Shore fixture. universe-house-custody README's v13
+standalone/no-command claim is STALE: current core source schema16 has
+AdmitUniverseWorldV1 (core/src/lib.rs:1464), custody field (:1382), and mounted
+House routes/main runtime. DreggCloud owner reports main e9ff17a9 with protected
+prepare/install/submit, archive-first custody and exact House/substrate base
+checks. These command/source presences were independently read; full validation
+details are the dedicated owner's inspection. Last dated deployment remains
+schema14; v15 universe mount then v16 service custody source do not establish
+real-artifact deployment. Replay assurance is retained producer assertion, not
+independently rerun or signed producer trust anchor. Useful integration/recovery
+cases and authoring UX, but a direct Mini port of host world semantics would
+reproduce the twin Ember rejected. Dedicated DreggCloud owner now supplies full
+product/source/deployment qualification; I did not assess every Forge/workroom/
+runtime/bridge consumer. July14 explicitly denies it was an intended game host.
+
+CURRENT MINI — THE EXISTING CONSTRUCTION HOME HAS A STORY ALREADY
+
+Read native/resource-client/src/story.rs, deploy/shell/templates/story/README.md,
+Assurance/StoryLaw.lean and retained J15 TSV at read-only Mini e851920e. Actual
+operations: author creates room/table doc, seals law, births each player's cell
+under generated law, invites players/GM; signed look/go/take/act and GM-only
+scenes narration. Table/installed player law rechecked on look; author cannot
+move another player's cell or replace sealed law. Grammar includes scene prose,
+items, conditional exits/acts and endings, each player has own position/items.
+Lean law is general over tables; source-generated sample is checked against
+that law. This is real content→kernel policy, not a hidden private evaluator.
+The general Lean-table law theorem plus sample equality/--check is NOT a general
+refinement theorem for the arbitrary-table Rust compiler; preserve that scope.
+
+claudesplosion/product/p-story.md gives dated source53cbddb7/176792ce evidence:
+J15 r5 121/121 expected rows, 688sec including setup; separate author/player/
+player/GM; skip/keyless/retake/rewind/other-player writes refuse, restart cold
+audit re-admits47 then49 records and progress retained. The TSV is present and
+was inspected; tests were not rerun. Setup copied enrollment custody into
+sponsor home then removed it, so this does not prove final independent signup.
+No story UI latency is inferred from total fixture time.
+
+Important live source gap: native/resource-client/src/hermes.rs:340 refuses
+summon as gm. GM grant template names deleted story shape; librarian/runner
+residents do not imply resident narrator/GM works. Story report has no history
+verb, per-player narration stream, free-form act text or GM mutable-scene state.
+Some kernel birth/field/refusal concerns are tracked separately; recheck active
+owners before repeating their old work. Existing law locks all install/delegate/
+revoke on player cells: good fixed story integrity, consequential limit for
+mutable live station governance. Prefer versioned new instances from amended
+world definitions over silently changing old meanings.
+
+RECOMMENDED CREATIVE COMMUNITY EXPERIENCE AND PORT STRATEGY
+
+These dates are proposed sequencing, not recovered feature commitments.
+The October13 objective report already defines complete docuverse/substantial
+deos and traffic privacy/agreement; fiction gives those consumers and delight,
+not an excuse to reduce those obligations.
+
+October13: add one coherent inhabited authoring place to the ordinary Mini world.
+People arrive with separate authority/budgets; read a station's room/index/map;
+write an episode as linked prose+transition table; inspect/seal it; invite others;
+play separately or vote one shared party decision; narrator/GM can read only
+authorized state and writes a clearly attributed scene stream, never silently
+mutates canonical world. A group authoring proposal changes a draft, and current
+authorized governance can accept a new version after validation; votes cannot
+authorize effects disallowed by inherited law. Preserve old play meanings.
+Integrate failure/current authority/history/private room into this one experience.
+The existing P-STORY path is the base. The first high-value integration is real
+GM role over that path plus shared decision/authoring, not another initial CYOA.
+
+October26 recommendation: durable station lobby→author workshops→away mission→
+return with one exact completion/artifact identity. Connect player identity,
+shared contested object, reusable prototype/law, publication lineage and room
+history. Real cross-surface views can reuse deos affordance vocabulary but should
+be authored to human stories rather than making everybody click verify dashboards.
+Connect operators/rooms under whatever agreement/privacy profile qualifies;
+public/custodial bot view must preserve actual holder and disclosure boundary.
+
+November recommendation: richer authored mechanics and entity composition,
+community governance/research tools, resident characters/companions, multiple
+parallel groups with explicit divergence/conflict settlement, optional broadcast
+spectator participation and player-owned economic artifacts. Explore Hoardlight
+creature/product slice if Ember's taste calls for it; neither full SS13 physics
+nor SecondLife renderer automatically belongs in this period.
+
+Direct reuse candidates: authored prose/scenes, spween parsing/AST as input
+contract, structured edit validators, closed command/schema/envelope patterns,
+ViewNode/Action semantics and frontend degradation examples, verified completion
+bindings, same-object saga acceptance cases. Check license/provenance of each
+sibling separately. Source choices are evidence, not a mandate to vendor crates.
+
+Repair/rebuild under Mini: scene→Pred/OO law compiler and supported-construct
+coverage, durable authenticated coauthor proposals, dynamically authorized poll,
+decision→exact shared world update, generated player/GM grants, same world
+completion/asset consequences, canonical cross-surface identity, realm/instance
+catalog as kernel resources. Borrow tests that refute illegal behavior and
+handoff substitution. Define narrator provenance policy separately from authority.
+
+Spec/inspiration: SS13 station coherence, Hoardlight/creature braid, streaming
+crowds, broad MUD federation topology, royalties, universal game module manifest,
+full succinct/hiding game proof closure, drorb compiled dataplane. They are
+valuable work directions; none is a magical ready-made Mini port.
+
+DEPENDENCIES AND COST QUESTIONS THAT MATTER
+
+- OO gives reusable room/story/poll/actor behavior; docuverse gives linked editable
+  scenes/drafts/publication/history; kernel predicates give actual world law.
+  These need one product owner joining them, not three disconnected mechanics.
+- Current Mini standalone player law cannot express every shared contest,
+  random/threshold/private game or voted world edit simply by declaring a kind.
+  Use actual composed operations/current observations and correct atomicity.
+- Resident GM source is explicitly unfinished; repair the real role/template
+  and attach it to rooms under grant+budget rules. Arbitrary narrated text has
+  no authority to change scene/item state. Clear consent/view/provenance matters.
+- Bread replay and session resume scale with retained history. Use Mini existing
+  admission/materialization work and measured warm command path; do not port
+  O(history) boot replay unexamined into every interactive click. Retained P-STORY
+  688sec fixture isn't a per-move measurement. Measure short composed journeys.
+- Private raid/shuffle/preferences and game consequence proofs are real Bread
+  consumers worth joining to current privacy work. Broad public proof claims
+  cannot inherit component/test assertions; current HORIZON captures pending
+  native/campaign and private-raid gates separately from source completion.
+- Web WASM old61MB/compression cold-cost comments illustrate portfolio packaging
+  debt. Existing server is heavy/!Send host-thread sessions; Mini UI should
+  consume one authority/effect path rather than load full Bread proof stack.
+- Source two-owner completion/asset equality matters; a copied name/root or
+  EmitEvent receipt commitment alone is not shared semantic world execution.
+- Community canon is an authorized publication/version choice, not a vote's
+  claim of truth. Keep fictional worlds, testimony, research claims and law
+  evidence interpretable as their actual kinds.
+
+COVERAGE / FURTHER SCOUTING GAPS
+
+Read HORIZON newest plus relevant fiction/game entries; complete Bread memory
+index and relevant Dreggnet/rehome/drorb/join notes; DreggNet memory index;
+OVERVIEW; stated conversation contexts; source above; objective recovery;
+Mini story/proof/template/retained journey. Bounded rg/files searched Bread
+docs/source, known sibling repos, session titles/content. No builds or deployment
+qualification and no claim of complete current repo health.
+
+Broad areas still omitted by this focused recovery: DreggCloud complete operator/
+author/agent workroom journey; Polisware/svenvs/ResearchRegime institutions and
+model homes; living simulation/ecology/FRP/gamevm/allgame/chreatures; game
+portfolio-specific content quality and actual player feedback; Matrix/native
+desktop social delivery; golden/silver long-term visions; protocol/object
+behavior authoring and theorem registry as usable social artifacts; full current
+creative asset/UI screenshot inventory; service uptime/public customer use;
+story/author contacts and preferences not present in these conversations.
+These are further scouting work, not proof Bread is exhausted. Historian peers
+have broader prompt corpora; root should combine this domain with theirs.
+
+The central recommendation is substantial and concrete: make Mini a place where
+friends and agents create a world, agree on its laws, inhabit it, and carry their
+work home. Its existing real story makes that a construction path rather than
+another abstract vision or another disconnected game demo.
