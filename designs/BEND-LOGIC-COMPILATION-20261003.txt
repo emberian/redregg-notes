@@ -1,0 +1,185 @@
+BEND LOGIC COMPILATION: SOURCE-GROUNDED CONSTRUCTION 2026-10-03
+Owner: Codex bend_logic_compilation. Upstream kernel pin:
+947db722640c86247849343657bf2f7ef01cb7f1 (bend2/bendtt.lean).
+Mini source read: /home/hbox/workbox/codex-unified-integration-20261003/src.
+Bread source read-only: /Users/ember/dev/breadstuffs.
+Status at this writing: additive source constructed in isolated hbox lane;
+focused checks await captain seat. No theorem here is reported compiled yet.
+
+1. The framework inventory is plural, not one autostark compiler.
+
+Mini:
+- Compiler/Signature.lean gives a generic syntactic container fold and uniqueness.
+  Compiler/Air.lean uses that signature for field const/var/add/mul expressions.
+  Its eval_agrees_exec proves expression fold agreement, not Bend agreement.
+- Compiler/AirFlatten.lean emits bounded-degree add/mul gates; arbitrary auxiliary
+  assignments force root values, and a scoped satisfying extension exists.
+- Compiler/Emit.lean produces ConstraintDescriptor with nPublic/nVars/nWires,
+  gate records and zero roots. emit_faithful is over every total wire vector;
+  emit_accepts_iff_fin connects an externally pinned original assignment to the
+  serialized descriptor. Compiler/EmitShare.lean CSE has its own SSA-based
+  reverse witness transport. Original variable wires are preserved; compact
+  renumbering/dead-gate sweeping remains separate.
+- Compiler/EmitSerialize.lean writes/parses the descriptor over ZMod p. Its
+  header describes the historical Rust prover seam. Current Compiler/Emit.lean
+  explicitly says that Rust descriptor reader/WGPU path was deleted and native
+  code does not consume this descriptor today. A JSON artifact is not a deployed
+  proof-producing runtime. The current native candidate-buffer controllers have
+  their own Lean receiving checks.
+- Compiler/PredCompile.lean is a different front end: first-party policy AST,
+  presence-aware equality, source-selected scalar order widths, Boolean nodes,
+  hash opening boundary, existential witness and arbitrary-witness soundness.
+  Field cast injectivity and NoWrap over the complete selected interval are
+  explicit premises. Compiler/CanonicalPolicyAdmission.lean consumes its
+  compiledLawAccepts, not a second policy interpreter; source semantic version
+  is currently 6. ResolvedLawCompilation binds source membership and composed
+  law closure separately. None compiles arbitrary Bend closure evaluation.
+- Pred.ran is eq on the controller-projected ran slot after Kernel.Run checked
+  actual re-execution. Pred.witnessed is false in first-party semantics. Calling
+  these a zkVM confuses a receiving fact with trace arithmetization.
+- Compiler/ObliviousEvaluator.lean proves finite whole-scan/scatter and native
+  sample exactness. Compiler/PrivateWorldIR joins the same actual evaluator and
+  WorldMethodTrace typed effects. Secret-PC/noun-heap lowering is explicitly
+  absent in these modules; new fixed circuit networks have their own lane.
+- Host currently has authenticated-state/root and receipt-continuity caches,
+  not an established Bend specialization cache. Any specialization cache must
+  key all bound source and representation parameters, below.
+
+Bread:
+- Exec/RecordCircuit + Exec/CircuitEmit is the record/spec expression path;
+  EffectSpec2 carries effect semantics and conservation/refinement scaffolding.
+- Circuit/EffectAirIR + Circuit/Emit/EffectLowerCore is the live EffectAir ->
+  EffectVmDescriptor2 lowering pass with table/lookup/window/range/PI legs and
+  fail-closed refusals for unsupported target faces. DfaRoutingTableEmit and
+  selected by-name descriptors are actually defined by lowerAir. Other emitters
+  remain separately hand-authored Lean constraints. EffectLower.lean documents
+  why its transfer model is not the deployed transfer's complete arithmetic.
+- Circuit/Emit/AirProgramRows relates forced canonical multi-row instruction
+  traces to runProgAt at integer semantics under ROM/range-table obligations.
+  This is the closest existing universal-machine proof shape, but its register
+  instruction language is not Bend and its premises must not be erased.
+- Logic/FiniteLogicDescriptorIR2, FiniteRelationalFOLDescriptorIR2 and
+  FiniteSignatureFOLDescriptorIR2 exhaust finite quantifiers and translate finite
+  formula semantics to live IR2. Finite signatures do not provide private RAM,
+  unbounded Nat or a constant-cost quantified rule. Public tables can expose data.
+- Metatheory/DirectLogicBoolGraphDescriptorIR2 materializes zero/Boolean nodes
+  into degree<=2 witness constraints. The public-binding variant quantifies
+  arbitrary nonempty satisfying traces, whereas the original unbound theorem
+  concerned canonical one-row traces. Optimizer/CSE/resource certificates exist;
+  arithmetic/membership/lifecycle production predicates remain atom boundaries.
+- Calculus/IntensionalCCCInteractionDescriptorIR2 is an STLC/shared-net local
+  interaction receipt compiler. It is not general dependent affine Bend and
+  does not reconstruct erased endpoint syntax from its receipt.
+- circuit/src/direct_logic_frontend.rs is an actual Rust finite logic compiler
+  with explicit size budgets and differential evidence, not a Lean-to-Rust
+  refinement. The production-derived benchmark reads Lean-emitted JSON/trace/
+  public vectors and calls prove_vm_descriptor2 / verify_vm_descriptor2.
+- circuit/src/descriptor_ir2.rs is the actual IR2 parse/check/trace/prove/verify
+  consumer. Its common-data caching at ~7240 is backend data reuse, not evidence
+  of semantic program specialization. Circuit correctness, trace witness
+  generation faithfulness, and the proof system cryptographic bound are separate.
+- DirectLogicArithmetization.lean is an umbrella across finite logic, FHE,
+  optimizer, categorical and proof-research constructions; it carefully lists
+  terminal model premises and missing runtime refinement. Do not infer a single
+  uniform autostark pipeline or an inherited Mini security guarantee.
+
+2. Two compilation products from one Bend live meaning.
+
+A. Universal machine trace:
+  fixed transition schema, varying exact book/program and input; private or
+  public program choice is explicit. Bind exact pinned kernel and evaluator
+  profile, code/book commitment, entry, initial/final data encoding, quota,
+  outcome, exact step charge, typed ordered effects and native dependency trace.
+  An accepted trace must force every transition, not merely contain a producer
+  success bit. Public ROM fits a fixed trace relation; private program requires
+  authenticated secret code access under the same trace constraints.
+
+B. Fixed-program specialization:
+  validate/elaborate the fixed exact BendTT book/entry, partially evaluate only
+  public syntax, specialize the shared transition IR or compile the represented
+  data fragment, emit one reusable descriptor/network for all inputs in declared
+  shapes. Erasure removes dead types/annotations/motives/Q0 arguments and fields;
+  it must preserve every live case, capture, label and quantity behavior. Symbolic
+  branches become muxes, never specialization on secret data. General recursion
+  is unrolled to a public cap or lowered through the bounded shared machine;
+  termination Acc supplies no uniform finite circuit shape. Closures require
+  explicit env/capture encoding; Q2 copies normalized Data and may share immutable
+  heap nodes, it does not authorize duplication of closures or opaque calls.
+
+Both products need a source-to-machine observation simulation, a machine-to-
+constraint arbitrary-witness forcing theorem, and backend-specific consumer
+refinement. There is no default Bend -> Nock translation; Nock registry and ABI
+remain their own compatibility entry. Checker WNF is lazy and not the live Eval/
+Walk CBV semantics. Upstream comp.ts erases Rwt evidence and unused live lets,
+so native fast-path refinement is final-observation simulation rather than
+literal equality of source step counts.
+
+3. Public/private and shape are independent of source quantities.
+
+Public receiving statement: source/kernel/compiler/profile IDs, chosen encoding
+and arithmetic domain, commitments to any hidden program/data/initial state,
+capability/policy revision context, effect/dependency commitments, declared caps,
+and permitted final observation/release. Private: selected program bytes (when
+that mode is supported), input/captures/heap/PC/control path/intermediate values,
+private outputs. Q0/Q1/Q2 describe erasure/usage/Data copying, not visibility.
+
+Caps bind code/book size, label dictionary, node count, closure/env frames, heap
+allocation, cell/slot working set, recursion/fuel, exact input/output lengths,
+integer limbs and effect count. Padded circuits/networks perform the whole public
+schedule; halt/crash/exhaustion/overflow are distinct private result tags.
+Overflow refuses or follows a predeclared resize/retry protocol; no take/truncate,
+unknown label=>false, malformed=>zero or exhausted=>crash substitution.
+The same profile owns charging. A specialized circuit may have different physical
+work from source Eval: bind semantic charge and backend cost separately, prove
+conversion, and never price merely the faster path while accepting a different
+trace. Program-cache key includes the exact compiled source/book closure,
+kernel pin, compiler and evaluator versions, encoding, public split, arithmetic
+profile, all caps and backend/version, plus emitted bytes. Private source caches
+must avoid exposing secret source identifiers publicly.
+
+4. Arithmetic/backend distinctions.
+
+Kernel Nat is Sigma/labels, not U32. comp.ts native U32 wraps and divides by zero
+as zero; native Nat optimization has a bounded representation. Primitive names
+cannot alone authorize replacing exact source definitions. Require definition
+identity, a representation theorem, and overflow semantics. Scalar field equality
+is exact only on an injective declared image. Integer addition/multiplication
+requires range/carry/limb proofs; casting a 256-bit input to one BabyBear felt is
+lossy. Reuse Mini AirRange/AirBignum/order gadgets when their proved domain fits.
+
+A field add/mul descriptor can feed multiple physical backends, but their proof
+obligations differ. MPC needs authenticated secret sharing and malicious circuit
+execution/release; ZK needs a sound commitment/opening/transcript/proof consumer
+for the bound trace; FHE needs matching plaintext ring, injective encoding or
+explicit modular source semantics, evaluated ciphertext noise budget and exact
+threshold opening. Field inverses/zero tests or branching do not become free
+homomorphic primitives. Bread's bounded exact zero conversion costs B-1 products,
+whole-field depth lower bound is >=20, and its B=8 measured multiplied-ciphertext
+noise refusal is not a certified FHE security/noise theorem. General graded
+modalities must preserve these separate domain/admission/release contracts.
+
+5. The first implemented end-to-end specialization.
+
+Compiler/BendLogicCase.lean (isolated hbox lane) defines four unary Bool enum
+truth tables, a binary input/output field encoding, a relational AIR and Emit
+artifact. Every satisfying descriptor vector with pinned input/output implies
+the selected result; every input has a satisfying vector; wrong outputs have
+none. This is universal over auxiliary assignments and the generic field.
+
+Compiler/BendLogicSpecialization.lean imports Theory/BendTTSource.lean, the exact
+namespace-wrapped pinned kernel. The proposed source plan is accepted only when
+the complete caller source equals Mat "false" falseBranch (Mat "true" trueBranch
+Efq). It rejects missing/different branches, labels or source syntax and an invalid
+public split. Exact upstream Eval.hit/miss yields one/two-step normalization.
+Composition proves arbitrary emitted satisfying vectors produce the actual
+upstream source output. Negation is the smallest complete example, input false
+-> label true and input true -> label false. The circuit does not specialize on
+input values; the same fixed source artifact is reused for both.
+
+This implementation is a faithful finite data block, not completed general Bend
+runtime, a claimed deployed zkVM, an FHE compiler, or registry admission. The next
+extension is typed data-case composition through the existing Air and shared
+transition block API; general captures/recursion join the closure/env machine,
+with public caps. No parallel general semantic interpreter should be authored.
+Lean toolchains are explicit: upstream v4.34, Mini v4.30; compile compatibility
+or deliberate version port is checked, never silently upgraded.

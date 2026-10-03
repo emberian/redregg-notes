@@ -1,0 +1,191 @@
+{
+  "generated_utc": "2026-10-03T07:45:32.970201+00:00",
+  "warning": "Author-owned mutable research hash pins at this time only. Different read units are preserved; counts are never summed. File hashing is not semantic reading.",
+  "records": [
+    {
+      "path": "/Users/ember/dev/redregg/intent/foundations-intent-model.txt",
+      "sha256": "7239c1503ad5856a39b8d35786bd4081007b2e364865647a8666e6f26f685121",
+      "bytes": 16259,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author"
+    },
+    {
+      "path": "/Users/ember/dev/redregg/intent/foundations-reading-coverage.json",
+      "sha256": "6c5ba0833057437ce8b4f24151584e895a1508c538c5f27bb8980799339f8071",
+      "bytes": 23792,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author",
+      "metadata_keys": [
+        "owner",
+        "date",
+        "method",
+        "focal_windows_read",
+        "focal_windows",
+        "files",
+        "source_pins",
+        "limits"
+      ],
+      "owner": "redregg_intent_foundations",
+      "method": "Initial reports used as leads; focal primary prompts and actual bounded exchanges reread with cv; source fragments checked without builds or source mutations. No raw transcripts copied.",
+      "focal_windows_read": 32,
+      "limits": [
+        "Broader search output was sometimes truncated and is not claimed as interpreted coverage.",
+        "Normalized metadata parse verifies focal origin/time, but does not turn automated rows into human endorsement.",
+        "Archived audit paragraphs and current docs are dated agent source claims, distinguished from checked source definitions.",
+        "No proof compilation, runtime tests, deployments or current assurance audit were performed.",
+        "Repeated/forked prompts not counted as independent endorsements."
+      ],
+      "source_pins": {
+        "breadstuffs": "22fad151e9f118e3aa001a823e075918ffa139e8",
+        "minidregg": "b57acedaaae02edf2b2cfd8e33675b3cbf40daa8"
+      },
+      "focal_unique_session_index_pairs": 32,
+      "focal_locators": [
+        {
+          "cv_locator": "claude:05a5aa0c-e038-4658-89b7-5d321d7d55b9",
+          "cv_index": 45
+        },
+        {
+          "cv_locator": "claude:0bea043f-86dc-4012-82d6-2ca7c0719304",
+          "cv_index": 105
+        },
+        {
+          "cv_locator": "claude:0c315aee-e07a-499c-8bb4-fa36730510ca",
+          "cv_index": 4504
+        },
+        {
+          "cv_locator": "claude:0c315aee-e07a-499c-8bb4-fa36730510ca",
+          "cv_index": 4515
+        },
+        {
+          "cv_locator": "claude:2ed94bdd-4d0d-492a-8cb3-ee06012e1d6e",
+          "cv_index": 95
+        },
+        {
+          "cv_locator": "claude:34db0696-2160-4fec-aaa2-2853b02ebe2f",
+          "cv_index": 247
+        },
+        {
+          "cv_locator": "claude:34db0696-2160-4fec-aaa2-2853b02ebe2f",
+          "cv_index": 294
+        },
+        {
+          "cv_locator": "claude:4b9dad75-dc09-4aa7-b529-e1042c0d0edb",
+          "cv_index": 39
+        },
+        {
+          "cv_locator": "claude:4ffab82c-200f-4b23-adc5-085488fdb0b7",
+          "cv_index": 0
+        },
+        {
+          "cv_locator": "claude:50ea7585-48e1-4014-99cc-158380b92698",
+          "cv_index": 272
+        },
+        {
+          "cv_locator": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+          "cv_index": 1381
+        },
+        {
+          "cv_locator": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+          "cv_index": 4317
+        },
+        {
+          "cv_locator": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+          "cv_index": 4341
+        },
+        {
+          "cv_locator": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+          "cv_index": 4759
+        },
+        {
+          "cv_locator": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+          "cv_index": 4850
+        },
+        {
+          "cv_locator": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+          "cv_index": 5306
+        },
+        {
+          "cv_locator": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+          "cv_index": 5456
+        },
+        {
+          "cv_locator": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+          "cv_index": 6497
+        },
+        {
+          "cv_locator": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+          "cv_index": 6577
+        },
+        {
+          "cv_locator": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+          "cv_index": 10444
+        },
+        {
+          "cv_locator": "claude:70642dc2-d9f1-434b-8209-c2c96787bd92",
+          "cv_index": 1987
+        },
+        {
+          "cv_locator": "claude:70642dc2-d9f1-434b-8209-c2c96787bd92",
+          "cv_index": 2646
+        },
+        {
+          "cv_locator": "claude:70642dc2-d9f1-434b-8209-c2c96787bd92",
+          "cv_index": 2831
+        },
+        {
+          "cv_locator": "claude:7fc2e1fd-dff5-45b5-8609-725f442f4cdc",
+          "cv_index": 667
+        },
+        {
+          "cv_locator": "claude:7fc2e1fd-dff5-45b5-8609-725f442f4cdc",
+          "cv_index": 899
+        },
+        {
+          "cv_locator": "claude:b54b6026-1b53-47dc-9148-5d041555810c",
+          "cv_index": 3
+        },
+        {
+          "cv_locator": "claude:ca49a136-b817-4644-8a86-092e07ec5c2e",
+          "cv_index": 321
+        },
+        {
+          "cv_locator": "claude:e9d68d2f-d24f-4f54-ab96-0196f23599f8",
+          "cv_index": 302
+        },
+        {
+          "cv_locator": "claude:e9d68d2f-d24f-4f54-ab96-0196f23599f8",
+          "cv_index": 4250
+        },
+        {
+          "cv_locator": "codex:019fe43d-3dc0-7911-8a86-f4c94ac00e8a",
+          "cv_index": 10459
+        },
+        {
+          "cv_locator": "codex:01a0b0ed-2f93-7a03-be0e-bb81bd250747",
+          "cv_index": 5836
+        },
+        {
+          "cv_locator": "codex:01a0fa81-d479-7753-a1b3-1331d1ed53de",
+          "cv_index": 6996
+        }
+      ]
+    },
+    {
+      "path": "/Users/ember/dev/redregg/intent/worlds-second-pass-20261003.txt",
+      "sha256": "19e89c5bead7cd057c24ee5eb73318776aa4f37568a47f815ab95fdfe88738c6",
+      "bytes": 20245,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author"
+    },
+    {
+      "path": "/Users/ember/dev/redregg/designs/ALTERNATIVES-20261003.txt",
+      "sha256": "b882d9dda3eb6125ca0577d23de442045f6099f318cd467f995078ef84c5436b",
+      "bytes": 23989,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author"
+    },
+    {
+      "path": "/Users/ember/dev/redregg/designs/BEND-DIRECTION-20261003.txt",
+      "sha256": "9e34484c2ebd0e99176d993352f2a09dcc814fb82191ef10fda69dd5fdfa319e",
+      "bytes": 3750,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author"
+    }
+  ]
+}

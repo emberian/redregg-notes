@@ -1,0 +1,197 @@
+SECOND-PASS RECEIVING LANDSCAPE AND TRANSFER CLASSIFICATION
+October 3, 2026 — Codex /root/redregg_systems_design
+Read-only research; no builds, source/Git changes, deployment or deletion.
+This report and designs/ are the owned new artifacts. Curated local-only record.
+
+EVIDENCE STRATA
+
+P = primary source/conversation read in this pass. Source files were read at the
+current local snapshot, not independently pinned via a new Git check or build.
+R = report/artifact reading with exact identity supplied by that report; not an
+independent rerun. Earlier source-pinned receiving retains its historical scope.
+N = new inference/proposal, with refuter and consumer. No implemented guarantee.
+
+ARCHIVED BASELINE
+
+Bread systems/programming/fiction/Cloud and Astra future synthesis reports are in
+archive/2026-10-03/. They identify Bread 22fad151e9f118e3aa001a823e075918ffa139e8,
+Cloud e9ff17a9a955af68afc0bbd7a537184a3656f6fb and Mini reading base
+e851920e92fe0a3c52ffd266715b4796e8eff47e. Those are report-supplied identities.
+This pass also read newest Bread HORIZONLOG, whole memory index, relevant current
+Mini/no-proof and Polis correction notes, docs/OVERVIEW, historical August handoff,
+and Assortia HANDOFF. Historical pessimistic/optimistic notes were treated as leads.
+OVERVIEW's 'one root knows everything' is not the current Mini admission guarantee.
+
+SUBSEQUENT WORLD-LANGUAGE DIRECTION
+
+R: root's designs/BEND-DIRECTION-20261003.txt records new direct human steering:
+Bend broadly as primary world language, Nock supported; native/oblivious, ordinary
+zkVM and fixed logic-specialized circuit routes should be explored. Root's upstream
+pin is 947db722640c86247849343657bf2f7ef01cb7f1, Lean4.34 versus Mini4.30.
+This owner read the direction record, not the upstream proof/compiler; those have
+separate current owners. Designs incorporate authored Bend modules/effect profiles
+without treating checker termination, runtime equivalence or private/zk execution
+as complete. This changes authoring priority, not the already frozen common v10
+receiving qualification or existing Nock receipt meanings.
+
+CURRENT CONSTRUCTION, BEYOND THE OLD e851 READING COPY
+
+R: /Users/ember/workbox/mini-private-capacity-review-20261002/
+DOCUVERSE-DEOS-CONSTRUCTION-20261003.txt was read in full. It reports source-owned
+browser comments/ranges/live-pinned transclusion/actions, retained edit identity,
+two authorized object faces and exact recovery. Its final client SHA is
+c56f148f4100c5fe7ddfc894f7bd21ae520a5c522fdabda44b763504308f80db, host source
+e8582196/host SHA f65002902c4e97edb24492c9661af98e616ae7918171321298f138125f732588.
+The 69 receiving rows, 4 recovery rows and real Chromium comment interaction are
+lane-reported receiving of that exact candidate. They do not qualify the new
+combined frame10/OO/private/agreement/traffic candidate. Report says complete
+docuverse/substantial deos remains broader than this tranche.
+
+R: MEMBER-OO-CONSTRUCTION-20261003.txt was read in full, including latest exhaustive
+payload consumer amendment. It implements authenticated kindRead, canonical
+definition byte output, actual evaluator/source-root constructor binding, frame10/
+world executionv2, complete accepted trace/native IR input join, and member commands.
+It reports scoped Lean/component/client evidence; common closure/native fresh
+construction receiving remains captain-owned/pending at report time. The 1..15
+ordered parents bound is a receiving profile, not a community population cap.
+Current numeric method tables remain; typed byte/erase/dynamic-key methods and
+separate non-effect private return ABI remain active work. Existing r5 self/super
+runtime results must be retained, neither erased nor upgraded to complete native
+authenticated construction. Updated designs use this actual join as their receiver.
+
+R: CONSTRUCTION-PRIVATE-EVALUATOR-CUSTODY-20261003.txt was read in full. Five modules
+and 28 named axiom checks join actual native evaluator samples/successor intents,
+bounded full-scan world projection, exact refusal/absence, canonical custody codec,
+generation preservation and stable physical correlation tombstones. The report
+explicitly excludes full secret-PC/noun-heap circuit, malicious MPC backend,
+physical journal/antirollback receiving and completed traffic privacy. Qualified
+contains an actual privateRecovery proposition; setting it True would not qualify
+a backend. Compiled source models are substantial construction, not actual MPC.
+
+R: TAKEOVER-ARCHITECTURE and ROOT-SYNTHESIS establish chosen direction: one native
+invocation/effect relation, explicit domains, last mandatory signer, private durable
+recovery, current reservation/release cuts, Generic Simplex baseline and Bread CM
+comparator, exact chosen privacy games. They name finite code/proof obligations;
+local flags/simulated private votes do not establish BFT finality. Earlier hard737/s
+capacity wording is withdrawn; working-set mux/count improvements are sensitivity
+scenarios, not measured full native throughput. No architecture choice is changed
+by this product/design report.
+
+PRIMARY SEAMS SPOT-CHECKED
+
+P: Mini /Users/ember/workbox/mini-dev-opus/Kernel/WorldKindMethods.lean defines
+immutable ROM method bindings to numeric, non-ROM outputs; actionWrite refuses
+read/erase/bytes, table valid rejects aliases/duplicates. Compiler/
+WorldExecutionContract.lean explicitly pins that receiving semantics. This is
+why proposed full OO/typed private consumers cannot be called already received.
+
+P: Mini native/resource-client/src/story.rs explains source/table/seal/player birth
+and actual signed look/go/take/act. Every player has separately governed progress/
+inventory; GM narration has distinct role. The existing historical J15 121-row
+receiving is from companion reports, not rerun here. Extend to contested shared
+entities/collective authored consequence; do not rebuild a first CYOA.
+
+P: Mini workspace.rs::project_transclusion_source matches exact source/atom/revision
+against independently admitted raw source and matching custody opening. It refuses
+borrowing host keys or current wrappers. Source link discovery/read authority and
+historical access are therefore real receiving seams, not a newly invented model.
+
+P: Mini resident_delivery.rs::FinalRecord binds origin/assignment/request/response/
+meter/text fingerprints; Pending separately retains operation/reply identity. Its
+header explicitly says model output is content, never authority. resident_completion
+source keeps exact before/after session bindings. General activity projection should
+link these artifacts, not create a second 'resident completed' truth store.
+
+P: Bread starbridge-v2/src/inspect_act.rs::build reads raw cell/reflection first and
+only gates message badges. Do not reuse it as Mini's authorized observation backend.
+Pure presentation/event/tree design can be useful after semantic data adaptation.
+
+P: Bread starbridge-v2/src/shared_fork.rs::stitch_pair computes merge/conflicts and
+returns Some(ea.1.state_root()) on settled.settles(); it does not install merged
+state into the live source. A visible settled_root is not the proposed apply bridge.
+
+P: Bread realm-model/src/lib.rs contains durable realm/node recovery and explicit
+ruleset_root-not-in-Turn caveat. open_permissions() is genuinely open; node admission
+does not imply Mini kernel/current-cap enforcement. Its identities/instance/catalog
+contracts deserve migration, not a claim that everything is absent or complete.
+
+P: Bread metatheory/Metatheory/ResearchRegime.lean separates ballot, optimistic and
+witness settlement. Its unanimous_ballot_upholds_a_refuted_claim is an inhabited
+counterexample, and witness truth need not win a ballot. UI/institution/source
+review consumes this distinction. New code adaptation requires receiving joins;
+this reading did not compile the theorem or qualify a deployment.
+
+P: Bread metatheory/Dregg2/Spec/Authority.lean explicitly models held Amplify,
+factory Mint, Endow and consented own-cell Origin. Delegation attenuation is real
+but a universal 'no authority can grow' claim is false. Current Mini's deliberate
+management lockout/no-owner-bypass differs from Bread's implicit self-cap. Reuse
+generative authority contracts only through Mini's actual current governed rules.
+
+P: Bread coord/src/shared_budget.rs gives ceiling=balance*(f+1)/(2f+1) to EACH
+participant. At f0 two honest participants can each spend balance: late detection
+does not undo physical consumption. Separate turn/src/budget_gate.rs::commit_debit
+is a no-op despite comment claiming finalized digests cannot be refunded. These
+are two related but distinct problems. Replace overselling/false finalized phase;
+do not merely rename the budget or treat post-hoc ordering as capacity reservation.
+
+P: Bread grain-verify/src/lib.rs::RenterCheckpoint::signing_bytes is exactly domain+
+head_root+num_turns. GenesisPin's renter nonce/signer is separately recorded, and
+verify_for_renter requires externally pinned nonce/key plus checkpoint and prefix
+checks. agent-platform/src/lib.rs::attestation_of provides that separate genesis
+binding. Useful acknowledged-prefix integrity, not proof of execution/completeness/
+availability, nor direct renter-signature binding of every genesis coordinate.
+N: a Mini acknowledgment should bind full native home/genesis/generation/source.
+
+P: /Users/ember/dev/allgame/claude_resident/edits.py patches pending content batches,
+logs edits and moves, but explicitly does not follow moves across per-topic logs.
+Peer primary lead b42cbce2#920 expects transparent moved+edited context recrafting.
+This is a concrete history/context consumer. Immutable audit and current context
+must coexist, not force one foreverlog projection to serve both.
+
+REUSE / MIGRATION / ABANDONMENT
+
+Direct reuse candidates are small pure leaves and content: bounded presentation
+tree/backends; supported syntax/validated edits; authored story assets; exact carry/
+manifest byte checks; source/identity graph rendering after authorized data input.
+Each needs a real consumer and current dependency/format/identity adaptation check.
+
+Semantic migration: authored kind/instance/realm publication, collective choice,
+source review/branch installation, provider acknowledgment, lease/continuation,
+private allocation, budget reservation and archive/custody. Their useful contracts
+survive but authority/law/evaluator/history/current privacy must be Mini's actual
+ones. A raw source port or hash anchor does not accomplish migration.
+
+Abandon unhelpful mechanisms when replacements connect consumers: app-private fake
+ledgers, duplicated authority truth, unsafe heap mutation before revision, full-cell
+observation, per-project async task twins, raw signing-seed exports, RAM-only storage
+sold as durable market, universal mutable-heap union, settled-root-without-install,
+operator identity masquerading as participant. Do not delete source/history or
+remove aspirations because implementation is weaker than its claim. This is a
+forward integration proposal; no files were removed by this research pass.
+
+COUNTERFACTUAL TEST OF A SMALLER KERNEL
+
+N: Replay three actual consumers through one source-owned admission/effect/history
+contract: station shared instrument+author edit; desk resident-reviewed source patch;
+commons capacity reservation+retained output. Check whether repeated mechanisms
+become adapters while irreducible authority/evidence/custody cuts remain intact.
+If it merely replaces 50 named verbs with one universal unchecked 'apply' or moves
+physical side effects inside deterministic evaluation, it fails the replay. If it
+requires abandoning current Mini source-owned semantics or importing Bread proof
+assumptions just to regain former labels, it fails. No wholesale rewrite follows.
+
+NEXT DESIGN DISCRIMINATORS
+
+Member-created derived instrument using actual source+super/restrictions; station
+contested shared object and adopted source change; exact resident result retained
+through crash and current-source review; independent audience/source access; context
+following moves while preserving audit; disjoint scarce reservation under concurrent
+honest actors; portable home with lawful rekey/fencing and no duplicated billing.
+Run these on the assembled candidate when its owners provide it. This owner did
+not run them and has not opened duplicate implementation work.
+
+Coverage: this is a bounded second-pass design, not an all-source audit. Deep living
+simulation/ecology/FRP, gamevm/chreatures, complete proof/external-value stack,
+operated storage/portability and actual current user feedback remain underread.
+Scope evidence and new contradiction reports in catalog/coverage, not a false
+claim that the first reports or these alternatives exhaust Dregg.

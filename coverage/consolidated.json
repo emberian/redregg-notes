@@ -1,0 +1,161 @@
+{
+  "generated_utc": "2026-10-03T07:38:41.330852+00:00",
+  "basis": "immutable initial reports plus external file availability/body hash navigation; metadata audit only",
+  "periods": {
+    "MAY-JUNE": {
+      "coverage_artifact": "/Users/ember/dev/redregg/archive/2026-10-03/INTENT-MAY-JUNE-COVERAGE-20261003.json",
+      "sha256": "620822242d881a84fcae9a4ac7be3aa98836fe24ff9f904d997356f4a2252ecc",
+      "catalog_rows": 888,
+      "distinct_session_keys": 887,
+      "source_paths_declared": 888,
+      "source_paths_existing": 888,
+      "extraction_paths_declared_or_derived": 888,
+      "extraction_paths_existing": 888,
+      "declared_counts": {
+        "catalog_rows": 888,
+        "distinct_harness_session_keys": 887,
+        "selected_relevant_sessions": 403,
+        "dated_relevant_cv_rows": 14736,
+        "exact_timestamp_text_unique_groups": 6094,
+        "duplicated_ancestry_occurrences": 8642,
+        "undated_cv_rows_all_sessions": 60,
+        "selected_prompt_groups_body_or_excerpt_reviewed": 350,
+        "saved_context_windows": 23,
+        "extraction_failures": 0,
+        "distinct_exact_raw_text_bodies": 4507,
+        "distinct_trimmed_text_bodies": 4506
+      },
+      "declared_limits": [
+        "No registered account-export sources: inaccessible/deleted/unsynced history is unknown, not empty.",
+        "Later-created forks can contain prior May/June ancestry not inventoried here; sibling July/August coverage may recover them.",
+        "cv prompts contains task notifications and delegated briefs; rows are not certified human turn counts.",
+        "No exhaustive semantic reading of all 4506 distinct body texts; targeted selected bodies/excerpts and context only.",
+        "Metadata relevance and literal prompt matching can include related-but-extraneous projects and miss alias-free connections.",
+        "60 undated prompt rows preserved, not assumed outside scope.",
+        "No present-HEAD proof/build/deployment statuses certified by history recovery.",
+        "UTC date boundaries used; local New York midnight differs."
+      ]
+    },
+    "JULY-AUGUST": {
+      "coverage_artifact": "/Users/ember/dev/redregg/archive/2026-10-03/INTENT-JULY-AUGUST-COVERAGE-20261003.json",
+      "sha256": "7177b377af44d64dc21dc29f7b550471eb92dd1eb98dfeac0b9ea4dc1463717a",
+      "catalog_rows": 2787,
+      "distinct_session_keys": 2787,
+      "source_paths_declared": 2787,
+      "source_paths_existing": 2787,
+      "extraction_paths_declared_or_derived": 2787,
+      "extraction_paths_existing": 2787,
+      "declared_counts": {
+        "local_catalog_sessions": 6304,
+        "overlap_sessions_extracted": 2787,
+        "extraction_errors": 0,
+        "overlap_sessions_with_window_rows": 1800,
+        "overlap_sessions_without_window_rows": 987,
+        "raw_prompt_rows_all_dates": 49924,
+        "raw_prompt_rows_in_window": 49342,
+        "missing_timestamp_rows": 14,
+        "exact_text_groups_all_cwds": 7562,
+        "broad_domain_groups": 5977,
+        "conservative_full_read_groups": 121,
+        "fork_inclusive_rows_with_full_read_text": 3583,
+        "context_choicepoints_read": 10,
+        "indexed_only_overlap_hits": 5889,
+        "indexed_only_agent_hits": 5889,
+        "exact_groups_with_prewindow_echo": 2
+      },
+      "declared_limits": [
+        {
+          "kind": "unread_extracted_content",
+          "count_domain_groups": 5856,
+          "description": "Domain groups not in full_read set remain unread or only excerpt-screened; full private extraction retained for continuation."
+        },
+        {
+          "kind": "unregistered_exports",
+          "description": "No ChatGPT/Claude account exports registered; unsynced app/remote-host histories not inventoried."
+        },
+        {
+          "kind": "index_source_moved",
+          "count": 5889,
+          "description": "5888 Claude agent-* hits + one Grok subagent absent live catalog, all path null/source moved; snippets only; source/ancestry content inaccessible."
+        },
+        {
+          "kind": "search_cap",
+          "description": "Broad fulltext search hit 10000 cap; ranking may omit additional content hits."
+        },
+        {
+          "kind": "timestamp_missing",
+          "count": 14,
+          "description": "Cannot place untimestamped cv prompt rows confidently in requested window."
+        },
+        {
+          "kind": "pasted_logs_and_generated_briefs",
+          "description": "Large pasted logs are not independently authored current requests; giant 608897-character Constitution prompt and other nested histories remain unexamined."
+        },
+        {
+          "kind": "ancestry_not_total",
+          "description": "Codex initial metadata inspected; 2068 sources show subagent; Claude prune/fork relationships are inferred only from exact repeated text, not complete ancestry."
+        },
+        {
+          "kind": "no_current_state_validation",
+          "description": "No source edits/builds/Git/deploy. Captured assistant outcomes are leads to eventual code, not proof of present functionality."
+        }
+      ]
+    },
+    "SEPTEMBER-OCTOBER": {
+      "coverage_artifact": "/Users/ember/dev/redregg/archive/2026-10-03/INTENT-SEPTEMBER-OCTOBER-COVERAGE-20261003.json",
+      "sha256": "6a8d8aa705d5bcb472fe5f6db1c07f808bb1859c403da357a9c494a3c12f1f08",
+      "catalog_rows": 1182,
+      "distinct_session_keys": 1182,
+      "source_paths_declared": 1182,
+      "source_paths_existing": 1182,
+      "extraction_paths_declared_or_derived": 277,
+      "extraction_paths_existing": 277,
+      "declared_counts": {
+        "outside assigned date span": 41,
+        "harness/context/machine artifact": 49,
+        "core_unique_authored_turns": 508,
+        "codex_subagents_excluded": 905,
+        "pure copied material; no new authorial human text counted": 4,
+        "core_duplicate_rows_excluded": 119
+      },
+      "declared_limits": [
+        "All available discovered candidates were inventoried and prompt-extracted; not all full transcripts read. This is meaningful Sept–Oct intent coverage, not certified completeness of every development utterance.",
+        "cv did not have account exports registered. Located Claude and ChatGPT exports end April 2026, before assigned span.",
+        "No remote-host-only, deleted, unavailable, unregistered newer web-account transcripts established.",
+        "Tool/pasted third-party transcripts and report prose are attributed source material, not new independent human requirements.",
+        "Some adjacent human sessions may imply suite relevance without a keyword; automated screen can miss these.",
+        "Earliest all-session inventory uses updated>=Sep1; an erroneously dated/undiscovered record can evade it."
+      ]
+    }
+  },
+  "catalog_union_distinct_session_keys": 4810,
+  "catalog_overlapping_session_keys": 46,
+  "body_identity_intersections": [
+    {
+      "periods": [
+        "MAY-JUNE",
+        "JULY-AUGUST"
+      ],
+      "same_exact_body_hashes": 16,
+      "meaning": "literal text recurrence only, no certified common ancestry or independent authorship"
+    },
+    {
+      "periods": [
+        "MAY-JUNE",
+        "SEPTEMBER-OCTOBER"
+      ],
+      "same_exact_body_hashes": 4,
+      "meaning": "literal text recurrence only, no certified common ancestry or independent authorship"
+    },
+    {
+      "periods": [
+        "JULY-AUGUST",
+        "SEPTEMBER-OCTOBER"
+      ],
+      "same_exact_body_hashes": 6,
+      "meaning": "literal text recurrence only, no certified common ancestry or independent authorship"
+    }
+  ],
+  "sept_core_candidate_rows_after_explicit_exclusions": 508,
+  "warning": "Different relevance/selection/dedup/read units forbid adding historical prompt counts. Candidate rows do not certify human authorship; no new full-corpus reading claimed."
+}

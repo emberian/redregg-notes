@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Redregg evidence card",
+  "type": "object",
+  "required": ["claim_id", "statement", "kind", "status", "scope", "sources", "corrections", "consumers", "open_questions"],
+  "properties": {
+    "claim_id": {"type": "string"},
+    "statement": {"type": "string"},
+    "kind": {"enum": ["human_request", "human_correction", "human_exploration", "agent_claim", "observed_result", "inference", "proposal", "open_question"]},
+    "status": {"enum": ["primary_read", "captured_metadata_read", "report_lead", "inferred", "proposed", "unresolved", "superseded"]},
+    "scope": {"type": "string"},
+    "sources": {"type": "array", "items": {"type": "object", "required": ["artifact", "sha256", "read_scope"], "properties": {"artifact": {"type": "string"}, "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "cv_locator": {"type": "string"}, "cv_index": {"type": "integer"}, "message_id": {"type": "string"}, "timestamp": {"type": "string"}, "revision": {"type": "string"}, "json_pointer": {"type": "string"}, "line": {"type": "integer"}, "read_scope": {"type": "string"}}}},
+    "corrections": {"type": "array", "items": {"type": "string"}},
+    "consumers": {"type": "array", "items": {"type": "string"}},
+    "open_questions": {"type": "array", "items": {"type": "string"}}
+  }
+}

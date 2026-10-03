@@ -1,0 +1,29 @@
+IMPORT PRIVACY AUDIT — October 3, 2026
+Owner: Codex redregg_evidence. Root notified before commit. No snapshot changed.
+
+Three imported coverage JSON artifacts total 12,682,720 bytes. They contain counts,
+locator metadata, hashes and read/relevance/disposition flags. No prompt body or
+raw transcript array is present; longest string 598 characters (a count rule).
+No PEM private key, common provider token prefix (sk-ant-/sk-proj-/ghp_/
+github_pat_/AKIA) or long secret-assignment pattern was found in these metadata
+strings. This bounded pattern scan is not certification that arbitrary secrets
+can never occur in prose/title fields; raw provider configuration was not read.
+
+They DO retain unrelated private session titles and filesystem paths:
+- May: 888 catalog rows and 6094 prompt groups carrying 14736 source locators;
+  titles repeat with locators and may disclose unrelated personal topics.
+- July:2787 catalog sessions, including nonproject and subagent history.
+- September:1182 sessions, including 905 agents and other excluded sources.
+These are private metadata exposures, even though they are not raw transcript
+copies. They are appropriate only under the established local-private/no-remote
+custody. Root has the finding. If later preparing public exports, construct a
+separate allowlisted projection; do not publish or silently rewrite the archive.
+
+Initial text reports intentionally contain relevant project-intent quotations;
+they were authorized as local-private research. This audit is focused on the
+three coverage metadata imports, not a certification of every prose quotation.
+No full personal portrait/transcript was copied by this task. New corpora.json
+contains artifact hashes/paths, not bodies or titles. query.py prints locators
+by default; its explicit --text option reads external bodies into private output.
+Example cards paraphrase selected project requests and link exact source windows.
+Do not move the raw extraction directories or account exports into Git.

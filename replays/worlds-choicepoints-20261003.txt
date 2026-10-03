@@ -1,0 +1,137 @@
+WORLDS CHOICEPOINT REPLAY — 2026-10-03
+Owner: Codex redregg_intent_worlds. Private local research; no source edits.
+Read alongside ../intent/worlds-second-pass-20261003.txt and its coverage JSON.
+
+Replay means a dated choice with the information then available. Proposed
+replacement is present hindsight; it never pretends Ember originally selected
+it. Current source without retained runs is source evidence only.
+
+R1. A conventional compiler roadmap encounters a richer endpoint.
+Then: May24 claude:130628b0#1434, full UUID in W01. Assistant proposes
+executor/AIR/witness generator from one effect DSL, ending in conventional ZK-VM
+shape. Ember asks model homes, language runtime/object capabilities, autonomous
+coordination and liberty, naming svenvs, cell/CellProgram and CapTP.
+Observed response: assistant explicitly goes to read before answering.
+Not observed here: the immediate resulting architecture or its deployment.
+Hindsight: preserve compiler/assurance engineering as enabling infrastructure,
+while one actual resident consumer states what tools, continuity and chosen
+resource relationships it needs. A technically conventional compiler need not
+be bad; it becomes inadequate when its roadmap silently replaces the endpoint.
+Refuting scenario: every tool method is a proof fixture, and the model cannot
+inspect/change/share anything meaningful in its ordinary ongoing environment.
+Next primary trail: subsequent May24 svenvs exploration, actual hosted runtime
+and later model-facing authority/exit contracts.
+
+R2. Magical desktop drifts into passive resident metaphor.
+Then: June15 7fc2e1fd#16438 AOL/Pharo discovery AND IDE/debugger. June24
+25937974#243 asks Lisa/PARC/NT semantic UI structure; #294 rejects holding/
+keeping-resident language; 01c55763#4 asks NT technical density, rightclick,
+icons, spatial persistence and actuation/composition.
+Observed response: an NT/Pharo desktop builder is dispatched after #4.
+Not observed here: its resulting pixel/runtime quality. Archive programmable
+scout reports real desktop surfaces with important save/mutation limits; those
+are secondary leads, not a fresh verification in this replay.
+Hindsight: a desk offers tools for inspecting, composing and programming living
+objects. Independent social rooms/agent homes can exist without making the
+technical desktop into a pet enclosure. These experiences share semantic
+objects, not necessarily visual metaphor or interaction grammar.
+Refuting scenario: all windows only narrate capabilities; the user cannot
+invoke a real interface or author new behavior. Conversely, full technical
+inspection should not be compulsory merely to join a story in ordinary chat.
+
+R3. Community fiction turns into an assurance vocabulary mirror.
+Then: July6 9699badf#401 specifies federation/community tools plus spween CYOA/
+MUD voting, with a concrete interested organizer. July11 6d1ce594#41 reports
+interested authors and Discord players. Its surrounding goal recites the
+accepted rebuild from toy hash-chain/whitelist/O(N)-lightclient to real native
+turns, laws and provenance. That operational wording is an agent-generated
+plan, not independent human authorship for each technical item.
+Source evidence: spweencraft has a concrete existing authoring interaction:
+post scene source in a library chat stream, run topic sessions, reply with
+choices. Actual Bread scenes demonstrate branching/gates. Neither proves
+native multiplayer law or satisfied authors.
+Hindsight: retain that easy authoring/play grammar and make meaningful shared
+consequences native. Mini's existing story should be extended, not a fresh
+private executor named 'native'. Author can publish/edit rules, audience may
+choose/propose, narrator may embellish, and canon authority stays explicit.
+Refuting scenario: a Discord vote updates a host-only world and writes its
+hash afterward; participants still cannot independently authorize/play state.
+Next primary trail: real post-release author/player feedback and fixture vs
+actual audience membership.
+
+R4. Dungeon release quietly replaces the station.
+Then: July25 5f419eb8#390 calls for source/mechanics survey and performant game
+engine with authoring metaprogramming; conditionally permits a pragmatic Rust
+release rather than gratuitous rewrite. #455 explicitly corrects ambition:
+station, dungeon outing, Second Life/Thirdroom future inspirations. Assistant
+then proposes tavern/crew/gear/trading/guild/bar-games hub. Only station/outings
+and inspirations are human in that exchange; detailed hub is a proposal.
+Source evidence sampled here: bw-exp1 docking/services/social/alliance scripts
+show a broader mechanics palette. Their execution/meaning is not audited.
+Hindsight: recurring social place plus independent authored universes. One
+outgoing expedition is a useful consumer, but returning to shared roles,
+places, creations and choices is what distinguishes the station from a menu
+of repeatable dungeon runs. Some leisure need not be economic production.
+Counterexample: July13 d311217b#65 explicitly selected services-only/no P2E for
+that launch. Do not derive a universal reward market from game participation.
+Refuting scenario: 'station' is only an operator dashboard reskinned with room
+names, or a lobby holding no persistent shared consequences besides rankings.
+
+R5. Residency memory is technically durable but experientially stale.
+Then: July25 allgame d41ad82c#806 asks longer scrolling context because lost
+shared history and count limits make residency less enjoyable. #873 asks about
+months being too distilled. Aug23 b42cbce2#920 wants moved/edited messages to
+recraft context. Aug25 #1245 catches assistant inventing absent defaults.
+Observed transcript: assistant plans backfill/foreverlogs/distillation and
+reports repairs; its later classifier explanation is self-corrected. Those
+reports are bounded captured claims; this pass ran nothing.
+Current source: message dispatch really defaults to current room/topic. edits.py
+patches pending edited content, logs edits, and explicitly records moves without
+following across topic logs. Source is a useful boundary, not total live proof.
+Hindsight: separate immutable event custody from current conversational/view
+projection. Revision/move-aware references and context loading are product
+semantics. Preserve history while making the present room match what people
+meant and where the message now lives. Fine-grained event distinctions matter:
+a preview re-render is not an authored edit; an edit is not a new statement;
+a move need not authorize a second model reply.
+Refuting scenario: queued reply answers an old version, reboot resurrects a
+moved item, or one room's context silently becomes another room's history.
+Implementation opportunity: feed edits/moves/source versions into one native
+activity projection contract, while retaining platform-specific event adapters.
+
+R6. Workroom becomes the invented single product.
+Then: June21 25025fdb#822 proposes real distributed work/reward incubator.
+Assistant declares all pieces secretly organs of it. July28 87b7d9e6#0 explores
+LLM semantic research infrastructure for OpenSolve community; weekly limit
+prevents an implementation response. Sept18 01a0b0ed#761 is unsure which first
+activity and wants a nexus growing outward. Sept27 #27314 corrects retrospective
+that omitted existing SPK app APIs and human web views.
+Hindsight: a research/workroom is a coherent experience with substantial grain,
+document, agent and service consumers. It earns place alongside authored
+universes and social life; its success does not retroactively make those work.
+October13 should exercise current OO/docuverse/resident/service laws through
+useful composition, not narrow the full objective to a scripted notebook.
+Refuting scenario: a 'general nexus' requires bespoke host code for every new
+app, or agent API and human web view mutate different objects despite looking
+like one activity. Next trail: actual SPK native contracts and research cases.
+
+R7. Existing Cloud demo searches for a permanent mission.
+Then: July14 b7cdd58a#1176 rejects assistant routing games/DrEX into DreggCloud:
+ChatGPT demo never part of plan. Intervening assistant swings to retire/compost.
+#1179 preserves experience value and possible direct use with purpose unclear.
+Observed source/outcomes: refer to archived Cloud scout for substantial House/
+archive/recovery mechanisms and deployment/schema distinctions. This pass
+independently read the correction exchange, not every Cloud mechanism.
+Hindsight: a mechanism earns integration through an actual consumer. Useful
+custody/recovery/owner-operator contracts can transfer without preserving an
+invented product identity; direct Cloud use remains possible. Neither reflexive
+hosting entwinement nor reflexive deletion is historical authorization.
+Refuting scenario: new wrappers manufacture need by duplicating already-native
+hosting, or a useful existing prototype is discarded only to simplify a diagram.
+
+CURRENT NEXT READS
+
+Player/author feedback after July26; earlier game design in bw-exp/zwobot and
+living ecology/chreatures; research question successors after July28; later
+selected residency contracts; actual current Mini author/publish/shared-law
+journeys. These replays are design tools, not replacements for finishing Mini.

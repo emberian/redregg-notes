@@ -1,0 +1,213 @@
+[
+  {
+    "claim_id": "E001",
+    "statement": "Ember asks for an AI-native runtime where models can coordinate, cooperate and build value autonomously, drawing on language runtimes and object capabilities; a model home is an expressed aspiration.",
+    "kind": "human_request",
+    "status": "primary_read",
+    "scope": "May 24 north-star correction to Cairo-style roadmap; deploy-this-year is historical aspiration, not feasible-delivery proof.",
+    "sources": [
+      {
+        "artifact": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-context-130628b0-1434.json",
+        "sha256": "716caccffd8bc14f3383646c71f2bf650f5f0d06d4254af75e49609de95d51ef",
+        "read_scope": "Focal human prompt fully read; text neighbors read in saved window; cv show around 1434 context 1 independently verified locator. Long assistant claims not validated.",
+        "cv_locator": "claude:130628b0-ab87-41b8-8116-66d0de87ec49",
+        "cv_index": 1434,
+        "message_id": "da2cde15-5418-4513-b419-aa4d3df11293",
+        "timestamp": "2026-05-24T08:21:21.648Z"
+      }
+    ],
+    "corrections": [
+      "E003/E004 qualify desktop framing; do not infer revocation of whole model-home aspiration."
+    ],
+    "consumers": [
+      "intent/worlds",
+      "landscape",
+      "Mini consumer matrix"
+    ],
+    "open_questions": [
+      "Which concrete runtime/resource/cooperation capabilities eventually reached users?"
+    ]
+  },
+  {
+    "claim_id": "E002",
+    "statement": "Kernel financial/privacy primitives were intentionally placed there to prove guarantees without relying on userspace, enabling resource payment and independent cell computation; hoisting was possible later.",
+    "kind": "human_correction",
+    "status": "primary_read",
+    "scope": "June 7 reply supersedes preceding assistant financial-vocabulary-poison explanation; historical design choice, not permanent placement law.",
+    "sources": [
+      {
+        "artifact": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-context-7fc2e1fd-899.json",
+        "sha256": "4d786986577eabf2b4bf2f5ed11cb3aae6b7e70c8d760c2cca501340ea38b979",
+        "read_scope": "Focal human correction fully read; preceding assistant claim and subsequent text read; cv show around 899 context 1 verified.",
+        "cv_locator": "claude:7fc2e1fd-dff5-45b5-8609-725f442f4cdc",
+        "cv_index": 899,
+        "message_id": "7eddcf48-4a5c-40c1-b45a-28c987b7f4b3",
+        "timestamp": "2026-06-07T01:01:39.881Z"
+      }
+    ],
+    "corrections": [],
+    "consumers": [
+      "intent/foundations",
+      "designs"
+    ],
+    "open_questions": [
+      "Can proposed simplification preserve or strengthen guarantees and independent computation?"
+    ]
+  },
+  {
+    "claim_id": "E003",
+    "statement": "Ember rejects holding/resident metaphors and stopping exploration, while asking for deos to offer the kind of experience associated with an iMac G3 or fantasy Windows desktop.",
+    "kind": "human_correction",
+    "status": "primary_read",
+    "scope": "June 24 correction; does not authorize copying unrelated Postmark community into dregg.",
+    "sources": [
+      {
+        "artifact": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-context-25937974-294.json",
+        "sha256": "a48ba9657075a380c824a151190dd5350d938a7e8126e14a052f010ce249e442",
+        "read_scope": "Two consecutive human versions and preceding/following assistant desktop framing read in full except unrelated tool bodies.",
+        "cv_locator": "claude:25937974-acb0-4804-95a2-21268c3353d4",
+        "cv_index": 294,
+        "message_id": "9340336e-7972-4ffb-952e-382ed286734d",
+        "timestamp": "2026-06-24T23:42:12.411Z"
+      }
+    ],
+    "corrections": [
+      "E004 supplies immediately subsequent technical/sterile NT/Pharo correction to assistant cozy interpretation."
+    ],
+    "consumers": [
+      "intent/worlds",
+      "deos UX"
+    ],
+    "open_questions": [
+      "Which spatial persistence, action and composition affordances actually solve the requested desktop problem?"
+    ]
+  },
+  {
+    "claim_id": "E004",
+    "statement": "The immediately subsequent desktop request is technical/sterile NT-style menus, windows, icons and detail, with Pharo/Smalltalk actuation, composition and spatial persistence.",
+    "kind": "human_correction",
+    "status": "primary_read",
+    "scope": "June 24 23:47 UTC; supersedes assistant cozy/holding interpretation while preserving exploration.",
+    "sources": [
+      {
+        "artifact": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-context-01c55763-4.json",
+        "sha256": "948ed9eb796158cf79740cc420c83bef4b6c4531b3d02937cf9c4490638dbd67",
+        "read_scope": "Focal human correction fully read; preceding task notification selectively read and identified as machine result; cv show around 4 context 1 verified human origin.",
+        "cv_locator": "claude:01c55763-cbb4-4af6-84cf-8e4e7ede1ad7",
+        "cv_index": 4,
+        "message_id": "5433e6dd-f55a-4363-8bb7-737976352482",
+        "timestamp": "2026-06-24T23:47:02.153Z"
+      }
+    ],
+    "corrections": [],
+    "consumers": [
+      "intent/worlds",
+      "designs",
+      "deos implementation"
+    ],
+    "open_questions": [
+      "Which historical UI implementations expose actual operations and shared state rather than decorative surfaces?"
+    ]
+  },
+  {
+    "claim_id": "E005",
+    "statement": "A user-role task-notification announces agent mail-town completion and a claimed 3/3 test result; that content is an agent outcome claim, not human requested mail-town scope.",
+    "kind": "agent_claim",
+    "status": "primary_read",
+    "scope": "Saved June 24 context first message. Machine notification wrapper and model-generated result are explicitly separated from focal human correction.",
+    "sources": [
+      {
+        "artifact": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-context-01c55763-4.json",
+        "sha256": "948ed9eb796158cf79740cc420c83bef4b6c4531b3d02937cf9c4490638dbd67",
+        "read_scope": "Notification text examined only as authorship counterexample; test logs/code not independently verified.",
+        "message_id": "64285220-29cf-4aae-86bb-1fcec7317c05",
+        "timestamp": "2026-06-24T23:45:56.981Z",
+        "json_pointer": "/messages/0"
+      }
+    ],
+    "corrections": [
+      "E004 corrects the surrounding agent interpretation; assistant commitment is not user endorsement."
+    ],
+    "consumers": [
+      "coverage/authorship rules",
+      "replays"
+    ],
+    "open_questions": [
+      "Was mail-town wanted, useful or later integrated? Locate primary user scope and actual code/test artifacts separately."
+    ]
+  },
+  {
+    "claim_id": "E006",
+    "statement": "The Docuverse construction report associates a client artifact c56f148f4100c5fe7ddfc894f7bd21ae520a5c522fdabda44b763504308f80db with host e8582196 and a 69-row native receiving record, while explicitly withholding qualification of the assembled integration candidate.",
+    "kind": "agent_claim",
+    "status": "report_lead",
+    "scope": "October 3 lane result; source packet exists locally. Report/source/artifact/capture relationship is retained, not promoted into current integration truth.",
+    "sources": [
+      {
+        "artifact": "/Users/ember/workbox/mini-private-capacity-review-20261002/DOCUVERSE-DEOS-CONSTRUCTION-20261003.txt",
+        "sha256": "1d41d550d20fd3d1716dd53e327f152dc7349fac94d9f0617172f25ae1f98870",
+        "read_scope": "Source/custody, exact owned paths and compiled/runtime evidence section read.",
+        "revision": "baseline e851920e; host e8582196; client SHA256 c56f148f4100c5fe7ddfc894f7bd21ae520a5c522fdabda44b763504308f80db",
+        "line": 60
+      },
+      {
+        "artifact": "/Users/ember/workbox/mini-private-capacity-review-20261002/docuverse-deos-native-results.json",
+        "sha256": "49d26a9f83fe8d752099c765a0762cacf2deb6cae68bf2445beb7027cf32094a",
+        "read_scope": "All 69 JSON records read: command/status/semantic-assertion metadata only. No independent rerun or full native logs read."
+      }
+    ],
+    "corrections": [],
+    "consumers": [
+      "landscape",
+      "integration acceptance",
+      "replays"
+    ],
+    "open_questions": [
+      "Which source revision received these five files, and which integration artifact passed the same consumer interactions?"
+    ]
+  },
+  {
+    "claim_id": "E007",
+    "statement": "A historical correction of metaphors cannot by itself establish cancellation of an earlier model-home ambition; cancellation needs later explicit scope evidence or a traced replacement.",
+    "kind": "inference",
+    "status": "inferred",
+    "scope": "Inference limited to E001,E003,E004; independent of psychological speculation or future design endorsement.",
+    "sources": [
+      {
+        "artifact": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-context-130628b0-1434.json",
+        "sha256": "716caccffd8bc14f3383646c71f2bf650f5f0d06d4254af75e49609de95d51ef",
+        "read_scope": "Focal human prompt fully read; text neighbors read in saved window; cv show around 1434 context 1 independently verified locator. Long assistant claims not validated.",
+        "cv_locator": "claude:130628b0-ab87-41b8-8116-66d0de87ec49",
+        "cv_index": 1434,
+        "message_id": "da2cde15-5418-4513-b419-aa4d3df11293",
+        "timestamp": "2026-05-24T08:21:21.648Z"
+      },
+      {
+        "artifact": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-context-25937974-294.json",
+        "sha256": "a48ba9657075a380c824a151190dd5350d938a7e8126e14a052f010ce249e442",
+        "read_scope": "Two consecutive human versions and preceding/following assistant desktop framing read in full except unrelated tool bodies.",
+        "cv_locator": "claude:25937974-acb0-4804-95a2-21268c3353d4",
+        "cv_index": 294,
+        "message_id": "9340336e-7972-4ffb-952e-382ed286734d",
+        "timestamp": "2026-06-24T23:42:12.411Z"
+      },
+      {
+        "artifact": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-context-01c55763-4.json",
+        "sha256": "948ed9eb796158cf79740cc420c83bef4b6c4531b3d02937cf9c4490638dbd67",
+        "read_scope": "Focal human correction fully read; preceding task notification selectively read and identified as machine result; cv show around 4 context 1 verified human origin.",
+        "cv_locator": "claude:01c55763-cbb4-4af6-84cf-8e4e7ede1ad7",
+        "cv_index": 4,
+        "message_id": "5433e6dd-f55a-4363-8bb7-737976352482",
+        "timestamp": "2026-06-24T23:47:02.153Z"
+      }
+    ],
+    "corrections": [],
+    "consumers": [
+      "intent chronology",
+      "design selection"
+    ],
+    "open_questions": [
+      "Find a later direct cancellation, replacement or reaffirmation rather than relying on a slogan."
+    ]
+  }
+]

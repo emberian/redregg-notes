@@ -1,0 +1,348 @@
+{
+  "generated_utc": "2026-10-03T07:38:39.669854+00:00",
+  "files": [
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-may-june-inventory-all.json",
+      "exists": true,
+      "bytes": 429063,
+      "sha256": "3a30d9cd672c5a6c82483e66966a969c1ef5e85574845597d329b65200b719eb",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-may-june-unique-prompts.json",
+      "exists": true,
+      "bytes": 10288036,
+      "sha256": "6f01f4f01bea914c6d8e47c56dceb02d6801d6205d1d22edb1dafd0ffb224f65",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-may-june-text-dedup.json",
+      "exists": true,
+      "bytes": 8118236,
+      "sha256": "7a4b02b6638600ef38273a45e81567d62f813234dc879bb07615f6b8b30736e0",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-may-june-undated-prompts.json",
+      "exists": true,
+      "bytes": 102944,
+      "sha256": "ee5c4e358e653506043104c9a9b743014953f05fb45fced1b45e6bfb6e9dbdb4",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-pre-may-origin-leads.json",
+      "exists": true,
+      "bytes": 2409,
+      "sha256": "0b885c94727181f96b6bbb8ddd9d99bd2d290448c6212d6a01cbee16b35137aa",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/july-august-session-inventory.json",
+      "exists": true,
+      "bytes": 3044846,
+      "sha256": "0c38eaf047fec346f0fbf3e07135546ac5f3298c07207f9ad897e4f0ff8742c6",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/july-august-unique-prompt-groups.json",
+      "exists": true,
+      "bytes": 15691657,
+      "sha256": "8e50ce094ebf26b0ea64abb3b3cddb21e8476463d2f9b337e73a99d720cd57e8",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/july-august-domain-prompt-groups.json",
+      "exists": true,
+      "bytes": 11662272,
+      "sha256": "56deb799645583d591eae66fb782d5b18d89666d4813eebc9c62c6f65ec9f229",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/july-august-read-core-evidence.json",
+      "exists": true,
+      "bytes": 798929,
+      "sha256": "f999c52090e272b3831288614b9c785f81c5bf40e8be6ccbebf23b4b763fa484",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/july-august-session-ancestry.json",
+      "exists": true,
+      "bytes": 1832601,
+      "sha256": "86622ec46d3c21d2e522d293d17778da6442c0564dbc8448ee1d4458dc078f0e",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/july-august-prior-history-echoes.json",
+      "exists": true,
+      "bytes": 440,
+      "sha256": "6b685e4526ac29f85dfd1e31b4ea618f76209043560ae12158d7cb57eb9d2da4",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/july-august-index-only-sources.json",
+      "exists": true,
+      "bytes": 3948422,
+      "sha256": "400c1cf78189e44c92a546c19faa5c3de5f08096472ba8489c06f2ecfd240714",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/sept-oct-session-inventory-all.json",
+      "exists": true,
+      "bytes": 583859,
+      "sha256": "8a6787acc87be6a675ad976a106d72dfc4ec5c56d74fc3a488bc80ae0408a0c6",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/sept-oct-prompt-extraction-results.json",
+      "exists": true,
+      "bytes": 21184,
+      "sha256": "275595846786e54417f3e3ca09982275c5bdc5bc621c530d936c03c788c2fb1a",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/DOCUVERSE-DEOS-CONSTRUCTION-20261003.txt",
+      "exists": true,
+      "bytes": 8135,
+      "sha256": "1d41d550d20fd3d1716dd53e327f152dc7349fac94d9f0617172f25ae1f98870",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/docuverse-deos-native-results.json",
+      "exists": true,
+      "bytes": 4946,
+      "sha256": "49d26a9f83fe8d752099c765a0762cacf2deb6cae68bf2445beb7027cf32094a",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-context-01c55763-304.json",
+      "exists": true,
+      "bytes": 48706,
+      "sha256": "a5405443c05597018ee30ae0a2710d7190072d86314b1469f3712d24ff25bcf0",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-context-01c55763-4.json",
+      "exists": true,
+      "bytes": 40431,
+      "sha256": "948ed9eb796158cf79740cc420c83bef4b6c4531b3d02937cf9c4490638dbd67",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-context-130628b0-11810.json",
+      "exists": true,
+      "bytes": 27239,
+      "sha256": "eef0de51f0c55d2841285017701042bc18419a966f082de5bb9c2cc8c552b46b",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-context-130628b0-1434.json",
+      "exists": true,
+      "bytes": 40991,
+      "sha256": "716caccffd8bc14f3383646c71f2bf650f5f0d06d4254af75e49609de95d51ef",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-context-1774dfce-867.json",
+      "exists": true,
+      "bytes": 35299,
+      "sha256": "cf73e09529cd3cdb0ba67c0e19d25f7cffca2b2dd30a26e7505fab3a2ee2ec9c",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-context-25937974-181.json",
+      "exists": true,
+      "bytes": 62977,
+      "sha256": "9c2b198c0b97de3403aa89a9634d1390c218fc655c70b06ec1204d969eda8163",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-context-25937974-294.json",
+      "exists": true,
+      "bytes": 33452,
+      "sha256": "a48ba9657075a380c824a151190dd5350d938a7e8126e14a052f010ce249e442",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-context-5a0f6a2e-4317.json",
+      "exists": true,
+      "bytes": 47747,
+      "sha256": "13e6e0eb122d5dea1003e78b1706c793eff758430262ee112da67cdc78fcddd5",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-context-5a0f6a2e-4341.json",
+      "exists": true,
+      "bytes": 96267,
+      "sha256": "06275c980b8404b82ecbfb63b5b834e3ecee4a93e9cc19c4068fbd5fbbd00856",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-context-5a0f6a2e-4389.json",
+      "exists": true,
+      "bytes": 79614,
+      "sha256": "24e57e3d2c0ccf7c1840c24ef83a8a8e1cd2b7c153168f30618a616311941bb0",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-context-5a0f6a2e-6497.json",
+      "exists": true,
+      "bytes": 85899,
+      "sha256": "4a41712ab90e5aadaf44b23fecec02ae60e7fb42bfc2f1124c2b99de7f8cdb9c",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-context-6686fc4f-269.json",
+      "exists": true,
+      "bytes": 27028,
+      "sha256": "53b2667f488a8080c137f475622d99234a9ffef44dd9daf1dbb14a870f831545",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-context-6686fc4f-337.json",
+      "exists": true,
+      "bytes": 46773,
+      "sha256": "47fa75420a506dce72a1a88db80b241d10e8a19a29bd728ccf159fcedb97c390",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-context-7fc2e1fd-16438.json",
+      "exists": true,
+      "bytes": 76173,
+      "sha256": "3b71add8bba662e26bcafcece50357437cf2993584ceded09dfd8e9c51bf679f",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-context-7fc2e1fd-8428.json",
+      "exists": true,
+      "bytes": 77689,
+      "sha256": "b6e44b00a9b1a0790851fa461efdb4e1c8cbf6b8d12b69977d031ce24c562672",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-context-7fc2e1fd-899.json",
+      "exists": true,
+      "bytes": 74887,
+      "sha256": "4d786986577eabf2b4bf2f5ed11cb3aae6b7e70c8d760c2cca501340ea38b979",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-context-d103af55-141.json",
+      "exists": true,
+      "bytes": 53025,
+      "sha256": "3c0c9175c38272e3f561497d186f78dfa01e775a0697fd224cdfb1967cf2c892",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-context-e6761437-383.json",
+      "exists": true,
+      "bytes": 64028,
+      "sha256": "26a02656c334610cab55c47497a6d6a97e4e6aeb7497dd3d223483140282cdc6",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-context-e6761437-46.json",
+      "exists": true,
+      "bytes": 31799,
+      "sha256": "874edd4ad2e058ca5ae79cae7e7c87519c21a24b0a9b346cf101b9e6d2815ebb",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-context-e75ed07b-1939.json",
+      "exists": true,
+      "bytes": 18509,
+      "sha256": "8c1c29299b36f971b85c8e5443c3dcf49b7348b729a5e221ddd79ac3138a99b0",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-context-e75ed07b-4751.json",
+      "exists": true,
+      "bytes": 26312,
+      "sha256": "d458b094cb1cd78f0837160e40d1537981bcdba5e7fd9bb277ff9e370181c016",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-context-e8bcf588-1945.json",
+      "exists": true,
+      "bytes": 35141,
+      "sha256": "d569db7165ceef9a5f743c5afeac6eec41d072eb6f568fc47ac3d60b6d430cb3",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-context-matrix.json",
+      "exists": true,
+      "bytes": 35299,
+      "sha256": "cf73e09529cd3cdb0ba67c0e19d25f7cffca2b2dd30a26e7505fab3a2ee2ec9c",
+      "custody": "external_private; reference only; not imported",
+      "read_status": "metadata inventory; no claim full semantic reading"
+    }
+  ],
+  "directories": [
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-may-june-prompts",
+      "exists": true,
+      "files": 892,
+      "bytes": 13825889,
+      "read_status": "file names/sizes inspected; not all bodies read"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/july-august-prompts",
+      "exists": true,
+      "files": 2787,
+      "bytes": 20267628,
+      "read_status": "file names/sizes inspected; not all bodies read"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/sept-oct-prompts",
+      "exists": true,
+      "files": 277,
+      "bytes": 3830694,
+      "read_status": "file names/sizes inspected; not all bodies read"
+    },
+    {
+      "path": "/Users/ember/workbox/mini-private-capacity-review-20261002/docuverse-deos-source",
+      "exists": true,
+      "files": 5,
+      "bytes": 114844,
+      "read_status": "file names/sizes inspected; not all bodies read"
+    }
+  ],
+  "warning": "Prompt bodies remain external. File availability proves custody, not truth or authorship."
+}

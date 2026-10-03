@@ -1,0 +1,59 @@
+EVIDENCE NAVIGATION — October 3, 2026
+
+Start with catalog/imports.json for immutable archived reports. Each report is an
+agent synthesis. It is a lead to primary turns, source and captures, not their
+substitute. Historical coverage reports have different units; read
+coverage/READING-MAP.txt before claiming completeness.
+
+Useful tools (Python standard library; no database or account access setup):
+  python3 catalog/query.py --period july --term 'SS13' --limit 8
+  python3 catalog/query.py --period may --session 130628b0 --index 1434 --limit 1
+  python3 catalog/query.py --period sept --term 'full OO' --limit 8
+  python3 catalog/query.py --hash 652d58e9 --limit 1
+Default output is body hash, locator, external artifact and declared read scope.
+Add --text for an explicit private terminal read. A hit is not necessarily human:
+inspect cv prompts harness:UUID, then cv show harness:UUID --around N --context 3.
+Message index is cv's displayed index, not raw file line or exported array offset.
+Keep machine notifications, human wrapper, pasted content and fresh human words
+separate. Exact body equality does not prove ancestry or independent endorsement.
+
+catalog/corpora.json pins external artifacts by SHA256, lists extraction directory
+custody and does not copy raw bodies. catalog/refresh.py refreshes metadata only;
+it never touches immutable archives. coverage/session-overlap.json links the 46
+session keys discovered by multiple historical period inventories. The 4810-key
+union is catalog custody, not relevant/human/read-history completeness.
+
+catalog/claim-schema.json is a small evidence-card interchange format. Each card
+needs scope, kind/status, source locator/read depth, corrections and consumers.
+Prefer a precise report-lead with an open question to an invented completion.
+Schema distinguishes requests/corrections/explorations, agent claims, observed
+results, inference, proposals and open questions. A source theorem, successful
+build, native receiving record and deployed interaction prove different things.
+The source item's revision is required by practice for implementation claims;
+retain exact artifact identity for captured execution. Do not invent a revision
+when the historical artifact only has branch/main metadata.
+
+catalog/example-cards.json demonstrates 7 linked cards:
+ E001 May 24 AI-native model-home request; live cv origin/locator checked.
+ E002 June 7 kernel assurance/payment correction; future hoist remains open.
+ E003 June 24 desktop metaphor correction; exploration stays live.
+ E004 Immediate NT/Pharo actuation/composition/spatial-persistence clarification.
+ E005 Counterexample: user-role mail-town notification is an agent claim.
+ E006 Exact Docuverse lane artifact/host/capture lead, unqualified assembled join.
+ E007 Inference: metaphor correction alone is insufficient cancellation evidence.
+Only three focal examples were independently re-read through live cv here;
+other explicit windows were read from external saved cv artifacts. These cards
+are pedagogic seed records, not a new exhaustive synthesis.
+
+Primary reading queue and peers' own evidence
+ intent/worlds-* and replays/worlds-* — lived/creative/world interaction.
+ intent/foundations-* and replays/foundations-* — semantics/privacy/economics.
+ designs/* and landscape/second-pass-* — coherent alternatives and reuse.
+Their counts belong to their own precise read logs; do not add them before
+hash/locator overlap comparison. Later coverage/second-pass-links.json lists
+available peer reports and recorded scopes without overwriting their files.
+
+Privacy: Local-private curated research. coverage/PRIVACY-AUDIT.txt records
+existing title/path exposure. Raw corpora and account state remain external.
+No current code, build, deployed functionality or secret credential validated by
+this catalog task; corpus availability is not evidence of a claim's truth.

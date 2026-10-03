@@ -1,0 +1,895 @@
+{
+  "owner": "Codex redregg_intent_worlds",
+  "prepared": "2026-10-03",
+  "status": "bounded_second_pass_checkpoint",
+  "count_units": {
+    "selected_prompt_locator_count": 40,
+    "distinct_full_read_july_august_groups": 27,
+    "new_to_first_pass_july_august_full_read_groups": 17,
+    "full_read_may_june_selected_texts": 9,
+    "sept_oct_selected_prompts": 4,
+    "context_windows_requested": 17,
+    "note": "Locator counts include duplicate/fork occurrences, UI-choice output and mixed quoted pastes. They are not human-authored requests. Do not add across periods or agents as total corpus interpretation."
+  },
+  "selected_prompt_locators": {
+    "claude:130628b0-ab87-41b8-8116-66d0de87ec49": [
+      1434
+    ],
+    "claude:e75ed07b-4ce4-4f00-a0b8-3abab4a2f20f": [
+      6922
+    ],
+    "claude:7fc2e1fd-dff5-45b5-8609-725f442f4cdc": [
+      16438,
+      17537
+    ],
+    "claude:25025fdb-8e70-488b-b3c3-0fb05344e65f": [
+      822
+    ],
+    "claude:d03d4fa3-232e-4cb3-91d5-e5013d21e7e7": [
+      136
+    ],
+    "claude:25937974-acb0-4804-95a2-21268c3353d4": [
+      243,
+      294
+    ],
+    "claude:01c55763-cbb4-4af6-84cf-8e4e7ede1ad7": [
+      4
+    ],
+    "claude:bc17f60d-c3bd-4fc5-8f19-b53c15b497d6": [
+      537
+    ],
+    "claude:9699badf-6982-4b3d-9725-9b34868b6653": [
+      401
+    ],
+    "claude:6d1ce594-402c-43b0-80c7-87615aabbb9f": [
+      41
+    ],
+    "claude:28920d6e-263e-4963-b9ca-ec1f0c9fd8e9": [
+      191
+    ],
+    "claude:d311217b-f797-4621-803a-e34f9dc85b28": [
+      65
+    ],
+    "claude:78c5121c-0ef8-4c61-9d16-d8657b4586cf": [
+      328
+    ],
+    "claude:5bf84858-71ef-4756-a970-971e03c32409": [
+      521
+    ],
+    "claude:d41ad82c-b169-4d25-8494-d2d16d493696": [
+      806,
+      873
+    ],
+    "claude:5f419eb8-39e3-40e3-848d-b26b65c31ab0": [
+      390,
+      402,
+      455,
+      474,
+      475,
+      477,
+      526,
+      530,
+      588,
+      1656,
+      1657
+    ],
+    "codex:019fe77b-f596-7be2-8d3c-fb7326306fde": [
+      12114
+    ],
+    "claude:87b7d9e6-2734-449f-9765-1346d7ced550": [
+      0
+    ],
+    "claude:b42cbce2-4510-4d20-b985-840476845387": [
+      196,
+      920,
+      1245
+    ],
+    "claude:b7cdd58a-95d0-4f4e-b623-6629f393f7ec": [
+      1176,
+      1179
+    ],
+    "codex:01a0b0ed-2f93-7a03-be0e-bb81bd250747": [
+      525,
+      761,
+      27314
+    ],
+    "claude:0c315aee-e07a-499c-8bb4-fa36730510ca": [
+      4690
+    ]
+  },
+  "july_august_full_read_groups": [
+    {
+      "period": "july_august",
+      "group_num": 252,
+      "text_sha256": "8c332396298197c53060849d16910434b6650b648d6525c518927fce51f1cd8b",
+      "previous_pass_full_read": false,
+      "selected_occurrences": [
+        {
+          "session": "claude:bc17f60d-c3bd-4fc5-8f19-b53c15b497d6",
+          "index": 537,
+          "timestamp": "2026-07-03T07:45:33.021Z",
+          "cwd": "/Users/ember"
+        }
+      ],
+      "authorship_note": "Selected interface answer or mixed pasted quotations are not automatically human-authored prose."
+    },
+    {
+      "period": "july_august",
+      "group_num": 529,
+      "text_sha256": "3f156a4c43a0f33c2f9f10f04fa4d51bc23a749aae23a0537f534283004ff425",
+      "previous_pass_full_read": true,
+      "selected_occurrences": [
+        {
+          "session": "claude:9699badf-6982-4b3d-9725-9b34868b6653",
+          "index": 401,
+          "timestamp": "2026-07-06T19:59:02.826Z",
+          "cwd": "/Users/ember/dev/breadstuffs"
+        }
+      ],
+      "authorship_note": "Selected interface answer or mixed pasted quotations are not automatically human-authored prose."
+    },
+    {
+      "period": "july_august",
+      "group_num": 1494,
+      "text_sha256": "a11a4a73fd7e508e7662f1955b960e46991acc1f3356cfaa9a2782d4485364c8",
+      "previous_pass_full_read": false,
+      "selected_occurrences": [
+        {
+          "session": "claude:28920d6e-263e-4963-b9ca-ec1f0c9fd8e9",
+          "index": 191,
+          "timestamp": "2026-07-11T14:40:46.588Z",
+          "cwd": "/Users/ember/dev/breadstuffs"
+        }
+      ],
+      "authorship_note": "Selected interface answer or mixed pasted quotations are not automatically human-authored prose."
+    },
+    {
+      "period": "july_august",
+      "group_num": 1498,
+      "text_sha256": "15de064d4ab0d2ce7f92ba90362669f07abaa94f7e59a78cd864b0800586e66d",
+      "previous_pass_full_read": false,
+      "selected_occurrences": [
+        {
+          "session": "claude:6d1ce594-402c-43b0-80c7-87615aabbb9f",
+          "index": 41,
+          "timestamp": "2026-07-11T14:49:23.367Z",
+          "cwd": "/Users/ember/dev/breadstuffs"
+        }
+      ],
+      "authorship_note": "Selected interface answer or mixed pasted quotations are not automatically human-authored prose."
+    },
+    {
+      "period": "july_august",
+      "group_num": 2021,
+      "text_sha256": "8df5cc354c2bbb8b16fd7f06f0c381172f6829a93e91700a75385178041fd89d",
+      "previous_pass_full_read": false,
+      "selected_occurrences": [
+        {
+          "session": "claude:d311217b-f797-4621-803a-e34f9dc85b28",
+          "index": 65,
+          "timestamp": "2026-07-13T21:58:10.246Z",
+          "cwd": "/Users/ember/dev/breadstuffs"
+        }
+      ],
+      "authorship_note": "Selected interface answer or mixed pasted quotations are not automatically human-authored prose."
+    },
+    {
+      "period": "july_august",
+      "group_num": 2157,
+      "text_sha256": "028f34ffbcdddafb46b34d8b513143c95ae78db30ef917f8207248f0f89c2287",
+      "previous_pass_full_read": true,
+      "selected_occurrences": [
+        {
+          "session": "claude:b7cdd58a-95d0-4f4e-b623-6629f393f7ec",
+          "index": 1176,
+          "timestamp": "2026-07-14T04:28:15.017Z",
+          "cwd": "/Users/ember/dev/DreggCloud"
+        }
+      ],
+      "authorship_note": "Selected interface answer or mixed pasted quotations are not automatically human-authored prose."
+    },
+    {
+      "period": "july_august",
+      "group_num": 2158,
+      "text_sha256": "851be7a4b97ff11348d18ddaf5dee7bd9ca68b48da384791dec268c7fa579dd2",
+      "previous_pass_full_read": true,
+      "selected_occurrences": [
+        {
+          "session": "claude:b7cdd58a-95d0-4f4e-b623-6629f393f7ec",
+          "index": 1179,
+          "timestamp": "2026-07-14T04:31:21.738Z",
+          "cwd": "/Users/ember/dev/DreggCloud"
+        }
+      ],
+      "authorship_note": "Selected interface answer or mixed pasted quotations are not automatically human-authored prose."
+    },
+    {
+      "period": "july_august",
+      "group_num": 3594,
+      "text_sha256": "95a13938f129112ad049ce97f0345666f83bfd592b1f8006e113a1866005e1f9",
+      "previous_pass_full_read": false,
+      "selected_occurrences": [
+        {
+          "session": "claude:78c5121c-0ef8-4c61-9d16-d8657b4586cf",
+          "index": 328,
+          "timestamp": "2026-07-22T19:53:26.090Z",
+          "cwd": "/Users/ember/dev/allgame"
+        }
+      ],
+      "authorship_note": "Selected interface answer or mixed pasted quotations are not automatically human-authored prose."
+    },
+    {
+      "period": "july_august",
+      "group_num": 3643,
+      "text_sha256": "243fc0639e4cd30c303c325890af040e054eb85c6ec57a5b96673cadceb9a5a7",
+      "previous_pass_full_read": false,
+      "selected_occurrences": [
+        {
+          "session": "claude:5bf84858-71ef-4756-a970-971e03c32409",
+          "index": 521,
+          "timestamp": "2026-07-23T01:56:19.904Z",
+          "cwd": "/Users/ember/dev/breadstuffs"
+        }
+      ],
+      "authorship_note": "Selected interface answer or mixed pasted quotations are not automatically human-authored prose."
+    },
+    {
+      "period": "july_august",
+      "group_num": 3885,
+      "text_sha256": "8b418df97f7dc454962bed51be33fc0bccc23a071ada9512cb0e4079befd6598",
+      "previous_pass_full_read": true,
+      "selected_occurrences": [
+        {
+          "session": "claude:5f419eb8-39e3-40e3-848d-b26b65c31ab0",
+          "index": 390,
+          "timestamp": "2026-07-25T02:51:38.193Z",
+          "cwd": "/Users/ember/dev/breadstuffs"
+        }
+      ],
+      "authorship_note": "Selected interface answer or mixed pasted quotations are not automatically human-authored prose."
+    },
+    {
+      "period": "july_august",
+      "group_num": 3886,
+      "text_sha256": "46aa0c7ca1e9c3f690d63d35a336dd2a48d5c3810fe20581356ab57bab6f3ec5",
+      "previous_pass_full_read": true,
+      "selected_occurrences": [
+        {
+          "session": "claude:5f419eb8-39e3-40e3-848d-b26b65c31ab0",
+          "index": 402,
+          "timestamp": "2026-07-25T02:56:16.748Z",
+          "cwd": "/Users/ember/dev/breadstuffs"
+        }
+      ],
+      "authorship_note": "Selected interface answer or mixed pasted quotations are not automatically human-authored prose."
+    },
+    {
+      "period": "july_august",
+      "group_num": 3889,
+      "text_sha256": "4f682aa66123dc685efc6c68dfea12984636265a355a4b4f051a861e7cbe8c2c",
+      "previous_pass_full_read": true,
+      "selected_occurrences": [
+        {
+          "session": "claude:5f419eb8-39e3-40e3-848d-b26b65c31ab0",
+          "index": 455,
+          "timestamp": "2026-07-25T03:02:46.653Z",
+          "cwd": "/Users/ember/dev/breadstuffs"
+        }
+      ],
+      "authorship_note": "Selected interface answer or mixed pasted quotations are not automatically human-authored prose."
+    },
+    {
+      "period": "july_august",
+      "group_num": 3890,
+      "text_sha256": "3efa5361ba4337a947e43cc5596b1b812ce7cfff1336b61716e82be871f55dc4",
+      "previous_pass_full_read": true,
+      "selected_occurrences": [
+        {
+          "session": "claude:5f419eb8-39e3-40e3-848d-b26b65c31ab0",
+          "index": 474,
+          "timestamp": "2026-07-25T03:06:26.373Z",
+          "cwd": "/Users/ember/dev/breadstuffs"
+        }
+      ],
+      "authorship_note": "Selected interface answer or mixed pasted quotations are not automatically human-authored prose."
+    },
+    {
+      "period": "july_august",
+      "group_num": 3891,
+      "text_sha256": "1c3faf7cd12c5eafcc5d5e8c2e7952d37c9091f40515188ed57805bd325087da",
+      "previous_pass_full_read": true,
+      "selected_occurrences": [
+        {
+          "session": "claude:5f419eb8-39e3-40e3-848d-b26b65c31ab0",
+          "index": 475,
+          "timestamp": "2026-07-25T03:07:12.080Z",
+          "cwd": "/Users/ember/dev/breadstuffs"
+        }
+      ],
+      "authorship_note": "Selected interface answer or mixed pasted quotations are not automatically human-authored prose."
+    },
+    {
+      "period": "july_august",
+      "group_num": 3892,
+      "text_sha256": "2823c45dd72e37a17c6d61e21025b228a25cc94608f64aa35c8fe1006ee8b79e",
+      "previous_pass_full_read": false,
+      "selected_occurrences": [
+        {
+          "session": "claude:5f419eb8-39e3-40e3-848d-b26b65c31ab0",
+          "index": 477,
+          "timestamp": "2026-07-25T03:08:01.098Z",
+          "cwd": "/Users/ember/dev/breadstuffs"
+        }
+      ],
+      "authorship_note": "Selected interface answer or mixed pasted quotations are not automatically human-authored prose."
+    },
+    {
+      "period": "july_august",
+      "group_num": 3899,
+      "text_sha256": "953fd1a5301b413ee813a178237f4a7d7dcdeb1871acd4678c10eb6be12eb2da",
+      "previous_pass_full_read": false,
+      "selected_occurrences": [
+        {
+          "session": "claude:5f419eb8-39e3-40e3-848d-b26b65c31ab0",
+          "index": 526,
+          "timestamp": "2026-07-25T03:28:26.773Z",
+          "cwd": "/Users/ember/dev/breadstuffs"
+        }
+      ],
+      "authorship_note": "Selected interface answer or mixed pasted quotations are not automatically human-authored prose."
+    },
+    {
+      "period": "july_august",
+      "group_num": 3901,
+      "text_sha256": "6119cdabb6e1f9c275a2a4e19af18806c5813e9bd7671853170da2ede7e20cc5",
+      "previous_pass_full_read": true,
+      "selected_occurrences": [
+        {
+          "session": "claude:5f419eb8-39e3-40e3-848d-b26b65c31ab0",
+          "index": 530,
+          "timestamp": "2026-07-25T03:29:44.431Z",
+          "cwd": "/Users/ember/dev/breadstuffs"
+        }
+      ],
+      "authorship_note": "Selected interface answer or mixed pasted quotations are not automatically human-authored prose."
+    },
+    {
+      "period": "july_august",
+      "group_num": 3908,
+      "text_sha256": "499270fdd1f1036a723cf5b20f93fd348618281dd7c04fc1286d92d00554a70a",
+      "previous_pass_full_read": false,
+      "selected_occurrences": [
+        {
+          "session": "claude:5f419eb8-39e3-40e3-848d-b26b65c31ab0",
+          "index": 588,
+          "timestamp": "2026-07-25T03:44:56.195Z",
+          "cwd": "/Users/ember/dev/breadstuffs"
+        }
+      ],
+      "authorship_note": "Selected interface answer or mixed pasted quotations are not automatically human-authored prose."
+    },
+    {
+      "period": "july_august",
+      "group_num": 3968,
+      "text_sha256": "72aeda41bcc3f6161802d8219a0b73b2d1e1f622817ac826bc0d503cf8dc4e56",
+      "previous_pass_full_read": false,
+      "selected_occurrences": [
+        {
+          "session": "claude:5f419eb8-39e3-40e3-848d-b26b65c31ab0",
+          "index": 1656,
+          "timestamp": "2026-07-25T14:42:09.275Z",
+          "cwd": "/Users/ember/dev/breadstuffs"
+        }
+      ],
+      "authorship_note": "Selected interface answer or mixed pasted quotations are not automatically human-authored prose."
+    },
+    {
+      "period": "july_august",
+      "group_num": 3969,
+      "text_sha256": "67a0b97e8b969350bbbba8c5cd83fde905188c317442d4b5eb223e498032586a",
+      "previous_pass_full_read": false,
+      "selected_occurrences": [
+        {
+          "session": "claude:5f419eb8-39e3-40e3-848d-b26b65c31ab0",
+          "index": 1657,
+          "timestamp": "2026-07-25T14:42:33.269Z",
+          "cwd": "/Users/ember/dev/breadstuffs"
+        }
+      ],
+      "authorship_note": "Selected interface answer or mixed pasted quotations are not automatically human-authored prose."
+    },
+    {
+      "period": "july_august",
+      "group_num": 3998,
+      "text_sha256": "d6d835bc9ccac55715df9ac76020e96dfd5418aaa90af6ad127507446b5b7fe3",
+      "previous_pass_full_read": false,
+      "selected_occurrences": [
+        {
+          "session": "claude:d41ad82c-b169-4d25-8494-d2d16d493696",
+          "index": 806,
+          "timestamp": "2026-07-25T17:36:55.033Z",
+          "cwd": "/Users/ember/dev/allgame"
+        }
+      ],
+      "authorship_note": "Selected interface answer or mixed pasted quotations are not automatically human-authored prose."
+    },
+    {
+      "period": "july_august",
+      "group_num": 4018,
+      "text_sha256": "d73c8bbb4980016d0288cd59fe062aaad616be1a257605cd65b299771c91bb7e",
+      "previous_pass_full_read": false,
+      "selected_occurrences": [
+        {
+          "session": "claude:d41ad82c-b169-4d25-8494-d2d16d493696",
+          "index": 873,
+          "timestamp": "2026-07-25T20:07:29.297Z",
+          "cwd": "/Users/ember/dev/allgame"
+        }
+      ],
+      "authorship_note": "Selected interface answer or mixed pasted quotations are not automatically human-authored prose."
+    },
+    {
+      "period": "july_august",
+      "group_num": 4354,
+      "text_sha256": "652d58e9b1a86c5354ee228384131a3dc0eca743cdbe8529d914b33d786cfdea",
+      "previous_pass_full_read": true,
+      "selected_occurrences": [
+        {
+          "session": "claude:87b7d9e6-2734-449f-9765-1346d7ced550",
+          "index": 0,
+          "timestamp": "2026-07-28T03:42:58.996Z",
+          "cwd": "/Users/ember/dev/breadstuffs"
+        }
+      ],
+      "authorship_note": "Selected interface answer or mixed pasted quotations are not automatically human-authored prose."
+    },
+    {
+      "period": "july_august",
+      "group_num": 5413,
+      "text_sha256": "bdea1ace88872dd7c356c24f1eda6b0f99c1af47fcc3a28dd9c56d48e3674a1a",
+      "previous_pass_full_read": false,
+      "selected_occurrences": [
+        {
+          "session": "claude:b42cbce2-4510-4d20-b985-840476845387",
+          "index": 196,
+          "timestamp": "2026-08-07T17:00:50.722Z",
+          "cwd": "/Users/ember/dev/allgame"
+        }
+      ],
+      "authorship_note": "Selected interface answer or mixed pasted quotations are not automatically human-authored prose."
+    },
+    {
+      "period": "july_august",
+      "group_num": 5703,
+      "text_sha256": "c829b812acaf8f5d191b305fc37ba3613f4c44c06e6dbb42eb3c0a861568c2e3",
+      "previous_pass_full_read": false,
+      "selected_occurrences": [
+        {
+          "session": "codex:019fe77b-f596-7be2-8d3c-fb7326306fde",
+          "index": 12114,
+          "timestamp": "2026-08-09T18:35:59.198Z",
+          "cwd": "/Users/ember/dev/minidregg"
+        }
+      ],
+      "authorship_note": "Selected interface answer or mixed pasted quotations are not automatically human-authored prose."
+    },
+    {
+      "period": "july_august",
+      "group_num": 6838,
+      "text_sha256": "26ddb8180bf43876b546b45ef8e4e19cd592f6e8b8ca92d214e5675c0c1c34fc",
+      "previous_pass_full_read": false,
+      "selected_occurrences": [
+        {
+          "session": "claude:b42cbce2-4510-4d20-b985-840476845387",
+          "index": 920,
+          "timestamp": "2026-08-23T18:20:14.554Z",
+          "cwd": "/Users/ember/dev/allgame"
+        }
+      ],
+      "authorship_note": "Selected interface answer or mixed pasted quotations are not automatically human-authored prose."
+    },
+    {
+      "period": "july_august",
+      "group_num": 6957,
+      "text_sha256": "6324e2479eaac31a2b2b0773db4caa2f4240840a5946665b398641e2ce3963f0",
+      "previous_pass_full_read": false,
+      "selected_occurrences": [
+        {
+          "session": "claude:b42cbce2-4510-4d20-b985-840476845387",
+          "index": 1245,
+          "timestamp": "2026-08-25T16:48:36.692Z",
+          "cwd": "/Users/ember/dev/allgame"
+        }
+      ],
+      "authorship_note": "Selected interface answer or mixed pasted quotations are not automatically human-authored prose."
+    }
+  ],
+  "may_june_full_read_selected": [
+    {
+      "period": "may_june",
+      "text_sha256": "0b5734c0ac125bc7ceeb5c59ba7891be679e1fbf71d2f9fadae13fdc0bd79ed9",
+      "timestamp": "2026-05-21T05:58:27.450Z",
+      "selected_occurrences": [
+        {
+          "harness": "claude",
+          "id": "e75ed07b-4ce4-4f00-a0b8-3abab4a2f20f",
+          "index": 6922,
+          "cwd": "/Users/ember/elide/breadstuffs",
+          "title": "Move non-JS runtime files to breadstuffs directory"
+        }
+      ],
+      "index": 6922
+    },
+    {
+      "period": "may_june",
+      "text_sha256": "c501b5510c812033e21ce027b6aa6b9c912398da2cc9b03ab053741a239629f2",
+      "timestamp": "2026-05-24T08:21:21.648Z",
+      "selected_occurrences": [
+        {
+          "harness": "claude",
+          "id": "130628b0-ab87-41b8-8116-66d0de87ec49",
+          "index": 1434,
+          "cwd": "/Users/ember/dev/breadstuffs",
+          "title": null
+        }
+      ],
+      "index": 1434
+    },
+    {
+      "period": "may_june",
+      "text_sha256": "19e67618a998b8431e6bc701b4cc8d54a21ccfc4e04b522b5449c119944fcaa3",
+      "timestamp": "2026-06-15T06:18:45.262Z",
+      "selected_occurrences": [
+        {
+          "harness": "claude",
+          "id": "7fc2e1fd-dff5-45b5-8609-725f442f4cdc",
+          "index": 16438,
+          "cwd": "/Users/ember/dev/breadstuffs/metatheory",
+          "title": "Clean up Composer agent build breakage and comment pruning"
+        }
+      ],
+      "index": 16438
+    },
+    {
+      "period": "may_june",
+      "text_sha256": "be8ff43dcff0922231269bf2ea66bb5254c072e0b5f7d0f4405bcd6f5f8e81b8",
+      "timestamp": "2026-06-16T00:31:16.090Z",
+      "selected_occurrences": [
+        {
+          "harness": "claude",
+          "id": "7fc2e1fd-dff5-45b5-8609-725f442f4cdc",
+          "index": 17537,
+          "cwd": "/Users/ember/dev/breadstuffs/metatheory",
+          "title": "Clean up Composer agent build breakage and comment pruning"
+        }
+      ],
+      "index": 17537
+    },
+    {
+      "period": "may_june",
+      "text_sha256": "abe9fd361d11cda08e9dfa5ad62408cf095189f25eeb1512a8dc31bf9cd957d2",
+      "timestamp": "2026-06-21T04:13:13.971Z",
+      "selected_occurrences": [
+        {
+          "harness": "claude",
+          "id": "25025fdb-8e70-488b-b3c3-0fb05344e65f",
+          "index": 822,
+          "cwd": "/Users/ember/dev/breadstuffs",
+          "title": "Orient into Starbridge-v2 project files and history"
+        }
+      ],
+      "index": 822
+    },
+    {
+      "period": "may_june",
+      "text_sha256": "017d9aac2df538d22972912643e3a74c0e168d50a1eb5cad6cc51e5993321d21",
+      "timestamp": "2026-06-23T19:05:26.008Z",
+      "selected_occurrences": [
+        {
+          "harness": "claude",
+          "id": "d03d4fa3-232e-4cb3-91d5-e5013d21e7e7",
+          "index": 136,
+          "cwd": "/Users/ember/dev/breadstuffs",
+          "title": "Orient within project structure and history"
+        }
+      ],
+      "index": 136
+    },
+    {
+      "period": "may_june",
+      "text_sha256": "4c6851624f35baf969a7b79fc4aca1df28bc760915ab26c10e05526ae038715d",
+      "timestamp": "2026-06-24T23:12:32.143Z",
+      "selected_occurrences": [
+        {
+          "harness": "claude",
+          "id": "25937974-acb0-4804-95a2-21268c3353d4",
+          "index": 243,
+          "cwd": "/Users/ember/dev/breadstuffs",
+          "title": "Orient within project structure and history"
+        }
+      ],
+      "index": 243
+    },
+    {
+      "period": "may_june",
+      "text_sha256": "f36662011897836f766d36df2c65e45c0e886f3119dcff22ad109800a66badee",
+      "timestamp": "2026-06-24T23:42:12.411Z",
+      "selected_occurrences": [
+        {
+          "harness": "claude",
+          "id": "25937974-acb0-4804-95a2-21268c3353d4",
+          "index": 294,
+          "cwd": "/Users/ember/dev/breadstuffs",
+          "title": "Orient within project structure and history"
+        }
+      ],
+      "index": 294
+    },
+    {
+      "period": "may_june",
+      "text_sha256": "0cdcf0808fd29c21ceeb1672cd2eb66b08e55a81664c873e7aa49e14cced56b8",
+      "timestamp": "2026-06-24T23:47:02.153Z",
+      "selected_occurrences": [
+        {
+          "harness": "claude",
+          "id": "01c55763-cbb4-4af6-84cf-8e4e7ede1ad7",
+          "index": 4,
+          "cwd": "/Users/ember/dev/breadstuffs",
+          "title": "Orient within project structure and history"
+        }
+      ],
+      "index": 4
+    }
+  ],
+  "sept_oct_selected": [
+    {
+      "session": "codex:01a0b0ed-2f93-7a03-be0e-bb81bd250747",
+      "index": 525,
+      "timestamp": "2026-09-18T00:45:49.309789896Z",
+      "text_sha256": "c9eefe22d66de445efc5cda6e2a297eb7d53bf015ccb2953dc82e6a506fd5865",
+      "read_scope": "complete selected prompt"
+    },
+    {
+      "session": "codex:01a0b0ed-2f93-7a03-be0e-bb81bd250747",
+      "index": 761,
+      "timestamp": "2026-09-18T01:18:14.402287006Z",
+      "text_sha256": "54d15fcc1607234ba2feaae9643c3fd483dcd219a9b3cda7ce8d29846d258395",
+      "read_scope": "complete selected prompt"
+    },
+    {
+      "session": "codex:01a0b0ed-2f93-7a03-be0e-bb81bd250747",
+      "index": 27314,
+      "timestamp": "2026-09-27T02:31:13.844634056Z",
+      "text_sha256": "974e4dc79693a495c5861e7cc5f8cd278f8deaaee79cd0d03b8cf5f1c4cf0847",
+      "read_scope": "complete selected prompt"
+    },
+    {
+      "session": "claude:0c315aee-e07a-499c-8bb4-fa36730510ca",
+      "index": 4690,
+      "timestamp": "2026-10-01T10:05:33.966Z",
+      "text_sha256": "7aa2d8123b74000ed9bd3a1188e67110010aec63e8f4caadd896cc32147c793b",
+      "read_scope": "complete selected prompt"
+    }
+  ],
+  "context_windows": [
+    {
+      "session": "claude:5f419eb8-39e3-40e3-848d-b26b65c31ab0",
+      "around": 455,
+      "each_side": 4,
+      "read_scope": "selected human prompt and relevant surrounding assistant text; tool rows may be automatically abbreviated, large notification output partly truncated"
+    },
+    {
+      "session": "claude:9699badf-6982-4b3d-9725-9b34868b6653",
+      "around": 401,
+      "each_side": 3,
+      "read_scope": "selected human prompt and relevant surrounding assistant text; tool rows may be automatically abbreviated, large notification output partly truncated"
+    },
+    {
+      "session": "claude:6d1ce594-402c-43b0-80c7-87615aabbb9f",
+      "around": 41,
+      "each_side": 2,
+      "read_scope": "selected human prompt and relevant surrounding assistant text; tool rows may be automatically abbreviated, large notification output partly truncated"
+    },
+    {
+      "session": "claude:b42cbce2-4510-4d20-b985-840476845387",
+      "around": 1245,
+      "each_side": 4,
+      "read_scope": "selected human prompt and relevant surrounding assistant text; tool rows may be automatically abbreviated, large notification output partly truncated"
+    },
+    {
+      "session": "codex:01a0b0ed-2f93-7a03-be0e-bb81bd250747",
+      "around": 761,
+      "each_side": 3,
+      "read_scope": "selected human prompt and relevant surrounding assistant text; tool rows may be automatically abbreviated, large notification output partly truncated"
+    },
+    {
+      "session": "codex:01a0b0ed-2f93-7a03-be0e-bb81bd250747",
+      "around": 27314,
+      "each_side": 3,
+      "read_scope": "selected human prompt and relevant surrounding assistant text; tool rows may be automatically abbreviated, large notification output partly truncated"
+    },
+    {
+      "session": "claude:0c315aee-e07a-499c-8bb4-fa36730510ca",
+      "around": 4690,
+      "each_side": 3,
+      "read_scope": "selected human prompt and relevant surrounding assistant text; tool rows may be automatically abbreviated, large notification output partly truncated"
+    },
+    {
+      "session": "claude:01c55763-cbb4-4af6-84cf-8e4e7ede1ad7",
+      "around": 4,
+      "each_side": 3,
+      "read_scope": "selected human prompt and relevant surrounding assistant text; tool rows may be automatically abbreviated, large notification output partly truncated"
+    },
+    {
+      "session": "claude:7fc2e1fd-dff5-45b5-8609-725f442f4cdc",
+      "around": 16438,
+      "each_side": 3,
+      "read_scope": "selected human prompt and relevant surrounding assistant text; tool rows may be automatically abbreviated, large notification output partly truncated"
+    },
+    {
+      "session": "claude:25025fdb-8e70-488b-b3c3-0fb05344e65f",
+      "around": 822,
+      "each_side": 3,
+      "read_scope": "selected human prompt and relevant surrounding assistant text; tool rows may be automatically abbreviated, large notification output partly truncated"
+    },
+    {
+      "session": "claude:d41ad82c-b169-4d25-8494-d2d16d493696",
+      "around": 806,
+      "each_side": 3,
+      "read_scope": "selected human prompt and relevant surrounding assistant text; tool rows may be automatically abbreviated, large notification output partly truncated"
+    },
+    {
+      "session": "claude:b42cbce2-4510-4d20-b985-840476845387",
+      "around": 920,
+      "each_side": 3,
+      "read_scope": "selected human prompt and relevant surrounding assistant text; tool rows may be automatically abbreviated, large notification output partly truncated"
+    },
+    {
+      "session": "claude:130628b0-ab87-41b8-8116-66d0de87ec49",
+      "around": 1434,
+      "each_side": 2,
+      "read_scope": "selected human prompt and relevant surrounding assistant text; tool rows may be automatically abbreviated, large notification output partly truncated"
+    },
+    {
+      "session": "claude:87b7d9e6-2734-449f-9765-1346d7ced550",
+      "around": 0,
+      "each_side": 2,
+      "read_scope": "selected human prompt and relevant surrounding assistant text; tool rows may be automatically abbreviated, large notification output partly truncated"
+    },
+    {
+      "session": "claude:b7cdd58a-95d0-4f4e-b623-6629f393f7ec",
+      "around": 1176,
+      "each_side": 3,
+      "read_scope": "selected human prompt and relevant surrounding assistant text; tool rows may be automatically abbreviated, large notification output partly truncated"
+    },
+    {
+      "session": "claude:5bf84858-71ef-4756-a970-971e03c32409",
+      "around": 521,
+      "each_side": 2,
+      "read_scope": "selected human prompt and relevant surrounding assistant text; tool rows may be automatically abbreviated, large notification output partly truncated"
+    },
+    {
+      "session": "claude:d311217b-f797-4621-803a-e34f9dc85b28",
+      "around": 65,
+      "each_side": 2,
+      "read_scope": "selected human prompt and relevant surrounding assistant text; tool rows may be automatically abbreviated, large notification output partly truncated"
+    }
+  ],
+  "source_read_scopes": [
+    {
+      "path": "/Users/ember/dev/allgame/README.md",
+      "sha256": "a78ceb415a57769ba53e7d478ac2d970bd128733fda1e81825290f4d79f640e5",
+      "read_scope": "lines1-140",
+      "qualification": "source only; no new build/runtime test"
+    },
+    {
+      "path": "/Users/ember/dev/allgame/claude_resident/tools/definitions.py",
+      "sha256": "e4c6f8e01aa87112e3d79679deadd02b8a7c32e406cdff143ddfe16188369a86",
+      "read_scope": "lines1-150,905-955; remaining lines symbol-screened",
+      "qualification": "source only; no new build/runtime test"
+    },
+    {
+      "path": "/Users/ember/dev/allgame/claude_resident/tools/dispatch.py",
+      "sha256": "aa38cbec95361679305cb81e89711a97be0bec81039a739e8f7639585abd621d",
+      "read_scope": "lines185-230,334-384",
+      "qualification": "source only; no new build/runtime test"
+    },
+    {
+      "path": "/Users/ember/dev/allgame/claude_resident/edits.py",
+      "sha256": "8477d7b6ba385b7c7c4ebe82d26df2ac26677f866ca17d66cbd6eaae2d7a877d",
+      "read_scope": "lines1-145 (whole file)",
+      "qualification": "source only; no new build/runtime test"
+    },
+    {
+      "path": "/Users/ember/dev/allgame/glm_resident/backend.py",
+      "sha256": "4c055d67cab3230325ace4e1974289580a7c6e042a76d7b0f3731e04b00f8da2",
+      "read_scope": "lines1-130",
+      "qualification": "source only; no new build/runtime test"
+    },
+    {
+      "path": "/Users/ember/dev/zwobot/README.md",
+      "sha256": "3d19c641e9361044cfe358223c7f261fe3da588339db190aff091160679a7538",
+      "read_scope": "read excerpt (combined output truncated; not whole-file read)",
+      "qualification": "source only; no new build/runtime test"
+    },
+    {
+      "path": "/Users/ember/dev/zwobot/crates/spweencraft/README.md",
+      "sha256": "9025b1757d0f0c5ee3217ae6bb1292489323eb6251fa10ecf2e047326974face",
+      "read_scope": "selected start/usage excerpt; not whole-file claim",
+      "qualification": "source only; no new build/runtime test"
+    },
+    {
+      "path": "/Users/ember/dev/zwobot/crates/spweencraft/src/lib.rs",
+      "sha256": "5b850ecd37e2d5455845628b5832bafd7159a7432d1fa55921abd9802f1ce69e",
+      "read_scope": "lines1-105",
+      "qualification": "source only; no new build/runtime test"
+    },
+    {
+      "path": "/Users/ember/dev/bw-exp1/scripts/actions/social.rhai",
+      "sha256": "fb9ebde63011cc449c410dca3751b9695f325d7bbd93eafbf8cfd38bb701ada0",
+      "read_scope": "lines1-160 requested; delivered excerpt due output truncation",
+      "qualification": "source only; no new build/runtime test"
+    },
+    {
+      "path": "/Users/ember/dev/bw-exp1/scripts/actions/station.rhai",
+      "sha256": "1155b94b2a1d61cd0a71ddc5a370986ce2755f22e9567de282102eb556a7a871",
+      "read_scope": "lines1-130",
+      "qualification": "source only; no new build/runtime test"
+    },
+    {
+      "path": "/Users/ember/dev/bw-exp1/scripts/actions/missions.rhai",
+      "sha256": "2bc256b4e41a74ab73bf217af5b7228ea9451b0fa370bd51cfdd94905fb6a979",
+      "read_scope": "symbol-screened only",
+      "qualification": "source only; no new build/runtime test"
+    },
+    {
+      "path": "/Users/ember/dev/bw-exp1/scripts/ai/faction_director.rhai",
+      "sha256": "6e6ca753570f79890714569ab646b0526169ea305389bbf616cfe6a1c288d546",
+      "read_scope": "symbol-screened only",
+      "qualification": "source only; no new build/runtime test"
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/demo/stories/the-commons.scene",
+      "sha256": "879968ce41c155e0f0fced14cf71e19e7a785f54199dbae7752056b804da366c",
+      "read_scope": "whole file",
+      "qualification": "source only; no new build/runtime test"
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/demo/stories/the-drowned-library.scene",
+      "sha256": "23b14817ab89d29485e18e96bcafae9c49fb330094fc9f7d1ea5cf370f0f6319",
+      "read_scope": "whole file",
+      "qualification": "source only; no new build/runtime test"
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/docs/deos/SPWEEN-ON-DREGG.md",
+      "sha256": "64a17a75d78ae5a611bf0a1772c3bce0964e0c1d2d1d9905f9d604696ea4fb65",
+      "read_scope": "lines1-155 requested; delivered excerpt, design-not-implementation",
+      "qualification": "source only; no new build/runtime test"
+    },
+    {
+      "path": "/Users/ember/dev/spween/README.md",
+      "sha256": "0051032f29d0b82bea9d5a2d98917665c6d3ac906584257a253a37e1db5b7534",
+      "read_scope": "lines1-110 requested; combined output truncated, partial",
+      "qualification": "source only; no new build/runtime test"
+    }
+  ],
+  "screening": {
+    "july_august": "Keyword-screened excerpts across domain groups, then selected complete bodies. Broad scan was output-truncated; no count of all hits fully read.",
+    "may_june": "Keyword-screened excerpts from unique prompts. Complete bodies only for selected cards.",
+    "sept_oct": "Keyword-screened two core session prompt files; complete selected prompts only.",
+    "allgame": "cv prompts two sessions, selected topic excerpts and contexts; no personal state files read."
+  },
+  "map_reads": "README/PLAN fully read. Archived INTENT May/July/Sept, fiction, Cloud and joined synthesis were reference maps; some initial combined outputs truncated. Not counted as primary corpus reading.",
+  "gaps": [
+    "Most corpus groups and context exchanges still unread.",
+    "No earlier bw-exp/zwobot human design or chreatures ecology history reconstructed.",
+    "No player/author post-release feedback audit.",
+    "No model private state/secret contents copied.",
+    "No whole Mini receiving audit or current station/runtime usability run.",
+    "Agent responses, copied UI goals and external promotional claims kept distinct from human intent."
+  ],
+  "outputs": [
+    "/Users/ember/dev/redregg/intent/worlds-second-pass-20261003.txt",
+    "/Users/ember/dev/redregg/replays/worlds-choicepoints-20261003.txt"
+  ]
+}

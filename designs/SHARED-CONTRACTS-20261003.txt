@@ -1,0 +1,195 @@
+COMMON CONTRACTS WITHOUT A UNIVERSAL APP STATE MACHINE
+October 3, 2026 — Codex /root/redregg_systems_design
+Status: proposed compression of repeated mechanisms; current native source and
+new lane reports have different maturity, recorded in the landscape companion.
+
+WHAT SHOULD BE SHARED
+
+The useful common boundary is an admitted relation between authenticated inputs,
+current authority/law, bounded evaluation, exact effects and retained result.
+That boundary can support a story move, authored instrument, governed source edit,
+private allocation or hosted app's newly requested native change. It is not a
+universal interpreter for arbitrary prose, remote APIs or community truth.
+Mini remains its construction home. A later common-kernel experiment in Bread
+would need explicit receiving consumers and a migration rationale of its own.
+
+Subsequent human steering, recorded by root in BEND-DIRECTION-20261003.txt,
+makes Bend the intended primary authored world language, retaining Nock. This
+changes the authoring center: a reusable station rule, review instrument and
+service contract should be authored/module-composed in Bend through one Mini
+effect boundary. It does not establish that the upstream affine/dependent checker,
+its live runtime, C/JS compiler, oblivious machine, trace proof and specialized
+circuit already implement one equivalent semantics. Their program/source profile
+and faithful refinement join is actual construction work. A checked terminating
+definition alone does not supply a public cost bound or hide its access pattern.
+
+A candidate shared module boundary should name definitions/import source roots,
+input/output schemas, effect signature, relevant authority/read projection,
+public capacity/cost profile and compiler/runtime edition. Those are interface
+requirements for Bend's world-language owner, not proposed unproved additions to
+the upstream language. Derive ordinary authoring/inspection/controller/codec paths
+from that source declaration where possible; don't handwrite a new Rust sidecar
+per module. A fixed specialized circuit uses the same meaning and declares what
+program/input choices are public versus secret; compiler success is not faithfulness.
+
+Objects and identities:
+ObjectRef = native identity + governing domain + declared semantic kind.
+RevisionRef = exact source/root/version coordinate, never latest-by-name.
+Definition = canonical source + evaluator/schema identity + bounded behavior
+composition + restrictions + views, with explicit publication/adoption.
+InvocationId = one semantic request; attempts, generations and transport nonces
+are distinct related identities. Retrying physical delivery must not create a
+new paid request or allow the old secret correlation row to be consumed again.
+ArtifactRef = exact bytes/digest/length/format plus origin and custody obligations;
+a content address alone does not confer discover/read/execute permission.
+
+Authority:
+Observe(resource, projection, viewer, source dependencies, current law).
+Invoke(resource(s), command, actor, typed current guards, current law).
+Reserve(exact candidate, domain footprint, authorizing law, retained obligation).
+Install(committed candidate, protected preimage, exact effects, obligation).
+Release(exact result projection, current audience/device sources, then-current law).
+Retire(exact obligation, close/nullifier/anchor evidence, legal forgetting rule).
+These are distinct cuts. A signed observation does not authorize mutation; an
+accepted historical request does not bypass today's law; reservation must actually
+grant/protect its future install obligation; delivery cannot undo learned data.
+Who may construct these facts depends on the resource's real governing law.
+Provider, renter, moderator, author, character and audience need separate roles.
+
+Behavior and effects:
+The evaluator executes the source-defined bounded program, including final-self/
+super behavior, restrictions, exceptions and metering. It returns typed reads,
+effects, messages and result. All inputs affecting dispatch/authority/effect/return
+must be traced, including absent values, aliases and source definitions. A renderer
+can emit an intent; it never turns an authored enabled=true into authority.
+A derived method's behavioral ordering and restriction conjunction are different
+mechanisms. The common interface must preserve both rather than flatten them into
+an enum label or a list of numeric writes. Existing Mini method tables are a real
+earlier receiver; completed full OO/typed private methods are not implied by them.
+
+Domain footprint:
+Coordinate only domains whose governed resources/read predicates/authority/fees
+the action actually depends on. A source link is an independently authorized
+observation; it becomes an action dependency when execution consumes its meaning.
+Do not obtain simplicity by giving all members one governor or by merging rooms
+that exchange messages. Do not duplicate MPC input agreement with a public input
+log merely because the UI needs a status indicator. Local work remains local when
+its footprint is local; June7's own-cell/partner independence is load-bearing.
+
+A shared activity projection:
+Common visible envelope: intent, exact source/actor/role, budget/reserve, request,
+artifacts, retained phases/evidence, current allowed next actions, terminal receipt.
+This can show a resident review, app export, narration, private joint operation or
+archive transfer. Each adapter supplies its OWN phase machine and witnesses.
+Never collapse submitted, selected, started, irreversible reserved, installed,
+retained, released and notified into one running/done flag. In particular Mini's
+provider started marker is not joint YES; completed text is not evidence of a
+delivered native write; absent optional notice is not evidence of unfinished work.
+
+Human actions map to these contracts:
+look/open -> authorized projection, often over several source identities;
+edit -> local draft followed by exact currently admitted proposal;
+publish/adopt -> source provenance and institutional authority, separately;
+ask/summon -> bounded serviced activity with distinct external dispatch custody;
+rehearse -> historical/projected world with live physical effects fenced;
+apply -> fresh current-authority installation of the proposed actual patch;
+share -> audience/capability change, not merely copy a graph reference;
+move home -> explicit custody/rekey/fence and retained-obligation handoff;
+withdraw -> stop unstarted work or request a permitted pre-commit decision;
+reconnect -> locate exact retained work/results before repeating anything.
+
+HISTORY NEEDS TWO PRODUCTS
+
+Immutable event/evidence history explains what was admitted and by whom.
+Current working/context projections explain where things now belong and what a
+person or resident should read next. One is not a substitute for the other.
+An edited/moved chat message preserves its original audit events while its current
+topic/context projection changes. allgame/claude_resident/edits.py currently logs
+moves but does not follow them across per-topic logs; the original human expected
+transparent context recrafting (peer source locator b42cbce2#920). This is a
+receiving test for Mini source/context navigation, not a request to rewrite old
+event records. Authorization can remove future visibility/editing while retaining
+attributable admitted history under its lawful retention rules.
+
+Snapshot classes must be explicit:
+1. Source/view cursor: exact revisions/selection + current or separately allowed
+   historical reads. Rehydration must not borrow current wrappers for old atoms.
+2. Workspace checkpoint: meaningful layout/drafts/open references/activity IDs.
+3. Application archive: exact packaged body plus retained /var and generation.
+4. Resident continuation: provider/session/result and acknowledged history.
+5. Private successor: authenticated share generation, qualified custody, pad/
+   correlation journal and current release authorization.
+6. Rehearsal branch: speculative effects and suggested patch, not live settlement.
+They may share manifest/canonical-byte/archive routines. They cannot share one
+untyped snapshot=backup=migrate=undo promise. A process RAM image is another
+explicit contract if ever built; an Android boundary checkpoint is not one.
+
+FAILURE AND RESOURCE OBLIGATIONS
+
+Failure responses have observers. A network observer sees endpoint/time/size;
+an authorized caller sees allowed result/Pending/refusal/staleness. Hidden
+dependencies can leak through status/probing even if packets are encrypted/padded.
+Each supported privacy profile specifies both classes, population/capacity/fault
+assumptions and permitted failure leakage. Fixed fanout, continuous mixes, encrypted
+docs and malicious confidential evaluation have different guarantees. A UI's
+helpful queue position must not silently define the confidential protocol's leak.
+
+Recovery responsibility includes evidence access, decision logs, exact installer,
+successor custody and repair capacity. A public certificate alone cannot reveal
+hidden participants or manufacture secret evidence rights. A last signer can abort
+under specified missing-participant schedules but blocks if that signer disappears;
+it is an availability choice, not universally nonblocking atomic commitment.
+
+Resources have distinct dimensions: fee balance, physical capacity, evaluator fuel,
+per-member fair service, source/view/search work, transport schedule, ciphertext/
+share storage, cryptographic preprocessing and recovery service. A shared budget
+must allocate disjoint slices or serial/joint reservations before physical work.
+Protect recovery reserve independently of ordinary admission. Count bounded
+history/GC and all message classes, not just healthy invocation payloads.
+
+IRREDUCIBLE SEPARATIONS (DO NOT 'SIMPLIFY' AWAY)
+
+1. Deterministic admission/evaluation vs external physical service.
+2. Exact installed state vs hash anchoring/display/candidate evidence.
+3. Participant identity vs surface alias, fictional role, billing account.
+4. Source revision vs grant generation; role downgrade vs erasing history.
+5. Community decision vs evidence that a statement is true.
+6. Conserving feasible allocation vs fairness/optimality/real availability.
+7. Observation/custody holder entitlement vs current audience release.
+8. History integrity/acknowledged prefix vs execution completeness/availability.
+9. Logical outcome agreement vs physical installation vs delivery.
+10. Rehearsal result vs consented fresh live settlement.
+11. Semantic operation ID vs retry attempt vs share generation vs outer nonce.
+12. Renter's portability right vs provider's offered capacity vs community rule.
+13. Technical workspace UX vs authored fictional UX vs natural chat UX.
+
+INCIDENTAL DUPLICATION TO REMOVE WHEN CONSUMERS CONNECT
+
+Many per-app local ledgers, receipt types and native-state mirrors -> one actual
+Mini transaction/result history, preserving app-specific semantic schemas.
+Many prepare/install/submit HTTP lanes -> one canonical admitted-intent/custody
+envelope, with adapter-specific physical delivery and phase facts retained.
+Parallel agent notebook, provider task and app export 'done' stores -> one shared
+activity index linked to their real retained artifacts, not one shared fake phase.
+Repeated presentation/tree/event lowering -> pure bounded leaf IR/backends consuming
+actual authorized projections; retain different experience-specific compositions.
+Several genesis/source/kind/instance identity mappings -> explicit source-root and
+generation relations, without losing principal or institutional distinctions.
+Repeated whole-history reconstruction/Spotter census -> exact indexed retained
+history/dependency projections; cache representation-preserving observations, not
+authority. Canonical roots/commitments remain unchanged unless explicitly migrated.
+Several unsafe generic snapshot/export schemes -> shared archive validation/fsync/
+canonical manifest routines plus typed custody/migration contracts above.
+
+COMPRESSION CHECK
+
+Ask whether each shared routine removes a duplicate source of meaning while keeping
+the witnesses of its consumers. A single 'governed=true' field does not compress
+authority; it erases it. A generic 'verified' badge does not compose evidence; it
+launders it. A shared object system is valuable when an authored institution,
+review instrument and service allocation run under their actual rules through the
+same native effects/identity/history, while their human workflows stay intelligible.
+
+Actual next refuters are in ALTERNATIVES. Current implementation ownership stays
+with the root's Mini construction team. This design supplies semantic consumer
+questions; it does not open a second host/journal/evaluator implementation.

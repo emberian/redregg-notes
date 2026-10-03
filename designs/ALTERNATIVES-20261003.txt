@@ -1,0 +1,380 @@
+THREE CONSTRUCTIONS FOR A PROGRAMMABLE NEXUS
+October 3, 2026 — Codex /root/redregg_systems_design
+Status: proposed designs grounded in bounded primary reading; not construction
+authorization, implemented architecture, or a claim that the corpus is exhausted.
+
+READ WITH
+designs/SHARED-CONTRACTS-20261003.txt explains the common semantic boundaries.
+landscape/second-pass-construction-20261003.txt distinguishes receiving source,
+captured evidence and proposed transfers. Archive reports remain historical.
+The root's subsequent BEND-DIRECTION-20261003.txt records new human steering:
+Bend should be the primary world language, with Nock retained. The alternatives
+therefore aim at authored Bend modules/tools/world behavior; that direction is
+not independent evidence of an already faithful Mini Bend receiver or circuit.
+
+HYPOTHESES BEFORE PREFERENCE
+
+H1. A community-authored station is the strongest way to discover whether shared
+programmability can support an inhabited place rather than a collection of demos.
+H2. A living workdesk is the strongest way to discover whether the programmable
+medium changes how people inquire, make tools and collaborate rather than merely
+replacing their chat or document editor.
+H3. A workshop commons of portable homes is the strongest way to discover whether
+contributed hosting/private resource exchange creates independence rather than
+another host-dependent subscription service.
+
+These are genuinely different constructions: their durable centers are an
+institutional place, a member's working image, and a federation of service/home
+contracts. Their normal journeys, publishing decisions and failure tolerances
+differ. They can interoperate through Mini. They are not three generic dashboards
+or proposed incompatible kernels. Choosing a first consumer does not choose away
+the others: cv 01a0b0ed#761 explicitly declines choosing research/social/compute and
+asks for a programmable nexus growing outward, including people's own nodes.
+
+Recovered intent constrains all three. July25 cv 5f419eb8#455 calls SS13 station the
+ambition, dungeon an away mission, and Second Life/Thirdroom inspirations. July11
+cv 6d1ce594#41 describes authors actually interested in running universes and
+players coordinating around Discord. June19 cv 383d2fad#482/#521 describes a
+durable, rewindable, literate hypermedia system whose tools themselves are world
+objects. June24 cv 01c55763#4 rejects the cozy interface and asks for technical
+NT/Pharo-like menus, windows, icons, detail, actuation and spatial persistence.
+June7 cv 7fc2e1fd#899 preserves core privacy for decentralized resource payments
+and own-cell computation coordinating only with partners. These prompts and their
+surroundings were read; archived agent reports supplied further leads.
+
+A. COMMUNITY-AUTHORED STATION
+
+The product promise: people return to a place they can understand, change and run
+together. Its creative premise is not that everything is a dungeon, nor that real
+work must be disguised as fiction. A station provides shared social continuity
+between authored universes, missions and ordinary community activity. Authors may
+also publish independent universes; the station is not their compulsory lobby.
+Specific bars/crafting/guilds are possible content, not recovered requirements.
+Leisure needs room of its own. July13 cv d311217b#65 is a tool-returned human
+selection of services-only/no-P2E, with assistant-authored question wording; it
+qualifies the temptation to make all play or participation earn tokens. A leisure
+room is not a failed workroom. Shared real resources and fictional inventory have
+distinct economic meaning even when both use native identity and methods.
+
+A meaningful visit:
+Mira arrives in a station, recognizes last week's room layout and her unfinished
+proposal, reads a notice authored by someone she knows, and sees the source of a
+door's behavior. She has permission to repair the door, but not to manage the
+station roster. Sol and Ivo both try to borrow one shared instrument; the world
+admits one exact reservation. Ivo's refused action leaves the instrument and his
+budget unchanged. They propose a new workshop room, rehearse its behavior, and
+invite a bounded narrator to suggest a scene. Members adopt an edit under their
+institution's rule. The prose suggestion remains attributed to its author; the
+adopted consequence has a separate native receipt. A later mission returns an
+allowed projection into the same character identity. The station does not blindly
+accept a claim that the mission awarded a valuable asset.
+
+Architecture:
+The station is a governed collection of places, entities, membership/role rules,
+source packages and institutional records. Each object's governing domain stays
+explicit. A place is not an authority root over everything visible in it. A room
+contains references to separately governed objects and authorized presentations.
+Character identity, participant principal, room membership, fictional role and
+economic account are separate coordinates linked through authorized relations.
+A GM can narrate without acquiring all players' edit rights. An author can publish
+a source package without acquiring the station governor's admission rights.
+
+Shared entities are the decisive extension beyond Mini's existing story. A sealed
+story currently gives each player their own progress/inventory under a generated
+law; that is substantial useful work, not the proposed shared contested entity
+model. A station's tool/object retains its own identity and accepted consequences
+across visits. A mission instance pins rules/source at birth and cannot silently
+alter the persistent institution. Graduation back to station state consumes a
+typed result, current admission rule, exact instance identity and single-use
+result identity. Narration, declared victory and resource issuance do not become
+equivalent merely because all are native documents.
+
+Publishing:
+Source changes have draft, validated proposal, institutional decision, and installed
+version. They can have different authors/authorities. Existing instances remain
+pinned; an institution explicitly adopts a revision for new actions/instances.
+The meaning of a ballot is an authorized collective decision. A factual claim
+about the proposed code or mission needs its own evidence. The ballot can approve
+a false proposition; ResearchRegime proves that distinction in an inhabited
+counterexample. Policy may permit a risky experiment, but its badge must say what
+was decided, not silently upgrade the evidence.
+
+Effects/history/custody:
+Ordinary place/object methods use the native deterministic evaluator and exact
+effects. Narrator/provider work is an asynchronous serviced activity that proposes
+content, followed by separately admitted changes. Historical visits and rehearsal
+are retained source/view coordinates, not authority to replay live payments or
+reinstall old capabilities. Offline drafts can survive loss of write authority;
+their eventual publication is judged now. Station archive custody, narration
+artifact custody, and secret private successor custody are different obligations.
+
+Resource model:
+Charge actual admitted work to explicit participant/institution budgets, with
+distinct recovery allowance. Shared scarce items need disjoint reservations or
+joint decision, not per-player permission to consume the whole capacity. Private
+choices can reveal the authorized outcome without revealing every preference;
+traffic/status leaks need an explicit profile. Private simultaneous strategy is
+not obtained from encrypted inventories alone. World simulation has public cost
+classes and bounded update work; no continuous all-world sweep is assumed.
+
+Receiving discriminator:
+Three differently authorized members, one newly authored derived behavior, one
+shared contested object, one voted source change, one narrator suggestion, restart
+and return. Vary member count rather than baking in demo names. Someone manages a
+room while lacking founder replacement rights. A revoked author keeps attributable
+history but cannot install the old draft. A mission result cannot be reused.
+
+Falsifiers:
+It fails as a station if participants only traverse separate player copies and
+their supposedly common consequences never meet. It fails as an authored medium
+if authors need operators to write Rust for every new behavior. It fails its own
+authority model if GM prose can mint canon/economic effects without admission.
+It fails socially if the shared place adds friction and nobody returns except to
+complete scripted tests. Recovered authors/player interest is historical interest,
+not evidence of current adoption or a supplied alpha launch roster.
+
+Transfer decision:
+Reuse authored assets, small syntax/validated-edit data, parent/content attribution,
+and useful UI interactions. Semantically migrate collective choice, realm/instance
+identity and graduation to Mini's source/law/current-authority path. Preserve
+realm-model's actual durable/node admission work; it is not already kernel-enforced
+because ruleset_root is absent from Bread Turn and its sample cells are open.
+Do not import an EmbeddedExecutor per game or claim a narration signature establishes
+truth. Current Mini story is the starting consumer, not something to rebuild.
+
+B. LIVING WORKDESK AND RESEARCH IMAGE
+
+The product promise: your working environment is durable, inspectable and editable
+enough that you and collaborators can change the tools of thought while using them.
+The center is a member's working image: spatial arrangement, documents, instruments,
+branches, running activities and narrowed published facets. Shared workrooms are
+relationships between images and independently governed resources, not ownership
+of everyone else's image. A social station can be one open workspace, not the
+desktop's universal organizing metaphor.
+
+A meaningful session:
+Nadia opens yesterday's source-linked notebook. The citations point to exact
+fragments; a live section has advanced, and its pinned comparison is still useful.
+She opens a definition inspector beside the notebook, changes a small review-card
+prototype, and tries it on a local draft. Her colleague sees the public argument
+and a locked private fragment. Nadia asks Hermes to compare two revisions under a
+bounded mandate. The provider result survives a lost reply. Hermes proposes a
+source patch; a real reviewer discusses the exact fragment and approves a revision.
+The source changed meanwhile, so installation refuses at the current base, keeping
+the draft and original work result. They resolve the change and admit a new exact
+installation. On restart, windows/source coordinates and retained work reconnect;
+it never implies that arbitrary process RAM or every input event was preserved.
+
+Architecture:
+Workspace layout and instrument definitions are separately governed native state.
+Transient cursor motion/IME composition may remain local; semantic checkpoints
+retain meaningful working arrangements/drafts. The image records references and
+activity identities, not a duplicate authoritative copy of each mounted object's
+state. Authored renderers consume authorized projections and intent templates.
+A view definition is not a read grant, and a clickable action is not an execution
+grant. Opening a notebook authorizes neither its transcluded sources nor the tools
+it happens to name. Multiple windows/views follow the same identities without
+forcing all object types into one generic property-grid interface.
+
+Instruments are ordinary authenticated source objects: definition, schema/codec,
+behavior composition, restriction conjunction, supported evaluator and view
+packages are explicit. Instantiation pins a source identity. The final-self/super
+behavior of a derived review card remains the intended full OO contract; current
+ROM numeric-output tables do not supply it. Changes to a view can be low impact;
+changes to executable meaning have a validation/publication/adoption boundary.
+Unresolved collaborative source must remain a draft, not choose a text projection
+and silently seal executable code.
+
+Research discipline:
+There are independent axes: source provenance, admitted authority/effects,
+reproducible/checkable content, and community approval. A model finding is an
+attributed proposal; a reviewer approval is an institution's choice; a checked
+certificate has a stated theorem/assumptions; an optimistic conclusion has an
+observation window and liveness/completeness obligations. Combining them into one
+green badge loses information. This is a concrete application of ResearchRegime,
+not a new proof that research can be made universally objective.
+
+Effects/history/custody:
+The deterministic object action, external provider request, reviewed source patch,
+and physical app export retain linked but distinct operation identities. A work
+record ties mandate/source/result; its delivery can happen later. Rehearsal forks
+contain suggestions and previews. Settlement means a fresh admitted live change
+with the actual installed result; Bread shared_fork's settled_root alone does not
+establish that. The UI should support inspecting current law, exact old source,
+retained receipts and uncertainty without turning every interaction into a receipt
+browser. Source authority is independently checked for each historical or live
+fragment. Historical UI persistence and historical read permission are different.
+
+Resource model:
+Interactive observation/search has bounded incremental indexes keyed by source,
+viewer/authority and dependent coordinates. Renderer caches never become cached
+authorization decisions. Provider activities have a quote/budget, started marker,
+result custody, exact settlement and separate recovery reserve. A shared workroom
+budget cannot become independent copies of the whole allowance. Turning every
+mount/open/keystroke into a global joint transaction would sabotage the medium;
+joint coordination follows actual effect/dependency domains.
+
+Receiving discriminator:
+Create a useful reusable derived instrument inside Mini; render it both as a
+notebook section and a technical inspector; run it against differently authorized
+source fragments; request resident work; crash after receiving output; review an
+exact source proposal; reject stale/currently unauthorized installation; resolve
+and install; restart into the same work with exactly one provider charge/result.
+
+Falsifiers:
+It fails as a live image if only operator-written CLI verbs extend the world. It
+fails as a docuverse if transclusion is copied text that forgets identity or leaks
+source authority. It fails collaboration if role downgrades erase previously
+admitted authorship or refused edits discard local drafts. It fails portability
+if a snapshot is just arbitrary credentials plus host-local process paths.
+It fails ergonomically if inspecting and composing real machinery requires more
+manual paperwork than the existing shell/editor. Bread's richer technical UI is
+evidence of design material, not evidence that its unsafe save or full-cell reads
+meet Mini's current authority model.
+
+Transfer decision:
+Reuse pure bounded presentation trees, selected text/web lowering, source/patch
+carry syntax and mature inspect/act/inspect interactions. Migrate review and branch
+semantics to native authority, full principal identities and exact installation.
+Use existing Mini source/history/protected-view and resident artifacts as receiving
+homes. Abandon out-of-band heap save, universal ledger census and parallel async
+notebook runtimes; retain the consumers they were meant to serve. This alternative
+can carry meaningful creative activity without making the desk itself a game.
+
+C. WORKSHOP COMMONS OF PORTABLE HOMES
+
+The product promise: people and their bounded agents can keep a home for work,
+contribute useful service capacity, negotiate private exchanges, and replace a
+provider without losing their acknowledged history or surrendering every role to
+the operator. Its center is a federation of independently governed home/service
+contracts. It is not a global market for arbitrary ML/numeric workloads: the
+October corpus places numerical jobs with Hellas, while Dregg's native authored
+computation, Hermes and resource hosting remain the relevant activities.
+
+A meaningful week:
+Rao runs a community node and offers a bounded resident home plus storage for
+shared research. El rents a home under explicit scope, budget and recovery terms,
+and grants a private collaborator one facet. The group collectively funds useful
+service without publishing each member's willingness to pay. The service may
+operate in a station or workdesk; its contractual meaning is independent of the UI.
+El countersigns an exact history checkpoint. The provider later disconnects. The
+system distinguishes 'finished and retained but not delivered' from 'uncertain
+dispatch' and from 'not admitted.' Successor custody, if qualified, lets El resume
+the same work elsewhere, with fresh signing authority and explicit old-provider
+fencing. If custody is inadequate, it retains a recoverable obligation/refusal
+rather than charging for a fresh fabricated continuation. The commons can elect a
+new moderator without gaining the right to decrypt El's private home.
+
+Architecture:
+Home identity, continuation history, source package, lease, custody cohort,
+execution provider, billing account and community membership are independently
+identified. A host chooses what capacity it offers; a renter chooses what work to
+authorize; resource law decides which effects are admitted. A moderator acts over
+community resources, not by becoming an implicit recovery superuser. Scope can
+expand through legitimate grant/factory/self-origin procedures; confinement means
+those procedures must carry authority, not that rights can never grow anywhere.
+Bread Spec/Authority explicitly models Amplify, Mint, Endow and consented Origin.
+
+Service interfaces distinguish replayable deterministic computation from serviced
+external effects. The native evaluator returns exact bounded effects/results. A
+provider call admits an obligation, obtains custody/receipts, then materializes a
+result under source/current audience law. Discovery/quotes are authorized views;
+they are not a promise of actual available capacity. Bounded session transport
+leases can make apps useful, but each semantic effect/payment keeps its own exact
+admission. An uncertain POST is not replayable merely because its app lease lives.
+
+Markets/governance:
+Private allocation combines authorized confidential inputs, a declared feasibility
+relation, selected allocation, disjoint capacity reservations and exact settlement.
+A solver can propose; a small checker qualifies the result against committed
+constraints. Conservation is not fairness, solver optimality or availability.
+Ballots control institutional choices under an explicit electorate/policy. They
+cannot certify private predicate validity or external payment occurrence. Asset
+value entry is a separate receiving relation with its external rail; no synthetic
+Book credit or address invented by an agent establishes Solana mainnet receipt.
+
+History/custody:
+An acknowledged prefix prevents a provider presenting a shortened or changed
+acknowledged history; it does not prove execution completeness, provider honesty,
+or storage availability. Current Bread RenterCheckpoint signs head_root+num_turns,
+with a domain separator; genesis nonce/key binding is separately platform-recorded
+and verifier-pinned. A new Mini acknowledgment should explicitly bind native
+resource/genesis/generation/source coordinates, not imply the existing renter
+signature already binds those. Mobility exports sealed lawful custody and exact
+retained obligations, never SessionCarrier's raw signing seed. Device/source read
+audience and MPC successor-holder cohort are separate access structures.
+
+Resource model:
+Reservations are disjoint or jointly decided before scarce physical consumption.
+Per-participant optimism must not oversell common capacity: SharedResourceBudget
+at f=0 gives each honest participant the whole balance, so two can both consume
+it before later reconciliation. Economic reserve, physical capacity, traffic
+schedule, correlation/pad lifetime and repair service are different resources.
+Admission cannot spend the final repair budget needed to discharge an admitted
+obligation. Epoch close/GC must carry nullifiers and possible old obligations;
+finite retention is a contract with legal retirement, not deletion on a timer.
+
+Receiving discriminator:
+Two independent provider domains, three renters, concurrent allocations, an
+acknowledged resident history, crash after effect/before reply, provider departure,
+current audience change and same-operation successor recovery. Use an allowed
+alpha fault/capacity profile, then test the actual receiving and privacy traces.
+If qualified provider migration is not implemented, retain an explicit immobile
+home instead of a portable label. That is unfinished product construction, not
+a reason to misname an archive export as migration.
+
+Falsifiers:
+It fails independence if provider replacement needs a secret host credential or
+operator intervention that the renter cannot authorize. It fails the commons if
+allocation settles money without reserving service or preserving output custody.
+It fails privacy if status/discovery/recovery reveals hidden counterparties beyond
+the declared leakage. It fails economics if two honest requests both spend one
+capacity. It fails institutions if democratic control is presented as technical
+truth or moderation can silently rewrite renter history. None is fixed merely by
+adding BFT-shaped local flags or compiling a private execution model.
+
+Transfer decision:
+Reuse lifecycle vocabulary, acknowledgment/test cases, archive-first exact recovery,
+and constrained solver/checker patterns. Migrate custody/export, shared reservations,
+private allocation and billing to Mini native contracts. Do not import the whole
+House, its object enum or its repeated per-lane HTTP prepare/install/submit stores.
+House's stronger factory birth/Expedition SetField paths deserve individual credit;
+ordinary EmitEvent anchoring is a narrower state-hash receipt, not app semantics.
+
+CONDITIONAL PREFERENCE, NOT A PRODUCT ELIMINATION
+
+For current Mini construction, B has the shortest path to a substantial composition
+because source-authorized documents, apps, exact resident work and technical
+observations already have receiving homes. Its strongest value is bringing tools
+inside the medium, not polishing an inspector. A is the necessary contrasting
+consumer: it reveals shared contested state, creative authorship and collective
+consequence that B could avoid. The combination should be two experiences drawing
+on one current semantics, not a combined station-workdesk brand or two fixtures
+declared the destination. C should influence today's custody/reservation/resource
+interfaces even when its public exchange/migration experience takes longer.
+
+If source-authoring composition cannot actually support A/B, the bottleneck is
+native programmable semantics. If B works but A's shared consequences do not,
+world/instance law and result admission need work. If both work but provider
+replacement needs raw host secrets or doubles billing, C exposes the next system
+boundary. These are discriminators with consequences, not a popularity ranking.
+
+The October13 recovered profile remains a variable-member platform, complete
+full-OO/private execution/traffic privacy/agreement prototypes, substantial
+docuverse/deos, actual usable apps/Hermes and operation/recovery. Traffic privacy
+and some agreement are explicit alpha conditions. All alternatives consume that
+work rather than moving it into later documentation. Their richer station,
+publication, service migration and commons experiences are design hypotheses.
+October26 and November sequences in earlier reports are proposals, not recovered
+feature deadlines. Neither portable full desktop/seL4 parity nor a universal
+proof stack is silently added as an October gate.
+
+OPEN EVIDENCE THAT COULD CHANGE THE PREFERENCE
+
+Actual current feedback from authors/participants/operators; complete Mini native
+member authoring/private action receiving evidence; ecosystem/living simulation
+and allgame/chreatures interactions; independently operated custody/migration;
+actual external value entry; modern participant-controlled device recovery.
+Reports and this pass do not qualify those. A counterfactual research branch may
+explore a compact common kernel integrating into Bread, but current Mini remains
+the construction home. No wholesale rewrite has been inferred or authorized.

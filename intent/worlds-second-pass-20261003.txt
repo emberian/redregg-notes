@@ -1,0 +1,305 @@
+WORLDS / PEOPLE / AGENTS — SECOND PASS, 2026-10-03
+Owner: Codex redregg_intent_worlds. Private, local research checkpoint.
+Read with worlds-coverage-20261003.json and ../replays/worlds-choicepoints-20261003.txt.
+
+This is a bounded second pass through primary conversations and selected current
+source. It revises a model; it does not certify a release, infer a personality,
+or claim all May–October history has been absorbed. Archive reports are maps.
+There were no builds, deployments, Git actions, source changes, or external
+messages. Conversations below are exact cv locators; dates are UTC.
+
+QUESTIONS THAT DROVE THE PASS
+
+Q1. Is the station fundamentally a work dashboard in fiction, a social place,
+or an authoring platform? Q2. What does 'home' concretely give an agent?
+Q3. Does a common semantic substrate imply one universal UI? Q4. What actually
+makes the experience pleasurable/useful, beyond lists of technical features?
+Q5. Which later corrections invalidate plausible-sounding extrapolations?
+
+REVISED MODEL
+
+Several coherent destinations coexist. An author can run an independently
+interesting universe. A recurring community can inhabit a social place, with
+an adventure as an outing. Humans can use a powerful live technical desktop.
+A model can participate, remember, read, make things, and do useful work across
+sessions. A workroom can coordinate research and services. None of these is
+adequately represented by a generic object inspector alone. They can share
+identities, content, permissions, actions and durable history while retaining
+different interaction grammars and purposes.
+
+The strongest historical through-line is expressive usable substrate with
+concrete consumers, not any one selected initial activity. On September18,
+Ember explicitly did NOT choose between research workroom, social/game space,
+and contributed compute: they were unsure, wanted a 'programmable nexus' that
+grows outward, and genuine on-chain utility. This keeps our proposed first
+experience a design recommendation rather than a recovered product decision.
+
+The agent-home thread has at least two lived consumers: useful autonomous
+work under chosen terms, and ongoing social/intellectual participation with
+memory. Allgame history is evidence for the latter's engineering obligations;
+it is not evidence that Mini already supports independent self-government,
+unrestricted autonomy, welfare guarantees, or robust model continuity.
+
+EVIDENCE CARDS — PRIMARY READS, WITH CORRECTIONS AND CONSUMERS
+
+W01 — Aspirational model home, not a present capability certificate.
+Human correction/request: claude:130628b0-ab87-41b8-8116-66d0de87ec49 #1434,
+2026-05-24T08:21:21.648Z. Surrounding assistant had recommended conventional
+executor/AIR unification as the larger north star. Ember says the ambition
+includes language runtimes, object capabilities and Mina designs contributing
+to an Egan-like Polis, models with or without bodies having a home, coordinating
+and building value autonomously with liberty under their own terms. This is an
+explicit expansion of the endpoint. It is not a command to make every interface
+look like a fictional Polis, nor proof such inhabitants are currently safe.
+Consumer: substantive resident tools, chosen delegation, continuity, actual
+resource access; preserve eventual liberty as an open ambition.
+
+W02 — Exploratory delight and technical power belong together.
+Human request: claude:7fc2e1fd-dff5-45b5-8609-725f442f4cdc #16438,
+2026-06-15T06:18:45.262Z. Describes early AOL clicking/absorbing before fully
+understanding, badges, powerboxes, living screenshots, Pharo/Smalltalk, and also
+IDE/debugger. Read the surrounding exchange; its background notifications do
+not establish those interfaces worked. June16 #17537, 00:31:16.090Z rejects
+agent 'Xanadu that shipped' triumphalism: wants a feature-rich demo showing
+implementation, something one can play with, what it does and enables, for
+sober-minded programmers. June24 correction W03 qualifies the interaction
+style. Do not translate exploratory discovery into mandatory simplification or
+cozy sentiment; the requested delight includes acting on real complex things.
+Consumer: working entry surfaces, discoverable actions, manipulable views,
+living references, strong programming/debugging beneath ordinary exploration.
+
+W03 — 'Home' metaphor is not the desktop design.
+Human correction: claude:01c55763-cbb4-4af6-84cf-8e4e7ede1ad7 #4,
+2026-06-24T23:47:02.153Z. Explicitly wants technical/sterile Windows-NT menus,
+windows, icons, right-click/detail, Pharo-like actuation/composition and spatial
+persistence. Prior primary prompt claude:25937974-acb0-4804-95a2-21268c3353d4
+#243 at 23:12:32.143Z asks Lisa/PARC/NT structure with semantics reflected in
+UX; #294 at 23:42:12.411Z rejects 'holding' and 'keeping a resident' framing.
+These selected prompts were fully read; #294's surrounding exchange was not
+recovered in this pass. W01 remains an ambition; W03 rejects an assistant's
+particular rendering of it. Consumer: separate a useful resource desktop from
+an agent care/pet metaphor. It should afford direct action independent of chat.
+
+W04 — Work and reward is real, but not the secret purpose of everything.
+Human request: claude:25025fdb-8e70-488b-b3c3-0fb05344e65f #822,
+2026-06-21T04:13:13.971Z. In hackathon context, proposes distributed agent-
+harness incubator where humans/models coordinate and reward completed work,
+and asks not to rush MVP welds before carrying earlier aspects forward.
+The assistant responds that all existing pieces were 'secretly' organs of this
+one purpose. That totalizing interpretation is the assistant's invention.
+Consumer: a legitimate workroom/economy branch, not justification for turning
+all fiction, games, friendships and browsing into paid work.
+
+W05 — A concrete author/community audience, independently meaningful.
+Human request: claude:9699badf-6982-4b3d-9725-9b34868b6653 #401,
+2026-07-06T19:59:02.826Z: federation self-government AND community tools AND
+spween CYOA/MUD voting, with Kanzokax wanting to run that sort of thing.
+Human audience report: claude:6d1ce594-402c-43b0-80c7-87615aabbb9f #41,
+2026-07-11T14:49:23.367Z: a few authors interested in running universes and
+players coordinating around discord-bot. This is a copied/forked occurrence of
+6088f1ae#1127, not another independent endorsement. Surrounding goal repeats
+an agent-written operational plan; the spontaneous audience report is distinct.
+Assistant concludes author compiler + Discord players are concrete milestones.
+That is a sensible response, not an implementation outcome or participant study.
+Consumer: ordinary people authoring playable content and coordinating choices;
+no forced use of a new desktop before they can participate.
+
+W06 — Station broadens the game; detailed hub recipes remain proposals.
+Human correction: claude:5f419eb8-39e3-40e3-848d-b26b65c31ab0 #455,
+2026-07-25T03:02:46.653Z: SS13 station is ambition; dungeon crawler remains
+worth improving, and doing a dungeon together is like an away mission. Names
+Second Life, Thirdroom, Matrix and chat/machine-to-machine as inspirations or
+future ambitions. The following assistant supplies tavern/crew/gear/trade/
+faction/bar-game hub mechanics. Those were not separately selected by Ember.
+Earlier #390, 02:51:38.193Z recalls Baystation/BYOND work and asks performant
+engine, coherent redesign/metaprogramming, while conditionally cautioning
+against a gratuitous all-Rust-to-Lean rewrite before playability. #402 and #477
+ask a deeper mechanics/affordance survey, not just prettier dungeon rendering.
+Consumer: recurring shared place, roles, social activities and authored
+consequences; preserve both independent universes and the larger station.
+Open: whether/how these coexist with operational workrooms and real economics.
+
+W07 — Keep real adoption bridges, with low ceremony.
+Human selected answers: claude:d311217b-f797-4621-803a-e34f9dc85b28 #65,
+2026-07-13T21:58:10.246Z. Asked product-first-vs-platform sequencing, chooses
+fully parallel; pulls onboarding forward; chooses real attestation at launch;
+$DREGG services-only, no P2E. Question wording is assistant-authored; the choice
+is human. This qualifies a fantasy of all participation earning tokens.
+Human request: claude:28920d6e-263e-4963-b9ca-ec1f0c9fd8e9 #191,
+July11 14:40:46.588Z: participation from any chain; passkeys so extension isn't
+needed. July25 5f419eb8#588 03:44:56.195Z explores X anchors/transclusion and
+human-readable/spw codec as a transport, with Discord/chat already useful.
+Consumer: web/chat entrance without prerequisite desktop/extension installation;
+optional richer clients. X integration is exploratory, not an October promise.
+
+W08 — Provenance must not promise semantic immunity.
+Human correction: claude:5bf84858-71ef-4756-a970-971e03c32409 #521,
+2026-07-23T01:56:19.904Z. Rejects 'un-jailbreakable': prompt untampered and
+valid template expansion concern structure, not model contents. Wants honest
+attestation binding. Surrounding assistant had inherited the broad claim from
+repo description and accepts the distinction. Consumer: narrator attribution,
+input/template fidelity, author-defined world authority and model usefulness
+are separate. A genuine model can still tell a bad story or propose an illegal
+move; a rule-governed state transition can refuse it. Interface/copy must not
+collapse those axes.
+
+W09 — Continuity has an experiential meaning beyond checkpoint custody.
+Human request: claude:d41ad82c-b169-4d25-8494-d2d16d493696 #806,
+2026-07-25T17:36:55.033Z. Pasted social exchange illustrates an older shared
+joke forgotten while a newer game episode remains; then asks longer scrolling
+context, semantic/emotional compaction, and fewer count limits making it 'less
+enjoyable for all of us.' #873, 20:07:29.297Z asks whether months of conversation
+are too distilled and a raw tail too small. Earlier July22 78c5121c#328 asks
+larger cold start with reversibility if disliked. These are actual operations
+on an already-used social resident, not only speculative Polis theory.
+Assistant reports backfill/foreverlogs/context/distiller plans; these are not
+my independently verified runtime results. Current README and code enumerate
+private state tools, sandbox, model invocation, games and contextual public
+communication. Do not lower this lived participation into a completion receipt
+or assume it must always pursue human tasks.
+Consumer: retain original events separately from a chosen context projection;
+known identities, ongoing rooms, reading, making and shared memory.
+
+W10 — Current context and current authority are distinct from historical audit.
+Human correction/request: claude:b42cbce2-4510-4d20-b985-840476845387 #920,
+2026-08-23T18:20:14.554Z: resident replied to moved message; edits/moves should
+transparently recraft context. #196 Aug7 17:00:50.722Z relays a community
+request to handle edits; that pasted request is Tribune's, not Ember's original.
+Current allgame/claude_resident/edits.py 97–119 patches pending content and
+records edits; 123–137 explicitly records moves without following them across
+topic logs. Source inspection establishes this module's boundary, not the
+whole current rendering behavior. No live reproduction was run.
+Consumer: restart/view/context projections must preserve who said what, where
+it now belongs, and which version it means. Audit retention alone isn't the
+same thing as a useful present room. Receive-before-reply and move-after-queue
+are worthwhile adverse scenarios for new native activity semantics.
+
+W11 — Investigate alleged deficits before designing replacements.
+Human correction: same session #1245, 2026-08-25T16:48:36.692Z asks what tools
+resident has, thinking the draft describes already-built behavior. Assistant
+had just claimed 31 tools require explicit channel/topic, proposing defaults
+and silence as a menu. Current definitions.py 905–947 says current-room
+defaults; dispatch.py 350–378 actually uses inp.get(stream/topic, ctx.*).
+This checks the user's suspicion: today's source contains the claimed missing
+default, and the captured assistant corrected itself by inspecting. It does not
+date when that default was added. A 'home' experience can emerge from concrete
+small semantics already present, rather than another grand residency wrapper.
+
+W12 — Research nexus is a positive independent direction; no outcome yet.
+Human exploration: claude:87b7d9e6-2734-449f-9765-1346d7ced550 #0,
+2026-07-28T03:42:58.996Z. Pasted OpenSolve promotion is an
+external marketing claim. Ember's own request asks infrastructure/demo/
+integration or a rebuild for its community, with distributed knowledge,
+guarded holes, partial turns/suspensions, LLM semantic proof/reasoning and
+possible voting/prediction coordination. Transcript reaches weekly limit and
+continuation request, with no substantive implementation response. Research
+should treat this as an open consumer, not claim a finished semantic web.
+
+W13 — The first shared activity wasn't chosen; continuity of breadth matters.
+Human response: codex:01a0b0ed-2f93-7a03-be0e-bb81bd250747 #761,
+2026-09-18T01:18:14.402287006Z. Unsure whether research, social/game or public
+compute; wants outward-growing programmable nexus, genuine token utility and
+self-operated nodes/cells. #525 at 00:45:49.309789896Z says none of earlier
+experiences felt closest to the wanted world; asks inspect actual state.
+Sept27 #27314 at 02:31:13.844634056Z corrects workroom retrospective missing
+SPK platform: grain APIs for agent sharing, human web projections, versions
+possibly published over fn. This is substantial existing application scope,
+not endorsement of an empty common object dashboard. Oct1 claude:0c315aee-
+e07a-499c-8bb4-fa36730510ca #4690 at 10:05:33.966Z hopes complete docuverse
+on13th and substantial deos; compute choices still open, wants ambitious,
+sophisticated, chic, reasonably scoped upcoming releases. Preserve a hope,
+a concrete goal source, and our recommendation as different statuses.
+
+WHAT SELECTED SOURCE ADDS (WITHOUT RUNNING IT)
+
+spweencraft is an especially good interaction donor: zwobot/crates/spweencraft/
+README.md describes authors posting scene code in registry chat streams and
+players making choices by numbered replies in per-topic sessions. src/lib.rs
+1–105 actually contains scene parse/registry and maps, with BotEffectHandler
+world values beginning at105. It is a source-level template for authoring
+through existing social media, not a durable authoritative multiplayer engine.
+
+Bread's actual the-commons.scene and the-drowned-library.scene were fully read.
+They contain collective branching and shared narrative stakes, but repeatedly
+make records/ownership/irrewriteability the moral of their stories. Their
+content is source material, not evidence Ember or players liked that lesson.
+A future world ought to offer an engaging fiction even when nobody wants a
+lecture about receipts. That is my design inference, not recovered taste.
+
+bw-exp1 station/social script excerpts offer another concrete palette: docking,
+services, hailing ships/NPCs, spatial distance, and squadron/alliance authority.
+They are plausibly part of the older engine lineage named in July25 #390.
+Read excerpts are not a working-engine certificate and not a mandate to import
+its state model. They broaden ideation beyond room prose/ballot alone.
+
+Allgame's current ChatBackend seam preserves platform-specific inbound loops
+while sharing outbound operations/history and resident internals. Its module
+rationale is an agent/source claim, but illustrates a useful counterexample to
+one universal UI or event protocol: semantic sharing can retain distinctive
+chat contexts and platform failures. Current tool defaults and the incomplete
+move path are independently visible code, with hashes in coverage.
+
+POSITIVE EXPERIENCE SKETCHES — PROPOSED, NOT HISTORICAL DECISIONS
+
+A. Author's universe. An author posts a small playable episode from ordinary
+chat or a scene editor. A group opens it in web/Discord, discusses choices,
+acts together, and sees the resulting place on return. They can propose a new
+passage, prop or rule; the author's chosen policy decides whether it becomes
+canon. A narrator can embellish and suggest without acquiring author/player
+permissions. A readable source/history view exists when needed. October13
+consumer: extend the existing Mini story into actual shared consequence and
+member-authored behavior, avoiding a second first-CYOA implementation.
+October26 direction: reusable episodes/rules/packages, coauthor drafts and
+review. November: richer recurring characters and declared cross-universe
+carry of accomplishments. No claim these dates were requested for every item.
+
+B. Recurring station. People return to a shared social place with familiar
+identities, their own projects/decorations, optional games, discussion and
+adventures. A dungeon outing changes something they can bring home together.
+Some rooms are simply for leisure or reading; a workshop can offer real tools
+and services without charging a fictional wrench as real money by accident.
+Governance concerns consequential shared edits, membership and resources.
+This is a proposed synthesis of W05/W06, not recovery of an approved station
+spec. Useful falsifier: if returning gives only a list of ledger operations,
+or all 'social' actions are work orders, the intended social place is absent.
+
+C. Living technical desk. A member has persistent windows for a document,
+source/method editor, inspector, history, terminal and shared app. They can
+open links/transclusions and act directly; context menus expose actual
+interfaces. An agent can follow the same references, inspect and propose an
+edit with bounded authority. The member keeps a private draft and sees what
+will be published. The pleasure is discovering things one can actually compose
+and making the instrument one's own. W02/W03 and Sept27 grain-web/API request
+support this; specific layout/icons are open design. October13 docuverse/deos
+work is the receiving home, with October26 deeper personal/shared instruments.
+
+D. Agent participation and research. A model returns to its ongoing room with
+appropriate recent context, retained source-linked memories, private working
+notes and actual tools. It may read with people, react, stay silent, make an
+artifact, inspect a computation, or take a bounded task. People can edit/move
+messages without stale ghosts controlling its next turn. A research question
+can link evidence, objections and open obligations; a reviewed proposal becomes
+an authorized change instead of a model assertion silently becoming fact.
+W09–W13 support useful continuity and research possibilities; silence-as-menu
+was the assistant's proposal in W11, not independently selected here. Shared
+Mini document/activity/authority contracts can support this without importing
+Allgame's whole process harness or calling an NPC equivalent to an autonomous
+model. November qualification can address stronger portability/continuity.
+
+NEXT QUESTIONS — ACTUAL OPEN WORK, NOT A NEW PERMISSION BARRIER
+
+1. Trace the earlier bw-exp/zwobot human game design and chreatures/ecology/
+FRP history, not only their code inventories. This pass only sampled them.
+2. Find real author/player feedback after July11 and playable Sunday: which
+activities were fun, what blocked participation, and which content survived?
+3. Read July28 semantic research successors and complete Sept docuverse/OO
+intent beyond selected prompts; map each to actual Mini receiving paths.
+4. Trace agent home's chosen authority/exit/recovery/self-edit contracts across
+svenvs/Polis and Allgame without equating social continuity with confinement.
+5. Distinguish fiction permissions, collective governance, ordinary conversation,
+private draft, and service/payment law in one real composed experience.
+6. When adopting activity/context rules, test moved/edit/reply races and history
+retention; do not assume logs or append-only records alone give correct views.
+
+Coverage is explicit in the JSON. Existing corpus extraction remains private at
+original workbox paths. This checkpoint changes the map, not the past.

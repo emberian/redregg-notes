@@ -1,0 +1,78 @@
+CONSOLIDATED EXTRACTION / READ / DEDUP / GAP MAP — October 3, 2026
+Owner: Codex redregg_evidence. Scope: evidence infrastructure, not another claim
+that all project history has been interpreted.
+
+Unit                                  May–June   July–August   September–October
+Catalog rows discovered                  888        2787             1182
+Distinct session keys                    887        2787             1182
+Prompt extraction successes              888        2787              277
+Relevant selection                   403 sessions 5977 body groups 21 core+15 adjacent
+Declared reading                    350 groups*   121 full groups** 508 core turns***
+Saved/read context windows                23          10           selected only
+
+* May–June 350 = body OR excerpt reviewed, not 350 complete bodies. Its 6094
+  timestamp+exact-text groups collapse to 4506 trimmed text bodies (4507 raw).
+  The 14736 dated relevant rows are inherited/extractor rows, not human turns.
+** July–August 121 = conservative full-body group set. 3583 equal-text rows are
+  content coverage by repeated bodies, not separately-read authors/context.
+  5856 domain groups remain outside that full-read set. Raw window rows 49342
+  and 7562 all-cwd exact bodies use a different relevance unit from May.
+*** September–October 508 = historical authorship-audited core turn definition;
+  short framing read, long pasted bodies scoped. Reproduced 508 candidate rows
+  after explicit exclusions/duplicates, but did not independently re-audit 508
+  origins or read all neighboring exchanges. 905 Codex subagents were classified
+  from metadata and intentionally not prompt-extracted.
+
+DO NOT ADD THESE READ TOTALS. They differ in unit, scope, authorship and depth.
+The catalog union is 4810 distinct harness:session keys; 46 keys overlap period
+inventories. This union is extraction custody, not 4810 human conversations read.
+Pairwise exact-body recurrences among differently selected period sets:
+ May–June / July–August 16; May–June / Sept–Oct 4; July–August / Sept–Oct 6.
+These are navigation matches only. Even equal exact bodies at different dates
+might be a repeated human request, ancestor copy, task brief or nested paste.
+No cross-period independent-intent count is asserted.
+
+Current source availability (metadata only): 888/888 May raw paths, 2787/2787
+July raw paths and 1182/1182 Sept raw paths exist. 888 declared/derived May,
+2787 July and 277 Sept extraction files exist. May extraction directory has 892
+files, including extras beyond the original 888 rows; do not treat directory file
+count as source count. Source identity is harness+ID, not title/path alone.
+New metadata is coverage/consolidated.json and coverage/session-overlap.json.
+
+Preserved limitations and useful next questions
+1. Pre-May roots: report has selected February and adjacent svenvs leads, not a
+   systematic origin reconstruction. Earlier account exports are available by
+   metadata discovery, but were not registered in cv or interpreted by this task.
+2. July 5889 indexed-only hits (5888 Claude agent sessions, 1 Grok subagent) have
+   moved/null source paths in the historical search. Live catalog custody exists
+   for inventoried sources; this does not make missing index-only sources exist.
+   Search cap 10000 and unsynced/remote/deleted histories remain unknown.
+3. Untimestamped rows: May 60 and July 14 are distinct report units; no confidently
+   dated union made. Keep them discoverable rather than assigning guessed dates.
+4. Authorship: human-facing extraction includes notifications and delegated
+   briefs. Example E005 demonstrates the category error. May/July do not claim
+   total human-origin audit; Sept applied a stricter selected definition.
+5. Semantic reading: giant nested pastes (including July 608897-character
+   Constitution) were not interpreted wholesale. More extraction cannot repair
+   missed corrections; source windows around design junctions matter most.
+6. Implementation continuity: recovered desire → attempted design → source
+   revision → captured receiving → integrated consumers → deployed use still
+   needs explicit tracing. The Docuverse artifact E006 is a concrete lane-to-join
+   gap, not a reason to dismiss useful completed lane code or declare broad green.
+7. Later cancellation: don't turn a rejected metaphor into abandoned capability,
+   nor turn a exploratory game/crypto proposal into a timeless deadline. Trace
+   subsequent explicit corrections. October 13 conditions versus later ambition
+   are separated in OCT13-OBJECTIVE-RECOVERY and need source-level comparison.
+8. Catalog snapshot was about 07:04Z October 3. New current root turns after it
+   require separate provenance, not silent modification of immutable coverage.
+
+Second-pass evidence task reading budget actually spent
+- Parsed three coverage artifacts and inventories for shape/counts/paths only.
+- Inspected selected corpus structures and derived exact-body intersections.
+- Four saved bounded June/May text windows: human focal text fully read; selected
+  assistant text/excerpts only, tools/thinking not exhaustively read.
+- Independently retrieved live cv around May 1434, June 899 and June 4, context 1.
+- Read Docuverse report source/artifact/evidence section and all 69 result metadata
+  records. No native rerun, no binary/source proof verification.
+- Did not read every extracted prompt, register account exports, inspect secrets,
+  edit source, build, deploy or claim present integration status.
