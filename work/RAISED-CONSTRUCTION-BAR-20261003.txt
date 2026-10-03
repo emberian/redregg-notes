@@ -1,0 +1,92 @@
+RAISED CONSTRUCTION BAR — October 3, 2026
+Root decision following Ember's request to identify early cuts/raise ambition,
+explicit request for mechanized correctness and other properties, and permission
+to upgrade Mini Lean. This extends existing construction, not a new scope ceiling.
+
+WHAT IS STILL AN EARLY CUT
+Current source WorldKindMethods binds method outputs to numeric non-ROM addresses;
+its actionWrite rejects bytes/read/erase. Separate typed content/append/definition
+adapters exist but do not make a general authored Plan. Current instance-call
+has restricted samples/no ordinary method arguments (docuverse owner's audit).
+Prototype constructor consumes authenticated parent definitions and exact target
+revision; actual self/super bundles exist. But this is not yet first-class
+partial-specification composition with required/provided interfaces, persistent
+behavior ancestry, source authoring, fresh heterogeneous birth and governed
+migration all available to ordinary members. Browser object faces are inspectors.
+
+Bend exact source+audits+reference live evaluator now pass4.30 (owner report).
+Fixedcase circuit/BFV is a useful compiler/backend seam, not arbitrary/stateful
+world programming or malicious multiuser private execution. Full backend protocols,
+private returns, native price law and global consensus proofs remain real work.
+
+PRIMARY CONSTRUCTION OBJECTIVE
+Ordinary members author a reusable community workshop from independently reusable
+partial specifications for catalog, review, allocation and presentation. Another
+member composes them, supplies requirements, overrides through finalself, extends
+through super, creates fresh instances, adds a view without editing originalsource,
+and governs a revision with exact migration/history. It consumes documents,
+actual resource rights, private results and a continuing resident coauthor.
+This is one demanding consumer of general tools that also serve authored worlds,
+research workdesks, markets and resident tools; none of those ambitions disappears.
+
+CAPABILITY / OWNER
+- Partial specifications as data: requirements/provisions/directparents/source;
+  deterministic composition/linearization, finalself+super and focused extension;
+  fresh instance creation and governed evolution: member_oo_construction.
+- Source packages/imports/parser transcript/checkedBook publication and resolution,
+  one typed Invocation/Plan/Result lowering actual native Payloads, ordered edits,
+  creation/deletion/messages, independent private returns and real fixed-capacity
+  private charging: bend_world_language, with kernel/OO/private peers.
+- Source-authored authorized views+intents; source edit/diagnose/preview/publish/
+  instantiate/evolve; shared canonical reference resolver; browser resident ask/
+  proposal/approval and structured doc mounting: docuverse_deos_construction.
+- Actual reusable domain modules and second-member extension: resumed
+  dreggnet_collective_fiction as authored-workshop constructor. No separate kernel,
+  parallel authority database, fake backend, or static demo as completion.
+- Continuing resident: takeover_service, using actual retained request/dispatch/
+  continuation/custody, source-context revision dependencies and current release.
+- Global consensus safety: resumed astra_adversarial_architecture paired with
+  astra_consensus_frontier actual executable event system and joint receiver.
+- General zkVM: resumed bend_semantics_audit, full bounded machine trace, real
+  backend and actual source statement/proof receiving. Specialization remains
+  bend_logic_compilation; FHE physical interpreter remains homomorphic builder.
+- Cross-construction proof obligations: resumed graded_execution_architecture,
+  mapping exact implementation/spec/theorem/assumptions/native consumer. Proof
+  work is assigned to builders; a report is not completion of those proofs.
+
+MECHANIZED CORRECTNESS IS PART OF CONSTRUCTION
+Prove general laws about actual functions and their callers: composition identity/
+associativity under the chosen interfaces; deterministic legal linearization and
+once-only ancestry; finalself/super dispatch/source closure; initialization and
+migration preservation; exact typed Plan lowering/authority/atomic effects and
+replay; source→machine→circuit/backend refinement; numeric/range/resource laws;
+reachable-event consensus safety with stated corruption/network assumptions;
+crash recovery and private scheduling/disclosure properties under exact models.
+Global consensus consistency does not follow solely from quorum intersection or
+from joint-decision proofs assuming already-finalized facts. Dedicated owner now
+closes that actual join. Cryptographic assumptions and physical implementation
+refinement must remain explicit. Tests/logs validate runtime boundaries; theorem
+about abstract oracle does not qualify concrete crypto/OS/transport automatically.
+
+FAREOO / BEND SEMANTIC JOIN
+Root reread FAREOO §§1–4 and current OO source. Arbitrary Y/lazy initialization is
+not silently available in terminating live-CBV BendTT; Q2 copies Data, not arbitrary
+closures. Use first-class specification data, per-call affine closures, explicit
+required/provided types, and a faithful typed/guarded/bounded construction model.
+Discharge completion requirements at instantiation. Preserve actual distinction
+between behavioral composition and authority/restriction composition. Decide and
+prove the supported semantics; do not merely import a law inheritance graph and
+call it full OO or discard open recursion to make a theorem easy.
+
+EXECUTION POLICY
+Finish frozen common native receiving; new construction proceeds in isolated
+sources beside it. Owners retain integration/repair responsibility through actual
+use. Minimize per-feature compilers/adapters by shared typed contracts. No new
+research wave or universal plugin registry needed before implementing these joins.
+Parent-count increases or more fixtures are not the meaningful raised bar.
+
+LEAN AUTHORIZATION
+Ember explicitly permits Mini toolchain upgrade. Keep current passing candidate
+while it finishes C/link; next version chosen by source/dependency/runtime merits.
+Current source adaptation was two proof rewrites only. Do not grow compatibility
+scaffolding merely to preserve4.30; no permission barrier to coherent upgrade.

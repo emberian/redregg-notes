@@ -244,3 +244,15 @@ not merely send_message, to wake completed/idle owner. Captain told this for OO,
 docuverse, service. Same immutableartifact manifest to allreceivers, current
 INTEGRATION row updates on phasechanges. No new tracker hierarchy needed.
 Lifecycleaudit /Users/ember/dev/redregg/work/SWARM-LIFECYCLE-REVIEW-20261003.txt.
+
+LATEST HUMAN STEERING: raise early-cut capability bar, mechanize correctness and
+other relevant properties, Mini Lean may be upgraded. Read entire
+work/RAISED-CONSTRUCTION-BAR-20261003.txt. Added actual workshop consumer owner
+(resumed dreggnet_collective_fiction), globalconsensusproof owner (resumed
+astra_adversarial_architecture), proof-contract owner (graded_execution_architecture).
+OO/worldlanguage/docuverse now own fullmember-authoredStudio/generaltypedPlan/
+sourceauthoredinterfaces objectives beyond current firstnativecandidate.
+Actual newer progress: common548/548Lean PASS, C/link ongoing; GitHubtip17d2ea28
+reportedverified captain. Bend source7audits+liveexecutor11checks PASS4.30, tiny
+proofsyntaxonlycompat. Logiccompiler nowhas seat; FHE releasebuildPASS23s, actual
+artifact executionpending. Agreement Rusthelper4/4PASS, Leanengine pending.
