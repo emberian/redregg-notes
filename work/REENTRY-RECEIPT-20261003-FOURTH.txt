@@ -1,0 +1,30 @@
+Root re-entry, October 3, 2026, about 10:10 UTC
+
+Ember requested lighter cv recovery: primarily human messages and selected
+important assistant replies. Read actual root dialogue [11050,11450), including
+Persvati, Preoscript, self-contained documentation and frequent main commits.
+Earlier dialogue is present in the conversation and prior reading receipts; it
+was not freshly replayed in this window. No whole-history comprehension claim.
+
+Read REENTRY and manifest; all eight named core records in full. Combined output
+truncation was repaired with Oct13 lines285–331 and BigDregg lines1–300. Read local
+redregg AGENTS. Lifecycle report was partial and dated, not current status proof.
+Live agent inventory and direct reports checked. Current source inbox inspected:
+23 rows from18 owners; hbox main7d501177 at that observation, push not yet verified.
+No builds restarted, no new agents spawned, no route semantics redesigned.
+
+New human policy: publish authored swarm source to main frequently, including
+uncompiled work; record qualification separately. No source silos or testing gate
+before ordinary commits/pushes. Captain owns common Git/reconciliation; room owns
+packet-to-commit accounting and live dependency census. Owners keep repair duty.
+
+Root discovered redregg checkpoint2eb2473 and newly public redregg-notes remote.
+Ember explicitly requested private visibility; gh repo edit succeeded and
+gh repo view confirmed PRIVATE. Do not misreport this as a root-authored checkpoint
+or a discovered credential leak. Personal conversation-derived notes remain private.
+
+Current actions: finish source publication; reduce stalled handoffs; use existing
+owners and warm Persvati jobs. OO explicitly owns native instance/CallContext;
+world owns common invocation/funding/release. Evidence placement turn finished
+after portable5/5, IR2 compile, dZK5/5; wake only for concrete runnable next work.
+Broader active Objective Bend/worldhost/privacy/agreement destination unchanged.

@@ -347,3 +347,21 @@ commands/navigation. CoordinatesPreoscriptAstra forgrounding, noassumedmerger.
 PersvatiIR2 warmharness compilePASSafterrealE0282repair, no proofexecutionyet;
 slot1 waitsactualLeanfixture, slot2queuedreal dZK sourcefreeze. Ownerreports+pins
 in redregg_evidence; no furtherrootapprovalfornormalboundedrepair loops.
+
+LATEST HUMAN POLICY / FOURTH REENTRY ~10:10UTC
+Ember requests whole swarm committed and frequent main/GitHub publication even
+before qualification. SOURCE PUBLICATION IS NOT A TEST GATE. Captain owns common
+Git, coordinator owns all-owner packet→commit/push reconciliation; WIP status
+explicit. Do not grow forgotten branches or withhold authored source in snapshots.
+Build isolation remains useful; exact passing binaries stay separately pinned.
+Current human asks light cv (mostly their messages plus important root replies),
+assess ~31 agents for useful enabled work/convergence and faster iteration.
+No new agents needed now. Three joins: world Package/typed input/funded receiver;
+joint receiver/replay/profile shared cohort; packet reconciliation/artifact handoff.
+OO owns native instance carrier, world shared invocation ABI. Waiting-only turns
+may end with exact producer-triggered resume; capability responsibility persists.
+Persvati portable5/5+release and dZK5/5 PASS; IR2 compile PASS, proof fixture still
+pending. Placement slots free/warm; no reason for placement owner to poll.
+redregg checkpoint2eb2473 was already present. Its newly public remote was made
+PRIVATE on Ember's explicit request, verified via GitHub. Fresh receipt records
+actual reading limits. No credential discovery or complete secret scan claimed.
