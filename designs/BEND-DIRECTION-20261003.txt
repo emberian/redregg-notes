@@ -9,6 +9,26 @@ zkVM execution, and recompile-from-logic/arithmetization through existing Mini
 and Bread machinery, specializing fixed Bend computations to reusable circuits.
 This is a primary authored world language, not merely an optional backend.
 
+LATEST LANGUAGE AUTHORITY — October 3, 2026, around 12:37 UTC
+Ember: "we don't need to preserve bend's type system precisely. we are building
+Objective Bend as its own language. that Bend is the calculus of."
+
+Objective Bend has its own language design. Bend supplies a starting calculus,
+not an immutable ceiling on types, quantities, recursion or representation.
+Design the intended modularity, effects and persistent computation first; use
+faithful embeddings where appropriate and change the core where required.
+Data-only reusable captures, acyclic linking and total within-turn evaluation
+are properties of the current embedding, not requirements imposed by Ember.
+A changed calculus needs explicit semantics, typing and new metatheory. Do not
+inherit Bend's consistency or termination results for constructs they do not
+cover. General recursive computation must not silently become evidence for
+arbitrary logical propositions. Preserve historical executable meaning through
+versioned profiles; that does not freeze the new language.
+
+The Fable council is an active design conversation, not an approval oracle.
+Root owns the choice and the correspondence between intended semantics,
+implementation, proofs and actual member-authored consumers.
+
 SOURCE PIN AND INITIAL READ
 Root cloned https://github.com/bendlang/bend.git to /Users/ember/dev/bend.
 Initial pin HEAD947db722640c86247849343657bf2f7ef01cb7f1. Original upstream
@@ -16,8 +36,10 @@ reference is retained; Ember explicitly authorized forking/changing Bend on Oct3
 ~11:28UTC for concrete efficiency. The earlier untouched-vendor restriction is
 superseded. Version changed semantics/representations and connect actual runtime
 to its intended semantics through refinement; upstream implementation is not sacred.
-AGENTS says bend.ts human-written and not to edit; kernel uses Lean4.34.0 while
-current Mini uses4.30.0. No silent whole-project toolchain migration.
+The original upstream AGENTS marks bend.ts human-written. Ember's explicit
+permission to fork and change Bend takes precedence for our fork. The original
+pin remains a reference artifact. Upstream requested Lean 4.34.0 while the initial
+Mini adaptation used 4.30.0; Ember also permits a coherent toolchain upgrade.
 Exact file is a dependent affine calculus with Q0/Q1/Q2 quantities, a Book of
 definitions, case-tree calls and separate typing/live checks. It is not safe to
 substitute assumptions about older Bend/HVM/interaction-net implementations.
@@ -78,6 +100,7 @@ per-invocation closures are a construction hypothesis; do not declare complete
 expressiveness merely because that representation works for small examples.
 Persistent reactive lifetime is not silently one total infinite Bend invocation.
 If explicit source state machines cannot faithfully provide desired lazy/reactive
-semantics, identify the needed extension and prove it. Preserve current receiving
+semantics, build the necessary language/core extension and establish its properties.
+Do not redefine the desired language to match the current checker. Preserve current receiving
 and source checkpoints while developing the fuller language. All relevant owners
 were explicitly informed; this direction survives compaction.
