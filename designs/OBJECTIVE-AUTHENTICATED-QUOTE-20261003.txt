@@ -1,0 +1,102 @@
+Objective invocation quotation and final admission — 2026-10-03 19:02 UTC
+Root decision grounded in actual NativeInput, NativeObservationController,
+NativeHost, NativeClientConsent and RunComputeBudgetDomain definitions.
+
+Problem
+The old native gate selected every final command target except source/funding as
+program input. Effects are produced by executing the program, so this both makes
+input depend on output and prevents a caller from authoring the final command
+before obtaining reads signed over that command. Unsigned preparation is not a
+Checked read. Source evidence and output-only destinations are not automatic inputs.
+
+Construction
+Use independent signed NativeObservation queries over ONE locally Verified
+current image. Each request explicitly names ordered resource kind, identity,
+root and capability. Check current challenge, footprint, subject signature and
+grant/law via the actual authorize path. CheckedGrant.preparation/checked can
+supply NativeInput.admitRead; do not fabricate final-command Read tokens.
+Source package/artifact full-scope observation is separate from program input.
+
+QuoteRequest locally retains original subject, nonce, exact sourceRef/sourceAtom,
+arguments, ordered inputRefs, selected capacity and codec, independently chosen
+output destinations/operation capabilities/audience, and funding input. It does
+not accept a remote finalCommand, claimed output or expectedInput as its meaning.
+The actual source/current observations execute through SAME DemandData and generic
+Plan adapter. Derived retains original request correspondence and actual draft.
+
+Claimv2 includes ordered InputRef(kind,resource,root,capability) and expectedInput.
+The commitment domain is DREGG.OBJECTIVE-BEND.AUTHENTICATED-INPUT/v1 over complete
+NativeInput.encode(subject,nonce,args,ordered observations). Encoding does not
+include Claim, so it is non-self-referential. Duplicate resource refs refuse.
+Final gate resolves refs against independently signed query grants on the current
+image, rechecks current authority and reproduces exact input bytes/digest. Input
+resources need not be final mutation targets; output-only targets remain out.
+Kind/capability/source pins retain their explicit authority meaning. Resource root
+alone cannot bind an observation when the read scope or account state changes.
+
+Fee-first account semantics
+NativeInput.observe uses RunComputeBudgetDomain.Prepared.budget.book.post for
+account balances. Quote and final admission must use the SAME actual preparation
+from current pay/book/clock/subject/steps and selected funding input. Neither raw
+pre-fee balance nor a caller-written accounting object substitutes. Final gate
+rechecks all current mutation grants, funds and exact effects; quotation does not
+reserve authority, spend funds or imply successful installation.
+
+Client custody
+Core227 consumes locally retained request/signed observation bundle, reconstructs
+quote and derived draft on its Verified source, and calls actual full-plan consent
+comparison. It returns only derived signing headers bound to intended current key
+and role. Rust never lets an operator-authored prepare redefine original intent.
+Until actual producer/core branch qualifies, 227 remains refusing. Retain request,
+selected source and exact pending call through lost replies; no automatic new nonce.
+
+Owners / current evidence
+native_performance_construction: additive quote/request codec and actual callable
+  producer; local execution-to-Draft correspondence, coordinate output role mapping.
+bend_world_language: native final gate/source package/current law/funding checks.
+graded_execution_architecture: Claimv2 codec; reports paired Lean/C PASS r60,
+  source6b9d8499; precise qualified files delivered to World and quote producer.
+client_consent_construction: actual Core227 and original client request custody.
+docuverse_deos_construction: Studio source/publication/invoke/readback use.
+scenario_objective_world: actual general Notebook content/message/result consumer.
+takeover_kernel: common source publication and coherent bounded native build.
+root: cross-boundary decisions/review, receiving callbacks and obligation ownership.
+
+Receiving bar
+Studio save/publish exact source, invoke from original request/current input,
+original signatures, native atomic effects and structured result, reopen/use,
+recover exact lost-reply result without double effects/charge. Include changed
+scope with unchanged target root, altered source/argument/input order/kind/grant,
+output injection, stale funding and current-law refusals. Existing component green
+is not native Accepted, and an unsigned Plan is not an installed effect.
+
+Source/core correspondence on imports as well as publication
+Root read ArtifactSource, PublishedPackage and SourceArtifact whole after this
+write. Native loading establishes live immutable canonical package and typed core,
+not general frontend adequacy or full source-to-core equality. An arbitrary
+publisher can store a package naming benign source alongside another well-typed
+core unless the importing/invoking signer regenerates and compares exact selected
+core. Reuse Doc's pinned frontend replay and wrong-core/wrong-package refusers on
+existing-source import/invoke, not just Studio publish. Bind original request to
+artifact only after that comparison; no operator-provided success label. This is
+an explicit trusted frontend boundary until its adequacy theorem exists.
+
+General observation carrier decision — 19:08 UTC
+World/scenario found actual Command.Payload.read hardcoded to content, while
+NativeObservationController supports declared objects/accounts/programs too.
+Choose canonical independent signed resourceScope query envelopes inside the
+signed Objective Claim/Statement. Do not use scalar[] no-op mutation to pretend
+read permission or expand the whole Payload enum merely to carry observations.
+Controller authenticates each original query on SAME current durable/context,
+checks exact subject/nonce/kind/resource/root/capability, query-only footprint and
+unique ordered refs, then consumes actual CheckedGrant through admitRead. Full
+final command signatures precede expensive source execution. Query signatures
+are bound as bytes by final caller signature; no unsigned grant fabrication.
+
+CAS must cover each consumed input resource and every governing authority/policy/
+clock/account Book dependency used by those checks, unless exact expected-pre
+writes already cover them. Exact input commitment does not itself provide CAS
+protection. World owns actual guard construction/composition; graded owns codec,
+performance quote, consent227 and Doc caller. Root actual import read found
+NativeObservationController has no DeclaredResourceController import, allowing
+reuse of lower current authorization without a second policy interpreter.
