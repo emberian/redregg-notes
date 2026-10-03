@@ -1,0 +1,490 @@
+{
+  "utc": "2026-10-03T17:30:26.539124+00:00",
+  "scope": "Source import graph of direct edges into composition-listed old semantic modules at common main694c plus concurrent WIP. Not semantic audit or automatic deletion authorization.",
+  "destination": "Objective sole active language, preserve backend and persistent/product capabilities. BendTT bounded interpreter discussed as possible target, no construction pivot.",
+  "rows": [
+    {
+      "consumer": "BendQualification",
+      "oldDependencies": [
+        "Assurance.BendObliviousControllerChecks",
+        "Assurance.BendObliviousExecutionChecks",
+        "Assurance.BendObliviousSourceJoin"
+      ],
+      "owner": "takeover_kernel",
+      "action": "Regenerate explicit build/import roots after scoped replacements; do not claim generic historical checks prove Objective.",
+      "state": "open"
+    },
+    {
+      "consumer": "ResearchWip",
+      "oldDependencies": [
+        "Assurance.BendObliviousAdministrativeChecks",
+        "Assurance.BendObliviousInputChecks",
+        "Assurance.BendObliviousMinimal",
+        "Assurance.BendObliviousRollbackWitness",
+        "Compiler.BendClosureCompileIndexed",
+        "Compiler.BendClosureInitialize",
+        "Compiler.BendClosureInput",
+        "Compiler.BendObliviousCodecRefinement",
+        "Compiler.BendObliviousExecutionIndexed",
+        "Compiler.BendObliviousInput",
+        "Compiler.BendObliviousRollbackSemantics",
+        "Compiler.BendObliviousStateSemantics",
+        "Theory.BendClosureApplicationLeaf",
+        "Theory.BendClosureCallSpine",
+        "Theory.BendClosureClassifierExit",
+        "Theory.BendClosureCodeCases",
+        "Theory.BendClosureDeadFunction",
+        "Theory.BendClosureDeadSteps",
+        "Theory.BendClosureInitialCoverage",
+        "Theory.BendClosureKnownArgument",
+        "Theory.BendClosureMatchingSteps",
+        "Theory.BendClosurePendingCall",
+        "Theory.BendClosureProjectionSteps",
+        "Theory.BendClosureReachability",
+        "Theory.BendClosureReadiness",
+        "Theory.BendClosureReadyAdministrative",
+        "Theory.BendClosureReadyApply",
+        "Theory.BendClosureReadyApplyOutcome",
+        "Theory.BendClosureReadyCapture",
+        "Theory.BendClosureReadyClassifier",
+        "Theory.BendClosureReadyClassifierOutcome",
+        "Theory.BendClosureReadyCompound",
+        "Theory.BendClosureReadyEvaluateOutcome",
+        "Theory.BendClosureReadyEvaluation",
+        "Theory.BendClosureReadyLabels",
+        "Theory.BendClosureReadyLeaf",
+        "Theory.BendClosureReadyLookup",
+        "Theory.BendClosureReadyMatching",
+        "Theory.BendClosureReadyNamedCall",
+        "Theory.BendClosureReadyOutcome",
+        "Theory.BendClosureReadyReturn",
+        "Theory.BendClosureReadyReturnAlloc",
+        "Theory.BendClosureReadyReturnOutcome",
+        "Theory.BendClosureReadyRewrite",
+        "Theory.BendClosureReadySpine",
+        "Theory.BendClosureReadyUnspineOutcome",
+        "Theory.BendClosureReadyWalk",
+        "Theory.BendClosureReadyWalkArgument",
+        "Theory.BendClosureRefusalPrefix",
+        "Theory.BendClosureResponseReady",
+        "Theory.BendClosureResponseTyping",
+        "Theory.BendClosureRetainedCaptures",
+        "Theory.BendClosureRetainedFrames",
+        "Theory.BendClosureRetainedReady",
+        "Theory.BendClosureRetainedReturns",
+        "Theory.BendClosureRetainedTransitions",
+        "Theory.BendClosureReturnFrames",
+        "Theory.BendClosureRollback",
+        "Theory.BendClosureStartup",
+        "Theory.BendClosureUnderapplication",
+        "Theory.BendClosureVariableSteps",
+        "Theory.BendClosureWalkArgument",
+        "Theory.BendClosureWalkCodeCases",
+        "Theory.BendClosureWalkMatching",
+        "Theory.BendClosureWalkNodes"
+      ],
+      "owner": "takeover_kernel",
+      "action": "Regenerate explicit build/import roots after scoped replacements; do not claim generic historical checks prove Objective.",
+      "state": "open"
+    },
+    {
+      "consumer": "Verify.BendObliviousProbe",
+      "oldDependencies": [
+        "Assurance.BendObliviousFixtures"
+      ],
+      "owner": "root",
+      "action": "Classify old fixture/proof/authoring consumer with source owner before removal; useful product semantics require replacement, historical test claims may retire.",
+      "state": "open"
+    },
+    {
+      "consumer": "Verify.BendMinimalCensus",
+      "oldDependencies": [
+        "Assurance.BendObliviousMinimal"
+      ],
+      "owner": "root",
+      "action": "Classify old fixture/proof/authoring consumer with source owner before removal; useful product semantics require replacement, historical test claims may retire.",
+      "state": "open"
+    },
+    {
+      "consumer": "Compiler.BendLogicPreludeMux",
+      "oldDependencies": [
+        "Theory.BendLiveMachine"
+      ],
+      "owner": "bend_logic_compilation",
+      "action": "Retain generic arithmetic/circuit machinery; replace exact source binding with Objective. Coordinate FHE positive consumer.",
+      "state": "open"
+    },
+    {
+      "consumer": "Compiler.BendPlanLowering",
+      "oldDependencies": [
+        "Theory.BendLiveMachine"
+      ],
+      "owner": "bend_world_language",
+      "action": "Replace old link-time/TT source admission with actual Objective source/type/current-input/Plan path; coordinate existing OO source consumers.",
+      "state": "open"
+    },
+    {
+      "consumer": "Compiler.ObjectiveBendConstruction",
+      "oldDependencies": [
+        "Theory.BendLiveMachine"
+      ],
+      "owner": "bend_world_language",
+      "action": "Replace old link-time/TT source admission with actual Objective source/type/current-input/Plan path; coordinate existing OO source consumers.",
+      "state": "open"
+    },
+    {
+      "consumer": "Compiler.BendLogicTrace",
+      "oldDependencies": [
+        "Theory.BendLiveMachine"
+      ],
+      "owner": "bend_logic_compilation",
+      "action": "Retain generic arithmetic/circuit machinery; replace exact source binding with Objective. Coordinate FHE positive consumer.",
+      "state": "open"
+    },
+    {
+      "consumer": "Compiler.BendActivityYield",
+      "oldDependencies": [
+        "Theory.BendClosureDecode",
+        "Theory.BendClosureMachine"
+      ],
+      "owner": "graded_execution_architecture",
+      "action": "Replace actual continuation/response/source-CAS consumer with Objective DemandMachine state and exact resumable custody; preserve capability.",
+      "state": "open"
+    },
+    {
+      "consumer": "Compiler.BendActivityProgram",
+      "oldDependencies": [
+        "Compiler.BendClosureCompile",
+        "Compiler.BendClosureContinuationCodec"
+      ],
+      "owner": "graded_execution_architecture",
+      "action": "Replace actual continuation/response/source-CAS consumer with Objective DemandMachine state and exact resumable custody; preserve capability.",
+      "state": "open"
+    },
+    {
+      "consumer": "Compiler.BendInvocationAdmission",
+      "oldDependencies": [
+        "Theory.BendLiveMachine"
+      ],
+      "owner": "bend_world_language",
+      "action": "Replace old link-time/TT source admission with actual Objective source/type/current-input/Plan path; coordinate existing OO source consumers.",
+      "state": "open"
+    },
+    {
+      "consumer": "Compiler.BendCoreAdmission",
+      "oldDependencies": [
+        "Theory.BendTTSource"
+      ],
+      "owner": "bend_world_language",
+      "action": "Replace old link-time/TT source admission with actual Objective source/type/current-input/Plan path; coordinate existing OO source consumers.",
+      "state": "open"
+    },
+    {
+      "consumer": "Compiler.BendActivityOrigin",
+      "oldDependencies": [
+        "Compiler.BendClosureContinuationCodec",
+        "Theory.BendClosureResponse"
+      ],
+      "owner": "graded_execution_architecture",
+      "action": "Replace actual continuation/response/source-CAS consumer with Objective DemandMachine state and exact resumable custody; preserve capability.",
+      "state": "open"
+    },
+    {
+      "consumer": "Compiler.BendActivityResponseBinding",
+      "oldDependencies": [
+        "Theory.BendClosureResponseReady",
+        "Theory.BendClosureResponseTyping"
+      ],
+      "owner": "graded_execution_architecture",
+      "action": "Replace actual continuation/response/source-CAS consumer with Objective DemandMachine state and exact resumable custody; preserve capability.",
+      "state": "open"
+    },
+    {
+      "consumer": "Compiler.ObjectiveBendComposition",
+      "oldDependencies": [
+        "Theory.BendTTSource"
+      ],
+      "owner": "bend_world_language",
+      "action": "Replace old link-time/TT source admission with actual Objective source/type/current-input/Plan path; coordinate existing OO source consumers.",
+      "state": "open"
+    },
+    {
+      "consumer": "Compiler.BendIndexedExecutionContext",
+      "oldDependencies": [
+        "Compiler.BendClosureCompileIndexed",
+        "Compiler.BendClosureContinuationCodec"
+      ],
+      "owner": "graded_execution_architecture",
+      "action": "Replace actual continuation/response/source-CAS consumer with Objective DemandMachine state and exact resumable custody; preserve capability.",
+      "state": "open"
+    },
+    {
+      "consumer": "Compiler.BendRunCore",
+      "oldDependencies": [
+        "Theory.BendLiveMachine"
+      ],
+      "owner": "bend_logic_compilation",
+      "action": "Retain generic arithmetic/circuit machinery; replace exact source binding with Objective. Coordinate FHE positive consumer.",
+      "state": "open"
+    },
+    {
+      "consumer": "Compiler.BendLogicSpecialization",
+      "oldDependencies": [
+        "Theory.BendTTSource"
+      ],
+      "owner": "bend_logic_compilation",
+      "action": "Retain generic arithmetic/circuit machinery; replace exact source binding with Objective. Coordinate FHE positive consumer.",
+      "state": "open"
+    },
+    {
+      "consumer": "Compiler.BendActivityYieldSource",
+      "oldDependencies": [
+        "Theory.BendClosureResponse"
+      ],
+      "owner": "graded_execution_architecture",
+      "action": "Replace actual continuation/response/source-CAS consumer with Objective DemandMachine state and exact resumable custody; preserve capability.",
+      "state": "open"
+    },
+    {
+      "consumer": "Compiler.WorkshopCardReturn",
+      "oldDependencies": [
+        "Theory.BendLiveMachine"
+      ],
+      "owner": "root",
+      "action": "Classify old fixture/proof/authoring consumer with source owner before removal; useful product semantics require replacement, historical test claims may retire.",
+      "state": "open"
+    },
+    {
+      "consumer": "Compiler.BendSurfaceLowering",
+      "oldDependencies": [
+        "Theory.BendLiveMachine"
+      ],
+      "owner": "docuverse_deos_construction",
+      "action": "Replace active Surface consumer through checked Objective extraction; preserve actual Studio histories and typed output.",
+      "state": "open"
+    },
+    {
+      "consumer": "Compiler.BendLogicPreludeCase",
+      "oldDependencies": [
+        "Theory.BendLiveMachine"
+      ],
+      "owner": "bend_logic_compilation",
+      "action": "Retain generic arithmetic/circuit machinery; replace exact source binding with Objective. Coordinate FHE positive consumer.",
+      "state": "open"
+    },
+    {
+      "consumer": "Compiler.BendActivitySegment",
+      "oldDependencies": [
+        "Theory.BendClosureDecode",
+        "Theory.BendClosureDenotation",
+        "Theory.BendClosureReification",
+        "Theory.BendClosureResponse"
+      ],
+      "owner": "graded_execution_architecture",
+      "action": "Replace actual continuation/response/source-CAS consumer with Objective DemandMachine state and exact resumable custody; preserve capability.",
+      "state": "open"
+    },
+    {
+      "consumer": "Kernel.BendActivity",
+      "oldDependencies": [
+        "Compiler.BendClosureContinuationCodec",
+        "Theory.BendClosureResponse"
+      ],
+      "owner": "graded_execution_architecture",
+      "action": "Replace actual continuation/response/source-CAS consumer with Objective DemandMachine state and exact resumable custody; preserve capability.",
+      "state": "open"
+    },
+    {
+      "consumer": "Theory.BendBookIndex",
+      "oldDependencies": [
+        "Theory.BendTTSource"
+      ],
+      "owner": "root",
+      "action": "Classify old fixture/proof/authoring consumer with source owner before removal; useful product semantics require replacement, historical test claims may retire.",
+      "state": "open"
+    },
+    {
+      "consumer": "Theory.BendBookTransport",
+      "oldDependencies": [
+        "Theory.BendLiveMachine"
+      ],
+      "owner": "root",
+      "action": "Classify old fixture/proof/authoring consumer with source owner before removal; useful product semantics require replacement, historical test claims may retire.",
+      "state": "open"
+    },
+    {
+      "consumer": "testing.StationSourcePlanReceiving",
+      "oldDependencies": [
+        "Theory.BendLiveMachine",
+        "Theory.BendTTSource"
+      ],
+      "owner": "root",
+      "action": "Classify old fixture/proof/authoring consumer with source owner before removal; useful product semantics require replacement, historical test claims may retire.",
+      "state": "open"
+    },
+    {
+      "consumer": "Assurance.BendLiveChecks",
+      "oldDependencies": [
+        "Theory.BendLiveMachine"
+      ],
+      "owner": "root",
+      "action": "Classify old fixture/proof/authoring consumer with source owner before removal; useful product semantics require replacement, historical test claims may retire.",
+      "state": "open"
+    },
+    {
+      "consumer": "Assurance.BendSourceAudit",
+      "oldDependencies": [
+        "Theory.BendTTSource"
+      ],
+      "owner": "root",
+      "action": "Classify old fixture/proof/authoring consumer with source owner before removal; useful product semantics require replacement, historical test claims may retire.",
+      "state": "open"
+    },
+    {
+      "consumer": "Assurance.BendClosureCompileChecks",
+      "oldDependencies": [
+        "Compiler.BendClosureCompile"
+      ],
+      "owner": "root",
+      "action": "Classify old fixture/proof/authoring consumer with source owner before removal; useful product semantics require replacement, historical test claims may retire.",
+      "state": "open"
+    },
+    {
+      "consumer": "Assurance.BendClosureChecks",
+      "oldDependencies": [
+        "Theory.BendClosureMachine",
+        "Theory.BendClosureDecode"
+      ],
+      "owner": "root",
+      "action": "Classify old fixture/proof/authoring consumer with source owner before removal; useful product semantics require replacement, historical test claims may retire.",
+      "state": "open"
+    },
+    {
+      "consumer": "Assurance.BendContinuationSourceJoin",
+      "oldDependencies": [
+        "Compiler.BendClosureContinuationCodec",
+        "Theory.BendClosureSimulation"
+      ],
+      "owner": "root",
+      "action": "Classify old fixture/proof/authoring consumer with source owner before removal; useful product semantics require replacement, historical test claims may retire.",
+      "state": "open"
+    },
+    {
+      "consumer": "Assurance.BendClosureVariableWitness",
+      "oldDependencies": [
+        "Theory.BendClosureVariableSteps",
+        "Theory.BendClosureDenotation"
+      ],
+      "owner": "root",
+      "action": "Classify old fixture/proof/authoring consumer with source owner before removal; useful product semantics require replacement, historical test claims may retire.",
+      "state": "open"
+    },
+    {
+      "consumer": "Host.BendObliviousIndexedProbe",
+      "oldDependencies": [
+        "Compiler.BendObliviousExecutionIndexed"
+      ],
+      "owner": "root",
+      "action": "Classify old fixture/proof/authoring consumer with source owner before removal; useful product semantics require replacement, historical test claims may retire.",
+      "state": "open"
+    },
+    {
+      "consumer": "Host.BendContinuationProbe",
+      "oldDependencies": [
+        "Compiler.BendClosureContinuationCodec",
+        "Theory.BendClosureDecode"
+      ],
+      "owner": "root",
+      "action": "Classify old fixture/proof/authoring consumer with source owner before removal; useful product semantics require replacement, historical test claims may retire.",
+      "state": "open"
+    },
+    {
+      "consumer": "examples.objective-bend-workshop.Export",
+      "oldDependencies": [
+        "Theory.BendLiveMachine"
+      ],
+      "owner": "root",
+      "action": "Classify old fixture/proof/authoring consumer with source owner before removal; useful product semantics require replacement, historical test claims may retire.",
+      "state": "open"
+    },
+    {
+      "consumer": "examples.objective-bend-workshop.ClosureConsumer",
+      "oldDependencies": [
+        "Theory.BendLiveMachine",
+        "Compiler.BendClosureCompile"
+      ],
+      "owner": "root",
+      "action": "Classify old fixture/proof/authoring consumer with source owner before removal; useful product semantics require replacement, historical test claims may retire.",
+      "state": "open"
+    },
+    {
+      "consumer": "examples.objective-bend-workshop.PersistedExport",
+      "oldDependencies": [
+        "Theory.BendLiveMachine"
+      ],
+      "owner": "root",
+      "action": "Classify old fixture/proof/authoring consumer with source owner before removal; useful product semantics require replacement, historical test claims may retire.",
+      "state": "open"
+    },
+    {
+      "consumer": "world.Workshop.check-core",
+      "oldDependencies": [
+        "Theory.BendTTSource"
+      ],
+      "owner": "root",
+      "action": "Classify old fixture/proof/authoring consumer with source owner before removal; useful product semantics require replacement, historical test claims may retire.",
+      "state": "open"
+    },
+    {
+      "consumer": "tests.bend-representation-efficiency.EmptyEnvProbe",
+      "oldDependencies": [
+        "Theory.BendTTSource"
+      ],
+      "owner": "root",
+      "action": "Classify old fixture/proof/authoring consumer with source owner before removal; useful product semantics require replacement, historical test claims may retire.",
+      "state": "open"
+    },
+    {
+      "consumer": "tests.bend-representation-efficiency.CheckOne",
+      "oldDependencies": [
+        "Theory.BendTTSource"
+      ],
+      "owner": "root",
+      "action": "Classify old fixture/proof/authoring consumer with source owner before removal; useful product semantics require replacement, historical test claims may retire.",
+      "state": "open"
+    },
+    {
+      "consumer": "tests.bend-representation-efficiency.BendIndexedActivityProbe",
+      "oldDependencies": [
+        "Theory.BendClosureDecode"
+      ],
+      "owner": "graded_execution_architecture",
+      "action": "Replace actual continuation/response/source-CAS consumer with Objective DemandMachine state and exact resumable custody; preserve capability.",
+      "state": "open"
+    },
+    {
+      "consumer": "tests.bend-representation-efficiency.BendBookIndexBenchmark",
+      "oldDependencies": [
+        "Theory.BendLiveMachine"
+      ],
+      "owner": "root",
+      "action": "Classify old fixture/proof/authoring consumer with source owner before removal; useful product semantics require replacement, historical test claims may retire.",
+      "state": "open"
+    },
+    {
+      "consumer": "tests.bend-representation-efficiency.BendClosureCompileIndexedBenchmark",
+      "oldDependencies": [
+        "Compiler.BendClosureCompileIndexed"
+      ],
+      "owner": "root",
+      "action": "Classify old fixture/proof/authoring consumer with source owner before removal; useful product semantics require replacement, historical test claims may retire.",
+      "state": "open"
+    }
+  ],
+  "assigned_work": {
+    "graded_execution_architecture": "Explicitly resumed persistent Objective continuation implementation; actual replacement absent at census.",
+    "scenario_objective_world": "Explicitly resumed typed complete returned-data/native Plan consumer.",
+    "docuverse_deos_construction": "Unapplied callable source capture and authenticated Notebook/Review hostInput wrapper.",
+    "root": "Integration closure coordination; no broad foreign file deletions."
+  }
+}

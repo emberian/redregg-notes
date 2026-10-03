@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-03T17:05:48.309925+00:00",
+  "updated_at": "2026-10-03T17:28:22.131629+00:00",
   "obligations": [
     {
       "id": "product-spk-failed-start-reconciliation",
@@ -105,17 +105,10 @@
       "consumer": "docuverse_deos_construction",
       "coordinator": "root",
       "state": "building",
-      "next_action": "Doc actively receives wire2 typed preview and implements new Objective Surface adapters. World/graded complete native current-law/funding/profile/effect gate; full publish/instantiate/evolve still open.",
+      "next_action": "World owns Objective current-source/input/funding/execution Controller. Doc owns unapplied callable capture and authenticated Notebook/Review hostInput wrapper. Resumed scenario_objective_world owns typed nonempty result/return codec and same-source consumer. Then actual signed admission, readback and second-member extension/stale-source refusal.",
       "acceptance": "Actual member module/import editing+version CAS/history, genuine diagnostics/preview from checked artifacts, governed native publish/fresh instance/self-super/evolution and source/readback/history acknowledgement; old instances retain pins. Fixed inspector or unavailable UI alone does not satisfy full loop.",
       "progress_evidence": "Actual native Studio editing/import/history/fork/stale-draft retention PASS26HTTP/18assertions/57s using client c833b50d and Host740545; exact package capture9eabba7241ab6219413ce04f3e75e47508cea59bbb303a5b165ecbd3a08afa9e consumed unchanged by compiler. Named-import parser repaired and Notebook.remember emitted to new demand machine. World/type owners now report actual captured Notebook execution returns8 and exact parsed-source global recursive-knot term accepted by compiled Lean checker Nat/uses[], receiving-r1.log in objective-types lane. General source-elaboration correspondence and native typed effect/admission/UI diagnostics remain OPEN. Doc yielded with root-owned producer callback; no completed OO language claim. UPDATE October3 after outage: original Doc owner explicitly resumed on real preview cohort02 PASS (Nat8/capture12/heterogeneous10). User renews construction15UTC. scenario_objective_world additionally owns native adapter implementation coordination. New served preview not yet qualified. UPDATE15:54UTC: actual19HTTP/14checks savedNat8 -> ordinarynativeedit42 -> checkerrefusal -> retainedhistorical8/current42 PASS, live32946 HTTP200 rootchecked. r14client+guide published dd2086cd. Complete native publish/instantiate/evolve acceptance remains OPEN.",
       "waits_for": [
-        {
-          "owner": "objective_bend_linker",
-          "deliverable": "Six actual immutable checked Partial artifacts and full constructor/correspondence",
-          "next_action": "Retain exact qualified artifacts and repair concrete consumers if needed",
-          "ready": true,
-          "evidence": "Fresh list_agents terminal report: six checked Books/full immutable IDs +Card6 PASS, constructor/Eval/exact-trace axiom gates PASS; sent OO+Studio"
-        },
         {
           "owner": "member_oo_construction",
           "deliverable": "Exact qualified persistent instance/partial loader/call context/publication/evolution receiving API",
@@ -137,22 +130,23 @@
           "evidence": "Actual immutable package capture from native Studio26HTTP/18assertions passed and compiler consumed exact9eabba source; arbitrary source semantic/native outputs remain separate live world/compiler dependencies."
         },
         {
-          "owner": "bend_logic_compilation",
-          "deliverable": "Actual arbitrary captured-source frontend Book/transcript/diagnostics emission via pinned parser/safeemit and Host.BendPackage.load",
-          "next_action": "Construct real elaborateSealed capture-input result and pair exact I/O directly Studio; source preview independent of native Plan admission",
-          "ready": false
-        },
-        {
           "owner": "takeover_kernel",
           "deliverable": "Actual Studio r9 scoped2+release candidate +PartialAuthor/Surface frozen qualification result callbacks",
           "next_action": "Send exact candidate/Host/config pins and safe actual receiving allocation to root/doc",
           "ready": true,
           "evidence": "Captain13:00 reports actualStudio2checks/release PASS c833b50d; runnable receiving window/pins requested"
+        },
+        {
+          "owner": "scenario_objective_world",
+          "deliverable": "Actual same-Checked typed result extraction, canonical returned data and native receiving consumer",
+          "ready": false,
+          "next_action": "Resumed explicitly for Notebook/Review result, coordinate World/Doc; no scalar-only returns=[] completion."
         }
       ],
       "checkpoint_ref": "/Users/ember/dev/redregg/work/CENSUS-20261003-1420.txt; retained exact source/evidence paths in this record and original owner handoff",
       "restart_condition": "New lazy Objective current-authority native effects producer qualified and explicit same-world consumer allocation; preview-only work is already done.",
-      "unresolved_work": "Complete preview/publish/native new-Objective effects, law/evolution and independent returns; editing alone works."
+      "unresolved_work": "Complete preview/publish/native new-Objective effects, law/evolution and independent returns; editing alone works.",
+      "current_receiving": "Actual Studio v2 24HTTP/19checks; exact original capture refuses after source alias retarget. Preview is real; new Objective native Accepted still absent. New source-first Plan adapters on main694c. Earlier TT Books are historical evidence, not new Objective qualification."
     },
     {
       "id": "product-capacity-inactive-fixture-native-use",
@@ -632,7 +626,7 @@
       "state": "building",
       "next_action": "Composition owns machine/network migration, compiler TT-free arithmetic/source lowering, ZK owner actual lazy trace relation, FHE owner Objective specialization; documentation Astra rewrites guide. Captain integrates coherent imports/build targets and consumer changes.",
       "acceptance": "No active parallel BendTT language/runtime onboarding; actual Objective authored programs reach native/private backend consumers under explicit semantics and resource contracts. Historical strict proofs do not count as lazy refinement. Preserve useful machinery and Git history.",
-      "progress_evidence": "Explicit latest human direction. Owners notified; composition/compiler acknowledged stopping old-target expansion. Docs replacement drafted, not yet published."
+      "progress_evidence": "Guide9/Plan adapters published694c; current main active TT entry arms removed. World and graded build new source+authenticated-input+funding+complete-result Controller. Root owns retirement external dependency map with source owners; generic gates/networks/arithmetical proofs retained and rebound. Historical127-record census zero frame11 TT invocations in that inspected world only. General BendTT elaboration was discussed as possible compiler target, not authorized new target pivot."
     }
   ]
 }
