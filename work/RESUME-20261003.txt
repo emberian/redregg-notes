@@ -1,103 +1,102 @@
-MINI / OBJECTIVE BEND — CURRENT ROOT NAVIGATION
-October3 2026, resumed construction window (~14:53–15:45UTC).
-Root session01a0fa81-d479-7753-a1b3-1331d1ed53de. Supersedes older190-line
-chronological RESUME; history remains in Git. This is navigation, not proof.
+MINI / OBJECTIVE BEND — ROOT NAVIGATION, October 3 ~17:45 UTC
+Session01a0fa81-d479-7753-a1b3-1331d1ed53de. Navigation is not evidence.
+Supersedes earlier source/build status here; history remains in Git.
 
-READ / WHY / HUMAN
-Follow REENTRY.txt. Full objective: ACTIVE-GOAL-20261003.txt. Exact outage source,
-artifacts, ownership and hard residuals: HANDOFF-AFTER-OUTAGE-20261003.txt.
-Takeover entry: ../START-HERE-CLAUDE-20261003.txt.
-Reasoning spine: ../designs/ARCHITECTURAL-ARGUMENT.txt.
-Original-reader explanations now EXIST: ../intent/WHY-OBJECTIVE-BEND-20261003.txt,
-WHY-AGREEMENT-20261003.txt, WHY-TRAFFIC-PRIVACY-20261003.txt. Read for architecture
-choices, not just build status. Exact primary references/versions and alternatives.
-Root recovered and read all127 human messages through cv16479 across26compactions,
-plus10large replies in last5windows. INTENT-RECOVERY-20261003-1505.txt records
-method, exact private workbox transcript paths and consequential interpretation.
-Attachments12852/12951 were omitted by cv prompts; recovered from actual messages.
-No blanket claim all old research papers were read. All raw transcripts local/private.
+REENTRY / DESTINATION
+Follow work/REENTRY.txt. Full objective ACTIVE-GOAL-20261003.txt remains active.
+Latest actual reading receipt14; earlier complete human recovery and rationale in
+INTENT-RECOVERY-20261003-1505.txt, WHY-OBJECTIVE-BEND, WHY-AGREEMENT and
+WHY-TRAFFIC-PRIVACY under intent/. Both human and assistant exchanges matter.
+Mini grows into Dregg: Objective authored OO/laws/evolution/persistent computation,
+SPK/docuverse/agentic worldhost, private execution, traffic privacy, agreement,
+native/oblivious/zk/specialized/FHE. Passing tranches never replace destination.
+Only Objective is active Bend language; Nock compatibility remains. Human asked
+about BendTT elaboration; root explained bounded interpreter/subset possible but
+no new target pivot. New Objective semantics do not inherit old strict proofs.
 
-DESTINATION (UNCHANGED)
-Mini grows into Dregg. Objective Bend is its own authored language; upstream Bend
-calculus/types/implementation may change, Nock compatibility retained. Faré-style
-partial specifications/finalself/whole-super/laziness/reflection/laws/evolution,
-meaningful mechanized refinement, general typed effects and durable computation.
-Actual private execution, traffic privacy and distributed agreement prototypes;
-native/oblivious/zkVM/specialized circuits/FHE distinct corresponding profiles.
-Shared multiuser agentic worldhost, SPK/docuverse/deos/residents/communities/worlds,
-money/service commons/portable homes. Oct13 traffic privacy+agreement conditions.
-No passing component tranche replaces any destination. Review claimed completed
-capabilities; separately list knownWIP so Fable can develop rather than rediscover it.
+SOURCE / OWNERSHIP
+Canonical: hbox:/home/hbox/workbox/codex-unified-integration-20261003/src.
+Captain takeover_kernel owns shared Git/main/publication. Mac transport:
+/Users/ember/workbox/mini-unified-push-20261003. Original ~/dev/minidregg now
+safely FF694c84a8 preserving all untracked. Root verified actual GitHub main694c.
+694c includes bce707 source49paths + external Spw1bf101de25paths. Later dirty
+source batches actively converging: inspect fresh HEAD; do not reset/stash/branch.
+Source inbox is append-only packets; captain merges scoped paths, not whole old
+snapshots. Warm isolated builds are not product branches. Root may edit exact
+shared hunks only under handover; captain commits. Private redregg main3100abd
+at last verified push; raw dialogues/keys stay out of public Mini.
 
-CURRENT HUMAN / LIFECYCLE
-After outage user requested immediate filesystem handoff for Claude, then explicitly
-resumed owners for0.5–1.5h and requested2–5upfront Sol scenario builders. All19
-outage owners resumed, original doc owner resumed, FHE+Activity owners restored,
-4newSol scenario implementers added. Original portable owner woke for exact Activity
-callback, not whole transfer domain. Counts change as bounded owners finish.
-19errored outage had no live compilers; resident services survived. Do not restart
-from this sentence: inspect current actual jobs. No resets/re-genesis/stash/branches.
-Older<=16deadline superseded by explicit resumed construction. One-time8:45heartbeat
-deleted. Old recurring heartbeat paused. New one-time resumed checkpoint11:45EDT
-id mini-resumed-construction-checkpoint records outcomes and Claude takeover state.
-Goal tool reported blocked after outage; API has no resume operation. Direct human
-authorization is current. Do not mark goal complete or infer whole ambition paused.
+CURRENT JOINS (SOURCE/RECEIVING DISTINCT)
+Objective: new Core4 parser/checker/lazy sharing runtime real; actual source
+mutual recursion, reflection, lazy fields and Studio typed previews exercised.
+Scenario source→checked fullData→native BoundPlan real, no new Objective Accepted.
+World owns current source/input/funding/execution/Controller; graded funding
+claim qualified, actual native gate still building. Compiler just qualified
+unapplied callable-definition r8 (not already-applied preview); Doc consumes
+with authenticated Notebook/Review wrapper; scenario_objective_world resumed
+for typed result/nonempty returns. These lead through actual signed acceptance,
+readback and second-member extension/stale-source refusal, not a scalar ceiling.
+Graded explicitly resumed Objective persistent checkpoint/response/CAS migration;
+old Activity path is not a qualified new-Objective continuation. Root closure map
+OBJECTIVE-MIGRATION-CLOSURE-20261003.json records old consumer owners.
 
-SOURCE / FLOW / OWNERS
-Actual common: hbox:/home/hbox/workbox/codex-unified-integration-20261003/src.
-Mac publication transport: /Users/ember/workbox/mini-unified-push-20261003.
-Last confirmed pushed4c5f6575: broker4839996f integrated. New intake moving; recheck.
-Captain takeover_kernel owns common source/Git/coherent native families.
-Runtime lieutenant coordinates warm artifacts/native receiving and domain handoffs.
-Original owners own implementation, not inherited six-domain passive responsibility.
-Explicit checkpointed domains retain source/evidence/restartconditions in
-integration-obligations/{runtime,product,protocol}.json; completed turn!=completedjoin.
-Producer readiness must followup_task completed consumer; send_message won't wake it.
-Original resident sole4store mutator; service sole originalapp8502 mutator.
-Scenario roles: scenario_objective_world generic DemandData/PlanAdapter and native
-consumer; scenario_private_agreement existing v2carrier→actual agreement/recovery;
-scenario_service_recovery chat/job/shell fdpaths+trusted cursor adapter+journeys;
-scenario_private_native203–205 private source receiving, receiver retainsroom67.
-FHE+Activity own restored domains. Money/Station/fiction/fullportable remain
-checkpointed unless explicitly resumed. No quiet reassignment to World.
+Backends: composition all18 sourceROM+sameDemandMachine checked; actual packed
+thunk controller/refinement still building. ZK89-module active source closure
+TT-free and qualified; concrete PackedRefinement remains producer obligation.
+Root rewrote existing BendArithmeticQualification to actual Objective source
+claims+generic unroll; exactb6a227e8 passed warm4G/2CPU/90s Persvati check.
+Compiler new Objective numeric source+field equivalence qualified; FHE physical
+new-only worker built/refuses retiredTT artifacts, positive new carrier/native
+source signing pending. No private/zk guarantee inferred from codec or circuit.
 
-RESOURCE FLOW
-hbox/tank and Persvati have useful freecapacity; sourceauthoring doesn't need a
-buildseat. Use exact warm owned outputs, actual atomiclocks/guardians and scoped
-checks. Generic captain-ACK wait became bottleneck; root preauthorized independent
-warm Rust8Gi/jobs2/swap0 and scoped Lean4Gi/2threads/180s where ownership/capacity
-actually free. SPK native16Gi Lean2/C2 own NVMe guardian. Inspect current totaljobs,
-preserve fn/foreignfiles/caches and source origins. No cold fullbuild or deletion.
+Agreement: first actual room admitted all4count1 and full64epoch fixed carrier
+replay/restart passed. Next original doc92a07 remains durable pending/absent.
+Production/test split and queue priority did not resolve it. Frontier identified
+repeated ~600event ENGINE replay on every receive/service, now implementing
+exact-context restored-state memo+replay-append law; no cached current authority.
+Resident callback-ready, no blind retry/reset. Source safety proof26module
+closure exists; native attribution/liveness/capacity remain explicit boundaries.
 
-LATEST CONCRETE JOINS (OWNER EVIDENCE, REVERIFY BEFORE NEW CLAIM)
-Newlanguage Core4 distinguishes Bool/String; strict checker and shared-thunk proof
-owners advancing actual typed-machine/general graph transitions. Full adequacy,
-allstep preservation, laws/evolution and native effect receiving still open.
-Studio generic savedsource preview client releasePASS; actual UIreceiving pending.
-Public guide complete rewritten2044words, SHA bbf3dd0a, captain publicationpending.
-Native frame12 independently derived signed invocation family in source; Controller
-consumer World, Activity producer graded, DemandData/PlanAdapter scenarioowner.
-First real4store room-birth offer signed/durable, no source effect yet; source-open
-under Lean--run measured74.661s. Native fixture link +sameoffer continuation owned
-runtime/frontier. NEVER resubmit unknown or resetstores. Resident followup pending.
-Private backend actual ACSS→checkedtuples→arithmetic→recipient-only result/restart
-PASS; source203–205 qualification remains newscenarioowner work, no fakeQualified.
-Trafficv11 all fixedbroadcasts but only12/16realcalls, actualservice lock/readiness
-repair active. Cover shape success is NOT usefulservice or fullunlinkability.
-SPKr7 now compiling past previously blocked Report/Host on sealedNVMe prefix.
-No finalELF/g2recovery claim yet. Originalg2fenced, must lawfulstoppedg3 thenupgradeg4.
-Client actual18native+6maliciousoperator consent casesPASS; specialized35families
-not allsafe. Room samePrepared currentkey/entitlement producerPASS; event67 Applied
-before disclosure still open. Root-protected frontier real double-rollback refusal
-PASS, mandatoryHostmode/deployment still open. Trusteddevelopment only confirmed.
-FHE real numeric/mux4096slots and Artifact/DriverPASS; actualHost/client routes remain
-integration. ZK fullcontroller+canonicalpayload+cSHAKE ONE nativeproofPASS; full
-transcript hiding/FS/QROM/native proofadmission still open. Profiles stay distinct.
+Private: standalone205 native333a02 and real MPC arithmetic/restart work. Genuine
+four source7–10 and four distinct committee keys/bootstrap retained. Event60
+source author actual Lean+C PASS; freshfixture native5c744 linked. Setup found
+accountid collision for added9/10, owner repairing to1009/1010 before freshgenesis;
+failed unadmitted setup preserved. No fundedpositive63→205 whole journey yet.
+Backend needs actual source generation before outputStore bootstrap. Room67
+replay+Applied+recovery source qualified; dedicated currentrecipient ELF95928
+produced and delivered. Signed444→original67 fullpayload binding+native permit
+receiving still receiver-owned; OO delivery consumer callback retained.
 
-PUBLICATION / TAKEOVER
-Ordinary main commits/pushes authorized, honest WIP allowed. Preserve other's edits;
-named staging only. redregg PRIVATE. No paid external calls/unrelatedservicechange/
-assetoperation/external human messages inferred. Keep intellectual rationale beside
-source status. Save final source/jobs/receiving/knownWIP before Claude takes control;
-no competing mutation if Claude already owns sharedfiles. Reentry readings are
-recorded in receipts10/11; full human recovery separately recorded as above.
+SPK: original failed STARTg2 exact recovery252bb442 installed receipt78/stoppedg3,
+root read both receipts and service independent signedg3. Warm18c Host2338225/
+operator2338143 remain. Service owns compatible security roles/launcher/g4 then
+actual browser→CSV→doc→Hermes→restore. Performance successor1900118a built14s
+with qualified equality+Store cached canonicalization; service samecut78 audit
+and comparison pending, no liveactivation by root. Original historical consent
+separate oldsem795 helper1213 built, source owner doing read-only genuineplan/
+malicious probes; no profile hash override.
+
+CLIENT / SCOUTS / CHECKS
+Four horse-Sols produced actual .spw maps and source fixes. Published694c sparse
+board+replan+sealedimage/rotation; Rust09 ACTUAL58/58 plus releasePASS root logread.
+Next sharedsource rootmerged: numeric retry consumers/module; sealedCONFIG
+transport3e1d; corrected settlement job719e. Jobr1/r2 rejected for uncertainty
+loss; r3 fresh-only origin/per-send markers preserve unknown legacy requests.
+Next combined client/native scratch receiving consent-owned, no blanket rerun.
+Discord source30tests and simulatedDiscord actual native resume journey passed,
+published694c; no external deployment/message. Guide9 published, tinyguide10
+wire2 correction intake. Documentation is not admission qualification.
+
+FLOW / BOUNDARIES
+Fresh roster and processes before wake/restart. Completed turn != completed join.
+Source-ready producer must wake stopped consumer with followup_task. Root resumed
+ScenarioObjective and graded specific gaps; no abandoned domains silently dumped
+on World. Money/Station/fiction/fullportable remain checkpointed, not done.
+No current unattended capacity failure established. pending_init can be misleading:
+docs responded normally/completed; old private-agreement pending restart stopped
+because work reassigned; Discord pending status needs fresh check if relevant.
+Use hbox/tank and Persvati warm artifacts/owned bounded processes; avoid cold
+wholebuilds/duplicate links. Preserve foreign fn/files/caches. No unrelated service
+replacement, paid calls, external human messages or asset operations inferred.
+Old recurring heartbeat paused; one-time checkpoints deleted. No Claude takeover
+currently established; if it starts, coordinate before common-source mutation.
