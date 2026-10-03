@@ -1,0 +1,255 @@
+[
+  {
+    "module": "CanonicalUniformSettlement",
+    "entry": "settle",
+    "schema": "dregg.bend.sealed-parser-transcript.v1",
+    "upstream": "947db722640c86247849343657bf2f7ef01cb7f1",
+    "sourceDigestAlgorithm": "sha256",
+    "modules": [
+      {
+        "namespace": "",
+        "source": "aba9004460d0063a9dec770921d0b492e4113d6540a99b4d8d6d4e9a10916e88",
+        "imports": []
+      },
+      {
+        "namespace": "MarketMath",
+        "source": "5fb8d148515731be8df3a0628eeb93abe4c7f625224f1896f26895269bed835d",
+        "imports": [
+          {
+            "alias": "",
+            "path": "Base",
+            "module": 0,
+            "source": "aba9004460d0063a9dec770921d0b492e4113d6540a99b4d8d6d4e9a10916e88"
+          }
+        ]
+      },
+      {
+        "namespace": "SingleSellerAllocation",
+        "source": "c3dfd90dc0d353fe5ec02d22656afc3fb35e558def8ee9fa4b1fdbcae7140c2c",
+        "imports": [
+          {
+            "alias": "",
+            "path": "Base",
+            "module": 0,
+            "source": "aba9004460d0063a9dec770921d0b492e4113d6540a99b4d8d6d4e9a10916e88"
+          },
+          {
+            "alias": "Math",
+            "path": "./MarketMath.bend",
+            "module": 1,
+            "source": "5fb8d148515731be8df3a0628eeb93abe4c7f625224f1896f26895269bed835d"
+          }
+        ]
+      },
+      {
+        "namespace": "CanonicalBookSettlement",
+        "source": "c7ae65d0aa065bd0932e4095a0ca5cc0a00667bf28cbe7664a327a660135646c",
+        "imports": [
+          {
+            "alias": "",
+            "path": "Base",
+            "module": 0,
+            "source": "aba9004460d0063a9dec770921d0b492e4113d6540a99b4d8d6d4e9a10916e88"
+          },
+          {
+            "alias": "Math",
+            "path": "./MarketMath.bend",
+            "module": 1,
+            "source": "5fb8d148515731be8df3a0628eeb93abe4c7f625224f1896f26895269bed835d"
+          },
+          {
+            "alias": "Seller",
+            "path": "./SingleSellerAllocation.bend",
+            "module": 2,
+            "source": "c3dfd90dc0d353fe5ec02d22656afc3fb35e558def8ee9fa4b1fdbcae7140c2c"
+          }
+        ]
+      },
+      {
+        "namespace": "UniformProRata",
+        "source": "29eb5527dacebf476de10bbc8598207a80206597c105e744ed4c80ca8165b2e5",
+        "imports": [
+          {
+            "alias": "",
+            "path": "Base",
+            "module": 0,
+            "source": "aba9004460d0063a9dec770921d0b492e4113d6540a99b4d8d6d4e9a10916e88"
+          },
+          {
+            "alias": "Math",
+            "path": "./MarketMath.bend",
+            "module": 1,
+            "source": "5fb8d148515731be8df3a0628eeb93abe4c7f625224f1896f26895269bed835d"
+          }
+        ]
+      },
+      {
+        "namespace": "CanonicalUniformSettlement",
+        "source": "1e75f509a80e302decd78fcd61652f86d760b55d0b6aca519eaf53937f9efcc7",
+        "imports": [
+          {
+            "alias": "",
+            "path": "Base",
+            "module": 0,
+            "source": "aba9004460d0063a9dec770921d0b492e4113d6540a99b4d8d6d4e9a10916e88"
+          },
+          {
+            "alias": "Math",
+            "path": "./MarketMath.bend",
+            "module": 1,
+            "source": "5fb8d148515731be8df3a0628eeb93abe4c7f625224f1896f26895269bed835d"
+          },
+          {
+            "alias": "Uniform",
+            "path": "./UniformProRata.bend",
+            "module": 4,
+            "source": "29eb5527dacebf476de10bbc8598207a80206597c105e744ed4c80ca8165b2e5"
+          },
+          {
+            "alias": "Book",
+            "path": "./CanonicalBookSettlement.bend",
+            "module": 3,
+            "source": "c7ae65d0aa065bd0932e4095a0ca5cc0a00667bf28cbe7664a327a660135646c"
+          }
+        ]
+      }
+    ],
+    "entryModule": 5,
+    "entryDefinition": "settle",
+    "definitions": [
+      "Nat",
+      "List",
+      "Bool",
+      "Empty",
+      "Unit",
+      "Empty.absurd",
+      "Sigma",
+      "Pair",
+      "Nat.eq",
+      "Bool.and",
+      "Bytes.eq",
+      "Truth",
+      "Bool.and_left",
+      "Bool.and_right",
+      "Nat.eq_sound",
+      "Bytes.eq_sound",
+      "MarketMath:add",
+      "MarketMath:sub",
+      "MarketMath:le",
+      "MarketMath:lt",
+      "MarketMath:choose_nat",
+      "MarketMath:choose_bool",
+      "MarketMath:min",
+      "MarketMath:mul",
+      "MarketMath:not",
+      "MarketMath:Division",
+      "MarketMath:increment_quotient",
+      "MarketMath:divide_step",
+      "MarketMath:divide",
+      "MarketMath:add_zero",
+      "MarketMath:add_zero",
+      "MarketMath:sub_zero",
+      "MarketMath:sub_zero",
+      "MarketMath:min_balance",
+      "MarketMath:min_balance",
+      "SingleSellerAllocation:Order",
+      "SingleSellerAllocation:Ranked",
+      "SingleSellerAllocation:Fill",
+      "SingleSellerAllocation:Allocation",
+      "SingleSellerAllocation:index",
+      "SingleSellerAllocation:precedes",
+      "SingleSellerAllocation:insert_choice",
+      "SingleSellerAllocation:insert",
+      "SingleSellerAllocation:sort",
+      "SingleSellerAllocation:take",
+      "SingleSellerAllocation:last_price",
+      "SingleSellerAllocation:prepend",
+      "SingleSellerAllocation:fill",
+      "SingleSellerAllocation:allocate",
+      "SingleSellerAllocation:empty_preserves_supply",
+      "SingleSellerAllocation:empty_preserves_supply",
+      "SingleSellerAllocation:sum_with_remaining",
+      "SingleSellerAllocation:accounted",
+      "SingleSellerAllocation:take_balance",
+      "SingleSellerAllocation:take_balance",
+      "SingleSellerAllocation:prepend_accounted",
+      "SingleSellerAllocation:prepend_accounted",
+      "SingleSellerAllocation:fill_conserves",
+      "SingleSellerAllocation:fill_conserves",
+      "SingleSellerAllocation:allocation_conserves",
+      "SingleSellerAllocation:allocation_conserves",
+      "CanonicalBookSettlement:Account",
+      "CanonicalBookSettlement:Bid",
+      "CanonicalBookSettlement:Input",
+      "CanonicalBookSettlement:Transfer",
+      "CanonicalBookSettlement:PrivateResult",
+      "CanonicalBookSettlement:Batch",
+      "CanonicalBookSettlement:Result",
+      "CanonicalBookSettlement:Coordinate",
+      "CanonicalBookSettlement:coordinate",
+      "CanonicalBookSettlement:coordinate_eq",
+      "CanonicalBookSettlement:contains",
+      "CanonicalBookSettlement:distinct",
+      "CanonicalBookSettlement:coordinates",
+      "CanonicalBookSettlement:orders",
+      "CanonicalBookSettlement:units_at",
+      "CanonicalBookSettlement:valid_bids",
+      "CanonicalBookSettlement:prepend",
+      "CanonicalBookSettlement:batch",
+      "CanonicalBookSettlement:choose",
+      "CanonicalBookSettlement:prepare",
+      "CanonicalBookSettlement:settle",
+      "CanonicalBookSettlement:ExactBook",
+      "CanonicalBookSettlement:chosen_book_exact",
+      "CanonicalBookSettlement:chosen_book_exact",
+      "UniformProRata:Side",
+      "UniformProRata:Order",
+      "UniformProRata:Fill",
+      "UniformProRata:Clearing",
+      "UniformProRata:Result",
+      "UniformProRata:Crossing",
+      "UniformProRata:Share",
+      "UniformProRata:same_side",
+      "UniformProRata:active",
+      "UniformProRata:total",
+      "UniformProRata:volume",
+      "UniformProRata:scan",
+      "UniformProRata:side_value",
+      "UniformProRata:make_share",
+      "UniformProRata:share_division",
+      "UniformProRata:shares",
+      "UniformProRata:floors",
+      "UniformProRata:rank",
+      "UniformProRata:finish",
+      "UniformProRata:clear",
+      "UniformProRata:allocate",
+      "UniformProRata:invalid_grid_refused",
+      "UniformProRata:invalid_grid_refused",
+      "CanonicalUniformSettlement:Participant",
+      "CanonicalUniformSettlement:Input",
+      "CanonicalUniformSettlement:PrivateResult",
+      "CanonicalUniformSettlement:Result",
+      "CanonicalUniformSettlement:orders",
+      "CanonicalUniformSettlement:coordinates",
+      "CanonicalUniformSettlement:units_at",
+      "CanonicalUniformSettlement:side_valid",
+      "CanonicalUniformSettlement:valid_participants",
+      "CanonicalUniformSettlement:side_total",
+      "CanonicalUniformSettlement:transfer_for",
+      "CanonicalUniformSettlement:transfers",
+      "CanonicalUniformSettlement:append",
+      "CanonicalUniformSettlement:remaining",
+      "CanonicalUniformSettlement:returns",
+      "CanonicalUniformSettlement:choose",
+      "CanonicalUniformSettlement:prepare",
+      "CanonicalUniformSettlement:accept",
+      "CanonicalUniformSettlement:settle",
+      "CanonicalUniformSettlement:volume_equality",
+      "CanonicalUniformSettlement:volume_equality"
+    ],
+    "emittedBookSha256": "9af2a394160c9707f8a723771364c5879ae254de18bfff564a48c2ab6307c75c",
+    "outOfScope": [],
+    "bookPath": "/home/hbox/workbox/codex-collective-domain-20261003/evidence/sealed-bend-8PKHtg/book.bendtt",
+    "transcriptPath": "/home/hbox/workbox/codex-collective-domain-20261003/evidence/sealed-bend-8PKHtg/transcript.json"
+  }
+]

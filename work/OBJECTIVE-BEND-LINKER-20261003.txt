@@ -1,0 +1,89 @@
+OBJECTIVE BEND SOURCE LINKER — 2026-10-03
+Owner: Codex / objective_bend_linker. Additive construction, no common source,
+Git, upstream Bend source or shared cache modification. Quiet Lean seat released
+to bend_controller_simulation + graded_execution_architecture after checking.
+
+PASSING SOURCE
+hbox:/home/hbox/workbox/codex-objective-linker-20261003/src/Compiler/
+  ObjectiveBendLinker.lean SHA256
+    3fc544d0ff3d1dd177b5125486ae1faae9799690d0234290e85f0c8e1598dde0
+  ObjectiveBendWorkshop.lean SHA256
+    d73e9684523044f084860132612c51f69926772f4e71061cd48a82801483efeb
+Source-only receiving capsule passing-linker-source.tar SHA256
+  6fe1ceb2938ff1b98b96c68bac1f82bd9a475c7eb45d2523a2db0d4e247a6e1f
+Local copy /Users/ember/workbox/objective-bend-linker-20261003/passing-linker-source.tar
+Includes scoped script, actual runner, complete logs and release hashes.
+
+CONSTRUCTION
+Stable Kahn ordering on actual elaborated Def live body dependencies, distinct
+from behavioral ancestry order. Full types/body refs checked for source closure.
+Q0 arguments, type syntax, rewrite motive do not impose live ordering; rewrite
+evidence does. Dead Nat/Nat.arms reference cycles in real emitted Workshop forced
+this distinction. Self references defer to actual Book.check structural descent.
+Unsupported non-self live cycles refuse with blocked names/dependencies; ordering
+is conservative, not a maximal completeness theorem for every admitted Book.
+Duplicate names, missing helpers, incomplete exact signature demands have focused
+diagnostics. Closure rejection runs before ordering, preserving missing-self.audit.
+
+linkSource checkedSource layers includes the exact entire checked source helper
+Book and generated OO definition ASTs. Admission actually encodes/parses/checks
+the resulting Book. Linked retains exact core.book=ordered; ordered.Perm candidate;
+all helper Def lookups and every generated method Def lookup. definition binds
+source body, Data substitution and exact selected finalSelf/super references.
+construction feeds existing ObjectiveBendElaboration.Construction. fromEntry
+partial-application wrappers call exact admitted source helper entries; they do
+not relabel unrelated handwritten bodies as surface elaboration results.
+
+MECHANIZED / EXECUTED EVIDENCE
+Lean4.30 scoped checks of both modules PASS (40G/j2 settings, explicit own outputs,
+readonly passing OO/world/common dependency overlay). Every named #assert_axioms
+gate passed. No sorry/native_decide/#guard added. Proofs: exact source-entry call,
+helper/method definition retention, full definition permutation, exact admitted
+Book Eval retention, and Book.WellTyped/Book.Live via actual checked admission.
+This does not prove source safe.ts elaboration fidelity or optimized C refinement.
+
+Actual MemberExtension emitted Book input:
+ hbox:/home/hbox/workbox/codex-authored-workshop-20261003/evidence/
+ sealed-bend-U0xfyy/book.bendtt
+ SHA256 b7bc7c8e5445c2a810ba2e51f930e732cb6a84d42bac536a956296046e3e91bb
+Runner canonicalized/check-admitted actual input, obtained actual helper Entries,
+formed six reusable source specs and checked their lawful OO ancestry. Uses Data
+catalog/policy/label and exact self.catalog/super.review/self.audit/self.review.
+Output:
+ incomplete audit: EXPECTED missing finalSelf.audit at owner 3
+ third member completion: LINKED exact methods/helpers, definitions=91
+ alternate presentation: LINKED exact methods/helpers, definitions=92
+Unexpected errors or acceptance of incomplete audit throw; these are actual
+kernel composition checks, not source-emission success labels.
+
+REMAINING OWNED JOINS
+1. Runtime evaluation of linked dynamic Candidate input by the one shared Bend
+   machine/evaluator, then actual native Plan/publication/Surface receiving.
+2. Reordering semantic transport via Book lookup equivalence, beyond exact
+   encoded/reparsed Book equality. Composition peer is authoring reusable
+   Walk/Value/Values/Eval transport. Liveness is not transported by lookup equality;
+   actual reordered Book.check admission remains required.
+3. Persist exact source artifact/member origin with world Attribution/Prototype
+   certificates; source/module indices in provisions alone are not provenance.
+4. Use concrete linkage in ordinary member instantiate/evolve/browser flows, and
+   retain broad partialspec/finalself/super evolution destination. Passing source
+   construction is an intermediate real join, not whole Objective Bend completion.
+
+EXECUTED PUBLICATION / DYNAMIC SOURCE FOLLOWUP
+After explicit collective5→linker auxiliary handoff, ran own new-only exporter
+with atomic aux-lean-lease.py,4G/2threads/180s, passing readonly BendLiveMachine
+olean. Source BendTT SHA256 matches world exactsource
+7b221b208344c69cef7962bdab264d0abf9528637ff55e2cf69787da4f753e38.
+Six actual proof-producing executeChecked runs on complete/alternate linked Books
+PASS: Candidate revisions0/1/2 yield exact whole structural expected Card, including
+candidate, policy, review verdict, label. Exact source Evalsteps38/55/39 respectively
+for both presentations. Completion carries actual Eval Trace and Value; refused
+outcomes cannot count as output. No second evaluator or source crash shortcut.
+Canonical checked core Books, providers/requirements/source-helper mappings,
+focused incompleteaudit JSON and actual output/step JSON are at ownparent/publication.
+Driver src/ObjectiveBendWorkshopExport.lean + workshop-export.log preserve runtime
+boundary evidence. AUX guardianreleased exit0; directhandoff resident-context3.
+OO owner is adding canonical Partial.seal reflection/fullhash identity chaining;
+world must supply actual cshake source Package. Current six specs still local1..6,
+provider JSON labels sourceModuleIndex explicitly; not persisted prototype IDs.
+Native Plan/source publication/Surface and private backend receiving remain open.

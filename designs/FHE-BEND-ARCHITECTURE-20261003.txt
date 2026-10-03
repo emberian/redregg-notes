@@ -1,0 +1,479 @@
+HOMOMORPHIC BEND IN THE GROWING DREGG
+2026-10-03 — Codex/Astra, fhe_bend_architecture
+
+Status: source-grounded design and construction prescription. No source edit,
+build, test run, Git mutation, deployment or paid call performed by this lane.
+This file is the requested durable research result. Historical artifacts below
+are evidence of their own pinned executions, not qualifications of today's tree.
+
+DECISION
+
+Make homomorphic execution an ordinary realization of a checked Bend method,
+with confidential persistent state and explicit release transitions in the same
+Mini-owned object/authority world. Mini grows into Dregg; this does not propose
+an isolated FHE product or a future Mini subdirectory inside a replacement.
+Bend is the primary authored language and Nock remains compatibility support.
+
+The best first join is a PUBLIC fixed Bend program with SECRET finite inputs,
+compiled once into a constructive arithmetic/Boolean graph, evaluated repeatedly
+on real ciphertexts. Preserve the existing Lean compiler and its output relation.
+Do not run a universal encrypted interpreter when specialization removes it.
+Do not infer program secrecy, computation integrity, release authorization or
+malicious collective custody merely from ciphertext evaluation.
+
+There is already enough executable FHE to make this a construction task. The
+missing joins are specific. The first modest circuit should be exercised through
+the real source compiler, key owner, secretless evaluator, public ciphertext
+checker and Mini encrypted-result object; then broaden the same path to actual
+private stateful methods. A success stub or new handwritten parallel compiler
+would miss the point.
+
+PINNED READING AND LIMITS
+
+Upstream Bend: /Users/ember/dev/bend, commit
+947db722640c86247849343657bf2f7ef01cb7f1. bend2/bendtt.lean SHA256
+e15042434e73aab07ab05cea4b77b5619082c00a6d4924ea2d4a2cdec05facce.
+Read AST and kernel description directly; full semantic audit belongs to
+bend_semantics_audit and machine construction to astra_consensus_composition.
+Upstream AGENTS read: human-written bend2/bend.ts must not be edited. Lean4.34
+versus Mini4.30 is an explicit qualification issue, not a silent migration.
+
+Bread current main ref read directly as 22fad151e9f118e3aa001a823e075918ffa139e8.
+Shared working tree may differ; material source pins from this actual read:
+  fhegg-fhe/src/fhir/logic_schedule.rs
+    cbe30b6bb9703c6832a805d2166a487e0e62dfa794af3a64b380804c4e769e9b
+  metatheory/Dregg2/Logic/FheLogicBfvModel.lean
+    19c7061d4beaf4a75f9f078cec80e2613ac6c24cebdd8f782f161f5c4434031e
+  fhegg-fhe/src/threshold/quorum.rs
+    013a6f6086849864707a9b3dbb954e28da162338fe8ce5a7acc85c3579dbd2ea
+  fhegg-fhe/src/threshold/distributed_relin.rs
+    2be9f3a6783a389a49118cbaabad17ad3b80242f3d8afeb1ef5e4c9ac6435270
+  circuit/src/stark_zk.rs
+    8c5d6f57b0d6e2d137ff0e8bb2088ef13cd593369744a662988b9c104180383c
+Cargo.lock pins tfhe1.6.3; fhegg uses the already-owned fhe0.1.1 fork with
+mbfv-share-codec. No new dependency selected for convenience by this design.
+
+Orientation: HORIZONLOG newest entries, full memory index, docs/OVERVIEW,
+historical HANDOFF-2026-08-11-codex; current redregg BEND-DIRECTION and
+BEND-WORLD-LANGUAGE; workbox BEND-PRIVATE-MACHINE and
+CONSTRUCTION-PRIVATE-EVALUATOR-CUSTODY. Workbox fhe.txt/private-proofs.txt were
+read as leads, followed by the source checks cited below. No claim of exhaustive
+historical intent or repository audit. degg-research AGENTS and VERDICTS confirm
+that its energy code is a Clear relation research artifact; it supplies a useful
+specification, not another cryptographic backend. Scoped searches found no CKKS
+implementation in the examined Bread FHE dependencies/modules. Do not generalize
+that scoped absence to every repository or machine.
+
+WHAT THE PRESERVED CODE ACTUALLY PROVIDES
+
+1. Executable encrypted Boolean and integer algebra.
+
+fhegg-fhe/src/fhir/logic_schedule.rs:104,203,454–575 contains BooleanProgram,
+compile_boolean and BfvLogicEngine.execute_boolean. The evaluator actually
+calls fhe.rs Multiplicator::multiply and performs ciphertext arithmetic:
+not x = 1-x; and = xy; or = x+y-xy; Boolean equality = 1-x-y+2xy.
+This is native ciphertext execution, not just a theorem or an ideal oracle.
+It checks exact primitive-count manifest parity and returns an encrypted bit.
+DeclaredEncryptedBit::from_declared_canonical DOES NOT verify bitness.
+BooleanConstants similarly trusts declared encryptions of zero and one.
+The manifest explicitly assumes matching key/parameters, external bit/range
+binding, and does NOT admit multiplicative depth against a general noise proof.
+
+fhegg-fhe/tests/fhir_logic_schedule_bfv.rs uses real BFV encryption/decryption,
+degree4096, plaintext modulus1032193 and a real relin key. Its source contains
+an exhaustive 16-environment SIMD test for one depth-two four-input formula.
+Tests were read, not run here. Such a test checks the concrete implementation;
+it cannot replace universal source/compiler or cryptographic correctness.
+
+FheLogicBfvModel.lean:78 proves the Boolean ring identities for every program
+over any commutative ring on encoded Boolean inputs. Its own boundary explicitly
+does not prove Rust refinement. ProofFheSharedOpening.lean gives a checked
+canonical raw-bit opening shared between the live proof descriptor and FHE
+model; it is not a ciphertext same-opening proof.
+
+2. The useful direct-logic work includes its own corrections.
+
+DirectLogicArithmetization.lean is the integration root for genuine finite
+logic/compiler results. Read its scope before selling 'FOL as free polynomials':
+finite quantifiers can expand exponentially, public tables are not private RAM,
+and many authority/membership operations are atom boundaries. Integer residual
+sum_i(x_i-y_i)^2 needs a bound on the WHOLE sum before field reduction. A bare
+field sum-of-squares can cancel and is not a valid generic equality compiler.
+
+Generic bounded zero conversion costs B-1 multiplications; an exact whole-field
+zero indicator over t=1032193 requires degree at least t-1 and arithmetic
+multiplicative depth at least20. There is further useful work beyond that first
+negative result: the symmetric bound-eight specialization uses three conversion
+multiplications instead of seven. Retained artifact
+docs/deos/artifacts/fhe-symmetric-eight-zero-2026-07-22/{META,raw,summary}
+pins source commit d34a3578732acf8728f3d30f58bd2e0c27c29805 and exact source hashes.
+Eleven degree8192 executions used four live SIMD slots and produced [40320,0,0,0]
+under a single-key oracle. Conversion median82.028ms generic versus38.317ms
+symmetric; whole residual-plus-conversion11 versus15 multiplications, depth4.
+These exclude encryption, residual evaluation, input proof, threshold opening,
+transport and keygen. Output40320 is a zero-indicator numerator, not canonical
+bit1 without the specified normalization. Noise readings are observations,
+not a safe threshold-opening certificate or end-to-end performance promise.
+
+3. Exact BFV numerical kernels and noise models are substantial but bounded.
+
+bfv_mul.rs implements real ct×ct/relinearization with declared product/sum
+no-wrap bounds; bfv_coeff_matmul and convex_engine provide public linear steps.
+fhIR's convex grammar must not be substituted for faithful arbitrary Bend
+optimization: the earlier source review found ignored affine/scaling structure,
+and this lane does not qualify that compiler as general semantics-preserving.
+
+Bfv/Noise.lean proves scalar-phase rounding and iterated linear bounds under
+fresh-noise hypotheses. Bfv/Mul.lean now exists, superseding stale bfv_mul.rs
+comments implying no multiplication model: it proves scalar scaled-product and
+relinearization-interface bounds. Its own explicit holes remain decisive:
+ring convolution lift, centered/mod-q correspondence, actual gadget key-switch
+noise, and arbitrary-depth recurrence. A multiplicative depth integer and a
+declared '128-bit' parameter picker are not those missing proofs. Admission
+must be about a pinned scheme/parameter/sampler/schedule with explicit failure
+budget; measurement is useful corroboration, not a universal admission proof.
+
+4. TFHE is real and gives the alternative exact discrete backend.
+
+fhegg-fhe/src/energy_dispatch.rs evaluates feasibility and settlement predicates
+on FheUint32 ciphertexts and accepts no ClientKey at evaluator API. Its harness
+has a client key; global optimality is explicitly NotEvaluated. Do not silently
+turn this candidate checker into a solver, general compiler, or private custody
+protocol. fhe_clear in lib.rs itself takes plaintext orders and ClientKey: it
+is a combined benchmark harness despite the module's no-viewer motivation.
+
+tfhe_high_level_wgpu.rs:678 implements encrypted comparison with31 PBS stages;
+:823 implements resident encrypted comparison-and-selection using31+32 PBS
+stages, returning selected ciphertext with no intermediate predicate opening.
+Shape/carry/atomic-pattern admission is explicit. TfhePbsRefinement.lean is a
+conditional model with a load-bearing WGPU correspondence premise, not a proof
+that the shader satisfies it. No collective TFHE key-custody construction was
+found in the examined surface. Reuse its actual restricted native primitive;
+do not call the entire backend verified or threshold-enabled.
+
+5. Threshold BFV exists; its separate security floors must remain visible.
+
+threshold/{distributed,relying_party,supervisor,quorum}.rs and the committee
+binary implement actual separate-process TCP custody. LiveCommittee can attach
+to parties or spawn local ones. open_verified verifies commitment-bound
+decrypt-share certificates before combining; these certificates are real
+Bulletproof range/Schnorr-representation work. Old settlement prose saying
+decrypt-share validity is wholly missing is stale.
+
+The remaining malicious-DKG seam is secret/error shortness: algebraic VSS plus
+public-key consistency does not prove ternary/CBD witness ranges. Setup needs
+all dealers; opening can use t of n. threshold/distributed_relin.rs implements
+honest n-of-n relin on additive short dealer contributions. Shamir custody rows
+cannot simply replace them: Lagrange amplification destroys required short noise.
+Relin contributions lack per-share ZK validity; acceptance testing is detection
+under an honest coordinator, not a malicious-protocol theorem or attribution.
+The relying-party implementation documents local-host/shared-rendezvous limits.
+Party independence is an operator/key-custody property, not process count.
+
+Quorum core replay state is in-memory. A new Dregg profile must use durable,
+rollback-resistant release authorization and custody before calling its opening
+primitive; nonce binding alone is not crash-safe current authority. Product
+owner independently found live market-created in-process custody consumers.
+Those must receive independently governed custody rather than create all shares.
+
+6. Same-opening and proof production are real, uneven, and stronger than old
+summaries of a single boundary suggest.
+
+amm_same_opening.rs is authenticated Tier1: issuer learns complete witness and
+encryption seeds, re-encrypts/checks, and signs. That is not a no-viewer ZK path.
+private_book_bfv_zk.rs proves exact bounded public-key BFV equations with a heavy
+experimental Bulletproof R1CS relation (~445k multipliers/~25M linear terms),
+receiving the whole book and seeds in one process. Its native HidingFRI slice
+covers one complete4096-term equation out of98304, not the whole opening.
+
+The distributed path has advanced beyond share-custody-only certificates:
+private_book_distributed_bfv.rs:1816+ requires four certificates in FHDBE002;
+new() actually verifies quotient, relation and nonlinear-root certificates.
+private_book_distributed_root.rs still uses one source viewer for the full
+nonlinear book/root relation; workers need not reconstruct the book, but the
+whole protocol is not no-viewer. These classical Ristretto/Bulletproof legs
+do not become PQ because transport signatures are hybrid-PQ. General nonlinear
+distributed proving remains a separate construction.
+
+Current circuit/src/stark_zk.rs:47,90,97,112–122 still uses SmallRng for hiding
+MMCS and HidingFri randomness. This directly corroborates the prior report's
+CSPRNG concern; this lane has not demonstrated witness recovery. Repair and
+audit the entropy path before inheriting a strong hiding claim. Do not respond
+by discarding the substantial existing relation/compiler work.
+
+THREE EXECUTION CLASSES, ONE SOURCE MEANING
+
+A. Public fixed program, encrypted inputs/state. Partial-evaluate source code,
+module dispatch, public dimensions and static loop bounds. Secret branches
+become muxes; secret indexing becomes fixed scans/mux networks or a separately
+proved oblivious-memory scheme. Result is a public static graph. Graph shape,
+packing, parameter set and declared capacities are public leakage.
+
+B. Public template, secret finite program choices/parameters. Encrypted flags,
+weights, bounded table entries or policy selectors can live as data in a fixed
+public graph. This is often the right private policy interface and avoids an
+entire secret-PC machine. It still leaks the template and public capacities.
+
+C. Secret arbitrary admitted program. Encrypt code, PC, environment/heap and
+continuations under one public bounded universal Bend machine, or a universal
+circuit. The same padded interpreter handles every code of the admitted size;
+secret-dependent allocation/access/termination/refusal cannot drive public
+scheduling. A code hash, specialization cache key or proof revealing code may
+itself violate the secrecy contract. Private code checking/admission also needs
+a mechanism (e.g. proof about committed code); ordinary public compiler output
+cannot supply it. Generic FHE does not hide the evaluator's public circuit.
+
+Use astra_consensus_composition's exact Eval/Walk semantic target and finite
+closure/environment machine. Bend Q0/Q1/Q2 discipline is not a privacy grade:
+dead erasure must follow source semantics, Q2 permits qualified Data sharing,
+and halting does not imply a public polynomial time/memory bound. Rwt evidence
+is live in source even where native comp.ts erases it. Native Nat48 and source
+structural Nat require an explicit domain bridge. Never silently truncate.
+
+NUMERIC AND COMPILER CONTRACT
+
+Share a typed semantic DAG and source refinement, not one allegedly universal
+field circuit. Preserve constructive expressions as well as relational AIR.
+Constraint satisfaction alone does not evaluate missing existential wires.
+The emitted FHE plan must be generated from the retained constructive program,
+with a checked relation to the proof descriptor and exact input/output layout.
+
+Canonical Bool/enums: input encodings must establish valid labels/bits. Ring
+identities work across carriers but do not prove malformed encodings absent.
+Some Mini Air/Emit theorems require Field; do not instantiate them on arbitrary
+composite Z_t. Use pinned prime-compatible SIMD semantics or prove a separate
+ring interpretation through the same expression signature.
+
+Exact integers: signedness, bit width, all intermediate ranges, division and
+rounding, comparison, overflow and refusal are part of the source profile.
+BFV/BGV operates modulo plaintext modulus; represent large integers with limbs
+or prove no wrap at every relevant intermediate. TFHE fixed-width words have
+their own modular semantics and carry budgets. A Nat48 native implementation,
+BFV20-bit slot and BabyBear proof field are not interchangeable integer types.
+ZK ranges/limb gadgets and MPC arithmetic/Boolean conversions have real costs.
+
+Approximate arithmetic: CKKS is a future explicit approximate Bend profile,
+not an unnoticed replacement for exact money, balances, label equality or
+authority predicates. Specify norm/error propagation, precision and rescaling,
+rounding, comparison gaps and authorized result relation. A candidate finder
+may be approximate while its admitted consequence uses an exact sufficient
+certificate. Such a checker must bind the same candidate/domain; approximate
+evaluation does not imply exact global optimality. No CKKS implementation is
+claimed available in the inspected Bread path.
+
+Cost is backend-specific: BFV ciphertext/plaintext mul versus ct×ct/relin,
+rotations and depth; TFHE PBS/carries/key switching; MPC multiplication rounds,
+preprocessing and conversions; ZK constraints/lookups/degree/trace/blinding.
+Choose specializations with these separate ledgers plus packing/memory/egress.
+A ZK residual satisfying zero is not automatically a cheap encrypted zero bit.
+The existing bound-eight optimization is exactly why accounting must include
+conversion and final observation rather than stop at the attractive residual.
+
+KEYS, INTEGRITY, AND RELEASE
+
+Proposed immutable FhePlan binds source/Book/entry/dependencies, semantics and
+numeric codecs, constructive DAG and proof relation, compiler version, full
+crypto parameters/sampler/evaluation algorithm, layout/padding, resource/noise
+and failure bounds, and leakage/release policy. A KeyEpoch separately binds
+canonical pk, evaluation keys, suite/parameter hashes, custody roster/threshold,
+setup transcript and qualified security profile. Backend cache identity joins
+both; an approximate plan or rekey does not reuse an exact plan/key cache entry.
+
+InputAdmission binds invocation/generation, exact ordered ciphertexts, state
+predecessor, canonical parse/shape/degree/level/parameter/key identity, semantic
+input commitment and actual validity evidence. Bit declarations, same-opening
+digests and 'proof verified' booleans cannot mint it. Honest client-local inputs
+may have an explicitly owner-generated profile; adversarial multiuser inputs
+need the appropriate proof/authoritative binding. Circuit evaluation cannot
+verify that a fresh BFV ciphertext was properly sampled from its bytes alone.
+
+Evaluation produces ciphertexts with exact output layout and a completion
+identity. It does not directly mutate Mini authority or open a result. A native
+checker can re-execute deterministic public ciphertext operations with no
+decryption key and compare canonical output bytes. That is a real first
+integrity implementation, at replication cost, using no ideal primitive.
+Canonical execution algorithm and serialization must be fixed; optional
+rerandomization/parallel algorithms require their own relation, not byte equality
+by wish. Ciphertext replay proves that computation was performed; its plaintext
+meaning remains conditional on admitted encodings and cryptographic correctness.
+
+This is also a disciplined path toward later succinct proof: prove the exact
+ciphertext transformer, including bootstrap/key-switch/rounding, or prove the
+same-opening plaintext relation with correct witness custody. A proof about
+plaintext output alone does not bind it to evaluated ciphertexts. An ordinary
+zkVM prover learning the inputs would lose the outsourced secrecy claim.
+
+ReleaseAuthorization is separate: full invocation, exact ciphertext/output
+projection, key epoch, recipient/purpose, current governing state/policy and
+durable decision are bound before a keyholder releases anything. Distinguish
+public aggregate opening, private-recipient output, continued encrypted state,
+and masked conversion to MPC. Threshold availability is not authority. A t-party
+coalition may be capable of decrypting outside software policy; the stated
+corruption assumption must exclude that or the cryptography must be stronger.
+No audit master key is implied. Existing BFV APIs opening a plaintext to the
+combiner do not supply selective recipient release. Distributed key-switch or
+recipient-encrypted shares needs its own construction and malicious validity.
+
+BFV→MPC masking and TFHE/BFV scheme switching are typed conversion edges with
+same-value, wrap/range, leakage and key-custody proofs, plus priced protocols.
+Do not reconstruct raw secret state at a coordinator to make an adapter easy.
+private_backend_construction owns durable one-time correlation release and the
+real ASKS/Bracha/RA work; an ASKS or common-coin primitive is not AVSS or full
+private-state custody. No bad raw-interpolation coin is assumed here.
+
+THREAT, RESOURCE, AND RECOVERY CONSEQUENCES
+
+Chosen inputs and outputs are part of the application contract. Even correctly
+computed repeated threshold/aggregate answers can isolate individual records;
+query capabilities, cohorts, rate/release budgets or explicit DP mechanisms may
+be needed by a chosen application. These controls do not upgrade FHE's base
+security theorem. Malformed ciphertext decryption, noise failure indications,
+per-slot validity diagnostics and retry timing can become decryption oracles.
+Admission must restrict release to exact authorized evaluations; do not expose
+arbitrary 'try decrypt' endpoints or detailed private failure diagnostics.
+
+Circuit privacy is distinct from input privacy and from hiding code from the
+evaluator. A keyholder receiving evaluated ciphertexts may learn evaluation
+information from ciphertext/noise unless the scheme/profile provides suitable
+sanitization. Adding Enc(0) or merely bootstrapping is not a generic proof of
+malicious circuit privacy. Pin a proven sanitization method and its threat model
+when needed. First public-program/single-owner profile claims no circuit secrecy.
+
+BFV depth without bootstrapping is a leveled budget. Relin limits ciphertext
+size, not accumulated noise. TFHE PBS refreshes noise but has a specified
+failure probability and expensive key/memory traffic. Bound lifetime failure
+over the admitted operation/query volume, not just per gate. Do not enlarge q
+without rechecking lattice security; do not borrow current documentation's
+default error bounds for a historically pinned library/parameter set.
+
+Metadata contract must include source/template identity, dimensions, packing,
+occupied slots, ciphertext/proof/key sizes, timing, calls, failure categories,
+fee/refund, scheduling, object/recipient access and recovery traffic. Padding
+only application packets misses key fetch, cache miss, proof generation and
+restart channels. Use public capacity classes and fixed schedules for secret
+control. SIMD throughput helps only when packing follows the privacy/recipient
+boundary; decrypting a packed ciphertext exposes every packed slot to that key.
+
+Reserve public resource ceiling before work. Separate semantic canonical charge
+from observed physical BFV/PBS/MPC/prover expense; specialization cannot silently
+alter fees. If actual work/early-refund reveals a secret branch, charge/pad at the
+public envelope or adopt an explicit leakage allowance. Price setup/eval-key
+distribution separately from amortized execution. Include long-lived ciphertext
+retention, key custody and later authorized release rather than billing only mul.
+
+Durable state machine proposal: admitted/reserved → evaluated candidate →
+integrity checked → prepared encrypted successor → committed → release authorized
+→ released/applied. Persist exact ciphertext generation and candidate context;
+effects and output release cannot precede required authority/finality. Historical
+retry returns the same committed result without another charge or decryption.
+Before repeating threshold smudges, masks, MPC correlations or proof nonces after
+a crash, consult the independently anchored journal. Uncertain secret exposure
+burns a one-time row. Deterministic ciphertext reevaluation may be replayable;
+one-time private protocols are not thereby replayable. Refusal must not install
+partial state or reveal secret-dependent early termination. Rekey/reshare and
+key loss have explicit migration/recovery policies; proofs cannot recover keys.
+
+FIRST EXECUTABLE CONSTRUCTION — PRESERVE THE REAL COMPILER
+
+Coordinate with bend_logic_compilation's isolated source:
+hbox:/home/hbox/workbox/codex-bend-logic-20261003/src/Compiler/
+  BendLogicCase.lean, BendLogicSpecialization.lean.
+At report time these are authored candidate modules awaiting captain checks,
+not a pass claimed by this lane. Current Plan has onFalse/onTrue Bool literals;
+constructive outputExpr is falseConstant + input*(trueConstant-falseConstant).
+The actual literal Mat(false)/Mat(true)/Efq source shape is checked, and candidate
+theorems connect exact upstream Eval and existing Mini Air/Emit descriptor.
+An Artifact must bind source, constructive expression and descriptor together.
+
+Slice 1: execute those actual unary cases with the real BFV carrier. Because
+arms are public literals, lower multiplication as ct×plaintext, depth0. Use an
+owned client process for keygen/encryption and private final decode; evaluator
+and independent ciphertext checker get only pk/evaluation material and admitted
+public plan. No secret key in evaluator address space. Commit exact encrypted
+input/output and plan identity into a real governed Mini computation object.
+The public receiver verifies ciphertext transformation, current authority and
+exact state/cost join. Initial application result remains owner-private; owner
+generation is the explicit input-validity profile, not adversarial joint input.
+This is the compiler-to-FHE seam, not completion of general confidential apps.
+
+Slice 2: extend the SAME source construction to dynamic-arm finite mux:
+choose(b,x,y) = y + b*(x-y), one ct×ct depth1. Validate eight environments using
+SIMD and isolated owner/evaluator/checker processes. Prove source result and
+codec/bit output, retain compiler expression, admit actual noise profile. The
+existing BooleanProgram fallback can express it as (b and x) or (!b and y), but
+that costs three multiplications/depth2; do not silently call it the optimized
+artifact or fake the compiler output. Add source-preserving DAG sharing.
+
+Slice 3: encrypted persistent finite state with the same method reused across
+invocations; exact predecessor binding, current release policy, crash/restart,
+stale/cross-key/cross-program/cross-generation refusal and idempotent fee/result.
+Use secret finite policy choice to select one of two authorized private result
+projections. No native effect uses an unproved plaintext assertion derived from
+the ciphertext. Later authorized opening binds the same encrypted successor.
+
+Slice 4: independent collective custody and adversarial input admission for the
+same plan, retaining actual BFV crypto/proof organs and closing named DKG/relin,
+same-opening and durable-release gaps. TFHE comparison/selection becomes the
+second exact backend; BFV/MPC conversion is a separately qualified edge.
+General secret-code bounded machine and succinct vFHE are larger extensions,
+not conditions for the first real public-program encrypted execution.
+
+Falsifiers for the first slices: source/descriptor/expression mismatch; wrong
+label/bit codec; wrong ciphertext or key epoch; changed output with valid-looking
+receipt; unbound public constant; overflow/noise profile beyond admission;
+missing evaluator key material; release under changed recipient/policy; restart
+between reserve and output; duplicated charge; attempted arbitrary ciphertext
+decryption. Compile/refinement checks and genuine ciphertext executions must be
+retained at exact source hashes. No new expensive full workspace build required.
+
+OPEN PROOFS AND INTEGRATION OWNERS
+
+- Bend source/case/machine/compiler refinement and bounded completeness:
+  semantics auditor, bend_logic_compilation, astra_consensus_composition.
+- BFV constructive interpreter and canonical bytes vs Lean graph; ring/noise/
+  sampler/relin/PBS correspondence and lifetime failure: explicit FHE work.
+- Shared source semantics with separate backend costs and observer leakage:
+  graded_execution_architecture and bend_world_language.
+- Actual native registration, encrypted-result receiving/current authority,
+  release and exact fee/history join: integration captain with world-language.
+- Malicious collective custody, durable reserve-before-secret-release and
+  nonideal distributed primitives: private_backend_construction; FHE keygen/
+  relin validity must not be hidden behind that backend interface.
+- Real institutions/markets/resource/game effects and independent operators:
+  bigdregg_product_architecture. Existing DrEX de-prioritization does not cancel
+  platform FHE, and platform FHE does not force every market to migrate today.
+
+TARGETED PRIMARY RESEARCH (read 2026-10-03; design support, not local evidence)
+
+https://eprint.iacr.org/2020/304
+Mouchet et al., Multiparty Homomorphic Encryption from Ring-Learning-With-Errors:
+the actual family behind fhe.rs multiparty key material; inspect exact corruption,
+setup and key-switch functionality rather than infer malicious DKG from the name.
+
+https://eprint.iacr.org/2024/127
+Cheon et al., Attacks Against the INDCPA-D Security of Exact FHE Schemes:
+incorrect-decryption probability can enable attacks even for exact BFV/TFHE and
+threshold variants. Motivates parameter/lifetime budgets and avoiding decryption
+oracles; 'exact integer' does not mean perfect cryptographic correctness.
+
+https://eprint.iacr.org/2022/495
+Doettling/Dujmovic, Maliciously Circuit-Private FHE:
+input IND-CPA and malicious circuit privacy are distinct security properties.
+https://eprint.iacr.org/2025/216
+Practical Circuit Privacy/Sanitization for TFHE: concrete potential sanitizer
+direction, whose scope must be preserved; not an already-owned implementation.
+
+https://eprint.iacr.org/2016/421
+Cheon–Kim–Kim–Song approximate arithmetic: rescaling and approximation explain
+why CKKS needs an error-aware semantic profile instead of exact equality claims.
+
+https://docs.zama.org/tfhe-rs/get-started/security-and-cryptography
+Current primary documentation describes leveled/PBS operations and current
+default failure/security parameters. Not evidence that Bread's pinned1.6.3
+configuration or custom WGPU path has those exact guarantees.
+
+https://www.usenix.org/conference/usenixsecurity26/presentation/liu-fengrun
+HasteBoots is a concrete recent vTFHE/PBS research direction. The primary page
+reports specialized proofs and batching. Its benchmark is not a Dregg bound;
+it demonstrates why a dedicated ciphertext-transform proof may be preferable
+to pretending a generic plaintext proof already proves FHE evaluation.

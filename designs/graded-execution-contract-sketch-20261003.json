@@ -1,0 +1,278 @@
+{
+  "format": "dregg.execution-contract.design-sketch.v0",
+  "date": "2026-10-03",
+  "author": "Codex /root/graded_execution_architecture",
+  "status": "design-only; not an admission artifact or implemented checker",
+  "runtime_authorization": false,
+  "design": "GRADED-EXECUTION-ARCHITECTURE-20261003.txt",
+  "separation": {
+    "semantic_program": [
+      "checked_book_and_dependency_closure",
+      "entry",
+      "evaluator_semantics",
+      "primitive_and_arithmetic_semantics",
+      "canonical_input_state_result_effect_abi",
+      "abstract_charge_and_outcome_semantics"
+    ],
+    "requested_contract": [
+      "input_domain",
+      "observer_leakage_policy",
+      "authority_demand",
+      "effect_protocol",
+      "resource_bounds",
+      "per_property_environment_assumptions",
+      "required_guarantees",
+      "custody_release_progress"
+    ],
+    "selected_realization": [
+      "typed_plan_dag",
+      "instance_parameters",
+      "named_bridges",
+      "refinement_evidence",
+      "deployment_qualification",
+      "request_binding"
+    ]
+  },
+  "coordinates": [
+    {
+      "id": "use",
+      "kind": "coeffect",
+      "algebra": "proved usage algebra; preserve Bend Quan directly, do not guess its semiring"
+    },
+    {
+      "id": "information_flow",
+      "kind": "label_grade",
+      "algebra": "policy-specific order and joins, with authorized declassification"
+    },
+    {
+      "id": "leakage",
+      "kind": "observer_history_projection",
+      "order": "L1 <= L2 if L1 factors through L2; cryptographic simulation is separately defined"
+    },
+    {
+      "id": "effects",
+      "kind": "indexed_effect",
+      "algebra": "ordered trace or dependent protocol composition; row union is only an upper bound"
+    },
+    {
+      "id": "authority",
+      "kind": "request_indexed_resource",
+      "algebra": "partial resource composition and current authorization"
+    },
+    {
+      "id": "cost",
+      "kind": "resource_grade",
+      "algebra": "pointwise additive work; separate peak-memory and schedule/latency rules"
+    },
+    {
+      "id": "differential_privacy",
+      "kind": "optional_release_grade",
+      "algebra": "declared accountant over explicit neighboring relation; simple sequential budgets add"
+    },
+    {
+      "id": "precision",
+      "kind": "numeric_relation",
+      "algebra": "exact carrier equality or proved error propagation, never an implicit cast"
+    },
+    {
+      "id": "assurance",
+      "kind": "typed_claim_evidence_set",
+      "order": "entailment under named assumptions and exact statement binding"
+    },
+    {
+      "id": "trust",
+      "kind": "per_property_environment_model",
+      "order": "inclusion/embedding of admissible environments; no scalar trust score"
+    },
+    {
+      "id": "progress",
+      "kind": "protocol_and_environment_contract",
+      "algebra": "matching protocol-state composition with explicit schedule assumptions"
+    },
+    {
+      "id": "custody_mobility",
+      "kind": "lifecycle_protocol",
+      "algebra": "qualified generation/epoch handoff and retained obligations"
+    }
+  ],
+  "observer_projection_fields": [
+    "explicit_outputs",
+    "authorized_release_history",
+    "program_identity_or_hiding_commitment",
+    "public_specialization",
+    "sizes_shapes_bounds",
+    "control_and_memory_trace",
+    "device_diagnostics",
+    "participant_endpoint_graph",
+    "packet_sizes_times_volume",
+    "attempts_recovery",
+    "termination_refusal_staleness",
+    "charges_refunds",
+    "proof_sizes_cache_hits"
+  ],
+  "plan_node_families": [
+    "compute",
+    "representation_bridge",
+    "prove",
+    "verify",
+    "custody",
+    "refresh",
+    "reserve",
+    "agree",
+    "install",
+    "release",
+    "deliver"
+  ],
+  "edge_type_fields": [
+    "semantic_type",
+    "representation_profile",
+    "artifact_identity",
+    "confidentiality_policy",
+    "key_epoch",
+    "custody_generation",
+    "authority_context",
+    "protocol_state"
+  ],
+  "satisfies_obligations": [
+    {
+      "id": "meaning",
+      "requires": "exact semantics/domain/outcomes/effects or explicitly allowed named refinement"
+    },
+    {
+      "id": "leakage",
+      "requires": "all actual observations simulatable from permitted observer history under stated model"
+    },
+    {
+      "id": "authority",
+      "requires": "existing request authority supplies every demand; no extra right introduced"
+    },
+    {
+      "id": "assumptions",
+      "requires": "requested environment implies all per-property plan assumptions"
+    },
+    {
+      "id": "guarantees",
+      "requires": "checked plan claims entail requested guarantees with qualified evidence"
+    },
+    {
+      "id": "resources",
+      "requires": "public bounds and physical reservations fit admitted limits"
+    },
+    {
+      "id": "representations",
+      "requires": "every edge has exact matching representation or checked named bridge"
+    },
+    {
+      "id": "composition",
+      "requires": "whole-plan security/progress conditions, shared setup and correlations checked"
+    },
+    {
+      "id": "lifecycle",
+      "requires": "required custody/install/release/delivery transitions are realizable"
+    }
+  ],
+  "selection_outcomes": {
+    "accept": "requires checked obligations and exact authorized request binding",
+    "reject": "retains authorized reason and, where appropriate, counterexample",
+    "unknown": "retains named missing obligation and confers no authority"
+  },
+  "prohibited_implicit_fallbacks": [
+    "private_to_plaintext",
+    "shares_to_coordinator_reconstruction",
+    "cryptographic_to_hardware_trust",
+    "exact_to_approximate",
+    "sealed_to_public_result",
+    "same_invocation_to_fresh_paid_call",
+    "resource_exhaustion_to_zero_or_semantic_crash"
+  ],
+  "first_consumer": {
+    "status": "proposed; not implemented by this lane",
+    "program": "bounded checked Bend Bool/enum computation chosen by logic and FHE owners",
+    "semantic_result": "one canonical typed result consumed by a real Mini effect plus separately authorized release",
+    "initial_fhe_domain": "public fixed program; authenticated canonical bits; bounded public schedule; admitted noise and keys",
+    "must_refuse": [
+      "unbound_range_or_bitness",
+      "unsupported_verifier",
+      "changed_source_or_plan",
+      "invalid_epoch",
+      "over_bound",
+      "undeclared_observer"
+    ],
+    "receiving_falsifiers": [
+      "same_scalar_different_effect_target",
+      "public_secret_dependent_refund",
+      "epoch_relabelled_pad",
+      "serialized_private_semantic_witness",
+      "release_after_audience_revocation"
+    ]
+  },
+  "ownership": {
+    "semantic_core": "bend_semantics_audit / astra_consensus_composition",
+    "world_abi": "bend_world_language",
+    "exact_logic_lowering": "bend_logic_compilation",
+    "fhe_realization": "fhe_bend_architecture",
+    "native_effect_trace": "member_oo_construction",
+    "agreement": "astra_consensus_frontier",
+    "product_contracts": "bigdregg_product_architecture",
+    "integration": "takeover_kernel / root",
+    "contract_implementation": "recommended scoped owner after semantic core and ABI pins converge; not dispatched"
+  },
+  "source_snapshot_note": "Whole-file hashes identify local working-copy source inspected in selected sections; no HEAD claim, no compilation claim, and no exhaustive read claim.",
+  "source_snapshots": [
+    {
+      "path": "/Users/ember/dev/minidregg/Theory/IndexedProgram.lean",
+      "sha256": "a578ee063520787481e9acc09718d5ebe9fb9675e72a2992260e7631aa826156"
+    },
+    {
+      "path": "/Users/ember/dev/minidregg/Theory/PrivacyProfile.lean",
+      "sha256": "339b47d6ea0a97568a02158e5a61c6c6ba2ed42c49b0e577893096497d33ca54"
+    },
+    {
+      "path": "/Users/ember/dev/minidregg/Theory/PrivateComputationDeclaration.lean",
+      "sha256": "4185d5bd83d9993b642bedf51efc2d22e24bf1c966b418da85be7ce30d202e1f"
+    },
+    {
+      "path": "/Users/ember/dev/minidregg/Theory/DisclosureDeclaration.lean",
+      "sha256": "d39f71377de62399161efc312e8c184e657bb030cc97ba1fae74ab4b57ee73e2"
+    },
+    {
+      "path": "/Users/ember/dev/minidregg/Theory/TypedAuthorization.lean",
+      "sha256": "ef5442c55f3d6e9cae8901cce2932dea655bbd201634b697fc34e3ac0adf71a8"
+    },
+    {
+      "path": "/Users/ember/dev/minidregg/Theory/EffectDeclaration.lean",
+      "sha256": "05de7e8b547c1a8a94684d533e78c763cd40819b397ff9916e2721e9e550b02c"
+    },
+    {
+      "path": "/Users/ember/dev/minidregg/Theory/ResourceCost.lean",
+      "sha256": "0342f193ea83cf262f55e884854ad728f67b8c73c5ef27895b9834bb166d3590"
+    },
+    {
+      "path": "/Users/ember/dev/minidregg/Compiler/Evaluator.lean",
+      "sha256": "1180341df1135b7c71497e4a3833a5917eee56d72df2b6681a21ced60779bd4b"
+    },
+    {
+      "path": "/Users/ember/dev/minidregg/Compiler/PredCompile.lean",
+      "sha256": "b25d1f35bc89491374cb7bbc1e89d2847e4efb6e283f31f16a2d5b04c2da6e50"
+    },
+    {
+      "path": "/Users/ember/dev/minidregg/Compiler/SemanticManifest.lean",
+      "sha256": "4b7ffe22397106760c4a5b1640edf74e437cd512a1ed33b3969a8d622f266265"
+    },
+    {
+      "path": "/Users/ember/dev/minidregg/Kernel/DeclaredResourceController.lean",
+      "sha256": "7a9bcba6113b0af9d263c4ab2c8fc6d790b01ac409f37febac6011f2afa027ed"
+    },
+    {
+      "path": "/Users/ember/dev/minidregg/Kernel/PrivateEscrowSettlement.lean",
+      "sha256": "e0322d79d6ec7587830ce8b3116fe653f91690c0ef55954662f226e88f181ef2"
+    }
+  ],
+  "bend_pin": {
+    "revision": "947db722640c86247849343657bf2f7ef01cb7f1",
+    "revision_source": "supplied by root and semantics audit, not freshly read with Git by this lane",
+    "path": "/Users/ember/dev/bend/bend2/bendtt.lean",
+    "sha256": "e15042434e73aab07ab05cea4b77b5619082c00a6d4924ea2d4a2cdec05facce",
+    "audit": "BEND-SEMANTICS-AUDIT-20261003.txt"
+  }
+}

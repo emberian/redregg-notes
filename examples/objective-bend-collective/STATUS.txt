@@ -1,0 +1,118 @@
+Objective Bend collective/domain construction — 2026-10-03
+Owner: /root/bigdregg_product_architecture
+
+Authoritative owned lane:
+  hbox:/home/hbox/workbox/codex-collective-domain-20261003
+This directory is a reviewable copy of source, not a second evolving lane.
+
+CHECKED
+MarketMath, CollectiveAdoption, SingleSellerAllocation, UniformProRata,
+SingleSellerSettlement pass sealed source checking, safe BendTT emission, and
+actual no-opaque BendTT Book.check. source-results-check15.json pins imports,
+source, entry, emitted Book and transcript; core-check1.log records all five
+passes (60/111/85/89/115 definitions). The bounded core check used the captain's
+atomic auxiliary lease and released before direct handoff to objective_bend_linker.
+
+CanonicalBookSettlement and CanonicalUniformSettlement additionally pass source
+checking + safe BendTT emission; book-settlement-source-results.json and
+uniform-settlement-source-results.json pin their exact closures. Their Book
+checks remain queued, not claimed. No new native receipt has been produced by
+this domain lane. SingleSellerTransfers is a superseded source-checked candidate:
+the deeper actual receiver refuses all scalar account targets, including move.
+
+IMPLEMENTED SOURCE
+CollectiveAdoption reuses the existing Workshop CatalogReview Candidate,
+Recommendation, Decision and Adoption. Proposal commits the round, exact
+base/candidate source+program+revision, base/candidate prototype IDs, kind root,
+instance root, migration digest, policy, electorate and quorum. Cast checks
+round, eligibility, unique ballot use, valid unique electorate and state,
+positive attainable quorum, and open phase. Tally is derived from retained
+ballots; there is no independently trusted tally input. General cast_exact
+proves the whole expected predecessor, one-ballot successor and derived counts.
+Resolution closes the exact ballot image. prepare_install derives endorsement
+from that retained closed valid image and checks current base/prototype/root/
+migration. Domain endorsement is not an installation capability.
+
+SingleSellerAllocation is the existing single-seller mechanism: decreasing bid
+price, original admitted-book index ties, capacity prefix, last filled price.
+General allocation_conserves proves filled quantities plus remainder equals
+the original supply for every source input. It does not assert full fairness
+or compiled-machine arithmetic refinement.
+
+UniformProRata is separately named: the DrEX two-sided uniform mechanism,
+lowest grid index maximizing volume, exact integer floors/largest remainders,
+original admitted-book index remainder ties. There is no float tolerance or
+worker-selected book/grid/order. Its algorithm and no-empty-grid law pass the
+actual Book checker; general conservation/capacity/optimality proofs remain
+to be joined, and no native DrEX monetary receipt is claimed.
+
+SingleSellerSettlement supplies a source-owned logical balance model, exact
+sampled resource/root/field/preimage write binding, complete account alias and
+principal/asset/reservation validation, and per-recipient result data. Its raw
+BalanceWrite is NOT a native monetary settlement: native accountBalance raw
+writes are forbidden. This useful receiving mismatch was caught before landing.
+
+CanonicalBookSettlement is the actual monetary construction direction. It
+derives only CanonicalResourceKernel.Operation.transfer-shaped intents over ONE
+canonical book ID/root. Every Account{account,asset,balance} input must be read
+from that same native book and have actual book.accounts membership. Negative
+balances refuse this natural-number domain profile. Canonical native
+Batch.Admission applies each operation to the preceding resulting book.
+Coordinate identity is (account,asset), so one account may own both money and
+goods; duplicate reservation coordinates are rejected. Unspent funds remain
+reserved; no refund transfer is invented. PrivateResult is typed intended-
+recipient data, not a cryptographic privacy certificate.
+
+CanonicalUniformSettlement consumes the distinct UniformProRata source through
+the SAME Transfer ABI. It collects admitted bid currency and ask goods into two
+clearing pools, then distributes the corresponding goods/currency. It checks
+per-side units equal the computed volume, per-order quantities/limits/backing,
+assets and coordinate distinctness. Both pools should finish unchanged. Its
+result explicitly retains Bid/Ask and the intended audience. No second native
+money primitive or host-selected allocation is introduced.
+
+Funding order is explicit: native_performance_construction and world language
+are defining one prepared financial token that applies the validated funding
+burn first, then application operations. Domain Account balances must come from
+that explicitly derived settlement-prebook, with provenance from the original
+durable book root plus the validated funding transition. Feeding original gross
+balances while charging later would be a wrong sample. The source only preserves
+the supplied original expectedRoot; native input binding must prove this bridge.
+
+PINNED REUSE
+Prelude.bend SHA256 aba9004460d0063a9dec770921d0b492e4113d6540a99b4d8d6d4e9a10916e88
+CatalogReview.bend SHA256 1af4911a91e049696dc33971162a901f3ee6bf3f9831f587cfd127d7d5ecd03f
+Owned upstream copies are in codex-authored-workshop-20261003/source/Workshop.
+Their primitive law identity is pinned, not a mutable-path import promise.
+
+ACTUAL RECEIVING WORK / OWNERS
+1. native_performance_construction now owns the generic canonical-money domain
+   adapter through actual existing Book semantics and atomic prepared receiver.
+   It reuses Operation, Batch.Admission, conservation and per-source current
+   capability/law, with the concrete domain scenario below. This is a newly
+   explicit shared capability: current ResourceTransaction Payload has no book
+   operation variant. bend_bread_archaeology retains the generic nonmonetary
+   scalar object-field adapter, not a fictional scalar money route.
+2. bend_world_language and captain own authenticated input sample/Plan admission
+   plus common controller/Host registration. Money, room settled-state and
+   private-return commitments must install atomically through the same receiver.
+3. member_oo_construction owns Partial persistence/lineage; world language owns
+   generic definition Payload source construction. Adoption joins that generic
+   current-authorized definition path, retaining observed ballot/source roots.
+   Existing descriptor-only kindDefinition must not impersonate arbitrary OO
+   Partial publication or an instance-migration primitive.
+4. Domain owner stays responsible for source output consumers, corrected native
+   relation, adversarial receiving cases and subsequent DrEX transfer consumer.
+   Workshop is one consumer among worlds, research, play and service exchange.
+
+Useful native scenario: stock7/proceeds10; A bid(limit5,qty4), funds20/goods0;
+B bid(limit3,qty5), funds15/goods2. Source clears at3, fills4/3. Real monetary
+target state should be stock0/proceeds31, A funds8/goods4, B funds6/goods5.
+Distinct sampled roots/IDs and exact sequential preimages are required. Refuse
+duplicate accounts, missing balances, stale roots, changed book/order/policy,
+wrong principal/asset, wrong amount, and unqualified private-result release.
+
+Compaction status: architecture source/cv evidence is in
+designs/BIGDREGG-PRODUCT-ARCHITECTURE-20261003.txt. This file records the later
+construction tranche and its still-open receiving seams. No Git, deployment,
+paid calls, shared registration or shared-source modifications by this lane.

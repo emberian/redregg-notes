@@ -1,0 +1,358 @@
+MISSING JUNCTIONS — FRESH HISTORICAL QUESTION/INTENT GRAPH, 2026-10-03
+Owner: Codex historical_missing_junctions. Local-private curated archaeology.
+Read with missing-junctions-graph-20261003.json, missing-junctions-coverage-20261003.json,
+and ../replays/missing-junctions-20261003.txt. No builds, Git, deployment, deletion,
+source mutation, external messages or nested agents. Private participant facts are
+deliberately omitted. Exact cv locators allow authorized local retrieval.
+
+This pass began with the initial and second-pass reports as navigation, then read
+fresh extracted bodies outside the conservative July full-read set and bounded live
+exchanges. It asks what was lost BETWEEN a good abstraction and the human action it
+was meant to enable. It is not a census of absent features or an old feature-port
+list. Current source is pinned by SHA256 in coverage; no integrated/deployed claim
+is inferred from a docblock, theorem name, lane report, or source-file presence.
+
+Eight questions changed through the reading:
+
+Q1. WHAT CAN A THIRD PARTY ACTUALLY LEARN FROM PORTABLE AUTHORITY EVIDENCE?
+
+MJ01: May22, claude:70642dc2-d9f1-434b-8209-c2c96787bd92 #912,
+2026-05-22T18:54:25.685Z. Human asks whether an ordinary Fly-like provider should
+maintain distributed structures so USERS can attest offline to OTHER PARTIES about
+status at particular times. The preceding assistant had separated local provider
+checks from a privacy mode and treated the latter as optional complexity. Human
+reconnects them through a consumer: local checking and portable testimony can be
+two uses of the same state. Provider signatures do not thereby become Byzantine
+agreement, and evidence about a past time does not become permission NOW.
+
+MJ02: May21, claude:e75ed07b-4ce4-4f00-a0b8-3abab4a2f20f #3053/#3059/#3093/#3098,
+2026-05-21T00:34:25.848Z / 00:35:35.454Z / 00:39:15.212Z / 00:41:47.534Z. Full focal
+texts and bounded #3093 context read. Human accepts snapshot+refresh and explicitly
+assigns presently-valid caveats/freshness to acceptors; asynchronous revocation is
+a risk of the model and full synchrony can be implemented above it. Human then
+asks whether it is the BEST coherent extension and worth its complexity. Thus
+acceptance is real, but not evidence that the first implementation was ideal.
+
+MJ03: July10, claude:e307afc5-4140-4f17-8ce8-7af955baf2c7 #389/#473/#505,
+13:56:17.333Z / 15:06:43.704Z / 15:24:45.220Z. Human refuses reducing
+revocation to a node's verify-time local set: strangers/light clients must attest
+correctly revoked behavior. Human also preserves voluntary fast channels whose
+evidence can enter the attestable kernel path, accepts capability INSTANCE identity
+rather than reused slots, and asks about intentional batch revokes. Equal texts in
+e61e6f51 and other forks are one recovered choice, not multiple endorsements.
+
+Actual receiving limits: Bread cell/src/delegation.rs has a snapshot c-list and
+freshness fields, but its own current header marks parent_signature inert. Its
+authenticity story is parent-signed TURN installation, not a detached signature
+on that field. turn/tests/delegation_snapshot_second_authority_source.rs describes
+the distinct Rust snapshot authority source and fixes expiry/amplification there;
+the delegation header separately records a Lean snapshot-authority fence. These
+are not interchangeable descriptions of one proved runtime. apply.rs:991-1020
+contains the committed batch-channel INSERT, while explicitly lacking authenticated
+TripEvidence admission and a production caller. This is a preserved useful join
+question; it is not a reason to declare all current revocation broken.
+
+Revised question: how does an independent local executor export a bounded grant,
+its instance identity, authenticated source/subject binding, accepted root/time and
+freshness policy, then settle later without silently converting past testimony into
+current authority? The peer-exchange adapter needs separate authenticated key↔cell
+binding and execution evidence; a signed assertion is not the full closure.
+
+Q2. HOW DOES A WORLD CREATE NEW THINGS WITHOUT SMUGGLING NEW AUTHORITY IN?
+
+MJ04: May23, claude:70642dc2-d9f1-434b-8209-c2c96787bd92 #2874,
+2026-05-23T06:49:58.100Z.
+Human rejects merely computable child-VK strategies as too narrow and asks whether
+a factory can borrow money to spawn itself within a larger atomic turn. Assistant
+dispatches a feasibility study and distinguishes intra-turn sequencing from deriving
+VK inputs from intermediate state. That response is a proposed explanation, not
+a verified closure of the requested cycle.
+
+Actual source: Bread apply_create_cell_from_factory validates declared params and
+computes a Derived VK from their hash, installs a child denominated in the creating
+cell's currency, and supports fixed executable program recipes. That does not by
+itself prove the dynamic borrow→derive→birth→repay scenario. Current Mini's
+ResourceBirthAuthority checks every grant against ONE original authority cell and
+does not use newborn rights to authorize later grants. GrainResourceBirthTransaction
+prepares birth/resource/authority and existing grain targets from one old image;
+its header explicitly says it is not a receiving endpoint. These are useful stronger
+boundaries, not proof every richer birth is impossible.
+
+Revised question: can a Bend-authored factory compute a descriptor and resource
+flow as one authorized atomic request, while all authority comes from the accepted
+prestate and all new code/policies/content/resources are installed together? A
+flash loan is a discriminating example, not an October13 requirement or preferred
+business model. A more ordinary consumer is a community creating a paid hosted
+tool with a bounded initial budget and exact source identity.
+
+Q3. WHAT DOES LAWFUL LIVE CHANGE MEAN FOR AN APPLICATION STILL DOING WORK?
+
+MJ05: June3, claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a #12873,
+2026-06-03T23:36:40.689Z. Human questions choosing a particular blocklace depth as
+the universal time, accepts portal-consulted direction, and asks about userspace
+Byzantine clocks/oracle committees. This is not rejection of an actual agreement
+implementation. It keeps clock authority and deadline meaning from being baked
+into every resource as one ambient number. Earlier MJ06, May24
+claude:487bc20c-eee8-4b3e-ae47-2ee337eb2f89 #215 explicitly blocks an assistant's
+oracle design; nearby #175..215 shows the assistant had dispatched an Ed25519
+OracleRegistry crate on broad app-framework authorization. The concrete rejected
+design was not permission to abolish oracle applications forever.
+
+MJ07: July6, claude:fbcc8d85-acbe-49e9-8d6f-811a946f5225 #448/#455/#462,
+19:31:10.215Z / 19:37:29.001Z / 19:42:29.927Z. Human asks for runtime config
+changes and recalls migrating file descriptors to a successor. The assistant's
+bytes→bytes framing triggers the NEXT correction: where did structured io_uring,
+zero-copy and vectored writes go? Human asks for a refinement framework and grounded
+comparison. This is a performance/assurance/continuity junction, not simply a wish
+for a reload button. The old implementation is encumbered; source-available IP is
+not authorized relicensing into AGPL.
+
+Actual current source: orb/Admin/Reload proves reject-keeps-config/generation and
+accepted config increments generation. dataplane/reconfig.rs runs a parser-mediated
+swap with old Arc-held config generations retained for in-flight work. DrainLive
+explicitly scopes its executable theorem consumer to a pure lifecycle selftest,
+not the deployed serving shell. No FD handoff outcome was established in this pass.
+Preserve the working reload nucleus and the larger unresolved continuity contract.
+
+Revised question: what must a law/module/method update preserve for admitted calls,
+pending reservations, existing capabilities, physical service state and returns?
+Could one versioned method/lifecycle contract serve Bend upgrades, room policy
+evolution, host reload and provider replacement without pretending these are the
+same physical operation? Already accepted obligations cannot evaporate on upgrade.
+
+Q4. CAN SEMANTIC DOCUMENTS REALLY ACT WHERE THEIR READERS ALREADY ARE?
+
+MJ08: July9, claude:4daf72e8-9866-4969-9e32-f9463a8f3171 #362,
+2026-07-09T15:26:33.606Z. Human enthusiastically connects reusable web components,
+document language and transclusion: semantic web with actionable 'physics'. The
+prior assistant claims Shadow DOM makes an embedded view secure against the hostile
+page. Human endorsement of the affordance does NOT make that premise true.
+
+Technical correction independently checked against primary browser documentation:
+MDN Using shadow DOM warns that closed roots are not a strong security mechanism.
+https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM
+The actual Bread component is a thin view: no keys/engine in the element, an isolated
+content-script transport, closed shadow root and background port. Importantly,
+port.ts:256-280 invokes custody consent BEFORE cast, with object/choice/origin in
+the explanation and turnId. That separate confirmation is a real useful receiving
+boundary; a page-resident badge alone is not. No exploit or browser run was performed.
+
+Current Mini owner reports a different member loopback surface: launch secret,
+Host+Origin gate, CSP frame-ancestors none, exact native intents and custody. This
+is a peer receiving report, NOT my independent runtime verification, and it means
+the old hostile-embedding flaw is not automatically a current Mini flaw.
+
+Revised question: can one native document/tool projection be rendered in Starbridge,
+a website and an existing chat while a trusted identity-bearing confirmation shows
+the same exact executable intent? Viewing, referencing, quoting, owning, editing,
+running and publishing need distinct contracts. Bend should supply behavior; a
+normal hyperlink should remain useful before a user adopts an entire new desktop.
+
+Q5. WHAT SHOULD SURVIVE A SEASON, PROVIDER OR CHAIN CHANGE FOR A CREATOR?
+
+MJ09: July14, claude:5d642514-10f1-4113-b2f8-7521ea52ff8f #170,
+2026-07-14T02:59:22.236Z. Human explores artists self-hosting/self-minting their own
+webstores and end-of-season achievements portable beyond churny Dregg devnet, with
+possible future import and trading-fee split. Human explicitly doubts value and
+does NOT choose a chain. Assistant chooses Solana cNFTs, prices and royalty mechanics;
+those are assistant proposals, unverified historical market claims, not requirements.
+Four fork occurrences are one text. This is more concrete than 'all games become
+finance', and weaker than a finalized mandatory NFT marketplace.
+
+Actual artifact docs/CONTENT-AND-ASSET-SPEC.md is a content contract with provenance/
+traits/signed authoring scaffolds and per-season content epochs. It still explicitly
+names hand-authored gallery publication as a gap. It does not certify foreign NFT
+minting, enforced secondary royalties or imported current authority. Nearby human
+prompts #177/#194 widen game infrastructure to parties/quests/raids/places and
+strategy games, so the artifact economy is a branch of play, not its secret purpose.
+
+Revised question: what survives as subject identity, earned provenance, artifact
+bytes and grants when seasons/hosts/chains change, and what must be reauthorized?
+Useful first consumer: export a season's authored object/achievement with exact
+source/run provenance, then import it as evidence while separately deciding local
+rights. Do not force monetization or a public wallet onto leisure participation.
+
+Q6. DOES A PARAMETRIC SEMANTICS ACTUALLY REACH THE ACTION AN AGENT TAKES?
+
+MJ10: June1, claude:7efea951-f234-48e7-bac4-96d9e45865b3 #59 (UI answer),
+2026-06-01T00:12:07.562Z. Human rejects the assistant's claim that a Lean orchestration
+demo can only certify a fixed literal: evolving state should be usable. #61 assistant
+corrects its analysis to generic execFullForestA laws and proposes a live Hermes→
+forest translator, correctly naming translation fidelity as an unproved seam.
+CRITICAL LATER CANCELLATION: #73, 00:23:44.258Z, HUMAN says 'New tack. Forget that
+task' and requests metatheory investigation. #75 complies. This is not a recovered
+unfulfilled implementation promise. The generic-live-translation insight remains
+available as a NEW recommendation when useful; no silent revival of a cancelled task.
+
+MJ11: July2, claude:a49cc4f7-386f-4e90-a824-376d818f12a1 #87 (UI answer),
+2026-07-02T05:56:53.469Z selects tiered verified interpreter for Orb handlers.
+Question wording/options are assistant-authored; the actual selected tier is human
+input. MJ12: July3 claude:47d16244-f253-4612-a1e8-00d47b62cddf #1028 explicitly
+abandons the old DreggNet REPOSITORY in favor of Bread ports. #1318 limits near-term
+general code execution while preserving Sandstorm SPKs and Hermes hosting. July4
+claude:54cbae0a #1521 UI answer chooses PORT-not-copy agent-platform edges.
+These are staging/replacement decisions, not a timeless ban on general computing.
+
+Revised question: can a hosted foreign tool, pure Bend program, private FHE task and
+resident all use typed native invocations while different grades honestly describe
+what is checked and who observes/acts? The translator must represent real requests,
+resource charges, outputs and external effects. A literal demo proof, self-authored
+receipt, or 'all tool names allowed' list is not equivalent to that live mapping.
+
+Q7. CAN A RESIDENT REMEMBER, FORGET AND KEEP RESPONDING UNDER CHANGING CONDITIONS?
+
+MJ13: July23 claude:d41ad82c-b169-4d25-8494-d2d16d493696 #744 asks that persistent
+reading context remain informed by its community. This is not storage alone.
+July29 #1291 is a mixed pasted room dialogue questioning high reasoning cost; #1311
+fresh human asks why effort is used at all. The agent first implements per-room
+effort, then #1328 reverses after discovering the old default was already high;
+its measured improvement came from smaller renewed context. Current config.py
+preserves the reason for omitting explicit effort. Do not convert an erroneous
+early explanation or the opposite correction into permanent model-policy folklore.
+
+MJ14: July31 #1640 is mixed quoted room dialogue PLUS human request for targeted
+forgetting of another person's information. The personal content is intentionally
+not restated here. #1679 assistant declares the regex scrub complete. Human #1680
+asks whether backfill restores it, then #1694 demands triplecheck. #1725 explicitly
+corrects the earlier completion: the SAME FACT survived in ordinary prose missed by
+the regex. A message-ID based second pass and context rebuild were reported, with
+IDs retained to prevent backfill resurrection. New quoted messages could reintroduce
+it; provider requests already sent and separate chat copies were outside that scope.
+This is an actual false-start outcome, not a hypothetical failure story.
+
+Source scripts/redact_state.py redacts rather than drops messages, keeps IDs, and
+separately instructs clearing live SDK context. Its code is narrower than the broad
+'every store' claim: redact_ids only rewrites top-level content of matching JSONL
+objects; no theorem closes arbitrary summarized/nested prose. Backups also remain
+copies. state.py separately has context floors/quarantine for suppressing loaded
+history while retaining stored history. No redaction tool was run in this pass.
+
+MJ15: August1 claude:06f061bb-d3ee-42ca-9d08-cd487690bfca #90 is pasted agent cost
+claims followed by human 'is this correct?'. #96/#103 agent discovers reading-room
+cache-prefix rewrites, distinguishes repeated cache writes from one prefill and
+rejects 'caching changes quadratic cost to linear'. The complexity claim is
+conditional on growing context, not every fixed-context call. August14
+claude:b42cbce2 #537 asks about an unresponsive resident and pathological Kimi
+latency/caching. Source kimi_resident/engine.py now has explicit medium/keep=off
+thinking config and serialized turns. This is evidence of provider adaptation,
+not a universal execution-grade ordering. August6 #592 UI answer deliberately
+scopes tool consolidation to Kimi, leaving Claude's live contract alone; subsequent
+unification is a new decision, not assumed historical consent.
+
+Revised question: can retained memory, loaded context, derived summaries, in-flight
+provider state and consented release have distinct versioned identities? Rebirth,
+editing, forgetting, cache renewal and account/provider failover are different
+operations. A resident service must stay socially informed and reply/recover with
+the correct history; preserving all bytes while perpetually failing to answer is
+not continuity. This complements worlds' message-move finding without rereading it
+as new evidence.
+
+Q8. WHEN IS A DIFFERENT BACKEND THE SAME COMPUTATION, AND WHEN IS IT A DIFFERENT CLAIM?
+
+MJ16: July30 claude:6418429c-b1af-4779-8a39-f42aebd4808f #291,
+2026-07-30T14:14:18.746Z. Human dislikes trusted-setup Groth16 shrinking in THIS
+Mina bridge exploration, rejects unattached 'bits' ceremony, and asks for BOTH
+foreign-proof verification and direct semantic compiler emission into Kimchi.
+They explicitly worry whether reinterpretation is the same protocol/proof. #297
+assistant recovers an earlier contrary scoping instruction; #300 acknowledges the
+new direction; #319/#322 report two-emissions-one-def for incrementNonce and its
+partial coverage, numeric hypotheses, missing commitment binding and absence of
+chain-membership evidence. Those reports are not whole protocol equivalence.
+
+Actual source KimchiEffectIncNonce.lean has shared heads and two forcing arrows to
+CellIncNonceSpec at encoded pre/post states. Its header explicitly limits this to
+14/35 descriptor constraints, excluding full row continuity/PI/commitment binding.
+The theorem takes RowEncodesIncNonce and a no-op selector hypothesis; the BabyBear
+arrow additionally takes its canonicality envelope. A theorem with those premises
+is valuable and narrower than 'the same whole protocol'. Even foreign proof
+verification must bind an accepted chain root/finality before claiming an event
+really occurred; the route's marketing shorthand is not a substitute for statement
+inspection. No bridge proof/build was run.
+
+Revised question: under Bend-native, oblivious, zkVM, FHE, MPC and specialized
+circuits, which common source denotation is preserved, which arithmetic/authority/
+observation/resource assumptions differ, and what finality/inclusion/result-release
+claim reaches the consumer? Nock remains compatibility support. A semantic compiler
+does not inherit old proof system membership or secrecy just by checking its output.
+
+FIVE ACTIONABLE HYPOTHESES FOR NEW DREGG — PROPOSED, NOT RECOVERED ORDERS
+
+H1 Portable evidence envelope (Q1/Q3): one typed object binds subject/issuer/source
+identity, grant instance, accepted state/version/root, clock domain/freshness and
+revocation proof or status. An independent local viewer can carry it through a chat
+or file without needing whole history; a receiver checks current action authority
+separately. First falsifier: revoke/regrant a reused slot, replay old evidence after
+an epoch change, and try substituting a different key for the same cell. Consumer:
+sharing a tool/document between two sovereign local worlds and a rented provider.
+October13 relevance: exact native authority/evidence and the chosen agreement join.
+Broader human-channel/offline portability is a suggested later tranche.
+
+H2 Versioned live-change contract (Q2/Q3/Q8): Bend module/method identity plus a
+bounded migration plan binds old/new state, outstanding calls/returns/reservations,
+resource accounting, accepted authority and provider lifecycle. Reuse actual Orb
+reload/drain laws as vocabulary; do not claim physical FD migration from them.
+First falsifier: update a method/policy while an old accepted call owes a private
+return; it must finish under its admitted contract or an explicit authorized
+handoff, never silently reinterpret or disappear. Consumer: room-authored tools,
+member OO and a hosted service surviving deployment/restart. Coherent current
+receiving/recovery matters by October13; richer hot upgrades are later suggestions.
+
+H3 Funded creation as an ordinary atomic authored operation (Q2/Q5/Q6): generated
+factory descriptors install exact source/program/policy identity, capability
+endowment and budget/resource flow in one accepted old-image batch. Internal value
+sequencing must not let freshly minted authority sign its own birth. First falsifier:
+try a descriptor substitution and a same-batch unauthorized grant; an ordinary
+funded new tool must still succeed. Consumer: creating a hosted room tool or game
+object, then invoking it from Starbridge. Mini already supplies one-old-image birth
+nuclei; investigate its actual receiver before inventing another kernel. An atomic
+flash-loan factory or foreign NFT export is a later discriminating experiment.
+
+H4 Portable presentation with exact trusted actuation (Q4/Q6): derive views and
+invocation schemas from authored native kinds/methods, but keep the trusted identity/
+consent context explicit for every host. First falsifier: embedded page changes the
+object/argument/origin shown after consent or overlays a fake 'verified' affordance;
+it must not produce an approved native intent for another action. Consumer: same
+document/poll/tool in Starbridge and an existing social/web surface. October13
+scope is meaningful native docuverse/deos actuation; arbitrary hostile embedding
+and browser extensions are proposed October26/November work, not recovered gates.
+
+H5 Context lineage and bounded resident work (Q7/Q1/Q6): retained events, edit/move/
+redaction records, summary dependencies, loaded context version and tool-work
+subcontext are explicit. Small delegated tool jobs return provenance-bound results
+to the informed main session; provider failover preserves operation identity and
+does not bill/dispatch twice. First falsifiers: summarized private fact survives
+authorized redaction, backfill resurrects a tombstoned event, changed system prefix
+invalidates every cache, or failover loses/duplicates the pending reply. Consumer:
+resident Hermes that remains informed and useful after a disconnect/restart.
+October13 scope is mature resident request/reply/recovery. Derived-memory rewrite,
+autonomous multi-provider optimization and comprehensive forgetting semantics are
+later suggestions; stored bytes/third-party provider custody cannot be wished away.
+
+DATE AND RELEVANCE BOUNDARY
+
+This pass independently reads historical sources; it does not independently re-audit
+the recent deadline corpus. OCT13-OBJECTIVE-RECOVERY remains the primary release
+lead: traffic privacy AND some agreement are explicit alpha gates, full OO/private
+execution prototypes are requested construction, and complete docuverse/substantial
+deos are real ambitions needing concrete acceptance. Old wishes here do not add
+mandatory NFTs, flash loans, all kernels, FD handoff or universal offline UI to that
+date. October26/November names above label suggested tranches, not human promises.
+The latest direction remains Mini growing into new Dregg, Bend the ordinary world
+language, Nock compatibility, graded/homomorphic execution and coherent Starbridge.
+
+NEXT DISCRIMINATING READS, NOT AN EXHAUSTIVE RESTORATION ORDER
+
+1. Follow actual signed-trip admission and the current Mini authority/epoch receiver
+   rather than implementing the old dead helper in a second system.
+2. Compare live-change contracts to accepted pending-call/private-return recovery;
+   inspect actual retained artifacts at the integrated revision.
+3. Read a current funded-birth consumer end-to-end, including source bytes installed,
+   existing-object calls and creation rollback, before importing old flash-loan code.
+4. Trace generated view→trusted consent→native accepted intent→received result as one
+   consumer. Closed Shadow DOM alone is not its trust argument.
+5. Trace a summary/event edit to loaded resident context and provider restart, with
+   deliberately different representations of the same fact; no regex-zero ritual.
+
+The large corpus remains underread. Keyword selection favors named tensions; it
+does not recover every human conversation, implicit abandonment, failed deployment
+or obscure code consumer. The coverage checkpoint keeps those gaps visible.

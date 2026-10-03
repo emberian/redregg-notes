@@ -1,0 +1,154 @@
+SWARM LIFECYCLE AND PRE-NAP CONSTRUCTION SURVEY — 2026-10-03 09:04 UTC
+Astra facilitator. Current owner replies supersede earlier status paragraphs in this file.
+No new agents, builds, source edits, Git or resource changes performed by this survey.
+
+DECISION SUMMARY FOR ROOT
+The swarm now has real joined native evidence, rather than only authored foundations. The next bottleneck is source/authority/proof/backend convergence, not an absence of parallel activity. Preserve one common integration/resource captain; keep ordinary adapters and producer-consumer interface resolution with their owners. Capability ownership survives a completed agent turn. Artifact readiness must wake completed owners using followup_task: send_message alone does not wake them.
+
+The broad destination remains Objective Bend and a member-programmable world: collective fiction/social places, workdesk/Starbridge/deos, DrEX/FHEgg/private allocation, continuing residents/service commons, portable homes/recovery, and strong private computation/traffic/sovereign agreement. Workshop is one demanding consumer, not a replacement portfolio or completion ceiling.
+
+Three clean extra Bend assignments have explicit consumer demand: controller/source simulation proof; generated-definition dependency ordering with exact installed-entry binding; actual prelude Data representation correspondence (Bool first, then Word/Nat). Root should decide additions. No extra general compiler/scouting lane is needed. Other underowned proof boundaries are listed separately below, not folded into those three.
+
+EVIDENCE AND SURVEY COVERAGE
+Read RESUME, REENTRY, prior INTEGRATION and local AGENTS; inspected live agent inventory; read targeted existing design sections. Survey sent to all active construction/proof owners: captain, service, OO, docuverse, native performance, agreement engine/proof/receiver, Bend execution/world/compiler/zkVM, FHE, backend, traffic, and fiction/workshop; resumed completed service and graded-proof owners via followup_task. Existing archaeology/synthesis owners were asked to inventory their ranked transfers, not redo history. All status below is attributed direct owner evidence, not independently rerun by this auditor. No claim every repository/history was reread.
+
+CURRENT CONSTRUCTION — ACTUAL STATE AND NEXT CONSUMER
+
+COMMON CANDIDATE / CAPTAIN
+Captain reports full548-module Host build/native link PASS; common client40, UI22 and shared guard3 PASS. Immutable common Host740545/client1ad2ebe have fresh native receiving. Integrated/pushed cace986a contains cache/service/OO/UI/traffic/batching; checked Bend13 committed df75f11d, push pending at captain reply. Safe loopback demo is running through Mac SSH port32944; no production/r1 replacement. Captain is reconciling obsolete INTEGRATION paragraphs. Next: import two ordered service patches, rebuild required SPK roles and seal a matched family for r2 receiving. Common Host/UI readiness is not automatically SPK-family readiness.
+
+OO / MEMBER CONSTRUCTION
+Owner reports fresh Store J0/J1 plus51 native OO actions PASS, canonical member constructors revisions2/3, actual final-self/super behavior across old/middle/new pins1/2/3, exact retry, inherited law refusal, stale-parent/narrow-read refusals with unchanged state/accounting. Three Objective Bend modules authored/uncompiled: composition of interfaces/requirements/provisions/direct parents; canonical partial-source prototype reflected from actual Book.get; actual self/super AST-ref elaboration into checked Book. Next: real reusable partial Workshop, missing requirement supplied by caller, super and final-self override, fresh governed instance. This is genuine new language construction beyond the passing older receiving tranche.
+
+DOCUVERSE / DEOS / STUDIO
+Owner reports same-world object faces35 checks, first69 rows with17/18 assertion count discrepancy between captain/owner, second62 rows21 assertions; exact original logs own counts. Native evidence includes creation, live/pinned source, independent narrow/revoked reads, history, stale drafts/comments, dropped-reply/restart exact receipts and signed cell+sequence resident outputs. Evidence under integration/receiving-docuverse-{oo,first,second}-r1 and docuverse-common-receiving.json. Objective Bend Surface codec/projection, prepared-intent refinement, generic Rust consumer and source Data interfaces are staged/unbuilt. Next: actual source-derived return -> canonical Surface -> generic renderer and native prepared/custodied intent, then editor preview/publish/evolve. Installing a view must not mint rights.
+
+SERVICE / R2 / CONTINUING RESIDENT
+First source repair8 integrated fc5288b7,53 focused checks PASS. SPK/staging v2 source patch00e7626897d9…: release compiled, native6/6 PASS,31 focused Python PASS, dry-run10 current paths PASS. BYOK incremental patchba19a79cc38b…:4 dispatcher+13 plan+9 root-stage PASS; no further Rust needed. Both delivered captain; import/seal not confirmed at owner reply. Evidence hbox:/tank/dregg-build/codex-service-r2-20261003/{SOURCE-STAGING-EVIDENCE-v2.json,CREDENTIAL-LAUNCHER-EVIDENCE-v2.json,spk-namespace-test.log}. No r2 accounts/units/ports, global service changes or paid calls. Owner retains fresh member TLS EtherCalc -> captured CSV -> shared native doc -> typed scripted Hermes -> exact completion/payment -> lost reply/restart/checkpoint/restore, plus signed synthetic BYOK concurrency. No private user input needed for this tranche. Broad multiuser service/context/mainnet acceptance remains separate.
+
+NATIVE PERFORMANCE / ASYNC GATEWAY
+Whole-action signed batching integrated; common40/40 includes five coherent-boundary/refusal checks, shared guard3/3 PASS. Actual same-world two-target proposal/readback and out-of-room refusal running at reply. Predicted query/exchange reductions are structural, not timing measurements. New owned next capability: durable asynchronous native request custody, source-authorized exact fetch, worker/recovery seam; traffic owns cohort adapter. Fixed emissions must run independently of native repair latency. Do not call five-second phases a solution to a one-second deadline failure.
+
+AGREEMENT ENGINE / GLOBAL PROOF
+Engine r1 actual PASS: nine Lean engine/quorum/codec/IO/native/binding/control/custody modules and audits, fallback/adversarial/replay harness, four logical nodes over authenticated TCP, MLDSA65 quorum verification and durable lost-CAS-reply restart. Frozen ENGINE-MANIFEST.json and joint-agreement-engine-source.tar.gz in hbox:/home/hbox/workbox/codex-agreement-20261003. Not yet integrated into native Mini ordering and not a completed global safety proof. r2 chronological audit authored.
+Proof owner authored450+ lines for READY causal roots, cross-time/party commit-vs-prepare/disable, safe first vote and cross-view prefix, directly aliasing executable AuditEvent. Uncompiled; captain has scheduled bounded check after Bend-world before receiver closure. Global theorem remains conditional until executable Reachable -> LocalFaithful extraction joins (frontier-owned). Native validation must fairly validate exact learned ancestor prefixes; reliable network alone does not make cached application validity total.
+
+JOINT SOURCE RECEIVER
+Foundation authored, no compile/execute/integration yet. Actual per-target reserve signatures/capabilities/composed law, framed physical control cell, ordinary sourceGate, one DataIntent PENDING reservation/funding/repair, VerifiedCommit -> actual physical CAS -> private Appended Pending. New exact source-prefix validation uses full-history loadImage -> NativeHostReplay.verifyLoaded from pinned origin, opaque Validated producer for frontier scheduler. Genesis/context self-reference repaired by distinct semantic roster manifest and exact source anchor.
+Next owned work: event60 replay, Pending -> anchored allocation, YES privateRecovery, terminal install/abort/maintenance and actual ordinary proposer routing. Allocation receipt is not Qualified; actual AVSS/holder readiness remains necessary. Root requested distinct opt-in birth reservegrant assignment so rights are reachable without inventing automatic owner authority. Captain owns shared import; receiver owns functional completion and repairs.
+
+BEND EXECUTION / CLOSURE MACHINE
+Pinned Bend947db source port PASS on Lean4.30 with two proof-rewrite edits; seven source theorem audits standard axioms; proof-carrying live Eval/Trace executor with eleven checks PASS. Bundle hbox:/tank/dregg-build/codex-private-lifecycle-20261003/bend-source-passing.tar.gz. Captain common integration separately tracked.
+Actual bounded closure/continuation machine, all18-constructor code/immutable heap/env, proof-producing decoder and10 semantic/refusal probes are authored/uncompiled. General heap extension and decoder completeness/uniqueness proofs also authored/uncompiled by graded owner, repair ownership retained. Controller -> Eval simulation/completeness is still open. Fixed network controller remains to generate; generic read depth improvement from serial O(H) mux to <=p+1 is authored, pending checks. Clear executor is foundation, not private execution completion.
+
+BEND SOURCE / TYPED PLAN / PUBLICATION
+World owner first six scoped modules PASS: sealed source/imports, artifact identity/version migration, actual exact Book parse/check/core entry, ordered actual native Payload + independent return slot, fixed ten-lane capacity/Fits, accepted-trace source/program link. Seventh publication syntax repair undergoing final check at reply; no native end-to-end claim. Further invocation exact-byte codec, method attribution, opaque-result actual native CAS and current-law guarded return-release event authored/uncompiled.
+Next: actual publication/source lookup -> chosen checked entry -> typed effects/result custody -> native admission. New source charge/funding rule is owned work: cannot feed source counts or fixed private charge into old Nock steps gate. Attribution transcript is not an elaboration theorem.
+
+FIXED-PROGRAM COMPILER / FHE CONSUMER
+Compiler scoped check-09 PASS: actual artifact9ca8ad25…dc049e2 from source parse/admission and shared executeChecked output/count; general arbitrary-witness -> exact BendTrace, standard axioms. Dynamic mux over three private-varying inputs and actual Book-selected Def entry adapter authored/unchecked. Important correspondence: inline body trace4/5 differs from reference-call trace1; actual selected entry must bind method identity.
+FHE release and dynamic API compile PASS. Real compiler artifact -> BFV -> separate evaluator/checker -> owner-only decode PASS all4096 slots, altered output/binding/PowerBasis refusal. Native code supports one ct-ct/relinearization and accumulated lifetime depth2, refuses third unrefreshed use. Dynamic source artifact still queued. Source-only bundles, no common native-method integration/deployment. Next: genuine current-authority opaque encrypted-result storage and separate authorized release, owner key retained. World owner supplies receiving, not a Rust Boolean CheckedRun.
+
+GENERAL ZKVM / PROOF BACKEND
+Owner has staged four Lean modules for source Trace endpoints, shared Op DAG -> Air arbitrary-wire forcing/SSA, actual Bread IR2 relation/public pins and Lean algebra emitter; uncompiled/integration pending. RNG adapter3/3 release tests PASS; isolated actual IR2 prover/verifier + short-trace regression staged/uncompiled awaiting resource allocation. Material issue: one-row hiding PCS degree-one OOD opening can reveal row despite CSPRNG. Fixedheight256 main-only experimental profile is not qualified hiding. Need actual transcript masking/query-budget argument plus controller/source simulation and exact world statement binding. No proof receipt replaces native reexecution yet.
+
+PRIVATE BACKEND / PHYSICAL CUSTODY
+Owner reports ASKS immutable accepted-share repair14/14 PASS including dealer replacement/delayed RA; r3 fresh ASKS per view + ICG/IndexVABA/selector ACS + strict wire + deterministic event/outbox WAL ten new tests PASS (28 unchanged skipped). Earlier physical anchor/snapshot/fsync secret release/restart/substitution/relabel probes pass. None integrated into native Mini; no full AVSS/AMPC/private-output claim. Source-native full descriptor/generation/receipt Lean proof and large-Nat frame probes authored/uncompiled. Next: actual recipient-private verifiable payload delivery (cipher RBC, ASKS key, recipient request RBC, private share transfer), then dZK/ACSSId/triples/authenticated Boolean evaluation. Maintenance funding and source receipt/private retained transport are concrete joins. Chosen native order: funded first source CAS undecided; actual physical receipt + Qualified second CAS YES; sign only after readback.
+
+TRAFFIC / SOURCE PRIVACY
+Scheduled transport frozen ca465 with nine tests/release integrated; PQ guard957ae seven tests/release sent for import. Actual four clients, three ML-KEM relays, receiver reached native Host with exact repair and broadcast scans at5-second phases; injected valid replacement rejected before claim and repeated reads cached. Same1-second native workload missed deadline after durable claims; no second effect/catch-up. No deployment. Explicit profile trusts honest noncolluding registrar, honest receiver, >=2 honest clients and >=1 honest shuffle within static protected lifetime. Receiver sees original signatures/graph: not receiver-author privacy/private execution. Cover survives capacity/class refusal; repair has separate quota. New authenticated cohort_tcp fixed padded records and slot/generation/stage PSK authored. Next joined capability pairs traffic cohort with performance's asynchronous source custody so cover cadence is independent of admission/completion.
+
+FICTION / WORKSHOP DOMAIN
+Real upstream Bend OrderedCapacity, CatalogReview, ReusableWorkshop, Demonstration and Prelude modules: all four consumers source parser/typecheck, sealed manifest and safe BendTT emission PASS; actual Book.check queued. Exact conservation/order, source-policy predecessor, audit delegation laws authored. Callback/final-self/super requirements are actual source. Next needs OO source-derived callback specialization, world typed Plan/private return, doc Surface and service held-source review. No native Workshop or source-lowering qualification yet. Older Mini StoryLaw member/player/GM consumer exists; resident GM summon remains refused. This does not complete broader shared fiction/social place construction.
+
+EXTRA BEND OWNERS — PRECISE HANDOFFS FOR ROOT
+1. Controller simulation: requested independently by composition and zkVM owners. Theory/BendClosureSimulation.lean; consume actual Control/Frame, Arena/Machine/Decode, source Eval/Walk/Value, graded code/heap lemmas. Prove initialization/reification, tick stutter or source progress, completed Value, refused prefix. Consumed by native/private/zkVM/world. Freeze interfaces after first source check. Composition keeps executable controller/network; graded keeps decoder/store lemmas. Completeness/capacity termination is a later explicit theorem.
+2. Core dependency/entry ordering: requested OO+world. Consume actual partialCore/resolved dispatch, emit lawfully topologically ordered checked Book and exact source-to-installed-entry certificate. Must satisfy actual earlier-definition/decreasing-recursive-call restriction; no host dispatcher or unchecked recursion. Consumed by Workshop wrappers, BendCoreAdmission and compiler.
+3. Prelude representation: requested compiler+archaeology. Pin actual base.bend definitions and safe elaboration. Start RepBool for Sigma(tag,unit) -> bit, encode/decode and source Prj/Mat/split adapter; then source-indexed Word/Nat symbolic relations and operation refinement. Existing fixed blocks accept bare core enums, not user-authored prelude Bool. Consumed by Objective specialization and MPC/FHE/ZK encodings. Test saturation/debit-underflow and div0 distinctions; do not create giant unary runtime trees.
+Separate optional proof capacity: actual GF2^128 interpolation uniqueness/reconstruction refinement (backend); unary ct/plain BFV phase/noise/rounding/ring convolution bound for actual q/t/N/sampler (FHE); concrete P3 masking-query-budget qualification (zkVM). These are substantive underowned correctness/security boundaries, not more general reviewers.
+
+EARLIER 'BRING TO MINI' PORTFOLIO — ACTIVE VS ORPHANED
+This inventory uses existing ranked archaeology records plus current owner replies; routed recommendations are not assumed implemented.
+- Exact warm history/revision indexing: kernel/cache/native performance active, common receiving now real. Remaining shared retained index/history materialization is kernel continuation, not another Bread runtime.
+- Archive-first continuation and acknowledged prefixes: service/provider/private recovery active. Common delivered/refund/base/outbox/generation join and typed one-ahead recovery remain; service should own, custody owner qualifies generation/rekey. Raw signing-seed transfer is not portability.
+- Physical non-overselling capacity: native budget/metering/lease and private recovery quotas exist, but cross-resource compute/preprocessing/cover/storage/repair disjoint reservation service has no confirmed end-to-end owner. Needs honest concurrent spending/flood/refill receiving; Bread SharedBudget is not a safe shortcut.
+- Authenticated encrypted artifact repair and portable home transfer: no dedicated builder confirmed. Need source-bound manifest/chunks, archive-before-ack, cross-provider restart/rekey/uncertain-call protection, held budget and participant acknowledgement. Useful separate product/system stream beyond local restart.
+- Shared station/collective fiction/GM: fiction owner currently building reusable Workshop source. No confirmed complete station/contested shared object/rule evolution/actuating GM receiving owner. StoryLaw/J15 provides a base, not that full consumer. UGC/remix/saga/social joins remain worthwhile.
+- Living workdesk/Starbridge: docuverse owns real source/history and new generic Surface; missing joined source-aware resident review/current-law landing and portable interfaces across contrasting products. Do not count two views as user-programmable UI completion.
+- Continuing residents and real service commons: service exact request lifecycle active. Ongoing mailbox/context, edit/move/redaction dependency invalidation, delegated actuation and GM behavior are broader unfinished joins. Provider call/result/notification remain distinct.
+- DrEX/FHEgg/private decisions: backend/FHE/joint source/traffic owners active. User-facing independent private inputs, private return and real governed consequence across game/choice AND allocation/service consumers lack a confirmed domain integrator. No revived dark-FHE dClutch mandate implied.
+- Rehearsal/review/selective incorporation: existing dry-run/history useful; no confirmed lawful proposal/branch-install owner. Need bounded proposal without external effects, complete dependencies and current-law actual installed receipt; old branch root or generic merge is not installation.
+- Governed homes/Matrix/Android/contributed hosting: no current construction owner confirmed. Keep portfolio visible; first concrete portable home, then confined body/interoperability consumer. Historical Android restore is not complete RAM/device/binder migration.
+- Cloud reuse: keep useful archive custody, typed views, exact mandates/budgets and source-pinned install/restore, not adoption of rejected Cloud universal executor or JSON authority ledger.
+
+COORDINATION / RESOURCE CORRECTIONS
+Root authorized two bounded Rust seats (8Gi/jobs2 each); captain implementation was not yet acknowledged at the earlier authorization note. Later captain confirms backend14 PASS, frontier helper4 PASS and continued FHE/PQ scheduling. Root separately proposed a four-minute8Gi/one-thread Bend probe subject to guard/capacity; it yielded the passing port. This auditor did not schedule or launch any check.
+
+Captain owns scarce seats/common ABI/Git/seal, not every adapter conversation. Service now owns broker spkRoot/helper. Ordinary producer/consumer pairs exchange exact types, canonical versions, source pin and positive/negative consumed call. Owners keep repair responsibility through first integrated native use. A turn may complete while a capability waits; wake it using followup_task when its dependency becomes ready. This avoids idle polling without silently abandoning the work.
+
+Maintain only compact rows in existing records: capability, owner, exact source/check, next proof of actual use, blocker owner. Replace obsolete current paragraphs rather than append contradictions. Preserve meaningful historical evidence separately. No new heavyweight lifecycle system is proposed.
+
+ROOT ASSIGNMENTS AFTER SURVEY / RANKED PORTFOLIO CONTINUATION
+Root has now assigned three requested construction owners: bend_controller_simulation,
+objective_bend_linker and bend_data_representation. joint_reserve_birth_authority
+owns actual birth-controller reserve opt-in. These are decisions already made,
+not staffing requests still pending. Composition froze nine-file uncompiled closure
+checkpoint bend-closure-first.tar.gz/manifest for proof/compile coordination.
+
+Recommended separable portfolio assignments, ranked by immediate cross-consumer
+benefit and current absence of a receiving owner; all four remain active ambitions:
+1. Resident context and governed proposal/actuation. Use actual hermes_room
+prepare_resident, room_resident assignment_fingerprint, resident_requests stable
+(binding,author,cell,sequence), and signed doc/stream observations. Own an additive
+bounded ContextProjection with immutable source/revision/placement dependencies,
+warm/cold equivalence and correction invalidation. Current message edit/reparent
+contract is missing and must be source-owned, not silently patched into a prompt.
+First consumer: collaborator cites current source, proposes one exact permitted
+change, source receiver installs/readbacks; edit/move/revoke before vs after start
+preserves exact pending identity and prevents new disclosure. Service retains
+provider/dispatch/recovery; docuverse retains canonical source/view. Current owner (root assigned): bread_programmable_archaeology, now actual
+context/placement/dependency and proposal-landing construction, with SPK included.
+2. Portable archive and continuation repair. Use Mini Store/checkpoint/restore,
+FnConsumerNamespaceAdmission same-walk verification and source-release guards;
+reuse Bread storage availability/retrieval position+manifest checks and
+sandstorm-serve custody archive-first one-ahead RecoveryRequired as mechanisms.
+Own durable source-bound encrypted chunk manifest/fetch/repair and participant
+acknowledged prefix; then controlled successor handoff/rekey with uncertain calls
+and fenced predecessor. No raw signing-seed migration or new provider dispatcher.
+First consumer survives unavailable origin and lost archive acknowledgment with
+exact continuation/no duplicated effect. Current owner (root assigned): bread_systems_archaeology resumed as actual
+portable continuation/archive-before-ack/repair/transfer builder; service/custody
+remain consuming interfaces and SPK is explicitly included.
+3. Collective station and bounded GM. Use current Mini StoryLaw/member/player/GM
+receivers; resident summon currently refuses. Own native shared place/contested
+object/rule revision and narrator mandate; multiple members change shared
+consequences under current rules. Service handles external inference and exact
+dispatch, OO/Bend carry authored rules. Suggested fiction owner retains Workshop
+and gets a distinct station consumer assignment, or focused domain successor if
+that splits attention. A static story or Workshop reskin does not close it.
+4. Authoritative allocation plus collective adoption. Existing product design
+packages2/5 identify Mini client-only single-seller allocation to move under
+source judgment, followed by exact integer DrEX uniform rules (distinct mechanisms).
+Own complete admitted intake/source-use/reservations/operation identity and native
+resource/payment consequences; collective cast/eligibility/delegation determines
+a real installed policy revision. Private inputs/results plug into existing
+backend/FHE/world release contracts; begin public/native rule and refusal tests
+without claiming private qualification. Suggested prior bigdregg product expert
+resumed as domain-construction owner, not another crypto/compiler owner.
+
+These assignments can start additive source/contracts in parallel without new
+build allocation. They are not a demand to serialize portability before fiction
+or to choose one product identity. Root chooses owner capacity and shared hooks.
+
+Current owner map correction: station/GM and collective-adoption/private-allocation
+are still unassigned construction at this writing. Root requested separability-now
+versus-next recommendations from fiction/workshop and bigdregg product owners;
+requests delivered. Root maintains the unified owner map/RESUME and active goal;
+this survey is evidence for that map, not a separate tracking hierarchy.
+Station exact current seam: native/resource-client/src/story.rs implements member
+story lifecycle/moves; Assurance/StoryLaw supplies allTable law; instances are
+per-player. hermes.rs around340 refuses GM summon. Proposed shared consequence
+source relation must add actual global prop/resource and no duplicate possession
+plus rule revision preimage law. Keep old StoryLaw receiving as regression, not
+a substitute for shared state. Service owns provider/custody, GM output is an
+attributed proposal rather than ambient source mutation authority.

@@ -1,0 +1,305 @@
+BEND <> BREAD: RANKED CONSTRUCTION BRIDGES AND SIMPLIFICATION
+2026-10-03. Codex / bend_bread_archaeology. Second-pass research, no source edits.
+
+Companion replay cards: replays/bend-bread-language-proof-20261003.txt.
+Scope and provenance limitations in that file apply here. 'Implementable' means
+the proposed seam has identifiable inputs, theorem/consumer obligations and a
+cheap falsifier, not that construction or deployment has already occurred.
+
+MAIN FINDING
+
+Bread's most reusable legacy is a translation discipline and a library of
+representation/forcing lemmas, not its many language names. Bend's richer primary
+language can remove duplicated app/control interpreters and per-backend syntax,
+provided source elaboration, finite representation, runtime effect observation
+and installation remain explicit joins. Do not reconstruct the old constellation
+of HOL4/Candle/STLC/DSL/effectVM beside Bend. Adapt useful laws into the currently
+owned Bend Book/Eval/Walk + typed machine/Block construction.
+
+The compiler owner already identified Mini Air/AirFlatten/Emit/PredCompile and
+Bread EffectAir/IR2. This file adds symbolic numeric codec patterns, certificate
+correspondence history, proof-generation assembly and product consumer priorities.
+
+P0 — NUMERIC REPRESENTATION BRIDGE, BEFORE WIDE DATA SPECIALIZATION
+
+Deliverable:
+  Source-indexed Nat/Word representation contract with exact backend domain,
+  outcomes and codec. The runtime operates on native words/limbs; unary source
+  trees exist as mathematical/Prop witnesses, never a gigantic runtime expansion.
+  Define relation RepNat(valueTerm,n) following exact normalized source Zero/Succ,
+  and RepWord(n,valueTerm,bits) following exact Word(n) WNil/WCon. Prove canonical
+  source representation, length/bounds and decode/encode directions symbolically.
+  An operation simulation carries source input and output representation, exact
+  pinned definition identity and permitted overflow domain/fault observation.
+
+Existing material:
+  Bread Circuit/FieldLanes9.lean117-194: generic Nat ofDigits/digitsN, inverse
+  directions, length and per-digit bound; instantiate base2 for Word, base2^k
+  for limbs. Bignum/DigitInjective.lean44ff: arbitrary-width injectivity by induction
+  without exhaustive enumeration. Exec/RecordCircuit.lean range_sound/complete/
+  iff gives bit decomposition. Circuit/Emit/AirProgramRows.lean limbs_recompose
+  gives width-generic residue relay. Mini AirRange/AirBignum belongs to compiler
+  owner and should be actual gadget consumer, not reimport the huge Bread closure.
+
+Necessary repair:
+  Nat.sub saturation is incompatible with Bignum.sub_underflow_unsat; use compare
+  plus mux zero or prove domain a>=b. Nat.divmod0=(0,a) is not U32 division pair's
+  semantics unless independently checked. Nat cap2^48-1 faults in comp.ts, does
+  not wrap. Word/U32 uses modular2^32 behavior. FHE plaintext ring reduction is
+  another carrier, requiring injectivity/no-wrap or declared modular source API.
+  Semantic source charge and optimized physical work need separate conversion.
+
+Falsifiers:
+  Nat3-5, div0, largest Nat immediate+1, malformed Word31/33, fieldmodulus alias,
+  unconstrained borrow/carry/high bit, wrong definition under same native name.
+  Proof obligation is arbitrary auxiliary assignments, not honest generator test.
+
+Cost/sequence:
+  Two codec modules + one source operation proof + one existing gadget adapter
+  first. Dominant unknown is source Eval normalization/definition unfolding and
+  binding correct Base definition, not limb algebra. Cheapest spike is Word32
+  roundtrip plus Nat.sub one bounded case theorem. Large integer arithmetic can
+  then reuse the generic proof at all widths. No global toolchain upgrade implied.
+
+P0 — SOURCE-BOUND TRANSLATION BUNDLE WITH A REAL RECEIVER
+
+Deliverable:
+  For each compiled source Plan/Block retain source/kernel/import/profile IDs,
+  target bytes/canonical encoding, shape/public split, operation/outcome/effect
+  observation relation, constructive witness producer, arbitrary-witness forcing
+  and versioned certificate checker. Receiver verifies these exact artifacts,
+  then invokes existing current-law controller, not a new backend authorization.
+
+Reuse:
+  ArithmetizeTypedPredicate emits defs and proof terms together, proof references
+  exact source Program. CompilationCertificateBundle.checkBytes_sound is a small
+  fail-closed reference checker from bytes to canonical source/target relation;
+  version1 targets only Boolean tree equality, not arbitrary Bend/CakeML.
+  BridgeSynthesis.holds_congr/canonAtom_iff assemble symbolic proof across source
+  constructors. OTPoC's context/conclusion-content repair explains why kernel
+  checking alone cannot guarantee intended source correspondence.
+
+Bridge still needed:
+  actual authored Bend -> exact admitted Book -> Block -> emitted descriptor/DAG
+  -> executing/proving consumer -> authenticated result/effects -> installed turn.
+  A generated canonForm adopted as its own Spec does not discharge first arrows.
+  C/JS translation requires observation refinement; Book.check plus consistency
+  proves properties of kernel calculus, not comp.ts backend.
+
+Falsifiers:
+  Source A certificate + targetB bytes; wrong import order/body/dependency hash;
+  valid proof of wrong statement; unknown version/tag/trailing bytes; mutated
+  public input; true answer but reordered effect/dependency trace; unsupported
+  source constructor silently omitted. Fail before installation.
+
+Cost:
+  Extend owner's actual unary case SourcePlan and Host emitter, not a universal
+  verifier project first. One certificate boundary + one receiver path + one
+  durable member method application supplies strongest practical evidence.
+
+P1 — TYPED MACHINE ROW ASSEMBLY INSTEAD OF HANDWRITTEN PROOF PER OPCODE
+
+Deliverable:
+  A typed transition Block declares source state relation, bounded representation,
+  instruction read/write/guard/effect/charge and row/gate schema in one place.
+  Generate source-independent fields and forcing obligations from that schema;
+  prove source-specific Eval/Walk simulation at instruction boundary; compose run.
+
+Reuse:
+  RowLibraryExperiment has descriptor-parametric gate/window, booleanity,
+  const-lane, selected const/thread/delta combinators and second descriptor
+  assembled without bespoke field arithmetic. AirProgramRows gives actual
+  RowsForced+RomFaithful+RangeTablesHonest+initialTracks -> runProgAt induction,
+  with selector onehot derived from ROM bytes and canon integer equality from
+  range/canonical residues. ConcreteKernel's commuting-square transfer illustrates
+  propagating abstract theorem through efficient persistent representation once.
+
+Boundaries:
+  RowLibraryExperiment still names assembly-driver/shaping work; spec is input,
+  not discovered. AirProgramRows machine is a Pasta arithmetic register machine,
+  not Bend. Its last instruction needs a trailing row; row0 pins and honest lookup
+  tables are actual assumptions/consumer obligations. ConcreteKernel is not a
+  general extracted Bend evaluator and its own function names mostly live within
+  that module; scoped consumer search found FinBindsKernel/FinAllocCell imports,
+  not proof that the native node executes ConcreteKernel operations.
+  Shared Binder/closure/env, quantities, live Rwt, complete captures and labels
+  need the exact Bend simulation owner. STLC receipt paths cannot substitute.
+
+Falsifiers:
+  Missing next row; aliased field register; detached ROM; unconstrained selector;
+  forged original input; source beta receipt identical but changed endpoint;
+  auxiliary witness invents unsupported effect or hides exhaustion.
+
+Cost:
+  Shared forcing library plus generator dispatch is cheaper than porting every
+  old AIR, but initial Bend closure/state representation is substantial. Start
+  two different finite Data instructions on same Block schema; only then expand
+  machine loops. Narrow compilation with pinned warm toolchain is adequate.
+
+P1 — EXECUTABLE DAG + RELATIONAL AIR AS TWO PRODUCTS OF ONE BLOCK
+
+Why:
+  ZK AIR expresses existence of consistent output/witness. FHE evaluates a
+  constructive DAG to encrypted output; it cannot be expected to solve arbitrary
+  relation. Native/MPC also need schedule/witness generation with matched meaning.
+
+Reuse/repair:
+  Finite logic/Boolean graph, optimizer certificates and direct-logic no-wrap
+  counterexamples give exact algebraic templates. Select output-known constructive
+  expressions, shared gates and flattening from existing Mini emitter. Retain
+  arbitrary-witness relational soundness for ZK and independent DAG evaluation
+  correctness for FHE. Reuse semantic predicate when truthful; keep leakage,
+  numeric plaintext ring/noise/domain/release/trust/physical cost backend-specific.
+  CertifiedPresentationChange/IndexedPresentationCompiler has explicit evidence
+  mapping and conversion overhead. Adapt contract structure, not old Mode enum.
+
+Falsifiers:
+  AIR verifies arbitrary wrong output; FHE DAG lacks witness-dependent inverse;
+  a finite-field repair assumes inverse witness as homomorphic primitive;
+  branch choice specializes secret data; encrypted output release lacks current
+  same-opening authority; no-wrap proof uses witness-selected domain.
+
+Cost:
+  Initial public literal Bool case is ct*plaintext/add, and owner now exposes
+  expression/DAG. Dynamic secret branch becomes mux with both arms represented.
+  Arithmetic/loops raise multiplicative depth/noise or bounded shape visibly.
+  Avoid porting huge finite function tables: variable CCC evaluation has degree2
+  but its coordinate space can be exponentially large.
+
+P1 — REJOIN AUTHORING, SELF/SUPER AND REVISION INSTALLATION
+
+Deliverable:
+  An actual member writes/imports Bend method source, gets useful diagnostics,
+  sees checked dependencies and input/output/effect declaration, publishes under
+  current law, invokes from a persistent world object, observes result/receipt,
+  then restart/replay preserves exact version. Prototype self/super references
+  resolve to sealed immutable library closure; governance parent graph stays
+  separately authenticated as current-law management policy.
+
+Simplification:
+  World behavior, authoring validators, docs/knowledge transformations, resident
+  agents and game rules can be Bend libraries/programs using same intent/response
+  vocabulary. Friendly purpose syntax is optional elaborator into checked Book.
+  This can retire repeated .scene/.dungeon app interpreters and Rust generation
+  recipes once actual consumers migrate. Preserve editor UX and diagnostics,
+  do not force every member to program raw dependent calculus to write a story.
+
+Authority/resource caveat:
+  Typed source constraints are not sufficient authorization: capability/time/
+  root/current-law checks remain receiving facts. Q1 affine use does not enforce
+  one-shot ownership; nullifier/reservation does. Predicate conjunction, accumulated
+  resource spend and one-shot consume are different algebras. Historical allowance
+  replay showed why a pure monotonic endpoint predicate misses path/reset history.
+  Rich type indices can expose these distinctions rather than flatten all into
+  Boolean caveats. More expressive source does not authorize ambient FFI/time.
+
+Falsifiers:
+  Same source-name loads different self/super version; preview runs sourceA but
+  installed receiver executesB; concurrent management revision; stale authority;
+  parent replacement during in-flight call; wrong result observation after reboot.
+
+Cost:
+  Current world-language/native OO owners hold the receiver and ABI; one member
+  journey through their source pin is a good first join. Shared typed effect/
+  continuation ABI is the integration bottleneck, not adding another parse button.
+
+P2 — GOVERNED PROGRAM OPTIMIZATION AND RESIDENT INHABITANT LOOP
+
+Deliverable:
+  Resident compiler/agent proposes an optimized immutable program revision and
+  checked refinement bundle; current authority admits it; consumers pin exact
+  chosen version. Running continuations finish old code or pass proved migration.
+  Faster backend doesn't alter source fuel/outcome by accident.
+
+Historical transfer:
+  Candle self_recompile demonstrates useful proposal/check/install iteration but
+  has separate HOL specification and ML closure plus sample agreement. Modified
+  CakeML bootstrap ran a proved pass while whole modified compiler composition
+  still carried FFI seam. Those are lessons for artifact-indexed correspondence,
+  not evidence newDregg must become Candle or hot-swap its trusted checker.
+
+Falsifiers/cost:
+  Same finite samples, different larger input; same output, changed FFI/effects;
+  wrong continuation heap codec; downgrade accepted under stale management law.
+  Cost is mostly migration/source-to-implementation bridge. Build ordinary
+  governed method revisions first; self-optimizing trusted compiler is not needed
+  to realize authored worlds or logic compilation.
+
+WHAT TO AVOID IMPORTING BY DEFAULT
+
+  Full finite HOL exponential tables as general Bend function representation.
+  Intensional STLC Boolean receipt graphs as full Bend typed endpoint commitments.
+  Topology-only Rust DSL emitters as live constraint systems.
+  Prover-specific four-mode enum as the graded execution architecture.
+  Full step-indexed Iris/Candle/HOL transport to solve finite Bool/data compilation.
+  A corpus of assumption-named forcing predicates detached from actual emitted
+  constraint membership and source semantics. A clean theorem about detached
+  hypotheses is weaker than a small completed source-to-receiver bridge.
+
+READING COVERAGE / PROVENANCE
+
+  Actual cv surrounding windows read: 61398580#1050;3d17355a#570;5a0f6a2e#7519;
+  ccb26860#495;aca16966#275/#795;83b72050#547;019f87ab#108;6418429c#291;
+  70642dc2#2874. catalog/query.py located related prompts; duplicated locators
+  and forked goal handoffs are one lineage, not extra independent evidence.
+  Large unrelated raw body matches and truncated tool excerpts are not full reads.
+  Sources read include exact modules named above, relevant portions of upstream
+  bend2/base.bend, comp.ts and bendtt.lean; old compiler/DSL and current artifacts.
+  No native/Lean test results produced in this archaeology lane. Old benchmark
+  evidence is bounded by its artifact's declared relation-evaluation scope.
+
+Primary research checked online during this pass:
+  https://cakeml.org/candle/ — actual Candle REPL/verified implementation lineage.
+  https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.ITP.2022.3 — Candle
+  paper; upstream proof/compiler story, not proof of our svenvs modifications.
+  https://cakeml.org/jlamp20.pdf — verified HOL article checker + CakeML compilation.
+  https://github.com/CakeML/cakeml — proof-producing HOL translator and verified
+  compiler project. External sources support pattern, local refinements still needed.
+
+COORDINATION FOLLOW-UP — EXISTING REPORTS, NO NEW SOURCE SURVEY
+
+  bend_logic_compilation owns SourcePlan Bool case + Air/Emit/constructive DAG
+  and Host emission; bend_world_language owns source/import/method identity and
+  publication contract; astra_consensus_composition owns exact live machine.
+  Native installed Bend registry/receiver remains an actual missing join in the
+  reports inspected here (they explicitly show Nock-only registration). This is
+  report-level status, not a fresh census of latest remote integration candidate.
+
+  Best extra separable contract, if owners accept help: BendWordCodec.lean,
+  source-indexed Prop representation for exact Word(n), generic length/range/
+  encode-decode laws and ONE operation refinement, integrated into their existing
+  SourcePlan/evaluator. Mathematical limb gadgets already have consumers; the
+  orphan is exact Bend source-to-mathematical/physical representation. Small
+  bounded Nat extension follows only with cap/error/saturation/div0 profile.
+  No additional broad compiler survey or separate semantic evaluator is needed.
+
+  The source bundle next consumer is current-law method publication/invocation/
+  restart; the row-library next consumer is two distinct Data instructions on
+  one typed Block schema with arbitrary-witness forcing and boundary-row proof.
+
+  Date correction: dual-route semantic/compiler vs foreign-proof request
+  6418429c#291 occurred 2026-07-30T14:14:18.746Z, catalog July group4463,
+  sha2567d89c519362af78659b46acf8102601d664e515e4ba12bac871232a23b6ceadd.
+  Earlier relay called it July28; replay card7 is corrected to July30.
+
+Unread/unfinished research: full HOL/CakeML proof closure and current binary/logs;
+all old CCC/hypergraph implementation consumers; full private compiler/crypto
+backends; historical Binder/OO branch evolution; latest remote newDregg code.
+This report supplies construction questions to active owners and does not claim
+the old source has been exhaustively absorbed or a Bend backend is now deployed.
+
+SOURCE SNAPSHOT HASHES — bytes read locally, not Git HEAD attestation
+4febab5b21e0fe2318baa39217774e1daeb218ce6e0f3cb3e7b2d9648df21c9f  /Users/ember/dev/breadstuffs/metatheory/Dregg2/Crypto/Arith/ArithmetizeTypedPredicate.lean
+9569a5d15a3d079247f2c4908cb3ad1c169431424d9417bba1f5343817d921df  /Users/ember/dev/breadstuffs/metatheory/Dregg2/Crypto/Arith/BridgeSynthesis.lean
+117ba3cafa80a3c0e8dd0785256d54bba68a88f27cbed0a08c153b7b54e3d9dd  /Users/ember/dev/breadstuffs/metatheory/Dregg2/Crypto/Arith/RowLibraryExperiment.lean
+852973832933ba3188b8738af51b3738addade99bf461ace1da6372898ba9c34  /Users/ember/dev/breadstuffs/metatheory/Dregg2/Circuit/FieldLanes9.lean
+237cdcd4ac1d96cd7ad934676a716c7cf224aa6ce4d12dc0d4f516dd15b3ef0b  /Users/ember/dev/breadstuffs/metatheory/Dregg2/Bignum/DigitInjective.lean
+af7107c02b22e071e80f9db45ff59bfa2226dac8737918b72281723ac60d9538  /Users/ember/dev/breadstuffs/metatheory/Dregg2/Circuit/Emit/AirProgramRows.lean
+678ff274ac036893035271187d483ba2b0c9200c6ee8c0aaa3fa8832e45aace9  /Users/ember/dev/breadstuffs/metatheory/Dregg2/Metatheory/CertifiedIndexedPresentationCompiler.lean
+9ca3b14e2b9ab31c1228b8e07a7b1e8c4669ff40e238cea3ce60d5f2fc9bc6dd  /Users/ember/dev/breadstuffs/docs/opentheory-importer-poc/OTPoC.lean
+c742fae9c49b14f0cc9128429a2c6109364c8a933a142f2c90b9f2e5fd976661  /Users/ember/dev/bend/bend2/base.bend
+453e5452f7d5ea1d501b29ce2332623c3f9f4c9e89f407352209716d31638c89  /Users/ember/dev/bend/bend2/comp.ts
+e15042434e73aab07ab05cea4b77b5619082c00a6d4924ea2d4a2cdec05facce  /Users/ember/dev/bend/bend2/bendtt.lean
+0f6ee59dddd6e71083f6a7b5c54114212c33d614dd8fc2cf5f082866a1639ad4  /Users/ember/dev/svenvs/candle/self_recompile.ml
+374b04c266c1c51e5c3d8dbce3c5ad2d79c12085c5ae728538c400bd2043cd29  /Users/ember/dev/svenvs/selfRecompile/selfRecompileGateScript.sml
+c731f81e96243d48fc050a57f3bfe430fb3a5041da125573a9563d495877a2a2  /Users/ember/dev/svenvs/compilerOpt/LAYERB.md

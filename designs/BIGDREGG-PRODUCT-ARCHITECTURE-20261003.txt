@@ -1,0 +1,544 @@
+BIGDREGG: ONE AUTHORED WORLD, THREE CONNECTED CONSTRUCTIONS
+2026-10-03 — Codex /root/bigdregg_product_architecture
+Status: design/source archaeology; no implementation or runtime qualification claimed.
+
+Recommendation
+==============
+Grow Mini into bigDregg by making community institutions, exchange mechanisms,
+creative tools and resident services ordinary authored Bend objects on the same
+kernel. Starbridge is their common authoring/inspection/actuation environment;
+specialized market, story, notebook and home views remain distinct experiences.
+FHEgg and DrEX supply serious computation and economic semantics, not a separate
+trusted market universe. Their useful mechanisms should become shared source
+modules and qualified execution adapters. This is a broad outward-growing nexus,
+not a choice of only social software, research notebooks or compute exchange.
+
+Start three joined constructions now: (A) a community allocation/exchange room,
+(B) an authored world/tool studio with collective review, and (C) a resident and
+service commons. Each exercises private inputs, source-defined behavior, actual
+effects, retained evidence and human-readable recovery. They share infrastructure
+because they share semantics, not because every activity must become a market.
+Keep future dregg-old/dregg renaming out of this construction cycle.
+
+Evidence and present-source boundaries
+=====================================
+B = /Users/ember/dev/breadstuffs
+M = /Users/ember/workbox/mini-dev-opus
+R = /Users/ember/dev/redregg
+P = /Users/ember/workbox/mini-private-capacity-review-20261002
+Paths below are relative to these roots. Read date is October 3. Local source
+hashes appended below identify important inspected files without Git operations.
+Root supplied Mac baseline e851920e and current hbox integration ba9f7b12; these
+are not claims that all new designs are compiled, deployed or present on Mac.
+The active integration is captain-owned. No new runtime profile is requested in
+the committing v10/world-execution-v2 candidate by this report.
+
+Read R/README.txt, BEND-DIRECTION, SHARED-CONTRACTS, Bend owner's newly written
+BEND-WORLD-LANGUAGE, archived programmable/systems and intent reports; actual
+selected source is listed below. Bread HORIZONLOG newest entries, whole memory
+index, relevant proof-admission/Polis/DreggSolve corrections, OVERVIEW and August
+11 handoff were read. The read profile was treated as dated context, not biography.
+No builds, tests, source mutations, Git operations, deployment, paid calls or
+new agents. This requested design file is the only authored output.
+
+Primary human corrections actually re-read with cv:
+* claude:32190750-0dc4-4f51-8263-1d4035af10c5 #233, surrounding +/-3:
+  July25 actual complete DrEX/FHEgg suite for game-engine use, chat/web surfaces
+  and extension ceremonies, with finance products potentially following game
+  improvement cycles. The preceding assistant admitted pricing tests had no
+  intake, positions, settlement or UI. The human asks to BUILD the actual suite.
+* claude:b7cdd58a-95d0-4f4e-b623-6629f393f7ec #1176, +/-3:
+  July14 DreggCloud was an unselected ChatGPT demo, never the planned home of
+  DrEX/games; subsequent #1179 leaves actual usefulness open. Reuse useful
+  custody engineering; do not invent a House product dependency to justify it.
+* claude:e9d68d2f-d24f-4f54-ab96-0196f23599f8 #302, +/-2:
+  August27 dark FHE is not a near/medium-term dClutch ambition; do not over-index
+  on subagent reports. That is historical Clutch scope, not a veto on today's
+  explicitly requested Mini homomorphic platform.
+* claude:0c315aee-e07a-499c-8bb4-fa36730510ca #4748, +/-2:
+  October1 numerical jobs belong to Hellas, not Dregg. Exchange mechanisms,
+  authored world computation and hosted agent services remain relevant here.
+
+Other date constraints are recovered leads from the archived September/October
+intent report, not independently re-read transcript in this lane: Codex
+01a0fa81 #6864 (full OO/private/traffic/agreement prototypes), #6996 (no October13
+shipment without traffic privacy and agreement), #9051 (coherent October26 and
+November releases hoped for, no fixed feature checklist); Claude 0c315aee #4690
+(complete docuverse/substantial deos ambition), #7569 (intermediate milestone does
+not lower destination). The current parent brief explicitly renews Bend centrality
+and FHEgg/DrEX reconstruction in Mini NOW. Do not let older 'Nock only' memory,
+proof-carrier caution, or a historical Clutch priority override current direction.
+
+The three constructions
+=======================
+
+A. A community allocation and exchange room
+------------------------------------------
+A group needs to allocate expedition equipment, studio time, contributed hosting
+capacity, or scarce places in a joint activity. A member creates an AllocationRoom
+from an inspectable Bend module, chooses a mechanism already authorized by the
+community, identifies the actual resources and capacity sources, and publishes
+the round. Members submit private limits/preferences or choose public orders.
+Their wallet holds the private input and receipt; the host shows the contracted
+round status. At close, a solver proposes an allocation, the selected execution
+plan checks the exact rule, and the kernel reserves/installs actual transfers or
+resource entitlements. Each person receives their own result; the shared room
+publishes only its declared aggregate/result. A game can immediately use the
+awarded item; a home can use the allocated service reservation.
+
+This is not restricted to a trading terminal. Community choice can select the
+policy or spend envelope; markets can allocate within it; authored games can use
+the outcome. Voting supplies institutional consent, not evidence that an
+allocation is feasible, fair, available or optimal. A rich domain may use no
+price at all. The room must retain those separate authorities visibly.
+
+First mechanism decision: preserve the existing Mini single-seller price/slot
+auction as one named mechanism, but move its complete allocation rule into
+source-authoritative execution. Add DrEX two-sided uniform-price/pro-rata as a
+separate module. They are different economics: silently replacing one with the
+other changes winners and incentives. Bind supply, grid, eligibility, order
+ordering, tie policy, zero/overflow policy, close/release windows and payment
+rule in the module/source instance. Public policy choices are not solver knobs.
+
+Useful Bread content, actual depth:
+* B/metatheory/Market/Clearing.lean defines participant-predicate satisfaction
+  and conserving pooled allocation. These are real semantic specifications,
+  not a theorem that a strategically fair market or honest intake exists.
+* B/metatheory/Market/UniformAllocationCertificate.lean:105+ check recomputes
+  grid-positive, canonical lowest-index volume argmax, exact volume, inactive
+  zero, exact active-side largest-remainder rationing with ordered ties.
+  B/fhegg-solver/src/uniform_allocation_cert.rs:1-36 gives an independent exact
+  checker and bounded wire. Reuse/adapt the integer relation and certificate
+  codec; preserve its exact semantic source. Generic Allocation.validate admits
+  multiple conserving allocations and is insufficient for this policy.
+* B/metatheory/Market/Optimality.lean explicitly separates numeraire
+  value-neutrality from strategic no-deviation/core stability. Source headings
+  and drex-web-v2/model.js use stronger sounding language than these distinctions.
+  No product badge should translate equal-value arithmetic into strategyproofness.
+* B/dreggnet-market/src/private_batch_optimizer.rs:1-21/issue selects top prices
+  over ALREADY settled results, exposing already-public winners/turns. This is
+  not private raw-order matching or a general welfare optimizer.
+* B/fhegg-solver/src/package.rs:209-276 uses floating tolerances, scaled from bid
+  values; check_with indexes arrays without a complete shape check in that body.
+  It checks near-0/near-1 rather than exact integrality. Public certificate fields
+  include private bid values (:143+). Mine the weak-duality mechanism, rebuild
+  an exact bounded admission checker and input validation before adversarial use.
+  Do not import its prose 'feasibility ALWAYS proven' as Mini authority. Package
+  approximation is useful later if the community accepts an explicit alpha bound.
+
+Present Mini refuter:
+M/native/resource-client/src/market.rs:1-22,303,512 computes allocation in Rust;
+the law judges commitment opening, phases and per-slot quantity bounds. SLOTS=4,
+depositUnavailable, no payment in settle's action list. The read law template
+M/deploy/shell/templates/market/sealed/law.market has no sum-fill supply constraint
+or canonical price/allocation equation. This is accountable client computation,
+not kernel-authoritative clearing. Rebuild this join with the same source-owned
+Bend Plan and actual Book/resource effects; adding a nice market view would not
+fix it. Retain useful commit encoding, signed-read and phase semantics.
+
+Private execution is not an optional badge on the same plaintext transaction:
+* The order's exact ciphertext/commitment, owner entitlement, resource reservation,
+  batch inclusion/order and semantic input must be bound. A correct calculation
+  on a substituted book is the wrong action. Private range/balance admission
+  and duplicate/withdraw rules are obligations of intake, not the optimizer.
+* A private result needs its own retained return/release slots. The public status
+  may reveal price/volume, existence, capacity or failure only as specified. A
+  winner may be private in one room and deliberately public in another.
+* Allocating resources in separate governed domains uses the current joint
+  reservation/install protocol, not a market-owned clone-and-swap. No public
+  receipt lets a market bypass the target's rule or current audience policy.
+
+Important FHE reuse/repair:
+B/dreggnet-market/src/threshold_committee.rs:1-96 explicitly identifies the
+ownership inversion. Distributed relin and supervisor exist; the two offering
+callers still CREATE local committees. DarkPool pool_ceremony:224 uses FromRoot,
+deriving all secrets from one root; its disclosure:112 overstates independent
+custody. B/fhegg-fhe/src/threshold/supervisor.rs:381,388,560 supplies attach vs
+spawn_local and nonce-bound certificate-checked openings. Inject a custody
+reference selected by actual independent participants, never market-created
+secrets. A process-supervisor API named production is not evidence of independent
+operators; the present deployment still needs network/custody qualification.
+Do not silently weaken n-of-n to t-of-n for availability.
+
+B/dreggnet-market/src/dark_amm_collective.rs:1-20,78-100 already separates stage
+from independent decision commit, retains exact task/candidate identity, and
+names Tier-1 issuers seeing witnesses/seeds. This is valuable lifecycle/identity
+content. B/private_bazaar_authority.rs:1-31 and :50-66 distinguish globally
+one-use SOURCE identity from target-bound OPERATION identity, avoiding replay by
+changing targets or timestamped receipts. Adapt those semantic identities into
+Mini's existing journal/outbox, do not port a parallel file-authority system.
+B/fhegg_atomic_asset.rs:1-18 is genuine exclusive-process detached validation
+and durable recovery classification; it expressly is not distributed atomic
+settlement. Use its hostile cases to test Mini's real multi-domain installation.
+
+Oracle Pit is a later compelling joined activity, but its current source is not
+already a complete private finance product. B/oracle_pit.rs:1-112 binds one
+exact Descent seed/day/run and replays it; it does not establish a blessed host
+origin. Open marginals determine aggregate positions; per-trader decomposition
+is the intended private quantity. HostedWallets retains plaintext; no escrow or
+value transfer occurs. Build an outcome-resolving module against an exact native
+event/history source, real collateral and payout policy, private wallet custody,
+and release budget before calling it a usable prediction market. This is a
+separate semantic extension, not the first allocation room's completion criterion.
+
+Receiving demonstration: ordinary members create a round, submit independently
+held secrets, allocate under exact named rules, receive resource rights they can
+actually use, and recover after a lost final reply. Refute with conserving but
+wrong tie allocation; omitted order; wrong grid; aggregate over-supply; changed
+source method; ciphertext belonging to another round; reward redirected to a
+second game; revoked recipient; committee timeout; restart after installation.
+Check hidden inputs never appear in public browser state, logs, receipts or
+failure timing outside the chosen privacy profile. This extends the actual
+private execution/agreement work; it is not a replacement for it.
+
+B. An authored world and tool studio
+----------------------------------
+A member opens a community notebook, room, game prop or market policy, inspects
+its source, forks a template with attribution, edits a Bend method and makes an
+instance. The same object has a domain view for use, a source view for learning
+and authoring, and an activity/history view for understanding effects. Another
+member proposes a revision, delegates review to a resident, and joins a vote or
+review process that the object's own governing law accepts. Adoption changes a
+pinned method reference; it does not rewrite old history or grant ambient rights.
+
+This construction makes Full OO, docuverse, private work and collective choice
+part of normal use. It can support a story universe, a technical instrument, an
+informal community plan or a shared workshop without pretending they all share
+one taste or institution. Fictional roles remain distinct from real principals;
+an in-world narrator cannot authorize real payments just by narrating them.
+
+Use the exact Bend owner's contract, R/designs/BEND-WORLD-LANGUAGE-20261003.txt:
+* Existing generic executable Program ID stays intact. Source artifact sidecar
+  binds source/import lock, elaborated Book, semantics, codecs, Plan ABI and
+  actual provenance. A source link is not a compiler refinement proof.
+* Kernel-created sample -> pure typed World.Plan: complete dependencies, exact
+  effects/messages, independent committed private return slots, canonical charge.
+* Receiver checks current grants/revocation/law, source/kind roots, resource and
+  release policy. Typechecking, compiled native success and a backend attestation
+  cannot create rights. Effects do not fire during speculative computation.
+* Self/super and immutable method closure belong to OO semantics; a governance
+  policy graph is different. Native Nat48 versus unbounded BendTT and exact
+  charge must be qualified, not guessed from C/JS performance.
+
+Starbridge implementation decision:
+Preserve the inspect->message->result->inspect concept in
+B/starbridge-v2/src/inspect_act.rs. Rebuild its adapters: current reflect_cell
+reads raw World ledger, its vocabulary intentionally shows every verb, and
+client.rs:34-113 uses operator bearer/mock/global cell list. Those are unsuitable
+as a member/private Mini client. Do not bring World, EmbeddedExecutor, a local
+authoritative heap or operator signing into the new shell.
+
+Create one source-owned ObjectPresentation projection: authorized identity and
+revision; readable domain fields; source/module/import references; currently
+disclosable method schemas; exact result/activity references; retained refusals
+and meaningful next actions. The projection may omit even the existence/name of
+a hidden method or object. A disabled button is only a display forecast. On
+invoke, use the same native signed intent and exact retained request ID as CLI,
+web and residents. Refresh the authorized projection from the admitted outcome.
+Keep user's draft when current law/source changes; no pre-write before admission.
+
+Rendering leaf reuse: extract bounded pure ViewNode/data and selected backends
+from B/deos-view as the programmable archaeology suggests. Authored rendering
+consumes authorized data and emits typed intents; layout and enabled bits never
+decide authority. Bound mounts, events and reactive work; maintain dependency
+invalidation on source, law, audience and revocation. Native/web inputs must have
+the same argument meaning before claiming backend parity. Start with existing
+Mini signed object projections, not a new desktop framework migration.
+
+Collective-choice exact reuse decision:
+B/collective-choice/src/lib.rs has worthwhile concepts: frozen electorate,
+single-use ballot, distinct quorum, weighted eligibility, attenuating delegation,
+and final resolved result. Its current runtime is not the kernel to import.
+new:326 funds an embedded operator out of band; issue_ballot:360 grants via raw
+ledger mutation. cast_inner:770-860 signs as operator, commits ballot first,
+inserts a RAM nullifier, then commits tally separately; holder/mandate aren't
+validated by this cast body. That describes a trusted in-process API, not an
+authenticated external delegated-vote receiver. A failure after ballot commit
+can prevent a tally on retry. resolve:895 preserves a RAM certified snapshot.
+Rebuild authored vote semantics in Mini with actual caller/delegation authority
+and one admitted atomic ballot/nullifier/tally transition, or a durable explicit
+multi-phase obligation if decomposition is intentional. Retain typed poll rule,
+stable identity and exact final decision rather than the 8-slot ceiling.
+
+Adoption needs a distinct guarded install: a vote may endorse revision X; a
+current source change can make installation stale. The same decision should
+not suddenly install Y. Governance can select a plan, never certify a factual
+claim as true. B/metatheory/Metatheory/ResearchRegime.lean and its corrected
+memory are useful specification leads for witness/optimistic/ballot distinction;
+the source was not independently audited here. Human review remains meaningful
+when it is correctly labelled as endorsement.
+
+Receiving demonstration: an ordinary member changes a reusable behavior and
+view, another creates an instance, a private resident review cites exact source,
+members authorize adoption, and a stale/delegated/revoked action refuses without
+changing source. A notebook includes an independently controlled section without
+conferring read rights by transclusion. The same object appears in native/web
+and source/history faces with identical operation identity. This is one usable
+authoring workflow, not a counter-example-sized OO syntax test.
+
+C. A resident and service commons
+--------------------------------
+A participant contributes a home/capacity offer; another rents bounded work for
+a resident using a published Bend service contract. The task may curate sources,
+help author a world, moderate an agreed workflow, maintain an object, or perform
+a private allocation. A group can sponsor it without giving the host its own
+authority. The home exposes transcript/context, budget, outstanding work and
+current permitted actions. The resident is a continuing participant, not merely
+a one-shot background job. Sleep, reconnect, recovery and eventually a consented
+move preserve exact retained work and audience boundaries.
+
+Service exchange should price a specified service, not a generic numeric-job
+market accidentally imported from Hellas. A quote binds method/input/source,
+result predicate or human acceptance role, offer/capacity, deadline, fee and
+recovery/release obligations. The deterministic Bend plan can be re-executed;
+an external Hermes response has provider provenance and contract-defined
+acceptance, not a theorem that its prose is true. Dispute/challenge mechanisms
+apply only where an individually able, funded challenger and a decisive predicate
+exist. Staking on a subjective answer does not make the answer factual.
+
+Reuse agent-platform's actual lifecycle and renter-acknowledgment ideas, adapt to
+Mini service owner contracts. B/agent-platform/src/lib.rs:1495-1569 checks pinned
+renter signature, genuine history prefix and nonregression. That is stronger
+than a host-signed log alone. It is not availability or complete execution proof.
+SessionCarrier:185-204 retains a host-held signing seed; exporting it raw would
+export custody. A movable home needs rekey/sealed successor handoff, old-host
+fencing, acknowledged prefix and recovery obligations. share's implicit owner
+Admin cannot override Mini's deliberately possible management lockout.
+
+Use existing Mini resident request/completion/cancel/provider-custody machinery,
+not a new agent scheduler per app. The shared activity index names exact source,
+request, reserve, external dispatch, retained output, installed effects, release
+and delivery. It does not make them one boolean. A pending provider dispatch
+after a lost reply is located/recovered before creating new paid work. A result
+can be retained while its audience has since lost permission; custody and release
+are different decisions. A notice is a pointer to truth, not truth itself.
+
+Economics must reserve actual disjoint capacity, not just have balances. Distinct
+costs: canonical evaluator work, external service fees, preprocessing, cover
+traffic, retained artifacts, storage repair, agreement and post-crash completion.
+Reserve recovery service independently of new ordinary work. Provider quotes
+may be compared using exact common dimensions; a low price with no fulfillable
+capacity is not a valid allocation. Market fairness and fair physical scheduling
+are separate obligations. Private branch-dependent rebates can leak information.
+
+Receiving demonstration: a group sponsors a resident to review the studio's
+pending change or run an allocation, sees source-scoped partial/terminal work,
+cuts an unnecessary grant, loses the final reply, restarts and obtains the same
+result without a second charge or dispatch. The granted publish destination
+accepts only the exact authorized effect. Renter acknowledges history. Host
+movement is a later real custody test, not a UI 'export' button promise.
+
+Common implementation contract and economy of code
+=================================================
+The public API should not contain MarketAuthority, PollAuthority, DesktopAuthority
+and AgentAuthority as four independent sources of truth. Domain modules express
+their state machines and rules. Common Mini machinery supplies authenticated
+samples, source binding, invocation/retry identity, dependency/current-law guards,
+exact effect admission, agreement/reservations, custody and authorized release.
+Domain adapters turn external evidence into exactly typed inputs; they cannot
+select weaker verifier policy from their own uploaded bundle.
+
+Keep a single generated family of source schemas/codecs/method intent forms/view
+descriptors where it removes duplicate meaning. Share archive canonicalization,
+manifest checking, bounded codecs and fsync mechanics, but keep typed snapshot
+contracts: document cursor, app /var, resident continuation, private-share
+generation and rehearsal are not interchangeable backups. A shared activity
+index links each real phase machine instead of inventing a universal one.
+
+Evidence-aware presentation, aligned with graded_execution_architecture:
+Show concise promise cards with inspectable details for (1) exact module and
+arithmetic/mechanism, (2) intended/selected execution plan, (3) observer-specific
+disclosures, (4) correctness/privacy/availability trust assumptions separately,
+(5) evidence actually received, (6) compute/reserve/install/release/delivery
+phase, (7) costs and release budget. Native re-execution, proof, signatures,
+attestation, community endorsement and optimizer certificate establish different
+propositions. A plan can combine FHE, MPC, ZK and agreement. Avoid one ordered
+mode ladder or a green 'verified/dark' flag. Unavailable plans refuse or await an
+explicit authorized alternative, never silently expose private inputs.
+
+Cross-system interoperability:
+Keep native semantics transport-neutral. Browser extension, native app, CLI,
+hosted app, fn or chat adapters carry the same exact request/result. Extension
+ceremony participation requires actual separate device custody and current
+opening authorization, not just signing the coordinator's summary. An app
+package signature establishes package origin/bytes, not every action's authority.
+External settlement requires exact resource identity/amount/recipient, finality,
+custody and replay binding. B/intent/src/drex_routing.rs:1-61 is valuable dataflow
+but explicitly uses mock proof acceptance/trusted mirror and one-vault fixture;
+do not call it cross-chain atomicity. This architecture leaves an interchain
+module boundary open without making external financial deployment October13.
+
+Implementation packages and ownership
+====================================
+Names here are proposed responsibilities, not newly spawned lanes or unilateral
+assignments to builders. Current implementation owners retain their surfaces.
+
+1. Shared source/Plan receiver — bend_world_language + member_oo_construction,
+   integrated by takeover_kernel. Implement exact module/sample/effect/private
+   return/charge joins, source pinning and member construction. Existing additive
+   BendWorldSource/BendWorldProgramCodec/BendWorldMethod work is the seam.
+   Accept when ordinary authored method produces the exact same admitted Plan
+   under qualified backends; wrong source/effect alias/private audience refuses.
+
+2. Authoritative allocation — subsequent market-domain owner, over package1.
+   First replace Mini client-only single-seller allocation with source judgment
+   and real native resource/payment effects; then add exact integer DrEX uniform
+   module. Keep mechanisms distinct. Bind complete admitted intake, reservations,
+   source-use and exact operation identity. This is meaningful work immediately,
+   independent of completion of every cryptographic backend.
+
+3. Private custody/intake/output — fhe_bend_architecture and existing private/
+   agreement owners. Inject independent custodian identity, retain nonce/share
+   generation/opening rights, qualify actual same-opening and range relations,
+   preserve traffic/recovery semantics. First receiving consumer is allocation;
+   resident private return and private review use the same contract afterward.
+
+4. Common Starbridge surface — docuverse_deos_construction + web/member owners.
+   Authorized object/source/activity projection and typed form/intent generation;
+   add market round and resident home domain faces as consumers. Existing v10
+   signed faces first; extract deos-view leaves selectively. No Bread World port.
+
+5. Collective adoption — domain owner with kernel/OO receiving review.
+   Native atomic cast and durable decision; source-bound adoption; actual
+   authenticated delegation/current eligibility. Start by governing the studio's
+   allocation policy or a shared world revision, so decision has a real consumer.
+
+6. Service commons — takeover_service/current resident owner, not a second host.
+   Contract-bound quote/reserve/request/result and acknowledgment; recovered exact
+   external dispatch; current audience release. General contributed-home movement
+   follows sealed handoff/fencing and recovery qualification, not before.
+
+Receiving tests should cross these packages once with source-matched immutable
+binaries on the designated build host. Narrow domain refuters first, then a
+joined journey. Do not rerun Bread's full proof gauntlet to validate Mini views.
+Do not mutate the shared tree to demonstrate a missing guard.
+
+Dates without lowering the destination
+=====================================
+October13 supported minimum means the actual intended private community world:
+traffic privacy plus agreement are explicit release conditions; complete full-OO
+and stronger-private-execution prototypes remain requested construction; a usable
+docuverse/substantial deos is the stated product ambition. A generic method demo,
+two-user fixed capacity or a static market mockup cannot redefine completion.
+
+Recommended joined Oct13 consumer: studio-authored allocation object plus bounded
+resident review in an actual community. Members can author/instantiate, use
+independent source-controlled documents, submit/receive under the selected real
+privacy profile, govern one consequential revision, and recover exact effects
+after interruption. It need not include every DrEX mechanism, derivative product,
+cross-chain vault or all historical frontends. The private profile's actual
+stronger-execution work cannot be waived by renaming commit/reveal 'dark'.
+
+Proposed October26 depth: independently operated ceremony participation joined
+to private allocation; two-sided exact uniform policy and actual private wallets;
+reusable source templates and collective adoption; shared Starbridge domain/source
+faces; contributed service offers with real reserve/recovery behavior. These are
+priorities for featureful coherence, not recovered user promises of exact dates.
+
+Proposed November depth: more expressive package/service allocation with exact
+bounded certificates and declared approximation, richer world/story/remix
+institutions, prediction/resolution with actual collateral, consented portable
+homes, broader external app/transport and interchain adapters as qualified.
+Private arbitrary-program ambition continues; BFV fixed public circuits are a
+concrete first backend, not a redefinition of the language as arithmetic demos.
+
+Captured evidence, limitations and compaction status
+====================================================
+Read M/docs/evidence/2026-10-01-p-story/journey-result.json: J15 PASS, 121 expected
+rows, 688.248 seconds for that step. Overall reachedEnd=false/selective run, not
+whole suite pass. This is evidence an existing story consumer can be the real
+receiving substrate rather than a new demo. Native market runtime was NOT run or
+qualified by this lane. SPK market-verify.txt is package signature/body evidence,
+not exchange behavior (the word 'market' is an unrelated app catalog there).
+
+No fresh FHE/DrEX current-source runtime log was located/read in this lane. The
+distributed committee's tests and source are substantive construction evidence,
+not an observed independent-operator deployment. FHE peer independently reports:
+decrypt-share certificates now exist (older market frontier doc is stale);
+dealer shortness/malicious relin remain distinct; full same-opening R1CS is
+experimental classical; HidingFri SmallRng concerns prevent blanket PQ/ZK claims.
+Those are peer findings with source leads, not independently audited here. Use
+the forthcoming FHE design for exact crypto qualification and pinned evidence.
+
+The July/August market frontier's stale 'permission gates' are historical notes;
+current human delegation governs engineering decisions. The old no-proof-admission
+memory correctly describes historical/current native re-execution baseline but
+cannot forbid today's explicit exploration/construction of proof-backed Bend.
+Proof adapter work must establish real received evidence before product claims.
+
+Critical findings were sent directly to root, bend_world_language,
+fhe_bend_architecture, takeover_kernel, takeover_service and docuverse_deos owner;
+graded_execution owner supplied the display contract. No builder was told to
+replace or restart the committing candidate. On compaction, resume at this file
+and BEND-WORLD-LANGUAGE; read the integration captain's newest record rather than
+assuming ba9f7b12 remains current. The actual work left is packages1-6 and their
+joined receiving evidence. This design is complete; it is not implementation
+completion or a parity inventory that can substitute for construction.
+
+Inspected-source SHA256 (local bytes at report completion)
+========================================================
+4d6afd5d96fb3f66fe1eb328c34f6fc05fce30c581cb8357c6dae0e30d09a226  B/collective-choice/src/lib.rs
+a213f5a019dbbc035f20c75e075f3c2e8fa9fc070ebd70dd49c8b75da501e78a  B/dreggnet-market/src/threshold_committee.rs
+c83fc9f84c6f4b3ff6195e5c91b1703bc5c3f07a05a8b19e73fc082fa82be94e  B/dreggnet-market/src/dark_pool_offering.rs
+98124ca52c48b4af2b0a9e86a51bd35d57bcfc3b7c0e5bd31b34bafed69e4e6a  B/dreggnet-market/src/oracle_pit.rs
+56358bf4ad0ad4cea00c6b85bab9579beb139da8f379d89c664109820c7ee900  B/dreggnet-market/src/dark_amm_collective.rs
+4903888f9f8a249068d1dd8ae25d3c519e9577af58618700d10ad188f2d96d96  B/dreggnet-market/src/private_bazaar_authority.rs
+d4658ff26ad2a0116e377e26b4871a9548501306ba300855540507d733a35540  B/dreggnet-market/src/fhegg_atomic_asset.rs
+2f7edea04d0f4492eb4a932ccdcf43ba5f6b6d24b39555092c0bf567c7668e5d  B/fhegg-fhe/src/threshold/supervisor.rs
+8710f17ece614d687bcc279fca0e8e2cc2e82d7986c5203fd3c82f084d97eb74  B/fhegg-solver/src/uniform_allocation_cert.rs
+8e5fa9dadd0ad7afa0d7125db8e422bfc56cb4139326215da5b4f962c2bc2460  B/fhegg-solver/src/package.rs
+ed2aa25bfd1be27e47d94c21ea8b19278790f089eabf91bb4a92b5b3c4e17cba  B/metatheory/Market/UniformAllocationCertificate.lean
+f5dac13d79ded099a1030b5f9a920632f8dccbd022b3e4868bee2fd3cb367dbd  B/starbridge-v2/src/inspect_act.rs
+488f0fb01e06f6b4b6093ac2a90549303e1a02e2fb9e62a300652d05ed70fac5  B/starbridge-v2/src/client.rs
+f1012732acf5f2309aedbb5c8b48a2fa060f41bcf62758743fe9cd91cde66d1a  B/agent-platform/src/lib.rs
+b60489a2c602ec973e5909afc99a75f68a37e7fe4fb984048f90f9e366f65b77  B/intent/src/drex_routing.rs
+00862ac9b71d26174a8bf77c3b3b466c8677093d1152a639c25a7fed194fc63c  M/native/resource-client/src/market.rs
+0712d4bd4af185b9a6cc5bdb7626775d8eee37ba503e6e2c889a6357971c705e  M/deploy/shell/templates/market/sealed/law.market
+840ba6e99298da2a595c223c5fa8ed02ad515dfe08b128104a2d98e901dd0805  M/Kernel/WorldKindMethods.lean
+f997b86e31cdc363ea148b8e419c4a1997b9b33cc9fd29986023d81fe225de33  M/docs/evidence/2026-10-01-p-story/journey-result.json
+
+CONSTRUCTION ADDENDUM — 2026-10-03, after root assigned actual domain ownership
+
+Owned source lane: hbox:/home/hbox/workbox/codex-collective-domain-20261003.
+Reviewable copies + exact evidence/status:
+  /Users/ember/dev/redregg/examples/objective-bend-collective/STATUS.txt
+Public source destinations agreed with Workshop owner: world/Workshop/*.bend.
+No second kernel or app-specific authorization mechanism was created.
+
+Five actual no-opaque BendTT Books pass: MarketMath, CollectiveAdoption,
+SingleSellerAllocation, UniformProRata, SingleSellerSettlement (60/111/85/89/115
+definitions). General source laws cover exact ballot predecessor/one-vote
+successor/derived counts and single-seller quantity conservation. Installation
+reads actual retained closed ballot state and exact current candidate/base roots.
+
+The native join uncovered an important real capability gap. Scalar writes
+cannot touch accountBalance; even scalar Action.move cannot target production
+accounts (accountRequiresBook). Only the canonical resourceBook owns balances.
+Therefore CanonicalBookSettlement and CanonicalUniformSettlement now emit one
+canonical Operation.transfer batch, shared between the distinct allocation
+rules. native_performance_construction owns the additive canonical money domain
+adapter; world language/captain own common Plan/receiver/Host joining. The earlier
+logical BalanceWrite and scalar-move candidates are explicitly superseded as
+monetary routes, preserved as authored source rather than silently reinterpreted.
+
+Canonical single-seller and DrEX consumers currently pass sealed source checks;
+their actual Book checks are queued. CollectiveDemonstration also source-checks
+a named equality evaluating the actual settlement source to the four nontrivial
+transfers/private result data, generalized over native roots/identities/audiences.
+Native settlement, atomic room-state/return installation and private release
+remain receiving work, not inferred from source or Book success.
+
+Important next boundaries: validated fee-first book sampling, per-debit current
+source authority, duplicate reservation use, exact source-output/native operation
+binding, arbitrary market atom-scale compact arithmetic refinement/charges, and
+general shared-coordinate alias support. Current structural Nat reference and
+distinct-coordinate source profile are not permanent product ceilings.
+
+Ember's source-before-qualification publication request: source-only packet r1
+sent captain immediately, SHA256
+3173c32d8838955d2de59cdda9a8d573f26f425a2f942cab8bc1556e125077a5;
+incremental demonstration+portable checker r2 SHA256
+ea6a33552f639c7868cc4866e0d3931304a3b1f2b33eb1dfc4856eaed5d4fb4f.
+Captain owns actual common reconciliation/commit/push; resulting commit SHA was
+not yet reported when this addendum was written. Packets exclude all private
+research/transcripts, runtime state, caches and generated artifacts.

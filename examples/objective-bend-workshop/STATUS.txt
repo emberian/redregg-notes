@@ -1,0 +1,54 @@
+Objective Bend workshop — source review copy, 2026-10-03
+
+Read Demonstration.bend first, then OrderedCapacity.bend and ReusableWorkshop.bend.
+Three contributed capacity tokens and ordered requests for two each produce
+first two tokens for A, final token for B, no remaining token. demonstration_result
+and demonstration_remaining are filled source laws; allocation_conserves is general
+over all stocks and request lists and preserves exact token references and order.
+
+CatalogReview binds recommendation/decision to exact source, program, revision
+and policy. Its general ExactProposal law preserves both expected predecessor
+and selected revision/policy in every successful proposal. ReusableWorkshop
+exposes affine callable demands for composed catalog/review and inherited review
+plus a supplied audit method. These are source bodies for partialspec elaboration,
+not already installed persistent prototypes. The persistent spec stores immutable
+source references as Data, then creates affine invocation closures.
+
+Checked: exact upstream Bend 947db722640c86247849343657bf2f7ef01cb7f1 parser
+and source checker; sealed local import manifest; safe BendTT emission for all
+seven consumer modules, no foreign/unsafe/bodyless implementation, no out-of-scope
+definitions. hbox evidence source-check-15.log + sealed-results.json.
+Actual formal core gate now PASS: exact installed BendTT Book.parse/Book.check
+on all seven emitted Books, no opaque definitions, core-check-01.log under captain's
+atomic auxiliary lease2G/30s; actual run under1s, lease released exit0.
+This checks the elaborated programs and general live proof terms. It does not
+prove the surface elaborator or native compiler correct.
+
+Pending: Objective Bend composition
+and source provenance/refinement; exact native Plan effect lowering, fresh governed
+instance allocation, independent private return/release, generic source view
+consumer and resident reviewer. No installed runtime, live resources, native
+receipts or backend-refinement claim is made by these source checks.
+
+Canonical construction lane: hbox:/home/hbox/workbox/codex-authored-workshop-20261003
+Local additive source: /Users/ember/workbox/authored-workshop-additive-20261003
+Review copies retain exact source bytes in SOURCE-SHA256.json; later construction
+updates need a deliberate refresh, not a claim that this copy is automatically live.
+
+Updated source laws: eligibility_binding proves exact review/decision source and
+policy agreement from eligibility, using general Nat/Bytes/candidate equality
+soundness proofs. Denied reviews cannot be upgraded by the audit extension; a
+failed audit denies even a previously ready review. WorkshopFaces.bend now provides
+a catalog/capacity/review/action face and a source/history face using the shared
+WorldSurface.bend source interface; typed native Surface output bridge is pending.
+
+The List<&2,Nat> representation is source data representing byte lists, not an
+implicit UInt8 cast: the shared native bridge must enforce byte/digest/string
+bounds and exact canonical payload refinement. No cast may silently truncate.
+
+MemberExtension.bend supplies the missing audit method and a separate focused
+review/alternate presentation without changing original sources. Environment-first
+helper entries support the exact source Entry-derived Objective Bend linker.
+ContractedReview.bend adds dependent result protocols with live affine contract
+terms; native backend erasure/encoding and actual source Eval/Trace linkage must
+be qualified. These witnesses do not replace current authority or world laws.

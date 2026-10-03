@@ -1,0 +1,610 @@
+[
+  {
+    "module": "MarketMath",
+    "entry": "divide",
+    "schema": "dregg.bend.sealed-parser-transcript.v1",
+    "upstream": "947db722640c86247849343657bf2f7ef01cb7f1",
+    "sourceDigestAlgorithm": "sha256",
+    "modules": [
+      {
+        "namespace": "",
+        "source": "aba9004460d0063a9dec770921d0b492e4113d6540a99b4d8d6d4e9a10916e88",
+        "imports": []
+      },
+      {
+        "namespace": "MarketMath",
+        "source": "5fb8d148515731be8df3a0628eeb93abe4c7f625224f1896f26895269bed835d",
+        "imports": [
+          {
+            "alias": "",
+            "path": "Base",
+            "module": 0,
+            "source": "aba9004460d0063a9dec770921d0b492e4113d6540a99b4d8d6d4e9a10916e88"
+          }
+        ]
+      }
+    ],
+    "entryModule": 1,
+    "entryDefinition": "divide",
+    "definitions": [
+      "Nat",
+      "List",
+      "Bool",
+      "Empty",
+      "Unit",
+      "Empty.absurd",
+      "Sigma",
+      "Pair",
+      "Nat.eq",
+      "Bool.and",
+      "Bytes.eq",
+      "Truth",
+      "Bool.and_left",
+      "Bool.and_right",
+      "Nat.eq_sound",
+      "Bytes.eq_sound",
+      "MarketMath:add",
+      "MarketMath:sub",
+      "MarketMath:le",
+      "MarketMath:lt",
+      "MarketMath:choose_nat",
+      "MarketMath:choose_bool",
+      "MarketMath:min",
+      "MarketMath:mul",
+      "MarketMath:not",
+      "MarketMath:Division",
+      "MarketMath:increment_quotient",
+      "MarketMath:divide_step",
+      "MarketMath:divide",
+      "MarketMath:add_zero",
+      "MarketMath:add_zero",
+      "MarketMath:sub_zero",
+      "MarketMath:sub_zero",
+      "MarketMath:min_balance",
+      "MarketMath:min_balance"
+    ],
+    "emittedBookSha256": "87d487360678e4cd88d08a76ab384a805a773cd956b6a6f249474471ee165cad",
+    "outOfScope": [],
+    "bookPath": "/home/hbox/workbox/codex-collective-domain-20261003/evidence/sealed-bend-Mx8MnR/book.bendtt",
+    "transcriptPath": "/home/hbox/workbox/codex-collective-domain-20261003/evidence/sealed-bend-Mx8MnR/transcript.json"
+  },
+  {
+    "module": "CollectiveAdoption",
+    "entry": "prepare_install",
+    "schema": "dregg.bend.sealed-parser-transcript.v1",
+    "upstream": "947db722640c86247849343657bf2f7ef01cb7f1",
+    "sourceDigestAlgorithm": "sha256",
+    "modules": [
+      {
+        "namespace": "",
+        "source": "aba9004460d0063a9dec770921d0b492e4113d6540a99b4d8d6d4e9a10916e88",
+        "imports": []
+      },
+      {
+        "namespace": "MarketMath",
+        "source": "5fb8d148515731be8df3a0628eeb93abe4c7f625224f1896f26895269bed835d",
+        "imports": [
+          {
+            "alias": "",
+            "path": "Base",
+            "module": 0,
+            "source": "aba9004460d0063a9dec770921d0b492e4113d6540a99b4d8d6d4e9a10916e88"
+          }
+        ]
+      },
+      {
+        "namespace": "CatalogReview",
+        "source": "1af4911a91e049696dc33971162a901f3ee6bf3f9831f587cfd127d7d5ecd03f",
+        "imports": [
+          {
+            "alias": "",
+            "path": "Base",
+            "module": 0,
+            "source": "aba9004460d0063a9dec770921d0b492e4113d6540a99b4d8d6d4e9a10916e88"
+          }
+        ]
+      },
+      {
+        "namespace": "CollectiveAdoption",
+        "source": "b2310cfa35dfd7d8c0e5c6976955d96f505fa9a4b18bdcdae1eda2a64526584f",
+        "imports": [
+          {
+            "alias": "",
+            "path": "Base",
+            "module": 0,
+            "source": "aba9004460d0063a9dec770921d0b492e4113d6540a99b4d8d6d4e9a10916e88"
+          },
+          {
+            "alias": "Review",
+            "path": "./CatalogReview.bend",
+            "module": 2,
+            "source": "1af4911a91e049696dc33971162a901f3ee6bf3f9831f587cfd127d7d5ecd03f"
+          },
+          {
+            "alias": "Math",
+            "path": "./MarketMath.bend",
+            "module": 1,
+            "source": "5fb8d148515731be8df3a0628eeb93abe4c7f625224f1896f26895269bed835d"
+          }
+        ]
+      }
+    ],
+    "entryModule": 3,
+    "entryDefinition": "prepare_install",
+    "definitions": [
+      "Nat",
+      "List",
+      "Bool",
+      "Empty",
+      "Unit",
+      "Empty.absurd",
+      "Sigma",
+      "Pair",
+      "Nat.eq",
+      "Bool.and",
+      "Bytes.eq",
+      "Truth",
+      "Bool.and_left",
+      "Bool.and_right",
+      "Nat.eq_sound",
+      "Bytes.eq_sound",
+      "MarketMath:add",
+      "MarketMath:sub",
+      "MarketMath:le",
+      "MarketMath:lt",
+      "MarketMath:choose_nat",
+      "MarketMath:choose_bool",
+      "MarketMath:min",
+      "MarketMath:mul",
+      "MarketMath:not",
+      "MarketMath:Division",
+      "MarketMath:increment_quotient",
+      "MarketMath:divide_step",
+      "MarketMath:divide",
+      "MarketMath:add_zero",
+      "MarketMath:add_zero",
+      "MarketMath:sub_zero",
+      "MarketMath:sub_zero",
+      "MarketMath:min_balance",
+      "MarketMath:min_balance",
+      "CatalogReview:Candidate",
+      "CatalogReview:Recommendation",
+      "CatalogReview:Decision",
+      "CatalogReview:Adoption",
+      "CatalogReview:candidate_eq",
+      "CatalogReview:candidate_eq_sound",
+      "CatalogReview:eligible",
+      "CatalogReview:PolicyBinding",
+      "CatalogReview:eligibility_binding",
+      "CatalogReview:eligibility_binding",
+      "CatalogReview:choose",
+      "CatalogReview:prepare",
+      "CatalogReview:ExactProposal",
+      "CatalogReview:proposal_exact",
+      "CatalogReview:proposal_exact",
+      "CatalogReview:prepared_exact",
+      "CatalogReview:prepared_exact",
+      "CatalogReview:unready_never_proposes",
+      "CatalogReview:unready_never_proposes",
+      "CollectiveAdoption:Proposal",
+      "CollectiveAdoption:Vote",
+      "CollectiveAdoption:Ballots",
+      "CollectiveAdoption:CastResult",
+      "CollectiveAdoption:Resolution",
+      "CollectiveAdoption:Installation",
+      "CollectiveAdoption:member",
+      "CollectiveAdoption:used",
+      "CollectiveAdoption:yes_count",
+      "CollectiveAdoption:total_count",
+      "CollectiveAdoption:electorate_count",
+      "CollectiveAdoption:unique_electorate",
+      "CollectiveAdoption:valid_votes",
+      "CollectiveAdoption:valid",
+      "CollectiveAdoption:cast_choice",
+      "CollectiveAdoption:cast",
+      "CollectiveAdoption:resolve_choice",
+      "CollectiveAdoption:resolve",
+      "CollectiveAdoption:install_choice",
+      "CollectiveAdoption:prepare_install",
+      "CollectiveAdoption:refused_cast_unchanged",
+      "CollectiveAdoption:refused_cast_unchanged",
+      "CollectiveAdoption:ExactCast",
+      "CollectiveAdoption:cast_choice_exact",
+      "CollectiveAdoption:cast_choice_exact",
+      "CollectiveAdoption:cast_exact",
+      "CollectiveAdoption:cast_exact",
+      "CollectiveAdoption:ExactInstallation",
+      "CollectiveAdoption:installation_exact",
+      "CollectiveAdoption:installation_exact"
+    ],
+    "emittedBookSha256": "838eb93e778c00e5ee816ff9e33aeebec1365543bbba770aa980983db549ef2c",
+    "outOfScope": [],
+    "bookPath": "/home/hbox/workbox/codex-collective-domain-20261003/evidence/sealed-bend-9oRrXb/book.bendtt",
+    "transcriptPath": "/home/hbox/workbox/codex-collective-domain-20261003/evidence/sealed-bend-9oRrXb/transcript.json"
+  },
+  {
+    "module": "SingleSellerAllocation",
+    "entry": "allocate",
+    "schema": "dregg.bend.sealed-parser-transcript.v1",
+    "upstream": "947db722640c86247849343657bf2f7ef01cb7f1",
+    "sourceDigestAlgorithm": "sha256",
+    "modules": [
+      {
+        "namespace": "",
+        "source": "aba9004460d0063a9dec770921d0b492e4113d6540a99b4d8d6d4e9a10916e88",
+        "imports": []
+      },
+      {
+        "namespace": "MarketMath",
+        "source": "5fb8d148515731be8df3a0628eeb93abe4c7f625224f1896f26895269bed835d",
+        "imports": [
+          {
+            "alias": "",
+            "path": "Base",
+            "module": 0,
+            "source": "aba9004460d0063a9dec770921d0b492e4113d6540a99b4d8d6d4e9a10916e88"
+          }
+        ]
+      },
+      {
+        "namespace": "SingleSellerAllocation",
+        "source": "c3dfd90dc0d353fe5ec02d22656afc3fb35e558def8ee9fa4b1fdbcae7140c2c",
+        "imports": [
+          {
+            "alias": "",
+            "path": "Base",
+            "module": 0,
+            "source": "aba9004460d0063a9dec770921d0b492e4113d6540a99b4d8d6d4e9a10916e88"
+          },
+          {
+            "alias": "Math",
+            "path": "./MarketMath.bend",
+            "module": 1,
+            "source": "5fb8d148515731be8df3a0628eeb93abe4c7f625224f1896f26895269bed835d"
+          }
+        ]
+      }
+    ],
+    "entryModule": 2,
+    "entryDefinition": "allocate",
+    "definitions": [
+      "Nat",
+      "List",
+      "Bool",
+      "Empty",
+      "Unit",
+      "Empty.absurd",
+      "Sigma",
+      "Pair",
+      "Nat.eq",
+      "Bool.and",
+      "Bytes.eq",
+      "Truth",
+      "Bool.and_left",
+      "Bool.and_right",
+      "Nat.eq_sound",
+      "Bytes.eq_sound",
+      "MarketMath:add",
+      "MarketMath:sub",
+      "MarketMath:le",
+      "MarketMath:lt",
+      "MarketMath:choose_nat",
+      "MarketMath:choose_bool",
+      "MarketMath:min",
+      "MarketMath:mul",
+      "MarketMath:not",
+      "MarketMath:Division",
+      "MarketMath:increment_quotient",
+      "MarketMath:divide_step",
+      "MarketMath:divide",
+      "MarketMath:add_zero",
+      "MarketMath:add_zero",
+      "MarketMath:sub_zero",
+      "MarketMath:sub_zero",
+      "MarketMath:min_balance",
+      "MarketMath:min_balance",
+      "SingleSellerAllocation:Order",
+      "SingleSellerAllocation:Ranked",
+      "SingleSellerAllocation:Fill",
+      "SingleSellerAllocation:Allocation",
+      "SingleSellerAllocation:index",
+      "SingleSellerAllocation:precedes",
+      "SingleSellerAllocation:insert_choice",
+      "SingleSellerAllocation:insert",
+      "SingleSellerAllocation:sort",
+      "SingleSellerAllocation:take",
+      "SingleSellerAllocation:last_price",
+      "SingleSellerAllocation:prepend",
+      "SingleSellerAllocation:fill",
+      "SingleSellerAllocation:allocate",
+      "SingleSellerAllocation:empty_preserves_supply",
+      "SingleSellerAllocation:empty_preserves_supply",
+      "SingleSellerAllocation:sum_with_remaining",
+      "SingleSellerAllocation:accounted",
+      "SingleSellerAllocation:take_balance",
+      "SingleSellerAllocation:take_balance",
+      "SingleSellerAllocation:prepend_accounted",
+      "SingleSellerAllocation:prepend_accounted",
+      "SingleSellerAllocation:fill_conserves",
+      "SingleSellerAllocation:fill_conserves",
+      "SingleSellerAllocation:allocation_conserves",
+      "SingleSellerAllocation:allocation_conserves"
+    ],
+    "emittedBookSha256": "9f9961f28b0a7e4a46efee606f075c552ebb3a01d2fbcc1e175e8d3809906815",
+    "outOfScope": [],
+    "bookPath": "/home/hbox/workbox/codex-collective-domain-20261003/evidence/sealed-bend-tHyT8s/book.bendtt",
+    "transcriptPath": "/home/hbox/workbox/codex-collective-domain-20261003/evidence/sealed-bend-tHyT8s/transcript.json"
+  },
+  {
+    "module": "UniformProRata",
+    "entry": "allocate",
+    "schema": "dregg.bend.sealed-parser-transcript.v1",
+    "upstream": "947db722640c86247849343657bf2f7ef01cb7f1",
+    "sourceDigestAlgorithm": "sha256",
+    "modules": [
+      {
+        "namespace": "",
+        "source": "aba9004460d0063a9dec770921d0b492e4113d6540a99b4d8d6d4e9a10916e88",
+        "imports": []
+      },
+      {
+        "namespace": "MarketMath",
+        "source": "5fb8d148515731be8df3a0628eeb93abe4c7f625224f1896f26895269bed835d",
+        "imports": [
+          {
+            "alias": "",
+            "path": "Base",
+            "module": 0,
+            "source": "aba9004460d0063a9dec770921d0b492e4113d6540a99b4d8d6d4e9a10916e88"
+          }
+        ]
+      },
+      {
+        "namespace": "UniformProRata",
+        "source": "29eb5527dacebf476de10bbc8598207a80206597c105e744ed4c80ca8165b2e5",
+        "imports": [
+          {
+            "alias": "",
+            "path": "Base",
+            "module": 0,
+            "source": "aba9004460d0063a9dec770921d0b492e4113d6540a99b4d8d6d4e9a10916e88"
+          },
+          {
+            "alias": "Math",
+            "path": "./MarketMath.bend",
+            "module": 1,
+            "source": "5fb8d148515731be8df3a0628eeb93abe4c7f625224f1896f26895269bed835d"
+          }
+        ]
+      }
+    ],
+    "entryModule": 2,
+    "entryDefinition": "allocate",
+    "definitions": [
+      "Nat",
+      "List",
+      "Bool",
+      "Empty",
+      "Unit",
+      "Empty.absurd",
+      "Sigma",
+      "Pair",
+      "Nat.eq",
+      "Bool.and",
+      "Bytes.eq",
+      "Truth",
+      "Bool.and_left",
+      "Bool.and_right",
+      "Nat.eq_sound",
+      "Bytes.eq_sound",
+      "MarketMath:add",
+      "MarketMath:sub",
+      "MarketMath:le",
+      "MarketMath:lt",
+      "MarketMath:choose_nat",
+      "MarketMath:choose_bool",
+      "MarketMath:min",
+      "MarketMath:mul",
+      "MarketMath:not",
+      "MarketMath:Division",
+      "MarketMath:increment_quotient",
+      "MarketMath:divide_step",
+      "MarketMath:divide",
+      "MarketMath:add_zero",
+      "MarketMath:add_zero",
+      "MarketMath:sub_zero",
+      "MarketMath:sub_zero",
+      "MarketMath:min_balance",
+      "MarketMath:min_balance",
+      "UniformProRata:Side",
+      "UniformProRata:Order",
+      "UniformProRata:Fill",
+      "UniformProRata:Clearing",
+      "UniformProRata:Result",
+      "UniformProRata:Crossing",
+      "UniformProRata:Share",
+      "UniformProRata:same_side",
+      "UniformProRata:active",
+      "UniformProRata:total",
+      "UniformProRata:volume",
+      "UniformProRata:scan",
+      "UniformProRata:side_value",
+      "UniformProRata:make_share",
+      "UniformProRata:share_division",
+      "UniformProRata:shares",
+      "UniformProRata:floors",
+      "UniformProRata:rank",
+      "UniformProRata:finish",
+      "UniformProRata:clear",
+      "UniformProRata:allocate",
+      "UniformProRata:invalid_grid_refused",
+      "UniformProRata:invalid_grid_refused"
+    ],
+    "emittedBookSha256": "f50fe416e7b29289c0720a50a72f4809c21af0757bcc3f2ed335731efd68749e",
+    "outOfScope": [],
+    "bookPath": "/home/hbox/workbox/codex-collective-domain-20261003/evidence/sealed-bend-U3oxCB/book.bendtt",
+    "transcriptPath": "/home/hbox/workbox/codex-collective-domain-20261003/evidence/sealed-bend-U3oxCB/transcript.json"
+  },
+  {
+    "module": "SingleSellerSettlement",
+    "entry": "settle",
+    "schema": "dregg.bend.sealed-parser-transcript.v1",
+    "upstream": "947db722640c86247849343657bf2f7ef01cb7f1",
+    "sourceDigestAlgorithm": "sha256",
+    "modules": [
+      {
+        "namespace": "",
+        "source": "aba9004460d0063a9dec770921d0b492e4113d6540a99b4d8d6d4e9a10916e88",
+        "imports": []
+      },
+      {
+        "namespace": "MarketMath",
+        "source": "5fb8d148515731be8df3a0628eeb93abe4c7f625224f1896f26895269bed835d",
+        "imports": [
+          {
+            "alias": "",
+            "path": "Base",
+            "module": 0,
+            "source": "aba9004460d0063a9dec770921d0b492e4113d6540a99b4d8d6d4e9a10916e88"
+          }
+        ]
+      },
+      {
+        "namespace": "SingleSellerAllocation",
+        "source": "c3dfd90dc0d353fe5ec02d22656afc3fb35e558def8ee9fa4b1fdbcae7140c2c",
+        "imports": [
+          {
+            "alias": "",
+            "path": "Base",
+            "module": 0,
+            "source": "aba9004460d0063a9dec770921d0b492e4113d6540a99b4d8d6d4e9a10916e88"
+          },
+          {
+            "alias": "Math",
+            "path": "./MarketMath.bend",
+            "module": 1,
+            "source": "5fb8d148515731be8df3a0628eeb93abe4c7f625224f1896f26895269bed835d"
+          }
+        ]
+      },
+      {
+        "namespace": "SingleSellerSettlement",
+        "source": "ed3341368ca77c4fc804cf84b98f205b9192a94fceccdda0a68dae9c80326ada",
+        "imports": [
+          {
+            "alias": "",
+            "path": "Base",
+            "module": 0,
+            "source": "aba9004460d0063a9dec770921d0b492e4113d6540a99b4d8d6d4e9a10916e88"
+          },
+          {
+            "alias": "Math",
+            "path": "./MarketMath.bend",
+            "module": 1,
+            "source": "5fb8d148515731be8df3a0628eeb93abe4c7f625224f1896f26895269bed835d"
+          },
+          {
+            "alias": "Seller",
+            "path": "./SingleSellerAllocation.bend",
+            "module": 2,
+            "source": "c3dfd90dc0d353fe5ec02d22656afc3fb35e558def8ee9fa4b1fdbcae7140c2c"
+          }
+        ]
+      }
+    ],
+    "entryModule": 3,
+    "entryDefinition": "settle",
+    "definitions": [
+      "Nat",
+      "List",
+      "Bool",
+      "Empty",
+      "Unit",
+      "Empty.absurd",
+      "Sigma",
+      "Pair",
+      "Nat.eq",
+      "Bool.and",
+      "Bytes.eq",
+      "Truth",
+      "Bool.and_left",
+      "Bool.and_right",
+      "Nat.eq_sound",
+      "Bytes.eq_sound",
+      "MarketMath:add",
+      "MarketMath:sub",
+      "MarketMath:le",
+      "MarketMath:lt",
+      "MarketMath:choose_nat",
+      "MarketMath:choose_bool",
+      "MarketMath:min",
+      "MarketMath:mul",
+      "MarketMath:not",
+      "MarketMath:Division",
+      "MarketMath:increment_quotient",
+      "MarketMath:divide_step",
+      "MarketMath:divide",
+      "MarketMath:add_zero",
+      "MarketMath:add_zero",
+      "MarketMath:sub_zero",
+      "MarketMath:sub_zero",
+      "MarketMath:min_balance",
+      "MarketMath:min_balance",
+      "SingleSellerAllocation:Order",
+      "SingleSellerAllocation:Ranked",
+      "SingleSellerAllocation:Fill",
+      "SingleSellerAllocation:Allocation",
+      "SingleSellerAllocation:index",
+      "SingleSellerAllocation:precedes",
+      "SingleSellerAllocation:insert_choice",
+      "SingleSellerAllocation:insert",
+      "SingleSellerAllocation:sort",
+      "SingleSellerAllocation:take",
+      "SingleSellerAllocation:last_price",
+      "SingleSellerAllocation:prepend",
+      "SingleSellerAllocation:fill",
+      "SingleSellerAllocation:allocate",
+      "SingleSellerAllocation:empty_preserves_supply",
+      "SingleSellerAllocation:empty_preserves_supply",
+      "SingleSellerAllocation:sum_with_remaining",
+      "SingleSellerAllocation:accounted",
+      "SingleSellerAllocation:take_balance",
+      "SingleSellerAllocation:take_balance",
+      "SingleSellerAllocation:prepend_accounted",
+      "SingleSellerAllocation:prepend_accounted",
+      "SingleSellerAllocation:fill_conserves",
+      "SingleSellerAllocation:fill_conserves",
+      "SingleSellerAllocation:allocation_conserves",
+      "SingleSellerAllocation:allocation_conserves",
+      "SingleSellerSettlement:Account",
+      "SingleSellerSettlement:Bid",
+      "SingleSellerSettlement:BalanceWrite",
+      "SingleSellerSettlement:PrivateResult",
+      "SingleSellerSettlement:Batch",
+      "SingleSellerSettlement:Result",
+      "SingleSellerSettlement:order_list",
+      "SingleSellerSettlement:account_id",
+      "SingleSellerSettlement:identifiers",
+      "SingleSellerSettlement:contains",
+      "SingleSellerSettlement:distinct",
+      "SingleSellerSettlement:valid_bid",
+      "SingleSellerSettlement:valid_bids",
+      "SingleSellerSettlement:write",
+      "SingleSellerSettlement:units_at",
+      "SingleSellerSettlement:append_bid",
+      "SingleSellerSettlement:bid_result",
+      "SingleSellerSettlement:bid_batch",
+      "SingleSellerSettlement:backed_results",
+      "SingleSellerSettlement:prepare_batch",
+      "SingleSellerSettlement:prepare_allocation",
+      "SingleSellerSettlement:settle",
+      "SingleSellerSettlement:ExactWrite",
+      "SingleSellerSettlement:write_bound",
+      "SingleSellerSettlement:write_bound"
+    ],
+    "emittedBookSha256": "343c4e5dda256fe231cee0aee214447c29f75d9a28c273b5a4cadd53fbb4102b",
+    "outOfScope": [],
+    "bookPath": "/home/hbox/workbox/codex-collective-domain-20261003/evidence/sealed-bend-Jrpqcz/book.bendtt",
+    "transcriptPath": "/home/hbox/workbox/codex-collective-domain-20261003/evidence/sealed-bend-Jrpqcz/transcript.json"
+  }
+]

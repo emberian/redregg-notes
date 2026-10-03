@@ -1,0 +1,123 @@
+PERSISTENT BEND — BOUNDED ADVERSARIAL REVIEW, 2026-10-03
+Owner: astra_adversarial_architecture. Mechanism review, no build or implementation edit.
+Read full BEND-PERSISTENT-COMPUTATION and BEND-WORLD-LANGUAGE; inspected actual
+BendClosureContinuationCodec, BendContinuationSourceJoin, Machine.State/Control,
+BendInvocation and BendWorldPlan source. Model artifacts are private workbox only.
+
+DECISION
+Build the proposed one source-owned Activity abstraction. Keep exact pure-machine
+checkpointing as its reusable substrate. Its next native admission must consume
+one complete transition statement; a second generic saga/event format would make
+identity and recovery harder. The existing statement/Plan/Return codecs are good
+pieces, but their current structure does not yet implement an Activity protocol.
+The following are precise join obligations, not claims that acknowledged pending
+implementations have already failed.
+
+1. STORED BYTES ARE NEITHER REACHABILITY NOR AN AFFINE RESOURCE
+Trace: an authorized content writer uploads a canonical checkpoint with the exact
+expected context/generation, but changes heap, data-cache flags, control=.complete
+or sourceSteps. restore accepts the canonical bytes and identities. A scheduler
+which treats ordinary current-law content admission as a valid running Activity
+executes a forged state. Even an honestly generated checkpoint can be restored by
+two workers: equality with the expected generation is not its consumption.
+Source response: restore is intentionally pure; restore_preserves and
+source_at_restore require a PREEXISTING whole-state invariant. They do not derive
+it from arbitrary bytes. Do not weaken this API or mistake it for a flaw.
+Fix: Activity creation is rooted in actual admitted initial-state construction;
+subsequent checkpoints carry verified actual-run/continuation transition evidence
+from the exact predecessor. Native phase CAS consumes predecessor+generation and
+binds successor checkpoint, pending intent and execution permit. Affinity protects
+source use, while native state linearizes durable consumption. Pure speculative
+recomputation may duplicate, but effects/continuation advancement cannot double
+consume. Counterexample tests: forged Data flag, discounted counter, terminal
+pointer substitution, two valid simultaneous resumes, old-worker publish after
+handoff. Owner: world+captain, with controller/graded execution provenance.
+
+2. ONE REQUEST-INDEXED CONTINUATION ENVELOPE, NOT TWO LOOSE CODECS
+Trace: two pending calls have the same byte/schema-level ReturnSlot, but their
+results depend on different request witnesses or closure environments. An otherwise
+canonical result from call B resumes call A, or a stale self/super provider cursor
+is replaced with today's method graph. Shape checks pass; source semantics change.
+Source response: actual ReturnSlot has schema/encoding/recipient/key/audience/
+generation; BendInvocation binds exact program, plan, invocation, predecessor,
+authority and inputs. These useful bindings do not prove source dependent typing.
+Controller confirms no typed external-result injection ABI exists yet.
+Fix: use a single Activity transition envelope extending the existing bound
+invocation, retaining exact Plan, continuation closure+environment, request-indexed
+response type/codec and immutable finalSelf/provider-super graph. Prove canonical
+result correspondence to THIS request, bounded Data reification and actual .apply
+simulation before resume. A public digest equality is an identity check under its
+crypto premise, not a typing proof. Immutable graph capture preserves open
+recursion; current authority is revalidated separately rather than refreshing the
+captured execution context. Owners: world/controller/graded/OO source owner.
+
+3. REVOCATION CANNOT ERASE AN ALREADY-DISPATCHED OBLIGATION
+Trace: generation g durably admits and externally dispatches intent I; reply is
+lost. Authority is revoked and custody moves to g+1. New worker forgets I because
+old authority is invalid, or retries under new identity I'. The old effect may
+already exist; forgetting strands recovery and I' may duplicate it.
+Fix: retained immutable intent/outcome identity survives transfer and cancellation.
+Reconciliation of the historical admitted outcome is distinct from admission of
+new effects and current release of private result. Current policy may deny new
+release/advance without authorizing deletion of uncertainty. Dispatcher consumes
+actual source durability evidence, not transport Accepted; external dedup or an
+authoritative status protocol is necessary to resolve ambiguous effects. Source
+phase CAS alone cannot make arbitrary external effects exactly-once. Preserve old
+in-flight artifacts until an explicit terminal/discharge law. Portable owner
+confirms Audited/Ready currently has NO execution activation path and keeps these
+obligations protected; keep this boundary in the actual future consumer.
+Costs: exact semantic sourceSteps survive restart, but physical retries, snapshot
+I/O, custody and repair need funded limits/reserves of their own. Finite retention
+is not obtained by expiring uncertain records. Owners: portable/service/performance,
+world+captain; graded strengthened the phase-CAS wording after this review.
+
+4. PRIVATE METACONTROL IS AN OBSERVABLE PROTOCOL
+Trace: hidden branch creates a different heap/stack or sourceSteps; a scheduler
+without heap-read rights repeatedly requests pause/checkpoint and observes byte
+length, success timing, phase changes, refusal or repair traffic. Encryption of
+checkpoint contents alone does not hide those observations. Similarly, migrating
+clear state to FHE does not erase knowledge already acquired by old observers.
+Fix: selected observer policy must cover checkpoint sizes, phase/status, scheduling
+acks, charge/refund, failure/repair and export; pad or explicitly authorize each
+leakage surface. Snapshot inspection and scheduling are separate capabilities,
+but both need declared leakage contracts. Migration relation includes cumulative
+observer knowledge and all outstanding effects, as well as residual semantics,
+new key/custody generations and physical worker fence. Do not infer that encrypted
+storage confers an oblivious/private execution qualification. Portable filesystem
+0700/0600 is useful local custody, not the network traffic-privacy argument.
+Owners: graded/private backend+portable+source metacontrol admission.
+
+5. WHOLE-STATE EXACTNESS IS A USEFUL STRONG DEFAULT
+The actual codec retains control lookup/unspine/walk/classify, stack, original call
+spines, heap rows, cache and counters; exact context retains tables and bounds.
+This defeats the proposed attack of silently dropping a lexical/effect context at
+an administrative cut. Simulation ghosts need preservation evidence, not blind
+serialization as runtime authority. SourceJoin transports StateDenotes and
+DataCacheSound only when already established; it neither fabricates a residual
+for refusal nor proves native publication ordering. Keep exact capture as v1.
+Optimize dead heap/contexts only with a proved source-residual translation, using
+the same migration interface as alternate backends. A pause inside native step
+still needs immutable publication/lifetime/ordering proof; a request cannot wait
+for an entire source program. Full totality of each pure turn is compatible with
+a persistent activity that yields and continues indefinitely under grants.
+
+COUNCIL EVIDENCE
+One explicit requested claude-opus-5-5 call used safe mode, disabled tools/MCP,
+no fallback and only the mechanism brief (no profile/conversation). It timed out
+at 180 seconds with zero response bytes. Availability/served model is therefore
+unconfirmed; there is NO Opus opinion or model agreement to report.
+One separately authorized Grok counterview was requested specifically to refute
+these fixes/simplify their join, with tools disabled, one turn and 120-second cap.
+It timed out at 120 seconds with zero response bytes. No second model attempt.
+No external model returned a critique, so this report attributes only my source
+analysis and the named implementation owners' replies; there is no council
+consensus. The strongest critique (checkpoint storage vs execution provenance)
+was checked against restore_preserves/source_at_restore and sent to world/graded.
+Artifacts: /Users/ember/workbox/bend-persistence-review-20261003/.
+
+PENDING RELATED CONSENSUS WORK
+The passing r2 Simplex global conditional proof snapshot remains intact. New
+owner-projection module is authored but uncompiled; actual Reachable→LocalFaithful
+and native export attribution remain open. Frontier's r3 inert-block source-cache
+repair is independent. This review neither blocks builders nor calls the first
+checkpoint consumer completion of persistent effect execution.

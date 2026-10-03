@@ -1,0 +1,826 @@
+{
+  "date": "2026-10-03",
+  "owner": "redregg_intent_foundations",
+  "source_pins": {
+    "breadstuffs": "22fad151e9f118e3aa001a823e075918ffa139e8",
+    "minidregg": "b57acedaaae02edf2b2cfd8e33675b3cbf40daa8"
+  },
+  "cards": [
+    {
+      "id": "F01",
+      "claim": "Local sovereign peers coordinating via human channels are explicit early product semantics; shared runtime/full-history paste rejected.",
+      "status": "human-request-plus-agent-response-read",
+      "primary_refs": [
+        {
+          "session": "claude:70642dc2-d9f1-434b-8209-c2c96787bd92",
+          "focal_index": 1987,
+          "timestamp": "2026-05-23T02:44:25.793Z",
+          "origin": "human",
+          "kind": "prompt",
+          "read_range": [
+            1982,
+            1993
+          ],
+          "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/70642dc2-d9f1-434b-8209-c2c96787bd92.jsonl"
+        },
+        {
+          "session": "claude:70642dc2-d9f1-434b-8209-c2c96787bd92",
+          "focal_index": 2646,
+          "timestamp": "2026-05-23T06:01:57.382Z",
+          "origin": "human",
+          "kind": "prompt",
+          "read_range": [
+            2642,
+            2651
+          ],
+          "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/70642dc2-d9f1-434b-8209-c2c96787bd92.jsonl"
+        },
+        {
+          "session": "claude:70642dc2-d9f1-434b-8209-c2c96787bd92",
+          "focal_index": 2831,
+          "timestamp": "2026-05-23T06:43:19.846Z",
+          "origin": "human",
+          "kind": "prompt",
+          "read_range": [
+            2827,
+            2836
+          ],
+          "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/70642dc2-d9f1-434b-8209-c2c96787bd92.jsonl"
+        },
+        {
+          "session": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+          "focal_index": 1381,
+          "timestamp": "2026-05-24T20:26:51.392Z",
+          "origin": "human",
+          "kind": "prompt",
+          "read_range": [
+            1376,
+            1387
+          ],
+          "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/5a0f6a2e-08ba-4cfc-aab1-f894f047703a.jsonl"
+        }
+      ],
+      "source_fragments": [],
+      "scope_or_later_correction": "May23 #1987 is exploratory, nearby endorsement is observed; #2646/#2831 question actual proof/compression, not certify them. May24 rejection is direct. Agent reply then overclaims claims require no history/synchronization; not adopted as proven.",
+      "consumer_consequence_proposed": "Preserve independent local executors, portable request/authority envelopes and optional scoped federation boundary.",
+      "discriminator_or_open_question": "Trace actual importer after #1381 and stale/revoked introduction handling."
+    },
+    {
+      "id": "F02",
+      "claim": "Lean-core-first selection became running Dregg2 semantics the same day, correcting agent golden-oracle/differential-certification narrowing.",
+      "status": "human-correction-and-attempt-read",
+      "primary_refs": [
+        {
+          "session": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+          "focal_index": 4317,
+          "timestamp": "2026-05-29T15:35:08.837Z",
+          "origin": "human",
+          "kind": "prompt",
+          "read_range": [
+            4311,
+            4324
+          ],
+          "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/5a0f6a2e-08ba-4cfc-aab1-f894f047703a.jsonl"
+        },
+        {
+          "session": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+          "focal_index": 4341,
+          "timestamp": "2026-05-29T15:43:28.513Z",
+          "origin": "human",
+          "kind": "prompt",
+          "read_range": [
+            4333,
+            4350
+          ],
+          "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/5a0f6a2e-08ba-4cfc-aab1-f894f047703a.jsonl"
+        },
+        {
+          "session": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+          "focal_index": 5306,
+          "timestamp": "2026-05-29T21:37:51.855Z",
+          "origin": "human",
+          "kind": "prompt",
+          "read_range": [
+            5302,
+            5311
+          ],
+          "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/5a0f6a2e-08ba-4cfc-aab1-f894f047703a.jsonl"
+        },
+        {
+          "session": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+          "focal_index": 5456,
+          "timestamp": "2026-05-29T22:23:25.631Z",
+          "origin": "human",
+          "kind": "prompt",
+          "read_range": [
+            5452,
+            5461
+          ],
+          "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/5a0f6a2e-08ba-4cfc-aab1-f894f047703a.jsonl"
+        },
+        {
+          "session": "claude:7fc2e1fd-dff5-45b5-8609-725f442f4cdc",
+          "focal_index": 667,
+          "timestamp": "2026-06-06T23:35:58.107Z",
+          "origin": "human",
+          "kind": "prompt",
+          "read_range": [
+            663,
+            672
+          ],
+          "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs-metatheory/7fc2e1fd-dff5-45b5-8609-725f442f4cdc.jsonl"
+        }
+      ],
+      "source_fragments": [],
+      "scope_or_later_correction": "#4341 accepts core-first/four corners/old frontend freeze; #5306/#5456 clarify executable approximately-all semantics including privacy/finality. June6 allows independent segregated Rust diversity except duplicated circuits.",
+      "consumer_consequence_proposed": "One authored semantic source should feed live consumers; trusted compilation distinct from unverified sibling semantics.",
+      "discriminator_or_open_question": "Find whether public consumer invokes generated semantics or only mirrors an oracle on tests."
+    },
+    {
+      "id": "F03",
+      "claim": "Chosen canonical resource cameras retain higher-order resources, but always-valid Nat FPU does not imply numeric sum conservation.",
+      "status": "human-answer-and-source-definition-read",
+      "primary_refs": [
+        {
+          "session": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+          "focal_index": 4759,
+          "timestamp": "2026-05-29T19:53:12.762Z",
+          "origin": "harness",
+          "kind": "tool_result",
+          "read_range": [
+            4754,
+            4765
+          ],
+          "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/5a0f6a2e-08ba-4cfc-aab1-f894f047703a.jsonl"
+        },
+        {
+          "session": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+          "focal_index": 4850,
+          "timestamp": "2026-05-29T20:10:05.367Z",
+          "origin": "human",
+          "kind": "prompt",
+          "read_range": [
+            4846,
+            4855
+          ],
+          "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/5a0f6a2e-08ba-4cfc-aab1-f894f047703a.jsonl"
+        }
+      ],
+      "source_fragments": [
+        {
+          "path": "/Users/ember/dev/breadstuffs/metatheory/Dregg2/Resource.lean",
+          "line_scope": [
+            100,
+            146
+          ],
+          "sha256": "c2a436abb774e20b8281b54e81e0c82d80f4116ec8c65765af7e66dc1b632cfc",
+          "read_status": "selected-definition-read",
+          "note": "Fpu compatibility; ConservesResource := Fpu; Nat valid=True; fpu_of_total permits all updates."
+        },
+        {
+          "path": "/Users/ember/dev/breadstuffs/metatheory/Dregg2/StepCamera.lean",
+          "line_scope": [
+            1,
+            45
+          ],
+          "sha256": "67daca2a94dba0832882cd9090c288d33b48d781bf89e52a47425af99eadc13f",
+          "read_status": "selected-definition-read",
+          "note": "Step-indexed rationale for recursive resources read; not a current executive consumer proof."
+        }
+      ],
+      "scope_or_later_correction": "4759 harness row is recorded explicit answer, not independently human-authored text. Agent claim sums are shadows of same FPU is too strong for this Nat instance. Does not refute separate balance invariants elsewhere.",
+      "consumer_consequence_proposed": "Keep explicit supply/conservation laws while permitting cameras for exclusive/fractional/authoritative/recursive resources.",
+      "discriminator_or_open_question": "Derive numeric conservation from actual accepted posting law, not resource vocabulary; Nat 0->100 is FPU in checked definition."
+    },
+    {
+      "id": "F04",
+      "claim": "Authority includes authorized generation/amplification; whole-graph monotonic narrowing is explicitly rejected.",
+      "status": "human-correction-and-source-read",
+      "primary_refs": [
+        {
+          "session": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+          "focal_index": 6497,
+          "timestamp": "2026-05-30T05:14:14.229Z",
+          "origin": "human",
+          "kind": "prompt",
+          "read_range": [
+            6491,
+            6504
+          ],
+          "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/5a0f6a2e-08ba-4cfc-aab1-f894f047703a.jsonl"
+        },
+        {
+          "session": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+          "focal_index": 6577,
+          "timestamp": "2026-05-30T05:35:13.598Z",
+          "origin": "human",
+          "kind": "prompt",
+          "read_range": [
+            6573,
+            6582
+          ],
+          "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/5a0f6a2e-08ba-4cfc-aab1-f894f047703a.jsonl"
+        },
+        {
+          "session": "claude:34db0696-2160-4fec-aaa2-2853b02ebe2f",
+          "focal_index": 247,
+          "timestamp": "2026-06-19T22:50:47.441Z",
+          "origin": "human",
+          "kind": "prompt",
+          "read_range": [
+            242,
+            253
+          ],
+          "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/34db0696-2160-4fec-aaa2-2853b02ebe2f.jsonl"
+        }
+      ],
+      "source_fragments": [
+        {
+          "path": "/Users/ember/dev/breadstuffs/metatheory/Dregg2/Spec/Authority.lean",
+          "line_scope": [
+            1,
+            45
+          ],
+          "sha256": "46dab01d2f367355d3b1c2b9144ab506a3ba0c7ee1507d2f161721bdd13281f5",
+          "read_status": "selected-definition-read",
+          "note": "Header explains generative moves and later Origin first-grant failure; historical failure is header claim."
+        },
+        {
+          "path": "/Users/ember/dev/breadstuffs/metatheory/Dregg2/Spec/Authority.lean",
+          "line_scope": [
+            168,
+            253
+          ],
+          "sha256": "46dab01d2f367355d3b1c2b9144ab506a3ba0c7ee1507d2f161721bdd13281f5",
+          "read_status": "selected-definition-read",
+          "note": "Actual Introduce attenuation/target, Amplify held amplifier, Mint contract, Endow, consented self-Origin relations."
+        }
+      ],
+      "scope_or_later_correction": "Human #6497 catches enum labels not semantics; #6577 directly questions narrowing forever. June19 preceding assistant again claims amplification proven impossible; actual authorized graph growth contradicts global wording.",
+      "consumer_consequence_proposed": "Factories/powerboxes/self-authority can begin new objects and social relationships; attenuation retains target and narrows along delegated edge.",
+      "discriminator_or_open_question": "Empty graph must support first legitimate grant while refusing foreign self-Origin or changed-target delegation."
+    },
+    {
+      "id": "F05",
+      "claim": "Flat delegation actions and scoped forest edges do not themselves solve portable cap-containing collection scaling.",
+      "status": "human-concern-and-agent-explanation-read",
+      "primary_refs": [
+        {
+          "session": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+          "focal_index": 10444,
+          "timestamp": "2026-06-02T00:25:04.274Z",
+          "origin": "human",
+          "kind": "prompt",
+          "read_range": [
+            10440,
+            10449
+          ],
+          "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/5a0f6a2e-08ba-4cfc-aab1-f894f047703a.jsonl"
+        }
+      ],
+      "source_fragments": [],
+      "scope_or_later_correction": "Human concern explicit; agent explains both forms operate single caps and CNode-style container is separate. No later resolution surveyed. No permanent demand for call forests inferred.",
+      "consumer_consequence_proposed": "A cap-bearing collection can be modeled independently of flat transaction composition, with explicit lookup/attenuation/revocation.",
+      "discriminator_or_open_question": "Read later decision and actual container representation before asserting this feature absent."
+    },
+    {
+      "id": "F06",
+      "claim": "Financial/private payment primitives were deliberately kernel-assured to rent decentralized resources while retaining partner-only local computation.",
+      "status": "human-correction-and-attempt-read",
+      "primary_refs": [
+        {
+          "session": "claude:7fc2e1fd-dff5-45b5-8609-725f442f4cdc",
+          "focal_index": 899,
+          "timestamp": "2026-06-07T01:01:39.881Z",
+          "origin": "human",
+          "kind": "prompt",
+          "read_range": [
+            894,
+            905
+          ],
+          "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs-metatheory/7fc2e1fd-dff5-45b5-8609-725f442f4cdc.jsonl"
+        }
+      ],
+      "source_fragments": [],
+      "scope_or_later_correction": "Preceding human question about flavor is exploration; assistant proposes demotion as application poison; focal human corrects deliberate guarantees and declines immediate audit while permits eventual hoisting.",
+      "consumer_consequence_proposed": "Simplify representation only while preserving guarantee and actual resource consumers; local computation need not public global consensus.",
+      "discriminator_or_open_question": "Userspace escrow needs guarantee-preservation theorem/composed receiving, not a method with same name."
+    },
+    {
+      "id": "F07",
+      "claim": "Non-domination/unfoolability schema packages disjoint conditional invariants; projecting holds is not a new substantive security fusion.",
+      "status": "human-review-request-plus-source-read",
+      "primary_refs": [
+        {
+          "session": "claude:50ea7585-48e1-4014-99cc-158380b92698",
+          "focal_index": 272,
+          "timestamp": "2026-07-06T20:09:58.939Z",
+          "origin": "human",
+          "kind": "prompt",
+          "read_range": [
+            268,
+            277
+          ],
+          "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/50ea7585-48e1-4014-99cc-158380b92698.jsonl"
+        }
+      ],
+      "source_fragments": [
+        {
+          "path": "/Users/ember/dev/breadstuffs/metatheory/Metatheory/Adversary/Schema.lean",
+          "line_scope": [
+            65,
+            114
+          ],
+          "sha256": "559f0bc4d56595f11294f03d624defdaad8624e3a904e51441c95d598ed9b848",
+          "read_status": "selected-definition-read",
+          "note": "GovernedDynamics.holds, governed_holds projection, Polis instance with safety premises."
+        },
+        {
+          "path": "/Users/ember/dev/breadstuffs/metatheory/Dregg2/Circuit/SovereignBackingAttack.lean",
+          "line_scope": [
+            132,
+            156
+          ],
+          "sha256": "544f7124a6f6e4a128f2f3838f2d3eb9810cea8f1481a377dddd4606338b377e",
+          "read_status": "selected-definition-read",
+          "note": "Authorized relation plus DeployedSovIntent concrete +7 stand-in; strong docblock not proof of current live AIR hole."
+        }
+      ],
+      "scope_or_later_correction": "Human suspects flawless proving and prompts adversarial rereview. Individual invariants may be substantive; schema triviality does not refute them. +7 attack illustrates omitted-authority class but no checked weld to actual current AIR in this pass.",
+      "consumer_consequence_proposed": "Name exact checked action boundary/operator; physical custody, availability, portable exit remain separate.",
+      "discriminator_or_open_question": "Read real carrier and deployed interpreter, satisfiable acceptance and source weld, before citing deployed no-forgery or physical non-domination."
+    },
+    {
+      "id": "F08",
+      "claim": "TokenAutonomy own-token theorem is about nonnumeric resource algebra, not a mandatory native currency.",
+      "status": "source-definition-and-scope-inference",
+      "primary_refs": [],
+      "source_fragments": [
+        {
+          "path": "/Users/ember/dev/breadstuffs/metatheory/Dregg2/Resource/TokenAutonomy.lean",
+          "line_scope": [
+            1,
+            47
+          ],
+          "sha256": "580e1c379f7bc897f78731a9da0b8465fa6166e1773ba5c8e12cb9519ea8796a",
+          "read_status": "selected-definition-read",
+          "note": "Header distinguishes nonnumeric idempotent resource and numeric payment."
+        },
+        {
+          "path": "/Users/ember/dev/breadstuffs/metatheory/Dregg2/Resource/TokenAutonomy.lean",
+          "line_scope": [
+            69,
+            133
+          ],
+          "sha256": "580e1c379f7bc897f78731a9da0b8465fa6166e1773ba5c8e12cb9519ea8796a",
+          "read_status": "selected-definition-read",
+          "note": "SoundSubstitution monoid hom retract; no_substitution_of_idempotent uses cancellative target."
+        }
+      ],
+      "scope_or_later_correction": "The theorem only excludes this homomorphic lossless substitution. Arbitrary richer foreign-chain object state, nonhomomorphic encoding, or payment choice are outside it.",
+      "consumer_consequence_proposed": "Separate membership/authority from balances and payment policy; external token acceptance not dictated by theorem.",
+      "discriminator_or_open_question": "Does a design claim rely on forgetting foreign-chain auxiliary state or demanding a monoid hom where a richer encoding was intended?"
+    },
+    {
+      "id": "F09",
+      "claim": "July staking skepticism, game-security interest and burn speculation preserve policy choice; assistant burn-only/no-mint constitution exceeds authored request.",
+      "status": "human-exploration-and-agent-extrapolation-read",
+      "primary_refs": [
+        {
+          "session": "claude:2ed94bdd-4d0d-492a-8cb3-ee06012e1d6e",
+          "focal_index": 95,
+          "timestamp": "2026-07-25T17:44:10.581Z",
+          "origin": "human",
+          "kind": "prompt",
+          "read_range": [
+            91,
+            100
+          ],
+          "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/2ed94bdd-4d0d-492a-8cb3-ee06012e1d6e.jsonl"
+        }
+      ],
+      "source_fragments": [],
+      "scope_or_later_correction": "Human says kernel supports being fully conserving, tokenomics above it policy; says burns or something. Assistant says cannot inflate, burns not emissions. No fixed monetary law established here.",
+      "consumer_consequence_proposed": "Economics and nominal payments/treasury remain explicit policy separate from foundational resource semantics.",
+      "discriminator_or_open_question": "Read actual issuance and policy consumers before repeating no protocol inflation possible."
+    },
+    {
+      "id": "F10",
+      "claim": "Historical branch/stitch intent is broad, but current BranchStitchSession culls only baseline while executing whole-world clone; simulation memory isolation is distinct from authority/effect confinement.",
+      "status": "human-exploration-plus-actual-doc/code-boundary-read",
+      "primary_refs": [
+        {
+          "session": "claude:34db0696-2160-4fec-aaa2-2853b02ebe2f",
+          "focal_index": 247,
+          "timestamp": "2026-06-19T22:50:47.441Z",
+          "origin": "human",
+          "kind": "prompt",
+          "read_range": [
+            242,
+            253
+          ],
+          "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/34db0696-2160-4fec-aaa2-2853b02ebe2f.jsonl"
+        },
+        {
+          "session": "claude:34db0696-2160-4fec-aaa2-2853b02ebe2f",
+          "focal_index": 294,
+          "timestamp": "2026-06-19T23:07:49.555Z",
+          "origin": "human",
+          "kind": "prompt",
+          "read_range": [
+            289,
+            300
+          ],
+          "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/34db0696-2160-4fec-aaa2-2853b02ebe2f.jsonl"
+        }
+      ],
+      "source_fragments": [
+        {
+          "path": "/Users/ember/dev/breadstuffs/docs/deos/BRANCH-AND-STITCH-PROTOCOL.md",
+          "line_scope": "full-document",
+          "sha256": "137077ac0c9b96ba5ca98fb1d5252c24ef25d71d9f33cf6704765c01847b674b",
+          "read_status": "selected-definition-read",
+          "note": "Full protocol doc read; BUILT claim is an agent artifact requiring actual code reconciliation."
+        },
+        {
+          "path": "/Users/ember/dev/breadstuffs/starbridge-v2/src/branch_stitch_session.rs",
+          "line_scope": [
+            1,
+            262
+          ],
+          "sha256": "df543365db268334b43d26a141a056ddd4549a4f476397601f9f92e44e5cf84f",
+          "read_status": "selected-definition-read",
+          "note": "Session/fork/drive/stitch definitions read; plus test lines325-405 checking baseline cull and pristine main."
+        },
+        {
+          "path": "/Users/ember/dev/breadstuffs/starbridge-v2/src/world/mod.rs",
+          "line_scope": [
+            1016,
+            1131
+          ],
+          "sha256": "aa8a30d90a1aa25816735368ca481ec07c4fdd2c0d03c7d8587961bc4ac18ce2",
+          "read_status": "selected-definition-read",
+          "note": "Whole-ledger/signing key/factory/chain clone, fresh observers, no persistence. Also commit_turn lines1378-1535 read."
+        },
+        {
+          "path": "/Users/ember/dev/breadstuffs/grain-fork/src/lib.rs",
+          "line_scope": [
+            445,
+            486
+          ],
+          "sha256": "00f41202a1c74bf5485825e78b1d09f52935778915a3ba4029799fdf44988752",
+          "read_status": "selected-definition-read",
+          "note": "Selected parent-held targets; clear copied c-list; independent child lease; not full permission/effect audit."
+        },
+        {
+          "path": "/Users/ember/dev/breadstuffs/metatheory/Metatheory/SettlementSoundness.lean",
+          "line_scope": [
+            135,
+            190
+          ],
+          "sha256": "52cd0f20b1af1af20db01b2dc29d1366d232c7b39c907f3fe53f9877b4952c1c",
+          "read_status": "selected-definition-read",
+          "note": "BindsLiveAuthority premise and generic theorem/direct projections; no claim that all later instances are premise projections."
+        }
+      ],
+      "scope_or_later_correction": "#247 asks fresh execution from old history; #294 hypothesizes safe nested virtualization/lossy stitching. Agent asserts no main cap and almost-composition theorem. Not human certification. Actual branch open has no joint-consent parameter; fork clones whole World separately from culled baseline; stitch is verdict-only. World fork has no persistence/live observer carryover. No runtime exploit or whole-host safety verdict claimed.",
+      "consumer_consequence_proposed": "Distinct cursor/snapshot/suspend/branch/recovery/stitch; copied authority rebased/sandboxed; outward real effects explicit.",
+      "discriminator_or_open_question": "Historical state containing live external cap must not leak physical effects; stitch checks current law/root/value/provenance."
+    },
+    {
+      "id": "F11",
+      "claim": "Resumable portable state requires actual content transfer and freshness; integrity, confidentiality, metadata and availability are independent.",
+      "status": "human-question-plus-design-doc-read",
+      "primary_refs": [
+        {
+          "session": "claude:05a5aa0c-e038-4658-89b7-5d321d7d55b9",
+          "focal_index": 45,
+          "timestamp": "2026-07-08T23:37:42.297Z",
+          "origin": "human",
+          "kind": "prompt",
+          "read_range": [
+            41,
+            50
+          ],
+          "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/05a5aa0c-e038-4658-89b7-5d321d7d55b9.jsonl"
+        }
+      ],
+      "source_fragments": [
+        {
+          "path": "/Users/ember/dev/breadstuffs/docs/deos/SOVEREIGN-RESURRECTION.md",
+          "line_scope": "selected-pipeline/tip-anchor/cap-sync/rent-retention/limitations-sections",
+          "sha256": "c6f325a4bf41cedfcedbfaf1711dfafe0aca4457e5bbe53bf2305b8fa4cab5c8",
+          "read_status": "selected-definition-read",
+          "note": "Tip anchor, encrypted shards, read-cap scope, branch-resurrection, rent/retention, metadata/key/collusion limits."
+        }
+      ],
+      "scope_or_later_correction": "Adjacent response explains umem boundary roots do not transfer underlying resume contents, commitments not necessarily hide low entropy. Current pipeline delivery not tested.",
+      "consumer_consequence_proposed": "Portable continuation needs code/data/dependency/authority closure; re-negotiate service handles, retain optional anchor and scope roles.",
+      "discriminator_or_open_question": "Can another host actually resume after origin loss with only designed credentials/retrievable material?"
+    },
+    {
+      "id": "F12",
+      "claim": "October private transport/agreement is explicit coupled construction intent and traffic privacy plus some agreement an alpha condition.",
+      "status": "human-exploration-and-release-condition-read",
+      "primary_refs": [
+        {
+          "session": "claude:0c315aee-e07a-499c-8bb4-fa36730510ca",
+          "focal_index": 4504,
+          "timestamp": "2026-10-01T09:22:39.359Z",
+          "origin": "human",
+          "kind": "prompt",
+          "read_range": [
+            4500,
+            4509
+          ],
+          "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/0c315aee-e07a-499c-8bb4-fa36730510ca.jsonl"
+        },
+        {
+          "session": "claude:0c315aee-e07a-499c-8bb4-fa36730510ca",
+          "focal_index": 4515,
+          "timestamp": "2026-10-01T09:30:16.327Z",
+          "origin": "human",
+          "kind": "prompt",
+          "read_range": [
+            4512,
+            4519
+          ],
+          "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/0c315aee-e07a-499c-8bb4-fa36730510ca.jsonl"
+        },
+        {
+          "session": "codex:01a0fa81-d479-7753-a1b3-1331d1ed53de",
+          "focal_index": 6996,
+          "timestamp": "2026-10-02T17:22:28.139647006Z",
+          "origin": "human",
+          "kind": "prompt",
+          "read_range": [
+            6993,
+            7000
+          ],
+          "source_path": "/Users/ember/.codex/sessions/2026/10/01/rollout-2026-10-01T22-46-47-01a0fa81-d479-7753-a1b3-1331d1ed53de.jsonl"
+        }
+      ],
+      "source_fragments": [],
+      "scope_or_later_correction": "Human origin excludes pasted Gemini as adopted architecture; sender-receiver unlinkability expensive but worthwhile; Oct2 requirement stronger than pure observer view. First message speculative protocol sketch not exact algorithm approval.",
+      "consumer_consequence_proposed": "Wire exact rooms/host requests/gateway/recovery into selected physical traffic/agreement scope.",
+      "discriminator_or_open_question": "Pure publicView equality cannot hide secret-dependent packet size/timing/recipient; order actual admissions, not adjacent test loop."
+    },
+    {
+      "id": "F13",
+      "claim": "Resources may deliberately govern and lock own management; existing grants still face current law without owner override.",
+      "status": "human-explicit-choice-and-agent-interpretation-read",
+      "primary_refs": [
+        {
+          "session": "codex:01a0b0ed-2f93-7a03-be0e-bb81bd250747",
+          "focal_index": 5836,
+          "timestamp": "2026-09-18T07:06:50.303253889Z",
+          "origin": "human",
+          "kind": "prompt",
+          "read_range": [
+            5832,
+            5841
+          ],
+          "source_path": "/Users/ember/.codex/sessions/2026/09/17/rollout-2026-09-17T15-52-09-01a0b0ed-2f93-7a03-be0e-bb81bd250747.jsonl"
+        }
+      ],
+      "source_fragments": [],
+      "scope_or_later_correction": "Exact choice copied from question/answer; actual native lockout journey not retested here. Does not eliminate physical host shutdown or disclosed-data custody.",
+      "consumer_consequence_proposed": "Separate owner, current governance, provider and resident authority; preserve deliberate lockout with explicit optional recovery only when policy gives it.",
+      "discriminator_or_open_question": "Can deployment operator bypass self-lock while claim chosen semantics unchanged?"
+    },
+    {
+      "id": "F14",
+      "claim": "Orb performance/assurance breadth selected together; trusted leanc interim explicitly accepted, generated seam examples narrower than a whole network compiler.",
+      "status": "human-tradeoff-plus-code/artifact-read",
+      "primary_refs": [
+        {
+          "session": "claude:4ffab82c-200f-4b23-adc5-085488fdb0b7",
+          "focal_index": 0,
+          "timestamp": "2026-07-02T03:08:28.825Z",
+          "origin": "human",
+          "kind": "prompt",
+          "read_range": [
+            0,
+            2
+          ],
+          "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-DreggNet/4ffab82c-200f-4b23-adc5-085488fdb0b7.jsonl"
+        },
+        {
+          "session": "claude:4b9dad75-dc09-4aa7-b529-e1042c0d0edb",
+          "focal_index": 39,
+          "timestamp": "2026-07-03T23:36:51.880Z",
+          "origin": "human",
+          "kind": "prompt",
+          "read_range": [
+            35,
+            44
+          ],
+          "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-DreggNet/4b9dad75-dc09-4aa7-b529-e1042c0d0edb.jsonl"
+        },
+        {
+          "session": "claude:ca49a136-b817-4644-8a86-092e07ec5c2e",
+          "focal_index": 321,
+          "timestamp": "2026-07-08T20:14:56.761Z",
+          "origin": "human",
+          "kind": "prompt",
+          "read_range": [
+            318,
+            325
+          ],
+          "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-DreggNet/ca49a136-b817-4644-8a86-092e07ec5c2e.jsonl"
+        }
+      ],
+      "source_fragments": [
+        {
+          "path": "/Users/ember/dev/drorb/Dsl/EmitLean.lean",
+          "line_scope": [
+            30,
+            80
+          ],
+          "sha256": "d6826d189a478090d0a6319aa2c22867bd10caa3385311108208eeb75e03df3a",
+          "read_status": "selected-definition-read",
+          "note": "Demo classifier and equal H1/h2c reactor step; bridge equality."
+        },
+        {
+          "path": "/Users/ember/dev/drorb/Dsl/EmitLean.lean",
+          "line_scope": [
+            120,
+            205
+          ],
+          "sha256": "d6826d189a478090d0a6319aa2c22867bd10caa3385311108208eeb75e03df3a",
+          "read_status": "selected-definition-read",
+          "note": "Three known fabric seam templates; unitComponent demonstration; Route means op origin."
+        },
+        {
+          "path": "/Users/ember/dev/drorb/docs/engine/PERF-BASELINE.md",
+          "line_scope": [
+            1,
+            85
+          ],
+          "sha256": "15cdb578a1454493196a72cd80876d16fa7fad7dfe42a84f29786d200b91d25e",
+          "read_status": "selected-definition-read",
+          "note": "Dated agent measurement report; serve processed rate includes 429; CPU/4-worker numbers not independently rerun."
+        }
+      ],
+      "scope_or_later_correction": "Source licensing statement is human provenance/constraint, not new legal advice. Compiler scalability/longevity vs immediate leanc execution distinct. Report cons-list bottleneck is dated observed claim, not measured current Mini cost.",
+      "consumer_consequence_proposed": "Generate reusable behaviors/refinements and actual consumer closures, preserve breadth while prioritizing representation bottlenecks.",
+      "discriminator_or_open_question": "Do generated seams constrain routing/RFC behavior or just invariant/provenance? Does useful-request latency improve, not only processed/refused throughput?"
+    },
+    {
+      "id": "F15",
+      "claim": "260 Pickles steps should be compiler output/partitioning work rather than manually authored circuits.",
+      "status": "human-correction-and-agent-response-read",
+      "primary_refs": [
+        {
+          "session": "claude:0bea043f-86dc-4012-82d6-2ca7c0719304",
+          "focal_index": 105,
+          "timestamp": "2026-07-28T13:01:55.832Z",
+          "origin": "human",
+          "kind": "prompt",
+          "read_range": [
+            101,
+            110
+          ],
+          "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/0bea043f-86dc-4012-82d6-2ca7c0719304.jsonl"
+        }
+      ],
+      "source_fragments": [],
+      "scope_or_later_correction": "Agent proposes alternate terminal wrap after measured estimated manual workload; human insists Lean metaprogramming; ensuing three-pass plan remains agent proposal, not verified backend.",
+      "consumer_consequence_proposed": "Shared semantic IR/backends/partitioner avoid per-circuit toil; benchmark/compiler output count not human authoring count.",
+      "discriminator_or_open_question": "Which source-to-Kimchi/Pickles proof and native receiving actually exists? No current bridge verdict made."
+    },
+    {
+      "id": "F16",
+      "claim": "Mini whole-computer redesign and <=10% LOC target preserve all old consumer functions and performance, not a isolated proof lane.",
+      "status": "human-request-plus-dated-audit-read",
+      "primary_refs": [
+        {
+          "session": "claude:b54b6026-1b53-47dc-9148-5d041555810c",
+          "focal_index": 3,
+          "timestamp": "2026-08-06T23:46:05.557Z",
+          "origin": "human",
+          "kind": "prompt",
+          "read_range": [
+            0,
+            7
+          ],
+          "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-minidregg/b54b6026-1b53-47dc-9148-5d041555810c.jsonl"
+        },
+        {
+          "session": "codex:019fe43d-3dc0-7911-8a86-f4c94ac00e8a",
+          "focal_index": 10459,
+          "timestamp": "2026-08-09T16:38:25.549Z",
+          "origin": "human",
+          "kind": "prompt",
+          "read_range": [
+            10456,
+            10463
+          ],
+          "source_path": "/Users/ember/.codex/archived_sessions/rollout-2026-08-08T21-57-26-019fe43d-3dc0-7911-8a86-f4c94ac00e8a.jsonl"
+        },
+        {
+          "session": "claude:e9d68d2f-d24f-4f54-ab96-0196f23599f8",
+          "focal_index": 302,
+          "timestamp": "2026-08-27T15:53:23.593Z",
+          "origin": "human",
+          "kind": "prompt",
+          "read_range": [
+            299,
+            306
+          ],
+          "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-dragons-clutch/e9d68d2f-d24f-4f54-ab96-0196f23599f8.jsonl"
+        },
+        {
+          "session": "claude:e9d68d2f-d24f-4f54-ab96-0196f23599f8",
+          "focal_index": 4250,
+          "timestamp": "2026-08-31T02:42:14.865Z",
+          "origin": "human",
+          "kind": "prompt",
+          "read_range": [
+            4245,
+            4256
+          ],
+          "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-dragons-clutch/e9d68d2f-d24f-4f54-ab96-0196f23599f8.jsonl"
+        }
+      ],
+      "source_fragments": [
+        {
+          "path": "/Users/ember/dev/BREADSTUFFS_MINIDREGG_SUBSUMPTION_AUDIT_2026-08-09.md",
+          "line_scope": [
+            1,
+            150
+          ],
+          "sha256": "d00b82ea35924f4c71fd23454edaa44bc03c2f61653def153d3caf6138a2c078",
+          "read_status": "selected-definition-read",
+          "note": "Dated audit with later additive refresh; source pins/maturity map and consumer contract, not current assurance."
+        },
+        {
+          "path": "/Users/ember/dev/HYPERDREGGMEDIA_MINIDREGG_SUBSUMPTION_AUDIT_2026-08-09.md",
+          "line_scope": [
+            1,
+            180
+          ],
+          "sha256": "812f417a55d907f346136bbf89b8d2a6620fb1ec14280b149339167d3ecc2a12",
+          "read_status": "selected-definition-read",
+          "note": "Distinct maturity levels, multiple old media runtimes, later semantic claims; physical migrated medium explicitly not closed."
+        }
+      ],
+      "scope_or_later_correction": "Aug6 whole Mini formal-first. Aug27 dark FHE deprioritized for Clutch near-term; Aug31 economics/semantics ready for assurance is Clutch-specific, not global reversal of Mini. 10% request is ambition not achieved count.",
+      "consumer_consequence_proposed": "Generated common contracts across documents/OS/grains/agents/private markets/control-plane; trace actual adapter and cutover before subsumed.",
+      "discriminator_or_open_question": "Does LOC fall because shared generator replaces recipes or because feature/guarantee is missing? Which consumer replaced?"
+    },
+    {
+      "id": "F17",
+      "claim": "Current Mini definitions provide specific separated privacy, metering, birth and supported-book contracts; they do not establish full physical/deployed closure.",
+      "status": "current-source-fragments-read",
+      "primary_refs": [],
+      "source_fragments": [
+        {
+          "path": "/Users/ember/dev/minidregg/Theory/PrivacyProfile.lean",
+          "line_scope": [
+            1,
+            170
+          ],
+          "sha256": "339b47d6ea0a97568a02158e5a61c6c6ba2ed42c49b0e577893096497d33ca54",
+          "read_status": "selected-definition-read",
+          "note": "Four independent observations; noninterference composition and authorized projection premises explicit."
+        },
+        {
+          "path": "/Users/ember/dev/minidregg/Theory/ResourceCost.lean",
+          "line_scope": [
+            1,
+            160
+          ],
+          "sha256": "0342f193ea83cf262f55e884854ad728f67b8c73c5ef27895b9834bb166d3590",
+          "read_status": "selected-definition-read",
+          "note": "Nonnegative semantic lane charges, materialized first-order representation and aggregate algebra; physical I/O external."
+        },
+        {
+          "path": "/Users/ember/dev/minidregg/Theory/ResourceBirthAuthority.lean",
+          "line_scope": [
+            1,
+            170
+          ],
+          "sha256": "eba5cc129e8796f0ff4057ddaa9f22130d83317919889bf9ccbc9a37258498e2",
+          "read_status": "selected-definition-read",
+          "note": "Batch issue evidence uses original pre-state; canonical sparse patch registration/parent/policy entries."
+        },
+        {
+          "path": "/Users/ember/dev/minidregg/Theory/CanonicalResourceBookInvariant.lean",
+          "line_scope": [
+            1,
+            145
+          ],
+          "sha256": "dad3611f14bc762eb38f85c6eff8e2ad68e2155d548f20be749ae51a2fc8a8e7",
+          "read_status": "selected-definition-read",
+          "note": "Supported accounts; zero outside registered set; admission depends account membership not hidden balances on invariant books."
+        }
+      ],
+      "scope_or_later_correction": "Read at Mini HEAD b57aced; file hashes bind actual working-tree read (no cleanliness assertion). No compilation/execution/current public source matching performed.",
+      "consumer_consequence_proposed": "Prefer exact contracts as preservation map over general privacy/conservation/non-domination slogans.",
+      "discriminator_or_open_question": "Connect living consumers and physical interfaces before declaring historical closure or Oct13 satisfaction."
+    }
+  ],
+  "retrieval": "cv show harness:uuid --around focal_index --context as recorded; source line_scope is reading scope, not proof location coverage.",
+  "scope": "Source-backed interpretation and proposed consequences. No raw transcript copies, credentials, proof builds, deployments or current security verdict."
+}

@@ -1,0 +1,236 @@
+FOUNDATIONS — CHOICEPOINT REPLAYS
+October 3, 2026. Research owner redregg_intent_foundations.
+
+Read with ../intent/foundations-intent-model.txt and foundations-evidence.json.
+Each replay has four different evidential levels: human intent then; assistant
+attempt then; observed code/artifact evidence; new proposed reconstruction.
+No current source edits, proof builds or deployments were performed.
+
+R1 — MAY 23/24: SOVEREIGN PEERS OR A SHARED SERVICE?
+
+Human: May23 70642dc2 #1987 asks wholly offline cells among relevant parties;
+next response is endorsed as the right direction. #2646/#2831 asks what transitions
+actually prove, how compressed histories work, and partial federation interaction.
+May24 5a0f6a2e #1381 rejects two tabs sharing one runtime and full-history transfer.
+
+Attempt: assistant first queues snapshot paste, CapTP handoff, bot RemoteRuntime;
+after correction it replaces the model with individual signed claims, declares
+no history/synchronization required, and describes the bot as a third sovereign
+peer. That answers the UX better but makes a new unproved protocol claim.
+
+Evidence: later July8 handoff explanation and SOVEREIGN-RESURRECTION document
+recognize underlying data transfer, actual resume content, confidentiality and
+freshness obligations. Current historical peer_exchange file was not found at its
+old path; absence is a locator problem, not evidence that all peer behavior is gone.
+The May23 agent's 869-test full-lifecycle statement was NOT verified here.
+
+Replay proposal: implement one peer envelope whose authority issuer/recipient,
+object identity, state/pre-root, evidence mode, freshness regime and causal context
+are explicit. A receiving local runtime imports only the authorized payload and
+verifies its required context. Human channels/Discord/fn are transports; it may
+consume shared agreement for a specific spend without becoming a front-end onto
+one universal shared runtime. Compress admissibility evidence rather than pretend
+signed bytes eliminate revocation/history. First useful journey: two independent
+tabs exchange an authorable object/cap, continue locally, and negotiate one shared
+operation under current partner law.
+
+Falsifier: Bob's verifier accepts an introduction with stale/revoked or unrelated
+issuer authority, or locally editing Alice's object silently calls one shared host.
+Additional boundary: local portable computation need not require a global anchor;
+when it spends shared value its chosen regime must prevent relevant conflicts.
+
+R2 — MAY 29/30: EXECUTABLE SEMANTICS OR A GOLDEN ORACLE?
+
+Human: asks whether genuinely executable Lean can make the ideas cohere and shrink
+TCB; chooses core-first and independent authority/ordering corners, then explicitly
+calls metatheory Dregg2 and wants compiled Lean hosted by Rust for actual behavior.
+
+Attempt: agent recommends small Lean model, Rust engine and difftests, saying those
+certify Rust. Initial factoring reasons from enum labels and theorizes a universal
+verify seam. Human #6497 catches the lack of semantic reading.
+
+Evidence: strong version is reinforced in June6 #667: independent Rust semantics
+acceptable if segregated, but repeated circuit authorship wasteful. Current factory
+and authority definitions contain target/rights/program/binding distinctions absent
+from the tiny name-derived model. The dated August audits separately enumerate
+semantic, admission, cryptographic, deployed and benchmark closure.
+
+Replay proposal: a typed intermediate semantic declaration should derive executor,
+authoring API/codec, exact request binding, materialized delta, view and proof statement.
+Its proof is about an independently useful behavior/specification, not a projection
+saying a stored proof field exists. Compiled Lean semantics and proved performance
+refinements may coexist with an independent Rust implementation for diversity;
+difftests detect disagreement without granting verification to the Rust sibling.
+Every declared consumer needs one working route before its feature is called subsumed.
+
+Falsifier: a new effect needs independently handwritten admission/codec/binding
+logic in several consumers; or changing its issuer, recipient, pre-root, arguments,
+resource delta or installed behavior doesn't change the checked statement.
+
+R3 — MAY 29/JUNE 2: ATTENUATION-ONLY AUTHORITY OR A GENERATIVE WORLD?
+
+Human: canonical camera; recursive caveats on other cells; May30 #6577 explicitly
+asks amplification/powerboxes/introduction; June2 #10444 asks cap-container scaling.
+
+Attempt: agent initially collapses capabilities to narrowing guards; later explains
+flat point-edits vs scoped forest contexts, admitting neither supplies CNode-style
+aggregate designation. June19 it again calls amplification impossible while answering
+a display/authorization question.
+
+Evidence: Spec/Authority has restrictive and generative families. Its July31 Origin
+addition records a first-grant failure from the empty authority graph. Existing
+FactoryDescriptor separates creation constraints from child lifetime constraints,
+checks targets and narrower permissions, and carries program strategy/provenance.
+Mini ResourceBirthAuthority checks every birth grant against the ORIGINAL authority
+state, not newborn authority from an earlier batch row.
+
+Replay proposal: distinguish deriving from a held cap, consented first authority
+over one's own object, constructor/factory authority and sealer-mediated recovery.
+Support a cap-bearing collection as a first-class object with policy-governed
+lookup/attenuation/revocation, so moving a document/world/instrument can move its
+chosen authority closure without N ritual grants. Flat multi-cell turns can retain
+this graph/container model; no return to arbitrary recursive call forests required.
+
+Falsifier: empty genesis cannot create a first legitimate object/grant; delegation
+can change the target; a child grant bootstraps unauthorized later grants within
+one atomic batch; a collection's authority escapes its declared policy.
+Unresolved: efficient aggregate revocation semantics, and whether live provider
+handles should ever be portable inside a copied collection.
+
+R4 — JUNE 7/JULY 25: SIMPLER MECHANISMS WITHOUT ERASING PAYMENT GUARANTEES
+
+Human: financial flavor questioned; private payment/resource guarantees deliberately
+kernel-proved; independent private computation retained. July25 staking skepticism,
+game-security interest and burn exploration remain policy research; treasury/service
+payments are separately requested.
+
+Attempt: assistant labels vocabulary poisonous and recommends removing effects,
+then in July extrapolates that kernel cannot inflate and burns must be the policy.
+The actual human says kernel supports being fully conserving; this is not equivalent
+to a universal prohibition of authorized issuance in every resource algebra.
+
+Evidence: Resource's always-valid Nat camera makes every update FPU; TokenAutonomy
+only rules out a lossless monoid substitution of idempotent membership into numeric
+amounts. Current Mini Book supports registered accounts and negative issuer wells,
+while ResourceCost's positive semantic costs are a separate carrier.
+
+Replay proposal: generic posting/reservation/issuance/lease/settlement families can
+replace a big effect enum while making contractual pre/post and party obligations
+explicit. Currency policy and native membership/authority resources remain separate.
+Meter semantic work, reserve finite provider capacity BEFORE physical work, and
+bind completion/charge/release evidence to the original permitted request.
+A private local marketplace can be useful at scoped assurance even before universal
+foreign-chain truth exists; external claims crossing scope require the stronger seam.
+
+Falsifier: balances increase because FPU was mistaken for supply conservation;
+concurrent resource reservations overpromise one provider's finite capacity;
+refund succeeds while the corresponding physical effect/charge happened twice.
+Question: which receipts are accepted when provider fails after work but before
+acknowledgment? The pure algebra does not answer that.
+
+R5 — JUNE 19/JULY 8: HISTORICAL PLAYGROUND OR REAL EFFECT ISOLATION?
+
+Human: run fresh things from old state with willing parties; nested virtual histories;
+reconcile useful lossy results. Later asks how state dissemination sustains this.
+
+Attempt: assistant says settlement soundness is almost a pre-existing theorem,
+then says two small additions suffice: joint virtualization handshake and lossy stitch.
+Branch confinement is declared as "holds no main cap"; superseded recovery becomes
+explicit Virtual rather than silent rollback.
+
+Evidence: branch/stitch and resurrection documents are concrete designs with named
+roots/anchors/read-caps/retention. They openly acknowledge metadata/availability/key
+custody. August hypermedia audit diagnoses actual implementations with competing
+identity/history stores and no welded whole medium. Its later refresh claims more
+semantic closure while still excluding editor cutover/physical durability.
+Actual BranchStitchSession source culls the stitch baseline, not its execution world:
+World::fork clones all cells, factories, signer and chain heads. Offstage absence is
+tested only in baseline.cells; main-memory purity is tested separately. Session open
+has no joint-consent input, and stitch returns a verdict without applying it to main.
+The fork disables persistence and live observers; that establishes selected simulation
+boundaries, not full physical confinement. Grain::fork instead explicitly clears the
+inherited c-list and confers selected held targets, with an independently funded lease.
+The generic SettlementSoundness theorem directly consumes BindsLiveAuthority; its
+name cannot close the host adapter by itself. Source fragments are recorded in F10.
+
+Replay proposal: distinguish immutable cursor, frozen snapshot, suspension, live
+branch, recovery and settlement. Branch creation must remap references/authority or
+sandbox outward effects; receiving old code containing a main reference cannot
+inherit permission to exercise it as reality. Stitch is a NEW authorized transition
+against current parents/law/resources, preserving selected provenance and explicit
+loss. A portable continuation includes retrievable code/data/dependencies, plus a
+re-negotiated physical-service environment. Make these generic for documents,
+simulation/game worlds and agent debugging, not a special-purpose Git adapter.
+
+Falsifier: exploring history spends current external credit or sends a message;
+restoring a stale checkpoint silently overwrites a newer authoritative head;
+branch stitch recreates already-spent value or reactivates revoked authority.
+Unresolved: meaningful reversible UI when an underlying service is explicitly
+non-replayable; June's foreign-runtime breadth must survive honest effect boundaries.
+
+R6 — JULY 2/3/8/28/AUGUST 6: GENERATION AS A CAPACITY MULTIPLIER
+
+Human: licensed-source restriction motivates fresh high-performance verified network
+engine; complete breadth retained, leanc interim accepted, custom compiler long-term
+important; 260 Pickles partitions should be generated automatically; Mini must
+reexpress complete Bread consumers at <=10% LOC and suitable performance.
+
+Attempt: repeated leaf proof/wiring progress counted as whole engine completion;
+agent tries reducing to one H1 vertical and correctness-by-testing; then offers
+literal no-tests rhetoric, which the human did not request. Work eventually has
+real generator seams, but custom compilation and consumer deployment lag.
+
+Evidence: EmitLean instantiates proved recycling/origin/invariant seams from one
+engine declaration, while its unitComponent demonstration and identical H1/h2c step
+are a generic model, not an implementation of both protocol behaviors. Performance baseline records ~7.4k processed requests/s for
+one worker and ~3.7x scaling at four workers, with high 429 fraction in one row;
+that is serve-loop throughput, not all successful application requests. Earlier
+report states cons-list representation hides gains from socket zero-copy changes.
+These scoped artifacts do not prove whole-network behavior or performance today.
+
+Replay proposal: invest in declaration generators when a recipe repeats across
+real consumers. Derive AST-dependent semantics, controllers, tests/falsifiers,
+views, cost accounting and backend partition outputs. Preserve behavioral proofs
+while making compiler trust explicit. Use matched physical workloads to identify
+representation changes that can be proved/refined; keep library breadth progressing
+with one composed consumer lane per generic family. LOC reduction is a diagnostic
+of reuse, not a reward for discarding features or compressing prose.
+
+Falsifier: compiler output uses a proof-irrelevant backend parameter; template expands
+many manually inconsistent variants; benchmark improves wrapper dispatch while
+interactive object/host request stays slow; a proof-only leaf has no actual caller.
+
+R7 — JULY 6/OCTOBER 1/2: NON-DOMINATION AND PRIVACY IN THE REAL WORLD
+
+Human: suspicious proof attempts never found flaws; asks coupled private dissemination
+and agreement; acknowledges expensive anonymity while still wanting a real system;
+October alpha requires traffic privacy and some agreement. September deliberately
+self-locking management gives actual object autonomy semantics.
+
+Attempt: GovernedDynamics projection described as profound unification of non-
+domination and unfoolability; view privacy/table wrappers treated as fuller privacy;
+October overnight promise then allocated all effort to object/message foundation.
+
+Evidence: schema literally projects its holds field; independent safety arguments
+remain. Current Mini PrivacyProfile carefully distinguishes four observations.
+July resurrection already names metadata as unsolved. October pasted architecture
+is only stimulus; Ember expressly agrees it is word salad. The correction is not
+an instruction to import every advertised FHE/zkHOL/KZG mechanism.
+
+Replay proposal: name adversary/custody/availability/traffic domains for each living
+consumer and wire privacy/agreement into that exact path. A room member can have
+cleartext execution while the host or outside observer has narrower visibility;
+an external API custodian is another principal. Deliberate management lockout can
+coexist with a provider's physical policy and portable exit. Cover traffic must
+include public gateway, provider/recovery/backlink traffic where those are in its
+claimed scope, with explicit membership/churn/load assumptions.
+
+Falsifier: public payload equality hides secret-dependent size/timing/receiver choice;
+operator refusal depends on voluntary host behavior rather than checked admission;
+room execution leaks plaintext to provider despite host-blind claim; agreement only
+orders a test loop beside real receipt admission.
+
+These replays favor smaller shared mechanisms capable of broad real uses. They do
+not establish that every historical implementation should be ported, nor that all
+listed future experiences are October13 feature mandates. Factual scope and dates
+remain in the intent model and evidence cards.

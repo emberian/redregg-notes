@@ -1,0 +1,355 @@
+PRIVACY SOURCE-COMPOSITION REVIEW — 2026-10-03
+Codex / privacy_composition_review
+
+Conclusion: one concrete malformed-dealer totality failure was found inside the
+admitted n=4,f=1 corruption budget and accepted for repair by its owner. The new
+registrar set guard closes the examined valid-replacement seam at an honest next
+operator under its stated additional trust. Separate passing lanes do not yet
+construct a private Bend world: clear source execution, private ciphertext
+evaluation, current-law installation, persistent private recovery, public charge
+and traffic lifecycle still need their actual receiving joins.
+
+This report is a finite source audit, not a literature survey, anonymity theorem,
+deployment qualification or complete whole-repository review. No source builds,
+Git operations, secret-key outputs, deployment, paid calls or nested agents were
+performed by this lane. Source owners implement fixes. Existing work continues.
+
+1. READING / EXACT SOURCE BOUNDARIES
+
+Read redregg/work/RESUME-20261003.txt and the current FHE, graded-execution and
+Bend logic reports, requested exact pins/owned files from all four owners, then
+read their hbox source. Bread HORIZONLOG newest entries and full memory index were
+read for orientation. Dated reports and owner test reports are leads, not claims
+that today's source has run. This report does not import old Bread crypto into
+Mini merely because a source module has the same subject.
+
+Traffic tree: hbox:/tank/dregg-build/codex-traffic-20261003, base e851920e.
+  native/resource-client/src/pq_mailbox.rs
+  SHA256 88902129321e25e7824c9975a36b4ca52e4266374295608a120dd3806b60af3a
+Read scheduled_transport.rs's persistence, dispatch_once and native service seam,
+and native/resource-client/PQ-MAILBOX.md. Current registrar guard was awaiting
+captain checks at owner handoff. Earlier scheduled/native tests do not qualify it.
+
+Backend tree: hbox:/home/hbox/workbox/codex-private-backend-20261003.
+Read codec.rs Journal/Generation, custody.rs physical reserve/anchor, asks.rs and
+protocol_store.rs. Original asks.rs before review fix:
+  e27b4449355d49261d45efeb795a86196e1bb01c5809a4a2381bc683e08cf1cc
+Observed owner repair in progress:
+  9da285e0e0a6fdd1b6170a06887d0ba79f13aa219bb1abc4bca1c135555aa229
+  custody.rs 0a0638e97de7b5de8310911970835d43849fc00df2e8c53eae4400c0fdb6ff97
+  protocol_store.rs 428ef2f95b1f402f71ab244bfbe015bdee4f513dd0c3e6ca967f5254879e1bef
+Read Compiler/PrivateBackendBoundary.lean. This is not Host AMPC admission.
+
+Bend machine/custody tree:
+  hbox:/tank/dregg-build/codex-private-lifecycle-20261003/src
+  Theory/BendLiveMachine.lean
+    8a5a9fa79417964cf7c3de118c7b81a5e5f8c744646226a1e6bee4f2eba2f8fc
+  Compiler/ObliviousNetwork.lean
+    06f78962fde5b4c1d732c7703d5f9b146479a55136f5bfdefbebc6db328da834
+  Kernel/PrivateSuccessorCustody.lean
+    30d403ba71c88378e1845fe6eda96579c6ca907bba6dc627365b93a22db8efb0
+  Assurance/PrivateEvaluatorCustodyJoin.lean
+    6491af11c0ce15b1970064390f740b7d9e4186e45a6783a72b39085aafd77689
+Also read ObliviousGate.lean and scoped charge/disclosure consumers. New Bend
+modules were authored, uncompiled at owner handoff; earlier custody tranche has
+separate evidence. Upstream exact namespace-wrapped kernel pin:
+  947db722640c86247849343657bf2f7ef01cb7f1
+  bend2/bendtt.lean e15042434e73aab07ab05cea4b77b5619082c00a6d4924ea2d4a2cdec05facce
+
+Logic tree: hbox:/home/hbox/workbox/codex-bend-logic-20261003/src.
+  Compiler/BendLogicCase.lean
+    9e7141f5155dc28db1bb7c22df8a5419da8a587f8b290e42f6dba4d087c61412
+  Compiler/BendLogicSpecialization.lean
+    0eaf29e33d4754b3c8771dab5515de6211f3a40cc5dd38464f1bfe0226125707
+  Compiler/BendLogicTrace.lean (after owner removed stray EOF marker)
+    b7bb0252fc9550a5f7d0fdb7e976c8a2a8fad043adb394f57734072325fbf58f
+  Host/BendLogicEmit.lean (after signed-constant face was added by owner)
+    c733f69505988c7252bedecd679a49c696fbe94aded0b0141d3557f2ec3abcb5
+No ZK/FHE/MPC consumer was connected at owner handoff. Source hashes can change
+as owners repair; these identify the reviewed faces, not integration HEAD.
+
+2. THREAT MODEL / REPROFILES
+
+P0 Scheduled PSK RPC: honest client and server, owner-private durable files,
+external network observation and manipulation. AEAD integrity and fixed cell
+shape are the claimed properties. Source IP, endpoint, connection presence and
+public faults remain visible. Native server sees signed graph/author. Neither
+source anonymity nor forward secrecy/full PQ stack is claimed.
+
+P1 Restricted registered cohort mix: fixed public cohort, at least two honest
+clients, three independent mixers plus separate honest receiver, at least one
+honest whole-batch shuffle over ALL protected epochs, additional honest
+NONCOLLUDING registrar, authenticated confidential slot enrollment and route
+commitment upload, trusted local durability, static corruption/no later secret or
+pairing disclosure, and bounded processing before public release. Registrar sees
+the paired stage hashes; it can map packets if it colludes. Native receiver sees
+ordinary signatures and authored graph. Public cohort/presence/failure/capacity,
+key inventory, epoch schedule, route endpoints and broadcast audience are allowed.
+This is a real extra trust assumption relative to one-honest-mix claims. It is
+neither inherited Outfox security nor a fully PQ OO/agreement deployment.
+
+P2 Physical correlations / ASKS: n=3f+1 (implementation n<=16), static cumulative
+f corrupted parties, authenticated confidential sender channels, eventual honest
+delivery, honest crash-storage authority and separately controlled monotonic
+correlation anchor. Dealer may be one corrupted party. The local Unix anchor test
+is IO evidence, not separate rollback authority. ASKS malicious-dealer default
+semantics are allowed; completed sharing must still retain reconstruction support.
+This source is not ACS/AMPC or prior-state VSS. Detailed capacity/retention errors
+are currently private host diagnostics, not admitted strong-world public outputs.
+
+P3 Bend reference: clear source AST/data, exact Eval/Walk evidence, finite ticks
+and exact source Trace. No secrecy property is established by executing it.
+Oblivious Boolean heap DAGs describe a fixed public schedule; their clear checker
+is conformance machinery. Secret-PC/closure controller lowering and malicious
+shared-wire execution remain receiving work. Do not silently instantiate P3 as
+the backend of a P2 committee-private contract.
+
+P4 First FHE slice: public fixed finite Bool program, private canonical input,
+real ciphertext evaluation, public independent ciphertext reexecution for
+integrity, owner-authorized private result release. This is the design's first
+construction, not an already joined admission path. Public output of negation
+would intentionally reveal the input; confidentiality must be stated relative to
+the permitted output. Program secrecy, threshold DKG/relin correctness and
+persistent encrypted-state release are distinct stronger constructions.
+
+None of the findings below assumes compromise of the honest registrar/receiver,
+later key disclosure in P1, or more than f corrupted parties in P2. Lifetime
+failures excluded by P1 are recorded as qualification limits, not in-budget
+attacks. These profiles do not lower the full private-world destination.
+
+3. CONFIRMED FAILURE: ASKS SUPPORTING SHARE OVERWRITE
+
+Consumer: native/private-backend/src/asks.rs, original PrivateShare arm lines
+279-288; progress lines 300-315; start_reconstruction's local_share broadcast.
+Original rule replaced private_share on every validly shaped dealer message until
+sharing output terminated. private_valid triggered RA but retained no immutable
+copy of the share that justified that acknowledgement.
+
+Minimal in-budget source trace, n=4,f=1, party0 malicious dealer:
+  A. Dealer creates a coherent commitment vector and matching private shares.
+     Deliver commitment RBC until honest1,2,3 have the vector.
+  B. Deliver their matching private shares. Each honest node emits RA Echo(1).
+     Hold all resulting RA traffic in the network scheduler.
+  C. Dealer sends wrong replacement coordinates to each honest node. The old
+     PrivateShare arm overwrites each commitment-matching private_share.
+  D. Deliver the previously generated RA Echo/Ready traffic. Three honest Echoes
+     suffice for Ready; agreement completes at all honest parties.
+  E. Every honest SharingOutput.local_share is None. Their start_reconstruction
+     emits no Reconstruct shares. The sole malicious dealer withholds.
+Completed sharing therefore has no honest reconstruction support. This is a
+totality/recovery failure, not a claim that the dealer learned honest secrets.
+It matters to key/output custody: a completed token cannot justify recoverability
+merely because RA terminated and numerical holder counts look sufficient.
+
+Repair: retain the commitment-matching accepted_share BEFORE RA Echo is emitted;
+never let later replacements erase it. Continue accepting candidates before a
+commitment is known, but freeze the first verified share supporting acknowledgement.
+Use the retained share when constructing SharingOutput. Reordered commit/share
+arrival and replay must preserve this rule.
+
+Owner private_backend_construction confirmed the fault and invalidated the old
+r1 qualification. I observed accepted_share authored in the new source; captain
+test run remained pending while writing. Required verification: exact delayed-RA
+replacement trace above, every honest sharing output retains Some(correct share),
+withhold corrupted party, all honest reconstruct the same coherent key. Retain
+incoherent malicious-dealer default and wrong/withheld reconstruction tests too.
+I subsequently inspected accepted_share freezing before the first RA Echo, the
+private_valid retained-share preference and the exact delayed-RA/replacement test.
+Owner bumped ASKS domain, wire and transcript to V2 to prevent reinterpretation of
+old r1 evidence. Source review is not a substitute for its narrow receiving run.
+
+4. PRECISE METER/REFUND DISTINGUISHER (OUTER JOIN STILL OPEN)
+
+Consumers: Compiler/BendLogicTrace.lean sourceCount/source_trace/execution;
+Theory/BendLiveMachine.lean:303-344 Trace/Outcome; native custody retains exact
+charge at Assurance/PrivateEvaluatorCustodyJoin.lean:66-77.
+
+Use Plan <false,false>, NOT public-output negation:
+  secret input false -> same public output false, one source Eval step;
+  secret input true  -> same public output false, two source Eval steps.
+The full permitted result is equal. A public exact step fee, early refund,
+completion count, failure prefix or status length would reveal the secret bit
+outside that result. Public negation is a weaker test because its result itself
+discloses the input. Physical fixed gates cannot magically make sourceCount equal.
+
+Current adapters explicitly do not price a run, so this is a construction
+constraint with a concrete refuter, not an observed deployed leak. Composition
+owner agreed and sent the receiving correction to world/profile ownership.
+
+Repair: implement a VERSIONED actual native fixed-capacity charge/reservation law
+covering computation/control/repair/padding, without a public secret-dependent
+refund. Keep exact semantic diagnostics privately when an authorized audience
+needs them. Do not invent padded RunClaim.steps under the old exact-charge law.
+Verification: paired same-output runs for both constant-case inputs have identical
+public fee/refund/status/traffic projections; private traces remain 1 and 2 and
+exact native successor/custody charge remains the chosen law's actual charge.
+
+5. MIX SET GUARD: EXAMINED VALID REPLACEMENT REFUSES
+
+Consumer: pq_mailbox.rs:391-495 manifest/verify_manifest/verify_transition;
+CLI relay/mailbox calls verify_transition at 774 before claim/native effects.
+Registrar signs the entire manifest separately for each operator/profile/hop.
+It publishes independently sorted sets of hashes for all five packet/core faces.
+An honest next operator checks both its complete input set and its peeled output
+set, so changing/removing a valid packet, duplicating a target or substituting a
+newly valid injected packet cannot pass that operator under collision resistance
+and an authentic honest enrollment manifest. No prefix is forwarded there.
+Distinct HMAC pins prevent corrupt operator0 from rewriting operator1's manifest.
+Core hashes include epoch and fresh random reply capability. Exact constant
+native bodies therefore do not by themselves make public core hashes repeat.
+
+This observation does not prove anonymity. CLI CSV paths do not authenticate
+one slot per enrolled human/client. Live authenticated enrollment and confidential
+paired-hash transfer are absent deployment joins. Require that adapter to enforce
+fixed slots, identical cohort to every operator, independent secret MAC pins,
+one immutable manifest per epoch and no publication of *.route vectors.
+Verification: corrupt enrolled client and corrupt relay attempt valid injection,
+target replay, missing slot, duplicate slot, alternate manifest and wrong-hop MAC;
+honest guard refuses before its claim or native counter changes. Compare full
+observation games for two honest-client swaps, including enrollment/control.
+
+6. PUBLIC CAPACITY/RELEASE/REPAIR COMPOSITION
+
+Consumers: pq_mailbox.rs:670-704 real-call capability reservation, 497-549 release
+deadline, 320-357 sequential native dispatch, 563-606 broadcast scan.
+Real requests reserve .cap records; dummies do not. Class quotas 128/64/64 count
+all retained caps, including spent caps, and refusal produces no network packet.
+That is an intentional finite retention boundary in today's CLI. A future
+resident fixed-cohort adapter cannot simply call real seal and stop cover output
+when it refuses: the real-vs-cover workload would change presence. Public capacity
+permission must say whether occupancy is released, not merely list a public cap.
+
+Repair: transport reservation and real request acceptance are separate; every
+enrolled slot continues scheduled dummy cover when private real acceptance fails.
+Return private Pending under its contract. Persistent retirement/refill needs
+source-authorized closure retaining outstanding repair obligations, never delete
+caps/tombstones to restore availability. No arbitrary key/cap reset.
+Verification: spend/exhaust real application capacity vs all-dummy history while
+keeping authorized public outputs equal; next slot and control/repair traffic are
+equal, application exhaustion cannot drain reserved repair/control. Test restart
+at the cap-reservation/packet-publication crash seam.
+
+After receiving this audit, transport owner committed to repairing the actual
+CLI pole: private carrier-class/cap refusal emits a well-formed cover packet and
+retains a private refusal file. No invented native Pending. Owner also repairs
+native dispatch journal admission errors into conservative private transport
+uncertainty within the same broadcast, avoiding whole-epoch abort after prior
+native effects. These were source changes in progress, not inspected/tested yet
+at this report revision. Full resident cohort/lifetime qualification remains.
+
+Mailbox calls actual native Host sequentially. It persists claim/output and only
+publishes at the public deadline, but secret-dependent Host work can make it miss
+that deadline. A missed broadcast can disclose work differences unless bounded
+WCET was actually established for all admitted workloads. Source docs correctly
+retain this qualification; no qualified live TCP cohort was reported.
+Repair: bounded admission plus established WCET, or source async continuation
+with equal scheduled Pending cover and separately authorized final result. Pair
+same permitted-result methods with different source paths; public release/fault
+projections must agree within the admitted resource/schedule model. Deliberate
+public faults cannot be used as an unbounded exception for private diagnostics.
+
+7. RETRIES / CORRELATIONS / LIFETIME
+
+Consumers: pq claim:176-203, capability scan:563-606; scheduled dispatch_once:
+539-572; custody reserve_release and recover_snapshot; protocol_store.rs Store.
+The mix's input digest and immutable claim reject changed replay; uncertain
+claim never reruns native effects. Reply capability is spent before opened-byte
+delivery; missing cache after spent refuses reuse. Native ID+exact-body journal
+protects semantic dispatch across fresh outer packet/capability. CLI real seal
+retains exact body; caller's supplied operation ID is not source retry authority.
+
+Physical correlation identity is pool+row across attempt/config/purpose, not an
+attempt-scoped new namespace. Anchor reserves before pool row read, then local
+snapshot/readback and a second anchor check; reserved already means unavailable
+for reissue. Generation relabeling does not restore the row. Protocol Store
+retains randomness and outbound transcript before transmission; retry returns
+retained bytes, not a new polynomial. These source mechanisms have real consumers.
+
+Two irreducible receiving joins: separate rollback authority for the anchor, and
+external monotonic/authenticated protocol checkpoint for ASKS WAL. Local unkeyed
+checksums and same-UID daemon cannot supply either. Within honest crash storage,
+reopen replay checks recorded outbox against protocol execution. Under malicious
+snapshot rollback that authority must refuse old prefixes before release/outbox.
+Verify source-authorized recovery after each reserve/read/send cut, and authority
+separation by a test where snapshot owner can restore its files but cannot restore
+the anchor/checkpoint. Retain privately stable semantic ID with fresh outer nonce.
+
+Retained mix outputs/traffic plus later old ML-KEM keys can reconstruct old routes;
+registrar pairing retention is another mapping record. P1 explicitly excludes
+later disclosure, so this is not an in-budget attack. An eventual longitudinal
+profile needs epoch key lifecycle, registrar-pairing erasure/custody policy,
+cryptographic forward-security qualification and rollback-safe retirement. Merely
+calling packets PQ does not supply those properties, nor upgrade native signatures.
+
+8. SOURCE / CIRCUIT / FHE / INSTALLATION IDENTITY
+
+Consumers: BendLogicSpecialization.compile checks exact full literal source tree
+and public split<=2. One Plan derives constructive outputExpr and relation; the
+arbitrary-witness theorem pins BOTH original input/output wires. nPublic is only
+layout, not a cryptographic proof consumer or bitness proof for ciphertexts.
+Specialized circuit topology/size also discloses the program or selected method.
+Specialize only public program/profile data. Secret dispatch/private programs need
+the fixed universal secret-PC path or an authorized fixed bank with private
+selection; padded capacities alone do not hide which graph was emitted.
+Accepting caller statements that wire1 came from encrypted input requires real
+same-opening/bitness/domain binding; declared encrypted bits cannot supply it.
+
+Numerical seam identified by the FHE/logic owners: BabyBear's emitted canonical
+representative 2013265920 for -1 cannot be copied as an integer coefficient into
+BFV Z_t. For historical t=1032193, 1+2013265920 on input1 is 489571 modulo t,
+rather than negation's required0. The actual owner has added a constructive
+signed-integer face via the same generic compiler, denominator1 only, alongside
+the BabyBear relation. This is repair in progress, not my discovery or tested
+closure. Verify exact Plan/source -> signed expression -> ciphertext execution,
+both inputs and all four Plans; reject wrong denominator/domain/key parameters,
+and never consume BabyBear field bytes under a different modulus by convention.
+
+FHE confidentiality does not establish computation integrity: for public program
+the first useful implementation is independent secretless canonical ciphertext
+reexecution, followed by equality of the actual output object. Bind exact graph,
+signed coefficients, encoding, ciphertext input/output bytes, algorithm/parameters,
+kernel/compiler/profile and release audience. A proof of a plaintext relation is
+not automatically a proof that installed ciphertext B is result ciphertext A.
+Verify malicious output substitution, descriptor/expression mismatch, changed
+source, wrong encoding and unbound constants at the receiving consumer.
+
+BendLiveMachine is a clear source-proof carrier; its outcome contains Term and
+exact count and its control is ordinary pattern matching. ObliviousNetwork's
+evaluate is also clear and cannot be a malicious private backend. An opaque Ref
+unfolds its model in source Eval. Native C/JS/foreign implementation equivalence
+is not established by that proof. Bind actual book/entry/kernel/profile/codec and
+the live backend body; authorize external disclosures, reject unsupported strong
+profiles, and construct the real private evaluator rather than treating a model
+or clear FFI call as opaque private execution. Preserve Q0 binder alignment while
+emitting only authorized live output, not complete ghost syntax/proof witnesses.
+
+Custody NativeBinding retains the actual accepted native successor, exact signed
+command, guards, writes, nullifiers, fee and event. Good: it does not weaken these
+to equal roots. But ofAccepted is not current release/install authority; transition
+has no decision certificate argument and explicitly delegates authorization to
+the joint receiver. Bind current authoritative decision, configuration and
+private recovery qualification in that actual receiver before installation or
+release. Test old accepted invocation after revocation and delayed old-generation
+certificate; neither may mint a new install/release from mere identity equality.
+
+9. OWNER COORDINATION / REMAINING RECEIVING WORK
+
+private_backend_construction: accepted-share repair and narrow malicious dealer
+trace are required; old r1 qualified status superseded. Owner test seat pending.
+bend_logic_compilation: removed stray final EOF marker reported by this audit;
+signed constant face added while FHE join continues. Same-output meter refuter sent.
+astra_consensus_composition: accepted same-output meter argument, recommends real
+versioned fixed-capacity native charge law and private diagnostics; forwarded it.
+resume_private_construction: exact guard inspection and cover/WCET receiving poles
+sent; owner is constructing cover-on-private-admission-refusal and contained
+native-journal uncertainty fixes. Current docs already state restricted registrar
+trust and lifecycle limits.
+root: concrete ASKS fault/owner response and source-marker repair communicated.
+
+Priority after repairs: one actual source-bound private run carried through native
+current-law admission -> exact private successor custody -> authoritative install
+-> authorized result -> loss/restart/repair, with the constant-case public meter
+pair and physical correlation crash cuts. Encrypted packets to a clear Host,
+separately passing arithmetic proofs and a retained sharing token cannot be
+combined in prose to count as that journey. Build only the narrow tests that can
+refute each changed seam, using the captain's hbox seats.

@@ -1,0 +1,887 @@
+GRADED EXECUTION FOR BEND IN MINI / THE GROWING DREGG
+2026-10-03 — Codex, graded_execution_architecture
+Status: design and source audit; no implementation/build/deployment claim.
+
+DECISION
+
+Make execution a checked composition of contracts for one Bend meaning. Do not
+make Native | ZK | MPC | FHE | TEE a user-program mode enum. An encrypted Bend
+computation can simultaneously have MPC key custody, a proof of correct evaluation,
+oblivious memory access, replicated installation, and a separately authorized
+statistical release. Those mechanisms occupy different dimensions.
+
+The desired “hypercube” is a useful navigation image, but the implementable object
+is a constrained, partially ordered space of contracts and typed realization
+plans. Its coordinates have different algebras. Many points are incomparable;
+some combinations are impossible under their assumptions; many useful points are
+merely unsupported today. A compiler must distinguish those outcomes.
+
+Keep three objects separate:
+  Meaning: checked Bend program + typed interface + exact outcome/effect relation.
+  Contract: permitted observations, authority, resources, assumptions and progress.
+  Realization: typed plan DAG + checked refinements + actual deployment evidence.
+
+Mini is the construction home that grows into big Dregg. Bend is the primary
+world language, as JS is for the web; retained Nock support is another language
+entry. This document authorizes neither repository renames nor a new execution
+service. No universal theorem or exhaustive taxonomy of computer science is
+claimed. Quantum/analog computation, arbitrary nondeterministic foreign programs,
+and physical secret destruction need additional semantics, not new badges here.
+
+READING AND CURRENT EVIDENCE
+
+Direct source reads, paths relative to /Users/ember/dev/minidregg:
+- Theory/IndexedProgram.lean: indexed operations/responses/continuation states;
+  fold_fusion and fold_rel require actual related algebras. Its wrong-algebra
+  example explicitly refutes “same syntax implies same result.”
+- Theory/PrivacyProfile.lean: independent publicView, executionVisibility,
+  metadataView and cryptographicHidingClaim; observer-preserving portal composition;
+  same-opening and release relations; explicit counterexamples separating privacy.
+  The supplied hiding predicate is a claim, not a primitive's security proof.
+- Theory/PrivateComputationDeclaration.lean: PrivateComputationKind indexes ZK,
+  MPC and RNS/FHE artifact families; CoreRequest is release-free; named input
+  bridges and mode-specific evidence portals preserve exact statement identity.
+- Theory/DisclosureDeclaration.lean: VerifiedRelease joins same-opening evidence
+  with the exact observer/policy/recipient/purpose authorization and projection.
+- Theory/TypedAuthorization.lean: complete request-indexed authority and current
+  root/ancestor/channel revocation. A backend cannot replace this with a Boolean.
+- Theory/EffectDeclaration.lean: typed effects derive footprint, balance deltas,
+  patch, encoding and guards from one declaration, including absent-store meaning.
+- Theory/ResourceCost.lean: pointwise Nat charge vectors; additive semantic lanes
+  include touches, proof work, network/storage, side effects, fees and lease time.
+- Compiler/Evaluator.lean: Machine/Evaluator separate data and laws; fueled output,
+  crash and exhaustion; canonical codecs, exact sample and exported oracle laws.
+  Inspected local registry at line 431 is [nock]. This is not a claim about every
+  active remote integration candidate. No Bend receiver is established by it.
+- Compiler/PredCompile.lean: witnessed lowers to constant false at line 600; ran
+  reads the run slot, it does not itself prove an arbitrary VM trace.
+- Compiler/SemanticManifest.lean: exact codecs/dimensions/bounds, named directional
+  bridges, carrier profiles and dialect clauses. mpcShared wraps a base carrier;
+  representation is already distinct from algebra. Registration is not evidence.
+- Kernel/DeclaredResourceController.lean: AcceptedInvocation retains exact signed
+  command ingress, current read authorization, checked incidence tuple and effects.
+- Kernel/PrivateEscrowSettlement.lean: sealed acceptance and later authorized
+  settlement are separate; proof-status pins do not manufacture a native verifier.
+- Assurance/PrivateComputationReceiptClause.lean: semantic receipt binding states
+  explicitly that it invokes no native cryptographic verifier.
+
+Direct source reads in /Users/ember/dev/breadstuffs:
+- metatheory/Dregg2/Resource.lean: discrete resource algebra, validity and
+  frame-preserving updates. This is useful authority/resource composition, not a
+  physical capacity manager or the full step-indexed Iris camera.
+- metatheory/Dregg2/Calculus/DreggCalculus.lean: GuardModality names guard families;
+  actual coordination eligibility depends on invariant preservation by the merge.
+- metatheory/Dregg2/Calculus/BiorthTensor.lean: JoinStable/coOrth_joinClosed/
+  behaviour_grade_sound are a real grade rule. grading_incomplete refutes its
+  converse: a conservative syntactic grade can overestimate coordination need.
+  These are local invariant/merge statements; do not infer full Byzantine
+  agreement, privacy, immediate revocation or availability from their names.
+- HORIZONLOG.md recent entries, memory index and relevant proof/admission/resource
+  memories, docs/OVERVIEW.md, historical HANDOFF-2026-08-11-codex.md.
+
+Bend pin supplied by root: 947db722640c86247849343657bf2f7ef01cb7f1.
+Read AGENTS.md and quantity/type/evaluation sections of bend2/bendtt.lean;
+read the peer's BEND-SEMANTICS-AUDIT-20261003.txt for its full-source audit.
+Q0 = no live uses; Q1 = at most one; Q2 = reusable Data, not two uses.
+Quan.fld is not interchangeable with multiplication in a guessed 0/1/omega
+semiring (its Q2 arm returns Q2 regardless of the second argument).
+The checked Eval/Walk calculus and the C/JS compiler are different evidence
+boundaries. The audit reports native Nat limits and float representation gaps.
+No fresh Bend compilation performed by this lane. Upstream remains untouched.
+
+Reports read as reports, not independent execution evidence:
+  workbox/mini-private-capacity-review-20261002/fhe.txt
+  CONSTRUCTION-PRIVATE-EVALUATOR-CUSTODY-20261003.txt
+  MEMBER-OO-CONSTRUCTION-20261003.txt
+  redregg/designs/BEND-DIRECTION-20261003.txt
+  redregg/designs/SHARED-CONTRACTS-20261003.txt
+Peers own crypto arithmetic, exact Bend audit, logic compilation and world ABI.
+The private evaluator report establishes a compiled bounded input/working-set
+refinement at its named base, while explicitly leaving secret-PC execution,
+malicious crypto, physical custody and integration work. Do not promote that
+report into an already-oblivious full Bend engine.
+
+1. THE COMMON SEMANTIC OBJECT
+
+Bind SemanticProgram to:
+  checked Book/module dependency closure and entry;
+  source-to-checked-artifact provenance (and its assurance boundary);
+  evaluator edition, canonical input/result/state/effect ABI;
+  pure primitive semantics and arithmetic edition;
+  abstract charge/step semantics and declared outcomes;
+  allowed effect signature and continuation/suspension encoding.
+
+Use semantic identity and implementation identity separately. Different native,
+oblivious or specialized artifacts may refine the same semantic object. Changing
+rounding, overflow, accepted errors, effect order, abstract gas, source imports or
+primitive meanings changes that object or requires a proved refinement adapter.
+A compiler version change alone need not change meaning; its artifact and
+refinement evidence still change and must be bound in the selected plan.
+
+Ordinary Bend core evaluation is pure. A world program returns a Plan of typed
+intents plus a result/next state, or an explicit suspension awaiting a typed
+response. A host handler discharges an effect under current Mini authority.
+Foreign printing, network, time, random and provider APIs cannot execute with
+ambient authority just because they typecheck upstream. Runtime wall time is not
+an implicit deterministic input. Accepted observations and entropy arrive as
+explicit typed inputs/effects, with origin and replay rules.
+
+The “same program” promise is conditional on a common admitted input domain:
+- Bounded Bool/enums can share exact Boolean meaning across several carriers.
+- Unbounded constructors/Nat require a proved finite encoding/domain restriction.
+- A declared fixed-width integer has its explicit overflow behavior everywhere.
+- Approximate evaluation is a different relation unless the API already specifies
+  an error set/distribution. It is not an optimization of exact equality.
+- A specialized circuit may erase runtime work only while preserving observable
+  outcomes. If canonical gas exhaustion is observable, finishing faster cannot
+  turn the same underfunded abstract run into success. Either prove all admitted
+  inputs finish within the bound, or preserve the bound/outcome through lowering.
+  Physical work and billing can have a different, explicitly declared model.
+
+For an effectful program, semantic correctness relates complete traces and the
+result/next-state/effect package, not merely its final scalar answer. For nondeter-
+ministic external responses, refinement quantifies over admitted response traces;
+for randomized mechanisms, it relates specified distributions and seed handling.
+No claim that every scheduler or foreign implementation is deterministic follows.
+
+2. COORDINATES: WHAT IS ACTUALLY A GRADE?
+
+The contract has these dimensions. “Grade” means an index with justified typing
+and composition operations, not any number or label stored in a manifest.
+
+A. Use, duplication and erasure (coeffects)
+  Bend's existing quantities govern live use and Data copying. Preserve them.
+  A generalized usage analysis can use a proved preordered semiring or usage
+  matrix: context addition for combined consumption, scaling for reuse. Do not
+  retrofit an unproved generalized algebra onto upstream Quan.
+  Affine source use does not stop a malicious host copying bytes. Q0 erasure
+  removes operational dependence only after the relevant erasure theorem; it
+  does not promise a secret never appeared in source, compiler memory or logs.
+  Capability/reference duplicability and authority consumption are separate:
+  a copyable object reference need not grant mutation; a one-shot right needs
+  kernel nullifiers/reservation and current authority even in affine code.
+
+B. Information flow and observer-indexed observations
+  Data labels express who may receive values; labels join at dependencies and
+  implicit control flow. Authority to declassify is separate from ability to read.
+  Execution contracts additionally declare a history-level leakage projection
+  L_o for each observer or allowed colluding coalition o. Include:
+    explicit output, committed public fields and authorized releases;
+    program/module identity or hidden-program envelope;
+    public sizes, shapes, dimensions, bounds and specialization parameters;
+    PC/branch/memory-address visibility and host/device diagnostics;
+    endpoint/participant/contact graph, packet size, timing, volume, retries;
+    termination, refusal category, quota/noise failure, stale-policy response;
+    resource charges, refunds, proof sizes, cache hits and recovery behavior.
+  Metadata is not a footnote to value privacy. Code confidentiality from an
+  evaluator and circuit privacy from a decrypting recipient are distinct.
+  A public digest of one of ten known programs usually reveals which program;
+  secret-code identity requires an appropriate hiding commitment/credential and
+  a separately authorized inspection surface. Padding must hide chosen family
+  membership too if that is excluded from L_o.
+
+C. Effects, authority and protocol state
+  An effect row is an upper bound on possible operations; ordered effect traces
+  and dependent protocol indices carry stronger facts. Effects compose by trace
+  concatenation/transition composition, generally noncommutatively. Row union
+  alone cannot prove that authorization preceded a transfer or release.
+  Authority demand is a request-indexed precondition, with a partial resource
+  composition where appropriate. Shared references, disjoint capabilities, escrow
+  slices and consumable grants require their actual composition laws. “Trusted
+  backend” does not create rights or eliminate read/alias/absence dependencies.
+  Typestates distinguish computed, retained, prepared/reserved, committed,
+  installed, released and delivered. Choose exact existing adapter states rather
+  than requiring every physical service to pretend to be one universal machine.
+
+D. Resource/cost bounds
+  Mini's additive charge vector is already a real algebra. Extend by named,
+  versioned lanes only where consumers enforce them. Sequential work adds work;
+  parallel work still adds work but peak memory and critical-path latency require
+  their own schedule-derived rules. A product of costs is not one scalar semiring.
+  Public shape/heap/stack/frame/loop/trace/slot bounds are finite admission data.
+  Private computation must hide its resource-dependent schedule within that
+  public envelope or list the resulting observations in L_o.
+  Cost separates semantic operations, capacity reservations, preprocessing,
+  ciphertext/proof work, communication, custody/repair and physical money tariff.
+  Never compare one field multiplication to one BFV multiplication as equal cost.
+  Estimates/calibration and enforced upper bounds have different evidence types.
+
+E. Statistical privacy / sensitivity
+  DP is an optional release contract with an explicit neighboring-dataset
+  relation, unit of protection, mechanism, sensitivity bound and accountant.
+  It can compose with encrypted execution and exact receipts. It neither hides
+  all inputs from an executor nor promises an exact answer to recipients.
+  Simple sequential (epsilon,delta) accounting adds; better accountants require
+  their own theorem and assumptions. Parallel disjoint accounting needs a proved
+  disjointness relation, not a syntactic separate-task label. Post-processing
+  applies when no extra raw sensitive input is consulted. [L3]
+  Track actual published transcript and adaptive failures. Charge a fresh release
+  once, retain its output before uncertain delivery; exact replay of those same
+  bytes is not a fresh randomized query. Regenerating independent noise is.
+  Releasing the noise seed or raw residual may destroy the intended protection.
+  DP tokens are ordinary governed budget resources with concurrency/rollback
+  protection. A source-level “epsilon” annotation is not a complete mechanism.
+
+F. Precision and numerical behavior
+  Exact Nat/Int, fixed-width words, finite fields/rings, rationals, IEEE floats,
+  fixed-point and approximate reals are distinct semantic carriers.
+  A ring encoding of Int needs a no-wrap domain argument; bitness/ranges need
+  authenticated input binding. A CKKS-style approximate backend needs explicit
+  error, scale/range and failure semantics; this is not proof-system soundness.
+  Error bounds can compose using verified sensitivity, e.g. delta_g + Lip(g)*
+  delta_f, plus domain/rounding premises. Without such premises use no rule.
+  “Approximately equal” is not an equivalence suitable for canonical consensus
+  bytes. An approximate solver can propose a candidate for an exact validator.
+  Exact feasibility, exact optimality and welfare/fairness are separate claims.
+
+G. Correctness / verification / assurance
+  This is a set of propositions and their evidence, not one ordered grade:
+    well-typed checked Book; language progress/termination;
+    compiler/encoding refinement; concrete evaluator result correctness;
+    authenticated source/input opening; exact installed effect;
+    proof verifier acceptance plus its stated security bound;
+    origin signature/attestation; data availability; finality; release authority.
+  Re-execution, a SNARK/STARK, MPC authentication, a TEE quote and quorum signatures
+  prove or support different predicates. A source theorem and a runtime proof
+  receipt can complement each other. Neither substitutes for every other item.
+  Labels such as source-proved, compiled, native-tested and deployment-qualified
+  describe evidence provenance/scope. They are not automatic levels of truth.
+  Deployed cryptographic advantage bounds retain adversary class, query/lifetime
+  scope, setup/model and exact relation. No universal “128-bit verified” scalar.
+
+H. Trust/corruption assumptions
+  This is a model index, not a numerical cost/coeffect:
+    adversary capabilities (passive/active, static/adaptive/mobile, rushing);
+    principals/rosters and correlated failure groups;
+    secret sharing/reconstruction and authenticated-channel/preprocessing setup;
+    cryptographic assumptions, parameter suite, quantum/classical model;
+    TEE vendor/root/measurement, firmware, side channels, rollback and freshness;
+    host/native compiler/OS assumptions and physical storage assumptions.
+  Privacy, correctness and progress may require DIFFERENT thresholds and
+  principals. Use a per-property predicate on corruption sets and environment
+  traces, not one t-of-n field or one “hybrid trust” score.
+  A 2-of-3 threshold key's decryptability does not establish 1/3 Byzantine
+  agreement, honest input generation, or private proactive repair.
+  Hardware+MPC hybrids must say whether security survives either component's
+  failure or requires both. The conjunction/disjunction follows the construction;
+  writing both technology names establishes neither. Hardware can add privacy
+  while proof gives integrity without hardware; their trust formulas differ.
+
+I. Interaction, progress, agreement and finality
+  Sessions/rounds and protocol typestates can be indexed and composed; network
+  models and progress assumptions remain separate predicates.
+  State offline/online phases, required participants, abort behavior, fairness,
+  guaranteed output delivery, repair service and synchrony assumptions. “No online
+  interaction during FHE evaluation” says nothing about threshold release.
+  A finality certificate does not show availability of the private successor.
+  A computation proof does not select one ordering of two valid conflicting turns.
+  Local/causal/escrow execution needs proof of invariants and effect commutation
+  under the actual merge/revocation model. Bread's join-stability grade is a useful
+  sufficient analysis, not an automatic no-consensus flag on a Bend function.
+  General fully asynchronous deterministic consensus with one possible crash
+  cannot promise termination on every admissible schedule. Randomized or eventual-
+  synchrony protocols must name the changed assumptions. [L5]
+
+J. Mobility, persistence and retention
+  An artifact/continuation can carry a migration protocol index and a custody
+  obligation. Persistence is not duplicability; mobility is not declassification.
+  Bind schema/module editions, key epoch, holder generation, recovery threshold,
+  retained effect IDs and antirollback anchor. Transferring a ciphertext is not
+  transferring decryption rights; transferring a capability's bytes need not
+  authorize it at the destination. Bind the named bridge and destination law.
+  Confidentiality after later corruption needs its own forward/proactive model.
+  Logical deletion/Q0/source affine use are not physical erasure evidence.
+
+These distinctions follow the general graded-types lesson: indices must mirror
+actual typing/operational laws. Effect/coeffect analyses can be combined, but an
+arbitrary list of security adjectives is not a semiring. [L1] Use nominal profile
+IDs for models that have no justified algebra; types can still index those IDs.
+
+2a. A SMALL FORMAL INTERFACE, NOT ONE GIANT GRADE TUPLE
+
+Proposed notation (not current Bend syntax or compiled Lean):
+
+  Uses; Authority; PublicShape |- p : A -> B ! Effects [Cost, Leakage]
+  Meaning(p, input, before, Outcome(result, next, intents, semanticCharge))
+  Represented(repProfile, artifact, semanticValue)
+  Exec(contract, beforePhase, afterPhase, resultType)
+  Realizes(plan, semanticProgram, contract)
+
+The first judgment combines contextual use, actual authority requirements and
+public admission dimensions with an effect/result type. Trust and evidence
+profiles index Realizes; they are not multiplied into the use grade.
+
+A minimal Realizes record has logically distinct fields:
+  encoding: accepted input artifacts denote admitted semantic inputs;
+  simulation: accepted successful executions yield Meaning-related complete
+    outcomes and frame-preserving typed intents;
+  outcomeHonesty: crash/exhaustion/refusal have their specified meaning;
+  observations: each permitted environment/observer's complete view is explained
+    by the allowed projection and adversarial/public inputs;
+  authority: generated native requests require precisely the declared rights;
+  accounting: every admitted path fits resource bounds and exact declared tariff;
+  progress: requested outcomes occur under the named schedule/custody hypotheses;
+  realizationBinding: the bytes/parameters/checkers actually deployed implement
+    the abstract plan components used in these statements.
+
+For a cryptographic profile, observations takes an explicit model-specific form,
+for example View(plan,x,environment) indistinguishable from
+Simulator(allowedHistory(x),adversaryAuxiliaryInput,publicParameters). It includes
+input/output delivery and corruption events as that model requires. This is a
+specification obligation, not a proof obtained by defining View as allowedHistory.
+For a deterministic verified adapter, an exact observation-preservation theorem
+may instead suffice. Do not conflate those two evidence types.
+
+Typed composition has the shape:
+  Exec(C1,i,j,A) x (A -> Exec(C2,j,k,B)) -> Exec(Compose(C1,C2),i,k,B)
+only given Compatible(C1,C2,bridge,environment) and the relevant composition
+witness. Compose is partial: it can fail on key epochs, observer policy,
+resources, authority, effect phase, or unsupported protocol security. It does
+not have to invent a total least upper bound for every trust profile.
+
+Within a chosen pure grade fragment, return has zero effects/cost and binding
+adds their declared composition; reuse scales contextual demand. For dependent
+branches, the grade can be a bound over all allowed responses or an indexed
+family. A public branch can expose its chosen index. A private branch cannot
+publicly expose a response-dependent grade/cost unless that is allowed leakage.
+Changing precision/domain is an explicit named relation with premises rather
+than ordinary unrestricted substitution.
+
+An implementation acceptance token should be indexed by the exact
+(request, SemanticProgram, Contract, Plan, inputArtifacts, resultArtifacts),
+with the current authority/epoch/source roots included in the request. Separate
+runtime Candidate data from Checked/Accepted data; only concrete registered
+checks construct the latter. Claim descriptors, profile IDs and this proposed
+interface are never accepted tokens by themselves.
+
+3. PREORDERS, INCOMPARABILITY AND SUBSTITUTION
+
+A deterministic leakage preorder can be stated as:
+  L1 <= L2 iff there exists f with L1 = f o L2.
+Thus L1 reveals no more than L2. Equivalently in a suitable value setting,
+equality under L2 implies equality under L1. In cryptographic profiles replace
+literal reconstruction with the precise simulator/indistinguishability statement
+under the named assumptions and observer coalition. Do not claim the deterministic
+PrivacyPortal theorem alone proves randomized cryptographic composition.
+
+For a request R and plan P, admissibility requires all of:
+  * P implements R's exact semantics/domain/outcomes/effects or a named permitted
+    refinement (including result distribution where relevant).
+  * Every P observation is within R's allowed L_o; required recipients still
+    obtain required projections under the requested progress conditions.
+  * R's authorized authority/context supplies P's demand; P grants no extra right.
+  * Every environment admitted by R satisfies P's relevant assumptions, with an
+    actual model embedding when observer/roster universes differ.
+  * P's guarantees entail R's requested guarantees, and the evidence's scope and
+    actual availability meet admission policy.
+  * P's bounds/cost/reservation requirements fit R's public limits; key/epoch/
+    representation and persistence constraints are compatible.
+  * All cryptographic/protocol compositions are justified, not just each node.
+
+This is a partial preorder within compatible semantic domains. Native execution
+on Alice's device and two-party MPC may be incomparable: different observers and
+failure schedules. TEE and malicious MPC are generally incomparable. A ZK proof
+is stronger public integrity than a signature for one relation, but doesn't mean
+its prover never saw the inputs. Greater privacy with no authorized output ever
+released is not a refinement of a service promising useful delivery.
+
+Two privacy labels with different owners are not linearly ranked. Neither is
+exact-but-local execution versus approximate distributed execution. “More secret”
+may require more work and weaker availability. Never collapse these into bronze/
+silver/gold unless a product preset displays the actual independent promises.
+
+Do not decide arbitrary semantic refinement by user-supplied IDs. Use registered
+proof-producing checkers/certificates for decidable fragments. The planner has
+Accept / Reject(reason,witness) / Unknown(obligation), with Unknown non-authorizing.
+A backend offer is untrusted until the required instance checks and bindings run.
+
+4. COMPOSITION RULES THE IMPLEMENTATION SHOULD ENFORCE
+
+The execution plan is a typed DAG of compute, encode/bridge, prove/verify,
+custody/refresh, reserve/install and release nodes. Nodes can themselves denote
+interactive protocols. Every edge carries semantic type, representation, policy,
+key/epoch and artifact identity. A whole-plan composition certificate closes the
+following obligations; a row of individually secure boxes does not suffice.
+
+R1 — Bind the same work.
+  Bind semantic program, exact public specialization, input/source roots,
+  authority/read dependencies, representation parameters, resource bounds,
+  plan/refinement edition, requested effects/result commitments and invocation
+  identity. Runtime receipts refer to that binding. Hidden fields use properly
+  hiding authenticated commitments; canonical bytes and collision/security
+  assumptions remain explicit. Neither a raw hash nor a field-sized fold is a
+  universal injective encoding.
+
+R2 — Sequence effects and strengthen contexts correctly.
+  Compose indexed transitions only at matching states; dependent result types
+  select actual continuations. Derive frame/read/write/absence/alias footprints
+  from the semantic declaration/trace. Reads affecting policy, dispatch, budget
+  or result count even when they are not ordinary data slots. The existing
+  IndexedProgram.fold_rel is a useful pure foundation for a backend relation;
+  it does not magically cover network executions or encrypted share machines.
+
+R3 — Preserve leakage under every observation path.
+  Sequential leakage is the joint history (L1, L2 after the first result),
+  including protocol messages and failure paths. Two apparently harmless
+  separate projections can together reveal a secret. A max of labels is sound
+  only under a proved label abstraction and corresponding composition rule.
+  Include shared setup, correlated randomness, malicious retries and adaptive
+  corruption. Stand-alone simulation is not automatically concurrent security;
+  use the actual composition theorem's model/setup conditions. [L4]
+  Branching on a secret requires oblivious execution or an authorized disclosure.
+  Evaluating both effectful branches and choosing afterward is unsound: execute
+  pure candidate plans, select privately, then admit exactly one selected plan.
+  Even unused external calls would already reveal data and spend authority.
+
+R4 — Bridge representations, not merely equal-looking bytes.
+  Encrypted-to-shared, shared-to-encrypted, key switching, ring/field conversion,
+  bit packing and byte encoding each need a named same-value relation plus
+  provenance, leakage, cost, key and authority conditions. Different BFV params
+  are not interchangeable; neither are two sharings under different epochs.
+  A bridge can be the most dangerous protocol node. No decrypt-reencrypt shortcut
+  is admissible unless that decrypting principal's observation is allowed.
+
+R5 — Multiply use and consume physical resources separately.
+  Function substitution/reuse follows the checked usage analysis. Replication
+  copies deterministic work only when repeated effects are fenced/deduplicated.
+  MPC triples, one-time pads and entropy commitments are physical consumables:
+  reserve durably before exposing, never relabel/refresh after uncertain crash.
+  Distinct source variables or new transport IDs do not make one pad reusable.
+  Resource preconditions compose only if allocations are disjoint or reserved.
+
+R6 — Separate proof correctness, backend correctness and accepted installation.
+  A proof's relation must bind exact inputs/output/effects/parameters and source
+  meaning. Bind the real verifier and statement codec. A valid arithmetic proof
+  about another code/input/book is irrelevant. If the native admission path has
+  no installed verifier, a “proof required” plan is unsupported; the abstract
+  portal cannot be instantiated by a constant-true function with a reassuring ID.
+  A theorem about the checker does not establish a particular remote result.
+  A proof/TEE quote does not itself grant authority or defeat current revocation.
+
+R7 — Join agreement with retention before success.
+  Accepted computation yields a sealed typed result and successor candidate.
+  The current reservation/agreement protocol establishes install obligations;
+  retain sufficient coherent private successor custody for recovery before the
+  decisive point. Installation preserves all writes, read guards, nullifiers,
+  fees and event bytes, not just a cipher-state digest. Certificate possession
+  alone cannot reconstruct a lost private successor. Use existing native
+  AcceptedInvocation and custody/joint adapters rather than a second ledger.
+
+R8 — Release is its own governed transition.
+  A committed encrypted/shared result can remain sealed and feed another
+  computation through a checked bridge. Release checks current audience, purpose,
+  policy, projection and relevant DP budget. Authority to compute, retain, install
+  and learn are distinct. Historical compute acceptance is not perpetual current
+  release authority. Delivery retries retrieve the same authorized retained
+  artifact; recipient/key changes require the declared later authorization.
+  Once learned, plaintext cannot be revoked retroactively.
+
+R9 — Meter and price without accidental disclosure.
+  If exact semantic work depends on secrets, a public exact charge/refund/status
+  leaks it. Either allow that leakage or author a fixed public tariff and padded
+  schedule, retaining private exact semantic accounting if needed. This is an
+  explicit program/economic contract, not permission for a backend to invent fees.
+  Caches, warm keys and accelerator scheduling must stay inside the same envelope
+  or have a separately admitted leak. Include recovery/refresh reserve, not only
+  the healthy compute path. Bound refusal is a real outcome, never a zero result.
+
+R10 — No downgrade fallback; explicit migration only.
+  If private evaluation lacks capacity, return the contract's Pending/refusal.
+  Do not rerun publicly, reconstruct shares at a coordinator, switch to a TEE,
+  publish a trace or widen the audience. Select another already-authorized plan
+  only when it refines the same contract. Updating the contract is a separate
+  currently authorized action with clearly changed promises and source identity.
+
+5. REALIZATION FAMILIES AND THEIR COMPATIBILITY LIMITS
+
+Native interpretation/AOT/JIT, sequential/parallel CPU/GPU:
+  These are implementation choices over a language/effect contract. Correctness
+  requires refinement including numeric and failure semantics. Parallel schedules
+  require determinism/commutation or an explicitly broader trace specification.
+  Host plaintext visibility is the default unless another mechanism changes it.
+  Native re-execution can establish a result locally; it is not a public succinct
+  proof and it discloses input to the reexecuting party if given plaintext.
+
+ZK trace or specialized relation:
+  Adds hiding verification for the proof audience and integrity for its relation.
+  A conventional witness producer sees its witness. Distributed proof generation
+  needs its own MPC/custody contract. ZK does not automatically hide proof length,
+  runtime, network topology, public statement or the source compiler's leakage.
+  General VM trace and fixed-program circuit are alternative proof relations
+  connected through the same Bend meaning, with different setup/cost tradeoffs.
+
+FHE:
+  Evaluator can transform ciphertext operands/state without decryption keys,
+  under the selected scheme's security and admitted input/domain/noise conditions.
+  Default first profile: public fixed bounded Bool/enum program, canonical bits,
+  fixed padded shape, ciphertext output. Source topology/code is public.
+  Correctness, input authenticity, output authorization and availability are
+  additional joins. Leveled depth/noise budgets are enforced admission constraints;
+  bootstrap support is a concrete primitive, not a promise of unlimited work.
+  Hidden arbitrary program dispatch needs a bounded universal circuit/interpreter
+  with appropriate memory/control privacy. This is possible in principle, not a
+  capability of the presently reviewed fixed Boolean evaluator.
+
+MPC:
+  Computes over shares/garbled representations with a protocol-specific adversary
+  threshold and interaction pattern. Can distribute witness creation, nonlinear
+  work, custody or decryption for an FHE stage. Security with abort, fairness,
+  guaranteed output delivery and agreement are distinct. Refuse requests whose
+  progress model exceeds the protocol's theorem; do not assert universal t<n/3
+  or t<n/2 rules across all models. Oblivious circuit execution still needs the
+  protocol transcript and traffic observations covered.
+
+Oblivious algorithms/ORAM/padding:
+  Constrain access/control/schedule observations; do not by themselves encrypt
+  values. Full scans and bounded secret-PC machines are simple initial realizations.
+  ORAM addresses a defined storage-access observer, not all message timing and
+  interaction leakage. Oblivious lowering and FHE/MPC/TEE commonly compose.
+
+TEE:
+  Can support richer low-latency code with a hardware trust assumption. A quote
+  identifies measured software under an attestation chain; it does not prove that
+  software's source semantics, absence of side channels, freshness of an old state,
+  or future availability. Intel's SGX guidance explicitly leaves relevant side-
+  channel defenses to enclave developers. [L6] Make these assumptions visible.
+  A proof can remove hardware trust from a correctness claim while confidentiality
+  still depends on it. A common-vendor enclave fleet is not independent diversity.
+
+Replication/agreement:
+  Determines admitted history/order/conflict resolution under a model. Replicating
+  plaintext widens its audience; replicating ciphertext does not create recoverable
+  keys. Different replicas can all deterministically agree on a compiler bug.
+  Causal/escrow optimizations apply to proven operation classes, not to the label
+  “Bend,” “private,” or “pure” (a pure transition may request conflicting writes).
+
+DP and approximate numerical methods:
+  DP governs released distributions. Approximation governs mathematical error.
+  Either can run inside native/FHE/MPC/TEE and have a proof of its actual relation.
+  Neither is a substitute for confidentiality, integrity or agreement.
+
+Reactive, streaming, mobile and speculative execution:
+  Split long-lived behavior into typed bounded turns/continuations. Streams have
+  window/retention/backpressure bounds and cumulative disclosure/cost accounting.
+  Speculation may compute a candidate but cannot undo a leaked observation or
+  physical effect; fence effect handlers until authorized commit. Migration changes
+  placement/custody under a protocol, preserving semantic state and outstanding
+  obligations. These are lifecycle dimensions, not new cryptographic modes.
+
+IMPOSSIBLE, CONDITIONAL AND UNSUPPORTED MUST BE DIFFERENT VERDICTS
+
+- Inconsistent: no observer ever learns a nonconstant result AND that observer is
+  promised that exact result; include the authorized output projection instead.
+- Inconsistent: strictly no timing/termination leakage AND unconstrained observable
+  secret-dependent completion; add a public bound/padded schedule or allow leakage.
+- Impossible in the named general model: deterministic asynchronous always-
+  terminating consensus with a possible crash [L5]. Restrict model/guarantee.
+- Generally unavailable without changed assumptions: fair guaranteed delivery for
+  arbitrary malicious dishonest-majority computation; use the exact protocol and
+  functionality-specific theorem, not a slogan about all functions.
+- Unsupported today: whole unrestricted Bend program on the reviewed BFV Boolean
+  backend; exact Mini authority via an uninstalled proof verifier; public secret
+  method with no finite shape/heap/trace domain; native TEE attestation without an
+  actual attestation receiver and rollback/custody integration.
+- Conditional: approximate arithmetic for a tolerant API with proved bounds;
+  secret-program universal interpretation within a fixed admitted envelope;
+  proactive epoch migration with coherent shares and a real repair theorem.
+
+6. THREE SAME-PROGRAM EXAMPLES
+
+A. Private member method: Room.reserveName(secretName, privatePreferences)
+
+Meaning: under actual self/super dispatch, check name absence and current room
+rules; select an allowed role; propose a registration plus a sealed private reply.
+Bind final-self, source definition chain, aliases, absence predicate, budget/grant
+reads and exact typed effect. A caller-selected shortened ABI footprint is invalid.
+The common output is (typed intent, result commitment, next-state commitment,
+abstract charge), not simply Bool. An installation that publishes name/role has
+that explicit public projection; a wholly private room needs those fields sealed.
+
+Plans for that meaning:
+  Owner/local: native Bend over the caller's permitted authenticated view. Room
+  admission reexecution sees private inputs if it receives them: this is only an
+  eligible plan when that observer is allowed. Merely running client-side does
+  not establish host confidentiality at the receiving verifier.
+  Committee-private: bounded oblivious Bend machine over authenticated shares,
+  malicious MPC for actual computation, successor custody, scoped agreement,
+  authorized reply release. Program can be public; footprint/schedule padding is
+  independent. Same native authority/read guards govern installation.
+  Fixed FHE: only after this method fits a fixed finite declared domain/footprint;
+  encrypted membership tests and selection under a public circuit, authenticated
+  inputs, independent integrity mechanism, threshold or client release. Dynamic
+  arbitrary world lookup cannot be hidden by just encrypting the chosen name.
+  TEE: same bounded meaning under accepted hardware/side-channel assumptions;
+  explicit alternative contract if the room did not previously allow that trust.
+
+User experience: ordinary “reserve” invocation, a visible requested audience and
+cost limit, plan eligibility explanations, retained Pending/result state. Authors
+can choose stricter privacy requirements; the system may optimize within them.
+Do not make users choose cryptographic machinery unless their policy demands it.
+
+Falsifiers: alias changes between observation and install; absence becomes presence;
+private preference flips a public retry/refund/diagnostic; a coordinator reconstructs
+inputs on MPC timeout; a stale reply is released to a newly unauthorized device;
+FHE selects same scalar result but changes the registered field/effect target.
+Any one refutes the advertised contract despite a correct scalar computation.
+
+B. Fixed financial/collective-choice computation: certified bounded allocation
+
+Illustrative meaning: a fixed eight-proposal, finite-budget collective selection
+with bounded integer scores/costs, deterministic tie rule and an exact declared
+feasibility/selection relation. This is a proposed workload, not a benchmark or
+already supported eight-way optimizer. The simplest first compiler probe should
+use the smaller Bool/enum case already chosen by the logic/FHE owners.
+
+Declare whether the function computes the winner or only validates a proposed
+winner/certificate. That choice is semantic. For public policy with private inputs:
+  one typed semantic DAG can lower to native exact evaluation, a fixed circuit
+  proved to a verifier, an MPC circuit, or an admitted FHE compare/select circuit.
+  Packed BFV favors arithmetic/Boolean schedules with admitted noise depth; a
+  compare-heavy backend may use a different exact bounded representation. A
+  shared AST does not make field/ring/bit encodings interchangeable.
+  Input-owner same-opening/range/bitness evidence binds the exact source root and
+  key epoch. Ciphertext correctness alone does not authenticate preferences.
+  MPC key custody + FHE evaluation + proof of result + Mini settlement is a
+  legitimate composed plan, provided every bridge and result/effect join closes.
+
+Only the declared winning allocation/payment projection is released. Revealing
+intermediate scores, loser identities, rejection diagnostics or exact iteration
+counts needs authority. If a noisy public statistic is wanted, author a separate
+DP mechanism and budget; adding noise to a private exact winner changes the rule.
+An approximate solver may find a candidate cheaply, followed by an exact Bend
+checker for conservation/feasibility or a sufficient optimality certificate.
+A proof of feasible payment cannot be displayed as fairness or global optimality.
+
+Tradeoff: specializing public code amortizes reusable circuit/plan costs and can
+remove VM overhead; code secrecy may instead require a padded interpreter. Packed
+FHE can amortize batches; cold keys, input binding, noise checks, custody and release
+must be included in the quote. No throughput claim follows from a gate count.
+
+Falsifiers: same matrix but different affine term/ordered roster; accepted input
+outside authenticated bounds; modular wrap changes comparison; stale key epoch;
+wrong deterministic tie; approximate equality yields different canonical payments;
+proof bound to output ciphertext A but installation consumes B; public failure bit
+reveals which member violated a private constraint. The current reviewed Bread
+fhIR optimizer report already warns that general AST-to-recurrence fidelity is
+not established by successful evaluation of the emitted matrix.
+
+C. Persistent agent/tool program: private research-room steward
+
+Meaning: each event invokes a bounded Bend step over serialized steward state,
+authorized room context and the exact retained response to prior effects. The step
+can propose source annotations, request a tool, await a provider, or emit a private
+recommendation. A persistent agent is a sequence of terminating turns, not a
+nonterminating loophole in Bend's checked live calculus. Continuing external work
+requires a governed scheduler/wakeup and sufficient prepaid/leased resources.
+
+Plan composition:
+  Native/device prepares permitted context; a private fixed rule may run under
+  FHE or MPC; the resulting typed tool request passes current capability/budget
+  checks. The actual tool/API sees its declared input. Encrypting the earlier
+  stage does not hide the request from the chosen external provider.
+  A provider result enters as an authenticated, untrusted observation with exact
+  origin/model/request identity. Deterministic Bend validation can check schema,
+  allowed sources and action constraints; a cryptographic receipt cannot make
+  the provider's factual claims true or prove human approval occurred.
+  The next pure turn proposes an exact native write. Irreversible dispatch is
+  fenced by its actual retained intent/idempotency mechanism. A timeout is not
+  permission to send a second paid request under a fresh semantic ID.
+  An optional proof can certify the deterministic orchestration/validation slice,
+  not arbitrary opaque API behavior. Run hidden subprograms only within their
+  own public shape/effect/disclosure envelope.
+
+Migration: archive exact continuation, source versions, accepted observation
+cursor, pending tool/effect IDs, result custody and budget reservations; transfer
+ciphertext/shares through named destination/epoch bridges; establish successor
+custody before retiring the old responsible actor. Recheck destination capability
+and release law. A crash/restart reuses retained provider response, not new
+randomness/text. An indefinite lifetime needs per-epoch renewals, recovery reserve
+and cumulative privacy accounting; no single fixed circuit covers all future IO.
+
+Tradeoff: rich external tools require deliberate disclosures; highly private
+substeps may be slower or unavailable. Show actionable “waiting on required
+custodians” separately from “computed privately / not yet released.” A user can
+move home without discarding the agent's obligations, but cannot migrate away
+someone else's authority or force a disappeared external service to answer.
+
+Falsifiers: export includes undeclared secret plaintext; old host continues making
+writes after handoff; reopened continuation replays a paid call; changed/moved
+source context is silently replaced by a different conversation; a shared-Q2
+reference becomes fresh write authority; provider response is treated as proof
+of its content; private branch changes which public tool endpoint is contacted.
+
+7. IMPLEMENTATION THAT ADDS CAPABILITY WITHOUT A SECOND FRAMEWORK
+
+First additive target (recommendation, not new dispatch by this lane):
+  Theory/ExecutionContract — first-order references to existing semantics,
+  disclosure/resource/authority profiles; semantic Satisfies definition.
+  Compiler/ExecutionPlan — typed node/edge representations and registered bridge
+  requirements over the existing SemanticManifest. No free arbitrary callback.
+  Assurance/ExecutionPlanRefinement — adapters to IndexedProgram.fold_rel and
+  observer-preserving portals for the pure fragment; explicit external protocol
+  obligations remain typed and undisguised.
+
+Do not create a generalized runtime before connecting a real consumer. Feed the
+already selected bounded Bend Bool/enum computation through two exact readings,
+then use its actual output in one Mini accepted typed effect and separately gated
+result. Start with native + one private backend when the latter's real admission
+is available. Native + arithmetic circuit is a useful first refinement proof but
+is not by itself private runtime completion. Reject an unsupported strong profile.
+
+Preserve existing PrivateComputationKind artifact safety. Add composition outside
+that enum, or generalize the language index only when a concrete mixed-family
+consumer requires it. Never cast a ZK witness to an FHE result because both are
+List UInt8. Existing named bridges and CoreRequest are the right seam.
+
+Contract inference should derive the easy upper bounds from source: effect row,
+public shape, quantitative use, conservative dependencies. Authors supply the
+policy/assumption demands that semantics cannot infer. A solver selects eligible
+plans and explains the smallest unmet obligation. It must not infer permission
+from the availability or price of a backend.
+
+Every selected invocation binds semanticId + planId + exact parameters and
+source/request roots in the currently authorized command/candidate. The receiver
+checks the selected manifest/contract before accepting results. Existing v10
+integration work is not silently reinterpreted; this is a new versioned profile.
+The world-language peer's additive BendWorldProgramCodec already plans separate
+semanticId and execution-plan digest. Reuse that boundary rather than competing.
+
+Physical secret carriers must not serialize semantic Lean witnesses. Existing
+CoreRequest.inputValue/privateOutput are useful mathematical values, but a runtime
+wire format containing those witnesses would disclose what the representation is
+supposed to hide. Make witness erasure and public/private codec projections a
+named join, and test emitted logs/receipts/FFI bytes for that boundary.
+
+First proofs with real negative poles:
+  identity/reflexivity and transitive contract refinement where model indices match;
+  typed sequential composition preserves authority and complete observations;
+  exact named-bridge composition preserves the same input/output value;
+  public bound refusal never yields a success token or fabricated result;
+  no privacy-profile weakening through backend selection;
+  canonical result/effect binding survives custody and release;
+  conservative coordination grade can refuse a safe optimization without becoming
+  a false impossibility claim (preserve Bread's incompleteness lesson).
+
+First joined receiving probes:
+  same actual bounded Bend source/input -> equal canonical native/circuit result;
+  successful exact native effect + separate authorized reply, and altered target,
+  input root, bounds, epoch, plan or result fails at the concrete receiving seam;
+  no available confidential realization -> explicit unsupported, never plaintext;
+  private branch/refusal/cost/retry differences outside allowed leakage fail the
+  contract's trace comparison; source-level equality tests alone are insufficient;
+  kill/restart at retained-before-install and reserved-before-release boundaries.
+
+8. ASSURANCE AND PRODUCT PRESENTATION
+
+Present three layers clearly:
+  Requested promise: who can learn what, effect authority, cost, delivery needs.
+  Selected realization: mechanisms, actual trust assumptions and expected costs.
+  Received evidence: what this invocation has actually established and retained.
+
+A short card can say “Only room members can read the reply; compute operators see
+fixed envelope sizes; installed under room rule revision R; release waiting for
+2 custodians.” Its detail view exposes the precise profile and unmet conditions.
+Do not say “private and verified” when the evidence is only endpoint health, an
+abstract portal or a signature. Display economic mechanism claims separately:
+conservation, eligibility, feasibility, optimality and fairness are not synonyms.
+
+Expose plan choices only for material tradeoffs: allowed observer, trusted party,
+availability, precision or price. CPU/GPU, AOT/interpreted and proof-layout choices
+can be automatic if their refinements preserve the admitted contract. A refusal
+message itself needs an authorized public projection; detailed private diagnostics
+can be retained for the entitled developer without becoming a public oracle.
+
+9. TARGETED PRIMARY LITERATURE CHECK
+
+These sources inform the design, not claims of implementing their theorems.
+
+[L1] Orchard, Liepelt, Eades, Quantitative Program Reasoning with Graded Modal
+Types, ICFP 2019, sections 3–4; semiring-indexed contextual use, graded effects.
+https://www.cs.kent.ac.uk/people/staff/dao7/publ/granule-icfp19.pdf
+Also Gaboardi et al., Combining Effects and Coeffects via Grading, ICFP 2016:
+https://www.repository.cam.ac.uk/handle/1810/256824
+Design consequence: grade only where introduction/elimination/composition laws
+are supplied. This is not a claim that Bend currently implements Granule.
+
+[L2] Cornell Jif reference: decentralized label model and programming/declassification.
+https://www.cs.cornell.edu/jif/doc/jif-3.3.0/dlm.html
+https://www.cs.cornell.edu/jif/doc/jif-2.0.0/jif_programming.html
+Design consequence: owner-indexed confidentiality/integrity policies and explicit
+authority for release are useful precedents; adopt Mini's current request-based
+capabilities rather than importing a static authority shortcut. Principals with
+different policies need not lie on one secrecy ladder.
+
+[L3] Dwork and Roth, The Algorithmic Foundations of Differential Privacy,
+Proposition 2.1 and Theorem 3.16 (plus adaptive composition discussion).
+https://www.cis.upenn.edu/~aaroth/Papers/privacybook.pdf
+Design consequence: a bounded statistical-release budget with an accountant and
+explicit neighboring relation, not “DP execution” as an alternative to FHE.
+
+[L4] Canetti, Universally Composable Security, primary paper; and the explicit
+shared-setup extension Universal Composition with Global Subroutines.
+https://eprint.iacr.org/2000/067
+https://eprint.iacr.org/2020/1209
+Design consequence: protocols need compatible functionalities, environment/setup
+and composition hypotheses. Listing independently named mechanisms is inadequate.
+No UC proof is asserted for Mini's present implementation.
+
+[L5] Fischer, Lynch, Paterson, Impossibility of Distributed Consensus with One
+Faulty Process, primary paper.
+https://www.cs.cornell.edu/courses/cs614/2003sp/papers/FLP85.pdf
+Design consequence: progress needs a stated schedule/fault model; deterministic
+asynchronous total termination must not be offered as a selectable combination.
+
+[L6] Intel SGX SDK guidance, application design and side-channel boundary.
+https://www.intel.com/content/www/us/en/developer/tools/software-guard-extensions/linux-overview.html
+Design consequence: hardware assumptions need an explicit perimeter; “TEE” is not
+a promise of arbitrary metadata hiding. This is not a hardware recommendation.
+
+Related current MPC primary research checked as a boundary reminder:
+From Fairness to Full Security in Multiparty Computation (2021).
+https://arxiv.org/abs/2105.00962
+Fairness and guaranteed output delivery are distinct properties; exact protocol/
+functionality conditions govern attainable combinations. Detailed protocol choice
+remains with the existing consensus/private-backend owners.
+
+10. COMPACTION CHECKPOINT / OWNERS / OUTSTANDING WORK
+
+Settled recommendations in this report:
+- One checked Bend meaning; typed realization DAG; no exclusive backend mode.
+- Preserve real existing grades and bridge/authority/release seams.
+- Observer/history leakage and per-property trust assumptions are explicit.
+- Selection is refinement plus evidence qualification, never privacy/authority loss.
+- Exact vs approximate semantics, progress vs integrity, and custody vs release
+  stay separate. No current theorem/manifest name is a deployment guarantee.
+
+Current peer owners and consumers:
+- bend_semantics_audit: exact checked Eval/Walk interpretation, primitive/erasure
+  gaps, compile audit. Its full report is the detailed Bend source authority.
+- bend_logic_compilation: bounded enum/Bool first lowering and exact arithmetic
+  circuit relation; no unproved general field/ring interchange.
+- fhe_bend_architecture: concrete BFV/TFHE domains/noise/bitness, first real FHE
+  slice and all private-representation bridges.
+- bend_world_language: semanticId, planId and canonical typed ABI/effect/result
+  envelope; additive source report under redregg/designs.
+- astra_consensus_composition: bounded oblivious execution, complete working set,
+  private successor custody; full secret-PC/heap and real backend joins remain.
+- homomorphic_bend_construction: active native depth-zero public literal/case BFV
+  consumer; bind exact prime/profile, input validity, ciphertext reexecution and
+  recipient-only decode. Design/API boundary sent directly; no success assumed.
+- private_backend_construction / resume_private_construction: exact malicious
+  realization and lifetime/correlation/repair boundaries; not assumed complete.
+- member_oo_construction: native full trace/self/super/alias/absence/effect output.
+- astra_consensus_frontier: actual agreement/reservation/current-install closure.
+- bigdregg_product_architecture: DrEX/FHEgg/Starbridge contract display and mechanism
+  claims. Shared guidance sent directly; no single dark/verified badge.
+- takeover_kernel/root: sole common candidate/integration/build ownership.
+
+Next implementer recommendation to root: commission a scoped additive contract/
+plan/refinement owner after the first Bend semantic core and ABI pins converge;
+have that owner connect one real consumer and its negative receiving poles,
+rather than building a free-standing generic policy engine. Existing lanes need
+not stop or rewrite current integration to read this document.
+
+This lane wrote only this design and the adjacent design-only JSON contract
+sketch/source index. No builds, source edits, Git operations, deployment, paid
+calls, nested agents or runtime security claims. The JSON is not an admission
+artifact and contains no purported deployed verifier/cipher suite pins.

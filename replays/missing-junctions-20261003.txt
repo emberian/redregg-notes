@@ -1,0 +1,149 @@
+MISSING JUNCTIONS — COUNTERFACTUAL REPLAYS, 2026-10-03
+Owner: Codex historical_missing_junctions. Curated local-private interpretations.
+Companion intent/missing-junctions-20261003.txt and graph/coverage JSON contain
+source pins and depth limits. These are retrospective engineering experiments,
+not simulated evidence that an alternative would have succeeded. No personal room
+facts, raw transcript, financial-price claim, builds or live mutations are included.
+
+R1. PORTABLE AUTHORITY WOULD HAVE CHANGED THE REVOCATION QUESTION
+
+Observed history: May22 claude:70642dc2-d9f1-434b-8209-c2c96787bd92 #912,
+18:54:25.685Z asks for offline user testimony to OTHER PARTIES from an ordinary
+provider. July10 claude:e307afc5-4140-4f17-8ce8-7af955baf2c7 #389,
+13:56:17.333Z corrects an assistant treating verify-time local revocation as enough.
+#473, 15:06:43.704Z preserves voluntary fast evidence channels. #505,
+15:24:45.220Z accepts grant-instance provenance rather than reused slots. These
+are exact selected occurrences; equal fork texts are not repeated endorsements.
+
+Observed current receiving boundary: delegation snapshot header marks a detached
+parent_signature inert; actual authenticity uses signed TURN installation. Rust
+snapshot authority and Lean fence are separate descriptions. The batch-channel
+insert helper in turn/src/executor/apply.rs:991-1020 explicitly lacks authenticated
+TripEvidence admission and a production caller. A signed local assertion or dead
+committed helper cannot independently answer a stranger's present-rights question.
+This pass did not execute those paths or establish deployed closure.
+
+Counterfactual intervention: write the receiver's question first: which issuer and
+subject, which grant instance, which accepted state/root/version, which time domain,
+which freshness or revoked status? Treat local convenience checks and exportable
+evidence as consumers of one state, then separately define present action authority.
+This might have exposed the missing evidence admission earlier; it is not evidence
+that one envelope design would have solved agreement or revocation instantly.
+
+Current experiment: share a tool between two local worlds through an ordinary file
+or chat. Revoke and regrant the same slot, change epoch, and substitute a key. Old
+evidence can remain true about its past state while failing current authorization.
+Consumer H1; relevant current Mini receiver must be read before adding a second
+revocation substrate. Broad offline portability is a later suggestion.
+
+R2. LIVE ORCHESTRATION WAS A PROMISING INSIGHT AND AN EXPLICITLY CANCELLED TASK
+
+Observed history: June1 claude:7efea951-f234-48e7-bac4-96d9e45865b3 #59,
+00:12:07.562Z is a human UI answer challenging fixed-literal certification of an
+evolving orchestration. Option framing is assistant text. #61, 00:13:24.493Z
+corrects that analysis to generic execFullForestA laws and proposes a live translator,
+with translation fidelity still unproved. #73, 00:23:44.258Z is HUMAN cancellation:
+new tack, forget that task, investigate metatheory. #75 complies. The bounded
+#59..106 narrative was read including this cancellation, not merely the attractive
+initial answer. No live certifier outcome is established here.
+
+Counterfactual intervention: before implementing, ask which real tool-request,
+charge, result and external-effect consumer the generic theorem will receive.
+Keep generic semantics and translator fidelity as distinct obligations. Then honor
+the cancellation. There is no justified alternative history in which the collaborator
+should have continued the abandoned task after #73.
+
+Current experiment: a newly justified typed native invocation translator for a
+resident's useful small tool job, with exact request/result and operation identity.
+Refute it using a tool request outside the represented semantics or a result that
+cannot be bound to the admitted request. Tiered assurance from July2 #87 is useful
+vocabulary; it is not a certificate for this live translator. Consumer H5/H3.
+
+R3. SEMANTIC WEB PHYSICS SURVIVES THE FAILED SHADOW-DOM PREMISE
+
+Observed history: July9 claude:4daf72e8-9866-4969-9e32-f9463a8f3171 #362,
+15:26:33.606Z connects document language, transclusion and reusable actionable web
+components. The preceding assistant's claim that closed Shadow DOM establishes
+security against a hostile page is false. Primary documentation independently read:
+https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM
+Closed roots are not a strong security mechanism.
+
+Observed source: extension/src/elements/dregg-poll.ts is a thin view with no keys
+or evaluator, closed roots and content-script transport. extension/src/port.ts:
+256-280 has a separate background consent before cast, binding object/choice and
+turnId in the explanation/request. This is a real boundary worth retaining. No
+browser exploit was run. Current Mini's owner reports a distinct loopback launch-
+secret/Host-Origin/CSP surface, so this history is not a demonstrated current bug.
+
+Counterfactual intervention: separate visual isolation from authenticated intent
+confirmation at design time. Reuse projections/transclusion but state which trusted
+surface confirms the exact object, argument and origin for each host. Neither a
+verified badge in hostile content nor the user's enthusiasm proves that boundary.
+
+Current experiment: render one native poll/tool in Starbridge and an existing web
+surface. Try changing display/target after trusted consent. The accepted native
+intent must remain the confirmed action or fail. Consumer H4. October13 meaningful
+native docuverse/deos actuation is distinct from suggested later arbitrary embedding.
+
+R4. THE SECOND FORGETTING PASS REFUTES REGEX-ZERO COMPLETION
+
+Observed history: July31 claude:d41ad82c-b169-4d25-8494-d2d16d493696 #1640,
+16:06:37.324Z contains quoted private dialogue plus a fresh human targeted-forgetting
+request. Personal content is deliberately not repeated. #1679, 16:12:51.022Z claims
+regex scrub complete. Human #1680, 16:15:48.656Z asks about later backfill and #1694,
+16:18:04.490Z demands triplecheck. #1725, 16:23:26.554Z admits the same fact survived
+as ordinary prose missed by the regex. Message-ID rewrite and context rebuild were
+reported; IDs retained to suppress resurrection. New quotes, already sent provider
+requests and other copies remain separate. Tool-output audit was not performed.
+
+Observed source: scripts/redact_state.py rewrites content rather than dropping IDs,
+retains backups, and instructs separately clearing live SDK context. redact_ids
+rewrites top-level content in matching JSONL rows, narrower than every-store claims.
+state.py separates stored history from loaded context floors/quarantine. Neither
+file establishes semantic dependency closure for arbitrary summaries.
+
+Counterfactual intervention: define event identity, derivatives, loaded context and
+provider custody before declaring forgetting complete. Try a semantically equivalent
+plain-English rendering rather than searching only the same literal regex. A semantic
+test cannot establish universal forgetting either; it can refute the specific false
+completion cheaply, as the later pass actually did.
+
+Current experiment: resident main context stays socially informed while a bounded
+tool job returns to it. Redact an authorized source fact represented differently in
+a derived summary; replay backfill and restart loaded context. Track surviving scope
+explicitly. Operation retries must preserve identity without duplicate dispatch or
+charge. Consumer H5; comprehensive derived-memory rewriting is later suggested work.
+
+R5. TWO EMISSIONS OF ONE DEFINITION DID NOT MAKE THE WHOLE PROTOCOL IDENTICAL
+
+Observed history: July30 claude:6418429c-b1af-4779-8a39-f42aebd4808f #291,
+14:14:18.746Z reopens BOTH foreign-proof verification and direct semantic emission
+to Kimchi, questioning protocol/proof identity and declining trusted-setup shrinking
+in that exploration. #297 quotes earlier contrary scope; #300 acknowledges changed
+direction. #319/#322 report incrementNonce shared denotation and explicitly name
+partial constraints, numeric premises, commitment and chain-membership limitations.
+The earlier contrary instruction is model-quoted here, not independently retraced
+to its original human occurrence. Do not universalize this to a ban on all Groth16.
+
+Observed source: KimchiEffectIncNonce.lean shares generated heads and proves forcing
+arrows to CellIncNonceSpec assuming encoded pre/post states and no-op selector;
+BabyBear additionally takes canonicality premises. Header limits coverage to 14/35
+descriptor constraints, without complete continuity, PI and commitment binding.
+The source supports a useful semantic nucleus, not the whole advertised protocol.
+No bridge build/proof or accepted foreign-root membership was checked here.
+
+Counterfactual intervention: write three separate claims before comparing routes:
+which source denotation is preserved; which proof statement a verifier checks; and
+which accepted chain root/finality/inclusion binds an actual event? Direct execution
+of equivalent semantics and verification of a historically bound event serve
+different consumers even if both end in the same arithmetic backend.
+
+Current experiment: for a Bend-authored method, state each backend's arithmetic,
+authority, visibility, resources and result-release premises. Reject incompatible
+canonicality/state encoding and a proof detached from accepted chain history. A
+shared denotation must not grant secrecy or membership. Consumer H2 and the graded
+execution designer; Nock is compatibility under the current direction.
+
+These replays recover decision pressure and actual false starts, not personality,
+nostalgia or retroactive obligations. The companion coverage preserves large unread
+areas and bounds each primary/source observation.

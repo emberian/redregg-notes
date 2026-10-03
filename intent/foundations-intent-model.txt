@@ -1,0 +1,253 @@
+FOUNDATIONS — INTENT MODEL, SECOND PASS
+October 3, 2026. Owner: redregg_intent_foundations. Private research, not a kernel audit.
+
+This pass rereads 32 focal exchanges (31 human-origin focal messages and one
+recorded answer) and selected concrete definitions. The attached coverage JSON
+records precise ranges, timestamps, file hashes and limits. Initial reports were
+leads. Bracketed F numbers point to foundations-evidence.json. Proposed consequences
+are explicitly mine; historical outcomes are not silently promoted to current truth.
+
+THE MOST CONSEQUENTIAL CHANGED UNDERSTANDING
+
+1. The early sovereignty requirement is a topology and user experience, not just
+   a cryptographic adjective. On May 23 Ember asks that cells live entirely offline
+   among relevant partners, with federation involvement when needed, and endorses
+   this direction. On May 24 they explicitly reject two browser tabs sharing one
+   runtime and reject full-history transfer as the substitute. Each tab should run
+   its own local JavaScript and still coordinate through human communication. [F01]
+   A hosted shared world is a valuable later mode, but cannot by itself fulfill this
+   earlier property. A document/room interface should have an independent local
+   executor mode, portable authority/evidence and a boundary settlement contract.
+
+2. Authority is generative as well as restrictive. May 30 Ember explicitly corrects
+   "monotonic narrowings forever": sealer/unsealer amplification, powerboxes and
+   third-party introductions are needed dynamical classes. This correction later
+   recurs beneath a June 19 agent claim that amplification is impossible. The actual
+   Spec/Authority source contains authorized Amplify, Mint, Endow and consented
+   self-Origin, alongside restrictive attenuation/revocation. [F04] Its Origin
+   header records the practical failure of the old empty-graph fixed point: no
+   first grant could be created. This is more than terminology. A platform that
+   knows only attenuation may be very safe and unable to begin anyone's life.
+
+3. Canonical cameras do not automatically provide numeric conservation. The May 29
+   agent sold sum preservation and authority confinement as one FPU law; the human
+   chose canonical cameras and requested recursive caveats about other cells.
+   The checked source defines Fpu as compatibility preservation, gives Nat an
+   always-True validity predicate, and proves EVERY update of an always-valid
+   algebra frame preserving. Thus Nat 0 -> 100 is FPU there. [F03] This does not
+   refute separate balance-conservation theorems elsewhere. It does refute using
+   that abstraction identity as a substitute for explicit accounting laws. Preserve
+   the resource richness and separately enforce actual supply/balance invariants.
+
+4. Native resource meaning need not mean native currency. TokenAutonomy's concrete
+   theorem forbids a lossless homomorphic retract from nontrivial idempotent
+   membership into cancellative numeric amounts. [F08] Its "own token" is an
+   autonomous NON-NUMERIC resource algebra. The theorem does not say users must pay
+   in DREGG, nor prohibit representing objects on a foreign chain with extra state.
+   Keep account funding, conserved resource claims, membership/permissions and
+   speculative tokenomics distinct. July 25's skeptical staking/burn exploration
+   is not a theorem fixing a burn-only monetary constitution. [F09]
+
+5. Stronger deployed semantics was an early correction to the agent's plan, not a
+   late taste change. May 29's agent proposes a small Lean golden oracle and says
+   differential testing will certify Rust. Same-day human prompts explicitly
+   redefine metatheory as Dregg2 itself and want Rust to host compiled Lean for
+   actual semantics, including consensus/finality and privacy. [F02] Later consent
+   to independent Rust diversity and leanc in the trusted base does not restore
+   the original false certification claim. Distinguish a trusted compiler from
+   unchecked second authorship of semantics or constraints.
+
+6. October traffic privacy is an unresolved seam brought back into implementation
+   scope, not an unrelated new feature. July's actual handoff/resurrection documents
+   already acknowledge storage placement, PoR audits and recovery fetches reveal
+   metadata; caps/encryption do not settle that. October 1 explicitly asks for a
+   coupled dissemination/agreement/constant-rate construction, then October 2 makes
+   some traffic privacy and agreement an alpha condition. [F11,F12] Those are stronger
+   than an observer-view theorem over a pure projected value. They must consume the
+   physical sender/receiver/host/recovery paths, without forcing private execution
+   to be FHE everywhere or treating pasted Gemini prose as architecture.
+
+THE FOUNDATION EMBER ACTUALLY SELECTED
+
+The repeated destination is a powerful, understandable semantic computer: rich
+objects, programs, authority, retained causal histories and private cooperation,
+inhabitable by humans and agents. Formal methods are supposed to expose wrong
+models and make implementation less fragmented. They are not an alternate product
+consisting of soundness models that no living consumer invokes.
+
+May 29 is a particularly instructive compressed decision cycle. Human #4317 lists
+linguistic abstraction, proofs, reasonable efficiency and future Rust integration
+as advantages, and explicitly fears detached formalization and integration cost.
+The agent recommends a small semantic spec and claims difftesting certifies Rust.
+Human #4341 accepts Lean-core-first, independent authority/ordering choices with
+"diagonal default," and freezing the old frontend for a rebuild. The same day #5306
+says metatheory IS Dregg2, expects approximately all semantics in Lean with raw
+crypto/bots/web as exceptions; #5456 specifies compiled Lean hosted by Rust for
+actual semantics of actual things. [F02]
+
+Therefore "core first" must not be quoted as endorsement of the agent's entire
+oracle architecture. The detailed follow-up narrows what the acceptance means.
+Likewise "freeze current and rebuild later" is a staging decision from an early
+rebuild, not perpetual permission to leave every consumer frozen.
+
+May 30 #6497 rejects factoring from variant names instead of real definitions.
+The rejected collapse hid different relationships: bearer delegation chains with
+facet attenuation, recipient-bound handoff certificates, stealth point relations,
+OneOf alternation, and token authorization bound to actual request facts. [F04]
+The desired abstraction is allowed to become smaller only after these semantic
+relationships survive. A universal "verify statement" seam can be useful while
+remaining insufficient to describe who attested WHAT to WHOM at WHICH root/time.
+
+June 2 #10444 asks whether treating delegation as one action per cap scales for
+moving cap-containing data structures, invoking seL4 guarded CNodes as comparison.
+The surrounding agent admits neither flat per-cap actions nor scoped forest edges
+solve the container problem. [F05] This is an underread tension for flat Mini
+hyperedges: flattening transactions can simplify coordination without answering
+portable aggregate authority. A manifest/container cap could designate a bounded
+collection with explicit lookup, attenuation and revocation semantics. That is a
+new design proposal, not a command to revive Mina-style call forests.
+
+AUTHORITY, SOVEREIGNTY AND PROVIDERS MUST NOT COLLAPSE INTO ONE ROOT
+
+The June 7 question whether financial flavor was "mind-poison" is real exploration,
+not an instruction to erase finance. The assistant immediately proposes demoting
+about sixteen effects and calls money a demo. Ember corrects this: effects were
+pulled into the kernel deliberately to prove their guarantees, including private
+payment for distributed resources, while individuals should compute in their own
+cells without coordinating beyond their partners. Hoisting may become appropriate,
+but a kernel-minimality audit is not the immediate destination. [F06]
+
+The assurance frontier is consequently a contract frontier, not a vocabulary
+frontier. A userspace escrow is acceptable if its guarantees really match or exceed
+the kernel route; an ordinary mutable map with methods called escrow does not
+inherit that assurance. Mini may express fewer generic transition primitives and
+more typed resource/contract families, provided ordinary users can still buy/rent,
+create, meter, delegate, recover and settle actual resources privately.
+
+A cell's owner, a community's current governance, a physical host's resource policy,
+and a participating model's instruction authority should be separately expressible.
+September 18 explicitly selects resources deliberately governing and potentially
+locking their own management. [F13] That choice supports meaningful self-government
+and removes an implicit owner repair override. It does not imply a host has no
+control over machine availability, or that revoking a content read capability
+makes already-disclosed bytes disappear. "Refuses operator" needs the exact operator
+and exact accepted action boundary named.
+
+July 6's human suspicion that flaw-free proof attempts were not trustworthy prompts
+adversarial rereview. [F07] Actual GovernedDynamics stores a holds proof as a field;
+governed_holds simply projects it. PolisDynamics consumes independent policy/shield
+safety premises. This packages a conditional invariant usefully, but does not by
+itself establish political non-domination or remove physical operator control.
+The strongest preserved meaning is: an enforcement mechanism refuses particular
+unauthorized/unsafe transitions despite an adversarial controller. It then needs
+continued capacity, custody, recovery and exit capabilities to be useful to a resident.
+
+TIME/HISTORY IS COMPUTATIONAL POWER, NOT ONLY EVIDENCE
+
+June 19 asks for fresh execution from historical points with willing parties,
+virtualizing a past, nested isolation and useful lossy reconciliation to main.
+These are human exploratory questions. The assistant responds that almost all of
+this is existing composition and offers two small protocol additions. [F10]
+
+The source reveals a concrete mismatch beneath the branch protocol's confinement
+story. BranchStitchSession::fork creates a WHOLE World::fork, then separately mints
+a culled UmemBranch as its stitch baseline. World::fork clones the entire ledger,
+factory registry, executor signing key and every receipt-chain head. The branch's
+world() exposes that whole ledger; turn/drive run through that cloned executor.
+The offstage-cell test checks absence only from baseline.cells. Thus the comment
+claiming offstage cells are structurally absent from every branch exceeds this
+implementation. open() also constructs the session without a joint-consent argument.
+Its stitch returns a verdict and does not apply the result to main. [F10]
+
+This is a useful simulator: wakes are fresh and persistence is None, so the source
+explicitly separates main-memory state and disk/observer publication. It is not a
+checked proof of namespace/capability/physical-effect confinement. No external-effect
+leak was run or asserted here. Grain::fork uses a different mechanism: it clears the
+inherited c-list and confers only parent-held selected targets under a separate lease.
+That is a concrete authority-culling design to reuse, still requiring effect/permission
+semantics review. SettlementSoundness's named generic theorem assumes BindsLiveAuthority
+and directly applies that premise; this read does not verify a deployed settlement weld.
+Reconciliation must bind current authority and causal/conflict/supply rules; external
+actions already completed cannot be undone by scrubbing a history cursor.
+
+July 8 #45 asks how disseminating umems/sovereign state will preserve enough
+houyhnhnmness. The adjacent response makes a valuable distinction: public root,
+actual contents needed to resume, integrity vs hiding, read authority, metadata.
+SOVEREIGN-RESURRECTION specifies encrypted shards, tip anchors, cap-scoped sync,
+policy-selected checkpoint/retention and explicit branch resurrection. [F11]
+This is a richer survival target than a SQLite reopen success at one root. A useful
+portable cell must carry or obtain the dependency/code/content/authority closure
+needed to resume, while separately choosing which physical effects remain available.
+This closure may be delegated and rented; it should not force global storage of
+every private object's contents. Identity, state version and checkpoint root deserve
+separate representations so a portable object does not become a new social subject
+every time it changes a field.
+
+GENERATION, PERFORMANCE AND THE 10% REQUEST
+
+July 2 Dragon's Orb is motivated by an explicit source-available/relicensing boundary,
+world-class performance and assurance, feeding a seL4-based future. This is not proof
+that copying old network source into an AGPL repository is authorized. [F14]
+July 3 Ember accepts executing with leanc in the trusted base while compiler work
+continues, rejects replacing complete Orb with depth-over-breadth and testing-as-
+correctness. July 8 again says custom compilation is vital for scalability/longevity
+but not necessary to run the cloud immediately. The same surrounding report records
+a specific representation bottleneck: cons-list processing dominated while socket
+zero-copy work disappeared beneath it. [F14] Preserve the destination and measure
+actual representations; do not infer either "Lean cannot be fast" or "proofs ensure
+speed" from these episodes.
+
+The actual EmitLean example generates instantiated seam theorems from shared lemmas,
+including recycling count, op origin and invariant preservation. [F14] It is a good
+mechanism for deleting repeated recipes. The actual demonstration uses unitComponent for both inputs; H1 and h2c lanes call
+the identical reactor step, and the Route seam means submission provenance, not HTTP
+routing correctness. Its accepted compiler syntax does not by itself prove the whole
+HTTP RFC, configure every existing middleware or generate optimized machine code.
+Research and codegen outputs need a precise consumer map.
+
+July 28 #105 explicitly rejects thinking of 260 Pickles steps as handwritten work:
+this should be compiler/translator output. [F15] August 6's initial Mini request
+extends that to the whole proof-native semantic computer, explicitly kernel,
+hyperdreggmedia and DeOS, at most ten percent of old LOC. August 9 asks subsumption
+across DrEX/FHEgg/Bazaar, DeOS, token authorization, grains, agents, cloud/control
+planes with good performance. [F16] This is a programmatic breadth-preservation
+request, not a claim that 10% is achieved or a quota to delete useful functionality.
+
+The dated August subsumption artifacts provide a good distinction among semantic,
+admission, cryptographic, deployment and benchmark maturity. Their history also
+warns against declaring "missing work is no longer another kernel design" too
+strongly: later sparse-model/OO/traffic work legitimately reopened foundations.
+A generated source boundary can still hide a wrong semantic statement; a proof can
+still rely on an unrealized handler or assumption. Source byte identity answers
+one question, while meaning, cryptography and physical receiving answer others.
+
+CURRENT MINI CONSUMER IMPLICATIONS — PROPOSED
+
+A small set of reusable contracts should enable a large set of real experiences:
+- Resource births/factories with inspectable authority endowment, exact installed
+  code/policy identity, child limits and independent lifecycle invariants.
+- Human/agent invocation through the same typed request and authority semantics,
+  with delegation containing collections and explicit self/parent/powerbox growth.
+- Local sovereign operation plus negotiated joint scopes and boundary settlement;
+  shared hosting is a mode. Agreement operates where conflicting shared resources
+  require it, not as mandatory public coordination for every private keystroke.
+- History cursor/snapshot/suspend/branch/stitch as distinct operations, explicit
+  physical-effect portals and dependency closure for resumption on another device.
+- Private paid service/resource paths whose public release, executor observation,
+  provider custody and traffic observation are independently specified.
+- Generated effect/controller/codec/proof/dispatch surfaces reducing repeated work,
+  with a canonical semantic model retaining materialization and performance refinements.
+
+The checked current Mini files show useful nuclei, not complete closure: PrivacyProfile
+explicitly keeps public observation, hiding claim, execution visibility and metadata
+independent; ResourceCost models exact semantic charges separately from external I/O;
+ResourceBirthAuthority installs a batch checked against the original pre-authority;
+CanonicalResourceBookInvariant proves supported-account and balance-hidden registration
+properties. [F17] They are specific better replacements for overgeneral slogans.
+No build or actual deployment was examined in this pass, so these source reads do
+not certify the current public system or the October13 bar.
+
+The unresolved design questions and targeted next readings are retained in
+../replays/foundations-question-queue.txt. The replay counterfactuals are a separate
+artifact; they are not historical assertions or a new whole-kernel implementation
+authorization.

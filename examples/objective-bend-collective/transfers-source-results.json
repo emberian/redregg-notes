@@ -1,0 +1,210 @@
+[
+  {
+    "module": "SingleSellerTransfers",
+    "entry": "settle",
+    "schema": "dregg.bend.sealed-parser-transcript.v1",
+    "upstream": "947db722640c86247849343657bf2f7ef01cb7f1",
+    "sourceDigestAlgorithm": "sha256",
+    "modules": [
+      {
+        "namespace": "",
+        "source": "aba9004460d0063a9dec770921d0b492e4113d6540a99b4d8d6d4e9a10916e88",
+        "imports": []
+      },
+      {
+        "namespace": "MarketMath",
+        "source": "5fb8d148515731be8df3a0628eeb93abe4c7f625224f1896f26895269bed835d",
+        "imports": [
+          {
+            "alias": "",
+            "path": "Base",
+            "module": 0,
+            "source": "aba9004460d0063a9dec770921d0b492e4113d6540a99b4d8d6d4e9a10916e88"
+          }
+        ]
+      },
+      {
+        "namespace": "SingleSellerAllocation",
+        "source": "c3dfd90dc0d353fe5ec02d22656afc3fb35e558def8ee9fa4b1fdbcae7140c2c",
+        "imports": [
+          {
+            "alias": "",
+            "path": "Base",
+            "module": 0,
+            "source": "aba9004460d0063a9dec770921d0b492e4113d6540a99b4d8d6d4e9a10916e88"
+          },
+          {
+            "alias": "Math",
+            "path": "./MarketMath.bend",
+            "module": 1,
+            "source": "5fb8d148515731be8df3a0628eeb93abe4c7f625224f1896f26895269bed835d"
+          }
+        ]
+      },
+      {
+        "namespace": "SingleSellerSettlement",
+        "source": "ed3341368ca77c4fc804cf84b98f205b9192a94fceccdda0a68dae9c80326ada",
+        "imports": [
+          {
+            "alias": "",
+            "path": "Base",
+            "module": 0,
+            "source": "aba9004460d0063a9dec770921d0b492e4113d6540a99b4d8d6d4e9a10916e88"
+          },
+          {
+            "alias": "Math",
+            "path": "./MarketMath.bend",
+            "module": 1,
+            "source": "5fb8d148515731be8df3a0628eeb93abe4c7f625224f1896f26895269bed835d"
+          },
+          {
+            "alias": "Seller",
+            "path": "./SingleSellerAllocation.bend",
+            "module": 2,
+            "source": "c3dfd90dc0d353fe5ec02d22656afc3fb35e558def8ee9fa4b1fdbcae7140c2c"
+          }
+        ]
+      },
+      {
+        "namespace": "SingleSellerTransfers",
+        "source": "72579daa8a4f80bbc35fb3ccf2f3ad91d06c82f4ad79434e03295e1ee60e50fa",
+        "imports": [
+          {
+            "alias": "",
+            "path": "Base",
+            "module": 0,
+            "source": "aba9004460d0063a9dec770921d0b492e4113d6540a99b4d8d6d4e9a10916e88"
+          },
+          {
+            "alias": "Math",
+            "path": "./MarketMath.bend",
+            "module": 1,
+            "source": "5fb8d148515731be8df3a0628eeb93abe4c7f625224f1896f26895269bed835d"
+          },
+          {
+            "alias": "Seller",
+            "path": "./SingleSellerAllocation.bend",
+            "module": 2,
+            "source": "c3dfd90dc0d353fe5ec02d22656afc3fb35e558def8ee9fa4b1fdbcae7140c2c"
+          },
+          {
+            "alias": "Settlement",
+            "path": "./SingleSellerSettlement.bend",
+            "module": 3,
+            "source": "ed3341368ca77c4fc804cf84b98f205b9192a94fceccdda0a68dae9c80326ada"
+          }
+        ]
+      }
+    ],
+    "entryModule": 4,
+    "entryDefinition": "settle",
+    "definitions": [
+      "Nat",
+      "List",
+      "Bool",
+      "Empty",
+      "Unit",
+      "Empty.absurd",
+      "Sigma",
+      "Pair",
+      "Nat.eq",
+      "Bool.and",
+      "Bytes.eq",
+      "Truth",
+      "Bool.and_left",
+      "Bool.and_right",
+      "Nat.eq_sound",
+      "Bytes.eq_sound",
+      "MarketMath:add",
+      "MarketMath:sub",
+      "MarketMath:le",
+      "MarketMath:lt",
+      "MarketMath:choose_nat",
+      "MarketMath:choose_bool",
+      "MarketMath:min",
+      "MarketMath:mul",
+      "MarketMath:not",
+      "MarketMath:Division",
+      "MarketMath:increment_quotient",
+      "MarketMath:divide_step",
+      "MarketMath:divide",
+      "MarketMath:add_zero",
+      "MarketMath:add_zero",
+      "MarketMath:sub_zero",
+      "MarketMath:sub_zero",
+      "MarketMath:min_balance",
+      "MarketMath:min_balance",
+      "SingleSellerAllocation:Order",
+      "SingleSellerAllocation:Ranked",
+      "SingleSellerAllocation:Fill",
+      "SingleSellerAllocation:Allocation",
+      "SingleSellerAllocation:index",
+      "SingleSellerAllocation:precedes",
+      "SingleSellerAllocation:insert_choice",
+      "SingleSellerAllocation:insert",
+      "SingleSellerAllocation:sort",
+      "SingleSellerAllocation:take",
+      "SingleSellerAllocation:last_price",
+      "SingleSellerAllocation:prepend",
+      "SingleSellerAllocation:fill",
+      "SingleSellerAllocation:allocate",
+      "SingleSellerAllocation:empty_preserves_supply",
+      "SingleSellerAllocation:empty_preserves_supply",
+      "SingleSellerAllocation:sum_with_remaining",
+      "SingleSellerAllocation:accounted",
+      "SingleSellerAllocation:take_balance",
+      "SingleSellerAllocation:take_balance",
+      "SingleSellerAllocation:prepend_accounted",
+      "SingleSellerAllocation:prepend_accounted",
+      "SingleSellerAllocation:fill_conserves",
+      "SingleSellerAllocation:fill_conserves",
+      "SingleSellerAllocation:allocation_conserves",
+      "SingleSellerAllocation:allocation_conserves",
+      "SingleSellerSettlement:Account",
+      "SingleSellerSettlement:Bid",
+      "SingleSellerSettlement:BalanceWrite",
+      "SingleSellerSettlement:PrivateResult",
+      "SingleSellerSettlement:Batch",
+      "SingleSellerSettlement:Result",
+      "SingleSellerSettlement:order_list",
+      "SingleSellerSettlement:account_id",
+      "SingleSellerSettlement:identifiers",
+      "SingleSellerSettlement:contains",
+      "SingleSellerSettlement:distinct",
+      "SingleSellerSettlement:valid_bid",
+      "SingleSellerSettlement:valid_bids",
+      "SingleSellerSettlement:write",
+      "SingleSellerSettlement:units_at",
+      "SingleSellerSettlement:append_bid",
+      "SingleSellerSettlement:bid_result",
+      "SingleSellerSettlement:bid_batch",
+      "SingleSellerSettlement:backed_results",
+      "SingleSellerSettlement:prepare_batch",
+      "SingleSellerSettlement:prepare_allocation",
+      "SingleSellerSettlement:settle",
+      "SingleSellerSettlement:ExactWrite",
+      "SingleSellerSettlement:write_bound",
+      "SingleSellerSettlement:write_bound",
+      "SingleSellerTransfers:Move",
+      "SingleSellerTransfers:Group",
+      "SingleSellerTransfers:Goods",
+      "SingleSellerTransfers:Payments",
+      "SingleSellerTransfers:Result",
+      "SingleSellerTransfers:move",
+      "SingleSellerTransfers:prepend_goods",
+      "SingleSellerTransfers:goods",
+      "SingleSellerTransfers:prepend_payment",
+      "SingleSellerTransfers:payments",
+      "SingleSellerTransfers:join",
+      "SingleSellerTransfers:prepare",
+      "SingleSellerTransfers:settle",
+      "SingleSellerTransfers:ExactMove",
+      "SingleSellerTransfers:move_bound",
+      "SingleSellerTransfers:move_bound"
+    ],
+    "emittedBookSha256": "48d98b2d411a0ad32a73e6e2339bbdb60bb7d77fb0379419760d120b3a07c568",
+    "outOfScope": [],
+    "bookPath": "/home/hbox/workbox/codex-collective-domain-20261003/evidence/sealed-bend-xvFI8R/book.bendtt",
+    "transcriptPath": "/home/hbox/workbox/codex-collective-domain-20261003/evidence/sealed-bend-xvFI8R/transcript.json"
+  }
+]

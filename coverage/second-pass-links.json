@@ -1,17 +1,36 @@
 {
-  "generated_utc": "2026-10-03T07:45:32.970201+00:00",
+  "generated_utc": "2026-10-03T09:52:18.735794+00:00",
   "warning": "Author-owned mutable research hash pins at this time only. Different read units are preserved; counts are never summed. File hashing is not semantic reading.",
   "records": [
     {
+      "path": "/Users/ember/dev/redregg/intent/foundations-evidence.json",
+      "sha256": "5732e3ebccad8c9073ad50529480a721bcaf6fc15968644abf6bf09024177c0e",
+      "bytes": 40092,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author",
+      "metadata_keys": [
+        "date",
+        "owner",
+        "source_pins",
+        "cards",
+        "retrieval",
+        "scope"
+      ],
+      "owner": "redregg_intent_foundations",
+      "source_pins": {
+        "breadstuffs": "22fad151e9f118e3aa001a823e075918ffa139e8",
+        "minidregg": "b57acedaaae02edf2b2cfd8e33675b3cbf40daa8"
+      }
+    },
+    {
       "path": "/Users/ember/dev/redregg/intent/foundations-intent-model.txt",
-      "sha256": "7239c1503ad5856a39b8d35786bd4081007b2e364865647a8666e6f26f685121",
-      "bytes": 16259,
+      "sha256": "10c2dfdd1ee966bd00704c6f6907fc9854fad82bb00b4927dae481a7e9737cb0",
+      "bytes": 17419,
       "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author"
     },
     {
       "path": "/Users/ember/dev/redregg/intent/foundations-reading-coverage.json",
-      "sha256": "6c5ba0833057437ce8b4f24151584e895a1508c538c5f27bb8980799339f8071",
-      "bytes": 23792,
+      "sha256": "f46b89a8543420badaec7f224adcdb9c2f3bb60b6fcc8507b9a088a4f6b3a0dc",
+      "bytes": 25477,
       "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author",
       "metadata_keys": [
         "owner",
@@ -170,22 +189,501 @@
       ]
     },
     {
+      "path": "/Users/ember/dev/redregg/intent/missing-junctions-20261003.txt",
+      "sha256": "c7a645a420fe2be5b30a33cdf0b413800bb341719d2c8e64a2ef6f4760460223",
+      "bytes": 24416,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author"
+    },
+    {
+      "path": "/Users/ember/dev/redregg/intent/missing-junctions-coverage-20261003.json",
+      "sha256": "c23181ddf4f3e1795029d1da7e840559f0d06408d1ce325e566f3d3376e107c7",
+      "bytes": 45706,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author",
+      "metadata_keys": [
+        "owner",
+        "prepared",
+        "status",
+        "method",
+        "full_body_records",
+        "context_windows",
+        "counts",
+        "limits",
+        "source_reads",
+        "external_corpora",
+        "narrative_ranges",
+        "additional_primary_focal_turns",
+        "external_primary_documentation",
+        "validation"
+      ],
+      "owner": "Codex historical_missing_junctions",
+      "method": "Fresh keyword-screening across extracted private corpora; selected bounded live cv windows read including human, adjacent response and corrections. Raw text is not copied here. Displayed tool calls/results may be truncated.",
+      "limits": [
+        "No total authorship audit; no whole-session reading; no implementation outcome certified; no builds/Git/deploy/delete/subagents.",
+        "Snippet screening never counted as full-body reading. July3306 has large inherited fork family; original human occurrence not yet audited.",
+        "Current source attribution uses SHA256 rather than a Git command; reading does not validate deployed use.",
+        "No re-audit of recent deadline corpus; archive OCT13 objective recovery used as dated release lead.",
+        "Mixed pasted private facts intentionally omitted from all owned artifacts. Body hashes/private cv locators allow authorized local recovery without republishing transcript.",
+        "Selected July3998 overlaps worlds full-read set; all map overlaps retained. No claim that each body is newly interpreted globally."
+      ]
+    },
+    {
+      "path": "/Users/ember/dev/redregg/intent/missing-junctions-graph-20261003.json",
+      "sha256": "e755d43ebcf521a210efe6ae0c5acb821de9ee9a40a56edf7a58d82846c62d83",
+      "bytes": 43196,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author",
+      "metadata_keys": [
+        "schema_version",
+        "owner",
+        "date",
+        "privacy",
+        "current_direction",
+        "deadline_lead",
+        "dedup_policy",
+        "questions",
+        "evidence_cards",
+        "source_pins",
+        "hypotheses",
+        "edges",
+        "peer_receiving_reports",
+        "coverage_file",
+        "narrative_report",
+        "replays_file",
+        "limits"
+      ],
+      "owner": "Codex historical_missing_junctions",
+      "limits": [
+        "No total authorship audit; no whole-session reading; no implementation outcome certified; no builds/Git/deploy/delete/subagents.",
+        "Snippet screening never counted as full-body reading. July3306 has large inherited fork family; original human occurrence not yet audited.",
+        "Current source attribution will use SHA256 rather than a Git command; reading does not validate deployed use.",
+        "No re-audit of recent deadline corpus; archive OCT13 objective recovery used as dated release lead.",
+        "Mixed pasted private facts intentionally omitted from all owned artifacts. Body hashes/private cv locators allow authorized local recovery without republishing transcript.",
+        "Selected July3998 overlaps worlds full-read set; all map overlaps retained. No claim that each body is newly interpreted globally."
+      ],
+      "source_pins": [
+        {
+          "path": "/Users/ember/dev/breadstuffs/cell/src/delegation.rs",
+          "line_ranges_inclusive": [
+            [
+              1,
+              230
+            ]
+          ],
+          "read_scope": "snapshot fields, inert signature header, Lean shadow fence",
+          "sha256_at_final_checkpoint": "5e8ebc72b9d15abb9388bc668df8993815e2601f0c435d8bd2f38997f8580a10",
+          "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+        },
+        {
+          "path": "/Users/ember/dev/breadstuffs/turn/tests/delegation_snapshot_second_authority_source.rs",
+          "line_ranges_inclusive": [
+            [
+              1,
+              200
+            ]
+          ],
+          "read_scope": "Rust second authority-source expiry/amplification regression narrative; not executed",
+          "sha256_at_final_checkpoint": "fb4a61fad2a6f2d41ece067c12cdc24345fac0a0c2e37bd3f11bca4c36591a38",
+          "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+        },
+        {
+          "path": "/Users/ember/dev/breadstuffs/cell/src/revocation_channel.rs",
+          "line_ranges_inclusive": [
+            [
+              1,
+              210
+            ]
+          ],
+          "read_scope": "voluntary trip local matching, no detached signed admission",
+          "sha256_at_final_checkpoint": "ff060e1389efb4de6c6701b39b778159086b644da46c26b7249e6260524f0177",
+          "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+        },
+        {
+          "path": "/Users/ember/dev/breadstuffs/turn/src/executor/apply.rs",
+          "line_ranges_inclusive": [
+            [
+              975,
+              1065
+            ],
+            [
+              3529,
+              3620
+            ]
+          ],
+          "read_scope": "dead batch trip helper and declared factory params; no call-closure/build claim",
+          "sha256_at_final_checkpoint": "b69e68dcbbee75370f863efcf7454335f900571b6cc197b9e460efe51e26d6a8",
+          "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+        },
+        {
+          "path": "/Users/ember/dev/minidregg/Theory/ResourceBirthAuthority.lean",
+          "line_ranges_inclusive": [
+            [
+              1,
+              130
+            ]
+          ],
+          "read_scope": "every birth grant uses original authority",
+          "sha256_at_final_checkpoint": "eba5cc129e8796f0ff4057ddaa9f22130d83317919889bf9ccbc9a37258498e2",
+          "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+        },
+        {
+          "path": "/Users/ember/dev/minidregg/Kernel/GrainResourceBirthTransaction.lean",
+          "line_ranges_inclusive": [
+            [
+              1,
+              85
+            ]
+          ],
+          "read_scope": "one-old-image preparation; explicitly not receiving endpoint",
+          "sha256_at_final_checkpoint": "88830bb5dedfc01b543d70212b71910826480eb34f0e83cb78add94b3babaebe",
+          "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+        },
+        {
+          "path": "/Users/ember/dev/breadstuffs/orb/Admin/Reload.lean",
+          "line_ranges_inclusive": [
+            [
+              1,
+              180
+            ]
+          ],
+          "read_scope": "pure reload config/generation contract",
+          "sha256_at_final_checkpoint": "e9eb36e102d458a4375bc3abf3f54c45217119e0b4c57ecbd53523664e7de925",
+          "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+        },
+        {
+          "path": "/Users/ember/dev/breadstuffs/orb/Admin/DrainLive.lean",
+          "line_ranges_inclusive": [
+            [
+              1,
+              140
+            ]
+          ],
+          "read_scope": "pure lifecycle selftest excludes deployed shell",
+          "sha256_at_final_checkpoint": "d6d81c5616a7b5d36627286a338b5d88e022fbf4f148e9226641e1df27ea9db0",
+          "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+        },
+        {
+          "path": "/Users/ember/dev/breadstuffs/orb/crates/dataplane/src/reconfig.rs",
+          "line_ranges_inclusive": [
+            [
+              1,
+              220
+            ]
+          ],
+          "read_scope": "actual reload signal/admin mechanism, retained Arc generation",
+          "sha256_at_final_checkpoint": "3c8e287c0667c2b6cc6c2d17307fe457838d10c1288b5f2a0abbc313a8053547",
+          "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+        },
+        {
+          "path": "/Users/ember/dev/breadstuffs/extension/src/elements/dregg-poll.ts",
+          "line_ranges_inclusive": [
+            [
+              1,
+              244
+            ]
+          ],
+          "read_scope": "thin closed-root view, no keys/evaluator; no runtime exploit tested",
+          "sha256_at_final_checkpoint": "93aa570bc047fe1ca30a8e45ccf7c31bad11fe0594b8ac030d3335769c5f984f",
+          "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+        },
+        {
+          "path": "/Users/ember/dev/breadstuffs/extension/src/port.ts",
+          "line_ranges_inclusive": [
+            [
+              250,
+              314
+            ]
+          ],
+          "read_scope": "separate background consent before cast",
+          "sha256_at_final_checkpoint": "bfa9d147fa93f1903e3532234038daef4c52b2e3633a7578bd1d24f3807308e9",
+          "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+        },
+        {
+          "path": "/Users/ember/dev/breadstuffs/docs/CONTENT-AND-ASSET-SPEC.md",
+          "line_ranges_inclusive": [],
+          "read_scope": "keyword search and selected content/provenance/epoch sections, not full file",
+          "sha256_at_final_checkpoint": "3c51c72bb9e7876d6bb8ac467ead6ba0371d743e6be799500f9b1fdf4aaa14aa",
+          "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+        },
+        {
+          "path": "/Users/ember/dev/allgame/claude_resident/config.py",
+          "line_ranges_inclusive": [
+            [
+              180,
+              207
+            ]
+          ],
+          "read_scope": "historical omitted effort rationale",
+          "sha256_at_final_checkpoint": "b1e6716ced45a894dc309465aa6990d3f245be9c57bf73db3ee806156c8e4f90",
+          "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+        },
+        {
+          "path": "/Users/ember/dev/allgame/scripts/redact_state.py",
+          "line_ranges_inclusive": [
+            [
+              1,
+              158
+            ]
+          ],
+          "read_scope": "full targeted top-level message-content redaction implementation; did not execute",
+          "sha256_at_final_checkpoint": "6956ec51624f1222b59d5b5791dbb3e3e3ae73393c3adb697f12e35540c2bc6d",
+          "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+        },
+        {
+          "path": "/Users/ember/dev/allgame/claude_resident/state.py",
+          "line_ranges_inclusive": [
+            [
+              310,
+              375
+            ]
+          ],
+          "read_scope": "move logging and context-floor separation; supplementary keyword search",
+          "sha256_at_final_checkpoint": "34600b6ce61f2a0c5bf97846db61d0db02fcc0c4d0dcc5598bf02e36213264c9",
+          "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+        },
+        {
+          "path": "/Users/ember/dev/allgame/kimi_resident/engine.py",
+          "line_ranges_inclusive": [
+            [
+              42,
+              82
+            ]
+          ],
+          "read_scope": "provider-specific thinking configuration, serialized turns",
+          "sha256_at_final_checkpoint": "9c302d667a952149f49eb6870645a3552500e65eb3343b7034abf20df2eb5686",
+          "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+        },
+        {
+          "path": "/Users/ember/dev/breadstuffs/metatheory/Dregg2/Circuit/Emit/KimchiEffectIncNonce.lean",
+          "line_ranges_inclusive": [
+            [
+              1,
+              82
+            ],
+            [
+              330,
+              383
+            ]
+          ],
+          "read_scope": "two emissions, premises and missing descriptor/continuity/PI/hashsite binding",
+          "sha256_at_final_checkpoint": "14cd70c620e653596adef3e1148679972c0bd9fec7f5378609591203ecac800e",
+          "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+        }
+      ]
+    },
+    {
+      "path": "/Users/ember/dev/redregg/intent/worlds-coverage-20261003.json",
+      "sha256": "bd89546ccb89e7850f25ed37f22b3d28e2e6a8f51f69acdead42308418a979bf",
+      "bytes": 34381,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author",
+      "metadata_keys": [
+        "owner",
+        "prepared",
+        "status",
+        "count_units",
+        "selected_prompt_locators",
+        "july_august_full_read_groups",
+        "may_june_full_read_selected",
+        "sept_oct_selected",
+        "context_windows",
+        "source_read_scopes",
+        "screening",
+        "map_reads",
+        "gaps",
+        "outputs"
+      ],
+      "owner": "Codex redregg_intent_worlds"
+    },
+    {
       "path": "/Users/ember/dev/redregg/intent/worlds-second-pass-20261003.txt",
-      "sha256": "19e89c5bead7cd057c24ee5eb73318776aa4f37568a47f815ab95fdfe88738c6",
-      "bytes": 20245,
+      "sha256": "0a45f3a57ae527b0a7c7a1da92b37955471227ce7099417989a124547b9fe0e0",
+      "bytes": 20228,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author"
+    },
+    {
+      "path": "/Users/ember/dev/redregg/replays/bend-bread-language-proof-20261003.txt",
+      "sha256": "23d073a2fe60bd69e7a841509c470c2d72b22070a79281d5381e52d119907e17",
+      "bytes": 19530,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author"
+    },
+    {
+      "path": "/Users/ember/dev/redregg/replays/foundations-choicepoints.txt",
+      "sha256": "86cd9f0bf92744575ca53ba00cf39ad9935c2ee3d6b8ce5da4c8b5844641ecae",
+      "bytes": 15200,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author"
+    },
+    {
+      "path": "/Users/ember/dev/redregg/replays/foundations-question-queue.txt",
+      "sha256": "8fed778ebdd443664f1d07de86e36addd4b8abc2f1ee321199a49546760659ce",
+      "bytes": 5929,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author"
+    },
+    {
+      "path": "/Users/ember/dev/redregg/replays/missing-junctions-20261003.txt",
+      "sha256": "967886e188ebbdf0eba5f2f18c943e5a1ca3ab5ae8a1dbd8b1ef5a7bb8fa7c1c",
+      "bytes": 9859,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author"
+    },
+    {
+      "path": "/Users/ember/dev/redregg/replays/worlds-choicepoints-20261003.txt",
+      "sha256": "f63371b941865c257f7cccb8cc1f34b67724ddd7eb9315fa9510561b6d8761aa",
+      "bytes": 9308,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author"
+    },
+    {
+      "path": "/Users/ember/dev/redregg/landscape/RESIDENT-CONTEXT-ARCHAEOLOGY-20261003.txt",
+      "sha256": "86f29128b25c5f2ea0299ddd6979767f23805b69935554afb18f6be8aac6da72",
+      "bytes": 24186,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author"
+    },
+    {
+      "path": "/Users/ember/dev/redregg/landscape/bend-bread-bridges-20261003.txt",
+      "sha256": "8b821bbfc7d29f122faf8e2676273ad066023052d69e19237c36d29a6443de60",
+      "bytes": 18866,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author"
+    },
+    {
+      "path": "/Users/ember/dev/redregg/landscape/second-pass-construction-20261003.txt",
+      "sha256": "49308bcbf133342fc9a3bc495745222be14059a92b048a74a5cb6a53a9e89994",
+      "bytes": 12750,
       "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author"
     },
     {
       "path": "/Users/ember/dev/redregg/designs/ALTERNATIVES-20261003.txt",
-      "sha256": "b882d9dda3eb6125ca0577d23de442045f6099f318cd467f995078ef84c5436b",
-      "bytes": 23989,
+      "sha256": "4957266a17d1bd1e7a0e4c24fc164a2a30c9e61de14ad0f4d2ab2d504e46eab0",
+      "bytes": 24701,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author"
+    },
+    {
+      "path": "/Users/ember/dev/redregg/designs/BEND-DATA-REPRESENTATION-20261003.txt",
+      "sha256": "63315340433a5288db712fdb266b91fecef70b098054fd2d0c405326a07f84ef",
+      "bytes": 9793,
       "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author"
     },
     {
       "path": "/Users/ember/dev/redregg/designs/BEND-DIRECTION-20261003.txt",
-      "sha256": "9e34484c2ebd0e99176d993352f2a09dcc814fb82191ef10fda69dd5fdfa319e",
-      "bytes": 3750,
+      "sha256": "4e2d6be83267c0f0ba8214bfffcc82d3b4bdf705591fd187b6e95bf99851f392",
+      "bytes": 5217,
       "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author"
+    },
+    {
+      "path": "/Users/ember/dev/redregg/designs/BEND-GENERAL-ZKVM-PATH-20261003.txt",
+      "sha256": "bbb6eb051022a044c0e2d9f0388307616c73084f684a63711070c1b70703e150",
+      "bytes": 16127,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author"
+    },
+    {
+      "path": "/Users/ember/dev/redregg/designs/BEND-LOGIC-COMPILATION-20261003.txt",
+      "sha256": "9ed6a0f8fa3318a420ab34e2dc7dc7424accdc5c650ab0630d4f11e33a6c721c",
+      "bytes": 34182,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author"
+    },
+    {
+      "path": "/Users/ember/dev/redregg/designs/BEND-PERSISTENCE-ADVERSARIAL-20261003.txt",
+      "sha256": "aa15352efe73490bb2d33f631072bbbc02c1f48cbc2a6481d5efa188ee44b441",
+      "bytes": 8804,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author"
+    },
+    {
+      "path": "/Users/ember/dev/redregg/designs/BEND-PERSISTENT-COMPUTATION-20261003.txt",
+      "sha256": "77715a16e8154314c50cba327db4681d8df42d5b178fdd32ef6bee81d8de7ad6",
+      "bytes": 13853,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author"
+    },
+    {
+      "path": "/Users/ember/dev/redregg/designs/BEND-SEMANTICS-AUDIT-20261003.txt",
+      "sha256": "9787423f9f30045c9e01d1ee3b802a39c1ec1ec2944f60904414dc4cae61a561",
+      "bytes": 25618,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author"
+    },
+    {
+      "path": "/Users/ember/dev/redregg/designs/BEND-WORLD-LANGUAGE-20261003.txt",
+      "sha256": "fc01b64b5fc974fdc483b2c97f4602418346de71139fbcac8879521704180fa1",
+      "bytes": 35571,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author"
+    },
+    {
+      "path": "/Users/ember/dev/redregg/designs/BIGDREGG-PRODUCT-ARCHITECTURE-20261003.txt",
+      "sha256": "5f91b5fa6922c8515416e223a799b0d9160ecbdff38744526d32e767a1d3c32b",
+      "bytes": 33919,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author"
+    },
+    {
+      "path": "/Users/ember/dev/redregg/designs/CONSTRUCTION-PROOF-CONTRACTS-20261003.txt",
+      "sha256": "0ce4cd7f8cad7f67aec649bacdfc594006e961654a2eec6da1cbab0dd20f038e",
+      "bytes": 24356,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author"
+    },
+    {
+      "path": "/Users/ember/dev/redregg/designs/FHE-BEND-ARCHITECTURE-20261003.txt",
+      "sha256": "2295778034dc189fcf19c5a8c8ee98ecf3f4c31bd94fab895aedab84bfbff441",
+      "bytes": 30250,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author"
+    },
+    {
+      "path": "/Users/ember/dev/redregg/designs/FHE-BEND-NATIVE-BOUNDARY-20261003.txt",
+      "sha256": "694cbf85dbdc0a3350f00a2b4bbc4f3099bcbb5c9ff2782d9c6713009dbae1dc",
+      "bytes": 4864,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author"
+    },
+    {
+      "path": "/Users/ember/dev/redregg/designs/GRADED-EXECUTION-ARCHITECTURE-20261003.txt",
+      "sha256": "29811ebe0245c2ae2d86740f7e661c13a01014548e2c612a2949e6bb804d3bbd",
+      "bytes": 57315,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author"
+    },
+    {
+      "path": "/Users/ember/dev/redregg/designs/PRIVACY-COMPOSITION-REVIEW-20261003.txt",
+      "sha256": "69ae1e33b3cab6db9d56f1ffa1db02d91955b5c8ed4449cd8460f22a51a2f853",
+      "bytes": 23131,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author"
+    },
+    {
+      "path": "/Users/ember/dev/redregg/designs/SHARED-CONTRACTS-20261003.txt",
+      "sha256": "fcfb9370f1aeff2bb7b007ecedec0c66950ec20c97d36a61c110a15fa213e31b",
+      "bytes": 12771,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author"
+    },
+    {
+      "path": "/Users/ember/dev/redregg/designs/contract-graph-20261003.json",
+      "sha256": "fd631fdab64196b1fcc795341a9d571f07bc95f5de4149c3760987bae115850e",
+      "bytes": 5731,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author",
+      "metadata_keys": [
+        "schema",
+        "author",
+        "date",
+        "status",
+        "reading",
+        "nodes",
+        "edges",
+        "negative_equivalences"
+      ]
+    },
+    {
+      "path": "/Users/ember/dev/redregg/designs/graded-execution-contract-sketch-20261003.json",
+      "sha256": "f2c64825f21ac4197a15f7e344e5f260dd2917599adedc8d1aa5ae655b317ebc",
+      "bytes": 9793,
+      "catalog_read_scope": "existence/hash/JSON metadata only; substantive reading belongs to author",
+      "metadata_keys": [
+        "format",
+        "date",
+        "author",
+        "status",
+        "runtime_authorization",
+        "design",
+        "separation",
+        "coordinates",
+        "observer_projection_fields",
+        "plan_node_families",
+        "edge_type_fields",
+        "satisfies_obligations",
+        "selection_outcomes",
+        "prohibited_implicit_fallbacks",
+        "first_consumer",
+        "ownership",
+        "source_snapshot_note",
+        "source_snapshots",
+        "bend_pin"
+      ]
     }
   ]
 }

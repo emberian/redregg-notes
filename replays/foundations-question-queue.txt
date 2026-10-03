@@ -1,0 +1,87 @@
+FOUNDATIONS — RECURSIVE QUESTION QUEUE
+October 3, 2026. Bounded second-pass queue. Open questions are work, not standing
+requests for permission. Current implementation ownership belongs to Mini trackers.
+
+Each loop names a premise at risk, next discriminating reading and consumer outcome.
+No claim below declares work absent merely because it was outside this reading.
+
+Q1. What exact portable authority envelope replaced the May24 two-tab exchange?
+Premise: signed claims need some freshness/current-root/history context; full-history
+paste and shared RemoteRuntime were rejected. Read following 5a0f6a2e #1381 through
+actual importer implementation; recover old peer_exchange provenance via cv touched/
+blame and compare current Mini message/address/receiving contracts. Outcome: local
+peer-to-peer room/document/program journey preserving sovereign executors. High value.
+
+Q2. Which authority objects aggregate portable references without N grants?
+Premise: June2 #10444 scaling concern remains distinct from forest flattening.
+Read subsequent same-session decision and actual CNode/container/CDT evolution;
+compare Mini object reference collections, factory/birth batches and revocation.
+Outcome: finite authority closure carried with shared tools/documents/worlds, exact
+rights/target interpretation. Do not invent recursive capability traversal proof.
+
+Q3. Does a generic resource representation preserve each numeric invariant?
+Premise: camera FPU with True-valid Nat permits all updates; membership cannot be
+collapsed to amounts. Map Resource/Core/executor actual resource laws, issuer wells,
+registered accounts, allowances, leases and reservations. Outcome: a compact matrix
+of resources, algebra, explicit law, source consumer and physical consequence.
+Cost models and token prices are separate entries, not one mysterious balance.
+
+Q4. What makes branch state physically imaginary?
+Premise: BranchStitchSession culls baseline but clones entire execution world/signer;
+its test checks baseline absence only. Grain::fork clears the c-list instead. Trace actual SharedFork,
+GrainForkSettlement, resume environment and outbound service handles against docs;
+read houyhnhnm.total.txt relevant reference/firmament/linear-drop passages, not agent
+poetry. Outcome: document and agent branch can execute without current external
+side-effects, then authorized stitch preserves useful provenance. High value.
+
+Q5. What is sufficient state for resurrection on a different device/provider?
+Premise: a root and decryptable bytes may omit dependency/code/provider authority
+closure; tip freshness itself depends on scope agreement. Trace July8 #45 onward,
+actual anchor/shard/deal/read-cap paths and Mini snapshot/reopen/reference materialization.
+Outcome: explicit portable continuation manifest and custody/recovery model with
+well-scoped availability. Do not infer erasure coding hides metadata.
+
+Q6. Where exactly does stronger privacy re-enter actual consumers?
+Premise: four pure observation fields are independent; October bar demands a physical
+traffic implementation. Read accepted scope/traffic/admission code and artifacts
+in current construction; include public gateway, API provider custody, recovery and
+room membership/churn. Outcome: one exact request/reply/disconnect/recover path with
+named observers, actual sizes/timing and agreement admissions. Do not blanket-require
+FHE in current Clutch: Aug27 explicitly defers it there.
+
+Q7. Can canonical generation replace bespoke declaration-to-use paths?
+Premise: July28 compiler output partition count was mistaken for manual effort;
+Mini 10% target preserves all consumers. Trace old circuit authorship -> semantic
+IR -> emitted constraint -> witness generator -> verifier statement -> current
+consumer. Then compare Mini declaration/controller/codecs/cost/views/native profiles.
+Outcome: delete repeated recipes by derived artifacts; retain exact API/resource
+meaning and source-match benchmark of one object journey.
+
+Q8. What is actually proved when a theorem says deployed/non-domination/sovereign?
+Premise: GovernedDynamics projects its assumed proof, and SovereignBackingAttack's
+DeployedSovIntent is a +7 stand-in despite strong docblock. Read individual theorem
+carriers, interpretation functions and actual node/public-verifier joins. Outcome:
+small claim cards distinguish conditional model, faithful deployed relation,
+cryptographic reduction and physical enforcement. This is selective statement
+reading, not another whole-tree proof census or expensive build.
+
+Q9. Economics-before-assurance in Clutch: what exact target was stabilized?
+Premise: Aug31 "economics and semantics ready for assurance turn" is Clutch-specific,
+not reversal of Mini formal-first selection. Read Aug27–31 actual correction and
+market-cross-risk/fee/multilateral forms with code then. Outcome: portable domain
+contract requirements, including options users can perform and invariants the later
+assurance work must certify. Keep transparent near-term and dark-computing research
+chronology separate.
+
+Q10. How do current governance and custody coexist without an owner bypass?
+Premise: Sep18 deliberate self-lock is explicit; supplier shutdown and information
+already disclosed remain physical possibilities. Read native lockout journey,
+current policy/grants, provider resource contracts and portable exit/recovery.
+Outcome: management authority, law, host service/custody and identity continuity
+have independent explicit lifecycles. A policy upgrade cannot secretly annul old
+grants or grant owner escape authority while still claiming the chosen behavior.
+
+Proposed priority: Q1/Q4/Q6 supply user-facing discriminators; Q2/Q3/Q7 simplify the
+foundation; Q5/Q8 protect meaningful claims; Q9/Q10 connect economics and autonomy.
+Follow evidence rather than this ordering when a nearer concrete consumer reveals
+an obstruction. No nested researchers spawned in this pass.

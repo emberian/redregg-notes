@@ -183,3 +183,318 @@ transition block API; general captures/recursion join the closure/env machine,
 with public caps. No parallel general semantic interpreter should be authored.
 Lean toolchains are explicit: upstream v4.34, Mini v4.30; compile compatibility
 or deliberate version port is checked, never silently upgraded.
+Construction addendum (same day, checks still captain-owned):
+- Constructive outputExpr_correct plus Block.expression/flatOutput/relation keep
+  the executable function and relational constraint artifact on one source Plan.
+  An FHE evaluator consumes the constructive expression/DAG, not an AIR assumed
+  to solve an unknown output. Unary public literal-arm case is ciphertext-times-
+  plaintext/add, depth0; dynamic secret arms are a later mux extension.
+- Wire0 is output, wire1 input: public prefix1 reveals only output, allowing
+  secret input. Private prefix0 and all-public prefix2 are available.
+- Host/BendLogicEmit.lean produces actual descriptor JSON and constructive flat
+  gates via existing serialization; computes candidate witnesses and separately
+  checks descriptorHolds, all four Plans/two inputs/wrong-output refusals plus
+  invalid source/public split. It has not yet run until captain checks it.
+- Exact one/two-step source case metering can reveal private branch if public.
+  Private backend must hide meter or use an admitted public padded-budget charge;
+  fixed physical gate count is not automatically equal to semantic source charge.
+- Source erasure for later Data must remove dead Q0 fields without losing binder
+  alignment. A source-normalization ghost witness may retain dead syntax logically;
+  native/private ABI emits only live-data observation through a codec refinement.
+
+Final queued source inventory (before captain check, 2026-10-03):
+  hbox:/home/hbox/workbox/codex-bend-logic-20261003/src/
+    Compiler/BendLogicCase.lean
+    Compiler/BendLogicSpecialization.lean
+    Compiler/BendLogicTrace.lean
+    Compiler/BendLogicBFVPlain.lean
+    Host/BendLogicEmit.lean
+  Check entry: ../check.sh, supplied BEND_SOURCE_OLEANS points to captain-checked
+  source/live-machine olean root. No source/build/Git changes in Mac repositories.
+  No build result is asserted here. Captain queues this after current healthy
+  Host Lean phase, not during a parallel package build.
+
+BendLogicTrace joins the universal evaluator owner's actual Trace and carries
+one/two-step source evidence plus the compiled descriptor soundness composition.
+The privacy counterexample is constantFalse: both inputs have the same authorized
+output, but source counts1/2 differ. Negation's opened output already determines
+input, so it would not demonstrate extra meter leakage beyond that release.
+
+BendLogicBFVPlain pins actual first consumer modulus1032193 with a kernel prime
+proof and instantiates shared outputExpr and descriptor exactness in ZMod of
+that modulus. This proves source arithmetic for admitted Boolean tags, not BFV
+noise/ciphertext integrity, malicious input bit validity, decryption or custody.
+Public ciphertext replay alone does not establish a ciphertext encrypts0/1.
+
+Host emits constructiveIntegerOutput from EXACT same outputExpr/flatten over
+Rat: signed numerator z and denominator den before modular field reduction.
+The native BFV adapter requires den1 and constants in{-1,0,1}, and compares this
+projection gate-for-gate with the BabyBear constructiveOutput. Reinterpreting
+BabyBear2013265920 as -1 under another modulus would be wrong. Plan fields and
+signedConstantPolicy literal-bool-difference-v1 retain coefficient origin.
+
+Only explicitly public source/profile facts permit specialization that reveals
+program-specific topology. Private selected code/method needs fixed secret-PC
+machine/network or an authorized fixed circuit bank with hidden selection.
+
+Numeric continuation is grounded in the sibling archaeology report:
+  landscape/bend-bread-bridges-20261003.txt, P0 and P1.
+Adapt generic FieldLanes9 digitsN/ofDigits roundtrips, Bignum/DigitInjective and
+AirProgramRows residue forcing into small Mini representation modules. Source
+Nat/Word syntax is represented by an erased Prop relation; do not expand a
+48-bit Nat to unary source AST in runtime. Bind actual Base definition identity,
+prove Nat saturation/overflow versus U32 modular semantics explicitly, then
+connect actual Mini AirRange/AirBignum gadgets. These are next implementation
+obligations, not existing Bend compiler claims.
+
+Source front-end precision:
+The implemented fragment is the exact core BendTT enum <false,true> with literal
+label matches. It is typed/live/closed at the kernel relation. It does not claim
+safe.ts elaboration correctness or implement the prelude's Bool representation.
+base.bend Bool constructors False{}/True{} elaborate via safe.ts ctor to Sigma
+pairs (tag,unit); the next adapter consumes exact pair/projection/handler syntax,
+using upstream Eval.split, hit/miss and beta. This extends the same Plan/Block
+without replacing general closure semantics or inventing a frontend proof.
+
+Ownership join updated:
+Bend semantics auditor now owns the general universal-machine zkVM path, separate
+from this fixed-program compiler. Homomorphic construction owns the real BFV
+constructive-DAG consumer. The existing proof-system floor is not inherited as
+a new security guarantee by either compilation product.
+
+2026-10-03 qualified first construction result (supersedes pending status above)
+Captain released sole Lean seat after actual source548/mainHost completion.
+Composition qualified source/audit/live/checks with actual standard-three axiom
+checks. My check-09.log then PASSED under SWARM_MEM_MAX40G/swarm-build/direct
+Lean4.30 -j2, no full Host build or upstream/toolchain upgrade. Own root:
+ hbox:/home/hbox/workbox/codex-bend-logic-20261003/
+Actual named general proofs compiled and #assert_axioms passed in BendLogicCase,
+BendLogicBFVPlain, BendLogicSpecialization, BendLogicTrace. Runtime Host emitter
+parsed its official source rendering, admitted exact fullsource equality,
+compared shared executeChecked []8 2 outputs/source counts for both inputs,
+and checked all four literal Plans/both inputs, wrong outputs and invalid
+source/public-layout refusals. No field proof was replaced with a success bit.
+
+Actual compiler output artifact.json:
+ SHA256 9ca8ad25b18baa14cf4d738d84c88001ffec79bff0aa02988d14f52f3dc049e2
+ schema dregg.bend.literal-enum-case.v1
+ source λ{.false: .true; λ{.true: .false; λ{}}}
+ constructive signed gates mul(w1,-1)->w2, add(1,w2)->w3.
+ relation8gates/nVars2/nWires10/nPublic1, constructive2gates/nWires4.
+ CompilerCase384b5cbaa3f03ca98769fb8e4b7930cb72b418a5c5ce31b0ab36cfe005a375ab
+ BFVPlain3d7594d320bcd8ba616fa95299d9d536c9cfee987400f91bc61ddc28b994cae0
+ Specialization9857f7655bf88c019273ecf3746251824500cd0a2a53385fac6a4532dc5162a1
+ Trace2ab028d4d520e7834e89c42e4aadf2ba0f15d00de962e73eeffe731dae4093f6
+ HostEmit1137098f1f19597b9ca9e933c93785659a4973772541ff325347d6b2e0497edf
+ check.sh75a3674fde79d5c1f1e4312837834dc383521c8768bcba4bd4ad712ad30f46d2
+ check-09.log58202af45da926d538ecf6d049ecb0f4ff032e4a473e07ba1f7cf973f78d79e9
+Fixed proof issues: separate bool-gadget/system-list simplification; explicit
+field type in arithmetic change; prime tactic extension import; Trace branch
+indentation; IO conditional syntax. Own olean symlink overlay resolves Lean's
+single module-root lookup without modifying shared outputs. Invalid first Host
+compile diagnostics were never accepted as an artifact; final JSON parse and
+PASS guard qualify actual artifact. Seat released directly to captain.
+
+Actual native consumer feedback, homomorphic_bend_construction:
+Consumed THAT exact artifact through real BFV implementation. PASS all4096slots
+(live Bool0/1 +padding0), actualnegation graph ctneg+plainadd, independently
+secretless evaluator/checker, ownerprivate decode with same in-memory check;
+changedciphertext with validshape/recomputedoutputhash, invocation/keyepoch,
+artifact and PowerBasis refusals PASS. Consumerlog:
+ hbox:/home/hbox/workbox/codex-homomorphic-bend-20261003/check-literal-01.log
+ run-literal-01 preserves exact request/output bytes. This is real encrypted
+execution of the compiler-produced fragment, conditional on admitted Bool
+encoding and BFV library/noise assumptions. No current governance/API claim,
+no encryption implementation refinement theorem or general zkVM claim.
+
+Objective Bend continuation: root names coherent object/prototype/module/
+composition language with governed persistence/effects. This first compiled
+fragment is feedback, not completion. Compiler has requested exact authored
+method producer/elaboration/identity seam from member_oo_construction and
+bend_world_language; source correspondence stays explicit. General zkVM path
+belongs to bend_semantics_audit. Dynamic private data mux and exact prelude
+SigmaBool adapter should extend the SAME constructive compiler contract;
+neither handwritten FHE circuit nor a new evaluator substitutes for lowering.
+
+Next source-only construction authored after first physical feedback:
+ Compiler/BendLogicMux.lean SHA7258d3fa194d22140b48a71c60b3265df8a9bbf65c634b0f51a7c377ab4f0dd6
+ Compiler/BendLogicSignedSemantics.lean SHAb82069b7388afb9bbc220effa49276fbd5a76ccf090513298a6f8758d215bc8a
+ Compiler/BendLogicSerialize.lean SHA5c780c97a78565b7e2e60ca7616a8705afa882c01ca5e44e072786c6c81dfa82
+ Host/BendLogicMuxEmit.lean SHA09b01704b95df178ae8e78ac57fe102590aa885162dbb53d955e1274fabaad4f
+ check-mux.sh SHAf7e2edada6f7bf4bef7f02bbaa7d18a73995b02c0f1b22147d70bf13643632b9
+Same isolated hbox root, no builds launched until captain handoff. Three changing
+secret inputs under one fixed public curried Bend lambda, direct label enums.
+Canonical ordered ABI output0/selector1/truearm2/falsearm3; source binders
+selector/truearm/falsearm with body Var2/Var1/Var0. Source Trace requires3beta
+steps then exact existing hit/miss trace,4/5source steps. No per-secret compile.
+Constructive same Air fold y+b*(x-y) flatten produces4gates/8wires with one
+ct×ct depth1 under physical BFV consumer. Relation nPublic0 preserves owner-
+private output; schema dregg.bend.dynamic-enum-mux.v1, signedConstantPolicy
+ dynamic-bool-mux-v1, inputWires[1,2,3], inputOrder declared by emitter.
+
+SignedSemantics names all-input literalInteger_correct/muxInteger_correct,
+all signed intermediates bounds [-1,1] and final[0,1], field expression meaning
+as exact Int cast, and literal_flat_layout/mux_flat_layout exact ordered graph
+for ALL Field F. This provides a source-specific integer-origin proof seam,
+not a global Rat→Fp ring homomorphism or arbitraryAST compiler theorem. All
+new modules remain AUTHORED/UNCHECKED until next scoped captain check. Generic
+Trace.append is owned separately by semantics auditor in BendExecutionTrace;
+no parallel evaluator or generic Trace implementation added here.
+
+Qualified vendor-port identity clarification:
+Original upstream vendor/bend/bendtt.lean SHA256
+ e15042434e73aab07ab05cea4b77b5619082c00a6d4924ea2d4a2cdec05facce
+at pin947db is retained. Qualified namespaced Theory/BendTTSource.lean SHA256
+ 7b221b208344c69cef7962bdab264d0abf9528637ff55e2cf69787da4f753e38
+includes the recorded vendor/bend/lean430.patch: only theorem cmp_size two
+proof rewrites `rw [ite_eq_left ⟨v,c⟩]`→`rw [if_pos ⟨v,c⟩]` at vendor3447/3454
+(wrapper3456/3463). Operational definitions and theorem statements unchanged.
+Thus earlier namespace-only draft wording is superseded for the qualified port;
+sourcePin and downstream port sourceHash are deliberately distinct. Source4.34
+was not silently substituted by an upgraded Mini toolchain; proofs qualify4.30.
+
+2026-10-03 SECOND construction qualified (supersedes source-only mux status)
+Captain handed off sole main Lean seat after global Simplex checks. Focused
+five-module check-mux-04.log PASS under40G/j2, then seat released for actual
+closure/controller batch. No fullHostbuild. All new named theorem axiom checks
+PASS only standard-three; no native_decide or admitted proof holes introduced.
+ Compiler/BendLogicMux SHA dc25c8cd1c54e590874e7f39a3dd6f662d29263a0940fc3da8e8505f5a72966d
+ Compiler/BendLogicMuxEntry SHA 9faceeb94227e6f1b049a1598e6ee16717642ac81ae64468085e7124d563828b
+ Compiler/BendLogicSignedSemantics SHA b82069b7388afb9bbc220effa49276fbd5a76ccf090513298a6f8758d215bc8a
+ Compiler/BendLogicSerialize SHA 5c780c97a78565b7e2e60ca7616a8705afa882c01ca5e44e072786c6c81dfa82
+ Host/BendLogicMuxEmit SHA 251079ca52e982f151216e811a6059bf75c193941cea16d5f4bed8ed3c59add8
+Actual emitted mux-artifact.json SHA256
+ ddc1747b6a233ff49eb337dd8f05cc8b7539bbbf660a67f678218a1d8d9f3ac7
+at same hbox ownlane. Compiler emits nPublic0 relation plus retained constructive
+fourgate/8wire graph and signed graph, agreeing over ALL fields in the general
+layout theorem. Output owner-private; varying selector and both arms secret to
+FHE evaluator. Artifact additionally retains exact bookSource and selectedentry
+objective.choose. It was sent to real BFV owner for actual consumption.
+
+BendLogicMuxEntry supplies general checked entry adapter:
+ compile nPublic book entry reads ACTUAL Book.get; refuses absent, opaque,
+ wrongexactinterface or body. compile_exact binds actuallookup+transparent+
+ Def.T=sourceType+Def.v=sourceTerm+layoutbound+descriptoridentity.
+ source_walk proves upstream Walk through3lambdas/environment/tagdispatch.
+ compiled_entry_trace_sound quantifies ARBITRARY satisfying auxiliary vectors
+ and yields actual Ref-entry Eval.call/shared Trace1, not a modeltheorem.
+Host parses emitted Book, runs actual Book.check, compiles selectedentry, and
+executes shared executeChecked Refentry for ALL8inputtriples; expectedresult and
+count1 PASS. It separately checks inlinebody4/5 steps, complete exactsource parse,
+honest/wrongoutputs, invalidpublicsplit, wronginterface, opaque and absententry
+refusals. Source frontend code/partialproto composition/governance are not
+claimed from this fixed Book. Its genericadapter receives constructed_method_exact
+or resolved_invocation from ObjectiveBendElaboration, canonical Checked.book/Entry
+from BendCoreAdmission. Actualworldpublication/authority remains its receiver.
+
+Important accounting distinction: upstream Eval.call collapses entire Walk
+case evaluation to ONE source step, unlike inlined3beta+hit/miss4/5. A fixed
+circuit must bind actual invocation and versioned semantic cost profile; counting
+inlinebody as the installed method is false. Circuitphysical4gates is separate.
+Representation lane now owns pinnedsafe.ts actual prelude Bool Sigma/tag/unit
+codec+sourceEval correspondence. Its accepted source will reuse this existing
+Plan expression/descriptor, not handbuild an encryptedcircuit or duplicate
+interpreter. Generic Word/Nat symboliccodec then arithmetic remains nextscope.
+Exact mux check script SHA710634a7a25186990b6558b4be5d58ed57d6711abd2671e6c12a6db074099fb1
+check-mux-04.log SHA9325fc6f21cbd72f00bdabc4a9c83155964299b00e08851c0a4f886e86f31c6e
+The new source-walk proof crosses3actual lambdas and environment lookup, then
+upstream hit/miss/done; source Book compiler acceptance binds Def.T in addition
+to Def.v. OO owner added constructed_invocation/resolved_invocation producers
+for the same Eval.call identity; no metadata-only invocation claim is used.
+Representation owner bend_data_representation now owns additive
+ Compiler/BendSourceRepresentation.lean,
+ Compiler/BendSourceTypedRepresentation.lean.
+BoolBookBinding structurally binds actual Bool/Bool.arms Defs and Book.check;
+prelude case adapter will consume its exact uppercase-tag+unit Prj/Mat shape
+using current Plan/DAG. New representations remain pending owner scoped check.
+
+Actual second native consumer feedback (homomorphic_bend_construction):
+Consumed compiler mux artifact ddc1747b... and snapshotted actual check/source.
+Real BFV PASS all8environments in4096slots with independent secretless
+ciphertextreexecution checker and existing identity/representation negatives.
+SAME checkedplan/key consumed predecessor ciphertext as falseArm with a fresh
+private selector; correct secondprivate output at lifetime depth2; deterministic
+retry byte-identical; third unrefreshed use refused. Full exactsnapshot:
+ hbox:/home/hbox/workbox/codex-homomorphic-bend-20261003/run-mux-01
+Thus reusable generated function and real ciphertext continuation both run.
+Scope honest canonical inputs and declared/authenticated depth provenance;
+no general BFV/noise/Rust proof or governed result receipt follows from this.
+
+Prelude frontend continuation AUTHORED/UNCHECKED:
+ Compiler/BendLogicPreludeCase.lean accepts exact representation sourceTerm p
+ with the SAME Plan descriptor/constructive expression; full source matching.
+ compileEntry additionally checks actual Book.get selected method transparent,
+ exact AllQ1 RefBool RefBool interface, actual Bool/Bool.arms structuralDefs and
+ actual whole Book.check through bookBinding. compileEntry_exact/entryTrace
+ soundness target upstream Walk.prj/taghit/unitmatch/Eval.call count1.
+ Host/BendLogicPreludeEmit.lean consumes actual captured BoolSource.bendtt and
+ BoolSource.bend from representation owner, parses full Book, compares exact
+ emittedNegationBook, actualBook.check and Refexecute for bothinputs; changed
+ same-name Bool type and alteredmethod interface refusals. No compilerfromscratch
+ or handauthored FHE circuit added. Two-module check-prelude.sh queued after
+ representation owner qualifies its dependencies, no compiler launched byme.
+
+Captured actual frontend files (hbox ownlane parent):
+ BoolSource.bend SHA c1be23a030b952c3ac539d8ef5361327ee2eff7ccbdd556b902480dd95980747
+ BoolSource.bendtt SHA 20ee16d2324107b2068f5871ff3c71ffd4e12af0e67fbec8af19c8a937fdd6ed
+Surface imports Base and defines SourceBool.not via False{}/True{} branches.
+Core contains actual SourceBool.not Prj/tag/unitcase, Bool.arms and dependent
+Sigma Bool. Consumer records both source texts and selectedentry; comparison
+is this captured safe_emit correspondence, not a global safe.ts refinement
+or a theorem covering arbitrary Objective Bend text. World source loader binds
+raw author package/import identity independently of normalized core bytes.
+FHE proposed schema dregg.bend.prelude-bool-case.v1, tagEncoding
+ bend-prelude-bool-sigma-unit-v1, nPublic0, SAME signed literal policy/Plan gates.
+Artifact not yet emitted/qualified; real native consumer waits actualfile only.
+
+2026-10-03 THIRD construction qualified (supersedes prelude pending status)
+Representation first3 modules qualified allstandard3 under designated auxiliary
+lease; own dependent2module check-prelude-01.log FIRSTPASS under4G/j2/180s,
+guardian printed AUX LEASE RELEASED exit0. Directhandoff Station3 done exactly
+captain's namedchain, no mainbuild collision.
+ Compiler/BendLogicPreludeCase SHA3158836e14f3962468356285ec39e8aa9f1021765edb5e4283f4a43ef329376f
+ Host/BendLogicPreludeEmit SHA9273214016adfe70159d5cab4b53754299874bad2361c7d731418c98f2a2bde6
+Actual prelude-artifact.json SHA256
+ 51efc99c33b1a87b476dbf9aa9fcc2b89acd5c431b21c1e4a71126c7ed33da29
+Host consumed ACTUAL captured BoolSource.bendtt, parsed exactly3capturedDefs,
+compared structural emittedNegationBook, ran upstream Book.check, specialized
+actual SourceBool.not entry using its exact type/body and Bool/Bool.arms
+bindings. Shared source executor Refcall returned exact represented BoolSigma
+pair for bothinputs/count1; wrongsame-nameBooltype and methodinterface refused.
+General source/descriptor/entrytrace theorems #assert_axioms all standard-three.
+Shared additive DecidableEq Def is supplied by representationmodule; no vendor
+Def mutation, no BEq-only equality assumption. Source Bool constructor codec
+and dependent RefBool typing are qualified producerproofs, no callername oracle.
+Same existing Plan/Air/flatten/Emit DAG as firstliteral, relationnPublic0.
+NativeFHE owner received actual artifact for next physical/driver qualification.
+
+Numeric next target agreed with representationowner: existing AirBignum
+AddWires width2 limbBits8, inputscalarNat values<256/highlimbs0, result≤510,
+no-overflow boundarycarry0 andtop0. Reuse addGadget_sound exact per-equation
+no-wrap premise2*2^limbBits≤p and emit_addGadget_iff arbitraryaux transport.
+Nat.add sourceproof alone is insufficient for API admission: actualNatBookBinding
+(Nat/Nat.arms structuralDefs plusBook.check), typed represented inputs/output,
+exactsourceoperationdef and sourcecaller/bounds must all join. This is not yet
+implemented/qualified integer circuit integration; sourceNatOp/NatTyped queue
+belongs representationowner. No unboundedNat→field alias or silentNatwrap.
+
+THIRD actual native consumer feedback:
+FHE owner consumed actual Prelude artifact51efc99... through SAME unary signed
+interpreter. Explicit prelude-bool-case depth0 profile, tagEncoding,
+frontendCorrespondence and entry checks;4096slots realBFV correct, isolated
+ciphertext replay and prior refusal cases PASS. Actualproof/log/captured
+.bend/.bendtt/representation+consumer source snapshotted immutable:
+ hbox:/home/hbox/workbox/codex-homomorphic-bend-20261003/run-prelude-01
+8G/jobs2 releasebuild1.94s released. No general surface compiler theorem,
+malicious encrypted input bit proof, BFV noise/Rust refinement or governed
+native result claim. AllTHREEqualified source artifacts now have actual native
+consumers. Next real owner gate is current-authority resident driver join.
+
+Immutable qualified compiler checkpoint:
+ hbox:/home/hbox/workbox/codex-bend-logic-20261003/qualified-compiler-source-20261003.tar.gz
+ SHAca25b2c65148260716e0e596277e6fd02e2bab18305769595b8b774d7f79bfb9
+21,228bytes. qualified-compiler-manifest.json SHA
+ 5fbf5376e8ce920248cafaa31d5f3337bef301262be327b65553b28eb712bc10
+Includesallqualified3blocks+representationfirst3, actual3artifacts/captured
+Boolfrontsources+passinglogs/checkscripts; excludespendingnumericmodules.
+No fullHost/sourceclosure rebuild or binarydistribution is implied.

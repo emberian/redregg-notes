@@ -1,0 +1,39 @@
+{
+  "schema": "dregg.bend.data-representation-check-receipt.v1",
+  "status": "qualified-first-three",
+  "observed_stdout": [
+    "BEND SOURCE REPRESENTATION CHECK PASS",
+    "AUX LEASE RELEASED: bend_data_representation exit 0"
+  ],
+  "run": {
+    "owner": "bend_data_representation",
+    "startedUTC": "2026-10-03T09:35:22Z",
+    "finishedUTC": "2026-10-03T09:35:28Z",
+    "wrapperPid": 1300176,
+    "childPid": 1300179,
+    "exitCode": 0,
+    "cap": "4G",
+    "threads": 2,
+    "seconds": 180,
+    "script": "/home/hbox/workbox/codex-bend-logic-20261003/check-representation.sh",
+    "scriptSha256": "7fc41e93b6370f90febf3e595a5ae745a539fe6603a27b9fe85cdd6cd29a75f6"
+  },
+  "sources": [
+    {
+      "path": "/Users/ember/dev/redregg/work/bend-data-representation-20261003/BendSourceRepresentation.lean",
+      "remote": "/home/hbox/workbox/codex-bend-logic-20261003/src/Compiler/BendSourceRepresentation.lean",
+      "sha256": "b9bafd51ec94d776e04d72ea9dcefae250c3cc73f933c7f87e704aab4aadb05f"
+    },
+    {
+      "path": "/Users/ember/dev/redregg/work/bend-data-representation-20261003/BendSourceTypedRepresentation.lean",
+      "remote": "/home/hbox/workbox/codex-bend-logic-20261003/src/Compiler/BendSourceTypedRepresentation.lean",
+      "sha256": "3d4933b142a5817454667428a511172de1208771c061e9387cb49459aef0d150"
+    },
+    {
+      "path": "/Users/ember/dev/redregg/work/bend-data-representation-20261003/BendSourceByteCodec.lean",
+      "remote": "/home/hbox/workbox/codex-bend-logic-20261003/src/Compiler/BendSourceByteCodec.lean",
+      "sha256": "48d7f8c926f52da38141a3b3b6bd7cf93732244ffbbe8ee9488858ca1578cf40"
+    }
+  ],
+  "qualification": "Each file direct Lean4.30 -j2 compiled against warm dependencies; every declared #assert_axioms gate passed standard three. No full dependency rebuild or native execution."
+}

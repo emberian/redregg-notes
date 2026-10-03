@@ -1,0 +1,72 @@
+FHE BEND NATIVE BOUNDARY — 2026-10-03
+Derived construction decision, not a replacement architecture or executed result.
+Owner: Codex homomorphic_bend_construction.
+
+Use the preserved real fhe0.1.1 fork directly for the first physical consumer,
+without importing Bread's unrelated GPU/PQ/solver/proof build tower. Pin its
+actual source and dependency lock in the compiled physical transformer identity.
+Preserve the actual source compiler: emitted constructive Rat gates retain signed
+coefficients, emitted BabyBear gates/descriptor retain the proof relation, and
+public receiving metadata pins exact source/Book/entry/profile artifacts. A
+BabyBear residue of -1 is not a cross-modulus coefficient encoding.
+
+Source kernel enum labels false/true are the current first source language
+slice. They are not the upstream safe.ts Sigma(tag,unit) base.Bool elaboration;
+that further adapter remains compiler construction. Source checking/kernel Eval,
+compiler refinement and BFV cryptographic/Rust correspondence are distinct.
+
+At native ingress, library ciphertext decoding alone does not enforce its
+constructor's NTT representation and same-context invariants. Canonical parsing
+must re-run the actual Ciphertext::new validation before any arithmetic. The
+single-owner initial format permits exactly two seedless level0 polynomials;
+public keys have their own seed-capable count/shape/representation validation.
+Decode/encode equality excludes protobuf aliases, but still does not prove
+sampling, key membership, bitness, range or security.
+
+Depth0 literalcases use ct/plain arithmetic. Signed -1 uses ciphertext negation,
+avoiding uncentered t-minus-one multiplication noise. Constants occupy the full
+public4096-slot capacity; every packed slot belongs to the same owner/audience.
+Public ciphertext replay is deterministic and independently repeated, comparing
+exact output bytes and ALL program/input/key/parameter/transformer/invocation
+bindings. It is a computation-candidate integrity leg, not source-domain input
+validity, current transition authority, or result release permission.
+
+An authorized owner can encrypt2. Invocation signatures and an input-admission
+profile tag do not prove canonical Bool plaintexts. Initial honest owner-generated
+semantics must be an explicit premise; opaque governed ciphertext storage may
+still be useful, but typed plaintext consequences or third-party effects require
+actual encrypted-input validity/same-opening admission.
+
+Current Mini's registry is Nock-only. Governed content/append can persist exact
+source/artifact/input/result ciphertexts and return an actual ordinary storage
+receipt. That receipt must not be sold as a private-computation or release receipt.
+World-language owner now owns exact canonical source publication/lookup and the
+native receiving join; no Rust boolean is coerced into CheckedRun. A later actual
+BFV-native adapter needs source/profile lookup, exact public replay, common current
+authority, tariff/fee, invocation/predecessor/result effect binding and history.
+Encrypted result release is a separate authored request binding committed output,
+current policy, recipient/purpose and actual receipt. Production decoders must use
+an immutable checked candidate or authenticated content-addressed handle across
+check→commit→release, preventing mutable-file replacement between those phases.
+
+A narrow source conformance runner can keep its sk resident while public children
+evaluate/check real ciphertexts, then independently verify retained bytes before
+owner-only decode. This is a source/crypto conformance artifact, not malicious
+host isolation, independently governed collective custody or full native receiving.
+Threshold BFV, TFHE, dynamic mux/depth1 and persistent key/refresh/recovery remain
+extensions of this same source/profile path with their own named qualifications.
+
+Concrete source and current acceptance frontier:
+/Users/ember/workbox/mini-private-capacity-review-20261002/HOMOMORPHIC-BEND-CONSTRUCTION-20261003.txt
+hbox:/home/hbox/workbox/codex-homomorphic-bend-20261003/src/native/fhe-bend/
+
+Actual execution checkpoint (2026-10-03): the qualified compiler mux artifact
+(ddc1747b...) now runs through the same native interpreter and real BFV. All8
+Boolean environments plus4096-slot padding passed independent ciphertext replay
+and owner-local decode; an encrypted predecessor was reused for a second call
+at lifetime depth2, retry bytes matched, third unrefreshed input refused. This
+is actual physical conformance, not the general implementation/noise/admission
+proof. Full source and artifact evidence resides in hbox owned run-mux-01.
+The target native join is full opaque candidate storage under real current
+authority, followed by a genuine current-result release event; it must remain
+separate from typed Bend computation admission and domain-validity evidence.

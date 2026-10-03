@@ -1,0 +1,340 @@
+PREOSCRIPT / LEAN-UWUEAVE / OBJECTIVE BEND — 2026-10-03
+Private research record. Author: Astra, preoscript_objective_bend_archaeology.
+Read-only archaeology; no builds, source edits, merge, deployment or publication.
+Source/dialect names, historical intent and proposed joins are separate below.
+
+JUDGMENT
+
+Bring Preoscript's strongest semantics into Objective Bend/Mini selectively.
+Keep lean-uwueave as an independently usable library and research home. Do not
+merge its Rust runtime, introduce its small expression evaluator as Mini's second
+world language, or make all of its Lean metaprogramming part of untrusted member
+execution. The first useful join is future-relative result/evidence contracts for
+source-authored views; the second is coordinated protocol/repair contracts that
+survive composition of partial specifications. A proved query-analysis bridge is
+a concrete way to make these contracts apply to actual Bend bodies.
+
+This preserves the historical ambition of a real language: authored contracts
+can constrain downstream composition and execution, rather than merely decorate
+a report. It also preserves today's decision that Bend is the primary executable
+world language. A Preoscript-derived contract language can be a coherent facet of
+Objective Bend without duplicating its evaluator, object model or authority.
+This is a recommendation, not a claim that this integration exists or a request
+to interrupt the current construction owners.
+
+WHY IT WAS SEPARATE — DIRECT CONVERSATION EVIDENCE
+
+August 10: Ember asked for CRDT theory/constructions from Bread and possibly Mini
+to be packaged in a fresh ~/dev/leanuweave repo, in response to the Universal
+Weave collaborators' DAG-CRDT discussion. They also wanted eventual integration
+somewhere, without having selected where. This was an explicit outward-facing
+companion project, not evidence that Mini had been rejected or that a clean code
+extraction had already occurred. The first assistant explored the repos and built
+a standalone Lean/Rust library. Ember immediately corrected the misleading name:
+Mini's Loom was its proof system, unrelated to the loom UI library. Later they
+authorized the public repository and corrected its intended name to lean-uwueave.
+
+Primary: cv claude:36b51055-354e-4290-ad2c-e59215809d62 #0, #14;
+historical subtask additionally checked #189/#190 and #341 surrounding exchanges.
+The local directory and public project spelling differ deliberately.
+
+August 11: Ember proposed the name Preoscript and explicitly wanted a real language
+richly metaprogrammed on Lean (#1051). The assistant supplied the preorder and
+prescribe/proscribe explanation; that etymology is not an Ember quotation. Ember
+then pointed at Mini's hyperdocuments as a possible beneficiary (#1054), rejected
+the assistant's reassurance that everything was already present, and asked for
+new expressive capability and a different declarative syntax (#1057). The
+assistant's ensuing design emphasized graded coordination, result-status types,
+synthesis, specification composition and propagated obligations. Ember asked for
+a multiagent example and an ambitious basis for UI work (#1092/#1095).
+
+Primary: cv claude:0d3efcb7-f69f-4fe8-91ca-6615fdbd7432 #1051–1059,
+#1092–1100. These are a continuation/fork of the same historical development;
+repeated prompts are not independent confirmations.
+
+The second review, forwarded by Ember at #1122, refuted important pieces of the
+assistant's worked example: different files were not an exclusive-file clash;
+accumulation did not rule out escrow; crossings were not meetings; and a one-fork
+ancestral result was not a theorem about arbitrary version DAGs. The corrected
+center was proof-carrying obligations and globally coherent plans, with prices,
+changed promises, futures and disclosure retained. Current CoordEffect, Protocol,
+WorldFuture, ResultProgram and related modules implement substantial parts of
+that correction. Do not revive the hypothetical Swarm example's false claims.
+
+The intended eventual relation is explicit, not inferred: cv
+codex:019ff1aa-e373-7d71-aaa0-eb0a1a933109 #3 asks to grow the independent repo,
+integrate it into Mini or Bread someday, and make Preoscript a full language.
+Later #4535 requests serious runtime/storage work, specifically pure Rust rather
+than SQLite. That instruction explains the independent persistence direction in
+this project; it is not a standing instruction to replace Mini's existing store.
+
+No conversation evidence found here makes the original repository boundary a
+permanent architectural separation. Conversely, eventual integration does not
+authorize assuming every component belongs in the same runtime.
+
+WHAT EXISTS IN THE INSPECTED SOURCE
+
+Lean-uwueave is a substantial Lean-core-only distributed-data/coordination library
+plus a Rust host, not merely Preoscript syntax. Its pinned toolchain is Lean4.30.0;
+lakefile.toml has no mathlib dependency. The README's last recorded checkpoint
+reports 185 Lean modules, 25,747 audited constants and 177/177 Rust tests. Those
+are retained project claims, not checks rerun by this study. The trust documents
+explicitly separate logical proofs, compiler/ABI/host obligations and deployment
+premises. Current source inspection supports the boundaries below; this is not
+an independent whole-tree proof audit.
+
+1. Data and coordination. Confluence, reachability, causal histories, ancestry,
+CRDTs, replay, authority and repairs have distinct models. MergeModel is a
+context-parameterized signature plus observational judgement, with join,
+ancestral and op-replay instances. Its laws are separate predicates, not an
+assumed universal semilattice. Mini's three-valued base decision inspired one
+instance, but MergeModel explicitly depends on none of Mini. The checked repair
+adapter is still join-only even though the general MergeRequest is wider.
+
+2. Coordination language. CoordEffect.Profile is Strategy→Nat, composed pointwise
+before one shared choice. Its strict witness has individually zero minima but a
+composed minimum of one; no coherent strategy pays the independent zero sum.
+Scheduling distinguishes peer barriers, arbiter cuts, network rounds, user prompts
+and rollbacks. Protocol.Term has operation, sequence, parallel, finite choice,
+bounded repeat and sync; operations carry authored crossing counts and needs,
+not a body executed by a distributed host. Its elaboration produces an exact
+session, checked schedule and witnessed upper bound. A budget lower bound can
+reject; acceptance requires a concrete plan. Finite planning searches an explicit
+authored capped universe, not all strategies. Guarded recursive choreography has
+finite approximants and a concrete barrier deadlock, not unconditional progress.
+
+3. Result/evidence language. Future.WorldModel retains the world and its state,
+issued pool, frontier and epoch projections. CheckedCertificate is indexed by the
+exact future, answer, key/acceptance predicate and world. Restriction goes from
+a proof for a larger future to one for a smaller future. Equal materialized states
+do not imply interchangeable certificates. StatusEffects separates six result
+shapes (exact/provisional/closed fork/open fork/absent/pending) and static possible
+shapes. ResultProgram retains the evaluated site, future, resolution policy and
+independent visibility/disclosure decisions. An explicit named resolution can
+select a branch; silent coercion must not. This is semantic UI evidence, not a
+proof about pixels or user comprehension.
+
+4. Program fragment and staging. Preo.Expr is a first-order typed query calculus:
+Bool, Nat, pairs, options, field references and structural operations. The actual
+Term has 17 constructors, including a proved opaque/custom escape. It is not a
+general lambda/object language or an interaction-net graph reducer. Nat's analysis
+merge is max, Bool's is OR; that choice is not automatically the meaning of an
+arbitrary world counter or Boolean. Its dependency occurrences retain syntax paths.
+CustomNode must provide bounded dependencies and a locality proof; raw custom
+syntax is refused. Automatic positive merge/monotonicity analyses are incomplete,
+and failure to establish a law is not a refutation of the law.
+
+Preoscript's commands run at Lean elaboration time: generated declarations,
+proofs, typed programs and export bundles share one checked semantic value.
+Ordinary derive accepts arbitrary Lean behind explicit proof obligations. This
+is genuine language-oriented construction, but it does not supply a sandbox for
+executing arbitrary member-provided Lean elaborators in Mini. The common typed
+query route still requires an explicit application State→Env projection and an
+authored finite reach. Quickstart evaluates count+1 at two authored states and
+certifies an equality-of-projected-environments future; it is not a demonstration
+of live distributed deployment closure.
+
+5. Incrementality and summaries. Incremental caches contain proofs tying values
+to environments; an untouched dependency reuses the root result, while a miss
+does one whole expression evaluation. Its recomputation count is not allocator
+work, execution gas or time. Contextual summaries use indistinguishability under
+future joins; finite compilers/codecs make restricted versions executable. A
+membership query can collapse to one bit; exact distinct count cannot generally
+be merged from counts. Even capped counts fail for set thresholds: {0} and {1}
+both have count1, but joining {1} reaches threshold2 only from {0}. The general
+quotient theorem is not by itself a finite message/circuit representation.
+
+6. Graphs. The project includes content-addressed causal/event DAGs, version
+ancestry, positional evidence and clash graphs. SeamColoring proves segmentation
+iff proper coloring AND merge closure within each color; a coloring alone is
+insufficient. These are data/coordination graph meanings, distinct from Objective
+Bend's ordered inheritance DAG or the machine's closure heap.
+
+7. Runtime and persistence. Concrete Rust paths include document moves/text,
+causal history and artifact/authenticated move journals with Lean-owned kernels.
+Legacy direct mutation APIs remain unauthenticated. The newer raw kind3 move path
+binds context, checks scoped host verification, independent policy, exact replay,
+durable append and then in-memory commit. A keyed-BLAKE3 MAC profile and trusted
+host policy traits are not Mini authority or a proof of signature security. The
+five journal domains preserve data/events/artifacts. Nothing inspected captures
+an arbitrary suspended Preoscript control stack or offers Houyhnhnm-style backend
+replacement. Finite history convergence is not a filesystem or global-consensus
+proof. No need to duplicate these journals beside Mini's current durable Activity.
+
+8. Export. V2/V3 proof-indexed builders produce canonical first-order artifacts
+and validated data-only Rust projections. ObservedBoundResult additionally
+requires caller-supplied authentic observation, independent running reach,
+authored reach and exact-world certificate. Its source says explicitly that it
+reads no process, network, device or filesystem. Decoding or inspecting the bytes
+does not recreate proofs, issue a permit, authenticate a deployment or establish
+that arbitrary generated Rust denotes the source semantics. Performance is also
+qualified: the documented V3 export benchmark exceeds its existing RSS ceiling.
+
+Cross-declaration composition remains explicitly unbuilt in PREOSCRIPTING §10.
+This matters more to Objective Bend than increasing the number of field examples:
+two independently authored partial specs need compatible meaning, footprints,
+futures, strategy variables and promise deltas, not concatenated export rows.
+
+An existing narrow Mini join was recovered during this study. Local older Mini
+contains Compiler/UwueavePreoProjectionV2.lean, generated static Rust at
+prover/generated/uwueave_preo_projection_v2.rs, and four tests at
+prover/tests/uwueave_preo_projection_v2.rs. I read all three. The Lean module
+imports Uwueave's fully nonempty Examples.fullExport, crosses its private
+ValidatedProjectionV2 boundary, proves exact manifest/plan/budget identities
+and renders the deterministic Rust value. The generated fixture is coordination
+data only; its header and tests explicitly deny semantic-controller, permit or
+authorization status. The module runs #eval writeGenerated at build time, using
+a relative target path, so qualification must isolate intended regeneration.
+This is real source-level integration work already present, not evidence of an
+actual Bend lowering or deployed Mini consumer. Recovery owner
+historical_missing_junctions reports it as untracked local source and is preparing
+its captain packet; this study did not independently establish Git status, hbox
+counterpart, dependency availability or build success. Preserve that work instead
+of constructing the same sample projection again.
+
+RELATION TO BREAD, WITHOUT IMPORTING ITS OLD LIMITS
+
+The original source and FORCODEX record actual reuse of Bread concepts: I-confluence,
+blue/red interactions, choreography, guarded holes and a negative result about
+directed closure. I verified the relevant current Bread statements directly:
+BiorthTensor.directed_conjecture_refuted distinguishes divergent replicas from
+one growing chain; Spec/Choreography.red_iff_coupled combines a definitional color
+with an actual clashing pair; Exec/GuardedHole.fillGuarded retains eager target/
+actor/guard shape and admits a late value only through predStateStepGuarded.
+
+Do not treat the August claim that strong holes were impossible in Bread's then
+kernel as a theorem forbidding future Objective Bend design. Likewise, statements
+in CODEXHELP about Mini's absent I-confluence judgement and vacuous hyperdocument
+carrier are historical August reconnaissance, not current Mini status. Current
+Mini construction is in the captain's hbox checkout, not the older local Mini.
+
+THE ARCHITECTURAL JOIN — AND THE FALSE FRIENDS
+
+Objective Bend's destination is reified partial computational specifications,
+required/provided methods, ordered finalSelf/super, authored views and protocols,
+persistent governed instances and computations. BendTT is the pinned dependent
+affine live-CBV calculus, not old Bend/HVM. Mini supplies current authorization,
+atomic effects, accepted history, charging and release. Current source examples
+already carry dependent result contracts (ContractedReview) and source-authored
+Surface values over admitted observations/prepared intents (WorkshopFaces).
+The separate construction notes retain which joins are authored, checked, run
+or still pending; this study does not advance those statuses.
+
+Preoscript's best contribution is a richer language of promises about these
+computations and observations. The natural abstraction is a source-owned contract
+on an exact method/view/protocol, checked compositionally and retained by its
+callers. It is not an alternative identity/authority/history substrate.
+
+Concrete distinctions required at the join:
+
+- Preoscript Scheduling.Plan witnesses coverage/cost of coordination demands.
+  Mini's typed Plan proposes actual effects and independent returns. They need a
+  proved trace/obligation correspondence, not a type alias based on their name.
+  Bend canonical charge and private public tariffs are additional resource
+  contracts; five coordination currencies cannot substitute for either.
+- CRDT merge is often commutative; Faré's extension is deliberately ordered.
+  For example, an extension replacing a result with0 then one adding1 differs
+  from the reverse order. A join law cannot justify swapping those providers.
+  A later override can also invalidate an earlier monotonicity/footprint claim.
+  Contracts must bind the completed dispatch graph/body and demanded interfaces.
+- A closed pure invocation terminates under BendTT's rules; a delivery-final
+  query is stable under a specified future. Neither implies that a continuing
+  activity has finished or that later writes cannot change a displayed value.
+  Permanent processes, finite protocol approximants and finite analyzed reach
+  have separate meanings. Their progress/liveness premises must stay explicit.
+- Source-level structural read dependencies omit Mini authority/schema/source/
+  audience dependencies unless explicitly added. An off-data-dependency cache
+  hit does not license reusing a result after revocation or source evolution.
+- Proof-relevant Lean Prop/functions/quotients and arbitrary custom nodes are
+  not automatically affine Bend Data, canonical bytes, Boolean circuits or FHE
+  computations. A checked, finite representation/refinement is required. The
+  exporter already knows this; preserve its one-way trust boundary.
+- Semantic disclosure is useful but not obliviousness. 'Waiting on Alice', fork
+  cardinality, hidden-branch reason strings and schedule/certificate identifiers
+  can disclose protected membership or activity. A port must use Mini's current
+  observer/custody/release contract and approved public envelope, including when
+  the exact future/support itself is private. Do not equate six-status rendering
+  with a proof of noninterference or safe public telemetry.
+- Preoscript merge safety concerns a named invariant over a chosen reachable
+  model. It does not authorize rights creation, ignore canonical Book accounting,
+  supply global agreement, or turn an ERA announcement into Mini finality.
+
+CONCRETE PORTS / DISCRIMINATING EXPERIMENTS
+
+1. First priority: one real authored view with future-indexed evidence.
+   Use the existing WorldSurface observation slots and independent private result
+   path; do not add a renderer or a second query server. A community research view
+   asks whether any retained finding satisfied a pinned predicate at admission.
+   Under grow-only admitted evidence, true can be stable; false needs a scoped
+   closure witness. A query about CURRENT approval is different: revocation may
+   change its truth, so it cannot inherit that grow-only theorem without a new
+   future-specific proof. Release permission remains current in both cases.
+   Include equal materialized states with different issued-but-undelivered pools,
+   a later extension, a hidden conflicting branch and a release revocation.
+   Port Future/StatusEffects/ResultProgram's contract, connecting Authentic to
+   actual accepted Mini observations and present release. The native view must
+   preserve pending/fork/absence distinctions without unauthorized disclosure.
+   Success: checked result/consumer bridge for that actual Bend body; the stale
+   certificate, implicit singleton extraction and revoked release cannot pass.
+   Owner dependencies: bend_world_language + docuverse_deos_construction; current
+   private/authority owner; member_oo_construction for inherited view contracts.
+
+2. A small proof of query-analysis refinement, rather than a new evaluator.
+   Select a structural Bool/pair/option subset of Preo.Expr; lower it through the
+   actual sealed Bend source→Book route or certify the corresponding Bend entry.
+   Prove evaluation and dependency interpretation commute with typed environment
+   encoding. Exclude custom initially by an explicit profile, retaining its future
+   extension obligation. Connect cache dependency checks to complete native
+   authority/source/release support. Exercise an irrelevant data edit, relevant
+   edit, overridden method and unchanged data after authority revocation.
+   Success: a source-authored view gains actual checked dependency/merge facts,
+   with one executable body and no independently maintained query implementation.
+   If arithmetic is added, prove range/overflow correspondence; Preo unbounded
+   Nat/max analysis is not native Nat48 or monetary-account semantics by default.
+   Owner dependencies: bend_logic_compilation + bend_world_language, controller
+   simulation owner, docuverse support-manifest consumer. Start from actual source
+   equality, not a callback premise that merely asserts compiler correctness.
+
+3. Shared coordination contract on composed partial specs.
+   Compose two realistic allocation/adoption protocol fragments that share a
+   strategy variable; retain a small case with zero separate minima but positive
+   common cost. Use existing Activity and native agreement trace as the operation
+   interpretation. Map each annotated obligation to a real prepared/admitted
+   effect or post-durability barrier; carry explicit promise/trust changes for
+   arbitration versus exposing a fork. Refuse budget acceptance from a lower
+   bound alone. Change one provider/epoch and invalidate the old plan witness.
+   Success: composition can accept a witnessed feasible protocol and reject the
+   false cheap one, while execution uses the existing Activity/receiver. The
+   contract must not claim arbitrary schedule synthesis or general liveness.
+   Owner dependencies: member_oo_construction + graded_execution_architecture,
+   world-language Plan owner and actual consensus/agreement owner. Their native
+   trace join is required before calling this an executable protocol feature.
+
+All three are construction proposals, not completed work or assigned new lanes.
+The first two can share one user-facing example. They discriminate whether the
+language ideas strengthen real Objective Bend programs rather than merely adding
+metadata. Keep general Preoscript synthesis/theorem research independent where
+it lacks an actual Mini consumer; do not carry the whole 185-module closure just
+to display a status flag.
+
+DEVELOPER DOCUMENTATION STILL NEEDED
+
+The new self-contained Mini/Objective Bend manual should define its own object,
+effect, result, Activity and view contracts; readers should not need FAREOO or
+this report to understand them. If the ports are adopted, add a compact semantic
+crosswalk distinguishing result status, resolution, visibility, authorization,
+agreement, durability and private execution. Show one complete source→contract→
+native observation/effect→view path with a negative case, not only API inventories.
+
+Lean-uwueave itself would benefit from an up-to-date architecture page separating
+its Lean-hosted authoring language, typed query fragment, proof/export stages and
+host runtime; a precise cross-declaration composition gap; and a supported-port
+manifest. PREOSCRIPTING is rich but interleaves chronological construction updates
+with thesis, examples, old status counts and outstanding work. Its early aspiration
+of roughly a dozen deep constructors no longer describes Expr.Term's 17 cases.
+Do not market its Rust DTO output as a compiled standalone Preoscript application.
+
+Source coverage and exact dialogue locators are recorded separately in
+PREOSCRIPT-OBJECTIVE-BEND-COVERAGE-20261003.txt. No private transcript is copied
+into a public repository and no historical assistant claims are promoted to
+current implementation status.

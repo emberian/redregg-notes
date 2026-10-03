@@ -1,0 +1,1197 @@
+{
+  "schema_version": 1,
+  "owner": "Codex historical_missing_junctions",
+  "date": "2026-10-03",
+  "privacy": "curated local-private interpretations only; no raw transcript or third-party personal facts",
+  "current_direction": {
+    "default_world_language": "Bend",
+    "compatibility": "Nock",
+    "construction": "Mini grows into new Dregg",
+    "execution": "graded/homomorphic",
+    "front": "coherent Starbridge"
+  },
+  "deadline_lead": {
+    "path": "/Users/ember/dev/redregg/archive/2026-10-03/OCT13-OBJECTIVE-RECOVERY-20261003.txt",
+    "scope": "secondary dated release lead, not a fresh recent-deadline primary re-audit; old ideas do not add deadline gates"
+  },
+  "dedup_policy": "Exact extracted body counted once. Fork copies/replayed history not independent endorsements. Selected occurrence timestamp not necessarily first authored time.",
+  "questions": [
+    {
+      "id": "Q1",
+      "question": "What can third parties learn from portable authority evidence?",
+      "evidence": [
+        "MJ01",
+        "MJ02",
+        "MJ03"
+      ],
+      "revised_focus": "bind past testimony, present action and revocation/freshness"
+    },
+    {
+      "id": "Q2",
+      "question": "How does one world create new things without smuggling in new authority?",
+      "evidence": [
+        "MJ04"
+      ],
+      "revised_focus": "compute/install funded creation from authorized old image"
+    },
+    {
+      "id": "Q3",
+      "question": "What does lawful live change preserve while applications still do work?",
+      "evidence": [
+        "MJ05",
+        "MJ06",
+        "MJ07"
+      ],
+      "revised_focus": "accepted obligations, distinct clock domains and physical lifecycle"
+    },
+    {
+      "id": "Q4",
+      "question": "Can semantic documents act where readers already are?",
+      "evidence": [
+        "MJ08"
+      ],
+      "revised_focus": "native projections with host-specific trusted actuation"
+    },
+    {
+      "id": "Q5",
+      "question": "What survives a season/provider/chain change for creators?",
+      "evidence": [
+        "MJ09"
+      ],
+      "revised_focus": "portable provenance distinct from local current rights"
+    },
+    {
+      "id": "Q6",
+      "question": "Does a parametric semantics reach an actual agent action?",
+      "evidence": [
+        "MJ10",
+        "MJ11",
+        "MJ12"
+      ],
+      "revised_focus": "live typed translator and declared assurance grade"
+    },
+    {
+      "id": "Q7",
+      "question": "Can a resident remember, forget and keep replying?",
+      "evidence": [
+        "MJ13",
+        "MJ14",
+        "MJ15"
+      ],
+      "revised_focus": "stored/loaded/derived/provider states and operation recovery"
+    },
+    {
+      "id": "Q8",
+      "question": "When is another backend the same computation or a different claim?",
+      "evidence": [
+        "MJ16"
+      ],
+      "revised_focus": "common source denotation, premise differences, accepted-chain membership"
+    }
+  ],
+  "evidence_cards": [
+    {
+      "id": "MJ01",
+      "question": "Q1",
+      "idea": "Provider-local status and portable third-party testimony share a state source.",
+      "human_status": "exploratory consumer request, not finalized architecture",
+      "locators": [
+        {
+          "session": "claude:70642dc2-d9f1-434b-8209-c2c96787bd92",
+          "index": 912,
+          "timestamp": "2026-05-22T18:54:25.685Z",
+          "role": "user",
+          "kind": "prompt",
+          "origin": "human",
+          "interpretation": "human-typed request",
+          "relationship": "focal"
+        }
+      ],
+      "correction": "Past status testimony does not confer present authority.",
+      "source_refs": []
+    },
+    {
+      "id": "MJ02",
+      "question": "Q1",
+      "idea": "Snapshot plus refresh accepted; expiry/caveats enforced by acceptor, stronger synchrony layered above.",
+      "human_status": "explicit acceptance followed by design challenge",
+      "locators": [
+        {
+          "session": "claude:e75ed07b-4ce4-4f00-a0b8-3abab4a2f20f",
+          "index": 3053,
+          "timestamp": "2026-05-21T00:34:25.848Z",
+          "role": "user",
+          "kind": "prompt",
+          "origin": "human",
+          "interpretation": "human-typed open question",
+          "relationship": "focal"
+        },
+        {
+          "session": "claude:e75ed07b-4ce4-4f00-a0b8-3abab4a2f20f",
+          "index": 3059,
+          "timestamp": "2026-05-21T00:35:35.454Z",
+          "role": "user",
+          "kind": "prompt",
+          "origin": "human",
+          "interpretation": "human-typed acceptance",
+          "relationship": "acceptance"
+        },
+        {
+          "session": "claude:e75ed07b-4ce4-4f00-a0b8-3abab4a2f20f",
+          "index": 3093,
+          "timestamp": "2026-05-21T00:39:15.212Z",
+          "role": "user",
+          "kind": "prompt",
+          "origin": "human",
+          "interpretation": "human-typed caveat correction",
+          "relationship": "qualification"
+        },
+        {
+          "session": "claude:e75ed07b-4ce4-4f00-a0b8-3abab4a2f20f",
+          "index": 3098,
+          "timestamp": "2026-05-21T00:41:47.534Z",
+          "role": "user",
+          "kind": "prompt",
+          "origin": "human",
+          "interpretation": "human-typed best-design question",
+          "relationship": "reassessment"
+        }
+      ],
+      "correction": "Current Rust snapshot authority and Lean fence are distinct stories; inert detached signature cannot prove authenticity.",
+      "source_refs": [
+        0,
+        1
+      ]
+    },
+    {
+      "id": "MJ03",
+      "question": "Q1",
+      "idea": "Revocation must be portable attestable behavior; fast voluntary channels remain useful and grant instance identity matters.",
+      "human_status": "human correction and positive design choices",
+      "locators": [
+        {
+          "session": "claude:e307afc5-4140-4f17-8ce8-7af955baf2c7",
+          "index": 389,
+          "timestamp": "2026-07-10T13:56:17.333Z",
+          "role": "user",
+          "kind": "prompt",
+          "origin": "human",
+          "interpretation": "human-typed portable-attestability correction",
+          "relationship": "focal"
+        },
+        {
+          "session": "claude:e307afc5-4140-4f17-8ce8-7af955baf2c7",
+          "index": 473,
+          "timestamp": "2026-07-10T15:06:43.704Z",
+          "role": "user",
+          "kind": "prompt",
+          "origin": "human",
+          "interpretation": "human-typed advisory-channel direction",
+          "relationship": "focal"
+        },
+        {
+          "session": "claude:e307afc5-4140-4f17-8ce8-7af955baf2c7",
+          "index": 505,
+          "timestamp": "2026-07-10T15:24:45.220Z",
+          "role": "user",
+          "kind": "prompt",
+          "origin": "human",
+          "interpretation": "human-typed instance-id acceptance",
+          "relationship": "focal"
+        }
+      ],
+      "correction": "Committed batch insert helper has no authenticated TripEvidence admission or production caller.",
+      "source_refs": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "MJ04",
+      "question": "Q2",
+      "idea": "Factory params may depend on computation within one atomic funded creation.",
+      "human_status": "exploratory discriminator, not demanded financial product",
+      "locators": [
+        {
+          "session": "claude:70642dc2-d9f1-434b-8209-c2c96787bd92",
+          "index": 2874,
+          "timestamp": "2026-05-23T06:49:58.100Z",
+          "role": "user",
+          "kind": "prompt",
+          "origin": "human",
+          "interpretation": "human-typed request",
+          "relationship": "focal"
+        }
+      ],
+      "correction": "Mini birth authority uses original image; derived params in old Bread do not close borrow/derive/spawn/repay.",
+      "source_refs": [
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "id": "MJ05",
+      "question": "Q3",
+      "idea": "Deadline/time authority can be userspace portal/oracle rather than one chosen ambient blocklace depth.",
+      "human_status": "explicit architectural question",
+      "locators": [
+        {
+          "session": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+          "index": 12873,
+          "timestamp": "2026-06-03T23:36:40.689Z",
+          "role": "user",
+          "kind": "prompt",
+          "origin": "human",
+          "interpretation": "human-typed question",
+          "relationship": "focal"
+        }
+      ],
+      "correction": "Not a rejection of agreement, and not endorsement of one implemented oracle.",
+      "source_refs": []
+    },
+    {
+      "id": "MJ06",
+      "question": "Q3",
+      "idea": "Broad framework authorization did not settle assistant-created OracleRegistry design.",
+      "human_status": "concrete rejected direction",
+      "locators": [
+        {
+          "session": "claude:487bc20c-eee8-4b3e-ae47-2ee337eb2f89",
+          "index": 215,
+          "timestamp": "2026-05-24T07:48:45.905Z",
+          "role": "user",
+          "kind": "prompt",
+          "origin": "human",
+          "interpretation": "human-typed refusal",
+          "relationship": "focal"
+        }
+      ],
+      "correction": "Reject the specific unsolicited design; do not universalize into no oracle applications.",
+      "source_refs": []
+    },
+    {
+      "id": "MJ07",
+      "question": "Q3",
+      "idea": "Runtime change must retain active work and structured physical IO, with refinement to actual service.",
+      "human_status": "human request plus consecutive corrections",
+      "locators": [
+        {
+          "session": "claude:fbcc8d85-acbe-49e9-8d6f-811a946f5225",
+          "index": 448,
+          "timestamp": "2026-07-06T19:31:10.215Z",
+          "role": "user",
+          "kind": "prompt",
+          "origin": "human",
+          "interpretation": "human-typed live-reload question",
+          "relationship": "focal"
+        },
+        {
+          "session": "claude:fbcc8d85-acbe-49e9-8d6f-811a946f5225",
+          "index": 455,
+          "timestamp": "2026-07-06T19:37:29.001Z",
+          "role": "user",
+          "kind": "prompt",
+          "origin": "human",
+          "interpretation": "human-typed structured-IO correction",
+          "relationship": "focal"
+        },
+        {
+          "session": "claude:fbcc8d85-acbe-49e9-8d6f-811a946f5225",
+          "index": 462,
+          "timestamp": "2026-07-06T19:42:29.927Z",
+          "role": "user",
+          "kind": "prompt",
+          "origin": "human",
+          "interpretation": "human-typed refinement request",
+          "relationship": "focal"
+        }
+      ],
+      "correction": "Current Orb reload exists; pure lifecycle theorem does not prove deployed FD migration. Old encumbered source is not relicensed.",
+      "source_refs": [
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "id": "MJ08",
+      "question": "Q4",
+      "idea": "Reusable semantic documents/transclusion can expose executable social affordances.",
+      "human_status": "human endorsement of affordance; preceding security premise agent-authored",
+      "locators": [
+        {
+          "session": "claude:4daf72e8-9866-4969-9e32-f9463a8f3171",
+          "index": 362,
+          "timestamp": "2026-07-09T15:26:33.606Z",
+          "role": "user",
+          "kind": "prompt",
+          "origin": "human",
+          "interpretation": "human-typed endorsement",
+          "relationship": "focal"
+        }
+      ],
+      "correction": "Closed Shadow DOM is not security. Separate trusted background consent exists; current Mini loopback surface is different.",
+      "source_refs": [
+        9,
+        10
+      ],
+      "external_primary_sources": [
+        {
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM",
+          "claim": "closed Shadow DOM is not a strong security mechanism",
+          "read_scope": "primary browser documentation browsed; no browser exploit executed"
+        }
+      ]
+    },
+    {
+      "id": "MJ09",
+      "question": "Q5",
+      "idea": "Self-hosted creator artifacts and seasonal achievements might survive network churn, with optional external import/economy.",
+      "human_status": "tentative exploration explicitly doubting value; no chain chosen",
+      "locators": [
+        {
+          "session": "claude:5d642514-10f1-4113-b2f8-7521ea52ff8f",
+          "index": 170,
+          "timestamp": "2026-07-14T02:59:22.236Z",
+          "role": "user",
+          "kind": "prompt",
+          "origin": "human",
+          "interpretation": "human-typed exploratory question",
+          "relationship": "focal"
+        }
+      ],
+      "correction": "Assistant chose Solana/prices/royalties; no present market or enforcement claim. Local provenance artifact does not prove foreign mint/import.",
+      "source_refs": [
+        11
+      ]
+    },
+    {
+      "id": "MJ10",
+      "question": "Q6",
+      "idea": "Generic execution laws can support evolving-state orchestration if real requests are translated faithfully.",
+      "human_status": "human UI answer/correction, explicitly cancelled later",
+      "locators": [
+        {
+          "session": "claude:7efea951-f234-48e7-bac4-96d9e45865b3",
+          "index": 59,
+          "timestamp": "2026-06-01T00:12:07.562Z",
+          "role": "tool",
+          "kind": "tool_result",
+          "origin": "harness",
+          "interpretation": "human UI answer; options/frame are assistant text",
+          "relationship": "focal"
+        },
+        {
+          "session": "claude:7efea951-f234-48e7-bac4-96d9e45865b3",
+          "index": 61,
+          "timestamp": "2026-06-01T00:13:24.493Z",
+          "role": "assistant",
+          "kind": "reply",
+          "origin": "model",
+          "interpretation": "model analysis correcting fixed-literal premise",
+          "relationship": "model explanation"
+        },
+        {
+          "session": "claude:7efea951-f234-48e7-bac4-96d9e45865b3",
+          "index": 73,
+          "timestamp": "2026-06-01T00:23:44.258Z",
+          "role": "user",
+          "kind": "prompt",
+          "origin": "human",
+          "interpretation": "human-typed cancellation",
+          "relationship": "cancellation"
+        },
+        {
+          "session": "claude:7efea951-f234-48e7-bac4-96d9e45865b3",
+          "index": 75,
+          "timestamp": "2026-06-01T00:24:28.280Z",
+          "role": "assistant",
+          "kind": "reply",
+          "origin": "model",
+          "interpretation": "model compliance",
+          "relationship": "reported abandonment"
+        }
+      ],
+      "correction": "Do not label live certifier an unfulfilled promise. Reuse insight only as a newly justified hypothesis.",
+      "source_refs": []
+    },
+    {
+      "id": "MJ11",
+      "question": "Q6",
+      "idea": "Tiered handler execution selected over one blanket verification story.",
+      "human_status": "human selected UI option; not human-authored option prose",
+      "locators": [
+        {
+          "session": "claude:a49cc4f7-386f-4e90-a824-376d818f12a1",
+          "index": 87,
+          "timestamp": "2026-07-02T05:56:53.469Z",
+          "role": "tool",
+          "kind": "tool_result",
+          "origin": "harness",
+          "interpretation": "human UI selection reported by harness",
+          "relationship": "focal"
+        }
+      ],
+      "correction": "Tier is a declared assurance boundary, not evidence the live translator/physical handler implements semantics.",
+      "source_refs": []
+    },
+    {
+      "id": "MJ12",
+      "question": "Q6",
+      "idea": "Port useful components into Bread, abandon old DreggNet repo, stage general code exec while preserving hosted SPK/Hermes.",
+      "human_status": "explicit replacement and staging choices",
+      "locators": [
+        {
+          "session": "claude:47d16244-f253-4612-a1e8-00d47b62cddf",
+          "index": 1028,
+          "timestamp": "2026-07-03T16:10:04.057Z",
+          "role": "user",
+          "kind": "prompt",
+          "origin": "human",
+          "interpretation": "human-typed repository abandonment",
+          "relationship": "focal"
+        },
+        {
+          "session": "claude:47d16244-f253-4612-a1e8-00d47b62cddf",
+          "index": 1318,
+          "timestamp": "2026-07-03T21:37:41.668Z",
+          "role": "user",
+          "kind": "prompt",
+          "origin": "human",
+          "interpretation": "human-typed near-term scope",
+          "relationship": "focal"
+        }
+      ],
+      "additional_locators": [
+        {
+          "session": "claude:54cbae0a-eef5-47cc-a731-b6fe3c096259",
+          "index": 1521,
+          "timestamp": "2026-07-04T06:22:03.453Z",
+          "role": "tool",
+          "kind": "tool_result",
+          "origin": "harness",
+          "interpretation": "human UI port-not-copy choice",
+          "relationship": "focal"
+        }
+      ],
+      "correction": "Repository abandonment is not abandonment of every useful idea; near-term limit is not timeless computing prohibition.",
+      "source_refs": []
+    },
+    {
+      "id": "MJ13",
+      "question": "Q7",
+      "idea": "Resident context stays community-informed; cost explanation changes after inspecting actual default and context.",
+      "human_status": "human request plus mixed pasted room dialogue and fresh question",
+      "locators": [
+        {
+          "session": "claude:d41ad82c-b169-4d25-8494-d2d16d493696",
+          "index": 744,
+          "timestamp": "2026-07-23T23:47:40.366Z",
+          "role": "user",
+          "kind": "prompt",
+          "origin": "human",
+          "interpretation": "human-typed socially informed reading-context request",
+          "relationship": "focal"
+        },
+        {
+          "session": "claude:d41ad82c-b169-4d25-8494-d2d16d493696",
+          "index": 1291,
+          "timestamp": "2026-07-29T23:29:02.718Z",
+          "role": "user",
+          "kind": "prompt",
+          "origin": "human",
+          "interpretation": "mixed quoted resident dialogue plus human cost question",
+          "relationship": "focal"
+        },
+        {
+          "session": "claude:d41ad82c-b169-4d25-8494-d2d16d493696",
+          "index": 1311,
+          "timestamp": "2026-07-29T23:57:07.727Z",
+          "role": "user",
+          "kind": "prompt",
+          "origin": "human",
+          "interpretation": "human-typed effort question",
+          "relationship": "focal"
+        },
+        {
+          "session": "claude:d41ad82c-b169-4d25-8494-d2d16d493696",
+          "index": 1328,
+          "timestamp": "2026-07-29T23:59:04.679Z",
+          "role": "assistant",
+          "kind": "reply",
+          "origin": "model",
+          "interpretation": "model correction of earlier effort/default explanation",
+          "relationship": "reported correction"
+        }
+      ],
+      "correction": "Historical provider default/prices are not universal current law. Context renewal caused reported change.",
+      "source_refs": [
+        12
+      ]
+    },
+    {
+      "id": "MJ14",
+      "question": "Q7",
+      "idea": "Authorized forgetting must cover semantic derivatives and loaded state while preserving IDs against backfill resurrection.",
+      "human_status": "mixed quoted dialogue plus human request, explicit followup challenges",
+      "locators": [
+        {
+          "session": "claude:d41ad82c-b169-4d25-8494-d2d16d493696",
+          "index": 1640,
+          "timestamp": "2026-07-31T16:06:37.324Z",
+          "role": "user",
+          "kind": "prompt",
+          "origin": "human",
+          "interpretation": "mixed private room quote plus fresh human targeted-forgetting request",
+          "relationship": "focal"
+        },
+        {
+          "session": "claude:d41ad82c-b169-4d25-8494-d2d16d493696",
+          "index": 1679,
+          "timestamp": "2026-07-31T16:12:51.022Z",
+          "role": "assistant",
+          "kind": "reply",
+          "origin": "model",
+          "interpretation": "model claimed complete regex scrub",
+          "relationship": "false completion"
+        },
+        {
+          "session": "claude:d41ad82c-b169-4d25-8494-d2d16d493696",
+          "index": 1680,
+          "timestamp": "2026-07-31T16:15:48.656Z",
+          "role": "user",
+          "kind": "prompt",
+          "origin": "human",
+          "interpretation": "human-typed backfill challenge",
+          "relationship": "focal"
+        },
+        {
+          "session": "claude:d41ad82c-b169-4d25-8494-d2d16d493696",
+          "index": 1694,
+          "timestamp": "2026-07-31T16:18:04.490Z",
+          "role": "user",
+          "kind": "prompt",
+          "origin": "human",
+          "interpretation": "human-typed demand to triplecheck",
+          "relationship": "focal"
+        },
+        {
+          "session": "claude:d41ad82c-b169-4d25-8494-d2d16d493696",
+          "index": 1725,
+          "timestamp": "2026-07-31T16:23:26.554Z",
+          "role": "assistant",
+          "kind": "reply",
+          "origin": "model",
+          "interpretation": "model admits same fact survives ordinary prose",
+          "relationship": "corrected outcome"
+        }
+      ],
+      "correction": "Personal content omitted. Reported second pass not independently audited across live stores/provider custody/backups. Source top-level content rewrite narrower than every-store claim.",
+      "source_refs": [
+        13,
+        14
+      ]
+    },
+    {
+      "id": "MJ15",
+      "question": "Q7",
+      "idea": "Caching, model effort, tool scopes and provider failover are different mechanisms of resident responsiveness.",
+      "human_status": "mixed pasted agent claims plus human accuracy question; explicit scoped UI choice",
+      "locators": [
+        {
+          "session": "claude:06f061bb-d3ee-42ca-9d08-cd487690bfca",
+          "index": 90,
+          "timestamp": "2026-08-01T01:20:51.507Z",
+          "role": "user",
+          "kind": "prompt",
+          "origin": "human",
+          "interpretation": "quoted agent economics claims plus human accuracy question",
+          "relationship": "focal"
+        },
+        {
+          "session": "claude:06f061bb-d3ee-42ca-9d08-cd487690bfca",
+          "index": 96,
+          "timestamp": "2026-08-01T01:22:18.737Z",
+          "role": "assistant",
+          "kind": "reply",
+          "origin": "model",
+          "interpretation": "model cache-prefix investigation",
+          "relationship": "model finding"
+        },
+        {
+          "session": "claude:06f061bb-d3ee-42ca-9d08-cd487690bfca",
+          "index": 103,
+          "timestamp": "2026-08-01T01:23:23.725Z",
+          "role": "assistant",
+          "kind": "reply",
+          "origin": "model",
+          "interpretation": "model complexity correction",
+          "relationship": "reported correction"
+        },
+        {
+          "session": "claude:06f061bb-d3ee-42ca-9d08-cd487690bfca",
+          "index": 592,
+          "timestamp": "2026-08-06T21:54:16.447Z",
+          "role": "tool",
+          "kind": "tool_result",
+          "origin": "harness",
+          "interpretation": "human UI Kimi-only scope; preserve live Claude tools",
+          "relationship": "focal"
+        }
+      ],
+      "additional_locators": [
+        {
+          "session": "claude:b42cbce2-4510-4d20-b985-840476845387",
+          "index": 537,
+          "timestamp": "2026-08-14T20:09:54.004Z",
+          "role": "user",
+          "kind": "prompt",
+          "origin": "human",
+          "interpretation": "human-typed resident unresponsiveness question",
+          "relationship": "focal"
+        }
+      ],
+      "correction": "No underlying provider log run audited. Conditional growing-context cost and provider thinking config do not imply universal grade order.",
+      "source_refs": [
+        15
+      ]
+    },
+    {
+      "id": "MJ16",
+      "question": "Q8",
+      "idea": "Reopen both direct semantic emission and foreign-proof verification, preserving their different claims.",
+      "human_status": "human-typed reopening; prior contrary scope quoted by model",
+      "locators": [
+        {
+          "session": "claude:6418429c-b1af-4779-8a39-f42aebd4808f",
+          "index": 291,
+          "timestamp": "2026-07-30T14:14:18.746Z",
+          "role": "user",
+          "kind": "prompt",
+          "origin": "human",
+          "interpretation": "human-typed two-route request",
+          "relationship": "focal"
+        },
+        {
+          "session": "claude:6418429c-b1af-4779-8a39-f42aebd4808f",
+          "index": 297,
+          "timestamp": "2026-07-30T14:15:44.874Z",
+          "role": "assistant",
+          "kind": "reply",
+          "origin": "model",
+          "interpretation": "model quotes previous contrary human scope",
+          "relationship": "reported prior constraint"
+        },
+        {
+          "session": "claude:6418429c-b1af-4779-8a39-f42aebd4808f",
+          "index": 300,
+          "timestamp": "2026-07-30T14:16:37.034Z",
+          "role": "assistant",
+          "kind": "reply",
+          "origin": "model",
+          "interpretation": "model acknowledges changed scope",
+          "relationship": "model response"
+        },
+        {
+          "session": "claude:6418429c-b1af-4779-8a39-f42aebd4808f",
+          "index": 319,
+          "timestamp": "2026-07-30T15:02:32.657Z",
+          "role": "assistant",
+          "kind": "reply",
+          "origin": "model",
+          "interpretation": "model reports narrow shared-denotation theorem",
+          "relationship": "reported outcome"
+        },
+        {
+          "session": "claude:6418429c-b1af-4779-8a39-f42aebd4808f",
+          "index": 322,
+          "timestamp": "2026-07-30T15:03:19.870Z",
+          "role": "assistant",
+          "kind": "reply",
+          "origin": "model",
+          "interpretation": "model names further assumptions/missing membership",
+          "relationship": "reported limitation"
+        }
+      ],
+      "correction": "Current source confirms encoded pre/post assumptions and partial constraints; no full protocol identity or foreign chain finality/inclusion conclusion.",
+      "source_refs": [
+        16
+      ]
+    }
+  ],
+  "source_pins": [
+    {
+      "path": "/Users/ember/dev/breadstuffs/cell/src/delegation.rs",
+      "line_ranges_inclusive": [
+        [
+          1,
+          230
+        ]
+      ],
+      "read_scope": "snapshot fields, inert signature header, Lean shadow fence",
+      "sha256_at_final_checkpoint": "5e8ebc72b9d15abb9388bc668df8993815e2601f0c435d8bd2f38997f8580a10",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/turn/tests/delegation_snapshot_second_authority_source.rs",
+      "line_ranges_inclusive": [
+        [
+          1,
+          200
+        ]
+      ],
+      "read_scope": "Rust second authority-source expiry/amplification regression narrative; not executed",
+      "sha256_at_final_checkpoint": "fb4a61fad2a6f2d41ece067c12cdc24345fac0a0c2e37bd3f11bca4c36591a38",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/cell/src/revocation_channel.rs",
+      "line_ranges_inclusive": [
+        [
+          1,
+          210
+        ]
+      ],
+      "read_scope": "voluntary trip local matching, no detached signed admission",
+      "sha256_at_final_checkpoint": "ff060e1389efb4de6c6701b39b778159086b644da46c26b7249e6260524f0177",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/turn/src/executor/apply.rs",
+      "line_ranges_inclusive": [
+        [
+          975,
+          1065
+        ],
+        [
+          3529,
+          3620
+        ]
+      ],
+      "read_scope": "dead batch trip helper and declared factory params; no call-closure/build claim",
+      "sha256_at_final_checkpoint": "b69e68dcbbee75370f863efcf7454335f900571b6cc197b9e460efe51e26d6a8",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    },
+    {
+      "path": "/Users/ember/dev/minidregg/Theory/ResourceBirthAuthority.lean",
+      "line_ranges_inclusive": [
+        [
+          1,
+          130
+        ]
+      ],
+      "read_scope": "every birth grant uses original authority",
+      "sha256_at_final_checkpoint": "eba5cc129e8796f0ff4057ddaa9f22130d83317919889bf9ccbc9a37258498e2",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    },
+    {
+      "path": "/Users/ember/dev/minidregg/Kernel/GrainResourceBirthTransaction.lean",
+      "line_ranges_inclusive": [
+        [
+          1,
+          85
+        ]
+      ],
+      "read_scope": "one-old-image preparation; explicitly not receiving endpoint",
+      "sha256_at_final_checkpoint": "88830bb5dedfc01b543d70212b71910826480eb34f0e83cb78add94b3babaebe",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/orb/Admin/Reload.lean",
+      "line_ranges_inclusive": [
+        [
+          1,
+          180
+        ]
+      ],
+      "read_scope": "pure reload config/generation contract",
+      "sha256_at_final_checkpoint": "e9eb36e102d458a4375bc3abf3f54c45217119e0b4c57ecbd53523664e7de925",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/orb/Admin/DrainLive.lean",
+      "line_ranges_inclusive": [
+        [
+          1,
+          140
+        ]
+      ],
+      "read_scope": "pure lifecycle selftest excludes deployed shell",
+      "sha256_at_final_checkpoint": "d6d81c5616a7b5d36627286a338b5d88e022fbf4f148e9226641e1df27ea9db0",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/orb/crates/dataplane/src/reconfig.rs",
+      "line_ranges_inclusive": [
+        [
+          1,
+          220
+        ]
+      ],
+      "read_scope": "actual reload signal/admin mechanism, retained Arc generation",
+      "sha256_at_final_checkpoint": "3c8e287c0667c2b6cc6c2d17307fe457838d10c1288b5f2a0abbc313a8053547",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/extension/src/elements/dregg-poll.ts",
+      "line_ranges_inclusive": [
+        [
+          1,
+          244
+        ]
+      ],
+      "read_scope": "thin closed-root view, no keys/evaluator; no runtime exploit tested",
+      "sha256_at_final_checkpoint": "93aa570bc047fe1ca30a8e45ccf7c31bad11fe0594b8ac030d3335769c5f984f",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/extension/src/port.ts",
+      "line_ranges_inclusive": [
+        [
+          250,
+          314
+        ]
+      ],
+      "read_scope": "separate background consent before cast",
+      "sha256_at_final_checkpoint": "bfa9d147fa93f1903e3532234038daef4c52b2e3633a7578bd1d24f3807308e9",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/docs/CONTENT-AND-ASSET-SPEC.md",
+      "line_ranges_inclusive": [],
+      "read_scope": "keyword search and selected content/provenance/epoch sections, not full file",
+      "sha256_at_final_checkpoint": "3c51c72bb9e7876d6bb8ac467ead6ba0371d743e6be799500f9b1fdf4aaa14aa",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    },
+    {
+      "path": "/Users/ember/dev/allgame/claude_resident/config.py",
+      "line_ranges_inclusive": [
+        [
+          180,
+          207
+        ]
+      ],
+      "read_scope": "historical omitted effort rationale",
+      "sha256_at_final_checkpoint": "b1e6716ced45a894dc309465aa6990d3f245be9c57bf73db3ee806156c8e4f90",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    },
+    {
+      "path": "/Users/ember/dev/allgame/scripts/redact_state.py",
+      "line_ranges_inclusive": [
+        [
+          1,
+          158
+        ]
+      ],
+      "read_scope": "full targeted top-level message-content redaction implementation; did not execute",
+      "sha256_at_final_checkpoint": "6956ec51624f1222b59d5b5791dbb3e3e3ae73393c3adb697f12e35540c2bc6d",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    },
+    {
+      "path": "/Users/ember/dev/allgame/claude_resident/state.py",
+      "line_ranges_inclusive": [
+        [
+          310,
+          375
+        ]
+      ],
+      "read_scope": "move logging and context-floor separation; supplementary keyword search",
+      "sha256_at_final_checkpoint": "34600b6ce61f2a0c5bf97846db61d0db02fcc0c4d0dcc5598bf02e36213264c9",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    },
+    {
+      "path": "/Users/ember/dev/allgame/kimi_resident/engine.py",
+      "line_ranges_inclusive": [
+        [
+          42,
+          82
+        ]
+      ],
+      "read_scope": "provider-specific thinking configuration, serialized turns",
+      "sha256_at_final_checkpoint": "9c302d667a952149f49eb6870645a3552500e65eb3343b7034abf20df2eb5686",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/metatheory/Dregg2/Circuit/Emit/KimchiEffectIncNonce.lean",
+      "line_ranges_inclusive": [
+        [
+          1,
+          82
+        ],
+        [
+          330,
+          383
+        ]
+      ],
+      "read_scope": "two emissions, premises and missing descriptor/continuity/PI/hashsite binding",
+      "sha256_at_final_checkpoint": "14cd70c620e653596adef3e1148679972c0bd9fec7f5378609591203ecac800e",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "H1",
+      "name": "Portable evidence envelope",
+      "questions": [
+        "Q1",
+        "Q3"
+      ],
+      "consumer": "independent local worlds sharing a tool/document via human channel and rented provider",
+      "first_falsifier": "revoke/regrant reused slot; epoch replay; substitute key for cell",
+      "date_scope": "Oct13 exact native evidence/authority and selected agreement join; broader offline portability is later suggestion",
+      "status": "new recommendation, not recovered order"
+    },
+    {
+      "id": "H2",
+      "name": "Versioned live-change contract",
+      "questions": [
+        "Q2",
+        "Q3",
+        "Q8"
+      ],
+      "consumer": "room-authored tools/member methods and hosted services with pending private returns",
+      "first_falsifier": "update accepted call policy while return/reservations remain; preserve admitted contract",
+      "date_scope": "Oct13 receiving/recovery matters; richer hot upgrades later",
+      "status": "new recommendation, not recovered order"
+    },
+    {
+      "id": "H3",
+      "name": "Funded atomic authored creation",
+      "questions": [
+        "Q2",
+        "Q5",
+        "Q6"
+      ],
+      "consumer": "Starbridge creates funded hosted room tool/game object",
+      "first_falsifier": "descriptor substitution or newborn authority signs its own birth, while ordinary valid creation succeeds",
+      "date_scope": "Oct13 inspect current birth consumer; flashloan factory/foreign NFT export later experiments",
+      "status": "new recommendation, not recovered order"
+    },
+    {
+      "id": "H4",
+      "name": "Portable presentation with exact trusted actuation",
+      "questions": [
+        "Q4",
+        "Q6"
+      ],
+      "consumer": "same document/poll/tool in Starbridge and existing social/web surface",
+      "first_falsifier": "host mutates displayed object/args/origin after consent or overlays fake verified badge",
+      "date_scope": "Oct13 native docuverse/deos actuation; arbitrary hostile embedding/extensions Oct26/November suggestions",
+      "status": "new recommendation, not recovered order"
+    },
+    {
+      "id": "H5",
+      "name": "Context lineage and bounded resident work",
+      "questions": [
+        "Q7",
+        "Q1",
+        "Q6"
+      ],
+      "consumer": "Hermes informed main resident with recoverable small tool jobs",
+      "first_falsifier": "derived prose survives forgetting, backfill resurrects, changing prefix loses cache, retry loses/duplicates reply",
+      "date_scope": "Oct13 mature resident request/reply/recovery; comprehensive derived-memory rewrite/provider optimization later suggestions",
+      "status": "new recommendation, not recovered order"
+    }
+  ],
+  "edges": [
+    {
+      "from": "MJ01",
+      "to": "Q1",
+      "relation": "grounds or revises question"
+    },
+    {
+      "from": "MJ02",
+      "to": "Q1",
+      "relation": "grounds or revises question"
+    },
+    {
+      "from": "MJ03",
+      "to": "Q1",
+      "relation": "grounds or revises question"
+    },
+    {
+      "from": "MJ04",
+      "to": "Q2",
+      "relation": "grounds or revises question"
+    },
+    {
+      "from": "MJ05",
+      "to": "Q3",
+      "relation": "grounds or revises question"
+    },
+    {
+      "from": "MJ06",
+      "to": "Q3",
+      "relation": "grounds or revises question"
+    },
+    {
+      "from": "MJ07",
+      "to": "Q3",
+      "relation": "grounds or revises question"
+    },
+    {
+      "from": "MJ08",
+      "to": "Q4",
+      "relation": "grounds or revises question"
+    },
+    {
+      "from": "MJ09",
+      "to": "Q5",
+      "relation": "grounds or revises question"
+    },
+    {
+      "from": "MJ10",
+      "to": "Q6",
+      "relation": "grounds or revises question"
+    },
+    {
+      "from": "MJ11",
+      "to": "Q6",
+      "relation": "grounds or revises question"
+    },
+    {
+      "from": "MJ12",
+      "to": "Q6",
+      "relation": "grounds or revises question"
+    },
+    {
+      "from": "MJ13",
+      "to": "Q7",
+      "relation": "grounds or revises question"
+    },
+    {
+      "from": "MJ14",
+      "to": "Q7",
+      "relation": "grounds or revises question"
+    },
+    {
+      "from": "MJ15",
+      "to": "Q7",
+      "relation": "grounds or revises question"
+    },
+    {
+      "from": "MJ16",
+      "to": "Q8",
+      "relation": "grounds or revises question"
+    },
+    {
+      "from": "Q1",
+      "to": "H1",
+      "relation": "motivates proposed consumer contract"
+    },
+    {
+      "from": "Q3",
+      "to": "H1",
+      "relation": "motivates proposed consumer contract"
+    },
+    {
+      "from": "Q2",
+      "to": "H2",
+      "relation": "motivates proposed consumer contract"
+    },
+    {
+      "from": "Q3",
+      "to": "H2",
+      "relation": "motivates proposed consumer contract"
+    },
+    {
+      "from": "Q8",
+      "to": "H2",
+      "relation": "motivates proposed consumer contract"
+    },
+    {
+      "from": "Q2",
+      "to": "H3",
+      "relation": "motivates proposed consumer contract"
+    },
+    {
+      "from": "Q5",
+      "to": "H3",
+      "relation": "motivates proposed consumer contract"
+    },
+    {
+      "from": "Q6",
+      "to": "H3",
+      "relation": "motivates proposed consumer contract"
+    },
+    {
+      "from": "Q4",
+      "to": "H4",
+      "relation": "motivates proposed consumer contract"
+    },
+    {
+      "from": "Q6",
+      "to": "H4",
+      "relation": "motivates proposed consumer contract"
+    },
+    {
+      "from": "Q7",
+      "to": "H5",
+      "relation": "motivates proposed consumer contract"
+    },
+    {
+      "from": "Q1",
+      "to": "H5",
+      "relation": "motivates proposed consumer contract"
+    },
+    {
+      "from": "Q6",
+      "to": "H5",
+      "relation": "motivates proposed consumer contract"
+    },
+    {
+      "from": "MJ06",
+      "to": "Q3",
+      "relation": "specific oracle rejection limits inherited design"
+    },
+    {
+      "from": "MJ10",
+      "to": "H5",
+      "relation": "cancellation means generic live translator requires new justification"
+    },
+    {
+      "from": "MJ08",
+      "to": "H4",
+      "relation": "agent ShadowDOM premise refuted; host-specific consent retained"
+    },
+    {
+      "from": "MJ14",
+      "to": "H5",
+      "relation": "actual false completion requires semantic derivative falsifier"
+    },
+    {
+      "from": "MJ16",
+      "to": "H2",
+      "relation": "backend source identity not enough to preserve deployed obligations"
+    },
+    {
+      "from": "Q5",
+      "to": "Q1",
+      "relation": "portable achievement evidence is not imported present authority"
+    }
+  ],
+  "peer_receiving_reports": [
+    {
+      "peer": "/root/bread_programmable_archaeology",
+      "status": "reported source investigation, not independently read here",
+      "finding": "caller-supplied peer key signed continuity lacks full authenticated key-to-cell/current-rights/execution closure"
+    },
+    {
+      "peer": "/root/docuverse_deos_construction",
+      "status": "reported current receiving surface, not independently run here",
+      "finding": "Mini member loopback launch-secret/Host-Origin/CSP/exact native intent path differs from old web-component embedding"
+    }
+  ],
+  "coverage_file": "/Users/ember/dev/redregg/intent/missing-junctions-coverage-20261003.json",
+  "narrative_report": "/Users/ember/dev/redregg/intent/missing-junctions-20261003.txt",
+  "replays_file": "/Users/ember/dev/redregg/replays/missing-junctions-20261003.txt",
+  "limits": [
+    "No total authorship audit; no whole-session reading; no implementation outcome certified; no builds/Git/deploy/delete/subagents.",
+    "Snippet screening never counted as full-body reading. July3306 has large inherited fork family; original human occurrence not yet audited.",
+    "Current source attribution will use SHA256 rather than a Git command; reading does not validate deployed use.",
+    "No re-audit of recent deadline corpus; archive OCT13 objective recovery used as dated release lead.",
+    "Mixed pasted private facts intentionally omitted from all owned artifacts. Body hashes/private cv locators allow authorized local recovery without republishing transcript.",
+    "Selected July3998 overlaps worlds full-read set; all map overlaps retained. No claim that each body is newly interpreted globally."
+  ]
+}

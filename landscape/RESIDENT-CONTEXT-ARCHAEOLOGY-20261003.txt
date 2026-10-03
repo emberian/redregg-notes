@@ -1,0 +1,351 @@
+RESIDENT CONTEXT / PORTABLE SEMANTIC DESKTOP — FOLLOWUP ARCHAEOLOGY
+2026-10-03. Owner: bread_programmable_archaeology, Sol/Codex.
+Private research supplement. No builds, tests, source/Git changes, deploys,
+deletion, external messages or nested agents. This requested report is the only
+new artifact. Read with intent/worlds-second-pass-20261003.txt, foundations-
+intent-model.txt and replays/foundations-question-queue.txt. Current Mini owners
+retain implementation control; this does not propose a shadow context store.
+
+JUDGMENT
+The recovered consumer is a continuing collaborator with appropriate context,
+private notes, actual tools and participation across sessions and rooms. It is
+not adequately specified by a durable completion receipt, a game NPC/GM, a
+model-name badge, or a portable applet counter. The complementary human
+consumer is an actuable, spatially persistent technical desktop: documents,
+objects, methods, permissions, history and tools have direct operation surfaces.
+These consumers can share source/history/authority without one conversation UI
+or one compulsory fiction metaphor.
+
+There is a concrete Mini/Bend seam: a bounded source-defined context projection
+over canonical signed activity and authored documents, with immutable evidence,
+current placement/text/authority, pinned summary inputs and invocation identity
+kept distinct. Mini's current resident request/completion machinery is the
+receiving home; Allgame contributes lived requirements and projection patterns,
+not another runtime or credential model. Bend can author/check/execute the
+deterministic selector and contextual work rules, but the physical observation,
+authorization, provider call, retained output and current release still belong
+to actual Mini controllers. A context selector cannot grant itself a read.
+
+PRIMARY HUMAN READS (not inferred from report titles)
+I used cv show with surrounding context for these exact locators:
+* claude:d41ad82c-b169-4d25-8494-d2d16d493696 #806 and #873, July25.
+  Human asks for a longer scrolling context approaching700–800k, meaningful
+  semantic/emotional distillation and removal of harmful count limits; then
+  corrects the assistant that a16k-message past reduced to hits plus40k raw
+  tail may be too thin for MONTHS of shared conversation. This is a lived
+  community continuity request, not only hypothetical model-home philosophy.
+  Assistant's era-volume/large birth-payload deployment claims are historical
+  reports, not a fresh runtime result here.
+* claude:b42cbce2-4510-4d20-b985-840476845387 #920, Aug23.
+  Human observed a reply to a previously moved message and asked edits/moves
+  to transparently recraft context. Current source confirms partial handling
+  rather than establishing full correction. No live reproduction was run.
+* Same session #1245, Aug25.
+  Human challenges an assistant's proposed missing implicit current-room tool
+  defaults: they thought it described existing behavior. Current defaults are
+  present. Do not automatically turn historical deficit claims into new work.
+  Surrounding exchange also corrects the assistant's simplistic claim that a
+  context floor deterministically repaired provider refusals; derived memory
+  mattered and repeated borderline provider outcomes varied. This is not a
+  general theorem about model providers.
+* claude:01c55763-cbb4-4af6-84cf-8e4e7ede1ad7 #4, June24.
+  Human explicitly requests technical Windows-NT menus/windows/icons/detail,
+  Pharo/Smalltalk-style actuation/composition and spatial persistence, rejecting
+  the assistant's framing. This corrects pet/care metaphors without erasing the
+  broader agent-home ambition recovered in worldsW01.
+* claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a #1381, May24.
+  Human rejects two tabs using one RemoteRuntime and rejects full-history paste:
+  sovereign local tabs should coordinate through human channels. Assistant
+  proposes signed introduction/handoff/bearer/intent envelopes as individually
+  complete. That proposal is not a human claim that the importer or freshness
+  closure was complete; actual source qualification below is narrower.
+
+No private conversation bodies or credential contents are reproduced here.
+Additional motivation in worldsW01–W13 remains that owner's bounded evidence;
+this followup directly read the five exchanges above, not all months of history.
+
+ALLGAME: WHAT REALLY EXISTS, WHAT STILL LOSES CURRENT CONTEXT
+Root /Users/ember/dev/allgame. Read README and actual claude_resident modules:
+edits, state, prompt, resident, sessions, handled, distill; sampled GLM's
+backend/Discord adapters. These are source reads, no live service inspection.
+
+1. Original event history and selected context already differ.
+state.py:269 log_message appends foreverlogs. Content edits append sidecar
+records (313); load_edits434 folds newest content, _apply_edit138 annotates it.
+Multiple recent-topic/stream/log renderers use the fold. Current LoadBound60
+and context_floor/context_quarantine now exist: floor excludes raw history
+while allowing it into distilled memory; quarantine excludes selected spans
+from both. Neither deletes original logs. The dated 'quarantine absent' claim
+in the Aug23 assistant exchange is superseded by source. Separate storage,
+current content and context load policy is a useful transferable design.
+
+2. Moves are retained evidence, not correct room placement.
+edits.py:97 patches pending/inflight dict content;123–137 logs destination only
+and explicitly says topic logs do not follow moves. state.py:323 appends a
+move record without content, and load_edits ignores it. msg_index is not
+updated to destination in this handler. For a moved, not-yet-answered batch,
+the handler does not relocate its stream/topic or de-queue/re-dispatch it.
+This establishes the local implementation boundary; it does not prove every
+live trigger in the entire service misroutes. Current-room projection needs
+placement semantics, not just an audit annotation saying 'moved'.
+
+3. Warm inference context and distilled memory are separate stale consumers.
+resident.py:342–382 retrieves per-topic session and reuses system_blocks;
+fingerprint_state in prompt.py:497 hashes identity/scratchpad/inbox, selected
+Allgame files, cross-topic board/postmark/journal/person notes. It does not
+fingerprint topic edit/move sidecars or topic hit revisions. update handler623
+passes pending/inflight batches, not already-retained session messages/SDK
+context. Thus fresh renderer correctness is not a warm-context invalidation
+mechanism. During a running provider call, mutating a Python dict cannot
+retract already-sent text; next-turn correction or a new context lineage needs
+an explicit policy.
+distill.py:235 reads raw jsonl and builds text directly from m.content at282,
+without load_edits or move fold. It advances a line-count cursor and seals eras
+at108–124; old edits/moves do not dirty already-sealed inputs automatically.
+Current cold view may be corrected while its memory summary still remembers
+superseded text in the old room. Summaries are readings with provenance, not
+canonical source. They need input dependency/version pins and invalidation or
+visible historical status; merely increasing the raw budget does not fix this.
+
+4. Persistence does not certify exact physical handling or continuity.
+HandledSet is bounded50k IDs and appends immediately, but mark mutates memory
+before append and only logs persistence failure. SessionManager TTL/LRU parks
+ended in-memory sessions for summaries; permanent/SDK bindings and private
+state contribute other continuity mechanisms, not process RAM migration.
+Do not port cap-eviction assumptions as a proof of indefinite replay safety.
+GLM ChatBackend intentionally shares outbound/history operations while keeping
+different inbound platform loops; platform room prefixes preserve distinct
+contexts. This is useful interface factoring. Its normalized identity/history
+is platform trust, not a Mini signature or permission to publish model data.
+Current send/reaction tool defaults consume the actual event cursor; they
+should be reused as interaction behavior, not reported absent.
+
+BREAD / STARBRIDGE: THREE DISTINCT 'RESIDENT' CONSTRUCTIONS
+Root /Users/ember/dev/breadstuffs.
+
+A. Real direct desktop actuation and useful authorization presentation.
+deos_desktop/agent_room.rs offers Actions/Mandate/Reach over AgentActivity,
+with executor-receipt activity and held authority, plus hireling HIRE/STEP/FIRE
+in the window system. Documents/inspectors/terminal/view cells supply real
+operation surfaces and retained window semantics, as qualified in the earlier
+programmable report. Take that direct technical experience, not a sentimental
+care metaphor. AgentRoom's synthetic window anchor is not a ledger principal.
+
+B. A closed-loop tool body, not months-long memory.
+deos-hermes/brain.rs AgentConvo holds one prompt plus tool verdict observations.
+LocalBrain is deterministic keyword-planned/reactive; HttpLlm is the actual
+provider path. resident_agent.rs:247 creates a fresh brain and HermesAgentPeer
+per prompt while retaining the gateway budget. Admitted gateway tool witnesses
+are later mirrored to a SECOND desktop World at293. These are real gate/world
+turns, but their pair is not one atomic source execution and tool witness is
+not proof of a physical file/network effect. Refusals remain session truth;
+runtime is leaked/app-lived at hire. HIRE/STEP with a LocalBrain does not
+establish an independently acting social collaborator or durable context.
+Do not use those demonstration receipts as substitute for Mini's source-owned
+provider dispatch/completion/work effects. world_bridge WithLedger returns all
+cells and MintOpenCell offers privileged funded birth; importing it would
+regress Mini authorized-source views and ordinary member construction.
+
+C. Byte-portable authored applet working set, not full resident resurrection.
+deos-hermes/tests/agent_memory_as_umem.rs projects a deos-js applet cell, stores
+manifest/source and two scalar registers, reloads Applet::from_cell, compares
+UProjection byte-for-byte and continues the counter. The source explicitly
+names missing cryptographic witnessing. This is a useful exact serialization
+test; it doesn't carry months of conversation, summaries' dependency closure,
+SDK/provider session, external tool environment, identity custody or current
+permission. portable applet held authority cannot become new live rights merely
+because bytes rehydrate. Deos web DomSnapshot captures boundary/ref/manifest
+asset names and re-fetches per viewer (deos-web-cells/rehydrate.rs); useful
+typed reference/closure pattern, but not authority for Mini via possession.
+
+CAPABILITY-BEARING MESSAGE IS NOT THE SAME AS CONTENT OR CURRENT ROSTER
+Bread contains at least two intentionally different message consumers:
+* deos-js/mailtown.rs is content-only pen-pal delivery with an affordance cap
+  floor and route graph. Its header explicitly says on-ledger permissions open
+  in this single-custody embedded world. Non-amplification of its API does not
+  prove all raw effect paths or a model's obedience; its string Custom office
+  value and embedded sender are not live authenticated multiuser identities.
+* dregg-sdk-net/mailbox.rs contains MailboxTurnIntent and MailboxCrank. Custody
+  proof binds encrypted bytes; live inbox root must match authorized sender-set
+  opening; unsealed typed intent is signed/submitted by OWNER runtime (421).
+  This deliberately permits messages to induce owner-authorized effects.
+  Therefore 'messages never commands' is not a universal mail abstraction.
+  It is a selected receiver policy. Sender-set authorization, authenticated
+  sender↔ciphertext binding, exact effects, stable intent replay identity and
+  current target rights must be qualified together before Mini adaptation.
+  Per-drain proof roots are checked; cross-crank enqueue movement and durable
+  effect dedup need their own semantics. No security reproduction was run.
+
+Low-level peer_exchange.rs is also narrower than May's assistant promise.
+verify_transition266 takes caller-supplied peer_pubkey; registered PeerCellView
+pins commitment/sequence/time but not a key. canonical_message391 omits cell_id.
+The read verifier checks strict signature, matching prior commitment, next
+sequence and timestamp; None transition_proof provides no executor proof,
+Some retired STARK fails closed. Optional unilateral_attestation is not checked
+in that body's acceptance chain. External trusted identity/key binding and
+execution evidence are prerequisites, not supplied by this signed assertion
+continuity function. This is a concrete missing-envelope question, not a claim
+that every consumer is vulnerable; higher layers may supply those conditions.
+
+DRORB / FN: USE THE ADAPTER CONTRACT, NOT ITS BROAD LABEL
+Drorb Reactor/Captp.lean uses real import/export/answer Session with epoch stamps
+and one-shot resolve. grantStep105 combines Reactor.serve with export; epoch
+seam proves stale descriptor refusal after modeled epoch bump/rebind. Useful
+ABA/reference generation and answer lifecycle abstraction. objOf66 is plain
+base256 fold with zero seed, so leading-zero byte sequences collide: it isn't
+an injective canonical signed-world identity. README names byte decoder and
+reconnect→bump hook as residual. My consumer search found grantStep/NetState in
+Captp and WireCaptp theorem drivers, not Arena.Orb.main; main runs the HTTP
+pipeline. A theorem that shares deployed response bytes does not prove a live
+socket retains/resets CapTP state. No current deployment was qualified here.
+
+Mini fn is stronger receiving groundwork for porting actual references:
+resource-client/fn_namespace.rs plan/current approval pins authority root,
+credential logical root, target pre-root, key ID/epoch/validUntil separately;
+an uncertain signed ingress uses original lookup rather than new submit.
+Kernel/FnConsumerNamespaceAdmission.lean requires NativeHostReplay.Verified
+same-walk history and exact legacy selection, not uploaded envelope's verifier
+choice. FnSelectiveReleaseSourceAuthority.lean separates signed source bytes
+used for authoring from current delegateObject/policy check, verifies selected
+atom current payload and physical root; its own header says separate durable
+publication event must precede attribution of outbound POST. These are suitable
+current-authority/replay/release boundaries. They are not yet independent local
+sovereign resident state convergence or portable authority closure.
+
+CURRENT MINI RESIDENT: THE ACTUAL RECEIVING HOME
+Root /Users/ember/workbox/mini-dev-opus, baseline e851920e supplied by root;
+concurrent service/common revisions exceed it. Read native sources and owner
+messages; do not silently rewrite their frozen context fixture.
+
+native/grain-runtime/hermes_room.rs:512 prepare_resident checks accepted signed
+summon handoff, adopts exact account/program, reads mini_doc_show, uses paged
+mini_stream_discovery, current room and room status. Request binding includes
+world, roomCell, assignment, task, handoff, resident. room_resident.rs:42
+assignment_fingerprint keeps full input except roomStatus and only the signed
+renderer's decimal height: own provider/budget movement should not trigger new
+work when role/source content stays unchanged. prompt_assignment compacts
+display gutters/omits bulky transaction receipts while keeping full durable
+input fingerprint. Initial framed brief is bounded16,384 bytes; this is NOT
+the upstream model's total context limit or a ban on additional signed tools.
+
+resident_requests.rs request identity is binding+author+cell+sequence (228);
+same_entry additionally compares height/text/to/kind. Discovery positions are
+not read grants. select uses current signed member/stream eligibility, author
+withdrawal, bounded fair rotation and retained pending selection; replaced
+assignment or revoked author cancels unstarted work, whereas started work is
+retained for exact recovery. This is a good starting policy; future edit/move
+cannot silently substitute a new prompt under its already-started ID.
+room_resident requires unique prompt origin and source completion receipt,
+retains uncertain pending, and never treats model text/counters as completion.
+resident_completion binds before/after session, provider replay/result digests,
+source prompt origin and typed receiving. Completion and delivery differ.
+
+resource-client/chat.rs has actual signed append-only per-author streams, bytes
+checked against accepted payload digest and stable (cell,sequence) references.
+Current Host who membership is separated from historical roster (tail1778);
+kick retains stream/history and re-invitation reuses subject slot with fresh
+authority. This avoids dreggnet-doc's erase-history-on-role-change semantics.
+request_rows220 takes terminal status only from resident's own canonical stream,
+and preserves terminal state. Display feed number is not invocation identity.
+There is no current message edit/reparent contract owned by docuverse/service;
+append-only streams alone should not be marketed as Allgame recrafting.
+
+Useful-work source testing/journeys/shared-resident-useful-work.py consumes
+explicit existing world/inventory, captured document alias/target and founder
+reference, performs current native doc read, authors role, gives multiple
+independent authors requests, uses a local scripted provider, and qualifies
+driver interruption/source completion/delivery/controller restart. It binds
+operation/custody/effects; it does not certify long-term collaborator memory or
+autonomous model judgment. Service owner reports current same-world connector
+fixture additionally binds accepted connector operation/call/body hashes and
+native readback before supplying captured context, later records signed doc
+read hashes per frame. That current owner work is not changed by this report.
+
+Captured model-context evidence read: docs/evidence/2026-09-27-hermes-context-
+64k/README.md pins actual upstream guard >=64k, captured tool schema overhead,
+real loaded65,536-token local slot and explicit output cap. Real baseline
+request8,947 prompt+23 output tokens took140.74s. This is dated built-in-only
+provider qualification, not today's Mini MCP catalog or a complete resident
+journey. Bigger context has material memory/latency cost; budget exact selected
+input/tool schema rather than promising months 'for free'.
+
+ONE CONCRETE BEND / MINI JOIN (DESIGN INFERENCE, NOT IMPLEMENTED)
+Define a source-owned, bounded ContextProjection over authorized source
+observations, retaining references to immutable activity identity and revisions.
+Inputs: declared room/topic/assignment, requested cursor/coverage, viewer's
+already-authorized source projection, current content+placement revisions,
+selected memory/scratch objects, source-defined loading/budget policy and
+summary records with source revision dependencies. Output: selected ordered
+data, historical/current status, explicit missing coverage and support manifest.
+Manifest ties exact source/module/policy/input roots and selected bytes to the
+residentPromptId/input fingerprint without making discovery or citation a grant.
+
+Bend authors deterministic selection/work reaction/summarization acceptance
+rules and exact typed effects, preferably via the same object methods/views.
+External model-generated summary is proposed authored data with citations,
+not deterministic Bend truth; acceptance/revision/current source eligibility
+are governed methods. Generate shared projection/codec/intent adapters for web,
+native and resident consumers. Check relation to canonical Mini state; do not
+blindly run the upstream C/JS compiler as an authority interpreter. Current
+BendTT proofs do not prove those compilers or physical IO refinement.
+
+Persistent continuation is a typed closure, not one opaque OS backup: exact
+source/modules and evaluator profile; authorized resource references; immutable
+history/current revision; private notes/summary input pins; pending operation,
+provider result/outbox and delivery obligations; audience/release generation;
+available body/tool ports; selected context policy; explicit host/identity key
+custody and successor fencing. Some bytes are unavailable after revocation,
+some physical effects already happened, and an external provider session may
+not migrate. Preserve those distinctions. A historical reference can show a
+past allowed view, but current inference/release needs its declared policy.
+
+PRECISE QUESTIONS AND CHEAP FALSIFYING TRACES FOR OWNERS
+1. Context currentness: append A, edit A before queue selection, then after
+   selection but before dispatch, then during provider call. One stable event
+   ID with distinct source revisions; already-started exact work cannot be
+   silently reauthored. UI and next inference show selected/current revision.
+   Owner seam: canonical message/domain contract + resident_requests;
+   acceptance policy still to specify, not a required human permission barrier.
+2. Placement: move an addressed message from roomX toY before reply, with
+   different grants/audience. X current projection excludes/relabels it;
+   Y includes only under Y authorization. Original author/history remains.
+   A move cannot launder X private bytes into Y or create new effect identity.
+3. Warm/cold equivalence: same authorized history/revisions/load policy yields
+   same selected semantic context after restart or warm cache. Summary produced
+   before edit/move stays visibly historical or is regenerated; quarantine must
+   not re-enter through summary. Pure Bend selector is a good narrow test home.
+4. Current authority: revoke author's request eligibility, resident read grant
+   or output audience separately. Unstarted tasks cancel/refuse; uncertain
+   started tasks retain recovery evidence; retained result does not imply current
+   disclosure. Historical author identity survives. Feed roster is not a cap.
+5. Input identity: unrelated provider height/budget movement creates no new
+   assignment; actual role/source/placement/load-policy revision does. Preserve
+   existing height-normalization without stripping revision/payload roots.
+6. Canonical receipt: driver cut after source end_turn, loss of delivery reply,
+   changed rendered excerpt and controller restart must recover same operation,
+   selected input revision and installed output, no second charge/dispatch.
+   Extend current useful-work receiving fixture; don't replace its frozen input.
+7. Portable refs: replay old epoch descriptor after reconnect/rebind, substitute
+   peer key for same cell, omit program/dependency/source bytes, export raw host
+   signing seed, revoke old host after successor, and retry old pending intent.
+   Separate reference validity, identity authenticity, execution, availability,
+   custody and current permission. Drorb/Bread leaf tests are donors, not proof
+   the complete physical Mini bridge exists.
+8. Real resident actuation: continuing model reads/cites current source, performs
+   one permitted tool/document effect, verifies readback, can decline/socially
+   participate, and carries useful chosen notes into a later context. A fixed
+   provider fixture, LocalBrain script, NPC GM or counter applet may qualify
+   pieces but cannot alone satisfy that experience. Technical direct desktop
+   surfaces must actuate the same objects and show current operation outcomes.
+
+HANDOFF / COVERAGE
+Sent concrete current projection/revision observations to takeover_service and
+docuverse_deos_construction, product distinctions to bigdregg_product_architecture,
+portable-envelope source caveats to historical_missing_junctions. Owners confirmed
+no edit/move/context shadow semantics already assigned; current docuverse uses
+signed rendered source with exact atom revisions, explicit transclusion pins
+and stale editor replacement refusal; resident UI shares canonical classifier.
+Scope includes actual adapters above; I did not audit every Allgame engine,
+runtime binding, Postmark deployment, Bread mailbox crypto, Captp byte transport,
+full Mini fn controller family or physical host migration. No grave historical
+claim was treated as automatic proof of a present flaw or absent feature.

@@ -1,0 +1,186 @@
+{
+  "date": "2026-10-03",
+  "owner": "redregg_evidence",
+  "host": "persvati",
+  "wrapper": "native systemd-run --user",
+  "enforced_controls": {
+    "memory_max_bytes": 8589934592,
+    "memory_swap_max_bytes": 0,
+    "cpu_quota_percent": 200,
+    "tasks_max": 256,
+    "runtime_max_seconds": 1800,
+    "kill_mode": "control-group",
+    "oom_policy": "stop",
+    "cargo_jobs": 2,
+    "rayon_threads": 2
+  },
+  "atomic_job_lifetime": "slot1/slot2 flock FD9 plus lane flock FD8, systemd cgroup child lifetime; PID lease hint cleaned at normal exit",
+  "outcomes": [
+    {
+      "lane": "portable",
+      "service": "persvati-portable-20261003-r1",
+      "scope": "5 release lib tests and release helper build",
+      "status": "PASS",
+      "tests_run": 5,
+      "tests_pass": 5,
+      "tests_skipped": 0,
+      "test_seconds": 0.174,
+      "finished_utc": "2026-10-03T09:44:35Z",
+      "binary_sha256": "fe36b0d716190761291d7248572e549346c8d33be50a10e6d7ddd4399beb1567"
+    },
+    {
+      "lane": "ir2",
+      "service": "persvati-ir2-20261003-r3",
+      "scope": "release cargo check --tests only; actual proof awaits Lean fixture",
+      "status": "PASS",
+      "first_code_failure": "E0282 basis slice type; owner repaired exact file",
+      "finished_utc": "2026-10-03T09:49:07Z",
+      "resolved_lock_sha256": "43c1a9e1484ddd9645a5215a85aaad10cc5d651efe97532a2aa7245c2dd9d926"
+    },
+    {
+      "lane": "dzk",
+      "service": "persvati-dzk-20261003-r1",
+      "scope": "explicit test(/dzk/) release lib selection",
+      "status": "PASS",
+      "tests_run": 5,
+      "tests_pass": 5,
+      "tests_skipped": 50,
+      "test_seconds": 5.706,
+      "finished_utc": "2026-10-03T09:57:06Z"
+    }
+  ],
+  "evidence": [
+    {
+      "lane": "portable",
+      "local_evidence": "/Users/ember/workbox/persvati-portable-20261003",
+      "persvati_source_output": "/home/ember/workbox/persvati-portable-20261003",
+      "pins": [
+        {
+          "path": "/Users/ember/workbox/persvati-portable-20261003/binary.sha256",
+          "sha256": "29d08ac13193a1461fde76d2d449da8706f3877c505d7c0a4d46ee05cff0e711",
+          "bytes": 155
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-portable-20261003/input-pins.txt",
+          "sha256": "09a924da5252ce20e07fa816328ac82f93096c66e3593f2744c4828423ce0ea4",
+          "bytes": 502
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-portable-20261003/job-01.log",
+          "sha256": "27e9568e5f5b6ff6aefad3889183f9bf0c273f4ad9eefe749d25f5f397c34b58",
+          "bytes": 2990
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-portable-20261003/run.sh",
+          "sha256": "da77ba070c7f8b8831dc36d7149ef17d77abd901bfa62e96a13fc7ee9e39bafb",
+          "bytes": 2016
+        }
+      ]
+    },
+    {
+      "lane": "ir2",
+      "local_evidence": "/Users/ember/workbox/persvati-ir2-20261003",
+      "persvati_source_output": "/home/ember/workbox/persvati-ir2-20261003",
+      "pins": [
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/input-pins.txt",
+          "sha256": "2e7c698cc3d62a3ccfa74ba896eeac64827285b1bbbff940aa7a19bc707665bd",
+          "bytes": 781
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/ir2-resolved-Cargo.lock",
+          "sha256": "43c1a9e1484ddd9645a5215a85aaad10cc5d651efe97532a2aa7245c2dd9d926",
+          "bytes": 27486
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/job-01.log",
+          "sha256": "40843bf665217a91487c1dafbc6849466972c1e7b60ed764358b4eec9458b73f",
+          "bytes": 484
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/job-02.log",
+          "sha256": "f3e493c022e743f4fd374507df220de9d77c7a1664e91bedd37396b8647f53ba",
+          "bytes": 17149
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/job-03.log",
+          "sha256": "97005c07dde0b6ab6e98c5ac57e27c808121426a7308e799ae6d1fb0223ac66f",
+          "bytes": 10521
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/job-journal.txt",
+          "sha256": "1723817cf47b3a977a9d0dd8c9df5af3cbc77e1964233da1129623b95ec31cf5",
+          "bytes": 1106
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/resolved-lock.sha256",
+          "sha256": "4e8e4a2b52557b2a31c7dee2bfa1dd97435af610b578efd09eb4f70bfee8e2a7",
+          "bytes": 99
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/run-02.sh",
+          "sha256": "5f0cc70b3d42c4d60f7f1da4ea9d010f9c52e24b57935a8f928993961562a969",
+          "bytes": 2135
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/run-03.sh",
+          "sha256": "0bb91d2f80e13fd73ed219d34351519fa20cae816987c78537601c6978c72518",
+          "bytes": 2135
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/run.sh",
+          "sha256": "bf30c78f4c7a0e17eb163e14096d375ee4a8344df3fc8e1bc75cbf62b8470500",
+          "bytes": 2119
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/source-hashes-r1.json",
+          "sha256": "aacf19be1187656b23b631d72761aef54c065b4be911e3d72580b6bdb4cc9ee8",
+          "bytes": 176442
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/source-hashes.json",
+          "sha256": "da1d36e0809abb0ca438122f76f6e24ee0ccf222fd62cbb2f1183bfe61867138",
+          "bytes": 176820
+        }
+      ]
+    },
+    {
+      "lane": "dzk",
+      "local_evidence": "/Users/ember/workbox/persvati-dzk-20261003",
+      "persvati_source_output": "/home/ember/workbox/persvati-dzk-20261003",
+      "pins": [
+        {
+          "path": "/Users/ember/workbox/persvati-dzk-20261003/input-pins.txt",
+          "sha256": "bfb8dfbe5037a53b0e2d74bd0b91ec9cd96eb1bb10374d3db542a1e78024e5b9",
+          "bytes": 590
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-dzk-20261003/job-01.log",
+          "sha256": "a50eb98a2d96b9a25b6f179a5ccaecddad46b67b0febc7d2c38b81a45e9ee7cc",
+          "bytes": 2331
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-dzk-20261003/job-journal.txt",
+          "sha256": "d3389f3850d37014dfd1e46bc1cc46b9d475d5845955f397de563bb7f2fd29b9",
+          "bytes": 284
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-dzk-20261003/run.sh",
+          "sha256": "a919a5271e6089aac314c2aca0b8776c5989091641201e90ec66db95c04d7d2e",
+          "bytes": 1912
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-dzk-20261003/source-hashes.json",
+          "sha256": "7bd6024056717da29f1c2047adf06bb8fc27df15a6f71139505054f8081347cb",
+          "bytes": 3663
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "No active hbox work restarted",
+    "No old target/cache blindly reused or deleted",
+    "No datamodel traversal/deletion",
+    "No current Mini cache compatibility or general proof-security claim established"
+  ]
+}

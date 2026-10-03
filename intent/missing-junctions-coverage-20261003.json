@@ -1,0 +1,1119 @@
+{
+  "owner": "Codex historical_missing_junctions",
+  "prepared": "2026-10-03",
+  "status": "completed_bounded_fresh_reading_checkpoint_2",
+  "method": "Fresh keyword-screening across extracted private corpora; selected bounded live cv windows read including human, adjacent response and corrections. Raw text is not copied here. Displayed tool calls/results may be truncated.",
+  "full_body_records": [
+    {
+      "period": "july",
+      "group": 103,
+      "body_sha256": "7c2a0cdf498658658409a1a029e0b926d7071ac13336dc3202752caab27fc482",
+      "body_characters": 749,
+      "all_locator_count": 1,
+      "selected_locator": {
+        "session": "claude:a49cc4f7-386f-4e90-a824-376d818f12a1",
+        "index": 87,
+        "timestamp": "2026-07-02T05:56:53.469Z",
+        "cwd": "/Users/ember/dev/DreggNet"
+      },
+      "full_body_read": true,
+      "firstpass_declared_read": false,
+      "authorship": "human request/correction or UI answer; UI framing and surrounding notifications are agent-authored, see cards",
+      "dedup": "count one exact text body; locator repetition does not imply independent endorsement",
+      "foundations_same_focal_locator": false,
+      "worlds_same_group": false
+    },
+    {
+      "period": "july",
+      "group": 1318,
+      "body_sha256": "0df8d539bd00817bf0336aa59f06b52c4c1c4c3ed5fa82b8d1fc94d840263bd3",
+      "body_characters": 224,
+      "all_locator_count": 2,
+      "selected_locator": {
+        "session": "claude:e307afc5-4140-4f17-8ce8-7af955baf2c7",
+        "index": 389,
+        "timestamp": "2026-07-10T13:56:17.333Z",
+        "cwd": "/Users/ember/dev/breadstuffs"
+      },
+      "full_body_read": true,
+      "firstpass_declared_read": false,
+      "authorship": "human request/correction or UI answer; UI framing and surrounding notifications are agent-authored, see cards",
+      "dedup": "count one exact text body; locator repetition does not imply independent endorsement",
+      "foundations_same_focal_locator": false,
+      "worlds_same_group": false
+    },
+    {
+      "period": "july",
+      "group": 1339,
+      "body_sha256": "6ebe1f92e5eba4f5cd861eb27033a9040b78b06b34be1d897e19c8c2d59bcc53",
+      "body_characters": 357,
+      "all_locator_count": 2,
+      "selected_locator": {
+        "session": "claude:e307afc5-4140-4f17-8ce8-7af955baf2c7",
+        "index": 473,
+        "timestamp": "2026-07-10T15:06:43.704Z",
+        "cwd": "/Users/ember/dev/breadstuffs"
+      },
+      "full_body_read": true,
+      "firstpass_declared_read": false,
+      "authorship": "human request/correction or UI answer; UI framing and surrounding notifications are agent-authored, see cards",
+      "dedup": "count one exact text body; locator repetition does not imply independent endorsement",
+      "foundations_same_focal_locator": false,
+      "worlds_same_group": false
+    },
+    {
+      "period": "july",
+      "group": 1472,
+      "body_sha256": "9c24d0d9d3208a72cb6b51315be2f633c1dc15755cc2d3c1995f3490e99f1974",
+      "body_characters": 202,
+      "all_locator_count": 3,
+      "selected_locator": {
+        "session": "claude:495db92c-be04-4c6c-8115-fd603836154b",
+        "index": 220,
+        "timestamp": "2026-07-11T13:17:45.571Z",
+        "cwd": "/Users/ember/dev/breadstuffs"
+      },
+      "full_body_read": true,
+      "firstpass_declared_read": false,
+      "authorship": "human request/correction or UI answer; UI framing and surrounding notifications are agent-authored, see cards",
+      "dedup": "count one exact text body; locator repetition does not imply independent endorsement",
+      "foundations_same_focal_locator": false,
+      "worlds_same_group": false
+    },
+    {
+      "period": "july",
+      "group": 293,
+      "body_sha256": "ebae4fff5802b515153331103b7262533290b62a9be5c80aec78c46bc6c8e32e",
+      "body_characters": 172,
+      "all_locator_count": 3,
+      "selected_locator": {
+        "session": "claude:47d16244-f253-4612-a1e8-00d47b62cddf",
+        "index": 1028,
+        "timestamp": "2026-07-03T16:10:04.057Z",
+        "cwd": "/Users/ember/dev/breadstuffs/.claude/worktrees/deos-night-shift"
+      },
+      "full_body_read": true,
+      "firstpass_declared_read": false,
+      "authorship": "human request/correction or UI answer; UI framing and surrounding notifications are agent-authored, see cards",
+      "dedup": "count one exact text body; locator repetition does not imply independent endorsement",
+      "foundations_same_focal_locator": false,
+      "worlds_same_group": false
+    },
+    {
+      "period": "july",
+      "group": 317,
+      "body_sha256": "aadb3d5319460d06e6209bb74ea7e810c818e74ec5d8cbf2034e69f80de2ac7b",
+      "body_characters": 453,
+      "all_locator_count": 3,
+      "selected_locator": {
+        "session": "claude:47d16244-f253-4612-a1e8-00d47b62cddf",
+        "index": 1318,
+        "timestamp": "2026-07-03T21:37:41.668Z",
+        "cwd": "/Users/ember/dev/breadstuffs/.claude/worktrees/deos-night-shift"
+      },
+      "full_body_read": true,
+      "firstpass_declared_read": false,
+      "authorship": "human request/correction or UI answer; UI framing and surrounding notifications are agent-authored, see cards",
+      "dedup": "count one exact text body; locator repetition does not imply independent endorsement",
+      "foundations_same_focal_locator": false,
+      "worlds_same_group": false
+    },
+    {
+      "period": "july",
+      "group": 354,
+      "body_sha256": "c337fa566669fac68ade8f9237a9d9d7ea33cff27e311555256e02a4bf3ad144",
+      "body_characters": 315,
+      "all_locator_count": 1,
+      "selected_locator": {
+        "session": "claude:54cbae0a-eef5-47cc-a731-b6fe3c096259",
+        "index": 1521,
+        "timestamp": "2026-07-04T06:22:03.453Z",
+        "cwd": "/Users/ember/dev/breadstuffs/.claude/worktrees/deos-night-shift"
+      },
+      "full_body_read": true,
+      "firstpass_declared_read": false,
+      "authorship": "human request/correction or UI answer; UI framing and surrounding notifications are agent-authored, see cards",
+      "dedup": "count one exact text body; locator repetition does not imply independent endorsement",
+      "foundations_same_focal_locator": false,
+      "worlds_same_group": false
+    },
+    {
+      "period": "july",
+      "group": 1093,
+      "body_sha256": "7d43139e1b318fdc5f73005c22bff067f6f2235f58fc560aa5507d20d0f0bccf",
+      "body_characters": 493,
+      "all_locator_count": 3,
+      "selected_locator": {
+        "session": "claude:4daf72e8-9866-4969-9e32-f9463a8f3171",
+        "index": 362,
+        "timestamp": "2026-07-09T15:26:33.606Z",
+        "cwd": "/Users/ember/dev/breadstuffs"
+      },
+      "full_body_read": true,
+      "firstpass_declared_read": false,
+      "authorship": "human request/correction or UI answer; UI framing and surrounding notifications are agent-authored, see cards",
+      "dedup": "count one exact text body; locator repetition does not imply independent endorsement",
+      "foundations_same_focal_locator": false,
+      "worlds_same_group": false
+    },
+    {
+      "period": "july",
+      "group": 2123,
+      "body_sha256": "f98aa4065bd29e7094e655d4cbf8180856d5086f3f9ebea11fc746165115ab77",
+      "body_characters": 929,
+      "all_locator_count": 4,
+      "selected_locator": {
+        "session": "claude:5d642514-10f1-4113-b2f8-7521ea52ff8f",
+        "index": 170,
+        "timestamp": "2026-07-14T02:59:22.236Z",
+        "cwd": "/Users/ember/dev/breadstuffs"
+      },
+      "full_body_read": true,
+      "firstpass_declared_read": false,
+      "authorship": "human request/correction or UI answer; UI framing and surrounding notifications are agent-authored, see cards",
+      "dedup": "count one exact text body; locator repetition does not imply independent endorsement",
+      "foundations_same_focal_locator": false,
+      "worlds_same_group": false
+    },
+    {
+      "period": "july",
+      "group": 3306,
+      "body_sha256": "12bac5a573596a59d05ba04a6e65f11f37f707f21e0c129c298ac29376e4bd64",
+      "body_characters": 312,
+      "all_locator_count": 147,
+      "selected_locator": {
+        "session": "codex:019f80fc-e5a8-76c1-b25d-f984288ce1a8",
+        "index": 7176,
+        "timestamp": "2026-07-20T19:24:45.915Z",
+        "cwd": "/Users/ember/dev/breadstuffs-codex"
+      },
+      "full_body_read": true,
+      "firstpass_declared_read": false,
+      "authorship": "inherited large fork family; original occurrence not audited, no core question/card relies on this body",
+      "dedup": "count one exact text body; locator repetition does not imply independent endorsement",
+      "foundations_same_focal_locator": false,
+      "worlds_same_group": false
+    },
+    {
+      "period": "july",
+      "group": 4284,
+      "body_sha256": "310213470784c9dd883d8e327dfd9c74c1797d226966b8ecc130fa6939ec2a8d",
+      "body_characters": 371,
+      "all_locator_count": 1,
+      "selected_locator": {
+        "session": "claude:976c560a-46d8-4d04-b139-6f16b99ab446",
+        "index": 246,
+        "timestamp": "2026-07-27T00:23:28.817Z",
+        "cwd": "/Users/ember/dev/breadstuffs"
+      },
+      "full_body_read": true,
+      "firstpass_declared_read": false,
+      "authorship": "human request/correction or UI answer; UI framing and surrounding notifications are agent-authored, see cards",
+      "dedup": "count one exact text body; locator repetition does not imply independent endorsement",
+      "foundations_same_focal_locator": false,
+      "worlds_same_group": false
+    },
+    {
+      "period": "july",
+      "group": 1347,
+      "body_sha256": "ba57dedfd14f846c0ceb55df97e88016f14a3fed45afd7784386e41bf4e5a9cf",
+      "body_characters": 381,
+      "all_locator_count": 2,
+      "selected_locator": {
+        "session": "claude:e307afc5-4140-4f17-8ce8-7af955baf2c7",
+        "index": 505,
+        "timestamp": "2026-07-10T15:24:45.220Z",
+        "cwd": "/Users/ember/dev/breadstuffs"
+      },
+      "full_body_read": true,
+      "firstpass_declared_read": false,
+      "authorship": "human request/correction or UI answer; UI framing and surrounding notifications are agent-authored, see cards",
+      "dedup": "count one exact text body; locator repetition does not imply independent endorsement",
+      "foundations_same_focal_locator": false,
+      "worlds_same_group": false
+    },
+    {
+      "period": "july",
+      "group": 514,
+      "body_sha256": "dfd9c3f1a583bfba36fd0a77c744c7a5d96f7415b7e1ad293b7ff88d2862f25c",
+      "body_characters": 347,
+      "all_locator_count": 4,
+      "selected_locator": {
+        "session": "claude:fbcc8d85-acbe-49e9-8d6f-811a946f5225",
+        "index": 448,
+        "timestamp": "2026-07-06T19:31:10.215Z",
+        "cwd": "/Users/ember/dev/DreggNet"
+      },
+      "full_body_read": true,
+      "firstpass_declared_read": false,
+      "authorship": "human request/correction or UI answer; UI framing and surrounding notifications are agent-authored, see cards",
+      "dedup": "count one exact text body; locator repetition does not imply independent endorsement",
+      "foundations_same_focal_locator": false,
+      "worlds_same_group": false
+    },
+    {
+      "period": "july",
+      "group": 4463,
+      "body_sha256": "7d89c519362af78659b46acf8102601d664e515e4ba12bac871232a23b6ceadd",
+      "body_characters": 978,
+      "all_locator_count": 4,
+      "selected_locator": {
+        "session": "claude:6418429c-b1af-4779-8a39-f42aebd4808f",
+        "index": 291,
+        "timestamp": "2026-07-30T14:14:18.746Z",
+        "cwd": "/Users/ember/dev/breadstuffs"
+      },
+      "full_body_read": true,
+      "firstpass_declared_read": false,
+      "authorship": "human request/correction or UI answer; UI framing and surrounding notifications are agent-authored, see cards",
+      "dedup": "count one exact text body; locator repetition does not imply independent endorsement",
+      "foundations_same_focal_locator": false,
+      "worlds_same_group": false
+    },
+    {
+      "period": "may",
+      "group": 756,
+      "body_sha256": "6171cc6d1a3e938aec27d565445a57bacfc96876d16ec251f1ca0b134ec4c902",
+      "body_characters": 213,
+      "all_locator_count": 2,
+      "selected_locator": {
+        "session": "claude:70642dc2-d9f1-434b-8209-c2c96787bd92",
+        "index": 912,
+        "timestamp": "2026-05-22T18:54:25.685Z"
+      },
+      "full_body_read": true,
+      "firstpass_declared_read": null,
+      "authorship": "human request/correction or UI answer; UI framing and surrounding notifications are agent-authored, see cards",
+      "dedup": "count one exact text body; locator repetition does not imply independent endorsement",
+      "foundations_same_focal_locator": false,
+      "worlds_same_group": false,
+      "firstpass_read_scope": "extracted and machine-keyword-scanned only"
+    },
+    {
+      "period": "may",
+      "group": 324,
+      "body_sha256": "6dda9a03748a0672f59f6d62ca9f7e14b48134906a4c7fb0ea31dacdc5328dcc",
+      "body_characters": 182,
+      "all_locator_count": 2,
+      "selected_locator": {
+        "session": "claude:e75ed07b-4ce4-4f00-a0b8-3abab4a2f20f",
+        "index": 3053,
+        "timestamp": "2026-05-21T00:34:25.848Z"
+      },
+      "full_body_read": true,
+      "firstpass_declared_read": null,
+      "authorship": "human request/correction or UI answer; UI framing and surrounding notifications are agent-authored, see cards",
+      "dedup": "count one exact text body; locator repetition does not imply independent endorsement",
+      "foundations_same_focal_locator": false,
+      "worlds_same_group": false,
+      "firstpass_read_scope": "extracted and machine-keyword-scanned only"
+    },
+    {
+      "period": "may",
+      "group": 3170,
+      "body_sha256": "4300a38d2d178ef76da2d13f1f58b12f60f6e4594bd984e4602f5776214f0ccc",
+      "body_characters": 1066,
+      "all_locator_count": 1,
+      "selected_locator": {
+        "session": "claude:7efea951-f234-48e7-bac4-96d9e45865b3",
+        "index": 59,
+        "timestamp": "2026-06-01T00:12:07.562Z"
+      },
+      "full_body_read": true,
+      "firstpass_declared_read": null,
+      "authorship": "human request/correction or UI answer; UI framing and surrounding notifications are agent-authored, see cards",
+      "dedup": "count one exact text body; locator repetition does not imply independent endorsement",
+      "foundations_same_focal_locator": false,
+      "worlds_same_group": false,
+      "firstpass_read_scope": "extracted and machine-keyword-scanned only"
+    },
+    {
+      "period": "may",
+      "group": 3376,
+      "body_sha256": "35ddd1b4c1f05a2b9acd7a52963ed03185f53e8766949887da90f198c0b3f931",
+      "body_characters": 973,
+      "all_locator_count": 1,
+      "selected_locator": {
+        "session": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+        "index": 12873,
+        "timestamp": "2026-06-03T23:36:40.689Z"
+      },
+      "full_body_read": true,
+      "firstpass_declared_read": null,
+      "authorship": "human request/correction or UI answer; UI framing and surrounding notifications are agent-authored, see cards",
+      "dedup": "count one exact text body; locator repetition does not imply independent endorsement",
+      "foundations_same_focal_locator": false,
+      "worlds_same_group": false,
+      "firstpass_read_scope": "extracted and machine-keyword-scanned only"
+    },
+    {
+      "period": "may",
+      "group": 1122,
+      "body_sha256": "8c9be645f673d7da1b381f2a357ce2353939ed96f7f7971bb440c2e89083d582",
+      "body_characters": 336,
+      "all_locator_count": 1,
+      "selected_locator": {
+        "session": "claude:70642dc2-d9f1-434b-8209-c2c96787bd92",
+        "index": 6649,
+        "timestamp": "2026-05-23T13:18:23.768Z"
+      },
+      "full_body_read": true,
+      "firstpass_declared_read": null,
+      "authorship": "human request/correction or UI answer; UI framing and surrounding notifications are agent-authored, see cards",
+      "dedup": "count one exact text body; locator repetition does not imply independent endorsement",
+      "foundations_same_focal_locator": false,
+      "worlds_same_group": false,
+      "firstpass_read_scope": "extracted and machine-keyword-scanned only"
+    },
+    {
+      "period": "may",
+      "group": 1284,
+      "body_sha256": "0df1b3b10e358b5973db2f29b8dd2c7ed6d6340148cf8a1b811eef1754e58717",
+      "body_characters": 114,
+      "all_locator_count": 1,
+      "selected_locator": {
+        "session": "claude:487bc20c-eee8-4b3e-ae47-2ee337eb2f89",
+        "index": 215,
+        "timestamp": "2026-05-24T07:48:45.905Z"
+      },
+      "full_body_read": true,
+      "firstpass_declared_read": null,
+      "authorship": "human request/correction or UI answer; UI framing and surrounding notifications are agent-authored, see cards",
+      "dedup": "count one exact text body; locator repetition does not imply independent endorsement",
+      "foundations_same_focal_locator": false,
+      "worlds_same_group": false,
+      "firstpass_read_scope": "extracted and machine-keyword-scanned only"
+    },
+    {
+      "period": "may",
+      "group": 933,
+      "body_sha256": "c5562414343d7f55a22a4ffc04356ce30bb2bbc8c64672ac470b281e7043f9ec",
+      "body_characters": 367,
+      "all_locator_count": 1,
+      "selected_locator": {
+        "session": "claude:70642dc2-d9f1-434b-8209-c2c96787bd92",
+        "index": 2874,
+        "timestamp": "2026-05-23T06:49:58.100Z"
+      },
+      "full_body_read": true,
+      "firstpass_declared_read": null,
+      "authorship": "human request/correction or UI answer; UI framing and surrounding notifications are agent-authored, see cards",
+      "dedup": "count one exact text body; locator repetition does not imply independent endorsement",
+      "foundations_same_focal_locator": false,
+      "worlds_same_group": false,
+      "firstpass_read_scope": "extracted and machine-keyword-scanned only"
+    },
+    {
+      "period": "may",
+      "group": 325,
+      "body_sha256": "9f68ae35c40ef81a5d272199190b51ec2e6022ce3fcf58fea8c625084b3ee5a8",
+      "body_characters": 40,
+      "all_locator_count": 2,
+      "selected_locator": {
+        "session": "claude:e75ed07b-4ce4-4f00-a0b8-3abab4a2f20f",
+        "index": 3059,
+        "timestamp": "2026-05-21T00:35:35.454Z",
+        "cwd": "/Users/ember/elide/breadstuffs"
+      },
+      "full_body_read": true,
+      "authorship": "see graph card; mixed quotation and UI option text are not all human authorship",
+      "dedup": "one exact text body, all inherited occurrences remain locators rather than endorsements",
+      "firstpass_declared_read": null,
+      "worlds_same_group": null,
+      "foundations_same_focal_locator": false,
+      "firstpass_read_scope": "extracted and machine-keyword-scanned only"
+    },
+    {
+      "period": "may",
+      "group": 326,
+      "body_sha256": "0ff7c9f69b61cb4ea7c86287b0ed76afdf0308731df354e938dcde5224422c03",
+      "body_characters": 457,
+      "all_locator_count": 2,
+      "selected_locator": {
+        "session": "claude:e75ed07b-4ce4-4f00-a0b8-3abab4a2f20f",
+        "index": 3093,
+        "timestamp": "2026-05-21T00:39:15.212Z",
+        "cwd": "/Users/ember/elide/breadstuffs"
+      },
+      "full_body_read": true,
+      "authorship": "see graph card; mixed quotation and UI option text are not all human authorship",
+      "dedup": "one exact text body, all inherited occurrences remain locators rather than endorsements",
+      "firstpass_declared_read": null,
+      "worlds_same_group": null,
+      "foundations_same_focal_locator": false,
+      "firstpass_read_scope": "extracted and machine-keyword-scanned only"
+    },
+    {
+      "period": "may",
+      "group": 327,
+      "body_sha256": "44390b1634608287789b980a47362e88ac3fb62ae746428939ce5e0c7ea69329",
+      "body_characters": 178,
+      "all_locator_count": 2,
+      "selected_locator": {
+        "session": "claude:e75ed07b-4ce4-4f00-a0b8-3abab4a2f20f",
+        "index": 3098,
+        "timestamp": "2026-05-21T00:41:47.534Z",
+        "cwd": "/Users/ember/elide/breadstuffs"
+      },
+      "full_body_read": true,
+      "authorship": "see graph card; mixed quotation and UI option text are not all human authorship",
+      "dedup": "one exact text body, all inherited occurrences remain locators rather than endorsements",
+      "firstpass_declared_read": null,
+      "worlds_same_group": null,
+      "foundations_same_focal_locator": false,
+      "firstpass_read_scope": "body-or-excerpt-reviewed"
+    },
+    {
+      "period": "july",
+      "group": 3732,
+      "body_sha256": "235a9c7064fd06b34709c6543af297bf7d0da000069e7e3dccd7fdc20befa2a3",
+      "body_characters": 219,
+      "all_locator_count": 2,
+      "selected_locator": {
+        "session": "claude:d41ad82c-b169-4d25-8494-d2d16d493696",
+        "index": 744,
+        "timestamp": "2026-07-23T23:47:40.366Z",
+        "cwd": "/Users/ember/dev/allgame"
+      },
+      "full_body_read": true,
+      "authorship": "see graph card; mixed quotation and UI option text are not all human authorship",
+      "dedup": "one exact text body, all inherited occurrences remain locators rather than endorsements",
+      "firstpass_declared_read": false,
+      "worlds_same_group": false,
+      "foundations_same_focal_locator": false
+    },
+    {
+      "period": "july",
+      "group": 3998,
+      "body_sha256": "d6d835bc9ccac55715df9ac76020e96dfd5418aaa90af6ad127507446b5b7fe3",
+      "body_characters": 967,
+      "all_locator_count": 2,
+      "selected_locator": {
+        "session": "claude:d41ad82c-b169-4d25-8494-d2d16d493696",
+        "index": 806,
+        "timestamp": "2026-07-25T17:36:55.033Z",
+        "cwd": "/Users/ember/dev/allgame"
+      },
+      "full_body_read": true,
+      "authorship": "see graph card; mixed quotation and UI option text are not all human authorship",
+      "dedup": "one exact text body, all inherited occurrences remain locators rather than endorsements",
+      "firstpass_declared_read": false,
+      "worlds_same_group": true,
+      "foundations_same_focal_locator": false
+    },
+    {
+      "period": "july",
+      "group": 4442,
+      "body_sha256": "d3caedf97d04e483adb1eef229309f82332040a3ad034aa4c8b6f87a20def329",
+      "body_characters": 956,
+      "all_locator_count": 1,
+      "selected_locator": {
+        "session": "claude:d41ad82c-b169-4d25-8494-d2d16d493696",
+        "index": 1291,
+        "timestamp": "2026-07-29T23:29:02.718Z",
+        "cwd": "/Users/ember/dev/allgame"
+      },
+      "full_body_read": true,
+      "authorship": "see graph card; mixed quotation and UI option text are not all human authorship",
+      "dedup": "one exact text body, all inherited occurrences remain locators rather than endorsements",
+      "firstpass_declared_read": false,
+      "worlds_same_group": false,
+      "foundations_same_focal_locator": false
+    },
+    {
+      "period": "july",
+      "group": 4575,
+      "body_sha256": "cc443cee8e078a4ad2a9482cf48d31c20dfbd8617a8cbb06dba5fd359d220af9",
+      "body_characters": 1329,
+      "all_locator_count": 1,
+      "selected_locator": {
+        "session": "claude:d41ad82c-b169-4d25-8494-d2d16d493696",
+        "index": 1640,
+        "timestamp": "2026-07-31T16:06:37.324Z",
+        "cwd": "/Users/ember/dev/allgame"
+      },
+      "full_body_read": true,
+      "authorship": "see graph card; mixed quotation and UI option text are not all human authorship",
+      "dedup": "one exact text body, all inherited occurrences remain locators rather than endorsements",
+      "firstpass_declared_read": false,
+      "worlds_same_group": false,
+      "foundations_same_focal_locator": false
+    },
+    {
+      "period": "july",
+      "group": 4666,
+      "body_sha256": "b0468c0c17ff56b15d6de1ce6864715759d775dea394d6fc8f413d0673b929e4",
+      "body_characters": 1763,
+      "all_locator_count": 2,
+      "selected_locator": {
+        "session": "claude:06f061bb-d3ee-42ca-9d08-cd487690bfca",
+        "index": 90,
+        "timestamp": "2026-08-01T01:20:51.507Z",
+        "cwd": "/Users/ember/dev/allgame"
+      },
+      "full_body_read": true,
+      "authorship": "see graph card; mixed quotation and UI option text are not all human authorship",
+      "dedup": "one exact text body, all inherited occurrences remain locators rather than endorsements",
+      "firstpass_declared_read": false,
+      "worlds_same_group": false,
+      "foundations_same_focal_locator": false
+    },
+    {
+      "period": "july",
+      "group": 5328,
+      "body_sha256": "06bb8b06ac85848c110847aa3b2cec5ee1daf4bccd7541c127d8bb4a641e83ea",
+      "body_characters": 404,
+      "all_locator_count": 1,
+      "selected_locator": {
+        "session": "claude:06f061bb-d3ee-42ca-9d08-cd487690bfca",
+        "index": 592,
+        "timestamp": "2026-08-06T21:54:16.447Z",
+        "cwd": "/Users/ember/dev/allgame"
+      },
+      "full_body_read": true,
+      "authorship": "see graph card; mixed quotation and UI option text are not all human authorship",
+      "dedup": "one exact text body, all inherited occurrences remain locators rather than endorsements",
+      "firstpass_declared_read": false,
+      "worlds_same_group": false,
+      "foundations_same_focal_locator": false
+    },
+    {
+      "period": "july",
+      "group": 6246,
+      "body_sha256": "b47d09c530f2f4da8f8f279085616416c553aef6db133b66974aee3aec2bfffb",
+      "body_characters": 412,
+      "all_locator_count": 1,
+      "selected_locator": {
+        "session": "claude:b42cbce2-4510-4d20-b985-840476845387",
+        "index": 537,
+        "timestamp": "2026-08-14T20:09:54.004Z",
+        "cwd": "/Users/ember/dev/allgame"
+      },
+      "full_body_read": true,
+      "authorship": "see graph card; mixed quotation and UI option text are not all human authorship",
+      "dedup": "one exact text body, all inherited occurrences remain locators rather than endorsements",
+      "firstpass_declared_read": false,
+      "worlds_same_group": false,
+      "foundations_same_focal_locator": false
+    }
+  ],
+  "context_windows": [
+    {
+      "session": "claude:e307afc5-4140-4f17-8ce8-7af955baf2c7",
+      "focal_index": 389,
+      "range": [
+        386,
+        393
+      ],
+      "read_scope": "rendered focal human + surrounding assistant and bounded neighboring exchange; tool blocks abbreviated"
+    },
+    {
+      "session": "claude:e307afc5-4140-4f17-8ce8-7af955baf2c7",
+      "focal_index": 473,
+      "range": [
+        470,
+        477
+      ],
+      "read_scope": "rendered focal human + surrounding assistant and bounded neighboring exchange; tool blocks abbreviated"
+    },
+    {
+      "session": "claude:e75ed07b-4ce4-4f00-a0b8-3abab4a2f20f",
+      "focal_index": 3053,
+      "range": [
+        3050,
+        3057
+      ],
+      "read_scope": "rendered focal human + surrounding assistant and bounded neighboring exchange; tool blocks abbreviated"
+    },
+    {
+      "session": "claude:70642dc2-d9f1-434b-8209-c2c96787bd92",
+      "focal_index": 912,
+      "range": [
+        909,
+        916
+      ],
+      "read_scope": "rendered focal human + surrounding assistant and bounded neighboring exchange; tool blocks abbreviated"
+    },
+    {
+      "session": "claude:7efea951-f234-48e7-bac4-96d9e45865b3",
+      "focal_index": 59,
+      "range": [
+        56,
+        63
+      ],
+      "read_scope": "rendered focal human + surrounding assistant and bounded neighboring exchange; tool blocks abbreviated"
+    },
+    {
+      "session": "claude:a49cc4f7-386f-4e90-a824-376d818f12a1",
+      "focal_index": 87,
+      "range": [
+        82,
+        93
+      ],
+      "read_scope": "rendered focal human + surrounding assistant and bounded neighboring exchange; tool blocks abbreviated"
+    },
+    {
+      "session": "claude:47d16244-f253-4612-a1e8-00d47b62cddf",
+      "focal_index": 1028,
+      "range": [
+        1025,
+        1032
+      ],
+      "read_scope": "rendered focal human + surrounding assistant and bounded neighboring exchange; tool blocks abbreviated"
+    },
+    {
+      "session": "claude:47d16244-f253-4612-a1e8-00d47b62cddf",
+      "focal_index": 1318,
+      "range": [
+        1315,
+        1322
+      ],
+      "read_scope": "rendered focal human + surrounding assistant and bounded neighboring exchange; tool blocks abbreviated"
+    },
+    {
+      "session": "claude:4daf72e8-9866-4969-9e32-f9463a8f3171",
+      "focal_index": 362,
+      "range": [
+        359,
+        366
+      ],
+      "read_scope": "rendered focal human + surrounding assistant and bounded neighboring exchange; tool blocks abbreviated"
+    },
+    {
+      "session": "claude:5d642514-10f1-4113-b2f8-7521ea52ff8f",
+      "focal_index": 170,
+      "range": [
+        167,
+        174
+      ],
+      "read_scope": "rendered focal human + surrounding assistant and bounded neighboring exchange; tool blocks abbreviated"
+    },
+    {
+      "session": "claude:487bc20c-eee8-4b3e-ae47-2ee337eb2f89",
+      "focal_index": 215,
+      "range": [
+        212,
+        219
+      ],
+      "read_scope": "rendered focal human + surrounding assistant and bounded neighboring exchange; tool blocks abbreviated"
+    },
+    {
+      "session": "claude:e307afc5-4140-4f17-8ce8-7af955baf2c7",
+      "focal_index": 505,
+      "range": [
+        502,
+        509
+      ],
+      "read_scope": "rendered focal human + surrounding assistant and bounded neighboring exchange; tool blocks abbreviated"
+    },
+    {
+      "session": "claude:70642dc2-d9f1-434b-8209-c2c96787bd92",
+      "focal_index": 2874,
+      "range": [
+        2871,
+        2878
+      ],
+      "read_scope": "rendered focal human + surrounding assistant and bounded neighboring exchange; tool blocks abbreviated"
+    },
+    {
+      "session": "claude:6418429c-b1af-4779-8a39-f42aebd4808f",
+      "focal_index": 291,
+      "range": [
+        288,
+        295
+      ],
+      "read_scope": "rendered focal human + surrounding assistant and bounded neighboring exchange; tool blocks abbreviated"
+    },
+    {
+      "session": "claude:fbcc8d85-acbe-49e9-8d6f-811a946f5225",
+      "focal_index": 448,
+      "range": [
+        445,
+        452
+      ],
+      "read_scope": "rendered focal human + surrounding assistant and bounded neighboring exchange; tool blocks abbreviated"
+    },
+    {
+      "session": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+      "focal_index": 12873,
+      "range": [
+        12870,
+        12877
+      ],
+      "read_scope": "rendered focal human + surrounding assistant and bounded neighboring exchange; tool blocks abbreviated"
+    },
+    {
+      "session": "claude:e75ed07b-4ce4-4f00-a0b8-3abab4a2f20f",
+      "focal_index": 3093,
+      "range": [
+        3088,
+        3099
+      ],
+      "read_scope": "bounded rendered cv around exchange, tools abbreviated; not a whole session"
+    },
+    {
+      "session": "claude:d41ad82c-b169-4d25-8494-d2d16d493696",
+      "focal_index": 1291,
+      "range": [
+        1288,
+        1295
+      ],
+      "read_scope": "bounded rendered cv around exchange, tools abbreviated; not a whole session"
+    },
+    {
+      "session": "claude:d41ad82c-b169-4d25-8494-d2d16d493696",
+      "focal_index": 1640,
+      "range": [
+        1637,
+        1644
+      ],
+      "read_scope": "bounded rendered cv around exchange, tools abbreviated; not a whole session"
+    },
+    {
+      "session": "claude:06f061bb-d3ee-42ca-9d08-cd487690bfca",
+      "focal_index": 592,
+      "range": [
+        589,
+        596
+      ],
+      "read_scope": "bounded rendered cv around exchange, tools abbreviated; not a whole session"
+    },
+    {
+      "session": "claude:b42cbce2-4510-4d20-b985-840476845387",
+      "focal_index": 537,
+      "range": [
+        534,
+        541
+      ],
+      "read_scope": "bounded rendered cv around exchange, tools abbreviated; not a whole session"
+    }
+  ],
+  "counts": {
+    "selected_full_bodies": 31,
+    "july_full_bodies": 21,
+    "may_full_bodies": 10,
+    "rendered_context_windows": 21,
+    "additional_narrative_ranges": 9,
+    "new_to_firstpass_july_groups": 21,
+    "july_same_group_as_worlds": 1,
+    "unit_warning": "Full bodies, bounded windows and half-open narrative ranges are overlapping units. Never sum these as independent human intents. May prior body-or-excerpt scope differs from July full-body units; source search is not complete file reading."
+  },
+  "limits": [
+    "No total authorship audit; no whole-session reading; no implementation outcome certified; no builds/Git/deploy/delete/subagents.",
+    "Snippet screening never counted as full-body reading. July3306 has large inherited fork family; original human occurrence not yet audited.",
+    "Current source attribution uses SHA256 rather than a Git command; reading does not validate deployed use.",
+    "No re-audit of recent deadline corpus; archive OCT13 objective recovery used as dated release lead.",
+    "Mixed pasted private facts intentionally omitted from all owned artifacts. Body hashes/private cv locators allow authorized local recovery without republishing transcript.",
+    "Selected July3998 overlaps worlds full-read set; all map overlaps retained. No claim that each body is newly interpreted globally."
+  ],
+  "source_reads": [
+    {
+      "path": "/Users/ember/dev/breadstuffs/cell/src/delegation.rs",
+      "line_ranges_inclusive": [
+        [
+          1,
+          230
+        ]
+      ],
+      "read_scope": "snapshot fields, inert signature header, Lean shadow fence",
+      "sha256_at_final_checkpoint": "5e8ebc72b9d15abb9388bc668df8993815e2601f0c435d8bd2f38997f8580a10",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/turn/tests/delegation_snapshot_second_authority_source.rs",
+      "line_ranges_inclusive": [
+        [
+          1,
+          200
+        ]
+      ],
+      "read_scope": "Rust second authority-source expiry/amplification regression narrative; not executed",
+      "sha256_at_final_checkpoint": "fb4a61fad2a6f2d41ece067c12cdc24345fac0a0c2e37bd3f11bca4c36591a38",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/cell/src/revocation_channel.rs",
+      "line_ranges_inclusive": [
+        [
+          1,
+          210
+        ]
+      ],
+      "read_scope": "voluntary trip local matching, no detached signed admission",
+      "sha256_at_final_checkpoint": "ff060e1389efb4de6c6701b39b778159086b644da46c26b7249e6260524f0177",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/turn/src/executor/apply.rs",
+      "line_ranges_inclusive": [
+        [
+          975,
+          1065
+        ],
+        [
+          3529,
+          3620
+        ]
+      ],
+      "read_scope": "dead batch trip helper and declared factory params; no call-closure/build claim",
+      "sha256_at_final_checkpoint": "b69e68dcbbee75370f863efcf7454335f900571b6cc197b9e460efe51e26d6a8",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    },
+    {
+      "path": "/Users/ember/dev/minidregg/Theory/ResourceBirthAuthority.lean",
+      "line_ranges_inclusive": [
+        [
+          1,
+          130
+        ]
+      ],
+      "read_scope": "every birth grant uses original authority",
+      "sha256_at_final_checkpoint": "eba5cc129e8796f0ff4057ddaa9f22130d83317919889bf9ccbc9a37258498e2",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    },
+    {
+      "path": "/Users/ember/dev/minidregg/Kernel/GrainResourceBirthTransaction.lean",
+      "line_ranges_inclusive": [
+        [
+          1,
+          85
+        ]
+      ],
+      "read_scope": "one-old-image preparation; explicitly not receiving endpoint",
+      "sha256_at_final_checkpoint": "88830bb5dedfc01b543d70212b71910826480eb34f0e83cb78add94b3babaebe",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/orb/Admin/Reload.lean",
+      "line_ranges_inclusive": [
+        [
+          1,
+          180
+        ]
+      ],
+      "read_scope": "pure reload config/generation contract",
+      "sha256_at_final_checkpoint": "e9eb36e102d458a4375bc3abf3f54c45217119e0b4c57ecbd53523664e7de925",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/orb/Admin/DrainLive.lean",
+      "line_ranges_inclusive": [
+        [
+          1,
+          140
+        ]
+      ],
+      "read_scope": "pure lifecycle selftest excludes deployed shell",
+      "sha256_at_final_checkpoint": "d6d81c5616a7b5d36627286a338b5d88e022fbf4f148e9226641e1df27ea9db0",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/orb/crates/dataplane/src/reconfig.rs",
+      "line_ranges_inclusive": [
+        [
+          1,
+          220
+        ]
+      ],
+      "read_scope": "actual reload signal/admin mechanism, retained Arc generation",
+      "sha256_at_final_checkpoint": "3c8e287c0667c2b6cc6c2d17307fe457838d10c1288b5f2a0abbc313a8053547",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/extension/src/elements/dregg-poll.ts",
+      "line_ranges_inclusive": [
+        [
+          1,
+          244
+        ]
+      ],
+      "read_scope": "thin closed-root view, no keys/evaluator; no runtime exploit tested",
+      "sha256_at_final_checkpoint": "93aa570bc047fe1ca30a8e45ccf7c31bad11fe0594b8ac030d3335769c5f984f",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/extension/src/port.ts",
+      "line_ranges_inclusive": [
+        [
+          250,
+          314
+        ]
+      ],
+      "read_scope": "separate background consent before cast",
+      "sha256_at_final_checkpoint": "bfa9d147fa93f1903e3532234038daef4c52b2e3633a7578bd1d24f3807308e9",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/docs/CONTENT-AND-ASSET-SPEC.md",
+      "line_ranges_inclusive": [],
+      "read_scope": "keyword search and selected content/provenance/epoch sections, not full file",
+      "sha256_at_final_checkpoint": "3c51c72bb9e7876d6bb8ac467ead6ba0371d743e6be799500f9b1fdf4aaa14aa",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    },
+    {
+      "path": "/Users/ember/dev/allgame/claude_resident/config.py",
+      "line_ranges_inclusive": [
+        [
+          180,
+          207
+        ]
+      ],
+      "read_scope": "historical omitted effort rationale",
+      "sha256_at_final_checkpoint": "b1e6716ced45a894dc309465aa6990d3f245be9c57bf73db3ee806156c8e4f90",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    },
+    {
+      "path": "/Users/ember/dev/allgame/scripts/redact_state.py",
+      "line_ranges_inclusive": [
+        [
+          1,
+          158
+        ]
+      ],
+      "read_scope": "full targeted top-level message-content redaction implementation; did not execute",
+      "sha256_at_final_checkpoint": "6956ec51624f1222b59d5b5791dbb3e3e3ae73393c3adb697f12e35540c2bc6d",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    },
+    {
+      "path": "/Users/ember/dev/allgame/claude_resident/state.py",
+      "line_ranges_inclusive": [
+        [
+          310,
+          375
+        ]
+      ],
+      "read_scope": "move logging and context-floor separation; supplementary keyword search",
+      "sha256_at_final_checkpoint": "34600b6ce61f2a0c5bf97846db61d0db02fcc0c4d0dcc5598bf02e36213264c9",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    },
+    {
+      "path": "/Users/ember/dev/allgame/kimi_resident/engine.py",
+      "line_ranges_inclusive": [
+        [
+          42,
+          82
+        ]
+      ],
+      "read_scope": "provider-specific thinking configuration, serialized turns",
+      "sha256_at_final_checkpoint": "9c302d667a952149f49eb6870645a3552500e65eb3343b7034abf20df2eb5686",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/metatheory/Dregg2/Circuit/Emit/KimchiEffectIncNonce.lean",
+      "line_ranges_inclusive": [
+        [
+          1,
+          82
+        ],
+        [
+          330,
+          383
+        ]
+      ],
+      "read_scope": "two emissions, premises and missing descriptor/continuity/PI/hashsite binding",
+      "sha256_at_final_checkpoint": "14cd70c620e653596adef3e1148679972c0bd9fec7f5378609591203ecac800e",
+      "pin_warning": "current file bytes pinned after reading; not a Git/deployed revision, no assertion that concurrent source remained unchanged"
+    }
+  ],
+  "external_corpora": [
+    "/Users/ember/workbox/mini-private-capacity-review-20261002/intent-may-june-unique-prompts.json",
+    "/Users/ember/workbox/mini-private-capacity-review-20261002/july-august-domain-prompt-groups.json"
+  ],
+  "narrative_ranges": [
+    {
+      "session": "claude:487bc20c-eee8-4b3e-ae47-2ee337eb2f89",
+      "range": [
+        175,
+        215
+      ],
+      "range_convention": "cv --range half-open",
+      "read_scope": "full textual human/assistant narrative selected from JSON; tool blocks omitted; not an implementation-output audit"
+    },
+    {
+      "session": "claude:7efea951-f234-48e7-bac4-96d9e45865b3",
+      "range": [
+        59,
+        106
+      ],
+      "range_convention": "cv --range half-open",
+      "read_scope": "full textual human/assistant narrative selected from JSON; tool blocks omitted; not an implementation-output audit"
+    },
+    {
+      "session": "claude:fbcc8d85-acbe-49e9-8d6f-811a946f5225",
+      "range": [
+        448,
+        493
+      ],
+      "range_convention": "cv --range half-open",
+      "read_scope": "full textual human/assistant narrative selected from JSON; tool blocks omitted; not an implementation-output audit"
+    },
+    {
+      "session": "claude:6418429c-b1af-4779-8a39-f42aebd4808f",
+      "range": [
+        291,
+        326
+      ],
+      "range_convention": "cv --range half-open",
+      "read_scope": "full textual human/assistant narrative selected from JSON; tool blocks omitted; not an implementation-output audit"
+    },
+    {
+      "session": "claude:d41ad82c-b169-4d25-8494-d2d16d493696",
+      "range": [
+        1291,
+        1330
+      ],
+      "range_convention": "cv --range half-open",
+      "read_scope": "full textual human/assistant narrative selected from JSON; tool blocks omitted; not an implementation-output audit"
+    },
+    {
+      "session": "claude:d41ad82c-b169-4d25-8494-d2d16d493696",
+      "range": [
+        1640,
+        1685
+      ],
+      "range_convention": "cv --range half-open",
+      "read_scope": "full textual human/assistant narrative selected from JSON; tool blocks omitted; not an implementation-output audit"
+    },
+    {
+      "session": "claude:d41ad82c-b169-4d25-8494-d2d16d493696",
+      "range": [
+        1685,
+        1760
+      ],
+      "range_convention": "cv --range half-open",
+      "read_scope": "full textual human/assistant narrative selected from JSON; tool blocks omitted; not an implementation-output audit"
+    },
+    {
+      "session": "claude:06f061bb-d3ee-42ca-9d08-cd487690bfca",
+      "range": [
+        90,
+        118
+      ],
+      "range_convention": "cv --range half-open",
+      "read_scope": "full textual human/assistant narrative selected from JSON; tool blocks omitted; not an implementation-output audit"
+    },
+    {
+      "session": "claude:06f061bb-d3ee-42ca-9d08-cd487690bfca",
+      "range": [
+        118,
+        160
+      ],
+      "range_convention": "cv --range half-open",
+      "read_scope": "full textual human/assistant narrative selected from JSON; tool blocks omitted; not an implementation-output audit"
+    }
+  ],
+  "additional_primary_focal_turns": "Corrections/cancellations inside read ranges are represented individually in graph cards; not inflated into extra selected extracted groups. Nearby game prompts #177/#194/#195/#199/#212 fully screened but omitted from conservative body total.",
+  "external_primary_documentation": [
+    {
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM",
+      "claim": "closed Shadow DOM is not a strong security mechanism",
+      "read_scope": "primary browser documentation browsed; no browser exploit executed"
+    }
+  ],
+  "validation": {
+    "json_parse_and_graph_references": "pass",
+    "conservative_unique_body_count": 31,
+    "source_pin_recheck_changed_paths": [],
+    "scope": "Artifact consistency only; no builds/tests/runtime claims."
+  }
+}

@@ -1,0 +1,149 @@
+PREOSCRIPT / OBJECTIVE BEND — PRIVATE SOURCE COVERAGE, 2026-10-03
+Author: Astra / preoscript_objective_bend_archaeology.
+Companion: PREOSCRIPT-OBJECTIVE-BEND-RELATION-20261003.txt.
+This ledger records actual reading scope, not global verification. No tests,
+Lean elaboration, Rust builds, Git commands, remote builds or deployment ran.
+Only the two new private report files were written by this lane.
+
+DIALOGUE: DIRECTLY READ IN THIS LANE
+
+cv claude:36b51055-354e-4290-ad2c-e59215809d62:
+  show --around0 --context2: full initial human extraction/fresh-repo request,
+    quoted Universal Weave exchange, initial assistant orientation reply.
+  show --around14 --context2: tool lead, human Loom naming-collision correction,
+    assistant correction. No inference from repository name used as history.
+
+cv claude:0d3efcb7-f69f-4fe8-91ca-6615fdbd7432:
+  show --range1051..1058 and1058..1061: naming, real-language ambition,
+    assistant initial sketch, human Mini comparison and anti-assembly correction,
+    assistant revised language design. Later tool notification is incidental.
+  show --range1092..1100: human multiagent-example/UI requests, full assistant
+    hypothetical example and its then-unbuilt status; CODEXHELP write event.
+  show --around1122 --context0: forwarded second review. Large result truncated;
+    directly read central verdict, errors1.1–1.4, §§2–4 through explicit resolution,
+    late synthesis/work orders and final assessment. Middle portions not claimed
+    read in full. The current PREOSCRIPTING/CoordEffect source independently
+    states the adopted key corrections used in the report.
+
+cv codex:019ff1aa-e373-7d71-aaa0-eb0a1a933109:
+  prompts: all12 human prompts (Aug11 scope/growth/runtime/overnight steering).
+  show --around3 --context2: full human eventual Mini/Bread integration request
+    and first assistant reply, with injected system context distinguished.
+  show --around4535 --context3: locator yielded surrounding tool traffic rather
+    than useful response, so runtime storage preference is grounded in the human
+    prompt read by prompts; no claim that this window established its reply.
+
+BOUNDED HISTORICAL SUBTASK
+
+Explicit root authorization allowed one Sol subtask. origin_dialogue recovered
+the same primary sessions with cv ls/prompts/show, plus 36b51055 #189/#190 public
+repo authorization and #341 naming correction. These extra locators are reported
+as subtask coverage, not directly reread here. Subtask confirmed forks/compactions
+repeat the same development; no frequency or independent-confirmation argument.
+No raw transcript dumps were saved. Personal profile was read for orientation
+and none of its speculative claims informs the technical report.
+
+OBJECTIVE BEND GROUNDING
+
+Read redregg/AGENTS.md and work/REENTRY.txt (specialist scope respected).
+Read complete designs/BEND-DIRECTION-20261003.txt and
+designs/BEND-PERSISTENT-COMPUTATION-20261003.txt.
+Read designs/BEND-WORLD-LANGUAGE-20261003.txt in initial batch then explicit
+80–169 follow-up; report's typed Plan/current source/view/charge/Activity model
+comes from these source-grounded owner records, not a fresh live-source audit.
+Read work/RAISED-CONSTRUCTION-BAR-20261003.txt, including explicit1–131 reread.
+Read fareoo/FAREOO.md1–230: §§0–3, prototype/instance, finalself/super, ordered
+composition, multiple inheritance. Read primary sources/eoomi2024.md370–445
+(modular/incremental specification and primitives). Persistent-computation
+comparison uses current persistent-construction record, not an independent
+complete reread of Faré's persistence corpus.
+Read both example STATUS.txt files in full; read workshop ContractedReview.bend
+and WorkshopFaces.bend in full. Enumerated example files, not every source body.
+STATUS files are dated review-copy evidence; current builders may have advanced.
+Parent brief supplies current integration checkout/status. No local old Mini
+status is generalized to today's hbox integrated source.
+
+LEAN-UWUEAVE CONTENT ACTUALLY READ
+
+README.md1–435, assembled in chunks: product, runtime/Preo checkpoints, trust,
+original acknowledgments. Its observed test/audit counts are not fresh results.
+PREOSCRIPTING.md654–1065 and1228–1345: full thesis, preorders, cost/coordination,
+result/future/merge-capability model, syntax/typed fragment, UI, synthesis/status.
+  Earlier sections were heading/status searched; not full1–653 read.
+CODEXHELP.md300–345 and FORCODEX.md520–605: historical Mini synthesis and Bread
+prior art. These are dated assistant documents, corrected against dialogue and
+actual selected Bread source; they are not current Mini implementation evidence.
+docs/RUNTIME.md1–185: legacy vs authenticated path, native closure, artifact
+journal boundary. Wider runtime claims checked against current README/source
+headers; no whole Rust runtime audit.
+docs/TRUST.md1–140 partly truncated combined output, plus targeted status search
+through later environment rows; logical/execution/deployment boundaries read,
+not every row/paper audited. docs/UNDONE.md was marker/heading searched only.
+lakefile.toml and lean-toolchain read completely.
+
+Focused implementation reads:
+  Uwueave/Preo/Quickstart.lean1–200: AppState/project, authored reach, pure query,
+    WorldModel/QueryFuture, exact certificate/world binding, protocol start.
+  Preo/Expr.lean1–245,250–355: Ty/denote/merge, typed fields/environment,
+    CustomNode, all17 Term constructors, evaluator, positional holes/reads.
+    Declaration/lemma search locates further proof APIs without claiming their
+    whole bodies read. Important APIs: CustomNode245, Term256, eval276,
+    holes325, reads337, eval_ext474.
+  Preo/Future.lean1–210: actual WorldModel56, FutureDecl102,
+    CheckedStability127, CheckedCertificate157 and restrict definitions/proofs.
+    Located state_certificate_cannot_be_checked_at_quiesced280; header and
+    current design describe counterexample, body not independently audited here.
+  Preo/ObservedBoundResult.lean1–140: complete principal structures and
+    attachAtWorld proof adapter; caller authenticity retained explicitly.
+  Preo/ResultProgram.lean1–130: visibility/disclosure, resolution identity,
+    ExactSnapshot.totalSound and beginning of CheckedDeclaration.
+    Located CheckedReport217 and ObservedReport498; relied also on binding
+    consumer/ObservedBoundResult read, not entire ResultProgram audit.
+  Preo/Incremental.lean1–175: typed EnvDelta, touched, proof of untouched
+    stability, Cache/Result, whole actual evaluator and correctness/zero-work law.
+  CoordEffect.lean1–210: detailed premises/counterexamples and actual profile
+    algebra/weakening. Located opt_compose_ge_sum_opt379 and
+    pin_indep_min_unpayable624; not entire long proof bodies read.
+  Protocol.lean1–145: actual operation annotation, typed need origin, AST,
+    no effect-executing body hidden in Operation. Indexed remaining APIs via rg.
+  StatusEffects.lean1–125: all six shapes, refinement/downset effects.
+  MergeModel.lean1–140: actual documented signature/law boundaries, instances,
+    explicit independent Mini inspiration, join-only checked-repair residual.
+  SeamColoring.lean1–130: exact characterization and closure residual, finite
+    coverage limits, definitions; located negative theorem777.
+  MinimalSummary.lean1–100: exact congruence/universal-property scope and
+    explicit threshold overlap witness; located cardinal theorem571 and
+    capped-count refutation742. No unrestricted codec theorem inferred.
+  ChoreoRec/ContextCompiler and related API names were searched, not fully read.
+
+BREAD ORIENTATION AND SELECTED VERIFICATION
+
+HORIZONLOG.md1–120, whole memory/MEMORY.md (tail explicitly fetched after
+combined-output truncation), docs/OVERVIEW.md. No general current Bread safety
+claim made; historical docs were compared with selected exact code.
+Read Exec/GuardedHole.lean completely (including its old closed-example guards),
+Calculus/BiorthTensor.lean565–595 actual directed-lub refutation, and
+Spec/Choreography.lean245–275 actual red_iff_coupled plus next-boundary comment.
+Searched SemanticConvergence classify_sound and historical guard theorem name;
+did not claim to audit Bread's full theorem/prover/circuit/host connection.
+
+EXISTING MINI PROJECTION EDGE (LATE RECOVERY)
+
+historical_missing_junctions owner supplied paths. Read all three completely:
+  /Users/ember/dev/minidregg/Compiler/UwueavePreoProjectionV2.lean
+  /Users/ember/dev/minidregg/prover/generated/uwueave_preo_projection_v2.rs
+  /Users/ember/dev/minidregg/prover/tests/uwueave_preo_projection_v2.rs
+Facts: upstream validated fullExport fixture, exact identity/budget laws, #eval
+relative-path writer, static generated data and four narrow tests, no permit API.
+Owner reports untracked local source and owns recovery packet; this lane did not
+run Git, edit these files, compile them, regenerate Rust or inspect active hbox
+counterpart. This corrects any reading that there was no prior integration work.
+
+COORDINATION
+
+Asked bend_world_language one bounded question about existing result/view/effect
+representation; awaiting answer at initial report save. Informed independent
+mini_objective_bend_documentation owner of history and likely semantic seam;
+their manual work remains theirs. No new implementation assigned. Shared exact
+late-projection boundaries with recovery owner and parent. The report's proposed
+ports are recommendations; construction claims require owners' actual evidence.

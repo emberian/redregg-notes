@@ -1,0 +1,574 @@
+{
+  "owner": "redregg_intent_foundations",
+  "date": "2026-10-03",
+  "method": "Initial reports used as leads; focal primary prompts and actual bounded exchanges reread with cv; source fragments checked without builds or source mutations. No raw transcripts copied.",
+  "focal_windows_read": 32,
+  "focal_windows": [
+    {
+      "session": "claude:70642dc2-d9f1-434b-8209-c2c96787bd92",
+      "focal_index": 1987,
+      "timestamp": "2026-05-23T02:44:25.793Z",
+      "role": "user",
+      "kind": "prompt",
+      "origin": "human",
+      "read_range": [
+        1982,
+        1993
+      ],
+      "scope": "Focal prompt/answer and bounded surrounding exchange read; rendered tool inputs/results are often abbreviated. Not full session.",
+      "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/70642dc2-d9f1-434b-8209-c2c96787bd92.jsonl"
+    },
+    {
+      "session": "claude:70642dc2-d9f1-434b-8209-c2c96787bd92",
+      "focal_index": 2646,
+      "timestamp": "2026-05-23T06:01:57.382Z",
+      "role": "user",
+      "kind": "prompt",
+      "origin": "human",
+      "read_range": [
+        2642,
+        2651
+      ],
+      "scope": "Focal prompt/answer and bounded surrounding exchange read; rendered tool inputs/results are often abbreviated. Not full session.",
+      "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/70642dc2-d9f1-434b-8209-c2c96787bd92.jsonl"
+    },
+    {
+      "session": "claude:70642dc2-d9f1-434b-8209-c2c96787bd92",
+      "focal_index": 2831,
+      "timestamp": "2026-05-23T06:43:19.846Z",
+      "role": "user",
+      "kind": "prompt",
+      "origin": "human",
+      "read_range": [
+        2827,
+        2836
+      ],
+      "scope": "Focal prompt/answer and bounded surrounding exchange read; rendered tool inputs/results are often abbreviated. Not full session.",
+      "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/70642dc2-d9f1-434b-8209-c2c96787bd92.jsonl"
+    },
+    {
+      "session": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+      "focal_index": 1381,
+      "timestamp": "2026-05-24T20:26:51.392Z",
+      "role": "user",
+      "kind": "prompt",
+      "origin": "human",
+      "read_range": [
+        1376,
+        1387
+      ],
+      "scope": "Focal prompt/answer and bounded surrounding exchange read; rendered tool inputs/results are often abbreviated. Not full session.",
+      "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/5a0f6a2e-08ba-4cfc-aab1-f894f047703a.jsonl"
+    },
+    {
+      "session": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+      "focal_index": 4317,
+      "timestamp": "2026-05-29T15:35:08.837Z",
+      "role": "user",
+      "kind": "prompt",
+      "origin": "human",
+      "read_range": [
+        4311,
+        4324
+      ],
+      "scope": "Focal prompt/answer and bounded surrounding exchange read; rendered tool inputs/results are often abbreviated. Not full session.",
+      "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/5a0f6a2e-08ba-4cfc-aab1-f894f047703a.jsonl"
+    },
+    {
+      "session": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+      "focal_index": 4341,
+      "timestamp": "2026-05-29T15:43:28.513Z",
+      "role": "user",
+      "kind": "prompt",
+      "origin": "human",
+      "read_range": [
+        4333,
+        4350
+      ],
+      "scope": "Focal prompt/answer and bounded surrounding exchange read; rendered tool inputs/results are often abbreviated. Not full session.",
+      "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/5a0f6a2e-08ba-4cfc-aab1-f894f047703a.jsonl"
+    },
+    {
+      "session": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+      "focal_index": 4759,
+      "timestamp": "2026-05-29T19:53:12.762Z",
+      "role": "tool",
+      "kind": "tool_result",
+      "origin": "harness",
+      "read_range": [
+        4754,
+        4765
+      ],
+      "scope": "Focal prompt/answer and bounded surrounding exchange read; rendered tool inputs/results are often abbreviated. Not full session.",
+      "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/5a0f6a2e-08ba-4cfc-aab1-f894f047703a.jsonl"
+    },
+    {
+      "session": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+      "focal_index": 4850,
+      "timestamp": "2026-05-29T20:10:05.367Z",
+      "role": "user",
+      "kind": "prompt",
+      "origin": "human",
+      "read_range": [
+        4846,
+        4855
+      ],
+      "scope": "Focal prompt/answer and bounded surrounding exchange read; rendered tool inputs/results are often abbreviated. Not full session.",
+      "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/5a0f6a2e-08ba-4cfc-aab1-f894f047703a.jsonl"
+    },
+    {
+      "session": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+      "focal_index": 5306,
+      "timestamp": "2026-05-29T21:37:51.855Z",
+      "role": "user",
+      "kind": "prompt",
+      "origin": "human",
+      "read_range": [
+        5302,
+        5311
+      ],
+      "scope": "Focal prompt/answer and bounded surrounding exchange read; rendered tool inputs/results are often abbreviated. Not full session.",
+      "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/5a0f6a2e-08ba-4cfc-aab1-f894f047703a.jsonl"
+    },
+    {
+      "session": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+      "focal_index": 5456,
+      "timestamp": "2026-05-29T22:23:25.631Z",
+      "role": "user",
+      "kind": "prompt",
+      "origin": "human",
+      "read_range": [
+        5452,
+        5461
+      ],
+      "scope": "Focal prompt/answer and bounded surrounding exchange read; rendered tool inputs/results are often abbreviated. Not full session.",
+      "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/5a0f6a2e-08ba-4cfc-aab1-f894f047703a.jsonl"
+    },
+    {
+      "session": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+      "focal_index": 6497,
+      "timestamp": "2026-05-30T05:14:14.229Z",
+      "role": "user",
+      "kind": "prompt",
+      "origin": "human",
+      "read_range": [
+        6491,
+        6504
+      ],
+      "scope": "Focal prompt/answer and bounded surrounding exchange read; rendered tool inputs/results are often abbreviated. Not full session.",
+      "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/5a0f6a2e-08ba-4cfc-aab1-f894f047703a.jsonl"
+    },
+    {
+      "session": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+      "focal_index": 6577,
+      "timestamp": "2026-05-30T05:35:13.598Z",
+      "role": "user",
+      "kind": "prompt",
+      "origin": "human",
+      "read_range": [
+        6573,
+        6582
+      ],
+      "scope": "Focal prompt/answer and bounded surrounding exchange read; rendered tool inputs/results are often abbreviated. Not full session.",
+      "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/5a0f6a2e-08ba-4cfc-aab1-f894f047703a.jsonl"
+    },
+    {
+      "session": "claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a",
+      "focal_index": 10444,
+      "timestamp": "2026-06-02T00:25:04.274Z",
+      "role": "user",
+      "kind": "prompt",
+      "origin": "human",
+      "read_range": [
+        10440,
+        10449
+      ],
+      "scope": "Focal prompt/answer and bounded surrounding exchange read; rendered tool inputs/results are often abbreviated. Not full session.",
+      "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/5a0f6a2e-08ba-4cfc-aab1-f894f047703a.jsonl"
+    },
+    {
+      "session": "claude:7fc2e1fd-dff5-45b5-8609-725f442f4cdc",
+      "focal_index": 667,
+      "timestamp": "2026-06-06T23:35:58.107Z",
+      "role": "user",
+      "kind": "prompt",
+      "origin": "human",
+      "read_range": [
+        663,
+        672
+      ],
+      "scope": "Focal prompt/answer and bounded surrounding exchange read; rendered tool inputs/results are often abbreviated. Not full session.",
+      "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs-metatheory/7fc2e1fd-dff5-45b5-8609-725f442f4cdc.jsonl"
+    },
+    {
+      "session": "claude:7fc2e1fd-dff5-45b5-8609-725f442f4cdc",
+      "focal_index": 899,
+      "timestamp": "2026-06-07T01:01:39.881Z",
+      "role": "user",
+      "kind": "prompt",
+      "origin": "human",
+      "read_range": [
+        894,
+        905
+      ],
+      "scope": "Focal prompt/answer and bounded surrounding exchange read; rendered tool inputs/results are often abbreviated. Not full session.",
+      "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs-metatheory/7fc2e1fd-dff5-45b5-8609-725f442f4cdc.jsonl"
+    },
+    {
+      "session": "claude:34db0696-2160-4fec-aaa2-2853b02ebe2f",
+      "focal_index": 247,
+      "timestamp": "2026-06-19T22:50:47.441Z",
+      "role": "user",
+      "kind": "prompt",
+      "origin": "human",
+      "read_range": [
+        242,
+        253
+      ],
+      "scope": "Focal prompt/answer and bounded surrounding exchange read; rendered tool inputs/results are often abbreviated. Not full session.",
+      "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/34db0696-2160-4fec-aaa2-2853b02ebe2f.jsonl"
+    },
+    {
+      "session": "claude:34db0696-2160-4fec-aaa2-2853b02ebe2f",
+      "focal_index": 294,
+      "timestamp": "2026-06-19T23:07:49.555Z",
+      "role": "user",
+      "kind": "prompt",
+      "origin": "human",
+      "read_range": [
+        289,
+        300
+      ],
+      "scope": "Focal prompt/answer and bounded surrounding exchange read; rendered tool inputs/results are often abbreviated. Not full session.",
+      "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/34db0696-2160-4fec-aaa2-2853b02ebe2f.jsonl"
+    },
+    {
+      "session": "claude:4ffab82c-200f-4b23-adc5-085488fdb0b7",
+      "focal_index": 0,
+      "timestamp": "2026-07-02T03:08:28.825Z",
+      "role": "user",
+      "kind": "prompt",
+      "origin": "human",
+      "read_range": [
+        0,
+        2
+      ],
+      "scope": "Focal prompt/answer and bounded surrounding exchange read; rendered tool inputs/results are often abbreviated. Not full session.",
+      "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-DreggNet/4ffab82c-200f-4b23-adc5-085488fdb0b7.jsonl"
+    },
+    {
+      "session": "claude:4b9dad75-dc09-4aa7-b529-e1042c0d0edb",
+      "focal_index": 39,
+      "timestamp": "2026-07-03T23:36:51.880Z",
+      "role": "user",
+      "kind": "prompt",
+      "origin": "human",
+      "read_range": [
+        35,
+        44
+      ],
+      "scope": "Focal prompt/answer and bounded surrounding exchange read; rendered tool inputs/results are often abbreviated. Not full session.",
+      "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-DreggNet/4b9dad75-dc09-4aa7-b529-e1042c0d0edb.jsonl"
+    },
+    {
+      "session": "claude:ca49a136-b817-4644-8a86-092e07ec5c2e",
+      "focal_index": 321,
+      "timestamp": "2026-07-08T20:14:56.761Z",
+      "role": "user",
+      "kind": "prompt",
+      "origin": "human",
+      "read_range": [
+        318,
+        325
+      ],
+      "scope": "Focal prompt/answer and bounded surrounding exchange read; rendered tool inputs/results are often abbreviated. Not full session.",
+      "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-DreggNet/ca49a136-b817-4644-8a86-092e07ec5c2e.jsonl"
+    },
+    {
+      "session": "claude:0bea043f-86dc-4012-82d6-2ca7c0719304",
+      "focal_index": 105,
+      "timestamp": "2026-07-28T13:01:55.832Z",
+      "role": "user",
+      "kind": "prompt",
+      "origin": "human",
+      "read_range": [
+        101,
+        110
+      ],
+      "scope": "Focal prompt/answer and bounded surrounding exchange read; rendered tool inputs/results are often abbreviated. Not full session.",
+      "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/0bea043f-86dc-4012-82d6-2ca7c0719304.jsonl"
+    },
+    {
+      "session": "claude:2ed94bdd-4d0d-492a-8cb3-ee06012e1d6e",
+      "focal_index": 95,
+      "timestamp": "2026-07-25T17:44:10.581Z",
+      "role": "user",
+      "kind": "prompt",
+      "origin": "human",
+      "read_range": [
+        91,
+        100
+      ],
+      "scope": "Focal prompt/answer and bounded surrounding exchange read; rendered tool inputs/results are often abbreviated. Not full session.",
+      "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/2ed94bdd-4d0d-492a-8cb3-ee06012e1d6e.jsonl"
+    },
+    {
+      "session": "claude:b54b6026-1b53-47dc-9148-5d041555810c",
+      "focal_index": 3,
+      "timestamp": "2026-08-06T23:46:05.557Z",
+      "role": "user",
+      "kind": "prompt",
+      "origin": "human",
+      "read_range": [
+        0,
+        7
+      ],
+      "scope": "Focal prompt/answer and bounded surrounding exchange read; rendered tool inputs/results are often abbreviated. Not full session.",
+      "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-minidregg/b54b6026-1b53-47dc-9148-5d041555810c.jsonl"
+    },
+    {
+      "session": "codex:019fe43d-3dc0-7911-8a86-f4c94ac00e8a",
+      "focal_index": 10459,
+      "timestamp": "2026-08-09T16:38:25.549Z",
+      "role": "user",
+      "kind": "prompt",
+      "origin": "human",
+      "read_range": [
+        10456,
+        10463
+      ],
+      "scope": "Focal prompt/answer and bounded surrounding exchange read; rendered tool inputs/results are often abbreviated. Not full session.",
+      "source_path": "/Users/ember/.codex/archived_sessions/rollout-2026-08-08T21-57-26-019fe43d-3dc0-7911-8a86-f4c94ac00e8a.jsonl"
+    },
+    {
+      "session": "claude:e9d68d2f-d24f-4f54-ab96-0196f23599f8",
+      "focal_index": 302,
+      "timestamp": "2026-08-27T15:53:23.593Z",
+      "role": "user",
+      "kind": "prompt",
+      "origin": "human",
+      "read_range": [
+        299,
+        306
+      ],
+      "scope": "Focal prompt/answer and bounded surrounding exchange read; rendered tool inputs/results are often abbreviated. Not full session.",
+      "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-dragons-clutch/e9d68d2f-d24f-4f54-ab96-0196f23599f8.jsonl"
+    },
+    {
+      "session": "claude:e9d68d2f-d24f-4f54-ab96-0196f23599f8",
+      "focal_index": 4250,
+      "timestamp": "2026-08-31T02:42:14.865Z",
+      "role": "user",
+      "kind": "prompt",
+      "origin": "human",
+      "read_range": [
+        4245,
+        4256
+      ],
+      "scope": "Focal prompt/answer and bounded surrounding exchange read; rendered tool inputs/results are often abbreviated. Not full session.",
+      "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-dragons-clutch/e9d68d2f-d24f-4f54-ab96-0196f23599f8.jsonl"
+    },
+    {
+      "session": "claude:0c315aee-e07a-499c-8bb4-fa36730510ca",
+      "focal_index": 4504,
+      "timestamp": "2026-10-01T09:22:39.359Z",
+      "role": "user",
+      "kind": "prompt",
+      "origin": "human",
+      "read_range": [
+        4500,
+        4509
+      ],
+      "scope": "Focal prompt/answer and bounded surrounding exchange read; rendered tool inputs/results are often abbreviated. Not full session.",
+      "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/0c315aee-e07a-499c-8bb4-fa36730510ca.jsonl"
+    },
+    {
+      "session": "claude:0c315aee-e07a-499c-8bb4-fa36730510ca",
+      "focal_index": 4515,
+      "timestamp": "2026-10-01T09:30:16.327Z",
+      "role": "user",
+      "kind": "prompt",
+      "origin": "human",
+      "read_range": [
+        4512,
+        4519
+      ],
+      "scope": "Focal prompt/answer and bounded surrounding exchange read; rendered tool inputs/results are often abbreviated. Not full session.",
+      "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/0c315aee-e07a-499c-8bb4-fa36730510ca.jsonl"
+    },
+    {
+      "session": "codex:01a0fa81-d479-7753-a1b3-1331d1ed53de",
+      "focal_index": 6996,
+      "timestamp": "2026-10-02T17:22:28.139647006Z",
+      "role": "user",
+      "kind": "prompt",
+      "origin": "human",
+      "read_range": [
+        6993,
+        7000
+      ],
+      "scope": "Focal prompt/answer and bounded surrounding exchange read; rendered tool inputs/results are often abbreviated. Not full session.",
+      "source_path": "/Users/ember/.codex/sessions/2026/10/01/rollout-2026-10-01T22-46-47-01a0fa81-d479-7753-a1b3-1331d1ed53de.jsonl"
+    },
+    {
+      "session": "codex:01a0b0ed-2f93-7a03-be0e-bb81bd250747",
+      "focal_index": 5836,
+      "timestamp": "2026-09-18T07:06:50.303253889Z",
+      "role": "user",
+      "kind": "prompt",
+      "origin": "human",
+      "read_range": [
+        5832,
+        5841
+      ],
+      "scope": "Focal prompt/answer and bounded surrounding exchange read; rendered tool inputs/results are often abbreviated. Not full session.",
+      "source_path": "/Users/ember/.codex/sessions/2026/09/17/rollout-2026-09-17T15-52-09-01a0b0ed-2f93-7a03-be0e-bb81bd250747.jsonl"
+    },
+    {
+      "session": "claude:50ea7585-48e1-4014-99cc-158380b92698",
+      "focal_index": 272,
+      "timestamp": "2026-07-06T20:09:58.939Z",
+      "role": "user",
+      "kind": "prompt",
+      "origin": "human",
+      "read_range": [
+        268,
+        277
+      ],
+      "scope": "Focal prompt/answer and bounded surrounding exchange read; rendered tool inputs/results are often abbreviated. Not full session.",
+      "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/50ea7585-48e1-4014-99cc-158380b92698.jsonl"
+    },
+    {
+      "session": "claude:05a5aa0c-e038-4658-89b7-5d321d7d55b9",
+      "focal_index": 45,
+      "timestamp": "2026-07-08T23:37:42.297Z",
+      "role": "user",
+      "kind": "prompt",
+      "origin": "human",
+      "read_range": [
+        41,
+        50
+      ],
+      "scope": "Focal prompt/answer and bounded surrounding exchange read; rendered tool inputs/results are often abbreviated. Not full session.",
+      "source_path": "/Users/ember/.claude/projects/-Users-ember-dev-breadstuffs/05a5aa0c-e038-4658-89b7-5d321d7d55b9.jsonl"
+    }
+  ],
+  "files": [
+    {
+      "path": "/Users/ember/dev/breadstuffs/metatheory/Dregg2/Resource.lean",
+      "sha256": "c2a436abb774e20b8281b54e81e0c82d80f4116ec8c65765af7e66dc1b632cfc",
+      "scope": "Selected sections read; exact sections enumerated in evidence cards. Hash records full file identity, not reading coverage."
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/metatheory/Dregg2/Resource/TokenAutonomy.lean",
+      "sha256": "580e1c379f7bc897f78731a9da0b8465fa6166e1773ba5c8e12cb9519ea8796a",
+      "scope": "Selected sections read; exact sections enumerated in evidence cards. Hash records full file identity, not reading coverage."
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/metatheory/Dregg2/Spec/Authority.lean",
+      "sha256": "46dab01d2f367355d3b1c2b9144ab506a3ba0c7ee1507d2f161721bdd13281f5",
+      "scope": "Selected sections read; exact sections enumerated in evidence cards. Hash records full file identity, not reading coverage."
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/metatheory/Metatheory/Adversary/Schema.lean",
+      "sha256": "559f0bc4d56595f11294f03d624defdaad8624e3a904e51441c95d598ed9b848",
+      "scope": "Selected sections read; exact sections enumerated in evidence cards. Hash records full file identity, not reading coverage."
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/cell/src/factory.rs",
+      "sha256": "937076dfd94c9260ce6104562c9b9b3a17ee917f18641d51dfc0e2c7876ded62",
+      "scope": "Selected sections read; exact sections enumerated in evidence cards. Hash records full file identity, not reading coverage."
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/metatheory/Dregg2/Circuit/SovereignBackingAttack.lean",
+      "sha256": "544f7124a6f6e4a128f2f3838f2d3eb9810cea8f1481a377dddd4606338b377e",
+      "scope": "Selected sections read; exact sections enumerated in evidence cards. Hash records full file identity, not reading coverage."
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/docs/deos/BRANCH-AND-STITCH-PROTOCOL.md",
+      "sha256": "137077ac0c9b96ba5ca98fb1d5252c24ef25d71d9f33cf6704765c01847b674b",
+      "scope": "Full branch protocol document read; code comparison recorded F10. Hash is file identity."
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/docs/deos/SOVEREIGN-RESURRECTION.md",
+      "sha256": "c6f325a4bf41cedfcedbfaf1711dfafe0aca4457e5bbe53bf2305b8fa4cab5c8",
+      "scope": "Selected sections read; exact sections enumerated in evidence cards. Hash records full file identity, not reading coverage."
+    },
+    {
+      "path": "/Users/ember/dev/minidregg/Theory/PrivacyProfile.lean",
+      "sha256": "339b47d6ea0a97568a02158e5a61c6c6ba2ed42c49b0e577893096497d33ca54",
+      "scope": "Selected sections read; exact sections enumerated in evidence cards. Hash records full file identity, not reading coverage."
+    },
+    {
+      "path": "/Users/ember/dev/minidregg/Theory/ResourceCost.lean",
+      "sha256": "0342f193ea83cf262f55e884854ad728f67b8c73c5ef27895b9834bb166d3590",
+      "scope": "Selected sections read; exact sections enumerated in evidence cards. Hash records full file identity, not reading coverage."
+    },
+    {
+      "path": "/Users/ember/dev/minidregg/Theory/ResourceBirthAuthority.lean",
+      "sha256": "eba5cc129e8796f0ff4057ddaa9f22130d83317919889bf9ccbc9a37258498e2",
+      "scope": "Selected sections read; exact sections enumerated in evidence cards. Hash records full file identity, not reading coverage."
+    },
+    {
+      "path": "/Users/ember/dev/minidregg/Theory/CanonicalResourceBookInvariant.lean",
+      "sha256": "dad3611f14bc762eb38f85c6eff8e2ad68e2155d548f20be749ae51a2fc8a8e7",
+      "scope": "Selected sections read; exact sections enumerated in evidence cards. Hash records full file identity, not reading coverage."
+    },
+    {
+      "path": "/Users/ember/dev/drorb/Dsl/EMIT-LEAN-README.md",
+      "sha256": "1b603fec1473d44973cf9b79b95224c5082ecea483273597645fd53ca10b98f5",
+      "scope": "Selected sections read; exact sections enumerated in evidence cards. Hash records full file identity, not reading coverage."
+    },
+    {
+      "path": "/Users/ember/dev/drorb/docs/engine/PERF-BASELINE.md",
+      "sha256": "15cdb578a1454493196a72cd80876d16fa7fad7dfe42a84f29786d200b91d25e",
+      "scope": "Selected sections read; exact sections enumerated in evidence cards. Hash records full file identity, not reading coverage."
+    },
+    {
+      "path": "/Users/ember/dev/BREADSTUFFS_MINIDREGG_SUBSUMPTION_AUDIT_2026-08-09.md",
+      "sha256": "d00b82ea35924f4c71fd23454edaa44bc03c2f61653def153d3caf6138a2c078",
+      "scope": "Selected sections read; exact sections enumerated in evidence cards. Hash records full file identity, not reading coverage."
+    },
+    {
+      "path": "/Users/ember/dev/HYPERDREGGMEDIA_MINIDREGG_SUBSUMPTION_AUDIT_2026-08-09.md",
+      "sha256": "812f417a55d907f346136bbf89b8d2a6620fb1ec14280b149339167d3ecc2a12",
+      "scope": "Selected sections read; exact sections enumerated in evidence cards. Hash records full file identity, not reading coverage."
+    },
+    {
+      "path": "/Users/ember/dev/drorb/Dsl/EmitLean.lean",
+      "sha256": "d6826d189a478090d0a6319aa2c22867bd10caa3385311108208eeb75e03df3a",
+      "scope": "Lines30-80 and120-260 actually read; generator and demo instantiate model seams; no build run."
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/starbridge-v2/src/branch_stitch_session.rs",
+      "sha256": "df543365db268334b43d26a141a056ddd4549a4f476397601f9f92e44e5cf84f",
+      "scope": "[1, 262] and supplementary lines recorded in F10; Session/fork/drive/stitch definitions read; plus test lines325-405 checking baseline cull and pristine main."
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/starbridge-v2/src/world/mod.rs",
+      "sha256": "aa8a30d90a1aa25816735368ca481ec07c4fdd2c0d03c7d8587961bc4ac18ce2",
+      "scope": "[1016, 1131] and supplementary lines recorded in F10; Whole-ledger/signing key/factory/chain clone, fresh observers, no persistence. Also commit_turn lines1378-1535 read."
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/grain-fork/src/lib.rs",
+      "sha256": "00f41202a1c74bf5485825e78b1d09f52935778915a3ba4029799fdf44988752",
+      "scope": "[445, 486] and supplementary lines recorded in F10; Selected parent-held targets; clear copied c-list; independent child lease; not full permission/effect audit."
+    },
+    {
+      "path": "/Users/ember/dev/breadstuffs/metatheory/Metatheory/SettlementSoundness.lean",
+      "sha256": "52cd0f20b1af1af20db01b2dc29d1366d232c7b39c907f3fe53f9877b4952c1c",
+      "scope": "[135, 190] and supplementary lines recorded in F10; BindsLiveAuthority premise and generic theorem/direct projections; no claim that all later instances are premise projections."
+    }
+  ],
+  "source_pins": {
+    "breadstuffs": "22fad151e9f118e3aa001a823e075918ffa139e8",
+    "minidregg": "b57acedaaae02edf2b2cfd8e33675b3cbf40daa8"
+  },
+  "limits": [
+    "Broader search output was sometimes truncated and is not claimed as interpreted coverage.",
+    "Normalized metadata parse verifies focal origin/time, but does not turn automated rows into human endorsement.",
+    "Archived audit paragraphs and current docs are dated agent source claims, distinguished from checked source definitions.",
+    "No proof compilation, runtime tests, deployments or current assurance audit were performed.",
+    "Repeated/forked prompts not counted as independent endorsements."
+  ]
+}

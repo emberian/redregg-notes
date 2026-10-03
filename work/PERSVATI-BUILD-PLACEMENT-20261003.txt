@@ -1,0 +1,86 @@
+PERSVATI BUILD PLACEMENT — October 3, 2026, 09:53 UTC checkpoint
+Owner: redregg_evidence, delegated by root after Ember explicitly requested more
+idle Persvati use. Placement ownership, not a change to product requirements.
+
+ACTUAL OUTCOMES
+1. Portable continuation archive r1: exactly five release nextest tests PASS,
+   zero skipped, 0.174s test time. Release helper built. Job ran 09:44:26–09:44:35Z;
+   journal peak 580.8M, CPU 14.168s. Frozen five-file archive hash
+   32af5f3be155dfb9cca7f3505db2e73ac95777041c6eb2e3659295bf528f877a.
+   Helper SHA256 fe36b0d716190761291d7248572e549346c8d33be50a10e6d7ddd4399beb1567.
+   Source/target/output at persvati:/home/ember/workbox/persvati-portable-20261003.
+   Job log and input/binary pins mirrored under local workbox same lane name.
+   Systems owner receives this immutable binary; no service activation performed.
+2. Bread IR2 harness: actual narrow release cargo check --tests built dependency
+   graph then found E0282 ambiguous basis slice type. Owner repaired both slices
+   to BabyBear; received exact SHA 0d04b04737eb250c975558514846429d77a9f9fd6e1ad268d13869866eec4927.
+   Warm check PASS 09:49:07Z, incremental check 0.08s. First dependency job peak
+   964923392 bytes, exit101 is code failure, not environmental failure.
+   No proof test or emitter fixture consumed yet. Owner checks Lean emitter on
+   its current warm seat and will supply exact fixture hashes for real proving.
+   Graph lock SHA 43c1a9e1484ddd9645a5215a85aaad10cc5d651efe97532a2aa7245c2dd9d926.
+   P3 actual git 82cfad73cd734d37a0d51953094f970c531817ec and both vendored
+   fri/challenger patches preserved. Source/target/logs at
+   persvati:/home/ember/workbox/persvati-ir2-20261003.
+   My first runner preflight used wrong test filename and stopped before cargo;
+   its failed log retained. Corrected runner started only after terminal failure.
+
+ENFORCEMENT / ATOMIC JOB LIFETIME
+Installed native systemd-run was reused; no new build orchestrator installed.
+Each live job recorded its OWN cgroup files before compiling:
+ memory.max 8589934592, memory.swap.max 0, cpu.max 200000/100000, pids.max 256.
+Systemd units also enforce RuntimeMaxSec 1800, KillMode control-group, OOMPolicy stop.
+Cargo and Rayon are jobs/threads 2. The actual scripts take flock FD9 on global
+/home/ember/workbox/.codex-persvati-build-slot1.lock (IR2) or slot2.lock (portable)
+for entire job lifetime, plus FD8 on own lane .job-lifetime.lock. New .pbuild-lease
+records PID/owner/host with 30-minute backstop; normal exit removes it. The atomic
+kernel lock releases on process/cgroup exit even if a lease hint survives a crash.
+Systemd owns child lifetime across SSH disconnection and kills whole cgroup at
+its time/memory boundary. A collected inactive unit can show default infinity;
+use the running cgroup values already saved in job logs, not later defaults.
+For future failure inspect service Result/ExecMainStatus and journal. oom-kill
+means ENVFAULT; cap refusal/lease conflict means no job ran. Never infer PASS from
+SSH exit or a tail pipeline.
+
+EXACT SOURCE / WARMTH DECISION
+Persvati has installed nightly-2026-06-21 rustc 8b6558a02 and Lean 4.30.0
+commit d024af099ca4bf2c86f649261ebf59565dc8c622. Toolchains/cargo downloads are
+available; old Bread release deps include P3 but cached source checkout 11cc584
+and old manifest/lock/toolchain differ from current request. No old target copied
+or trusted. Native dregg-circuit/DSL/codec source plus exact vendor patches copied
+into isolated lane, source inventory 922 files/hash-pinned. Preserve parent original
+Cargo.toml 8ab8d8367dcf132d45c480cda8fc5a6f0b3c228a4d07fa4073f335b5bcf3bb25.
+Derived root manifest changes only members/default-members to three required
+crates; package/deps/lints/profiles retained byte-for-byte. Derived hash
+81e2d3e3e214f772b5ab172ed62a435144359325821c53343dde5672a18f2e33.
+No semantic modules pruned. Owner-native provision.py creates standalone harness
+manifest 825d8d4554b814abecd1872b6138c5e51a664b78760dfb8c63c3fc43be1785b2.
+Original source ledger and received repair ledger retained separately.
+No hbox targets blindly shipped. No active hbox jobs restarted. No datamodels,
+caches, existing lane files or live services deleted, reset or stashed.
+
+TARGETED HOST FINDINGS / QUEUE
+09:38-era point probe: 24 CPUs, roughly 66.9 GiB available, 206 GiB free on /.  Existing
+swarm.slice has no memory/CPU quota; buildr symlink targets absent binary. Use
+native systemd-run limits above. The 160 datamodel directories were not traversed
+or modified. No all-lane recursive DU/cleanup performed.
+Mini Persvati root snapshot dates August; root .lake absent. Bread metatheory has
+older warm Dregg2 oleans; exact current Mini package/source/olean compatibility
+still needs checking before reuse. Lean 4.30 compiler availability alone is not
+proof of current Mini cache warmth. For a migrated additive Lean job, use one
+16 GiB/threads 2 isolated seat and pin import closure/cache provenance first.
+Slot1: warm IR2 target awaiting exact emitted fixture; send owner/captain first.
+Slot 2: provisionally queued privacy_composition_review DZK backend source freeze.
+Native performance ResourceMoney additive Lean request received; current hbox
+Mini dependencies may be better placed for its tiny module. If queue blocks,
+receive exact module/seed/import closure and package pins before Persvati placement.
+Both captain and root received concrete units, source/log paths, pins and outcomes.
+
+09:57 UTC RECEIVING UPDATE
+Third independent job: dZK backend scoped release nextest PASS, five selected
+tests, 50 outside explicit filter skipped, 5.706s. Compile 6.00s; no errors.
+Source-only 21 files / 238,853 bytes, exact authored dZK and store hashes checked.
+Manifest 84adb34cc7e1183eb66c40eb1c458252f353b7f575ae6d804f37f9391d06d9d7,
+lock 849029284fa8a2ca14fbae4ae1ebfb603c7addd331909355447f862706b13360.
+Log/pins mirrored local workbox/persvati-dzk-20261003. Slot 2 released on terminal
+success. Machine-readable placement/evidence index catalog/persvati-build-placement.json.

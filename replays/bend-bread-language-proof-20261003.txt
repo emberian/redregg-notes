@@ -1,0 +1,317 @@
+BEND <> BREAD: INTENT AND IMPLEMENTATION REPLAY CARDS
+2026-10-03. Codex / bend_bread_archaeology. Research only, second pass.
+
+This is a selective reconstruction, not an exhaustive history or a new kernel
+architecture. Ember's current choice is primary: Mini grows into new Dregg;
+Bend is the authored world language; Nock remains compatibility. No repo rename.
+Upstream Bend is read-only, supplied pin 947db722640c86247849343657bf2f7ef01cb7f1.
+Source reads are the current files on disk, not a claim they equal committed HEAD.
+No build, Git operation, deployment, credential access, or raw transcript export
+was performed. Historical quotations below are short locators/paraphrases, not
+copies of private conversations. These files remain local/private research.
+
+The continuity record was read first: work/RESUME-20261003.txt. Relevant current
+peer designs were read: BEND-LOGIC-COMPILATION and BEND-WORLD-LANGUAGE; selected
+GRADED-EXECUTION and FHE-BEND sections. Bread HORIZONLOG newest entries, memory
+index, relevant architectural law/statement/witness memories and docs/OVERVIEW
+were orientation leads. Current code and actual cv surrounding exchanges decide
+the cards. Peer claims are explicitly not independently rerun evidence.
+
+CARD 1 — A running self-improving inhabitant, not a theorem beside its runtime
+
+Human intent:
+  May15 claude:61398580-7dab-488f-8f4d-52da52265b64 #1050: asks runtime Candle
+  proof/reflection and runtime compiler after an in-logic agent model was called
+  alive. May31 claude:3d17355a-1ea0-483d-b6c3-fba7a5dd6fea #570/#571: asks to
+  discharge compiler/relocator obligations and demonstrate a running self-
+  optimizing, recompiled, self-proving system; asks how proof terms cross ABI.
+  Read cv show around1050/context3 and around570/context5, including preceding
+  assistant claim, explicit carried seams and immediate implementation plan.
+
+Attempt:
+  HOL4 genesis soundness -> Candle runtime checking -> CakeML compilation ->
+  relocation -> forward-certified genealogy. An untrusted inhabitant proposes
+  changes and proofs; checking is privileged, proof search is not.
+
+Actual current source:
+  /Users/ember/dev/svenvs/candle/self_recompile.ml contains executable application
+  sum_v0 -> sum_v1 -> sum_v2 closure swaps through a ref. GATE1 proves HOL
+  sum_spec equals closed form; GATE2 proves reassociation. Actual ML closures are
+  separately written; finite agree1/agree2 points trigger positive swaps. A bad
+  HOL equivalence proof fails and its boolean gate keeps prior compute closure.
+  File explicitly excludes changing trusted kernel/compiler code and says its
+  ML implementation/spec connection is cited, not redone. A theorem about a
+  HOL formula is not structurally tied to the exact ML closure being installed.
+  /Users/ember/dev/svenvs/selfRecompile/selfRecompileGateScript.sml defines
+  cert_sound over offered (bool,function) pairs and proves genealogy safety
+  PROVIDED that premise. The operational fold is real; cert_sound is the seam.
+  kernelMod/relocatorScript.sml proves MAP offset relocation on a toy read-only
+  memory model. Its kernel-image relocation keeps SND semantics by definition;
+  it is not an x86/CakeML binary loader refinement for an arbitrary edited image.
+  compilerOpt/LAYERB.md documents actual altered CakeML bootstrap carrying a
+  separately proved BVL pass, but full modified compile_correct re-composition
+  remains open at an FFI/outcome subgoal. This report is not rerun evidence.
+
+Lesson:
+  There was useful executable work after the early model, so 'nothing ran' is
+  false. 'A verified live trusted-kernel/compiler replacement ran' also exceeds
+  the inspected evidence. Preserve implementation identity in the certificate,
+  outcome/effect/FFI traces in the translation theorem, and installation authority.
+
+Bend opportunity:
+  Start with member-owned immutable method/library revisions, whose source Book
+  and exact compiled artifact are bound to the same checked translation. Current
+  management law authorizes replacement. Preserve active continuations at their
+  pinned version; deliberate migration needs a state/continuation transformer.
+  Rich source lets an agent propose libraries/proofs without making compiler
+  source or current proof checker mutable ambient authority. This realizes the
+  interesting inhabitant loop more simply than copying Candle genealogy first.
+
+Falsifier:
+  A proposal carrying a true theorem about function A but installing function B
+  must refuse even if chosen sample inputs agree. Replacing effectful function
+  with same scalar answer but changed ordered effects must also refuse.
+
+CARD 2 — Use the right prover pragmatically, but preserve the claimed statement
+
+Human intent:
+  May31 claude:5a0f6a2e-08ba-4cfc-aab1-f894f047703a #7519 asks for existing Iris,
+  Rocq/Isabelle infrastructure and term transport for particular proofs, with
+  explicit recognition of a more complicated trust argument. Read cv around7519
+  context4: this follows a misleading 'only three problems remain' summary.
+
+Attempt and source:
+  docs/OPENTHEORY-LEAN-IMPORTER-PLAN.md and CV-COMPUTE-FEASIBILITY.md route foreign
+  HOL results through an OpenTheory replayer. Current
+  docs/opentheory-importer-poc/OTPoC.lean parses v6 commands and creates Lean Expr
+  proof terms checked by addDecl. Its header records an actual correspondence
+  failure: declared q|-p exported as the true p->p. Kernel acceptance certified
+  ITS OWN statement, not equality to the declared foreign sequent. The repaired
+  thm operation checks entire declared context and conclusion by content; axiom
+  discharge is whitelist-to-proved-theorem, not creation of fresh Lean axioms.
+  Missing bundled articles are hard errors. That directly addresses vacuous green.
+  CV-COMPUTE report distinguishes ordinary reasoning import from compute logging:
+  expanding cv_compute into primitive proof steps grows with reduction length.
+  No fresh importer or HOL execution was performed here.
+  Bread Resource.lean is a discrete resource algebra with frame-preserving
+  updates. The source explicitly separates it from full step-indexed Iris OFE/
+  camera/iProp machinery. 'Iris-inspired' is not a transported Iris proof corpus.
+
+Lesson:
+  Cross-system proof checking can be pragmatic without moving the whole project
+  to a second prover. The encoding and statement correspondence are load-bearing.
+  A source-language acceptance proof has the same limitation: any admitted Book
+  is not necessarily the Book the user authored or the runtime actually executes.
+
+Bend opportunity:
+  Keep exact upstream Lean calculus as semantic boundary and make external proof
+  evidence an optional source-indexed certificate. Check conclusion, all assumed
+  definitions/imports, arithmetic/profile and context against publication bytes.
+  No reason to import HOL4 or full Iris just to type Bool cases or world methods.
+  Discrete resource algebra can help one-shot authority; it cannot turn Bend Q1
+  affine use into physical noncopyability or current-law revocation by itself.
+
+Falsifier:
+  Change one imported assumption, one dependency identity, or one source type
+  while preserving a true proof term: publication must refuse wrong correspondence.
+
+CARD 3 — Proof-producing translation was a broad language ambition
+
+Human intent:
+  July25 claude:aca16966-b955-46b9-a10a-d16f632bb306 #275 says not to fixate on
+  peepholes; asks proof-producing dependent-language translations and to revisit
+  hypergraph rewriting over theories/logics as production zkVM. Read cv around275
+  context4. Around795/context4 records later desire to converge release-sized
+  work while parking a genuinely month-scale compiler project, not abandoning it.
+
+Attempt and actual source:
+  Crypto/Arith/ArithmetizeTypedPredicate.lean captures Program and emits its LIVE
+  descriptor, exact equality, arbitrary-trace/public soundness, canonical iff,
+  resource/degree and JSON bundle through kernel-checked elaboration. A supplied
+  bridge joins Program.Holds to external Spec; negative canaries reject claiming
+  program B's soundness from program A's translation. Mathematical backend is
+  finite affine atoms plus Boolean syntax, not arbitrary dependent Lean code.
+  Crypto/Arith/BridgeSynthesis.lean improves it: structural Formula congruence and
+  canonAtom_iff synthesize fold plus recognized affine-leaf canonicalization with
+  symbolic field input. canonForm-to-independent Spec remains manual. A generated
+  spec equal to its own lowering's canonical form is useful but not discovery of
+  the authored program's intended meaning.
+  TypedLinearPredicateOptimizedWiring.lean transports these same proofs onto
+  Program.optimized. Registry stays unchanged by rfl. The older report says the
+  two production pilots initially optimized at equality; do not infer speedup.
+  RowLibraryExperiment.lean factors descriptor-parametric gate/window/constant/
+  selector/thread/delta forcing and assembles a second row relation from them.
+  Its assembly driver and additional shaping laws remain named next work.
+
+Lesson:
+  Generalized extraction means generate artifact AND checked correspondence
+  from one typed source, then connect a consumer. It does not mean repeated
+  emitter wrappers or calling an arbitrary backend relation 'the spec'.
+
+Bend opportunity:
+  One source-indexed specialization/typed transition Block can generate native
+  observation evaluator, constructive circuit DAG, relational AIR and proof
+  bundle. At each source constructor prove source Eval/Walk observation refinement
+  to Block; at each instruction assemble arbitrary-witness forcing from shared
+  lemmas. The current unary case specialization is a real first instance.
+  Wider Data cases and finite folds should extend that source-aware fragment;
+  closure/env/recursion uses bounded machine blocks, not finite HOL table expansion.
+
+Falsifier:
+  Swap emitted bytes while preserving bundle name, alter branch/default/source
+  quantity, corrupt an auxiliary witness: wrong source result must become UNSAT
+  or fail the exact artifact check. A witness generator refusing alone is weak.
+
+CARD 4 — Arbitrary CCC was an explicit target; finite tables are one answer
+
+Human intent:
+  July22 codex:019f87ab-aa9d-7ae1-a93b-a7b717103679 #108 demands either an
+  arithmetization of arbitrary cartesian closed categories or a reason it cannot
+  be done. Read cv around108/context5, including clarification that effectiveness
+  and finite-model conditions cannot be hidden by retreating to finite types.
+
+Actual source:
+  FinitePolynomialFunctions / FinitePolynomialCCC use extensional finite tables,
+  with exponential coordinate space. CCCPolynomialEvaluationFrontier proves
+  variable function+argument evaluation has exact degree2 on valid one-hot codes;
+  affine only when one side is subsingleton. Fixed function routing is linear.
+  This does not enforce one-hotness or make function-space encoding succinct.
+  CertifiedPresentationFibredCCC proves broad presentation-change category has
+  no weak terminal object; fixed-source zero-resource evidence families are CCC.
+  Logical conjunction is not product of equivalent presentations of one meaning.
+  CertifiedIndexedPresentationCompiler keeps source-indexed fragments, exact
+  acceptance certificates, explicit backend cost and conversion overhead, finite
+  candidate search, and a free-glue counterexample. It explicitly requires actual
+  adapters. Its historical four representation tags are not an execution-mode
+  taxonomy for new Dregg.
+  IntensionalCCCInteractionDescriptorIR2 binds full rule/path receipt and two
+  receipt endpoint commitments. It explicitly proves forgetting source typed
+  endpoints is irreversible: different beta redexes share layout. This is STLC
+  local proof evidence, not general dependent affine Bend evaluation or the old
+  HVM semantics. Receipt path uniqueness cannot restore erased source syntax.
+
+Lesson:
+  Preserve the useful distinctions: fixed/varying program, extensional/intensional,
+  predicate/evidence, equality/simulation, semantic glue/materialized backend.
+  The construction is not one blanket efficient compiler for arbitrary CCCs.
+
+Bend opportunity:
+  Rich language and static book closure allow partial evaluation of public code,
+  immutable Data copying and explicit captures. Compile functions intensionally
+  as closures/code/env, specializing known applications. Avoid one-hot coordinate
+  per possible function. Reuse presentation contracts across supported carriers,
+  but relation must include state/effects/errors/metering, not acceptance alone.
+
+Falsifier:
+  Two typed source terms with identical receipt layout but different runtime
+  output must not share executable identity or substitute in a Bend statement.
+
+CARD 5 — Exact arithmetic, not a field-shaped claim about machine words
+
+Current source evidence:
+  Bend base.bend:28 Nat Zero/Succ; 44-53 Word(n) WNil/WCon Bool; U32 wraps Word32.
+  Nat.add/mul recurse over source data. Nat.sub saturates to0. Nat.divmod(_,0)
+  returns (0,input). comp.ts:207-221 native arithmetic and349-358/448-453 bounded
+  Nat check at2^48-1; C posts ERR_NATS and returns cap, JS throws. That is NOT
+  modulo2^48 source meaning; caller's final fault interpretation matters.
+  Bread Bignum.lean gives signed ranged limb denotation and carry/borrow/modular
+  relation witnesses; subtraction belowzero is UNSAT. Its header identifies two
+  directions: DigitInjective gives limbs->value injectivity, but codec requires
+  value->digits left inverse. FieldLanes9.lean:117-194 supplies generic Nat
+  ofDigits/digitsN bounds and both inverse directions. RecordCircuit.range_iff
+  gives symbolic bit decomposition; AirProgramRows.limbs_recompose proves width-
+  generic truncation identity without term enumeration.
+  FOLArithmetizationCounterexamples gives BabyBear cancellation and reversed
+  zero-true connectives; Corrected gives nonnegative/no-wrap or Boolean graph
+  repair. Not every semiring/ring supports residual AND=sum or OR=product.
+
+Captured evidence read:
+  tools/direct-logic-bench/artifacts/20260722-reference-macos-arm64/SUMMARY.md:
+  M-SPEC3936 mismatches; naive field1; corrected Boolean10061 cases zero mismatch;
+  no-wrap rejects unsupported3324 cases. These are Python relation throughput/
+  symbolic costs, explicitly no prover/FHE/deployment/finality benchmark.
+
+Bend opportunity:
+  Relate source unary Nat and indexed Word to mathematical Nat/Fin as ghost Prop
+  evidence. Runtime codec handles limbs/words and never constructs gigantic
+  unary syntax. Prove source definition normalization symbolically once; prove
+  chosen bounded representation total/canonical on admitted domain; join Mini
+  existing AirRange/AirBignum. Saturating sub requires comparison+mux0; Nat div0
+  needs exact branch. U32 modular overflow, Nat overflowfault and field/ring
+  modular arithmetic are separate profiles. Optimize pinned definitions, not names.
+
+Falsifier:
+  a<p does not ensure an unconstrained difference cannot equal p-(b-a).
+  Tests/theorems should separate Nat3-5=0, underflow-refusing debit, U32wrap,
+  Nat2^48 overflow, div0, p-aliasing, malformed Word length and high limb.
+
+CARD 6 — Authoring was already intended as source-to-collective-use
+
+Human intent:
+  July10 claude:83b72050-8c57-4774-9ceb-59838db48cfb #547 carries explicit
+  authoring epoch: write source, lint, publish, play with crowd, verify, without
+  Rust/recompilation. Read cv around547/context3. That text includes older goal
+  handoff repetition: it is one intent lineage, not independent repeated requests.
+
+Actual source/caution:
+  dregg-dsl/src/lib.rs advertises six source generators and immediately records
+  the exact failure: retired plonky3 generator never compiled because consumers
+  lacked its feature; differential harness rebuilt a mirror descriptor rather
+  than consuming the emitted implementation. gen_air returns topology metadata;
+  RangeCheck/merkle stub does not itself enter proved constraints. Source comment
+  distinguishes actual production descriptor interpreter from these paths.
+  ConstraintIr carries require/mutate/match syntax and all_requirements flattens
+  branches; keeping control/effect order is essential for any richer replacement.
+  The authoring/card/game journey cannot be satisfied by adding another parser.
+
+Bend opportunity:
+  Game/document/agent behaviors become imports/libraries yielding typed world
+  intents, governed methods and persisted next states. Friendly .scene/.dungeon
+  syntax may elaborate to a checked source fragment; source diagnostics persist.
+  A user's current source opens in the authoring inspector, publishes an immutable
+  method revision, is invoked by actual members and can be replayed after restart.
+  This can simplify repeated app-specific interpreters while preserving useful UX.
+  Reuse existing native receiving and current-law typed effects; compiler success
+  is not a new authorization bypass.
+
+Falsifier:
+  Wrong branch guard/default, concurrent source revision, missing import, stale
+  current law or changed self/super dependency must refuse without partial install.
+  A method whose preview passes but receipt/restart replay invokes different bytes
+  fails the authoring destination even if parser and compiler modules are green.
+
+CARD 7 — Semantic recompilation and wrapping a foreign proof are different work
+
+Human intent/source choicepoint:
+  July30 claude:6418429c-b1af-4779-8a39-f42aebd4808f #291 asks both directly
+  witnessing foreign proof system and emitting Kimchi for Lean semantics, and
+  questions whether semantic reinterpretation still represents same protocol.
+  Read cv around291/context3. Preceding assistant described unused proving
+  function and unattached informal security-bit ledger, corrected by human.
+  May23 claude:70642dc2-d9f1-434b-8209-c2c96787bd92 #2874 asks factory creation
+  funded/computed inside atomic turn, not just fixed child-VK strategies. Read cv
+  around2874/context3. Assistant intuition about executor is not established fact.
+
+Bend opportunity/lesson:
+  One source meaning can have distinct realization/protocol identities. Reusing
+  AIR across ZK/MPC/FHE may preserve functional relation but change setup, leakage,
+  progress, release and authority. Explicit graded contracts are the correct join.
+  For factory behavior, compute proposals within the same ordered authenticated
+  turn/continuation, then kernel-current authority checks install. Public source
+  specialization need not generate fresh verifying key during private execution.
+  Source equivalence alone does not prove protocol equivalence or atomic birth.
+
+Falsifier:
+  Same result with changed threshold/setup/release observer is a changed contract.
+  A factory sees authenticated intermediate state, not unverified speculative
+  output; creation plus loan repayment must be all-or-nothing at actual receiver.
+
+UNREAD / NOT CLAIMED
+  This is seven scoped cards, not all language generations absorbed. No full
+  svenvs/HOL/CakeML proof closure, newDregg native receiving run, Bread fullClaims
+  build, dependent Bend compiler verification, Iris corpus transport, full old
+  memory cold storage, entire CCC/FOL history, all game authoring source or proof-
+  system security floor was read/checked. Large catalog prompt bodies are locator
+  leads; truncated query outputs are not counted as full reads. No historical
+  benchmark was reproduced. Latest active native/consensus/private work is owned
+  elsewhere and these cards do not override its source evidence.
