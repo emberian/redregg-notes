@@ -18,6 +18,11 @@ builders or make every specialist reread the entire project.
    for new human instructions. If a decision is uncertain, expand around its exact
    locator with cv show --around INDEX --context K, including relevant tool evidence.
    Extraction omits thinking and tools; it does not decide what is true or current.
+   Also follow EVERY prior_conversations entry in the manifest: cv prompts for
+   each, then both sides around its decision anchors and handoffs. These are
+   human-linked workstream predecessors, not verified cv fork lineage. Expand
+   beyond selected anchors when a question needs it; never claim whole-session
+   comprehension from a few windows. Preserve later corrections across the chain.
 
 2. Read every file under "always" in reentry-manifest.json completely, in order.
    RESUME gives navigation/owners, not a substitute for the remaining records.
@@ -66,8 +71,9 @@ this procedure, not transcript contents, secrets or a huge context dump. Existin
 Orca global hooks are untouched. It never blocks work or writes state.
 Non-managed hooks require Codex trust review. A successful local script test is
 NOT proof the app loaded/trusted/fired it. Do not edit trusted_hash to self-approve.
-Until actual lifecycle firing is observed, this is configured, not qualified
-automatic recovery. The user's explicit instruction and this file are the manual
+Ember explicitly approved the hook in this conversation on October3. Actual
+lifecycle firing still has not been observed, so automatic recovery remains
+unqualified until it fires. The user's explicit instruction and this file are the manual
 fallback. redregg/AGENTS.md points here for subsequent work in that repository.
 
 Updating this procedure

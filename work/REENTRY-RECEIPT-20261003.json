@@ -38,13 +38,15 @@
   ],
   "additional_read": [
     "BEND-SEMANTICS-AUDIT: report read in two chunks; its source claims not independently re-audited here",
-    "OpenAI official hooks docs: configuration, SessionStart compact, trust limits"
+    "OpenAI official hooks docs: configuration, SessionStart compact, trust limits",
+    "BEND-WORLD-LANGUAGE complete report",
+    "FHE-BEND-ARCHITECTURE complete report",
+    "RESIDENT-CONTEXT-ARCHAEOLOGY complete report",
+    "SWARM-LIFECYCLE-REVIEW complete report"
   ],
   "not_yet_reread_in_this_window": [
-    "BEND-WORLD-LANGUAGE full report",
     "BEND-LOGIC-COMPILATION full report",
     "GRADED-EXECUTION-ARCHITECTURE full report",
-    "FHE-BEND-ARCHITECTURE full report",
     "original FAREOO sources and all historical corpora",
     "full agreement source/design before new protocol judgment"
   ],
@@ -56,7 +58,9 @@
   ],
   "hook_validation": {
     "local_filtered_cases": 5,
-    "actual_codex_trust_or_lifecycle_observed": false
+    "actual_codex_trust_or_lifecycle_observed": false,
+    "user_reported_approval": true,
+    "actual_lifecycle_observed": false
   },
   "next": [
     "Captain finishes common Host and hands short Bend check seat during safe phase",
@@ -70,5 +74,28 @@
       9743
     ],
     "purpose": "verified latest user compaction instruction and prior assistant promise"
-  }
+  },
+  "prior_chain_windows_read": [
+    {
+      "session": "01a0fae5-8eb3-7392-83ee-4179c7664edc",
+      "range_half_open": [
+        7877,
+        7885
+      ]
+    },
+    {
+      "session": "df44288a-6539-4fb8-a6d5-2e7f78b3d751",
+      "range_half_open": [
+        232,
+        240
+      ]
+    },
+    {
+      "session": "0c315aee-e07a-499c-8bb4-fa36730510ca",
+      "range_half_open": [
+        7566,
+        7574
+      ]
+    }
+  ]
 }

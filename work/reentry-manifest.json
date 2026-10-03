@@ -39,5 +39,40 @@
       "/Users/ember/dev/redregg/intent/worlds-second-pass-20261003.txt",
       "/Users/ember/dev/redregg/intent/foundations-intent-model.txt"
     ]
-  }
+  },
+  "prior_conversations": [
+    {
+      "session": "01a0fae5-8eb3-7392-83ee-4179c7664edc",
+      "relationship": "Ember explicitly linked prior cloud session; cv lineage absent",
+      "starting_locator": 7880,
+      "other_locators": [
+        154,
+        189,
+        199,
+        289,
+        566
+      ]
+    },
+    {
+      "session": "df44288a-6539-4fb8-a6d5-2e7f78b3d751",
+      "relationship": "Claude takeover/handoff root; cv lineage absent",
+      "starting_locator": 235,
+      "other_locators": [
+        139
+      ]
+    },
+    {
+      "session": "0c315aee-e07a-499c-8bb4-fa36730510ca",
+      "relationship": "Earlier Claude project root; cv lineage absent",
+      "starting_locator": 7569,
+      "other_locators": [
+        2311,
+        3849,
+        4690,
+        4748,
+        7895,
+        7911
+      ]
+    }
+  ]
 }

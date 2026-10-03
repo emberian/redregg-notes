@@ -210,3 +210,37 @@ Continuity assets: work/REENTRY.txt, reentry-manifest.json, reenter.py and local
 redregg/AGENTS.md. Thread-only breadstuffs/.codex/hooks.json adds SessionStart
 compact/resume reminder. Local5case tests pass; Codex trust/lifecycle firing not
 yet observed. Never selfapprove trusted_hash. Existing global Orca hooks untouched.
+
+SWARM OBSTRUCTION REVIEW — root, after Ember's live-status request
+Hook approved by Ember; actual next compact/resume firing not observed yet.
+Prior chain cv windows actually read: cloud7880 (variablemultiuser, teardown),
+Claudehandoff235 (main, not dev), earlierClaude7569 (intermediate not lowerbar).
+Full sessions remain larger than these windows; see reentry-manifest chain.
+
+Root actual hbox08:16UTC probe:123GiRAM,60Gi available,load3.54,disk72Gi free;
+swapfull (do not assume active thrash merely from occupancy). Healthy commonLean
+~4.9GiRSS. Root authorized second warm Rust slot8Gi/jobs2 now DIRECTLY assigned
+to private_backend V2+ICG; original Rust job may finish unchanged. Owner records
+lease/log to captain, obeys actual resourceguards. After release captain/frontier
+queue handles tiny crypto helper and FHE. No new fullbuild/unboundedparallelism.
+One short separate Bendprobe8Gi/oneLeanthread/4min budget requested to captain,
+conditional actualguard+isolatedoutputs; NOT yet confirmed running. Healthy
+commonHost never interrupted. No >50Gi free disk condition relaxed.
+
+Worldlanguage owner resumed actual sourcepublication/nativeauthority/BFVjoin;
+FHE receipt can use genuine governed storage first but that is NOT Computation
+CheckedRun. Registry currently Nockonly: no Rustcheck->CheckedRun shortcut.
+Semanticsaudit owner resumed GENERAL Bend zkVM/fulltrace proof receiver (not
+Sol's fixedcase specialization), actual chosen proofbackend entropy qualification
+included. No entropyrepair snapshot previously qualified. Closure/heap proof
+extraowner waits first machine elaboration; composition still owns that join.
+Service owns optional isolatedspkRoot broker + helper --root implementation now;
+captain only overlapping core/importreview. Runtimepaid/r1 limits unchanged.
+Obsolete pending_init astra_recommendation interrupted, not counted as activework.
+
+Lifecycle: sourceowner keeps native qualification/repair responsibility. A turn
+can finish while blocked on immutableHost; artifactready must use followup_task,
+not merely send_message, to wake completed/idle owner. Captain told this for OO,
+docuverse, service. Same immutableartifact manifest to allreceivers, current
+INTEGRATION row updates on phasechanges. No new tracker hierarchy needed.
+Lifecycleaudit /Users/ember/dev/redregg/work/SWARM-LIFECYCLE-REVIEW-20261003.txt.
