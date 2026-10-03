@@ -1,0 +1,93 @@
+Whole-tree audit response — root, 2026-10-03 ~13:53 UTC
+Reference: work/FABLE-TREE-AUDIT-20261003.md (human-provided, preserve original).
+The audit's source pin is fe60a569. Current source and deployment are separate.
+Root read all 1,039 audit lines in the previous context, and directly checked the
+signing source and relevant contracts in this context. Other findings below have
+explicit owner reports or remain hypotheses, not a claimed independent re-audit.
+
+Exposure checked, no emergency inferred
+Root read-only checks on dregg-workhorse found Mini Store active, paid enrollment/
+bootstrap/watchers inactive, four operator-managed SSH keys, zero self-enrolled.
+Ember explicitly confirms these are ONLY trusted development access. No evidence
+of compromise has been reported. No shutdown, key changes or deployment done.
+This narrows current exposure; it does not repair tenant isolation or signatures.
+The same mini UID owns sessions and Store; operator and Host are the two mini
+processes root observed. Treat stranger enrollment as not ready until boundaries
+are actually repaired and tested, not merely private source checks passing.
+
+Construction and ownership
+ROOT: client consent and tenant-boundary triage. Real process routes author,
+inspect, signatures and assemble remotely; first intent signature and subsequent
+challenge/transaction signatures all consume server-chosen bytes. Merely moving
+inspect locally, checking finalizedDraft equality, or checking nullifier is NOT
+sufficient. Birth legitimately finalizes source; marker alone need not bind effects.
+New additive Kernel/NativeClientConsent source delegates exact Challenge/SigningPlan
+construction to the SAME Lean functions on a locally verified pinned prefix and
+retained authored intent. It compares complete canonical frames including ordered
+incidences. This full-peer producer is unqualified at writing; common client use
+and thin-client selective-witness verification remain actual required work.
+Do not expose full private state to thin clients as a shortcut, or silently require
+full replay on every signature. Warm verified prefixes / incremental extension and
+selective authenticated preparation are distinct necessary efficiency boundaries.
+
+OO + RECEIVER + WORLD + TRAFFIC: current recipient, signed epoch/wrap lineage,
+monotone durable client epoch, exact governed release, crash-safe key rotation.
+A sharper live design refuter emerged: publishing an ECIES wrap of an already-used
+room key to a stale recipient discloses the key even if source CAS later refuses.
+First bind and order exact release authorization (recipient record, ciphertext
+commitment, epoch/head, release capability), receive Applied/readback, THEN disclose
+ciphertext. New rotation drafts refused before adoption must never later be used.
+Current-key148byte producer alone is not this complete pre-disclosure guarantee.
+
+SERVICE + RUNTIME: separate privileged bounded launching from unprivileged app
+parser. Removing CAP_SETUID/GID alone breaks existing spawn; running whole resident
+under app UID also loses custody. Preserve exact package fd, selected UID, journal,
+cgroup and retained launch/reap identity. Service additionally owns grain-runtime
+journal.tmp crash recovery and status/hash findings, and completed an isolated
+broker fd/freeze crash-recovery source/test packet (actual public deployment not done).
+
+RUNTIME: signature-first admission; current prepare-before-admit still confirmed.
+Existing Oct2 antirollback implementation4a34dcb1 supplies sibling external anchor,
+so DB-only truncation claim needs the actual current helper refuter. Runtime owns
+that receiving. Same-UID filesystem attacker can potentially modify sibling anchor
+as well: independent protected custody/acknowledged frontier is a separate condition.
+Don't call a same-UID sibling file rollback protection against that stronger threat.
+
+CAPTAIN: current build/gate/publication repairs, scoped immutable native cohorts.
+Cold-start missing-binary gate refusers and prover-glue environment repair reported.
+Hyp-ledger instruments actually pass, but real scan finds three toothless families;
+retain those real reds and repair claims, not an allowlist. Ordinary source-first
+main publication remains Ember's direction; audit advice does not impose a new
+all-green-before-commit ceremony. Whole dispatcher refinement remains open.
+
+ZK/SEMANTICS: actual new source/network-to-native proof run reported, but no inherited
+2^-55/BindingCommitment/PQ/Fiat-Shamir security claim. Owner verified compressing-root
+BindingCommitment impossible and budget theorem arithmetic-only. Construct useful
+salted-hash collision extraction rather than global injectivity of compression.
+
+ROOT terminal repair: one-file render/text.rs visible control escaping including
+body/link/annotation/shared metadata; raw export stays exact. Two actual extracted
+function regressions fail on original and pass repaired; full renderer test authored,
+captain scoped warm check/publication requested. This is not tenant isolation.
+
+Still tracked, not lost in the headline fixes
+- Tenant OS identity/custody separation; say/tail/job path escape surfaces and sudo.
+- Current-room-key revision/AAD binding and rollback of same-address ciphertext.
+- Signing key loader custody/mode/zeroization and inherited passphrase environment.
+- Share expiry/revocation; claimed installation/lifecycle lost-report recovery.
+- Whole Host admission/dispatch/reexecution proof composition and repeated receivers.
+- Actual build closure/CI all gates, stale website/security docs, license attribution.
+- Public/private native output, sustained useful traffic, real four-store delivery,
+  Activity ordinary-route exclusion and portable private successor/old-host fence.
+These require concrete source ownership/receiving, not closure by listing them here.
+
+Broad frontier remains active
+Objective Bend's own partial/lazy core, future-type composition, reflection, laws,
+resource-sensitive typing and graph adequacy continue. Eight independent source
+examples now reportedly execute; actual Studio capture is a further real consumer.
+Private backend reports retained field-evaluation crash/restart output; full controller
+inventory scaling/native admission and sustained useful traffic remain incomplete.
+The real SPK failed START remains the ORIGINAL world/generation: no reinstall/reset.
+Captain transferred same live native bridge to a bounded phase guard after bulk I/O
+verification; compile progress preserved. Four-source reader receives matched native
+artifacts. Component successes do not constitute completion of these destinations.
