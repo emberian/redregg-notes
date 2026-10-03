@@ -1,0 +1,187 @@
+WHY TRAFFIC PRIVACY HAS THIS SHAPE — October 3, 2026
+Author: traffic construction owner /root/resume_private_construction.
+This is the reasoning behind the current construction, not a claim that the
+complete Mini privacy goal is fulfilled. Existing reports and selected primary
+sections were revisited; no new literature inventory or complete proof audit.
+
+THE QUESTION IS WHO CAN ASSOCIATE WHICH EVENTS
+
+Mini must support programmable OO worlds: methods, nested/cross-object calls,
+state, authority, outputs, membership and recovery. Encrypting stored data or
+hiding a sender IP does not hide dispatch, object access, worker participation,
+recipient subsets, or the agreement/custody graph. Network unlinkability and
+operator-hidden execution are separate obligations that must compose. A clear
+native Host at the end of a mix can still see the full author and object graph.
+The ordinary receiving fixture below deliberately uses that clear Host; it
+qualifies physical delivery and recovery, not private OO execution.
+
+The current restricted network experiment admits public cohort membership,
+source IP/connection presence, traffic reservation class, packet bounds, epoch,
+fixed lifetime and public faults. It aims to hide association of an honest
+client contribution with an honest output among at least two compatible honest
+contributions. The adversary can observe all links, control other clients and
+some relays, inject, tag, replay, withhold and drain replies. The premises include
+at least one honest whole-batch shuffle, an honest noncolluding registrar, an
+honest receiver, independently private endpoint keys/storage and a static
+corruption set. Later key compromise, adaptive corruption and longitudinal
+intersection across changing cohorts are NOT covered by a proved game here.
+Public presence alone can eliminate an anonymity set. A malicious intended
+recipient's plaintext and timing observations must enter the eventual game.
+
+The registrar is substantial trust, not administrative decoration: it knows
+admitted routes/pairings and authenticates the exact input and peeled-output
+hash sets independently for every operator. Public sorted sets disclose no
+pairing, but collusion with the registrar would defeat this construction's
+association premise. This is a concrete bounded comparator, not a decentralized
+verifiable shuffle. The active set guard refuses replacement, omission or a
+forged operator transition before claim/native effect. One enrolled malicious
+contributor can still abort an epoch without attribution; privacy is not a
+liveness guarantee. Padding by itself is never called source anonymity.
+
+WHY FIXED SCHEDULE, COVER AND WHOLE BROADCAST
+
+Demand-driven status, withdraw, key retrieval, repair and reply traffic can reveal
+exactly the hidden action that message encryption protects. Public app/app/
+control/repair opportunities reserve service for these duties independently of
+new application admission. Private work substitutes within admitted capacity;
+capacity refusal must retain valid cover. A real native receipt remains source
+evidence, never something a proxy infers from tail absence or an elapsed tick.
+The authorized caller's observation of completion/continued absence is separate
+leakage; its timing is not automatically permitted because an old API exposed
+Pending. Publication and audience authorization are additional source duties.
+
+The current cascade has three separately owned mixing stages and a receiver.
+It uses actual ML-KEM-768 and XChaCha20Poly1305 onions, authenticates whole sets,
+shuffles whole batches and broadcasts the identical encrypted batch to every
+cohort member. A reply capability opens only its own response. This avoids
+building an unqualified malicious-private-write/PIR primitive or a replenished
+SURB protocol into the first native join. It deliberately buys simplicity at
+O(W squared times payload) broadcast bandwidth and extra registrar/receiver
+trust. It is not an Outfox implementation or inheritance of Outfox's UC proof.
+Suite1 is pure ML-KEM, without a classical hybrid; native Ed25519 authority is
+still classical. Calling this whole stack post-quantum secure would be false.
+
+Cover is prepared before private work, durably provisioned for the entire public
+lifetime and loaded into memory before clocked emission. Disk, crypto, native
+execution and producer latency cannot block the send clock. Final fallback is
+one shared canonical MPB1 batch encrypted under discarded random capabilities;
+it supplies no client-openable admission, Pending or result. All audience links
+receive the same bytes. This avoids exposing real output readiness as a missing
+broadcast while the actual source custody remains authoritative. It does not
+make slow computation fast or establish worst-case execution time. Backlogs,
+fixed quotas and public lifetime need admission limits, not extra private bursts.
+
+WHY CUSTODY AND RECOVERY ARE INSIDE THE PRIVACY DESIGN
+
+A stable exact inner request is admitted once into durable custody before native
+exchange. Claim-without-reply is uncertain; it is never dispatched a second time.
+A later repair slot carries original class, exact-body digest and original recovery
+access, with a fresh reply capability. It fetches an actual cached source outcome
+or physical continuation without a second Mini operation. Stable semantic IDs
+and fresh outer encryption have different purposes. Reusing a nonce for changed
+plaintext is forbidden; deduplication must not suppress required fresh recovery.
+
+Durable relay/mailbox admission binds profile, exact authenticated input and
+clock context. Output is durably cached before publication; an immutable exact
+readback precedes any readiness alias. A missing alias is not lost source
+custody. The network accepts an input only after the fsynced adoption token;
+file visibility alone was an actual crash/timing hazard. Future-only resume
+cannot retransmit released epochs or accelerate a private backlog. Lifetime,
+retention and reservation bounds are public and pinned; rollback of keys,
+spent capabilities or generation/correlation inventory invalidates privacy and
+safety. Enrollment, rekey and offline repair require the same scheduled capacity.
+
+This connects directly to MPC: committee messages require independently owned
+recipient encryption keys, source-enrolled purpose credentials and exact
+configuration/epoch/session/generation binding INSIDE the opaque carrier. The
+mailbox key must not become every party's secret channel key. Shared source
+admission must see ciphertext and hiding commitments, not all private shares.
+Replies/PROGRESS/outbox must also be sealed; a plaintext digest of a low-entropy
+share is not hiding. The reusable provider validates an original persisted
+secret/public pair by actual encapsulation/decapsulation; AWS-LC restored secret
+keys do not expose derivable public keys. No latest-key fallback is safe.
+
+Room rekey adds another boundary: current recipient authentication under a locked
+source point is selection evidence, not permission to disclose an already-used
+room key. SAME Prepared source authorization and Applied readback must precede
+transmitting its wrap. A later CAS refusal cannot undo disclosure. Sticky retained
+key-rotation attempts, original ingress, old/successor snapshots and source lookup
+rather than resubmission preserve recovery after post-admission/pre-install loss.
+These joins are still incomplete in actual native receiving; refusers are not a
+finished private lifecycle.
+
+ALTERNATIVES STILL WORTH BEATING THIS CONSTRUCTION
+
+Echomix/Pigeonhole is a serious continuous symmetric mailbox alternative, not
+rejected on alpha convenience. Its section6 explicitly restricts service nodes
+to courier plus echo. Section5.6 makes acknowledgments and retransmission
+opportunistic with later user messages; automatic Mini progress needs a new
+scheduled recovery construction. Section5.7 treats PIR against replica linkage
+as future work. A deterministic scheduler cannot inherit a Poisson/echo proof.
+NymHS sections3 and5 expose malicious opposite-party/SURB attacks and introduce
+seed withholding and independent rewrap. A future SURB path must actually join
+those defenses, quotas, lifecycle and PQ wire format, not combine names.
+
+A fixed-epoch private-write plus authenticated-PIR board could remove whole
+broadcast for large cohorts and simplify bounded reply discovery. Sabot provides
+a concrete anytrust secret-shared relationship/PIR starting point, but its
+section7 Claim1 is a sketch for active privacy; section9 explicitly leaves the
+full malicious proof open. Servers can alter notification matrices and deny
+service. Its public membership and N squared setup also differ from hidden Mini
+objects. DPF/FSS keys that are plausibly PQ do not supply malicious-key validation,
+end-to-end authenticated writes, durable epochs or source authority. No actively
+secure PQ private-write/APIR implementation has been silently assumed solved.
+Signaling schemes can help discovery, but still need private body fetch and
+replies. The strongest path may replace this registrar with qualified shuffle/
+board proofs while keeping real source custody and the hidden evaluator common.
+
+COSTS AND FALSIFIERS THAT CHANGED THE DESIGN
+
+For this exact four-layer wire, W clients and payload P, aggregate fixed-link
+bytes per epoch are P*(W*W+5*W)+17237*W+1016, before TCP/IP, native/MPC work,
+storage and enrollment. W4/P4096 costs217420 bytes/epoch,13914880 over64epochs.
+W4/P262144 costs9507148 bytes/epoch; that larger shape requires a shorter lifetime
+under the64MiB inventory bound or separately admitted fixed fragmentation.
+T1second/G2 processing slots means one-second cadence, TEN seconds from client
+contribution to broadcast, not one-second delivery. Application completion and
+repair add more latency. These are derived actual codec costs; paper benchmarks
+are never reported as measured Mini performance.
+
+Actual falsifiers mattered more than padded-frame counts. An early64epoch run
+sent all768 scheduled records but produced only33 useful final broadcasts: the
+service rate was below arrival rate. Adding slack would only postpone overflow.
+Grouped immutable admission removed repeated fsync records and duplicate KEM
+peels; an adoption waiter fixed premature visible-file acceptance. The last
+qualified v10 all-cover pole delivered64 valid broadcasts with maximum send
+lateness1.371ms. Its real-native pole delivered63/64, maximum1.134ms; initial
+native admission took1.983s against the1.975s readiness cutoff. Both actual source
+requests completed through reserved repair, with exactly two native dispatches.
+The new shared final fallback closes missing shape, not useful service; the next
+paired64epoch experiment requires SIXTEEN actual historical op3 outcomes, two
+reserved repair polls/job and exactly sixteen source calls. All outcome claims
+must be exact real source frames. Full trace/adaptive/churn/private-execution
+security and full rekey/restoration remain required, not inferred from this test.
+
+PRIMARY AND LOCAL CONNECTIONS
+
+Outfox §§2.1,2.3,3 and AppendixB: https://arxiv.org/abs/2412.19937
+Echomix §§5.6,5.7,6: https://arxiv.org/abs/2501.02933
+NymHS §§3,5: https://arxiv.org/abs/2609.01326
+Sabot §§4,6,7,9,10: https://eprint.iacr.org/2025/971
+DPF survey (taxonomy lead, not a fresh proof audit): https://arxiv.org/abs/2607.27696
+Primary extracted texts and earlier read-depth inventory:
+/Users/ember/workbox/mini-private-capacity-review-20261002/literature/
+Prior comparison: literature-anonymity-frontier.txt in that same workbox.
+Bread transfer limits: BREAD-SYSTEMS-ARCHAEOLOGY-20261003.txt in that workbox:
+exact durable outbox/receipt and ciphertext archive recovery are useful; public
+selective release is not private delivery, archive repair is not secret resharing,
+and local allowance arithmetic does not reserve global recovery service.
+Actual owned source, line references at current WIP pins:
+hbox:/tank/dregg-build/codex-traffic-20261003/native/resource-client/src/
+pq_mailbox.rs:452 prepare_transition;640 live_broadcast_cover;830 live_relay;
+952 live_mailbox. cohort_tcp.rs:629 await_inputs;1219 fallback consumer test.
+current_recipient_source.rs:106 locked source consumer; key_rotation.rs and
+key_rotation_custody.rs retained original-attempt/install custody.
+hbox:/tank/dregg-build/codex-traffic-20261003/native/crypto_transit.rs
+Current coherent source-only capsule bde2875e… in captain SOURCE-INBOX; no keys,
+private journals, packet captures or native fixture state were published.

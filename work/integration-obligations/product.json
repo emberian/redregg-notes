@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-03T14:22:00Z",
+  "updated_at": "2026-10-03T15:08:45.699072+00:00",
   "obligations": [
     {
       "id": "product-spk-failed-start-reconciliation",
@@ -99,10 +99,10 @@
       "owner": "docuverse_deos_construction",
       "consumer": "docuverse_deos_construction",
       "coordinator": "root",
-      "state": "checkpointed",
-      "next_action": "INACTIVE AND INCOMPLETE. Actual generic captured-package diagnostics/preview producer plus explicit Doc receiving allocation. Resume original domain owner explicitly; no active implementation inherited by World/runtime.",
+      "state": "receiving",
+      "next_action": "Finish actual saved source/imported capture to generic Objective typed-preview UI and retained result/refusal, with current source edition.",
       "acceptance": "Actual member module/import editing+version CAS/history, genuine diagnostics/preview from checked artifacts, governed native publish/fresh instance/self-super/evolution and source/readback/history acknowledgement; old instances retain pins. Fixed inspector or unavailable UI alone does not satisfy full loop.",
-      "progress_evidence": "Actual native Studio editing/import/history/fork/stale-draft retention PASS26HTTP/18assertions/57s using client c833b50d and Host740545; exact package capture9eabba7241ab6219413ce04f3e75e47508cea59bbb303a5b165ecbd3a08afa9e consumed unchanged by compiler. Named-import parser repaired and Notebook.remember emitted to new demand machine. World/type owners now report actual captured Notebook execution returns8 and exact parsed-source global recursive-knot term accepted by compiled Lean checker Nat/uses[], receiving-r1.log in objective-types lane. General source-elaboration correspondence and native typed effect/admission/UI diagnostics remain OPEN. Doc yielded with root-owned producer callback; no completed OO language claim.",
+      "progress_evidence": "Actual native Studio editing/import/history/fork/stale-draft retention PASS26HTTP/18assertions/57s using client c833b50d and Host740545; exact package capture9eabba7241ab6219413ce04f3e75e47508cea59bbb303a5b165ecbd3a08afa9e consumed unchanged by compiler. Named-import parser repaired and Notebook.remember emitted to new demand machine. World/type owners now report actual captured Notebook execution returns8 and exact parsed-source global recursive-knot term accepted by compiled Lean checker Nat/uses[], receiving-r1.log in objective-types lane. General source-elaboration correspondence and native typed effect/admission/UI diagnostics remain OPEN. Doc yielded with root-owned producer callback; no completed OO language claim. UPDATE October3 after outage: original Doc owner explicitly resumed on real preview cohort02 PASS (Nat8/capture12/heterogeneous10). User renews construction15UTC. scenario_objective_world additionally owns native adapter implementation coordination. New served preview not yet qualified.",
       "waits_for": [
         {
           "owner": "objective_bend_linker",
