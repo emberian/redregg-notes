@@ -1,0 +1,374 @@
+{
+  "updated_at": "2026-10-03T11:27:14.128458+00:00",
+  "obligations": [
+    {
+      "id": "product-spk-failed-start-reconciliation",
+      "outcome": "Recover the actual admitted r2 START after physical spawn failed, under its original request and generation, then produce lawful retry or terminal native readback.",
+      "owner": "takeover_service",
+      "consumer": "takeover_service",
+      "coordinator": "product_lieutenant",
+      "state": "building",
+      "next_action": "Service diagnoses PermissionDenied/setuid/path failure and supplies retained original START evidence; captain constructs missing K-SPK reconcileFailedStart receiving. Service then executes lawful reconciliation and checks original generation before retry/terminal readback.",
+      "acceptance": "Actual failed START -> native authorized same-request reconciliation -> lawful retry or terminal readback, with service acknowledgement; four original r2 services preserved. No new INSTALL, fresh-world substitute, archive ACK or blind claimed-START retry.",
+      "progress_evidence": "Native begin+claim ACCEPTED; g2 phase entered/child_pid null; PID1580319 exited1 PermissionDenied(os13), supervisor also failed; composed run440.376s. Root identifies native reconcileFailedStart absent/K-SPK. Captain explicitly contacted; service owns physical diagnosis.",
+      "waits_for": [
+        {
+          "owner": "takeover_service",
+          "deliverable": "Exact physical-launcher permission repair and retained failed START request/generation pins",
+          "next_action": "Inspect actual launcher/setuid/ancestry and source repair without retrying claimed START",
+          "ready": false
+        },
+        {
+          "owner": "takeover_kernel",
+          "deliverable": "Guarded native reconcileFailedStart K-SPK receiving in coherent candidate",
+          "next_action": "Construct and hand off same-request/generation reconciliation with service; preserve current native authority",
+          "ready": false
+        }
+      ]
+    },
+    {
+      "id": "product-spk-browser-document-resident-restore",
+      "outcome": "Two actual browser members edit installed EtherCalc, export exact CSV to native shared document, continue Hermes work, and recover/restore the same managed world.",
+      "owner": "takeover_service",
+      "consumer": "takeover_service",
+      "coordinator": "product_lieutenant",
+      "state": "waiting",
+      "next_action": "After lawful failed-START recovery, consume attachment result to start TLS; send actual URL for normal browser interaction, retain connector CSV/native publication/Hermes/callback inventory and same-cut restore evidence.",
+      "acceptance": "Real browser edits by independent members, exact CSV hash/native publish+independent readback, attributed continuing resident request/result, lost reply/restart without duplicate charge/dispatch, quiescent complete app/resident backup and restore. Scripted BYOK only until user supplies real provider material.",
+      "progress_evidence": "Actual app8502 INSTALL complete; BOTH member tickets/routes native confirmed after owner0 grants/current-law+own-account fee repair. Notes17744999174753477343, connector child10340669511690461678. START blocked by explicit failed-start obligation; no browser/CSV/provider success claimed.",
+      "waits_for": [
+        {
+          "owner": "takeover_service",
+          "deliverable": "Lawfully recovered START and real browser attachment/TLS endpoint",
+          "next_action": "Execute failed-start reconciliation then attachment/TLS and preserve exact original app",
+          "ready": false
+        },
+        {
+          "owner": "takeover_service",
+          "deliverable": "Real controller/app callbacks and finalized quiescent managed inventory",
+          "next_action": "Finish registrations/capture callbacks and same-cut checkpoint/restore after app/resident receiving",
+          "ready": false
+        }
+      ]
+    },
+    {
+      "id": "product-resident-review-four-replica-workdesk",
+      "outcome": "A real resident/participant selected-support review prepares original signed document ingress, agrees it across four source stores, and preserves one append through lost response/restart.",
+      "owner": "bread_programmable_archaeology",
+      "consumer": "bread_programmable_archaeology",
+      "coordinator": "product_lieutenant",
+      "state": "waiting",
+      "next_action": "Runtime supplies matched Config/Host/client, agreed setup and signed-read route/workspace/caps; immediately wake resident to prepare original call/attempt/support identities and run frontier's four-store consumer.",
+      "acceptance": "Actual current signed source/readCapability support -> prepared original owner call -> ordinary agreed append -> lost response/restart -> exactly one append on four actual readbacks, including stale/revoked support refusal and retained original provider context. No consensus-none history clone or renamed anonymous bytes.",
+      "progress_evidence": "Resident f/g terminal PASS9/9: grain6 job-01.log/client3 job-02.log, Persvati terminal11:13:10UTC; source f/g58138c40/shared9064b2f0. Actual setup/ingress not yet signed. Frontier real TCP/MLDSA r3 protocol passed separately.",
+      "waits_for": [
+        {
+          "owner": "bread_programmable_archaeology",
+          "deliverable": "Qualified explicit review/helper and signed-state handoff adapter",
+          "next_action": "Retain qualified source and consume matched actual fixture",
+          "ready": true,
+          "evidence": "Terminal scoped9/9 PASS with closure-only repair2ef41669; no semantic source change"
+        },
+        {
+          "owner": "runtime_lieutenant",
+          "deliverable": "Matched four-replica Config/Host/client and real agreed setup/signed-read transport/workspaces/caps",
+          "next_action": "Produce concrete source-roster native fixture boundary and wake resident immediately",
+          "ready": false
+        },
+        {
+          "owner": "astra_consensus_frontier",
+          "deliverable": "Workdesk ingress lost-response/restart/single-append/four-readback consumer",
+          "next_action": "Join actual signed resident state to SourceHarness under exact Config context",
+          "ready": false
+        }
+      ]
+    },
+    {
+      "id": "product-studio-immutable-oo-authoring",
+      "outcome": "Ordinary members author module documents, compose/fork package imports, capture exact revisions, preview checked OO artifacts and instantiate/evolve governed persistent objects.",
+      "owner": "docuverse_deos_construction",
+      "consumer": "docuverse_deos_construction",
+      "coordinator": "product_lieutenant",
+      "state": "building",
+      "next_action": "Finish first Studio source packet and connect actual six immutable checked Partial artifacts to exact OO loader/preview and native publish/instantiate/evolve custody, preserving stale drafts/history and honest unavailability.",
+      "acceptance": "Actual member module/import editing+version CAS/history, genuine diagnostics/preview from checked artifacts, governed native publish/fresh instance/self-super/evolution and source/readback/history acknowledgement; old instances retain pins. Fixed inspector or unavailable UI alone does not satisfy full loop.",
+      "progress_evidence": "Doc owner reports Studio ordinary module/editor/history, ordered imports/entry/composition CAS/stale draft/current capture authored uncompiled. Linker terminal immutable join PASS six canonical Partial artifacts/full IDs and six Card executions; OO/Studio received actual artifacts. No installed new Studio loop claimed. OO reports qualified Instance/Reference/ReferenceInstance/InstanceLoader now consume six constructor artifacts; new publication author r11/613fff29 source produces revalidated closure/canonicalCore/compact pin/native kind, tiny check requested. Studio received JSON/file contract; native auth/call/evolve still worldKernelInput1 dependency.",
+      "waits_for": [
+        {
+          "owner": "objective_bend_linker",
+          "deliverable": "Six actual immutable checked Partial artifacts and full constructor/correspondence",
+          "next_action": "Retain exact qualified artifacts and repair concrete consumers if needed",
+          "ready": true,
+          "evidence": "Fresh list_agents terminal report: six checked Books/full immutable IDs +Card6 PASS, constructor/Eval/exact-trace axiom gates PASS; sent OO+Studio"
+        },
+        {
+          "owner": "member_oo_construction",
+          "deliverable": "Exact qualified persistent instance/partial loader/call context/publication/evolution receiving API",
+          "next_action": "Consume six real artifacts and produce loader/instance producer boundary to Studio",
+          "ready": false
+        },
+        {
+          "owner": "bend_world_language",
+          "deliverable": "Actual diagnostic/preview/source-publication/current-authority native intent producer",
+          "next_action": "Expose real source core/provider/result/native authority contract and hand off exact outputs",
+          "ready": false
+        }
+      ]
+    },
+    {
+      "id": "product-capacity-inactive-fixture-native-use",
+      "outcome": "Persistent multiuser document/object/Studio consumers run concurrently with fair bounded ingress and retained refusal/recovery on an actual isolated native world.",
+      "owner": "multiuser_capacity_construction",
+      "consumer": "multiuser_capacity_construction",
+      "coordinator": "product_lieutenant",
+      "state": "waiting",
+      "next_action": "Doc/captain deliver an inactive qualified OO/docs fixture COPY-only or existing fresh source-genesis setup; capacity owner runs actual overlapping member/browser workloads with retained unknown outcomes and no shared active Store copy.",
+      "acceptance": "Actual native member write/read/inspect/history/object workload, slow/refused/idle clients leave other members progressing, bounded capacity and recovery; matched source/artifacts/fixture and consumer acknowledgement. No active r1/r2/demo Store cloning.",
+      "progress_evidence": "Capacity source browser16 bounded workers/absolute ingress/per-world credential stream/crosscaller scratch; focused37 checks+release PASS. Actual native-world consumer pending fixture; direct inactive-fixture request sent doc/captain.",
+      "waits_for": [
+        {
+          "owner": "multiuser_capacity_construction",
+          "deliverable": "Qualified concurrency/client artifact",
+          "next_action": "Retain37 checks and release then run actual consumer",
+          "ready": true,
+          "evidence": "Owner+captain focused37 regressions and release terminalPASS"
+        },
+        {
+          "owner": "docuverse_deos_construction",
+          "deliverable": "Exact inactive qualified OO/docs receiving fixture or existing ordinary fresh-genesis setup descriptor",
+          "next_action": "Nominate inactive Store/config/keys/resources with copy/remap/pin rules; verify no active receiving process",
+          "ready": false
+        },
+        {
+          "owner": "takeover_kernel",
+          "deliverable": "Safe coherent native fixture allocation/artifact binding for capacity journey",
+          "next_action": "Accept/copy or source-create isolated fixture with immutable matching Host/client; hand off directly",
+          "ready": false
+        }
+      ]
+    },
+    {
+      "id": "product-source-surfaces-live-two-faces",
+      "outcome": "Two actually invoked member-authored source/domain faces render over one pinned OO instance and authorized native observations, with exact prepared actions and governed effects.",
+      "owner": "docuverse_deos_construction",
+      "consumer": "docuverse_deos_construction",
+      "coordinator": "product_lieutenant",
+      "state": "building",
+      "next_action": "Repair source Intent.instance representation to canonical native Nat bytes with full-consume/reencode proof and ABI version, then actual helperBook smoke/current native channels; old unaryNat cannot cheaply carry random63 instance IDs.",
+      "acceptance": "Actual accepted provider/entry Trace+Value -> exact typed decode -> independent accepted origin/observations/prepared actions -> real browser/document mounts; third-party/stale/narrow/private action refusal preserves drafts. Smoke/source syntax doesn't grant rights.",
+      "progress_evidence": "Surface base Lean PASS; Lowering+JSON2 actual scopedPASS/released0 log/tank/dregg-build/codex-surface-next-20261003/check-r2.log. Generic Rust5PASS earlier. HelperBook smoke ready, no installed native Surface authority. Actual smoke1 terminalFAIL only missing Json DecidableEq; source compare canonical compressed strings repair. Real-use blocker: unaryNat instance IDs cannot cheaply represent random63 native identities; doc+world paired compact nativeNat byte schema/decoder repair, shared source ABI must requalify.",
+      "waits_for": [
+        {
+          "owner": "docuverse_deos_construction",
+          "deliverable": "Qualified compact native instance identity Surface source ABI/decoder plus real two-face helperBook smoke",
+          "next_action": "Author canonical nativeNat byte instance field with full consume/reencode and update source library/ABI/consumers, then qualify actual smoke",
+          "ready": false
+        },
+        {
+          "owner": "bend_world_language",
+          "deliverable": "Actual accepted provider/input/result origin and independently admitted slots/prepared native intents",
+          "next_action": "Return exact native receiving channels; no fabricated source annotation/authority",
+          "ready": false
+        },
+        {
+          "owner": "member_oo_construction",
+          "deliverable": "Pinned actual persistent OO instance/source identity for both faces",
+          "next_action": "Hand off exact loader/instance/current context after artifact consumption",
+          "ready": false
+        }
+      ]
+    },
+    {
+      "id": "product-station-world-gm-current-effects",
+      "outcome": "An inhabited authored station has shared contested props/supply, continuing room/catalog/history views and attributed resident GM narration, with actual governed effects.",
+      "owner": "dreggcloud_product_archaeology",
+      "consumer": "dreggcloud_product_archaeology",
+      "coordinator": "product_lieutenant",
+      "state": "waiting",
+      "next_action": "Owner executes frozen Station4/source Trace checks at accepted placement, then consumes exact source admission/funding/current authority and service8812..15 provider boundary; resume immediately when ready.",
+      "acceptance": "Actual source take/drop/move jointly governs shared resource/player roots, stale concurrent/current-law/replay refusals inert; attributed GM reads exact native source/citations and suggestion stays inert until separate authorized action. Continuing six-scene world remains coherent.",
+      "progress_evidence": "Station3 Books/provider6PASS; scalar actual14ABI/Trace adapter qualified4bc477...; Station4/source consumer frozen nominated no active job last owner. New6scene12edge catalog/genericfaces/coauthoring/publicPlan source d33de08a/bdbdb876 WIP.",
+      "waits_for": [
+        {
+          "owner": "bend_bread_archaeology",
+          "deliverable": "Qualified actual scalar source Trace/Value14ABI->sequential native Plan adapter",
+          "next_action": "Retain qualified overlay for Station real consumer",
+          "ready": true,
+          "evidence": "check-04 PASS standard gates, /home/hbox/workbox/codex-bend-scalar-20261003/olean, SHA4bc477..."
+        },
+        {
+          "owner": "redregg_evidence",
+          "deliverable": "Pinned warm placement and terminal frozen Station4/source consumer results",
+          "next_action": "Delegate exact guarded leaf launch to Station owner after closure acceptance; remove hbox duplicate",
+          "ready": false
+        },
+        {
+          "owner": "bend_world_language",
+          "deliverable": "Native source-run/current-law/funding admission",
+          "next_action": "Complete signed authoritative Bend method receiver and exact current inputs",
+          "ready": false
+        },
+        {
+          "owner": "takeover_service",
+          "deliverable": "Sequential first8/provider boundary for Station tasks8812..15",
+          "next_action": "Finish failed START/app journey and supply actual independent member3/4+connector1 safe boundary",
+          "ready": false
+        }
+      ]
+    },
+    {
+      "id": "product-collective-service-commons-atomic-use",
+      "outcome": "Community allocation and resident service commons consume canonical shared-account settlement, capacity, exact requests/results and recipient acceptance in one governed native lifecycle.",
+      "owner": "bigdregg_product_architecture",
+      "consumer": "bigdregg_product_architecture",
+      "coordinator": "product_lieutenant",
+      "state": "building",
+      "next_action": "Execute frozen collective5 then service3 Books through accepted delegated placement; wake retained owner on money/world/Activity/service evidence to run actual atomic source/native consumer and recovery refusers.",
+      "acceptance": "Authenticated fee-adjusted shared account table before source, exact canonical ordered transfers with per-debit current authority and atomic room/Book/returns; real service quote/capacity/request/uncertain recovery/result/recipient acceptance, no duplicate dispatch/refund/pay. Independently held private release follows declared contract.",
+      "progress_evidence": "Original5BooksPASS;14 domain sourcePASS including shared budget settlement/servicecommons/faces/scenario. Collective5 frozen packet3efdd364..., service3 packet744f699c..., source r6-r9. New native receiving remains OPEN, completed source turn didn't close it. Money Foundation2 terminalPASS17330a01/14axiomgates; actual generic typed Plan wrapper absent. Completed collective consumer explicitly followup_task resumed for source Preparedresult\u2192moneycarrier/room/returns constructor, current schemas requested world+money. World delivered concrete adapter ownership Compiler/BendMoneyPlanAdapter.lean+WorldPlanMoney.bend to collective: normalized source-derived root/ordered transfers, scalarv2 phase effects, independent logical ReturnSlots/canonical byte identities; Closed selected outputCodec registry/current input still qualification dependencies.",
+      "waits_for": [
+        {
+          "owner": "redregg_evidence",
+          "deliverable": "Frozen collective5/service3 terminal core-check receiving",
+          "next_action": "Accept exact warm closure and delegate owner launch; remove hbox duplicates",
+          "ready": false
+        },
+        {
+          "owner": "native_performance_construction",
+          "deliverable": "Qualified canonical money receiver/funding sample/current debit authorities",
+          "next_action": "Qualify r4 exact batch/consent/positions/funding foundation and hand off world+consumer",
+          "ready": false
+        },
+        {
+          "owner": "bend_world_language",
+          "deliverable": "Authenticated source inputs and atomic request/Book/room/returns current-law Plan receiving",
+          "next_action": "Bind pre-source accounts/current source and exact outputs into native joint intent",
+          "ready": false
+        },
+        {
+          "owner": "graded_execution_architecture",
+          "deliverable": "Compiled actual pending/ResponseReady/source handler Activity request/result boundary",
+          "next_action": "Construct actual source turn handler and native event62 continuation consumption",
+          "ready": false
+        },
+        {
+          "owner": "takeover_service",
+          "deliverable": "Actual admitted service completion observation and safe existing provider lifecycle",
+          "next_action": "Deliver original request/cell/sequence/operation/native completion evidence after live service resumes",
+          "ready": false
+        },
+        {
+          "owner": "bigdregg_product_architecture",
+          "deliverable": "Actual source-authored Prepared allocation/service result -> normalized typed money/room/return Plan wrapper and decoder correspondence",
+          "next_action": "Pair exact source constructors/ABI/carrier mapping with world+money, publish wrapper source-first; no unrelated hardcoded operations",
+          "ready": false
+        }
+      ]
+    },
+    {
+      "id": "product-coauthoring-world-institution",
+      "outcome": "Members coauthor rules/canon/tools using attributable proposals, independent decisions and governed adoption while existing instances retain their meanings.",
+      "owner": "dreggnet_collective_fiction",
+      "consumer": "dreggnet_collective_fiction",
+      "coordinator": "product_lieutenant",
+      "state": "building",
+      "next_action": "Qualify source-first institution/Card leaves, connect Station+Studio version refs, bind actual signer/current charter/ballots and atomic definition/history adoption through native world/OO producer.",
+      "acceptance": "Ordinary actors propose/independently endorse/exactly decide/adopt same reviewed version under current charter/grants; old instance pins unchanged; native atomic definition+history and refusal readbacks. Fiction personas never become payment principals or factual truth.",
+      "progress_evidence": "Institution r1 fourWIPfiles6ce6ed04; actualBallots delegated-law/fullVersionRef/logicalexport/persona-principal separation/genericfaces source authored. Station consumes actual references. Card repair r7 source825f7663/Persvati nomination; no fake pass after prior ENV namespace error.",
+      "waits_for": [
+        {
+          "owner": "redregg_evidence",
+          "deliverable": "Card/institution exact checked leaves with readonly import closure",
+          "next_action": "Accept repaired4c722147 Card script closure/actualBooks and delegate owner launch",
+          "ready": false
+        },
+        {
+          "owner": "bend_world_language",
+          "deliverable": "Native actor/source/current charter/adoption intent admission",
+          "next_action": "Bind real signer and exact roots to ordinary governed Plan",
+          "ready": false
+        },
+        {
+          "owner": "member_oo_construction",
+          "deliverable": "Atomic persistent definition/history publication and old-pin instance boundary",
+          "next_action": "Expose current loader/publication/evolution semantics to coauthoring consumer",
+          "ready": false
+        }
+      ]
+    },
+    {
+      "id": "product-portable-restored-bend-resume-activity",
+      "outcome": "The actual archived repaired Bend checkpoint resumes under its pinned current source and joins durable Activity/worker consumption.",
+      "owner": "bread_systems_archaeology",
+      "consumer": "bread_systems_archaeology",
+      "coordinator": "product_lieutenant",
+      "state": "waiting",
+      "next_action": "Graded executes existing probe resume repaired.bin7 in exact assigned scope and sends source/result state; portable consumes proof/native result then joins event62 worker path on coherent candidate.",
+      "acceptance": "Actual329-byte cut7 restored checkpoint executes same pinned computation/resume result with wrong context/source/generation refusals; actual Activity continuation/worker action receives it. Separate controller cuts/archive repair alone don't close resume/activation.",
+      "progress_evidence": "Nativearchive5PASS; actual329-byte cut7 capture/missing-chunk refusal/repair/restore/forgery+overwrite refusalsPASS; frontier4node streamingCAS/lostreply/restartPASS. repaired.bin hbox:/home/hbox/workbox/codex-portable-continuation-20261003/evidence/bend-custody-r1/repaired.bin. Resume requested graded, not yet executed receiving.",
+      "waits_for": [
+        {
+          "owner": "graded_execution_architecture",
+          "deliverable": "Actual pinned repaired BendContinuationProbe resume path7 result",
+          "next_action": "Run exact restored bytes through existing source probe and hand off state/result evidence",
+          "ready": false
+        },
+        {
+          "owner": "graded_execution_architecture",
+          "deliverable": "Native event62 Activity/worker continuation producer",
+          "next_action": "Join actual resume to durable current-source worker receiving on matched candidate",
+          "ready": false
+        },
+        {
+          "owner": "takeover_kernel",
+          "deliverable": "Coherent matched Activity/operator roles and immutable source capsule",
+          "next_action": "Seal matching roles/capsule and deliver exact native receiving boundary",
+          "ready": false
+        }
+      ]
+    },
+    {
+      "id": "product-governed-home-transfer-custody",
+      "outcome": "A real continuing home/worker moves by consented exact history/source/control/private generation, with successor custody, old-host fencing and recoverable activation.",
+      "owner": "bread_systems_archaeology",
+      "consumer": "bread_systems_archaeology",
+      "coordinator": "product_lieutenant",
+      "state": "building",
+      "next_action": "Publish/qualify authored transfer phase/epoch law and native phase receiver; pair actual private successor/fence and quiescent current capsule/inventory producers, then execute prepare/cut/activate/recovery consumer.",
+      "acceptance": "Actual owner+renter consent binds acknowledged prefix/source/control/old-new generations/destination, retained original uncertain calls and liabilities; quiescent cut, genuine successor privateRecovery+physical oldhost fence, single destination activation/ack and retry classification. Source phase/ACK/STOP alone cannot mint custody qualification or erase historical shares.",
+      "progress_evidence": "Portable reports authored exact transferplan/phaseepoch/sourceResourceCell/AcceptedInvocation prepare admissions; nativephase receiver next. Backend SuccessorQualified/resharing explicitly UNCONSTRUCTED; fresh credential revocation only future dispatch, cumulative historicalf remains. ServiceSTOP isn't permanent fence.",
+      "waits_for": [
+        {
+          "owner": "bread_systems_archaeology",
+          "deliverable": "Actual source transfer phase receiver and current governance consent/custody binding",
+          "next_action": "Construct typed current-law prepare/quiesce/epochCAS/activation/recovery receiver source-first",
+          "ready": false
+        },
+        {
+          "owner": "private_backend_construction",
+          "deliverable": "Actual SuccessorQualified/resharing/privateRecovery with old-new descriptors and liability custody",
+          "next_action": "Construct successor after authenticated sharing/triples/output join; bind holder set/threshold/generation/WAL/outbox/spent pool, retain cumulative threat assumptions",
+          "ready": false
+        },
+        {
+          "owner": "runtime_lieutenant",
+          "deliverable": "Current-source worker governance and genuine oldhost fencing/activation mechanism",
+          "next_action": "Pair source transfer with real execution credentials/epoch/generation exclusion and recovery",
+          "ready": false
+        },
+        {
+          "owner": "takeover_service",
+          "deliverable": "Finalized fullhome manager inventory and exact quiescent app/resident source cut",
+          "next_action": "Finish real app/controller registration and capture exact coherent source/native generation cut",
+          "ready": false
+        },
+        {
+          "owner": "takeover_kernel",
+          "deliverable": "Current immutable operator capsule/facets/replay registration",
+          "next_action": "Pin actual Host/config/profile/helper/verifier and same-cut Store/custody paths for source audit",
+          "ready": false
+        }
+      ]
+    }
+  ]
+}

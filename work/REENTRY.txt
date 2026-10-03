@@ -52,6 +52,9 @@ builders or make every specialist reread the entire project.
    authored / compiled / executed / integrated / deployed claims distinct. Never
    duplicate an active native build because a stale note said it was not started.
    Read INTEGRATION plus captain's newest message: either can lag the other.
+   Audit work/integration-obligations against fresh stopped/running agents.
+   Verify diagnostic/dependency readiness, then followup_task stopped owners whose
+   work is actionable; a queued message or completed turn does not close a join.
 
 5. Re-establish the destination and the next concrete joins.
    Mini grows into Dregg; Bend is the central authored language, Nock compatibility.

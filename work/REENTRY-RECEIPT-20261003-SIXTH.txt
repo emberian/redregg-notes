@@ -1,0 +1,15 @@
+Sixth re-entry receipt — Oct3 ~11:33UTC
+Actual reading: REENTRY and manifest; all5 always records in full (repaired output
+truncation by rereading ACTIVE-GOAL, BEND-DIRECTION and SHARED-CONTRACTS separately).
+Recent actual cv both-party12560..13200; older actual8781..8845,9438..9469,
+9705..9750,10400..10465,11475..11500,12380..12420, all read. Prior-chain full
+reading provenance in earlier receipts, not claimed fresh now. These bounded
+anchors span several compactions, preserve human corrections and own promises.
+Read all3CENSUS-1107 reports completely; current direct owner messages supersede
+older report states. Live agent snapshot26running before latest scalar/controller
+wakes. Full goal stillactive. Core main/source state remains captain-owned; root
+did not independently rerun native builds this window.
+Actions: twoSol efficiency builders; Bend fork permission durable; docs rewrite
+owner resumed; cluster integration audit35obligations, stopped dependencies sent
+for real readiness/wakeup; headcount deadline durable. Detailed logs remain with
+lieutenants; broad construction continues.

@@ -11,7 +11,11 @@ This is a primary authored world language, not merely an optional backend.
 
 SOURCE PIN AND INITIAL READ
 Root cloned https://github.com/bendlang/bend.git to /Users/ember/dev/bend.
-HEAD947db722640c86247849343657bf2f7ef01cb7f1. Upstream stays unmodified.
+Initial pin HEAD947db722640c86247849343657bf2f7ef01cb7f1. Original upstream
+reference is retained; Ember explicitly authorized forking/changing Bend on Oct3
+~11:28UTC for concrete efficiency. The earlier untouched-vendor restriction is
+superseded. Version changed semantics/representations and connect actual runtime
+to its intended semantics through refinement; upstream implementation is not sacred.
 AGENTS says bend.ts human-written and not to edit; kernel uses Lean4.34.0 while
 current Mini uses4.30.0. No silent whole-project toolchain migration.
 Exact file is a dependent affine calculus with Q0/Q1/Q2 quantities, a Book of

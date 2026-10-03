@@ -1,0 +1,234 @@
+{
+  "updated_at": "2026-10-03T11:22:38.130390+00:00",
+  "records": "Source/build/publication authority remains captain INTEGRATION and coordination maps; this is capability join audit only.",
+  "obligations": [
+    {
+      "id": "protocol-agreed-workdesk",
+      "outcome": "Actual authorized review-note appended once through four agreement participants, surviving lost reply and restart",
+      "owner": "astra_consensus_frontier",
+      "consumer": "bread_programmable_archaeology",
+      "coordinator": "astra_multimodel_room",
+      "state": "building",
+      "next_action": "Bind SourceHarness to real signed review ingress from same-profile genesis; run setup and four readbacks",
+      "acceptance": "One admitted append, identical four physical source readbacks after restart, no second charge/effect, consumer acknowledges actual document use",
+      "progress_evidence": "Native selective COMMIT recovery with TCP/MLDSA/archive CAS PASS; source call codec mismatch repaired. No actual signed review fixture yet.",
+      "waits_for": [
+        {
+          "owner": "joint_receiver_construction",
+          "deliverable": "Qualified ordered source receiver cohort",
+          "next_action": "Repair foundational source proofs and qualify exact immutable producer cohort",
+          "ready": false
+        },
+        {
+          "owner": "runtime_lieutenant",
+          "deliverable": "Four same-genesis consensus-profile stores and signed setup",
+          "next_action": "Produce actual Config/source fixture with exact context and genesis pins",
+          "ready": false
+        },
+        {
+          "owner": "bread_programmable_archaeology",
+          "deliverable": "Actual guarded prepared/signed document review note",
+          "next_action": "Use matched source/profile and prepare-submit capability bindings",
+          "ready": false
+        }
+      ]
+    },
+    {
+      "id": "protocol-joint-decision",
+      "outcome": "Current-authority funded joint reservation through custody YES, install/abort and durable repair",
+      "owner": "joint_receiver_construction",
+      "consumer": "astra_consensus_frontier",
+      "coordinator": "astra_multimodel_room",
+      "state": "building",
+      "next_action": "Finish actual source reserve/install/abort entrypoints and current-law CAS/readback; preserve Activity conjunction",
+      "acceptance": "Actual reservation protects write/read/nullifier/budget guards; YES only after qualified retained custody; recovery cannot bypass current source laws",
+      "progress_evidence": "Joint candidate/reservation/decision modules previously checked; combined native receiving and event60/61 source WIP; saved foundational outputs, actual source failures owned",
+      "waits_for": [
+        {
+          "owner": "joint_reserve_birth_authority",
+          "deliverable": "Reachable explicit reserve-birth current-owner consent",
+          "next_action": "Deliver qualified controller repair to receiver",
+          "ready": false
+        },
+        {
+          "owner": "private_backend_construction",
+          "deliverable": "Actual qualified private custody outcome",
+          "next_action": "Construct holder/readiness/recovery qualification, not just allocation receipt",
+          "ready": false
+        }
+      ]
+    },
+    {
+      "id": "protocol-private-ingress",
+      "outcome": "Funded current committee enrollment reaches designated private WAL with exact authorized recovery outcome",
+      "owner": "joint_receiver_construction",
+      "consumer": "resume_private_construction",
+      "coordinator": "astra_multimodel_room",
+      "state": "building",
+      "next_action": "Finish event63 JointBackendPartyAdmission/Codec current manifest/capability/native credential admission and route",
+      "acceptance": "Ordered actual Applied receipt before enqueue; outcome binds exact carrier/generation/descriptor/source receipt; no synthetic Qualified/YES; authorized fetch works",
+      "progress_evidence": "Concrete producer files/ABI assigned and outer codec authored. Raw private transport remains refused. Backend authenticated_ingress::Receiver<M>::receive supplies durable protocol progress.",
+      "waits_for": [
+        {
+          "owner": "private_backend_construction",
+          "deliverable": "Exact authenticated backend ingress/progress/WAL binding",
+          "next_action": "Pair real durableProgress and recipient/generation checks with receiver codec",
+          "ready": false
+        }
+      ]
+    },
+    {
+      "id": "protocol-useful-private-transport",
+      "outcome": "Useful guarded private delivery at sustained fixed public cadence with retained native recovery",
+      "owner": "resume_private_construction",
+      "consumer": "joint_receiver_construction",
+      "coordinator": "astra_multimodel_room",
+      "state": "building",
+      "next_action": "Remove redundant outer cache fsync while preserving durable inner outputs/cover/no redispatch; repeat sustained and drain workload",
+      "acceptance": "Every epoch delivers valid guarded output and actual native operation/recovery result over many buffer lengths; report cadence and end-to-end latency separately",
+      "progress_evidence": "64epoch physical768/768 records met cadence but useful outputs decayed64\u219249\u219244\u219239\u219233; sustained useful delivery REFUTED. Owner implements causal IO repair.",
+      "waits_for": [
+        {
+          "owner": "native_performance_construction",
+          "deliverable": "Reviewed durable gateway/grouped journal contract",
+          "next_action": "Supply reviewed no-second-effect cache/adoption producer",
+          "ready": false
+        },
+        {
+          "owner": "joint_receiver_construction",
+          "deliverable": "Source-authorized private ingress/fetch",
+          "next_action": "Qualify event63 producer before opening raw private route",
+          "ready": false
+        }
+      ]
+    },
+    {
+      "id": "protocol-malicious-preprocessing",
+      "outcome": "Actual maliciously checked preprocessing feeds authenticated multiplication and private evaluator",
+      "owner": "private_backend_construction",
+      "consumer": "astra_consensus_composition",
+      "coordinator": "astra_multimodel_room",
+      "state": "building",
+      "next_action": "Extend real ACSS+Sh2t checked King multiplication with malicious-king refusal/fault localization and authenticated AND consumer",
+      "acceptance": "Concrete checked correlations/triples from protocol state with stable one-use burn, generation binding, retained accusation and recovery; evaluator consumes actual products",
+      "progress_evidence": "Persvati King3+ACSSf2 actual4/4 PASS11:19:23\u201332Z: checked multiplication, delayed-RBC/early-RA, burn/retry refuters; not full AND/evaluator/GOD/private output",
+      "waits_for": [
+        {
+          "owner": "privacy_composition_review",
+          "deliverable": "Actual dZK/Sh2t typed preparation producer",
+          "next_action": "Retain API repair ownership for King consumer",
+          "ready": true,
+          "evidence": "dZK8 and Sh2t9 actual release checks PASS; backend consumed typed getters/preparation"
+        }
+      ]
+    },
+    {
+      "id": "protocol-private-output",
+      "outcome": "Full private execution returns/rekeys recoverably under exact holder/audience and source generations",
+      "owner": "private_backend_construction",
+      "consumer": "joint_receiver_construction",
+      "coordinator": "astra_multimodel_room",
+      "state": "building",
+      "next_action": "Construct malicious evaluator/output recovery and qualified holder generation over real preprocessing",
+      "acceptance": "Actual source-native custody and audience release survives faults/rekey without mask reuse, stale generation or invented current authority",
+      "progress_evidence": "Physical anchor/WAL/correlation identity and native descriptor pieces exist; full malicious evaluator and output/GOD construction remains open",
+      "waits_for": [
+        {
+          "owner": "astra_consensus_composition",
+          "deliverable": "Full fixed-access controller with source refinement",
+          "next_action": "Deliver complete checked controller/network producer",
+          "ready": false
+        },
+        {
+          "owner": "private_backend_construction",
+          "deliverable": "Authenticated gates/preprocessing",
+          "next_action": "Finish actual products and fault-localizing continuation",
+          "ready": false
+        }
+      ]
+    },
+    {
+      "id": "protocol-global-causal",
+      "outcome": "Actual executable agreement start/pump/step implies global causal vote/commit invariant",
+      "owner": "joint_reserve_birth_authority",
+      "consumer": "astra_adversarial_architecture",
+      "coordinator": "astra_multimodel_room",
+      "state": "waiting",
+      "next_action": "Run frozen causal full-action invariant diagnostic, repair, complete actual composite start/pump/step",
+      "acceptance": "Kernel-checked causal extraction from real reachable engine, then global proof consumes it without conditional placeholder",
+      "progress_evidence": "Earlier causal primitives PASS; later action/initial/ingest/fold bundle frozen; full composite closure unfinished. Completed turn retains obligation.",
+      "waits_for": [
+        {
+          "owner": "redregg_evidence",
+          "deliverable": "Frozen causal placement diagnostic",
+          "next_action": "Validate exact warm closure, run accepted job and followup_task owner with actual result",
+          "ready": false
+        }
+      ]
+    },
+    {
+      "id": "protocol-global-receive",
+      "outcome": "Actual network receive/store provenance joins executable projection to global agreement safety",
+      "owner": "astra_adversarial_architecture",
+      "consumer": "astra_consensus_frontier",
+      "coordinator": "astra_multimodel_room",
+      "state": "waiting",
+      "next_action": "Run frozen ReceiveProvenance then dependent structure/global receive checks; repair returned diagnostics",
+      "acceptance": "Global proof uses actual stored-message send provenance and causal extraction; receiver token meaning remains source-derived",
+      "progress_evidence": "Structure/certificate/count/projection PASS; three receive leaves source-frozen, not compiled; completed owner needs actual diagnostic callback",
+      "waits_for": [
+        {
+          "owner": "redregg_evidence",
+          "deliverable": "Three frozen receive proof diagnostics",
+          "next_action": "Run exact accepted placement and followup_task owner",
+          "ready": false
+        },
+        {
+          "owner": "joint_reserve_birth_authority",
+          "deliverable": "Qualified full causal extraction",
+          "next_action": "Finish actual composite invariant and pass exact API to global proof",
+          "ready": false
+        }
+      ]
+    },
+    {
+      "id": "protocol-governed-lifecycle-profile",
+      "outcome": "Agreement/private/Activity worlds use honest genesis/profile and migration boundaries",
+      "owner": "astra_consensus_frontier",
+      "consumer": "runtime_lieutenant",
+      "coordinator": "astra_multimodel_room",
+      "state": "building",
+      "next_action": "Bind fixture and settings to exact consensus/current facets; use genuine initialization or admitted migration for later facets",
+      "acceptance": "No relabeling consensus=none or enabling new control facets in an existing world without source-authorized transition; real Host prepare-only matches profile",
+      "progress_evidence": "Minimal Settings canonical Context/genesis validation source pushed; initial ordinary fixture control/activity None. Later facet migration not constructed.",
+      "waits_for": [
+        {
+          "owner": "joint_receiver_construction",
+          "deliverable": "Source-derived facet genesis/bootstrap pins",
+          "next_action": "Provide actual joint/private/Activity profile admission contracts",
+          "ready": false
+        }
+      ]
+    },
+    {
+      "id": "protocol-build-dag",
+      "outcome": "Frozen receiver dependencies compile concurrently without false cache reuse or mixed receiving cohorts",
+      "owner": "astra_multimodel_room",
+      "consumer": "takeover_kernel",
+      "coordinator": "astra_multimodel_room",
+      "state": "building",
+      "next_action": "Finish isolated bounded scheduler tests, explicit legacy checkpoint adoption and actual guarded receiver resume",
+      "acceptance": "Failed node blocks dependents only; independent ready nodes compile; exact input/output pins, one writer and immutable completed cohort; captain consumes actual run",
+      "progress_evidence": "Verified old script sequential set-e; new scheduler source authored and infrastructure tests PASS. No scheduler production run yet.",
+      "waits_for": [
+        {
+          "owner": "joint_receiver_construction",
+          "deliverable": "Frozen current manifest and saved-PASS evidence",
+          "next_action": "Provide exact source/input attestation for146 saved output pairs",
+          "ready": true,
+          "evidence": "Owner supplied CHECK-MANIFEST, r4b/r5c logs, own olean/C roots and current failed BirthPolicy boundary"
+        }
+      ]
+    }
+  ]
+}
