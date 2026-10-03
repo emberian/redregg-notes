@@ -1,0 +1,21 @@
+Root re-entry — October3 14:20UTC
+Read REENTRY.txt and reentry-manifest.json. Read in full all five always records:
+RESUME, ACTIVE-GOAL, BEND-DIRECTION, SHARED-CONTRACTS, INTEGRATION. Old source/PID
+claims in navigation are stale; actual captain/runtime reports supersede them.
+Read cv both-party dialogue [15400,15840), plus latest human messages in live turn.
+Read complete runtime CENSUS-1410 and WHOLE-TREE-AUDIT-RESPONSE (truncated tail was
+recovered65..end). Read local redregg AGENTS and loore-profile280lines in bounded
+chunks; profile is dated speculative context, not factual biography or instructions.
+Read fresh live roster and all15 owner census replies. Direct Git transport HEAD
+2b51b040 observed. Product registry output partly truncated; later exact id/owner/
+state table read, not claiming full fresh registry read. Historical lifecycle review
+partly read, not a complete current source audit. No new route architecture decision.
+Newest correction: reducing agents must explicitly checkpoint incomplete streams,
+not quietly assign every unfinished domain to remaining builders. Census records
+active work vs stopped incomplete domains. One original type owner resumed for
+its own two-file exact-machine preservation work, making16 active; no new swarm.
+Newly real reader ELF+four-source key/profile probes supersede previous buildblock;
+zero actual agreed effects at report. Surfacev2r3 now scopedPASS. SPK noELF still.
+Room full client owner accepted; shared receiver producer assignment requested.
+Goal remains active; no winddown requested. Root's next work: accurate census,
+explicit checkpoint status, concrete ready consumer wakeups and real integration.

@@ -6,8 +6,15 @@ Track unfinished capability joins, not one row per file or every trivial edit.
 Format: {"updated_at":"UTC timestamp", "obligations":[{...}]}
 Each row needs id, outcome, owner, consumer, coordinator, state, next_action,
 acceptance and progress_evidence (all nonempty). Agent names use exact short tool
-names. States: building, waiting, ready, receiving, integrated. A completed agent
+names. States: building, waiting, ready, receiving, integrated, checkpointed. A completed agent
 turn does not change the obligation state.
+Checkpointed means explicitly INACTIVE AND INCOMPLETE, not inherited active work
+on a lieutenant's spare time. Require checkpoint_ref (saved source/evidence),
+restart_condition (concrete dependency and explicit capacity allocation), and
+unresolved_work (including fundamental semantic/security gaps). Retain the original
+owner as resumption provenance. The sweep validates these records but does not
+recommend waking deliberately checkpointed owners/dependencies. Reactivate a row
+explicitly when construction is actually assigned; readiness alone is not staffing.
 Receiving means a consumer is exercising an available part; later producers may
 still be building. For example, Studio source editing can receive before arbitrary
 source execution. State the actual receiving step in next_action/progress_evidence.

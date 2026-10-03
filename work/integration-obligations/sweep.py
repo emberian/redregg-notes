@@ -4,7 +4,7 @@ import argparse
 import json
 from pathlib import Path
 
-STATES = {'building', 'waiting', 'ready', 'receiving', 'integrated'}
+STATES = {'building', 'waiting', 'ready', 'receiving', 'integrated', 'checkpointed'}
 REQUIRED = ('id', 'outcome', 'owner', 'consumer', 'coordinator', 'state',
             'next_action', 'acceptance', 'progress_evidence')
 
@@ -37,9 +37,16 @@ def audit(records, inactive, known_agents=None):
                 findings.append((key, 'INVALID', 'dependency lacks owner/deliverable/action'))
             if dep.get('ready') is True and not dep.get('evidence'):
                 findings.append((key, 'INVALID', 'ready dependency lacks evidence'))
-            if dep.get('ready') is not True and dep.get('owner') in inactive:
+            if state != 'checkpointed' and dep.get('ready') is not True and dep.get('owner') in inactive:
                 findings.append((key, 'WAKE_PRODUCER',
                     f"{dep['owner']}: {dep.get('next_action', '')}"))
+        if state == 'checkpointed':
+            # Deliberately inactive is neither complete nor accidentally stranded.
+            # Retain the source/evidence and explicit reactivation decision.
+            for field in ('checkpoint_ref', 'restart_condition', 'unresolved_work'):
+                if not item.get(field):
+                    findings.append((key, 'INVALID_CHECKPOINT', f'missing {field}'))
+            continue
         if state == 'integrated':
             ack = item.get('consumer_ack', {})
             if not item.get('receiving_evidence') or ack.get('owner') != item.get('consumer') or not ack.get('evidence'):

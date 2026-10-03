@@ -1,0 +1,193 @@
+Mini / Dregg census — October 3, 2026, 14:20 UTC (10:20 EDT)
+Root. Snapshot, not completion evidence or a new scope ceiling.
+
+Ember's latest direction
+Continue past 10am. Assess full domains, including unfinished work behind completed
+agent turns. Do not distribute every retired stream to whoever remains: explicitly
+checkpoint incomplete streams instead. Active building and retained responsibility
+are different states. The full destination in ACTIVE-GOAL remains unchanged.
+
+Evidence
+Fresh census requested from all 15 then-running owners. All substantive domain
+reports received, plus runtime's CENSUS-1410.txt covering stopped domains. Root read
+current roster, recent actual both-party cv dialogue, five required core records,
+runtime census and audit-response record. Direct Git check: main transport HEAD
+2b51b040ffada5663269a7c65382b7fcd65648f7. Many capability findings below are explicit
+owner reports, not a fresh root rerun of every program/theorem. New main intake is
+ongoing; deployed, compiled and source-only states must not be conflated.
+
+Judgment
+There are substantial constructions, but we have the same important failure mode
+Ember described in fn: too much stops at independently working components while
+the requested usable system is absent. It is inaccurate both to call this nothing
+and to describe the remaining work as merely wiring. Missing semantics, protocol
+properties, authority producers and coherent native execution are real work.
+
+Effect of reducing about 30 agents to 15
+Some real consolidation: scholars delivered bounded research; representation,
+compiler optimization and capacity lanes finished specific useful packets; dependent
+consumers stopped polling. We have no controlled before/after throughput measure,
+so cannot claim a speedup caused by reducing headcount.
+Actual cost: less parallel domain construction. FHE, Activity, money/DrEX, portable
+homes, Station/fiction, and several UI consumers no longer had active builders.
+Their responsibilities accumulated on World, runtime, receiver and root. A named
+successor or retained callback did not give those people implementation capacity.
+Build failures/import closure debt and the broad native interface remained serial
+constraints. The cut did not create all of that debt, but made it easier to leave
+unfinished domain work sitting behind it while reporting broad active coverage.
+
+Active roster (16 after one precise resumption)
+01 bend_world_language: new Objective language/core, generic typed lazy execution,
+   shared native output/current-authority contract. Does NOT actively implement all
+   inherited FHE/money/Activity/portable consumers.
+02 bend_logic_compilation: actual source parser/captured-package compiler and generic
+   preview CLI; numeric source specialization/artifact interface.
+03 objective_demand_proof: general concrete lazy graph/source adequacy. All closed
+   raw reachable states avoid unbound/missingCell/invalidUpdate; general suspended
+   entry and cache-update simulation now qualified. Remaining transition families,
+   allocation/substitution, administrative rank and completeness remain open.
+04 objective_type_construction: resumed into its own exact-machine typing domain,
+   exclusively DemandTyping/Preservation files. Typed heap/environments/continuations,
+   quantity/capture ownership and every-step preservation; no termination promise.
+05 astra_consensus_composition: retained BendTT CBV clear/oblivious machine, all
+   controls, general source and raw-network refinements. Distinct from new lazy core.
+06 bend_semantics_audit: real source-derived circuit/native proof and privacy/security
+   composition. Full controller two ticks proved/verified with tamper refusers; full
+   PCS/Fiat-Shamir/ZK/source coverage and Mini proof admission are not established.
+07 astra_consensus_frontier: actual four-store agreed source operations and recovery;
+   fixed-committee consensus engine has real TCP/MLDSA and global safety proofs.
+08 joint_receiver_construction: actual source reservation/admission/terminal private
+   custody and same-Prepared room release producer. Terminal NO/maintenance/YES/
+   install/epoch liability handoff remain substantive unfinished work.
+09 private_backend_construction: malicious reference field computation and retained
+   correlations/outboxes; whole-inventory burn and real crash continuation work.
+   Full controller scaling, recipient-private results, native qualification, robust
+   successor custody and active security/GOD proof remain open.
+10 resume_private_construction: scheduled private transport, source custody/recovery,
+   key rotation. Useful service still fails its actual first-epoch deadline.
+11 member_oo_construction: complete room client repair actively accepted; old OO native
+   carriers work, new Objective method/effect consumer waits on World. Room issuance,
+   lineage/latest head and pre-disclosure Applied authorization are not all built.
+12 client_consent_construction: local authoring/full-plan consent before every signing
+   path. Warm verified-prefix session Lean+C passes; ordinary Rust consumer authored,
+   unqualified. Specialized signers and thin authenticated witnesses remain open.
+13 takeover_service: SPK product journey + privileged launch separation, broker,
+   journals, export/restore. Original failed START still not reconciled.
+14 spk_recovery_endpoint: sealed immutable historical build continuation and recovery
+   endpoint. Exact 10,494-input/1.67GB NVMe capsule sealed; no recovery ELF yet.
+15 runtime_lieutenant: actual current native reader/receiving plus signature-first and
+   independent rollback frontier. Routes checkpoint callbacks, not six extra domains.
+16 takeover_kernel: source integration/publication, coherent native builds/artifact
+   custody and scoped receiving batches. Source WIP may ship before qualification.
+
+Communication / ownership graph
+World <-> compiler <-> Studio consumer; World <-> demand/type proofs.
+Retained machine <-> compiler/ZK/private backend (not automatically new Objective).
+Frontier <-> receiver <-> runtime; resident joins actual prepared source operation.
+Traffic <-> private backend <-> receiver for source-bound private custody.
+OO <-> receiver <-> traffic, World only for shared statement/authority contracts.
+Service <-> recovery endpoint <-> captain/runtime for original generation recovery.
+Captain accepts frozen source/built outputs across lanes. Root owns cross-domain
+decisions and checkpoint inventory. Product/protocol lieutenants have yielded;
+their old titles must not be mistaken for live construction capacity.
+
+What actually works and what does not
+Native user family: Host740545 + Studio clientc833b50d supports real multiuser
+documents, source/import/history/fork editing, old OO instance publication/evolution,
+stale drafts and scoped restart/deduplication. New source is broader than this ELF.
+New Objective: actual Studio capture executes Notebook.remember -> Nat8 and passes
+the same core checker. Independent sources exercise mutual recursion, repeated
+self/super, heterogeneous/captured extensions, lazy divergence and sharing. No
+new-language native atomic effect/private result yet. General elaboration correctness,
+typing preservation, adequacy, laws and live-frame migration are not established.
+Agreement: real engine and safety construction. Matching reader ELF361efa...6074
+now actually reads all four stores, exact profiles and current keys; bad pins/direct
+submission refuse. At last report ZERO accepted agreed source effects. Native
+application liveness, fair inclusion, dynamic epochs and cross-domain joint turns
+are unfinished. Scheduled traffic transport is not yet the actual consensus mesh.
+Traffic: paired 64-epoch run emitted all768 scheduled records and covered all four
+clients; native useful service63/64, first epoch missed by ~1.98s against25ms bound.
+This refutes the claimed sustained-service profile, despite steady/drain recovery.
+Private compute: real malicious reference share/triple/AND/XOR lifecycle and WAL.
+Full retained controller needs 13,237 gates / 4,709 ANDs per tick, 29 dependency
+layers, max565 openings/layer; current8,192 gate bound is too small. Backend is
+building batched openings. Current assumptions GF128/classical ROM/static faults;
+no PQ/QROM/GOD claim. New lazy Objective private execution is further work.
+ZK: actual source-controller proof plus separate private-salt cSHAKE preimage circuit.
+No composed full confidentiality/security or native proof-admission claim. Exact
+Bread prover slice still external to a self-contained Mini checkout.
+SPK: installed original app and native sharing tickets, but failed START g2 remains
+fenced. No completed browser -> CSV -> native doc -> continuing Hermes -> restore.
+Security: repairs are progressing but not a safe stranger-ready deployment. Trusted
+development only per Ember. Same-UID custody/rollback, blind-signing consumers,
+room release/epoch trust and privileged app parsing remain incompletely repaired.
+Proof/build: no whole running Host refinement, no aggregate current-tree/CI green.
+Actual hypothesis scan still has three substantive reds. Component axiom scans are
+not end-to-end correctness. Most recent source packet batches are intentionally WIP.
+
+Immediate executable joins (no fabricated completion times)
+1 Matching agreement reader now exists and passed probes: actual signed setup,
+  original resident append, four readbacks, lost reply/restart. Runtime triggers
+  resident only when that concrete setup is available; one fixture mutator.
+2 World structured runner + compiler captured-package CLI -> real Studio diagnostics
+  and preview. This can close independently of native effect admission; that larger
+  obligation remains explicit. Surfacev2r3 Lowering/JSON/Smoke just passed.
+3 Consent native session/Rust client receiving; room coherent Rust refusers; launch
+  split physical refuters. Each is real safety construction, not deployment yet.
+4 Sealed NVMe recovery suffix -> exact old-profile ELF -> original g2 reconciliation
+  -> independently read stopped g3 -> lawful successor. Repeated prior timeouts are
+  a real obstruction. No reset/reinstall or silent new-world substitute.
+5 Traffic separate scheduled broadcast from slow custody without widening deadline;
+  backend vector openings through full retained controller; general type/adequacy
+  proofs through actual transitions. These are substantive active work, not cleanup.
+
+Checkpointed INCOMPLETE streams (no pretend active successor)
+FHE: packet12 ce1b4ef5... is authored/uncompiled; prior real BFV mux4096-slot/depth2
+  evidence retained. Native authorized compute/result/release and noise inheritance
+  unfinished. Resume original owner on explicit build/consumer slot and source API.
+Activity: baseline author helper2 ready; effect64 disabled after signature bypass.
+  Resume original owner with exact signed-statement/controller contract; external
+  dispatch/abort/recovery/funding is still its own domain, not World's spare work.
+Money/DrEX/collective settlement: source wrappers/input/fee-first proofs retained;
+  no atomic native Book+room+returns. DrEX262 proof remains slow. Resume original
+  builders after explicit native transaction contract and real reserved capacity.
+Portable homes: real separate-process checkpoint resume retained; full liabilities,
+  private successor resharing, old-host fence and governed activation absent. This
+  stream remains checkpointed, not active because receiver has a related producer.
+Station/fiction/institutions: actual source/card examples retained; authored native
+  consequences/GM/community adoption and private custody absent. No active builder.
+Docuverse/Studio: editing is usable; diagnostics/preview callback pending. Broader
+  deos/reflection/user-authored views remain incomplete. UI owner is checkpointed
+  and resumes on actual generic producer, not on a promise of one.
+Optimizations: qualified representation/controller and replay-Session rewrites
+  retained; complete native regression/performance gains not yet demonstrated.
+
+If work were put down now
+It would be a usable older multiuser document/OO development environment plus a
+large partially integrated language/protocol research system, NOT the requested
+private programmable worldhost and NOT the October13 alpha construction completed.
+Preserve original live development worlds and failed generation; source-publish
+nonconflicting work, retain exact coherent executable families, and save independent
+checkpoints for dormant domains. A restart capsule must identify source/patch,
+verified result, runnable continuation, missing dependency, receiving consumer and
+hard unresolved semantic/security claims. Agent-completed is not domain-completed.
+Before a deliberate stop we need one current ledger matching real jobs and source,
+all accepted ready packets safely captured, and restartable native receiving jobs.
+That is reproducibility/honest handoff, not a new way to call unfinished work done.
+14:22 update after original census
+Captain confirms ordinary main pushed3dd5a7b17e322e488ffc6874a566714ec3622d10.
+102 forward source files received;26 shared snapshots still need minimal merges.
+Whole mixed Host.Main executable is still absent. Consent Rust deliberately remains
+uncommitted pending its owner's current check; Lean session is published.
+Runtime explicitly resumed original resident for the now-real four-store reader:
+17 active temporarily (15 initial + type preservation + resident receiving). This
+is an actual consumer wakeup, not a new domain assigned to a busy lieutenant.
+Type preservation immediately found a real checker soundness defect: mix can close
+over an affine binding that lambda would reject. Original type owner now repairs
+that rule/checker with World before proving preservation. No theorem weakened.
+Private two-tick full graph latest measurement26,477 gates/9,420 AND/58 layers,
+maximum658 openings/layer; latest source graph handed directly to backend.
+Product registry now explicitly checkpoints8 inactive incomplete domains. Sweep
+requires checkpoint reference/restart condition/unresolved work and suppresses
+automatic wake suggestions for intentional checkpoints;9 regressions pass. Full
+destination and goal remain active. Runtime is updating its own parked rows.

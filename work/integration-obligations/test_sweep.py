@@ -48,5 +48,21 @@ class LifecycleTests(unittest.TestCase):
         self.assertIn(('doc-join', 'UNKNOWN_AGENT', 'consumer: resident'), findings)
         self.assertFalse(audit([self.row], set(), {'receiver', 'resident', 'product'}))
 
+    def test_deliberate_checkpoint_does_not_wake_owner_or_dependencies(self):
+        row = {**self.row, 'state': 'checkpointed',
+               'checkpoint_ref': 'retained source and evidence capsule',
+               'restart_condition': 'explicit builder allocation and matched receiver',
+               'unresolved_work': 'actual signed operation and recovery',
+               'waits_for': [dict(owner='builder', deliverable='matched host',
+                                 next_action='compile', ready=False)]}
+        self.assertFalse(self.codes([row], ['receiver', 'builder']))
+        self.assertIn('WAKE_PRODUCER', self.codes(
+            [{**row, 'state': 'waiting'}], ['receiver', 'builder']))
+        self.assertIn('INVALID_CLOSE', self.codes([{**row, 'state': 'integrated'}]))
+
+    def test_checkpoint_requires_restartable_evidence_and_residuals(self):
+        self.assertIn('INVALID_CHECKPOINT', self.codes(
+            [{**self.row, 'state': 'checkpointed'}], ['receiver']))
+
 if __name__ == '__main__':
     unittest.main()
