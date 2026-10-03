@@ -1,0 +1,33 @@
+ROOT RE-ENTRY RECEIPT 8 — 2026-10-03T13:07:41.088193+00:00
+Read REENTRY.txt, entire reentry-manifest.json, COUNCIL-CONTINUATION,
+and all five always records. Batched output truncation affected Bend-direction
+and Shared-contracts; both fetched separately and read fully afterward.
+Integration and old RESUME operational statements are stale; live captain messages
+supersede them. Read actual cv both-party dialogue [14000,14450) and [14450,14900)
+(as available at 13:05UTC); latter includes this window's own exchanges, not new
+independent evidence. No new historical full-corpus read claimed.
+Read full Fable response-1, mirror manifest and redregg AGENTS. Inspected live
+collaboration tree. No dead job restarted. Scholar already active from explicit
+human request; mirror complete and actual checksums of HTML/all9assets verified.
+
+Recovered alignment: Objective Bend owns its language/type/core design; no forced
+Data-only semantics or unchanged checker ceiling. Source semantic inadequacy must
+be repaired, not hidden behind component successes. World and scholar are directly
+exchanging heterogeneous-extension, future-type, lazy-demand and C4 corrections.
+No new architecture selected this window. Route design records not freshly read;
+previous receipt7 records that reading, and consequential new selection still
+requires current route/source inspection. Fable second dialogue asks critical
+questions, not an implementation mandate; started same CLI session in tmux with
+15USD bound, no child agents/read-only tools. Original first turn exited0.
+
+Actual live updates: receiver373 cohort complete; output-history and real ordered
+receiver proof joins reported kernelPASS, root has NOT inspected those new statements
+yet. Backend r19 reports9/9PASS after restored MLKEM keypair repair. Studio new tests/
+release reportPASS c833b50d. Captain owns active SPK r2 after exact20min r1 timeout;
+full manifest equivalence precedes suffix compile. No native g2 recovery claimed.
+Endpoint, birth, graded and FHE terminal with explicit receiving ownership.
+
+Next: primary scholar completes tracked semantic synthesis and discriminating
+source consumers; root reads Fable second response and relevant current semantic
+source before architecture choices. Keep world/crypto/native joins moving under
+current owners. Broader goal unchanged; no completion claimed.

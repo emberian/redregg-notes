@@ -1,5 +1,5 @@
 Objective Bend / Fable / Faré continuation
-Updated 2026-10-03T12:56:55.223091+00:00
+Updated 2026-10-03T13:18:31.785916+00:00
 
 Human direction supersedes old embedding constraints
 Objective Bend is its own language; Bend is its starting calculus, not its ceiling.
@@ -11,26 +11,48 @@ actual Mutation.finish_selects against the network/StateRep implementation and
 actual GenericSimplexEngineSafety against authenticated Reachable; accepted only
 their precise component/audit-safety claims, not source refinement or live crypto.
 
-Fable council is ACTUALLY RUNNING, not merely planned
-Human requested it. tmux session objective-bend-fable; shell PID 66033, Claude PID
-66036 verified live during this window. Model init confirms claude-fable-5-1.
-Claude session ID 4772a92c-ab47-44fe-a109-5ecd9f6bceac.
+Fable council completed two actual turns; no external model process needed now
 Work folder /Users/ember/workbox/objective-bend-fable-council-20261003.
-Read prompt-1.txt, turn-1.jsonl and turn-1.exit if present. response-1.txt is to be
-extracted from a terminal JSON result; absence does not imply the process stopped.
-Read-only tools, safe mode, first-turn max budget $20; no child agents.
-At last observation it had completed source reading and was drafting. Rate limit
-messages were allowed_warning, not refusal. Do not restart from an observation
-timeout. After response, actually discuss disagreements via --resume same ID,
-using a second prompt file and owned tmux runner. No second simultaneous Claude.
-Reconcile headcount before resuming. Raw council logs stay in private workbox.
+Claude session4772a92c-ab47-44fe-a109-5ecd9f6bceac, modelclaude-fable-5-1.
+Root read response-1.txt AND response-2.txt completely. First actualcost13.28933325,
+second15.60356175USD (requested max15; provider result is recorded as returned).
+Turn2 was same-session critical dialogue, read-only, not another independent oracle.
+Both terminalsuccess. No third call launched. Raw model logs remain private.
+
+Turn1 recommended unchanged-core Data/table/CPS trampoline, claiming lazy meaning
+only differs in sharing cost and Data residuals ensure affinity/migration safety.
+Root and scholar independently challenged these with actual source/semantic cases.
+Turn2 explicitly RETRACTS Data-only self, affinity-by-Data and migration-safe-by-
+serialization; supports changed partial/lazy core and capture-sensitive ownership.
+It is not a selected architecture. Remaining overclaims caught by root/scholar:
+- Arbitrary-context exact syntactic Value equality for finite approximants fails
+  for returned closures carrying residual fix; use ground observations or a proper
+  approximation/contextual relation. s=λself.λsuper.λx.self is a refuter.
+- Partial methods can have partial-correctness/contextual/coinductive laws in total
+  metatheory; general recursion need not run inside logical conversion.
+- Linear resources cannot promise eventual discharge in divergent/suspended runs;
+  safety/no duplication, retained obligation and liveness are distinct.
+- Pure CBN versus call-by-need sharing changes cost, not unbounded termination;
+  strict CBV versus lazy demand DOES change termination. Do not conflate these.
+Root read actual Theory/ObjectiveBendExtensions and OpenRecursion completely.
+Found newly added Representation total-step/rank contract forces impossible progress
+at terminal values. World immediately repaired to classified transitions, running-
+step simulation, supported initialization and ground completeness; root has NOT
+qualified that revised contract or its inhabitation. Actual machine adequacy OPEN.
+World owns lazy/capture/partial/proof semantics, compiler actualsource frontend;
+scholar contributes independent unused-divergent-field/argument source consumers.
 
 Primary scholar explicitly requested by human
 /root/fareoo_primary_scholar is an Astra. It fetched canonical
 https://fare.tunes.org/files/cs/poof/ltuo.html, 4,266,596 bytes,
 SHA256 0644ab39f5a08fef711abc5da19f3c703c2db260b10fda851ea512857377966c,
-identical to Oct1 raw snapshot. Offline mirror/provenance work in fareoo is ongoing;
-canonical scribble-common.js is404 and scholar records that explicitly.
+identical to Oct1 raw snapshot. Offline mirror complete at fareoo/raw/mirrors/ltuo/2026-10-03/ltuo.html.
+Root verified canonicalHTML and9asset hashes/lengths from manifest;2,838internal
+anchors checked by scholar, browser rendering inspected by scholar. Canonical
+scribble-common.js404 has an explicitly sourced Racket supplemental script.
+No fresh whole-book reading claimed by root. Root read full synthesis/catalog;
+mirror and synthesis committed in fareoo dev d7ddf53, preserving unrelated work.
+Independent source consumer qualification continues with compiler/world.
 Its actual §5.4.1 reading already corrected the new language nucleus: open modular
 extensions have distinct inherited/context/result types; fixed-context composition
 is a category. Homogeneous A→A→A is a closed special case, not general OO.
