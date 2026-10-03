@@ -1,0 +1,57 @@
+{
+  "recorded_at": "2026-10-03T09:28:45.418048+00:00",
+  "session": "01a0fa81-d479-7753-a1b3-1331d1ed53de",
+  "root_dialogue_read": {
+    "ranges_half_open": [
+      [
+        6800,
+        11050
+      ]
+    ],
+    "notes": "Actual human and assistant text. Refetched truncated 6994..7410 and 7088..7295. 10400..11050 was current through initial response to latest request when extracted; later steering read directly."
+  },
+  "predecessor_windows_read": [
+    {
+      "session": "01a0fae5-8eb3-7392-83ee-4179c7664edc",
+      "around": 7880,
+      "context": 3
+    },
+    {
+      "session": "df44288a-6539-4fb8-a6d5-2e7f78b3d751",
+      "around": 235,
+      "context": 3
+    },
+    {
+      "session": "0c315aee-e07a-499c-8bb4-fa36730510ca",
+      "around": 7569,
+      "context": 3
+    }
+  ],
+  "catalogs": "Root and all three predecessor prompt catalogs extracted; selected locators inspected, not full conversations.",
+  "whole_files_read": [
+    "REENTRY.txt",
+    "reentry-manifest.json",
+    "RESUME-20261003.txt",
+    "ACTIVE-GOAL-20261003.txt",
+    "RAISED-CONSTRUCTION-BAR-20261003.txt",
+    "/Users/ember/workbox/mini-private-capacity-review-20261002/OCT13-OBJECTIVE-RECOVERY-20261003.txt",
+    "../designs/BEND-DIRECTION-20261003.txt",
+    "../designs/SHARED-CONTRACTS-20261003.txt",
+    "../designs/BIGDREGG-PRODUCT-ARCHITECTURE-20261003.txt",
+    "/Users/ember/workbox/mini-private-capacity-review-20261002/INTEGRATION-20261003.txt",
+    "../designs/BEND-WORLD-LANGUAGE-20261003.txt",
+    "../AGENTS.md",
+    "/Users/ember/loore-profile.txt"
+  ],
+  "truncation_repairs": "BIGDREGG lines70..210 and profile75..155 refetched. Personal profile used only as dated speculative context.",
+  "route_limits": "No fresh complete agreement/private-execution source audit or full Bend route rereading this window. No new protocol semantic decision claimed. Deeper source work remains with active owners.",
+  "live_changes": [
+    "Captain recovered; ordered SPK patches applied; actual OO Lean PID1271009 then linker/Simulation/CodeRefinement queue; two Rust slots service/backend. Owner reports, not root replay.",
+    "Composition Arena/Reification/Machine/Decode and 10 compiled runtime checks pass; simulation remains open.",
+    "Service explicitly deputized to integrate/commit/push its two infra paths in isolated checkout and supply exact hook pin directly to captain.",
+    "Coordinator resumed to message all running owners and collect candid design/lifecycle feedback without stopping construction.",
+    "Existing paused mini-overnight-construction updated to Mini swarm check-in, ACTIVE every44minutes, expired prompt replaced. Tool confirmed update; future firing unobserved."
+  ],
+  "user_latest": "Keep top-level context reasonably sparse, preserve orientation; may switch to77-minute checks if44 becomes burdensome; user went to sleep.",
+  "next": "Receive compact survey, act on blocked producers and real joins; retain current goal active. No duplicate research swarm or builds. Keep routine per-owner detail in coordinator file; only decisions/blockers/results at root."
+}
