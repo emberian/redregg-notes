@@ -32,5 +32,10 @@ class LifecycleTests(unittest.TestCase):
     def test_empty_registry_cannot_pass(self):
         self.assertIn('INVALID', self.codes([]))
 
+    def test_nonexistent_consumer_cannot_receive_a_handoff(self):
+        findings = audit([self.row], set(), {'receiver', 'product'})
+        self.assertIn(('doc-join', 'UNKNOWN_AGENT', 'consumer: resident'), findings)
+        self.assertFalse(audit([self.row], set(), {'receiver', 'resident', 'product'}))
+
 if __name__ == '__main__':
     unittest.main()

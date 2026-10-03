@@ -9,7 +9,7 @@ REQUIRED = ('id', 'outcome', 'owner', 'consumer', 'coordinator', 'state',
             'next_action', 'acceptance', 'progress_evidence')
 
 
-def audit(records, inactive):
+def audit(records, inactive, known_agents=None):
     findings = []
     if not records:
         findings.append(('<registry>', 'INVALID', 'no obligations loaded; this is not a clean integration audit'))
@@ -19,6 +19,10 @@ def audit(records, inactive):
         for field in REQUIRED:
             if not item.get(field):
                 findings.append((key, 'INVALID', f'missing {field}'))
+        if known_agents is not None:
+            for field in ('owner', 'consumer', 'coordinator'):
+                if item.get(field) and item[field] not in known_agents:
+                    findings.append((key, 'UNKNOWN_AGENT', f'{field}: {item[field]}'))
         if key in seen:
             findings.append((key, 'INVALID', 'duplicate obligation id'))
         seen.add(key)
@@ -27,6 +31,8 @@ def audit(records, inactive):
             findings.append((key, 'INVALID', f'unknown state {state!r}'))
         waits = item.get('waits_for', [])
         for dep in waits:
+            if known_agents is not None and dep.get('owner') and dep['owner'] not in known_agents:
+                findings.append((key, 'UNKNOWN_AGENT', f"dependency owner: {dep['owner']}"))
             if not all(dep.get(k) for k in ('owner', 'deliverable', 'next_action')):
                 findings.append((key, 'INVALID', 'dependency lacks owner/deliverable/action'))
             if dep.get('ready') is True and not dep.get('evidence'):
@@ -57,13 +63,15 @@ def main():
     parser.add_argument('files', nargs='*', type=Path)
     parser.add_argument('--inactive', action='append', default=[],
                         help='Agent observed completed/stopped in a FRESH collaboration.list_agents call; repeat as needed.')
+    parser.add_argument('--agent', action='append', default=None,
+                        help='Exact short agent name from the full live tree, including completed agents and root; repeat to supply a complete roster.')
     args = parser.parse_args()
     files = args.files or sorted(Path(__file__).parent.glob('*.json'))
     records = []
     for path in files:
         data = json.loads(path.read_text())
         records.extend(data['obligations'])
-    findings = audit(records, set(args.inactive))
+    findings = audit(records, set(args.inactive), None if args.agent is None else set(args.agent))
     if not args.files:
         for name in ('runtime.json', 'product.json', 'protocol.json'):
             if not (Path(__file__).parent / name).is_file():

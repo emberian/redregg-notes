@@ -28,3 +28,8 @@ nor calls collaboration tools; the coordinating agent must act on its output.
 A recorded job PID/log/lock is not liveness. Check the process/tool handle now;
 use a unique attempt ID/log/status and distinguish accepted, running and terminal.
 No automatic work spawning, builds, destructive action or completion claims.
+
+Optionally supply --agent NAME for every exact short name in the complete current
+tree (include root and completed agents). This catches nonexistent recipients,
+which otherwise look like valid handoffs. An incomplete roster yields misleading
+unknown-agent findings; omit the option rather than use a partial roster.
