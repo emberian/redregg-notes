@@ -53,3 +53,17 @@ Source publication backlog acknowledged; captain owns guide9/rotation fullconsum
 Discord14files/Objective r7 and usual intake. Local ~/dev/minidregg safe fast-forward
 to96a verified; all untracked including .spw preserved. Four Spw maps now linked,
 actuallint0/no broken links reported; partial coverage stays explicit.
+
+Subsequent actual joins (~17:00 UTC): root reviewed/applied sealed-memfd successor
+transport83afdca96eba73e748813703e0978f2ef767a099b0c2ba9648726548158f7a4e,
+closing mutable-inode gap on Linux. Two actual helper testsPASS per owner; existing
+Host ELF has no RPATH/RUNPATH/$ORIGIN per readelf. Rust07 whole-client compile
+failed before tests because warm Studio source lacked current preview hook. Doc
+sent exact r16 three-file closure for Rust08; do not delete/stub new preview route.
+Whole-client sealed-image receiving remains pending, source not deployment.
+
+Root independently read BOTH original SPK recovery JSON receipts: installed78,
+same252bb442 ingress, reconciledGeneration3. Service subsequent signed currentg3
+read also PASS. Product recovery obligation now integrated; actual browser/CSV/
+Hermes/restore obligation receiving, not complete. Broader historical consent
+cohort compatibility is separate and not silently solved by this result.

@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-03T16:48:07.227900+00:00",
+  "updated_at": "2026-10-03T17:05:48.309925+00:00",
   "obligations": [
     {
       "id": "product-spk-failed-start-reconciliation",
@@ -7,33 +7,37 @@
       "owner": "takeover_service",
       "consumer": "takeover_service",
       "coordinator": "root",
-      "state": "receiving",
-      "next_action": "Service sole owner awaits original native208 outcome; if uncertain use ONLY209 with retained original ingress, never reprepare/resubmit. Coherent local-consent historical profile seam remains separate.",
+      "state": "integrated",
+      "next_action": "Service continues independent currentg3 read then compatible profile/launcher/roles and lawfulg4 under separate app-browser obligation. Preserve warm18c and exact original receipt; no further recovery submit.",
       "acceptance": "Actual failed START -> native authorized same-request reconciliation -> lawful retry or terminal readback, with service acknowledgement; four original r2 services preserved. No new INSTALL, fresh-world substitute, archive ACK or blind claimed-START retry.",
-      "progress_evidence": "Original app8502 STARTg2 admitted/claimed but physical spawn failed. Exact namespace permission repair passed. All13 additive recovery leaves plus exact old Replay/Main compiled. Runtime transport206\u2013209 client built/tested and orchestration source qualified. r1 terminated at1200s after about18min baseline validation; no OOM/source diagnostic. Endpoint exact bulk validator passes10 refuters; captain ACKed r2 builder1889640/timeout1889638 at2400s16GiB Lean2/C2, with old manifest equivalence before compilation. Runtime independently observed r2 live13:08UTC. Actual native ELF and same-g2 reconciliation remain OPEN. UPDATE15:54UTC: all561Lean/561C native bridge18c18f64 built; operator2256348/Host2256429 actually reopened same cfg1fbc/SQLite. CLI1ffe2258198 invoked once15:50:09, source admission CPU-bound, no final result yet. UPDATE16:46UTC owner: retained1800 prepare finished, plan/signatures/18241-byte ingress and submit-requested retained; original CLI invoked208 once. No terminalreceipt yet. Current373-based consent helper refuses historical genesis/head; not a qualified replacement for18c.",
+      "progress_evidence": "Original app8502 admitted STARTg2 failed physical spawn. Reconciliation used exact retained failed-start-recovery-v1 ingress252bb4425b31f001d1f2c95ffbb0c2a1fc61c4be481d8ae7c909d18d4311ef45, historical Host18c. Real native208 completed16:54:47, installed acceptedCount78, reconciledGeneration3. Root read both exact confirmed.json and failed-start-recovered-v1.json under /var/lib/mini-bigstep-hbox-r2/grains/1fbc8d0353180211/host/apps/8502/g2/. No new INSTALL/reset/reissue; full browser/resident journey remains separately OPEN.",
       "waits_for": [
         {
           "owner": "takeover_service",
           "deliverable": "Exact physical-launcher permission repair and retained failed START request/generation pins",
-          "next_action": "Hand off actual repaired physical source pins/failedgeneration to native reconciliation consumer; no blind retry",
+          "next_action": "Complete for originalg2 receiving; retain repair callback.",
           "ready": true,
           "evidence": "Service actual namespace/true probe exactUID/GID64010 clear groups/NnP/allcapsdropped EXIT0; g2 old claimedSTART remains fenced"
         },
         {
           "owner": "takeover_kernel",
           "deliverable": "Guarded native reconcileFailedStart K-SPK receiving in coherent candidate",
-          "next_action": "Own existing r2 guardian through exact native binary and transfer to runtime/service; endpoint diagnostic callback retained",
+          "next_action": "Complete for originalg2 receiving; retain repair callback.",
           "ready": true,
           "evidence": "ELF18c18f64 actual built/rootstaged/operator reopened; service consuming originalg2 now."
         },
         {
           "owner": "runtime_lieutenant",
           "deliverable": "Real SPK failedSTART orchestration/supervise/scan plus trustworthy no-child audit for native reconciliation",
-          "next_action": "Construct grain_export.rs recovery orchestration, minimal grain.rs supervision/scan and additive hostd.rs no-child audit; pair exact source admission/routes with captain and physical repair with service",
+          "next_action": "Complete for originalg2 receiving; retain repair callback.",
           "ready": true,
           "evidence": "Runtime/captain report exact206\u2013209 transport client built/tested and no-child recovery adapter ready; actualg2 use waits native bridge"
         }
-      ]
+      ],
+      "consumer_ack": {
+        "owner": "takeover_service",
+        "evidence": "Original CLI exit0; then independently signed currentg3 read reports generation3/status2/remaining1/reserved0 on same warmoperator."
+      }
     },
     {
       "id": "product-spk-browser-document-resident-restore",
@@ -41,15 +45,15 @@
       "owner": "takeover_service",
       "consumer": "takeover_service",
       "coordinator": "root",
-      "state": "waiting",
-      "next_action": "After lawful failed-START recovery, consume attachment result to start TLS; send actual URL for normal browser interaction, retain connector CSV/native publication/Hermes/callback inventory and same-cut restore evidence.",
+      "state": "receiving",
+      "next_action": "Originalg2 recovered stoppedg3; service independently reads current state, completes compatible profile/launcher/security-role activation and lawfulg4, then browser\u2192CSV\u2192document\u2192Hermes\u2192restore.",
       "acceptance": "Real browser edits by independent members, exact CSV hash/native publish+independent readback, attributed continuing resident request/result, lost reply/restart without duplicate charge/dispatch, quiescent complete app/resident backup and restore. Scripted BYOK only until user supplies real provider material.",
       "progress_evidence": "Actual app8502 INSTALL complete; BOTH member tickets/routes native confirmed after owner0 grants/current-law+own-account fee repair. Notes17744999174753477343, connector child10340669511690461678. START blocked by explicit failed-start obligation; no browser/CSV/provider success claimed.",
       "waits_for": [
         {
           "owner": "takeover_service",
           "deliverable": "Lawfully recovered START and real browser attachment/TLS endpoint",
-          "next_action": "Execute failed-start reconciliation then attachment/TLS and preserve exact original app",
+          "next_action": "Use reconciledg3 for actual nextgeneration launch and attachment/TLS; recovery itself complete.",
           "ready": false
         },
         {
@@ -614,10 +618,10 @@
       "owner": "discord_world_integration",
       "consumer": "discord_world_integration",
       "coordinator": "root",
-      "state": "building",
-      "next_action": "Finish actual mirror catchup against real native world and publish full consumer/docs.",
+      "state": "receiving",
+      "next_action": "Captain import/publish final14file source/evidence capsule1bf6a236; owner retains current-profile and actual deployment callback.",
       "acceptance": "Authorized shared navigation/read/action discovery, durable actor-bound interaction retry, lossless backlog and uncertain POST handling, no forged Mini authorship; separate Discord disclosure from Mini private custody.",
-      "progress_evidence": "Owner reports30focusedtests and actual native shared-home/document/stranger-refusal/restart receiving. Mirror cursor path compatibility repair in progress, no live Discord deployment."
+      "progress_evidence": "Thirty tests PASS; actual Mini Host740545/client1ad2 plus simulated Discord passed signed shared navigation/document/strangerrefusal/restart,23entry outbound catchup, bridge-attributed inbound append and duplicate-free exact native retry. Root inspected finalchecks in native-run-2/result.json; earlierfailedattempts retained separately, successful run native-resume-3.log. No live Discord deployment or Objective nativeeffect claim; service-held keys and explicit UNKNOWN boundaries remain."
     },
     {
       "id": "product-objective-only-backend-migration",
