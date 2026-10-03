@@ -1,0 +1,151 @@
+READ FIRST AFTER COMPACTION — root 01a0fa81-d479-7753-a1b3-1331d1ed53de
+October 3, 2026. This is continuity, not a substitute for actual cv/source.
+
+LATEST HUMAN DIRECTION (supersedes earlier narrower designs)
+1 Mini grows into the NEW Dregg, importing/repairing/rebuilding useful Bread and
+  related work NOW. Possible later repo rename dregg-old/dregg; no rename now.
+  Earlier 'Mini as Bread subdir someday' is superseded as primary direction.
+2 BEND is central authored world language, 'like web uses JS'. Retain Nock
+  compatibility and existing work; stop further Nock-first architecture.
+  Exact requested file bendlang/bend/bend2/bendtt.lean, cloned ~/dev/bend.
+3 Support native, oblivious, zkVM, reusable fixed-program logic-compiled circuits
+  AND HOMOMORPHIC execution. Explore generalized graded execution modalities;
+  independent confidentiality/proof/trust/authority/resource/etc axes with
+  explicit compatibility, not one enum or promise all imaginable combinations.
+4 Investigate old FHEgg/DrEX and new Starbridge as real consumers joined to the
+  new kernel/Bend. New Astra exploration/design/synthesis expressly requested.
+5 Keep coding existing Mini work concurrently; source review can justify clear
+  fixes without a prerequisite measurement ritual. Complete/integrate native
+  user experiences, not only model/proof/demo or remaining-work documents.
+6 Delegate detail to agents to preserve root context. Redregg is a durable local
+  research home for recursive intent reconstruction, source archaeology and
+  counterfactual replay (intent->attempt->actual outcome->hindsight design).
+
+DESTINATION / HISTORICAL CORRECTIONS
+Oct13 alpha explicitly requires traffic privacy + some agreement. Full OO and
+strong private execution prototypes are requested construction, not parked
+future docs. Complete docuverse/substantial deos are real release ambitions.
+Variable multiuser world, apps, resident Hermes, authoring, knowledge/social/play,
+extensibility, recovery; friend+Hermes journey is intermediate, not scope ceiling.
+User does not choose only research/social/compute: outward-growing nexus.
+Oct26/November are forward ambition, not a recovered fixed feature checklist.
+No CometBFT convenience import. Bread joint-turn/interfederation source matters.
+Old DreggCloud explicitly unselected ChatGPT demo: mine useful mechanisms without
+inventing adoption. Mini already has StoryLaw/story + J15 evidence; shared
+collective consequences/authoring and actual GM remain useful joins.
+
+CURRENT SOURCE / BUILD / INTEGRATION
+Original GitHub base e851920e. Ember's ~/dev/minidregg older b57aceda UNTOUCHED.
+Mac mini-dev-opus e851920e on dev is read-only source, not main. Sonnet clone old.
+Integration captain takeover_kernel owns NEW hbox checkout:
+ /home/hbox/workbox/codex-unified-integration-20261003/src
+Last reported clean main ba9f7b12, seven reviewed commits incl cache, service,
+OO framev10+exhaustive consumers, docuverse, transport, additive private/agreement.
+All26 joined scoped Lean checks PASS. Full independent Host build is RUNNING
+at last report; inspect actual state/log before claiming completion/relaunching.
+Native build outputs artifacts/minidregg-host; native-build.log under lane.
+First bundle on Mac workbox research root integration-first-ba9f7b12.bundle,
+sha5cdf81e62567affb339601f6520c9b84cfd0e535199f24d96f5c35a764733e30.
+Captain NOW explicitly deputized to normal-fast-forward GitHub push using a NEW
+Mac /Users/ember/workbox/mini-unified-push-20261003 main checkout; root authorized
+Git there, no force/no shared switches. DO NOT duplicate its push/checkout job.
+No confirmed push yet in root context. Native receiving continues independently.
+All source construction/builds hbox; Mac research/Git transport allowed.
+Captain controls one Lean seat and bounded Rust queue; direct handoffs permitted.
+Use swarm-build, cargo-bounded, explicit readonly warm oleans + independent
+outputs. lake env in copied package dirs reclones them: avoid that trap.
+>=50GB free hbox /; never delete other files/caches, touch /tank/fn, stash/reset.
+Preserve160 Persvati datamodel dirs. No paid provider calls in service tests.
+No unrelated live replacement/asset operations; new isolated r2 world authorized.
+Old r1 services remain running OLD capsule2a075e68; don't qualify new work by them.
+
+ACTIVE CONSTRUCTION OWNERS / ACTUAL STATUS
+takeover_kernel — integration/build captain, common Host+client then receiving.
+takeover_service — service53-check patch integrated; now fresh r2 staging,
+ optional SPK-root isolation, TLS connector helper, scripted controller,
+ apps->CSV->doc->Hermes->restart/restore/BYOK. Ordinary source choices delegated.
+docuverse_deos_construction — first5-file tranche actual Chromium/native forms,
+17 assertions+recovery passed on its matched OLD Host; joinedv10 still to run.
+ Now browsercreate/current-source/history/resident-output inspectors.
+member_oo_construction — authenticated kindRead/definition output, typed trace/IR,
+ kind construct; scoped checks pass. Actual v10 constructor journey waiting
+ commonbinaries; owner stays to repair it. Nockcompat, Bend nextlanguage.
+native_performance_construction — signed mixed-view coherentbatching/duplicate
+roomresolve removal, sourceauth preserved; authored, focused check queued.
+astra_consensus_frontier — first5 Lean modules/18 general claims pass; NOW full
+ GenericSimplex protocol+quorums+MLDSA65 certs+durable outbox/realnetwork driver.
+ Atomic current-law reservation and install co-CAS must join central receiver;
+ old AcceptedInvocation is not future install authority. Not yet live consensus.
+astra_consensus_composition — first5 nativeinput/custody modules/28 checks pass.
+ Authored Nock machine/circuits saved as UNCOMPILED compatibility checkpoint,
+ STOPPED expansion. NOW exact Bend Eval/Walk live-machine + oblivious/circuits.
+private_backend_construction — malicious AMPC/coin/physical correlation service.
+ Audited referenceBA raw first-threshold interpolation lacks verified share
+ consistency/error correction; finitecoin stock lacks refill. No drop-in claim.
+resume_private_construction — scheduled encrypted native RPC passed actual
+ selected release/restartrepair/signedread; no source anonymity/fullPQ claim.
+ NOW ML-KEM768 onionbatch/mix+fullbroadcast reply capabilities. Active n-1/valid
+ replacement attack found; exploring explicit honest noncolluding registrar
+ per-stage commitment-set guard (strong trust assumption, not Outfox theorem).
+bend_semantics_audit (Astra) — exact upstream theorem/compiler/FFI boundary audit.
+bend_logic_compilation (Sol) — actual Mini logicAIR/Emit + Bread compiler stacks,
+ exact source-linked Bend case specialization; authored additive modules,
+ checks awaiting vendor+captain. Generic/runtime vs fixedcircuit distinguished.
+bend_world_language (Sol) — pinned module/program/backend profiles, native method
+ source provenance, effect/private-return/program identity; no fake Bend admission.
+
+THREE JUST-LAUNCHED ASTRAS (explicit last user request)
+graded_execution_architecture — constrained modality/grade contracts/composition,
+ not universalrank/exclusiveenum. Found existing PrivacyProfile/IndexedProgram/
+ ResourceCost/DisclosureDeclaration and Bread coordination grade worth reuse.
+fhe_bend_architecture — actual FHEgg/Drex crypto evidence, FHE+specialized Bend
+ circuits/keycustody/release/verification, numeric semantics/costs/trust.
+bigdregg_product_architecture — FHEgg/Drex/private choice/markets/serviceexchange
+ and new Starbridge worldprogramming client, coherent buildable consumer designs.
+All save redregg/designs/ named reports, coordinate active Bend/backend builders.
+
+BEND PIN / CRITICAL SOURCE DISTINCTIONS
+/Users/ember/dev/bend HEAD947db722640c86247849343657bf2f7ef01cb7f1; upstreamreadonly.
+AGENTS prohibits edits human bend.ts. Upstream Lean4.34 vs Mini4.30: no silent
+globalupgrade. Exact dependent affine calculus; not old HVM/interaction-net lore.
+Checker wnf lazy/open honors opaque; declarative Eval/Walk liveCBV unfolds models.
+Q2 means unrestricted Data uses, not exactlytwo; Q0 erased, Rwt evidenceLIVE.
+Proof chain book_check=>WellTyped+Live, sr/progress/halts/consistent etc; not
+compiler/elaborator/C/JS equivalence. safe emits typed models for bodyless defs;
+public --verdict calls book_promises rejecting nonBase foreign/unsafe, BASE
+exempt. Earlier blanket 'verdict allows allFFI model' statement needs this correction.
+comp.ts warns bugs expected; no automatic backend/proofsemantic equivalence.
+
+DURABLE RESEARCH HOME
+/Users/ember/dev/redregg local Git main, NO remote. Initial44d1b50 + Bend96c83dc.
+README.txt, work/PLAN.txt, catalog/imports.json15 immutable hashed snapshots.
+catalog/INDEX.txt + query.py lookup exactcvsession/index or terms in external
+private corpus, --text explicit. catalog/claim-schema+examplecards/provenance.
+coverage/READING-MAP.txt and PRIVACY-AUDIT.txt. Imported coveragemetadata includes
+private sessiontitles/paths; no rawtranscript/keys found. Keep repoLOCALPRIVATE.
+New peerfiles not all committed yet: inspect git status, namedstage only completed
+files; no sweeping ongoing report writes. __pycache__/raw/private ignored.
+intent/worlds-*, foundations-*; replays/*; designs/ALTERNATIVES/SHARED-CONTRACTS;
+landscape/second-pass-construction. Evidence librarian completed and verified
+hashes. Histories extracted far more than semanticallyread: never sayallabsorbed.
+Union4810 catalogsessionkeys,46overlap; counts variousreadunits notadditive.
+
+OTHER IMPORTANT RECORDS
+Private workbox /Users/ember/workbox/mini-private-capacity-review-20261002/
+ root initialreports, sourcepatchmanifests, buildreceiving evidence, TAKEOVER*.txt,
+ INTEGRATION-20261003.txt, BREAD-FUTURE-SYNTHESIS, OCT13-OBJECTIVE-RECOVERY.
+Claudehandback /Users/ember/dev/claudesplosion/planning/handoff-2026-10-03/START-CODEX.md.
+Product DREGGNET-CLOUD.md sameplanning. Original cloudsession01a0fae5-8eb3-7392-83ee-4179c7664edc;
+Claude df44288a-6539-4fb8-a6d5-2e7f78b3d751; historical0c315aee... undercv.
+Tracker01a0f9c0-521b-7400-bff7-5ca5fd59420f notes updated but title stale2friends.
+Use cv prompts01a0fa81 then targeted show to recover latest userturns.
+Old mini-overnight-construction heartbeat remains PAUSED, do not revive.
+No new /goal requested/set for this expandedwork.
+
+ROOT NEXT
+Read latest usersteering and check liveagents/updates. Keep construction converging,
+do not restart finished research or let proofs-onlyfirsttranches becomecompletion.
+ThreeAstras synthesize Bend/FHE/graded contracts and actual bigDregg consumers;
+merge their decisions into redregg+native work with rootjudgment. Verify captain
+push/commoncandidate actual status, unblock native receiving/realprotocol gaps.
+Give user compact meaningfulprogress, not hugeeverytooloutput or stale laneclaims.
