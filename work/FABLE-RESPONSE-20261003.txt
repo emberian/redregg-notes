@@ -1,0 +1,95 @@
+Fable review: construction response and ownership
+2026-10-03, root session 01a0fa81-d479-7753-a1b3-1331d1ed53de
+
+Ember's correction
+The root accepted component reports as evidence toward a stronger system than
+those reports established. This is a coordination and technical judgment failure,
+not a reason to attribute deceptive intent to peers. The current implementation
+must not be called a completed Faré object system. More PASS reports or axiom
+counts do not repair that gap.
+
+Operating change
+A capability claim needs an independently stated intended behavior, a connection
+to actual executable consumers, and an account of what the proof excludes.
+Compilation, axiom accounting, implementation correctness and usable capability
+remain separate claims. Small rfl and projection lemmas may be useful plumbing;
+they are not evidence of unproved composition or execution semantics.
+
+Builders continue source-first publication and coherent batched checks. This is
+not a new per-file approval queue. At consequential semantic boundaries a peer
+must inspect the theorem statement and its implementation connection. Premises
+must have nontrivial inhabitants; hostile cases must distinguish the intended
+claim. A universal claim is not established by those finite cases alone.
+
+The root owns acceptance of the cross-system semantic contract. Lieutenants
+coordinate work but cannot replace that judgment with their own status labels.
+Consolidation to 16 active subagents does not delete the broader destinations.
+
+Language work to own, rather than rename
+World language owns the reference meaning and implementation design, with
+composition and semantics peers and runtime coordination. Faré's modular
+extensions, common final self, inherited super, incomplete specifications,
+noncommutative composition and in-language manipulation are requirements.
+Objects-as-Data plus grouped dispatch is a promising representation, not an
+already accepted equivalence. Distinguish total recursion within a turn from
+guarded ongoing computation across admitted turns. Explicit clocks do not
+silently establish unrestricted lazy fixed-point semantics.
+
+Independent discriminating consumers include mutually recursive even/odd
+specifications; two self calls in one method; extension changing a prior method's
+late-bound dependency; super preserving the earlier computation; a violated
+behavioral requirement on override; and instances sharing checked code while
+retaining distinct captures and governed identities. Author these in the actual
+surface language. A handwritten Lean manifest is not a replacement.
+
+Admission reuse must separate immutable checked code from current authority,
+release, resource and source-revision checks. General compilation and faithful
+machine steps must replace fixture equality as the architectural destination.
+
+Review routing (all remain open until specific current evidence closes them)
+- Runtime lieutenant: all Objective Bend and backend findings; world/compiler/
+  composition/semantics/efficiency owners implement. No new review swarm.
+- Product lieutenant: SPK export path race and freeze recovery, key rotation
+  crash recovery, recipient key authentication, credit reference recovery,
+  tariffs/overflow, malformed hex, shared retained-operation primitives.
+- Integration captain: import boundaries, build targets and orphan gates,
+  evaluator integration, published artifact/claim mismatch, source provenance,
+  generated operation dispatch and shared receiver factoring proposals.
+- Private backend: per-sender replay isolation, torn-tail recovery, adversarial
+  view changes, and the already active recipient-confidential delivery join.
+- Traffic owner: unauthenticated cohort connection denial, actual useful traffic
+  capacity, explicit hybrid and malicious-participant availability limitations.
+- FHE owner: actual noise measurements, persistent noise lineage and independently
+  justified parameter/security estimates, alongside governed session integration.
+- Semantics owner: proof artifact reproducibility and source/trace/IR2 connections;
+  no full ZK or Fiat-Shamir soundness assertion from a runnable proof harness.
+- Global consensus owner: executable Reachable-to-audit closure, nontrivial
+  reachable witness and over-fault counterexample. Captain owns build imports.
+
+Review is not answered by labelling it stale
+Root read all 848 lines. Current common source at b627a442 still defines finalSelf
+through rightmost exact-signature selection; the named cursor-independence lemma
+is rfl. That confirms a substantive semantic gap. The current controller source
+now includes evaluate/return/apply/walk and declares all 12 controls authored;
+this supersedes the reviewed seven-tag file but does not establish refinement.
+Compiler/ObjectiveBendCallContext.lean was not at the attempted Compiler path;
+no conclusion about its current contents follows from that miss.
+
+Actual incoming repair acknowledgements
+Private backend confirmed both replay-pool starvation and torn-tail refusal still
+exist and owns fixes. Traffic confirmed first unauthenticated connection can end
+the link and owns challenge-bound admission/reaccept. Global proof owner confirms
+full LocalFaithful closure and formal execution/over-fault witnesses remain open.
+FHE confirms executed owner harnesses exist but noise measurements were absent;
+new measurements are only authored, with security estimation still unqualified.
+These confirmations are stronger reason to act, not evidence the repairs passed.
+
+SPK recovery bridge is actually running against the original a593 family, with
+13 additive leaves and old Host/Replay hooks checked. This removes the missing
+receiver construction bottleneck; lawful recovery of the original failed START
+still requires the resulting binary and actual consumer. No new app genesis.
+
+Keep the complete Fable review beside this response as the finding inventory.
+Do not rewrite it to erase historical failures. Product/runtime/captain must
+transfer residuals into their existing integration obligations, rather than leave
+an unowned review appendix. Root will inspect substantive closures, not tallies.
