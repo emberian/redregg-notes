@@ -90,3 +90,11 @@ Ember explicitly permits Mini toolchain upgrade. Keep current passing candidate
 while it finishes C/link; next version chosen by source/dependency/runtime merits.
 Current source adaptation was two proof rewrites only. Do not grow compatibility
 scaffolding merely to preserve4.30; no permission barrier to coherent upgrade.
+
+HUMAN NAMING / LANGUAGE CENTER
+Ember subsequently named the destination OBJECTIVE BEND. Read latest addition
+in designs/BEND-DIRECTION-20261003.txt. Shared OO/Bend language design and actual
+member authoring are the center; protocol/backends and views consume that meaning.
+Root sent direction to OO, worldlanguage, composition, compiler, zkVM, proof,
+docuverse and workshop owners. No Objective-C syntax or unsupported implementation
+property inferred from the name.

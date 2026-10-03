@@ -56,3 +56,24 @@ receipts stay supported. Current common v10 OO/cache/service candidate continues
 building; new Bend additions must not rewrite its profile mid-build.
 No backend/privacy/zk claim is established by this direction document.
 All construction/builds on isolated hbox sources under existing controls.
+
+EXPLICIT HUMAN DESTINATION: OBJECTIVE BEND
+October3 Ember: "Objective Bend" is clearly where we are headed as a destination.
+Root interpretation to develop with Ember: a coherent authored language and live
+world combining Bend with first-class partial specifications/prototypes, modules,
+composition/finalself/super, source-defined interfaces/protocols, reflection,
+governed persistence/effects and evolution. The name does not preselect syntax.
+It is more than an optional evaluator behind externally prepared OO metadata.
+
+World-language and OO owners jointly own the language design, with composition,
+compiler/proof, docuverse and actual workshop consumers. Converge representative
+member-authored programs and a clear boundary: constructs elaborated into exact
+Bend core, Mini host/authority/lifetime contracts, and any genuine semantic
+extensions needing new mechanized proofs. Reusable specification Data and affine
+per-invocation closures are a construction hypothesis; do not declare complete
+expressiveness merely because that representation works for small examples.
+Persistent reactive lifetime is not silently one total infinite Bend invocation.
+If explicit source state machines cannot faithfully provide desired lazy/reactive
+semantics, identify the needed extension and prove it. Preserve current receiving
+and source checkpoints while developing the fuller language. All relevant owners
+were explicitly informed; this direction survives compaction.
