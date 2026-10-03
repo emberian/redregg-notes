@@ -1,125 +1,40 @@
-CURRENT PUBLICATION: Mini main dd2086cdbf2746ed258bd96846e081329d3d7497.
-Post-Fable guide r8 published; Studio actual source-edit/typed-preview UI received.
-Read work/RESUME-20261003.txt (rewritten current map) and
-work/ROOT-RESUMED-CONSTRUCTION-20261003.txt before older outage chronology below.
-
-LATEST ADDENDUM 15:05UTC: FHE and Activity original owners restored; three new
-Sol scenario builders now active (Objective-world/private-agreement/service-recovery).
-Full127-human-message recovery +10recent substantial root replies read; see
-work/INTENT-RECOVERY-20261003-1505.txt for exact local transcript paths and findings.
-WHY-OBJECTIVE-BEND and WHY-AGREEMENT now actually written under intent/.
-Obsolete one-time8:45 automation deleted; recurring checkin remains paused.
-
-LATEST HUMAN STEERING — 2026-10-03 14:53–14:57 UTC
-Ember asks to continue the interrupted swarm for another approximately 0.5–1.5h
-before Claude takeover, including substantial nextsteps and a complete rewrite of
-public docs/OBJECTIVE-BEND.md after the Fable intervention. Root resumed the19
-outage owners plus mini_objective_bend_documentation (20 lanes); deliberately
-checkpointed older domains remain inactive, not covertly assigned to World.
-This supersedes the no-restart wording in the historical outage snapshot below.
-No source or remote job was reset. Captain inspected hbox at14:54: no surviving
-owned compiler/native-phase jobs; resident services2083267/2083278/2083280 remain
-live under sole resident custody. Main3dd5a7b1 confirmed before broker publication.
-Takeover is not yet quiescent: coordinate with root/captain before editing common
-files while this resumed window runs. Next checkpoint target approximately15:45UTC;
-range15:25–16:25UTC, depending on useful closure. Not a claim all domains will finish.
-Goal tool unexpectedly reports blocked after outage; objective unchanged. API has
-no resume operation; root is continuing on direct user authorization regardless.
-
-MINI / OBJECTIVE BEND — TAKEOVER AFTER USAGE OUTAGE
-Saved by Codex root 2026-10-03 14:44 UTC / 10:44 EDT.
-Root session: 01a0fa81-d479-7753-a1b3-1331d1ed53de
-Ember explicitly requests filesystem preservation so Claude can iterate and hand
-back here. This is the entry point for either collaborator. No completion claim.
+MINI / OBJECTIVE BEND — CLAUDE OR CODEX ENTRY
+Current checkpoint October 3, 2026, 15:54 UTC / 11:54 EDT.
+Root session 01a0fa81-d479-7753-a1b3-1331d1ed53de.
 
 READ FIRST
-1. This file, then work/HANDOFF-AFTER-OUTAGE-20261003.txt for exact owners/artifacts.
-2. designs/ARCHITECTURAL-ARGUMENT.txt — WHY these constructions belong together.
-3. work/ACTIVE-GOAL-20261003.txt — full ambition, not the latest passing tranche.
-4. work/CENSUS-20261003-1420.txt — candid full-domain state and parked streams.
-5. work/WHOLE-TREE-AUDIT-RESPONSE-20261003.txt and both FABLE reviews in work/.
-For code decisions read the corresponding design and actual current source.
-Do not reread the whole research corpus before a small action; do recover the
-actual argument and disputed primary passages before changing architecture.
+1. work/CHECKPOINT-RESUMED-20261003-1554.txt — latest outcomes and actual custody.
+2. work/ACTIVE-GOAL-20261003.txt — full destination, not the passing subset.
+3. designs/ARCHITECTURAL-ARGUMENT.txt and intent/WHY-{OBJECTIVE-BEND,AGREEMENT,TRAFFIC-PRIVACY}-20261003.txt.
+4. work/RESUME-20261003.txt for navigation, then work/REENTRY.txt for actual dialogue
+   and route reading. Its build/status paragraphs are older than this checkpoint.
+5. work/integration-obligations/{product,runtime,protocol}.json plus owner callbacks.
+   They retain incomplete domains; completed agent turns do not close integration.
 
-WHAT EMBER JUST CORRECTED
-The project is much harder than fn and real progress is welcome. They want MORE
-substantiality and better work selection, not an apology ritual or timid cleanup.
-The ~30→15-agent cut incorrectly transferred too much unfinished domain work onto
-remaining owners. Explicitly CHECKPOINT inactive incomplete streams instead of
-pretending a lieutenant can build six domains at once. Preserve original owners,
-source/evidence, hard residuals and restart conditions. Active work and remembered
-responsibility differ. Main-first source publication remains desired; no side
-branches/stash/reset or blanket staging. Ordinary scoped commits/pushes authorized.
+Source: hbox:/home/hbox/workbox/codex-unified-integration-20261003/src.
+Publication transport: /Users/ember/workbox/mini-unified-push-20261003.
+Mini main confirmed on GitHub dd2086cdbf2746ed258bd96846e081329d3d7497.
+Private reasoning repo: /Users/ember/dev/redregg; ordinary scoped commits/pushes
+are authorized. No blanket staging, resetting/stashing or foreign cache deletion.
 
-MOST IMPORTANT CURRENT CONCERN
-Preserve the accumulated intellectual context: why Faré/FAREOO and Houyhnhnm, the
-full privacy/unlinkability adversary model, consensus/joint-turn/interfederation
-comparisons, constraints, rejected alternatives, primary references and what would
-change our mind. A build command or feature checklist does not preserve that.
-Root wrote ARCHITECTURAL-ARGUMENT as a compact reasoning spine and asked original
-readers to write WHY-OBJECTIVE-BEND, WHY-AGREEMENT and WHY-TRAFFIC-PRIVACY essays.
-At the first post-outage check, NO intent/WHY-* files existed. Recover those writers'
-partial thoughts from their workboxes/cv; do not assume requested files were written.
+Ember requested recovery from outage, then another0.5–1.5h construction with
+original owners plus2–5Sol scenario builders. Five scenario builders were added;
+FHE and Activity original owners restored. Active workers continue. This checkpoint
+is NOT quiescence or a claim Claude has taken over. Coordinate actual shared-file,
+originalapp and four-store custody before editing or starting another native run.
+The obsolete headcount deadline is superseded. One-time checkpoint automation is
+being removed after handling; no unfinished goal is marked complete or paused.
 
-OUTAGE
-Around14:38UTC all19 then-active subagents reported terminal error:
-  Fatal error: application network permission was revoked
-Ember says usage outage/restart. Do not infer source failure or lost remote jobs.
-No swarm restart dispatched. Verify actual agents and remote PIDs before resuming
-owners or builds. Frozen source, artifacts and workboxes are retained. A fresh
-inventory supplement will be placed beside the detailed handoff if tools work.
+RECOVERED HUMAN INTENT
+All127 genuine human messages through cv16479 across26compactions and10large
+assistant replies from last5windows were actually read before this latest window.
+Local transcripts: /Users/ember/workbox/mini-session-recovery-20261003/.
+Method/interpretation: work/INTENT-RECOVERY-20261003-1505.txt.
+Latest human discussion: actual Hermes/Objective/Unix hosting, optional OpenBSD
+bridge, retro workstation UI, richer deos views/eventing, agreement/privacy state,
+and compositional Lean Host. These are new product design questions, not an OS
+migration decision. Root response and fresh reading: receipt12 in work/.
 
-WHERE THE REAL SOURCE IS
-Construction shared main: hbox:/home/hbox/workbox/codex-unified-integration-20261003/src
-Git publication transport: /Users/ember/workbox/mini-unified-push-20261003
-Last captain-confirmed pushed Mini main:3dd5a7b17e322e488ffc6874a566714ec3622d10.
-Current remote HEAD/status must be inspected; later source may be uncommitted.
-/Users/ember/dev/minidregg and the old Mac Mini checkout may be stale.
-Bread is reference; don't start new construction there. hbox fast capacity under
-/tank; NVMe /home workboxes now hold some sealed continuation artifacts. Persvati
-also has warm capacity. Preserve fn, foreign files/caches and live dev services.
-
-ACTUAL CAPABILITY CUT
-Usable older native multiuser docs/OO/Studio family exists. New generic Objective
-source preview now runs real Studio source and two contrasting extension programs
-through the actual repaired checker and SAME demand machine. Full new-language
-native effects/private results, full OO laws/reflection/migration remain incomplete.
-Real consensus engine/safety proofs and four independent stores exist; matching
-reader/operator/mini binaries now run. At last owner report ZERO accepted agreed
-source effects; actual signed setup was just underway. Don't substitute genesis.
-Scheduled encrypted traffic exists; latest sustained useful service63/64 refuted
-first-epoch deadline. New final-cover decoupling repair authored, not qualified.
-MPC/reference share/tuple/AND execution and ZK circuit evidence exist; full private
-native output/qualification/security composition remain real open work.
-Original SPK app8502 failed STARTg2 remains fenced. No reset/reinstall. Recovery
-native build still blocked by missing Lean artifact companions; exact fix known.
-Fable security repairs are underway, not all deployed. Ember confirms ONLY trusted
-development access; no emergency shutdown or strangers' exposure was inferred.
-
-IMMEDIATE HIGH-VALUE WORK
-Continue actual generic Studio preview UI integration, original four-store signed
-resident append/recovery, native client consent, room pre-disclosure authorization,
-SPK recovery/privilege separation, and exact language preservation/adequacy proofs.
-Do not add more builders without a substantial separable result and actual capacity.
-Explicitly parked FHE/Activity/money/portable/Station/fiction streams need their own
-reactivation decision; receiving a dependency doesn't secretly staff the domain.
-
-WHAT ROOT JUST CHANGED
-Private redregg c7ad13f pushed: full census + reentry receipt10 + checkpointed state
-in integration-obligations/sweep.py (9 tests pass) and8 parked product rows.
-ARCHITECTURAL-ARGUMENT newly written, not yet committed at first save; root will
-commit named handoff files when possible. Never blanket-stage foreign WIP.
-Broker fd-custody repair ACTUALLY merged into common hbox broker.rs:
-6afb3b39...→4839996f2398849876265f683ae86b4e59b62daa717fdb9ae9d8c3b31669d759.
-Captain told to publish; source publication after that not yet observed. Helper/
-physical test already byte-identical to qualified packet. No deployment performed.
-Root reserved chat.rs/job.rs/shell.rs path-confinement repair, inspected only;
-NO edits made. Notes in detailed handoff prevent breaking resident operation paths.
-
-WHEN HANDING BACK
-Write exact current source/commits, active jobs, meaningful runtime evidence, changed
-semantics/assumptions and open decisions into this private repo. Preserve rationale,
-not just status. Point back to this root UUID for cv. Leave improvements on main;
-keep honest unqualified WIP and original failed-world artifacts. Do not declare
-the broad goal complete because a useful receiving tranche works.
+Historical outage details remain in work/HANDOFF-AFTER-OUTAGE-20261003.txt and
+work/HANDOFF-ENTRY-HISTORICAL-OUTAGE-20261003.txt. Their no-live-build/failedbuild/
+missing-WHY statements were dated observations, superseded by current records.

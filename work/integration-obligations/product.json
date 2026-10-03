@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-03T15:08:45.699072+00:00",
+  "updated_at": "2026-10-03T15:54:00Z",
   "obligations": [
     {
       "id": "product-spk-failed-start-reconciliation",
@@ -7,10 +7,10 @@
       "owner": "takeover_service",
       "consumer": "takeover_service",
       "coordinator": "root",
-      "state": "building",
-      "next_action": "Continue from sealed10494-input/1.67GB NVMe capsule8f1ceaeb; captain owns exact old-profile native suffix then runtime/service originalg2 reconciliation. Both earlier native builds ended before ELF; do not report them live.",
+      "state": "receiving",
+      "next_action": "Service owns sole original app8502/g2 op206 reconciliation using exact historical Host18c18; lookup209 on uncertain durable submit. No reset/reinstall/oldHost restoration after event66.",
       "acceptance": "Actual failed START -> native authorized same-request reconciliation -> lawful retry or terminal readback, with service acknowledgement; four original r2 services preserved. No new INSTALL, fresh-world substitute, archive ACK or blind claimed-START retry.",
-      "progress_evidence": "Original app8502 STARTg2 admitted/claimed but physical spawn failed. Exact namespace permission repair passed. All13 additive recovery leaves plus exact old Replay/Main compiled. Runtime transport206\u2013209 client built/tested and orchestration source qualified. r1 terminated at1200s after about18min baseline validation; no OOM/source diagnostic. Endpoint exact bulk validator passes10 refuters; captain ACKed r2 builder1889640/timeout1889638 at2400s16GiB Lean2/C2, with old manifest equivalence before compilation. Runtime independently observed r2 live13:08UTC. Actual native ELF and same-g2 reconciliation remain OPEN.",
+      "progress_evidence": "Original app8502 STARTg2 admitted/claimed but physical spawn failed. Exact namespace permission repair passed. All13 additive recovery leaves plus exact old Replay/Main compiled. Runtime transport206\u2013209 client built/tested and orchestration source qualified. r1 terminated at1200s after about18min baseline validation; no OOM/source diagnostic. Endpoint exact bulk validator passes10 refuters; captain ACKed r2 builder1889640/timeout1889638 at2400s16GiB Lean2/C2, with old manifest equivalence before compilation. Runtime independently observed r2 live13:08UTC. Actual native ELF and same-g2 reconciliation remain OPEN. UPDATE15:54UTC: all561Lean/561C native bridge18c18f64 built; operator2256348/Host2256429 actually reopened same cfg1fbc/SQLite. CLI1ffe2258198 invoked once15:50:09, source admission CPU-bound, no final result yet.",
       "waits_for": [
         {
           "owner": "takeover_service",
@@ -23,7 +23,8 @@
           "owner": "takeover_kernel",
           "deliverable": "Guarded native reconcileFailedStart K-SPK receiving in coherent candidate",
           "next_action": "Own existing r2 guardian through exact native binary and transfer to runtime/service; endpoint diagnostic callback retained",
-          "ready": false
+          "ready": true,
+          "evidence": "ELF18c18f64 actual built/rootstaged/operator reopened; service consuming originalg2 now."
         },
         {
           "owner": "runtime_lieutenant",
@@ -66,9 +67,9 @@
       "consumer": "bread_programmable_archaeology",
       "coordinator": "root",
       "state": "receiving",
-      "next_action": "Runtime has explicitly followup-resumed original resident owner with matched reader/operator, frozen import closure and sole-mutator custody; execute original signed setup/review/four-source append and lost-reply/restart.",
+      "next_action": "Resident explicitly resumed by frontier on actual native fixture8485a1b6/wrapperba453117; continue SAME retained original signed room offer, then independent four-store readbacks and sequential carrier consumer.",
       "acceptance": "Actual current signed source/readCapability support -> prepared original owner call -> ordinary agreed append -> lost response/restart -> exactly one append on four actual readbacks, including stale/revoked support refusal and retained original provider context. No consensus-none history clone or renamed anonymous bytes.",
-      "progress_evidence": "Resident scoped9/9 and original TCP/MLDSA consumer qualified separately. Exact receiver373 C+olean cohort exported b723a784; frontier consumes it. Runtime13:08 reports four independent physical stores/MAC/MLDSA keys, same normalized profile and exact anchored seed, genuine Ed25519 enrollments, zero accepted history. Genesis initialization is not an agreed append. First signed setup awaits matchedHost7 prepare/read bridge; resident remains correctly stopped pending it. 14:20UTC: reader ELF361efa9f actual four-store profile/current-key and direct-submit-refusal probes PASS. Resident explicitly resumed; no accepted source effect yet.",
+      "progress_evidence": "Resident scoped9/9 and original TCP/MLDSA consumer qualified separately. Exact receiver373 C+olean cohort exported b723a784; frontier consumes it. Runtime13:08 reports four independent physical stores/MAC/MLDSA keys, same normalized profile and exact anchored seed, genuine Ed25519 enrollments, zero accepted history. Genesis initialization is not an agreed append. First signed setup awaits matchedHost7 prepare/read bridge; resident remains correctly stopped pending it. 14:20UTC: reader ELF361efa9f actual four-store profile/current-key and direct-submit-refusal probes PASS. Resident explicitly resumed; no accepted source effect yet. UPDATE15:54UTC: native fixture linked after interpreter timeout; frontier dispatched actual resident followup. Zero acceptedsourceeffects remains latest verified precontinuation state; no new success claim.",
       "waits_for": [
         {
           "owner": "bread_programmable_archaeology",
@@ -99,10 +100,10 @@
       "owner": "docuverse_deos_construction",
       "consumer": "docuverse_deos_construction",
       "coordinator": "root",
-      "state": "receiving",
-      "next_action": "Finish actual saved source/imported capture to generic Objective typed-preview UI and retained result/refusal, with current source edition.",
+      "state": "waiting",
+      "next_action": "Preview UI complete and published; World/scenario owners finish new-language native authority/effect producer, then followup_task Doc for actual publish/invoke/evolve receiving.",
       "acceptance": "Actual member module/import editing+version CAS/history, genuine diagnostics/preview from checked artifacts, governed native publish/fresh instance/self-super/evolution and source/readback/history acknowledgement; old instances retain pins. Fixed inspector or unavailable UI alone does not satisfy full loop.",
-      "progress_evidence": "Actual native Studio editing/import/history/fork/stale-draft retention PASS26HTTP/18assertions/57s using client c833b50d and Host740545; exact package capture9eabba7241ab6219413ce04f3e75e47508cea59bbb303a5b165ecbd3a08afa9e consumed unchanged by compiler. Named-import parser repaired and Notebook.remember emitted to new demand machine. World/type owners now report actual captured Notebook execution returns8 and exact parsed-source global recursive-knot term accepted by compiled Lean checker Nat/uses[], receiving-r1.log in objective-types lane. General source-elaboration correspondence and native typed effect/admission/UI diagnostics remain OPEN. Doc yielded with root-owned producer callback; no completed OO language claim. UPDATE October3 after outage: original Doc owner explicitly resumed on real preview cohort02 PASS (Nat8/capture12/heterogeneous10). User renews construction15UTC. scenario_objective_world additionally owns native adapter implementation coordination. New served preview not yet qualified.",
+      "progress_evidence": "Actual native Studio editing/import/history/fork/stale-draft retention PASS26HTTP/18assertions/57s using client c833b50d and Host740545; exact package capture9eabba7241ab6219413ce04f3e75e47508cea59bbb303a5b165ecbd3a08afa9e consumed unchanged by compiler. Named-import parser repaired and Notebook.remember emitted to new demand machine. World/type owners now report actual captured Notebook execution returns8 and exact parsed-source global recursive-knot term accepted by compiled Lean checker Nat/uses[], receiving-r1.log in objective-types lane. General source-elaboration correspondence and native typed effect/admission/UI diagnostics remain OPEN. Doc yielded with root-owned producer callback; no completed OO language claim. UPDATE October3 after outage: original Doc owner explicitly resumed on real preview cohort02 PASS (Nat8/capture12/heterogeneous10). User renews construction15UTC. scenario_objective_world additionally owns native adapter implementation coordination. New served preview not yet qualified. UPDATE15:54UTC: actual19HTTP/14checks savedNat8 -> ordinarynativeedit42 -> checkerrefusal -> retainedhistorical8/current42 PASS, live32946 HTTP200 rootchecked. r14client+guide published dd2086cd. Complete native publish/instantiate/evolve acceptance remains OPEN.",
       "waits_for": [
         {
           "owner": "objective_bend_linker",
@@ -146,7 +147,7 @@
         }
       ],
       "checkpoint_ref": "/Users/ember/dev/redregg/work/CENSUS-20261003-1420.txt; retained exact source/evidence paths in this record and original owner handoff",
-      "restart_condition": "Actual generic captured-package diagnostics/preview producer plus explicit Doc receiving allocation.",
+      "restart_condition": "New lazy Objective current-authority native effects producer qualified and explicit same-world consumer allocation; preview-only work is already done.",
       "unresolved_work": "Complete preview/publish/native new-Objective effects, law/evolution and independent returns; editing alone works."
     },
     {
@@ -508,8 +509,8 @@
       "owner": "historical_missing_junctions",
       "consumer": "takeover_service",
       "coordinator": "root",
-      "state": "building",
-      "next_action": "Repair credit449\u2013451 retain originalref until validated successor+durable CAS/recovery, require tariff812 and checked arithmetic; current workspace atomic_json helper reuse; actual interrupted inbox/accounting refusers then service consumer.",
+      "state": "checkpointed",
+      "next_action": "Retain source/component checks; captain establishes exact composed-client qualification and root assigns a bounded consumer repair only when actually staffed.",
       "acceptance": "Interrupted inbox update retains usable exact old/new currentref, stale recovery cannot adopt mismatched recipient; missingtariff/overflow refuse before Hermes payment/dispatch, ordinary valid tariff still exactpaid.",
       "progress_evidence": "Existing Sol resumed for source construction; current workspace atomic_json staging/perrecordlock/exactprior/rename+dirfsync found, captain narrow visibility requested. Credit repairs authored next, no executionclaim. Historical terminal9file v3 6f1c2d81926f1a97d64270943a1e558094e7ff29ab4aa8314ffc28e3f4472330 captainSOURCE-INBOX;3 isolated extracted-source checksPASS interruption recovery/stalemismatch/overflow/nonASCII. Traffic+OO sharedpublish_retained_json ACK, fullresourceclient unbuilt; strandedoldreference repair explicitOPEN. Consumer service actualHermes adoption notyet received.",
       "waits_for": [
@@ -519,7 +520,9 @@
           "next_action": "Pair exact source interface and custody/qualification callback with named consumer",
           "ready": false
         }
-      ]
+      ],
+      "checkpoint_ref": "work/CHECKPOINT-RESUMED-20261003-1554.txt; historical source packet6f1c2d81",
+      "restart_condition": "Explicit builder allocation for stranded oldreference and actual Hermes credit receiving; historical named owner is not in current live roster."
     },
     {
       "id": "product-retained-client-codec-primitives",
@@ -595,9 +598,9 @@
       "consumer": "takeover_service",
       "coordinator": "root",
       "state": "building",
-      "next_action": "Separate root-owned bounded launch adapter from unprivileged parser; coordinate source-bound fd launch/reap and journal identity with runtime, then actual launch/recovery receiving.",
+      "next_action": "Captain reconcile recovery3file packet3f6ece4a with privilege source and narrow dual-role release; service use after lawful originalg2 recovery, then actual app launch/parser isolation.",
       "acceptance": "Untrusted app parsing holds no CAP_SETUID/GID; valid launch still uses exact authorized UID/package/cgroup and recovers original uncertain generation; path/capability escape attempts refuse.",
-      "progress_evidence": "Service rechecked current Ambient/Bounding capabilities and spawn dependency; removing unit caps alone breaks spawning, running whole resident as app cannot read custody. Correct separation design underway; no deployment modification."
+      "progress_evidence": "Service rechecked current Ambient/Bounding capabilities and spawn dependency; removing unit caps alone breaks spawning, running whole resident as app cannot read custody. Correct separation design underway; no deployment modification. UPDATE15:54UTC: root merged exact five shared paths+Linuxcfg; helper unchangedc3aa9e88; source published dd2086cd. Owner scoped3+physical1 qualify split privileges. Newly built roles had inherited grain_export placeholder; service supplied exact runtime3file packet3f6ece4a for coherent role release. No finalapp/deployment closure."
     }
   ]
 }
