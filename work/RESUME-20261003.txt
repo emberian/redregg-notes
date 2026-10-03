@@ -366,7 +366,7 @@ redregg checkpoint2eb2473 was already present. Its newly public remote was made
 PRIVATE on Ember's explicit request, verified via GitHub. Fresh receipt records
 actual reading limits. No credential discovery or complete secret scan claimed.
 
-ACCOUNT-REFRESH RESUMPTION — October3 ~10:30UTC
+ACCOUNT-REFRESH RESUMPTION — October3 ~10:15UTC
 Ember explicitly resumed interrupted agents/goal after freshaccount allocation.
 New staffing preference: mostly Sol; Astra rare/precious coordinators or strategic
 work; CURRENT Astra owners may finish. Do not replace them just to change models.
@@ -383,3 +383,14 @@ module, earlier failure superseded. No auth errors observed among resumed replie
 Source-run funding admission remains a REAL shared kernel join: current prepared
 run is Nock-specific. World owns coherent Bend source/charge/current-law extension
 with captain; no run:none wrapper claimed sufficient. Broadgoal remainsACTIVE.
+
+HUMAN CHECKPOINT — October3 10:15UTC
+Ember: get as much done across whole system before10amAmerica/New_York today
+(14:00UTC), available briefly for design/discovery discussion. This is a progress
+checkpoint, not goal completion or authorization to lower destination. Actual
+GitHub main7d501177 verified; sourcefirstpublication is now moving. Coordinator
+screened64rows447records withzero hash/patherrors, handles directbuildhandoffs.
+Captain dispatch: auxdata5→world5→linker3→portable4; maingraded5→frontierR3→global;
+Rusttraffic5/release and backendauth4+ACSS4. Verify actualjobs, not queueintent.
+Persvati actualIR2 regression failed canonicaldescriptor key t/col beforeproving;
+owner repairs emitter; dZK8/8PASS. No privacyproof inferred from compile.
