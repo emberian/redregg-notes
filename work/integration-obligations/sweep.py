@@ -53,8 +53,13 @@ def audit(records, inactive, known_agents=None):
         if ready and item.get('owner') in inactive:
             findings.append((key, 'WAKE_OWNER',
                 f"{item['owner']}: {item.get('next_action', '')}"))
-        elif not ready and state in {'ready', 'receiving'}:
-            findings.append((key, 'CONTRADICTION', 'claims ready/receiving with unmet dependency'))
+        elif not ready and state == 'ready':
+            findings.append((key, 'CONTRADICTION', 'claims ready with unmet dependency'))
+        # A consumer can exercise a qualified part while later producers build.
+        # Full integration above still requires every dependency and actual use.
+        if state == 'receiving' and item.get('consumer') in inactive:
+            findings.append((key, 'INACTIVE_CONSUMER',
+                f"{item['consumer']}: verify next runnable receiving step or record its actual wait"))
     return findings
 
 

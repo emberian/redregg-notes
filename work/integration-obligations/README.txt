@@ -8,6 +8,11 @@ Each row needs id, outcome, owner, consumer, coordinator, state, next_action,
 acceptance and progress_evidence (all nonempty). Agent names use exact short tool
 names. States: building, waiting, ready, receiving, integrated. A completed agent
 turn does not change the obligation state.
+Receiving means a consumer is exercising an available part; later producers may
+still be building. For example, Studio source editing can receive before arbitrary
+source execution. State the actual receiving step in next_action/progress_evidence.
+Ready promises all listed dependencies are ready; integrated still requires all
+dependencies and evidence for the complete acceptance, not just that partial step.
 Optional waits_for array has owner, deliverable, next_action, ready(bool), evidence
 (required when ready). A waiting dependency must have a real builder, not a queue
 or unassigned concept. Distinguish authored/compiled/executed/integrated evidence.

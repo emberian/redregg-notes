@@ -32,6 +32,17 @@ class LifecycleTests(unittest.TestCase):
     def test_empty_registry_cannot_pass(self):
         self.assertIn('INVALID', self.codes([]))
 
+    def test_receiving_can_overlap_later_producers_without_closing_join(self):
+        row = {**self.row, 'state': 'receiving', 'waits_for': [dict(
+            owner='compiler', deliverable='arbitrary source execution',
+            next_action='finish elaboration', ready=False)]}
+        self.assertFalse(self.codes([row]))
+        self.assertIn('INACTIVE_CONSUMER', self.codes([row], ['resident']))
+        self.assertIn('CONTRADICTION', self.codes([{**row, 'state': 'ready'}]))
+        closed = {**row, 'state': 'integrated', 'receiving_evidence': 'partial UI run',
+                  'consumer_ack': dict(owner='resident', evidence='UI works')}
+        self.assertIn('INVALID_CLOSE', self.codes([closed]))
+
     def test_nonexistent_consumer_cannot_receive_a_handoff(self):
         findings = audit([self.row], set(), {'receiver', 'product'})
         self.assertIn(('doc-join', 'UNKNOWN_AGENT', 'consumer: resident'), findings)
