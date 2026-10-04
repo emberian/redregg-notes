@@ -1,0 +1,14 @@
+# fn — for ember in the morning (2026-10-04)
+
+## State
+- dev is being moved to the first current-source image set: INTEGRATOR-2 fixed the three host-load reds (a 10-03 commit had broken `fn-owner-io-preserves-retain-state`; a never-built `def-cost` bound; a translate slip), merged the closed tail batch (15 lanes + harness-reds, green against the wave-0 baseline), and is running a host preflight on hbox, then the image set + natives. Results will be in its coordinate table.
+- Wave 0/1 exits so far: `make check` 47 → ~15 red against baseline; both image worlds certify; ledger in-progress 99 → 16; 72 branches preserved and classified.
+
+## Decisions waiting on you
+1. **Live reclaim's default cost** (`planning/design/reclaim-funding-2026-10-04.md` §11 on `lane/reclaim-funding@436c38b78`). The scholar chose a combined design: the launcher reserves an owner's work reserve sized at max(open transient, live pass demand) at the profile's bounds; the pass borrows it and returns it; user requests never touch it (five keystones admitted with teeth; one Kimi review folded in — it caught tombstones held as octet lists, +40% demand). As built **every node pays**: small preset heap 662 → 911 MB (fits 1.5 GB); `init` on a 2 GiB machine drops from the 16 MiB rung to the 8 MiB floor, on 3 GiB from 32 → 16. Alternative: an opt-in config key, default "refuse live reclaim by name" (needs a native-config field; waits for batch R). Also: deployed nodes' MemoryMax must be checked before a redeploy that carries this. My lean: default-on for the public/hbox nodes (they have room, and 6.6.0 is meant to be a foundation), with the opt-out key in batch R for small machines.
+2. **Mini's 6.6.0 asks** (`FN-660-RESPONSE-20261004.md`, table at the end; Mini's root agrees with fn on all three): M2 (served = stored) → 6.6.x; M1 durable-after-ack without segment rotation, provided H refuses by name and the release states the max archive span; Mini decodes fn's control frames and cursor directly from fn's exported grammar. Saying yes adds ~4 lanes to the next wave (M1 kernel durability, M4 identity command, M5 grammar export, M6 article-kind row + impl).
+3. **S025** (TCPCL incoming idle session, `planning/design/bp-2026-10-04.md` §7(e)): reason code Busy (3) or Resource Exhaustion (5). My call if you don't weigh in: 5.
+4. **Redeploy** once the image's natives are green: both nodes are toys per you; the hbox node runs through the Mini session; the 09-29 schema change likely means init-fresh (D34).
+
+## Next wave, as I'd shape it
+The natives' reds first (one lane per family that fails); then the Mini asks (M1, M4, M5, M6); the zmq-pattern surface packet (D49); the remaining tariff families; PRF-1318's two conditions and the other proof-owed items; actors beyond `admin.lisp`. Continuations for every lane are in `~/dev/fn/build/coordinator/lanedumps/`.
