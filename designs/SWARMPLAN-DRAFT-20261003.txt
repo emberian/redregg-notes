@@ -55,7 +55,8 @@ PART I — THE GROUNDED PICTURE (v2: what round 2 changed is marked ►)
    build. The wall snapshot still cannot build alone (Host/Main imports the lane's
    admission module; the snapshot's ResourceTransaction lacks the `family` field).
    The missing pieces are not proofs: the deriveDraft producer does not exist
-   anywhere, the Claim v2 SOURCE exists only as a compiled file, and
+   anywhere, the Claim v3 source (found late: objective-claim-v3-qualified-r1,
+   PASS on its own check) has never been built together with the controller, and
    AuthenticatedInputs is authored but never compiled.
 
 4. THE WORLD IS SLOW FOR READABLE REASONS. Cold audit = a genesis re-walk per check
@@ -187,7 +188,7 @@ rest run in parallel with no source overlap.
 L0.1 THE CUT = ONE COHERENT BASE (R2-2 §3 step 1 + C §7 steps 0–2 + R2-5 edge).
    Start from c8fdd000 + wall-snapshot minus the two .orig files. Add the newest
    lane sources R2-2 lists (Compiler: NativeInvocation{Statement,Profile},
-   ObjectiveInvocationClaim [recover its v2 SOURCE first], ObjectiveSourcePackage,
+   ObjectiveInvocationClaim [take v3 from /tank/dregg-build/codex-private-lifecycle-20261003/objective-claim-v3-qualified-r1/ and re-check the controller + input modules against it], ObjectiveSourcePackage,
    ObjectiveBendSourceArtifact, ObjectiveNativeScalarBinding, ObjectiveBendPlanAdapter,
    ObjectiveBendNativePlanData, ObjectiveBend{Result,Combined,Generic}Result,
    BendWorldPlan; Kernel: ResourceTransaction, DeclaredResourceController,
