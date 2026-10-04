@@ -1,0 +1,39 @@
+COMMON RULES FOR SONNET BURNDOWN LANES (2026-10-04, root = Claude session breadstuffs-89 on Ember's Mac)
+
+Project: Mini (GitHub emberian/minidregg). Lean owns semantics and admission; Rust is the client/custody
+boundary. Greenfield: no compatibility obligations; breaking a format is fine if the commit says what broke.
+READ FIRST (on the Mac): ~/dev/redregg/work/LANE-PROTOCOL-20261004.txt (whole file, it is binding) and the
+last 40 lines of ~/dev/redregg/work/SWARM-LEDGER-20261004.txt.
+
+YOUR CLONE: on hbox (ssh hbox), under /tank/dregg-build/claude-lanes/<lane>/src :
+  mkdir -p /tank/dregg-build/claude-lanes/<lane> && cd /tank/dregg-build/claude-lanes/<lane> && \
+  git clone https://github.com/emberian/minidregg.git src && cd src && git log --oneline | head -3
+Write /tank/dregg-build/claude-lanes/<lane>/STATUS.txt at every milestone (commits, evidence paths, deferred, restart condition).
+Never clone under /home/hbox/workbox (that disk is at 87 percent). Never write big artifacts to hbox / .
+
+BUILDS: there is NO warm Lean base right now (the cut lane is still gating). Do NOT run `lake build` of the
+umbrella or any large Lean closure. A single small Lean file check is allowed only via
+`swarm-build lake build <OneModule> -j 4` if your task truly needs it; otherwise mark the item
+"authored, uncompiled" and keep going. Rust: `swarm-build cargo ...` with CARGO_TARGET_DIR inside your lane
+dir, ALWAYS filtered (`cargo test -p X <filter>` or nextest -E), never an unfiltered -p suite. TypeScript/
+shell/python checks run freely. hbox load must stay under 16 (check `uptime` before a build; wait if over).
+Foreground-wait your builds; never background one and wait for a notification.
+
+COMMITS: small, named files only (never `git add -A`), unsigned is fine:
+  git -c commit.gpgsign=false -c user.name="ember arlynx" -c user.email="cmrx64@gmail.com" commit -F msgfile
+Write messages to a file (no backticks in shell double quotes). Commit on a branch `lane/<lane>` in your clone.
+Do NOT push. The LANDER lane lands commits; your final report lists commit ids in landing order plus any
+that need a Lean build before landing.
+
+NEVER: git stash; delete anything outside your lane dir; start/stop/signal any process or unit on hbox or
+persvati; touch live worlds, the agreement mesh, /tank/fn, the public box; call paid providers; send external
+messages; print secrets. Disk below 10 percent free anywhere: stop writing and report.
+
+CLAIMS: tag every claim READ (you read the source), RUN (you ran it, cite the log path) or INFERRED.
+A theorem you add must have inhabited premises and a non-tautological statement. No #guard where a
+theorem belongs. No quick fixes: if the right fix is bigger, do the right fix or file it, never a shim.
+Deferrals: `cv task open --repo ~/dev/minidregg --body "<body>" "<TITLE>"` on the Mac (tag swarm-20261004)
+before you report. Close or note cv tasks you finish (`cv task --help`).
+
+FINAL MESSAGE: at most 400 words. Commits (ids, order), evidence class of each (authored/compiled/executed),
+what remains, restart condition.
