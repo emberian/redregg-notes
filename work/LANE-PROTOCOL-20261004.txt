@@ -38,7 +38,10 @@ GIT (D4: main is the only branch; fix forward; never stash/reset/force)
   Message: what changed, what shape broke, what must be re-emitted or re-genesised, what
   now refuses to load ("Say what you broke"), and end with
   Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
-- Before every landing report: `git fetch origin && git rebase origin/main`; resolve
+- AMENDMENT 01:40: a cp -al clone's `origin` is the hbox WARM TREE, not GitHub. Add the
+  real remote once: `git remote add github https://github.com/emberian/minidregg.git`
+  and rebase onto `github/main` (GitHub main has moved: cbd849c4 'spw update' + landings).
+- Before every landing report: `git fetch github && git rebase github/main`; resolve
   conflicts forward. Report the commit ids. The ROOT pulls from your clone and pushes to
   GitHub (hbox has no push credentials; do not try). A landing is not landed until the
   root says so; keep working meanwhile.
