@@ -117,3 +117,12 @@ Rule from Ember (10-04): read the referents, not only the syntheses.
   independent per-action specs; small Lean decisions exported as refuse-when-unavailable gates (2PC
   verdict, finality order/quorum, round advance, constraint evaluator, flow refinement); the vacuity
   tooling (fix KeystoneLint first). Mini already has the best of the law/merge layer in better form.
+
+## Frontier/Agoric scholar, spot-checked at source
+- agoric-src-zcfSeat-2026.js:267-270: in reallocate, `for (const [seat, allocation] of newAllocations)
+  isOfferSafe(seat.getProposal(), allocation) || Fail\`Offer safety was violated...\`` — offer safety is an
+  INVARIANT checked on every reallocation of every seat for the seat's whole life, and it runs in ZCF (inside
+  the contract's vat, separated by a SES Compartment). MINI READING: a seat = a Book account + a law whose
+  clause is the offer-safety predicate (anyL of two allL lower bounds over totals), judged by the kernel on
+  every write; exit = a kernel action no contract can override; payout liveness becomes a kernel theorem for
+  Book assets. Within one turn, assay and transfer are atomic: escrow is needed only across a yield or domain.
