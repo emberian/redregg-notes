@@ -1,0 +1,90 @@
+SCOUT B — Objective Bend Core4: statement-level formal audit + native execution path
+2026-10-03 ~21:20 UTC. Read-only opus scout under the Claude root (breadstuffs-89). Source c8fdd000.
+Tags: READ (in the code), RECORD (a note/checkpoint claims it), INFERRED. Verbatim report.
+
+SHORT VERSION: the Core4 proofs are real and their statements are not vacuous, but they cover a different function from the one the native path runs, the default build never checks them, completeness is still open, and the front end cannot yet produce most of what the theory talks about.
+
+(1) CORE4 CONSTRUCTORS (Theory/ObjectiveBendOpenRecursion.lean Term; READ)
+- bound i: de Bruijn variable; machine enters the cell at that environment address.
+- lam body: weak-head value; machine builds a closure.
+- app f a: CBN beta in the reference semantics; machine makes the argument a heap thunk (call-by-need).
+- mix lower upper: steps to mixBody = λself.λsuper. upper self (lower self super).
+- fix spec inherited: steps to app (app spec (fix spec inherited)) inherited; machine ties one heap address to itself.
+- specification metadata extension: value; applying it applies extension; metadata reachable without forcing extension.
+- prototype spec target: value; reflect returns spec, project returns target, each without forcing the other.
+- reflect / metadata / project: eliminators.
+- nat n, boolean b, label s: scalars; labels opaque strings.
+- binary p l r: left-to-right; p ∈ {add, multiply, equal (Nat→Bool), conjunction (Bool)}.
+- record fields: lazy fields; lookup takes first match.
+- extend inherited fields: only when inherited is a record; new fields shadow.
+- get t name: field selection.
+- ifZero v z s: Nat case; successor branch binds the predecessor.
+No eliminator for Bool or labels, no sums, no lists, no case on constructors, no effects.
+
+(2) TYPING AND QUANTITIES (READ)
+PartialTyping assumptions context term type uses, mutual with FieldsTyping. Uses = one count per context slot. Assumptions = explicit bounds on rigid type variables + shareable variable list. sameType = canonical row equality unfolding at most one bound head. No subtyping. Field lookup uses fuel. fix requires spec : target → inherited → target with target shareable; mix requires both sides reusable, unrestricted two-argument arrows sharing a middle type. infer/check is proof-producing (returns the derivation for the actual term). DemandTyping lifts to heap/stack/state typing (StateTyping) over address-type assignments that only grow.
+Quantities: erased, affine, linear, unrestricted. safeQuantity enforces at-most-once for affine AND linear (exact-once not enforced; Quantity.fits has the exact rule but no consumer). Reusable closures may only capture unrestricted shareable bindings; an unrestricted parameter demands a shareable argument with shareable captures. ifZero branches counted additively. Static count only: no theorem says a runtime value is used at most once. Ty.custody exists but no term/ValueTyping constructor creates a custody value, so in the closed programs the preview requires, custody can never be present (INFERRED). Front end cannot emit affine or linear: qty maps default/copy → unrestricted, dead → erased; the parser produces nothing else.
+
+(3) MAIN THEOREMS
+- sourceStep_deterministic: a steps to b and to c ⇒ b = c. No hypotheses. SOUND (field rule pins find?).
+- runBounded_natural_sound / boolean / label (and rawRun_*): source closed (Scoped 0) and runBounded limits ticks (initial source) finishes with nat n (bool, label) ⇒ Evaluates source (.nat n). Hypotheses: closedness (every elaborated program meets it) and a finished outcome (satisfiable; shared_argument_executor exhibits one). Hold for every limit/tick count. SOUND. Caveat: about runBounded only; native preparation and the Plan tests run forceWith/executeWith under a capacity policy, and no theorem relates the two (grep finds no theorem mentioning forceWith, materializeWith, executeWith or allows).
+- runBounded_value_sound: finished value ⇒ ∃ address meaning with MeaningsScoped, HeapRealizes, Evaluates source (valueMeaning meaning value). SOUND; determinism pins the existential; weak-head only. The deep Data that becomes a Plan (materialized by re-entering field addresses with an empty stack) has no soundness theorem. SUSPECT as basis for "the Plan is what the source means".
+- runBounded_observes_sound / observation_sound / resource_independent: ground observations from different limits agree. SOUND.
+- adequate_trace_completion: rawRun ticks state reaches complete v ⇒ runBounded (traceLimits ticks state) ticks state finishes with v. Premise = the unbounded run already finished: resource adequacy, NOT completeness. SOUND but weak; do not cite as completeness.
+- typed_stepRaw_preserved: typed state steps to typed state over an extended address typing. Non-vacuous: checked_initial_state builds a StateTyping from any real Checked; decide lemmas show real terms (e.g. the global knot) accepted. "No refusal" from ControlTyping having no refused constructor (standard). SOUND.
+- checked_reachable_no_refusal and check_runBounded_no_refusal: a closed checked term never reaches any refusal, for every limit/tick count. SOUND. The _accepted hypothesis is unused (cosmetic). Host/ObjectiveBendPreview.preview really runs check on the empty context then runBounded on the same decoded term, so this matches what the preview executes.
+- Representation.evaluationComplete: a field of a structure nobody inhabits (no instance anywhere). SUSPECT by design: Supported is a free parameter, so Supported := fun _ => False would satisfy initializesSupported and evaluationComplete; only a docstring forbids it. Representation.step returns Transition while the machine's step returns Outcome signalling advance as .suspended .ticks; an adapter will be needed and should be read closely.
+- Axiom pins: #guard_msgs + #print axioms cover every theorem above; all show only propext, Classical.choice, Quot.sound. No sorry/axiom/native_decide/unsafe/partial/implemented_by/extern in Theory/ObjectiveBend*.
+- THE PINS ARE NOT IN THE DEFAULT GATE: Objective Theory modules are imported only by the opt-in ResearchWip library; Theory.lean, the default Minidregg target and BendQualification do not import them. Host/ObjectiveBendPreview imports only Typing and DemandMachine. A normal build does not re-check Adequacy/Preservation.
+Identity-carrier class: TotalProof (law) := law (identity); checked_erasure and PreparedOutput.native_matches / no_returns are field projections; ExecutionWith.runExact and ExtractionWith.exact only record that a value is the output of the very call that produced it. Honest, but not semantic.
+Defs with no consumer outside their own file: Representation, PositiveSteps, MachineSteps, Transition, instantiatePrototype, LawProvider, RetainedContracts, FamilyMix, Quantity.fits, all of ObjectiveBendExtensions (imported only by ResearchWip). No theorem ties mixBody to Extensions.mix/composeOpen.
+
+(4) NATIVE EXECUTION PATH
+Studio preview: (1) Rust native/resource-client/src/workspace/studio_preview.rs:run spawns bun → (2) TS objective-frontend.ts:captureObjective → objective-parser.ts:parseObjective → (3) TS objective-preview.ts:preview spawns objective-elaborate.ts producing elaborate + literalAnnotations, writes .core.json and .typed.json → (4) preview checks typed term equals core term, runs `lean --run Host/ObjectiveBendPreview.lean` → (5) Lean preview: decodePacket, check, runBounded. Step 5 is lean --run against compiled oleans; precompileModules not set ⇒ IR interpreter, not native C (INFERRED). On this path Core4 runBounded executes and is the function the theorems are about.
+Rust–TypeScript MISMATCH (READ): Rust writes request schema preview-input.v1 and accepts only preview-result.v1; in-tree objective-preview.ts requires preview-input.v2 and emits preview-result.v2. Against the in-tree adapter the Studio route always ends "unavailable" (configured adapter is a pinned path, might be an older copy; INFERRED). Rust's own test (~line 140) checks only its own v1 mirror fixture.
+Plan / prepared-output route: Kernel/ObjectiveBendPreparedOutput.prepare → check → executeWith (allows capacity) → forceWith (repeated runBounded … 1) → materializeWith; ObjectiveBendPlanAdapter.lower → decode (Data→NativePlan) → BendScalarPlanAdapter.bindPlan (pure binding/ordering; never calls BendLiveMachine.executeChecked, which only the sibling execute/lowerResult of the old BendTT route uses). BendTT/BendLiveMachine in the import closure but not on the Objective run path. HOWEVER prepare has no consumer: ResearchWip-only; only executable relatives are tests/.../Check{Guarded,}SourceObjectivePlan.lean.
+Exports/twins: no @[export] in any Objective file; no Rust calls any Core4 symbol; no Rust reimplementation of Core4. Lean-side twins of the tick loop: forceWith (unproven), the measured loop in the generated source.lean (preview.ts writes, never runs), the 11 example drivers' measured. The Objective path has no receipt or witness at all.
+
+(5) SURFACE → CORE ELABORATION (objective-elaborate.ts)
+- Each global declaration = field of one record knot: fix (λ$globals λ$seed. record{Module.name: …}) (record[]); global reference = get $globals "M.name" (shared via tied address).
+- def f(x…) -> T: body → nested lams with binder hints → annotations.
+- extension(self, super) -> T: e → lam lam e; Extension<T> typed T→T→T (homogeneous).
+- spec S for T: def m(…) → specification(metadata = record{name, interface: <signatures as JSON string label>, laws: record of law closures}, extension = λself λsuper. extend super {methods}); laws retained as closures, never checked.
+- compose(a,b,c…) folds into specification(record{operator, inherited: v, wrapping: r}, mix v r); v and r copied syntactically ⇒ 2^k term growth in the number of composed specs; inherited composite not shared between metadata copy and mix copy. SURPRISING.
+- fix(s,i) → fix; extend(x,{…}) → extend; prototype/reflect/metadata/targetOf → prototype/reflect/metadata/project; x.f → get; f(a,b) → curried app; () → record[].
+- + * == && → add, multiply, equal, conjunction; != < > <= >= || - / parse but are refused at elaboration.
+- match n: case 0n / case 1n+p → ifZero; requires exactly those two branches; wildcards refused.
+- true/false → boolean; strings → label; 7n → nat. Laziness preserved (arguments and fields stay thunks).
+- literalAnnotations THROWS for any spec declaration anywhere in the package ⇒ a package declaring a spec (EvenOdd, Review, Lazy*Specification) cannot produce a typed packet; typed preview refuses it even if the entry never uses the spec. Spec method lambdas get no binder hints.
+
+(6) WHAT THE TESTS ACTUALLY TEST
+- CheckDemandData.lean: executable main runs run + complete, pattern-matches expected Data and failures (budget, duplicate field, closure leaked into data, cycle). Unit test; verdict = exit code + printed PASS.
+- CheckDemandCapacity.lean: executable; forceWith (allows 8) suspends before 81·81, resumes at 16 bits to 6561; decodeNatural enforces caps. Unit test.
+- CheckSourceObjectivePlan.lean / CheckGuardedSourceObjectivePlan.lean: drivers taking a packet path, run check, execute(With), decode, print JSON. "actualTyping": true is a literal. No expected-output comparison; no repo script invokes them.
+- TS check-parser.ts and objective-elaborate-tests.ts: assert AST/annotation shapes.
+- TS check-preview.ts: only fixture comparison, but its cohort file (with expectedStatus) is not in the repo.
+- 11 example drivers examples/objective-bend-world/reference/*.lean: generated, untyped (no check), print state with no assertions; run only from docs. STALE: EvenOdd encodes booleans as Term.label "true"; no example contains Term.boolean while the current elaborator emits boolean. They carry a "costly"-field sharing probe hardcoded into the runner.
+- Proven #guard-style facts are real theorem … := by decide in Typing; no #guards in Objective Theory.
+
+(7) FORMAL GAPS, RANKED
+1. Finite completion / Representation instance. Statement: Scoped 0 s → Evaluates s v → Observes v r → ∃ n, (rawRun n (initial s)).control = .complete (observationRuntime r); then adequate_trace_completion; then inhabit Representation. Lane state (RECORD): r11 (5301-line Adequacy, NOT in the repo) proves rawRun_terminating_resultControl and runBounded_terminating_finish_or_suspend (source terminates ⇒ machine never faults or blackholes). leaf75 (rawRun_terminating_administrative_frontier, PASS per checkpoint) closes the pointer/bound administrative macro-step under weak cost monotonicity. leaf76 checks global cost descent for shared-context reduction and specification calls. Remaining: classify cost descent for every non-administrative constructor (primitive, extend, spec, Fix, prototype projections), then well-founded composition of frontiers on (source cost, traversal work, stack length), in ObjectiveBendDemandAdequacy.lean. Medium-large: one module, ~14 constructor cases. These leaves are not in the repo or the r11 directory; "PASS" is a log/RECORD claim.
+2. forceWith/executeWith ≡ runBounded, plus deep Data soundness: prove forceWith (fun _ => true) matches runBounded; capacity policy only adds suspensions; extracted Data equals a deep source evaluation of the field terms (needs a deep Evaluates/observation relation for records). Small–medium, in DemandData + Adequacy. Makes the Plan output a theorem rather than a test.
+3. Gates: put the Objective Theory modules into a default or qualification target. Configuration, not proof work.
+4. Data constructors: Bool eliminator (ifBool) and label equality/case missing outright. Sums, lists, constructor case each need a new Term constructor + updates in OpenRecursion Step, stepRaw, Invariant Scoped, Typing, all three DemandTyping/Preservation case splits, Adequacy graph lemmas. ~6 files per constructor; mechanical but large (Preservation/Adequacy grow by hundreds of lines per constructor).
+5. Front-end adequacy: none. TypeScript is trusted; literalAnnotations is a proposal; Lean checker only validates the core term. Needs a Lean surface→core elaborator or a checked translation-validation statement. Fix first: compose duplication, spec-typing refusal, unreachable affine/linear.
+6. Effects/custody: absent from constructors; quantity discipline has no dynamic theorem; custody vacuous for closed terms.
+7. Metering: RunComputeBudgetDomain, BendComputeCapacity (accounting.steps = capacity.proofWork) and BendPreparedOutput charge the OLD BendTT path. Objective PreparedOutput.Usage (ticks, nodes, bytes, heap) has no consumer and no link to fee preparation. The tick bound in the proofs is not the number anyone charges; the Objective path is not priced at all.
+
+(8) THINGS A FUTURE AGENT WOULD BE MISLED BY
+- "Sound at every bound" is true of runBounded (the preview). The Plan path runs forceWith + materialize; nothing covers it.
+- adequate_trace_completion sounds like completeness and is not.
+- Proofs live only in ResearchWip; a green default build says nothing about them.
+- Kernel/ObjectiveBendCallContext (in BendQualification) and Compiler/ObjectiveBend{Instance,Linker,Reference…} are the older "Objective" lineage, not Core4; do not count them as Core4 qualification.
+- Example drivers and the docs' `lake env lean --run …GenericExtension.lean` run stale, untyped generated terms.
+- Rust Studio preview is wire-incompatible with the in-tree TS adapter (v1 vs v2).
+- check-preview.ts "passed" depends on a cohort file not in the repo.
+- Laws in spec metadata are callable closures, not checked laws.
+- The Representation docstring, not its type, is the only thing stopping a Supported := False inhabitant.
+- r11/leaf75/leaf76 "PASS" claims are checkpoint text + hbox logs; the r11 Adequacy file differs from the repo copy (5301 vs 2668 lines) and has not landed.
+
+FILES: Theory/ObjectiveBendDemandAdequacy.lean, Theory/ObjectiveBendDemandPreservation.lean, Theory/ObjectiveBendDemandData.lean, Kernel/ObjectiveBendPreparedOutput.lean, Host/ObjectiveBendPreview.lean, native/bend-source/objective-elaborate.ts, native/bend-source/objective-preview.ts, native/resource-client/src/workspace/studio_preview.rs, /Users/ember/workbox/objective-demand-completeness-checkpoint-20261003.txt, /Users/ember/workbox/objective-demand-proof-r11-core4-20261003/.
