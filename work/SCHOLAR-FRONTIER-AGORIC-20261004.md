@@ -927,8 +927,8 @@ Mini can have the strong version without the weaknesses:
 - `exit` is a kernel action whose admissibility for the offerer no contract can override.
 
 Payout liveness then becomes a kernel theorem for Book assets. So: no user-coded issuers, and LAWS' per-invocation
-"caller law" is the single-turn special case of a seat. And **inside one turn, assay and transfer are atomic, so single-domain trades need no escrow at all.** Escrow
-is needed only across a yield or a domain (Miller 2000's argument for escrow assumes those two steps are separated in
+"caller law" is the single-turn special case of a seat. And **inside one turn, assay and transfer are atomic, so
+single-domain trades need no escrow at all.** Escrow is needed only across a yield or a domain (Miller 2000's argument for escrow assumes those two steps are separated in
 time).
 
 **2. Bound authority as well as outcome (fills a gap in LAWS ideas 2–3 and CALLS idea 1).** Offers bound what the
@@ -950,8 +950,8 @@ decidable predicates at three points:
 - object state writes (`stateShape`);
 - proposals (`proposalShape`).
 
-Give every package method a guard in the law language; a guard refusal costs no Core4 execution. Mini can also *decide* guard implication at publish time, which Agoric cannot:
-an upgrade is compatible iff `old ∧ ¬new` is unsatisfiable.
+Give every package method a guard in the law language; a guard refusal costs no Core4 execution. Mini can also
+*decide* guard implication at publish time, which Agoric cannot: an upgrade is compatible iff `old ∧ ¬new` is unsatisfiable.
 
 **4. Add an action scope for laws and multi-cell laws (upgrades LAWS idea 1 and BREAD 3.2).** Two independent routes
 reach the same conclusion:
@@ -1018,6 +1018,7 @@ storage failures:
 - A Zoe↔contract reference cycle (about 50k instances, about 310 MB) was uncollectable because cross-vat GC among
   suspicious parties is a "purple box" (#8401).
 
+Rules:
 - Every watcher table, recovery list, inbox and await index is a cell with a payer.
 - Within one domain all references are kernel-held caps in one Merkle store, so a deterministic tracing pass collects
   cycles.
@@ -1025,7 +1026,7 @@ storage failures:
   consensus path. A law-governed termination capability is minted at creation, so no host "superpower" is ever needed
   (#8928, #9483).
 
-**10. Cross-domain: output gate, deal cell for rights, sagas for the rest (refines CALLS idea 7 and OS §2).** 
+**10. Cross-domain: output gate, deal cell for rights, sagas for the rest (refines CALLS idea 7 and OS §2).**
 - **The output gate is a runtime rule, not program discipline** (Durable Objects). Nothing leaves a domain until its
   turn is committed and final.
 - **Exclusive rights use CALLS' deal cell**, with offer safety as its decision law (item 1).
@@ -1053,8 +1054,9 @@ vWasm does:
 - **Agreement**: re-execution is deterministic. This is the only claim that trusts the evaluator and the Lean
   compiler.
 
-Lean4Lean in CI checks the kernel, not the compiler. - **Refusal explanations are an information channel** (lane A, from Odersky et al.'s threat model), so fork 2 needs
-  a redaction policy.
+Lean4Lean in CI checks the kernel, not the compiler.
+- **Refusal explanations are an information channel** (lane A, from Odersky et al.'s threat model), so fork 2
+  needs a redaction policy.
 - **Legibility is a security property** (Agoric governance). The card must show who holds each upgrade, termination
   and parameter capability, and which package counts the votes. Mini should have no `CoreEval`-style superuser.
 

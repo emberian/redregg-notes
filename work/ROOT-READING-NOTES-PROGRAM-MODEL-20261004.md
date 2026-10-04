@@ -105,3 +105,15 @@ Rule from Ember (10-04): read the referents, not only the syntheses.
   sequential execution — the basis for "parallel admission, root = sequential fold". Confirmed present.
 - Scholar conflicts to resolve in the design: footprints learned at admission (calls) vs declared (OS);
   checkpoints long-lived if code pinned + capture rule (calls) vs short-lived by policy (OS, Morningstar).
+
+## CORRECTION (after SCHOLAR-BREAD-METATHEORY, spot-checked at source)
+- Dregg2/Await.lean is a FALSE FRIEND, not "nearly Mini's activity": `structure OneShot (R S) where run : R → S`
+  (line 105) exposes `run` publicly, so one-shotness is only a convention; `commit_resumes_once` (line 280)
+  assumes `resumeWith : (Reply : Type u) → Reply`, uninhabited (no value of Empty), so the theorem can never be
+  applied. Keep Await only as an IDEA (Plotkin–Pretnar signature await/call/emit; turn as rollback handler);
+  Mini's activity is the first real executor of that idea, and its one-shot resume must be a kernel check
+  (await id spent like a nullifier), not a type convention.
+- What actually ran in Bread and is strong: the Lean executor with a refinement theorem against
+  independent per-action specs; small Lean decisions exported as refuse-when-unavailable gates (2PC
+  verdict, finality order/quorum, round advance, constraint evaluator, flow refinement); the vacuity
+  tooling (fix KeystoneLint first). Mini already has the best of the law/merge layer in better form.
