@@ -1,0 +1,204 @@
+CLAUDE ORIENTATION RECEIPT — 2026-10-03, ~20:30 UTC (16:30 EDT)
+Written by the Claude (Fable 5.1) session Ember opened in ~/dev/breadstuffs to
+orient into the stopped codex root 01a0fa81-d479-7753-a1b3-1331d1ed53de.
+This is a reading receipt and a preservation record, not a takeover claim and
+not a status claim about any build. Tags: READ = I or a scout read the source
+or file; RECORD = a swarm note says so; INFERRED = my judgement.
+
+WHY THE ROOT STOPPED (READ)
+Codex account usage wall at 19:20:49 UTC ("usage_limit_exceeded", reset
+Oct 10 06:07 EDT). The fn codex root 01a0fe41 died three seconds later with the
+same error. No codex root or codex owner can run before the reset. Every owner
+of this swarm is a dead thread. Claude lanes are the only route to Oct 13.
+
+WHAT I ACTUALLY READ
+Whole: REENTRY.txt, reentry-manifest.json, START-HERE-CLAUDE, AGENTS.md,
+RESUME-20261003, REENTRY-RECEIPT-17, ACTIVE-GOAL, CHECKPOINT-OBJECTIVE-ONLY,
+BEND-DIRECTION, SHARED-CONTRACTS, OBJECTIVE-AUTHENTICATED-QUOTE,
+examples/objective-bend-collective/{CollectiveDemonstration,Prelude(head)},
+work/bend-data-representation/{NatSource.bend,NatSource.bendtt},
+hbox:/home/hbox/workbox/root-objective-old-external-edges.json (first 6 KB),
+upstream /Users/ember/dev/bend/bend2/bendtt.lean: grammar (60–135), Book and
+Claim definitions, every theorem name, the axiom/partial/noncomputable census.
+cv prompts for the root: the last 14 human prompts (17301–19323).
+Via scouts (opus, read-only), whole: every BEND-*/OBJECTIVE-*/WHY-OBJECTIVE
+design record; docs/OBJECTIVE-BEND.md; Theory/ObjectiveBend*.lean headers and
+theorem names; the Compiler/Kernel/Host ObjectiveBend* Gen-1 files; the
+integration-obligations ledgers; CENSUS, SWARM-CANDID-CHECKIN, ROOT-MERGES,
+PERSVATI-*; mini-four-horse-sols brief; hbox lane dirs' STATUS/REPORT files;
+the live process table on hbox and persvati; claudesplosion handoffs; cv ls
+across harnesses since Oct 1; cv task list/inbox.
+Not read: the 26 compaction summaries; assistant replies other than the five
+in Ember's paste; the bodies of Theory/ObjectiveBendDemand{Adequacy,
+Preservation,Invariant}.lean (theorem names and axiom pins only); any Rust.
+
+STATE AT THE WALL (READ unless marked)
+Source: local ~/dev/minidregg, ~/workbox/mini-unified-push-20261003 and
+hbox:/home/hbox/workbox/codex-unified-integration-20261003/src all at c8fdd000
+= origin/main. hbox load 0.02, no lean/cargo/lake running. persvati idle,
+273 G free, three orphaned .codex-persvati-*.lock files.
+Uncommitted at the wall, now preserved:
+  hbox canonical: 39 paths = the Objective-only ZK/backend migration (865
+  lines deleted, 135 inserted; deletes Assurance/Bend{Direct,}UnrolledSource,
+  Compiler/BendCommitmentReduction, BendProofProjection,
+  Theory/BendExecutionTrace, Verify/Bend{ControllerCommitmentEmit,Unrolled*};
+  adds Assurance/ObjectiveBend{CommittedSource,ProofSource,ZkClaims},
+  Compiler/ObjectiveProofContext) + the Host/Main, Host/Json,
+  Kernel/NativeHostContext, NativeHostReplay, ProtectedContentGate weld
+  (14:37–15:10 EDT) + SOURCE-INBOX.jsonl (10 rows), coordination/, designs/,
+  patches/. Existed nowhere else. -> ref wall-snapshot-20261003 (bfe7e8cf),
+  made with a temporary index; HEAD and working tree untouched. UNBUILT.
+  local minidregg: the four horse-Sols' .spw audits (17 files, +879/-291).
+  -> ref wall-snapshot-20261003-spw (03819eaf), same method, HEAD untouched.
+  The other ~60 dirty local paths are Aug 11–Oct 2 leftovers, not today's.
+  redregg: 45 paths of owners' final reports -> commit 498e5a0, pushed.
+Live on hbox: the common OO world (socket jm.ESPsOH, host 1189053, "preserve
+1189048"); nine Studio/web servers on 127.0.0.1:32944–32952 against it;
+SPK r2 world (/var/lib/mini-bigstep-hbox-r2, host 2338225); r1 demo world
+(host 137378); the four-source agreement mesh (mini-f serve 3003759, broker,
+reader, session broker unit mini-agreement-backend-20261003-r1); fn's /tank/fn
+node and sbcl. NONE of these are mine to stop; r1/r2 are reference worlds.
+Live and UNCERTAIN: agreement init call 00f711, attempt f0eb3aa5 has call.bin
+and no outcome; broker.log says "use exact original-call lookup"; last lookup
+15:19 EDT returned "host returned absent". Only an exact-ingress lookup is
+lawful; never resubmit (RECORD + READ of broker.log by scout).
+Other live Claude: session 9627d694 (Fable) has cwd ~/dev/minidregg with 8
+lanes running — it is AUDITING THE fn CODEX ROOT (make -k check in a scratch
+fn clone, rsync hbox:/tank/fn/evidence). Coordinate before editing or
+committing in ~/dev/minidregg; it shares the tree, not the work.
+
+THE OWNERS' LAST STATED NEXT ACTIONS (RECORD; see scout map in this receipt's
+companion, the swarm-map section below)
+root: implement OBJECTIVE-AUTHENTICATED-QUOTE across World's Claim envelope
+  and the performance quote producer; resident runs same-init once.
+captain: publish backlog — guide r9, rotation consumer 213c7084, Discord
+  capsule 1bf6a236, Objective r7 (objective-source-r7.bundle in the push
+  checkout), resident-launch packet 3f6ece4a, protocol-global-receive 4a17d023;
+  paired source/C checks on the Main weld.
+World: separate signed query envelopes + complete CAS guards; TT-free final gate.
+Quote: the actual quote and local proposal producer.
+Consent: Core227 over the original QuoteRequest; Receipt225 Core+Rust receiving.
+Doc: r24 publication -> quote -> Claim -> Core227 -> Notebook native effects;
+  import/invoke must regenerate and compare core (root flag).
+Scenario: repair the document-root/atom-ID collision; keep the native gate;
+  packet r5 b13d71ca has no publication receipt.
+Frontier: exact original-call lookup only for 00f711.
+SPK endpoint: additive RetryEvidence/BEGIN/CLAIM v4; the 614.5 s vs 600 s
+  startup audit; browser -> CSV -> doc -> Hermes -> restore on the r2 world.
+Private: Host/PrivatePartyBootstrapAuthor.lean is MISSING (check-bootstrap-r7
+  failed on it at 15:21 EDT); then v4 validate-original against BootstrapBundle.
+Demand proof: leaf76 (shared-context + spec-call cost descent) toward finite
+  completion; r11 frozen PASS, leaf75 PASS.
+Graded: extraction cursor over the actual scheduler.
+Composition: packed constructors 16–18 (record extension/macro proof).
+Type: source-law evidence checker.
+Discord: 14-file capsule 1bf6a236 awaits captain; no lane allocated for the
+  entrance work in DISCORD-WORLD-ENTRANCE.
+
+BEND: WHAT EXISTS (READ)
+"BendTT" = upstream bend2/bendtt.lean vendored as Theory/BendTTSource.lean
+(3,903 lines; pin 947db722; two proof rewrites for Lean 4.30). A dependent
+affine calculus (Q0/Q1/Q2, All/Sig/Enu/Mat case trees, Eql/Rwt, Book of defs,
+termination by a multiset ordering on labels), Type:Type, strict call-by-value
+Eval/Walk. Proven, zero sorry/axiom: confluent, book_check (sound), sr,
+progress, empty, halts, consistent. No codata, laziness, sharing, objects,
+general fix or mutual recursion; Q2 duplicates Data only.
+Mini on BendTT: 279 Bend*.lean files, ~33.6k lines; 120 non-Objective files
+import it. BendLiveMachine (360), BendClosure* (81 files, ~10.1k, simulation
+to Eval PARTIAL per its own header), BendOblivious* (29), BendLogic* (15,
+incl. BFV/specialization/trace), BendNatural*/BendFhe*, BendActivity* (28),
+BendCommitted*/Quotient*/Direct* (zkVM), Plan/Surface/admission lowering.
+"Objective Bend" names TWO things:
+  Gen-1 = OO elaborated INTO BendTT: Compiler/ObjectiveBend{Composition,
+  Order,Elaboration,Linker,LinkerRefinement,Construction,Prototype,Reference,
+  ReferenceInstance,Instance,Persistence,Workshop} (~1,375 lines) + Kernel/
+  Host adapters (~926). Its header: "does not admit unrestricted recursion".
+  This IS the elaborate-into-the-kernel option, it exists, and its restrictions
+  are what the council rejected.
+  Gen-2 = Core4: Theory/ObjectiveBendOpenRecursion (283, untyped de Bruijn,
+  18 constructors incl. general fix, mix, specification, prototype, reflect,
+  metadata, records, nat/bool/label, primitives; weak-head call-by-name);
+  ObjectiveBendDemandMachine (201: thunk cells, blackholing, runBounded with
+  tick/heap/stack limits); ObjectiveBendTypes+Typing (983: simple types with
+  rows, quantities erased/affine/linear/unrestricted, once vs reusable,
+  custody; checker returns a certifying PartialTyping). Proof above it ~6.9k
+  lines: DemandAdequacy (2,668: sourceStep_deterministic, runBounded_*_sound,
+  adequate_trace_completion), DemandInvariant (892), DemandPreservation
+  (2,893: typed_stepRaw_preserved, check_runBounded_no_refusal), Extensions,
+  OpenRecursion laws. Every file pins #print axioms to [propext,
+  Classical.choice, Quot.sound]; zero sorry/native_decide.
+  Core4 LACKS: sums, lists, label case, effects, continuations, contextual
+  equivalence; completeness (reference evaluates => bounded run finishes) is
+  open at r11/leaf75 with no counterexample. Parser+elaborator are 37 KB of
+  unverified TypeScript (native/bend-source/objective-{parser,elaborate}.ts).
+  Consumers of Core4 today: Host/ObjectiveBendPreview, Kernel/
+  ObjectiveBendPreparedOutput, Compiler/ObjectiveBendPlanAdapter (which still
+  reaches BendTT through BendScalarPlanAdapter -> BendPlanLowering),
+  ResearchWip, 11 example drivers, 4 tests.
+  The "TT-free" zk route (Assurance/ObjectiveBendZkClaims over stepRaw, 89
+  modules) and the Objective arithmetic/BFV compiler are NOT at c8fdd000: zk
+  is in the wall snapshot ref and ~/workbox/bend-zkvm-20261003; BFV only in
+  hbox:…/codex-bend-logic-20261003. "No new TT admission" is policy in notes
+  and lane code, enforced nowhere in the landed tree (INFERRED).
+
+BEND: CLAUDE'S ASSESSMENT (INFERRED; for Ember's decision, not decided)
+The question "elaborate into the kernel vs inject Bend into Objective (a
+self-interpreter)" presupposes BendTT is the kernel. For the live system it
+cannot be: BendTT's theorems are about ITS strict total Eval. A lazy fix, a
+cyclic self, a shared non-Data closure have no image in it except through a
+fuelled interpreter Book — and then the kernel certifies only that the
+interpreter halts per fuel step, which runBounded already has in Lean, and
+says nothing about Objective's meaning. BendTT also isn't a proof language
+you'd want to do that metatheory in (Type:Type). Gen-1 shows the only direct
+elaboration is the total/acyclic/Data-capture fragment, i.e. not the language.
+Core4 is already the kernel in every sense that matters: ~1.66k lines of
+trusted definitions, a certifying checker (a checker bug can only reject),
+adequacy + preservation proven, completeness in progress. The backends
+(native lazy machine, oblivious, zk trace, circuits, FHE) consume stepRaw, and
+the zk lane has already re-targeted at it. So: NO interpreter in either
+direction. The metatheory that is "really-really worth it" is the one in
+flight plus three named gaps: (1) finish completeness (leaf76 onward);
+(2) grow Core4's data — sums/lists/label case — with preservation/adequacy
+cases for each new constructor (linear work in the existing proof files),
+rather than keeping BendTT alive as the data calculus; (3) make the
+TypeScript elaborator's trust boundary explicit: either port it to Lean with
+an adequacy theorem, or keep the Doc r24 pinned-frontend-replay as THE named
+trusted frontend (import and invoke included), which the root already flagged.
+What BendTT still earns: a reference calculus and a template for the proof
+architecture (Par/Pars/confluence/certifying check), and its generic
+upper-stack machinery (circuit/Emit/SSA, oblivious memory, PCS/quotient,
+activity custody) which must be re-targeted at stepRaw regardless. It does
+NOT earn a public cost bound: the records already say termination is not a
+resource bound. If a total fragment with circuit-friendly bounds is wanted,
+a total fragment OF CORE4 (a structural-descent or fuel criterion checked by
+the same certifying checker) is cheaper than a second kernel.
+
+COLLISIONS AND NON-COLLISIONS (READ)
+~/dev/minidregg tree: shared with live Claude 9627d694 (fn audit). hbox:
+Mini worlds + fn node share the box; no build contention now. persvati: old
+mini-datamodel hosts and 6-day nextest processes are not today's; leave them.
+claudesplosion SESSION-STATE and HANDOFF-ASTRA are stale (Oct 2); the Dreggnet
+cloud work moved INTO this root (START-CODEX) and inherits with it. Codex
+quota blocks fn and Mini equally. No collision: telme, allgame residents,
+audec, breadstuffs.
+
+PROPOSED FIRST WAVE (for Ember; nothing launched yet)
+1. Review and land the wall snapshot deliberately: build the Objective-only
+   migration + Main weld from ref wall-snapshot-20261003 in an isolated clone
+   on hbox (cp -al from the warm canonical), paired source/C checks, then
+   land or split.
+2. Agreement 00f711: one exact original-call lookup through the session broker
+   socket; record the outcome; never resubmit.
+3. The authenticated-quote join (World envelope + quote producer -> Core227
+   -> Doc -> Scenario) = first Objective native Accepted. This is the human
+   priority ("wire it up through the whole running system").
+4. Private: author Host/PrivatePartyBootstrapAuthor.lean, run v4
+   validate-original against the funded BootstrapBundle.
+5. SPK lawful g4 (RetryEvidence/BEGIN/CLAIM v4) + the startup-deadline audit.
+6. Publication backlog (Discord capsule, Scenario r5, compiler packet 74,
+   private-backend r42, objective-source-r7.bundle).
+7. Demand-proof leaf76 -> finite completion (self-contained single lane).
+8. Core4 data constructors (sums/lists/case) if Ember accepts the Bend
+   assessment above.
+All lanes: model opus, cp -al clones from warm trees, foreground waits,
+swarm-build on hbox, narrow filtered checks, verdicts from artifacts.
