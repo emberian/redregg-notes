@@ -54,3 +54,14 @@ SHARED BOX STATE: fn swarm (session 9627d694) running certify run-20261004T02172
 + emission on hbox; our hbox seats: 1 (the cut) until the fn certify closes, then ramp to ≤6.
 Orphans (E5): rpc proxy 3501219 and tailscale login 1160617 stopped; solana validator 4106046 and
 smoke9p 152051 handled in the next step (see git log for the result).
+
+WAVE-2 PULL-FORWARDS launched 2026-10-04 ~00:40 EDT (Ember: "anything from the futurework we can pull forward safely?"):
+W2.A contracts claude-contracts-20261004 (+persvati)  NEW FILES ONLY: Theory/Contracts/{Identities,Cuts,Snapshot,Futures}.lean, docs/CONTRACTS.md; refinement statements vs existing per-domain types; collapse awaits the cut
+W2.B traffic   claude-traffic-20261004               intake traffic lane; LEAKAGE card (docs/TRAFFIC-PRIVACY-PROFILE-P1.md); live authenticated enrollment; roles across hbox+persvati; v13 two-host run; FIRST NEW EFFECT into a scratch host
+W2.C threehosts claude-threehosts-20261004 (+persvati,+Mac)  prep only: reachability, persvati linger ON, binaries per host (darwin feasibility), FRESH devnet committee/pair keys with custody rule, CUTOVER-PREP.md; live mesh untouched
+W2.D bread-b   claude-bread-b-20261004 (+persvati leaf)  NEW FILES: Theory/BfvNoise (noise margin over Mini's real params; smudging as release precondition), Theory/CertF, Theory/Transferability (DV dial; ML-DSA COMMIT is public pole), Kernel/GenericSimplexReconfig (statement-first), docs/BREAD-PORTS.md
+W2.E zktruth   claude-zktruth-20261004               NEW Assurance files on copies: PACKED-REFINEMENT-AUDIT; inhabit PackedRefinement for one real network or produce the counterexample; step-count leak refuter + tariff statement; one-row trace leak; docs/ZK-TRUTH.md
+W2.F spk       claude-spk-20261004                   intake RetryEvidence/BEGIN/CLAIM v4 from the Mac lane; lawful g4 START on a SCRATCH r2 copy (broker as hbox, not root); Playwright EtherCalc → CSV → shared doc; docs/SPK-LIFECYCLE.md; live r2 untouched
+W2.G mpc       claude-mpc-20261004                   intake private-backend lane; non-public inputs + real entropy on the width-8 adder with a transcript-secrecy check; 429 King stocks rerun; composite crash-store + kill-9 test; docs/MPC-PROFILE-P2.md
+NOT pulled forward (conflicts): W1.1 native-A (cut's files), contract-type collapse (edits per-domain types incl. the cut's), effects-as-yield + dynamic get (W1.3's files), version-twin deletion + receiver collapse (Host/Main + Kernel dispatch during the cut), Hermes on main (W1.12's composed-scenario residents phase), Studio for members (W1.12's edge/mini dir), Discord (Ember's app), three-host MOVE (needs W1.7's driver; W2.C preps).
+Lane count: 22 + root. hbox seats: 1 until the fn window closes.
