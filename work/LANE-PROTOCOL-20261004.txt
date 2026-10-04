@@ -28,8 +28,16 @@ YOUR CLONE (hbox)
   git config user.name "ember arlynx"; git config user.email "cmrx64@gmail.com"
   git config commit.gpgsign false
   export CARGO_TARGET_DIR=$L/rust-target
+  UNSHARE RIGHT AFTER cp -al (hazard found by the events lane: the clone shared the warm
+  tree's .git/FETCH_HEAD, .git/logs/HEAD and 2.5 GB of .lake/build trace/hash/ilean/c
+  files; its first fetch/checkout wrote into the warm tree's git metadata):
+    cd $L/src && for f in .git/HEAD .git/FETCH_HEAD .git/ORIG_HEAD .git/index; do
+      [ -f $f ] && cp -p $f $f.tmp && mv -f $f.tmp $f; done
+    cp -a --remove-destination .git/logs .git/logs.tmp && rm -rf .git/logs && mv .git/logs.tmp .git/logs
+    find .lake/build -type f -links +1 -exec sh -c 'cp -p "$1" "$1.tmp" && mv -f "$1.tmp" "$1"' _ {} \;
+    find . -path ./.lake -prune -o -type f -links +1 -print | head   # must print nothing you will edit
   (cp -al shares inodes: never edit a file in place with sed -i or an editor that rewrites
-  in place without first `cp -p f f.tmp && mv f.tmp f`; git itself is safe.)
+  in place without first `cp -p f f.tmp && mv f.tmp f`.)
   If scripts/build-native-host.sh refuses writable package symlinks: cp -a the warm
   tree's .lake/packages into your clone.
 
