@@ -55,7 +55,7 @@ Mini's model (which fork, which decision it pushes, what we would build), and it
   (JSON: data.search[] with url,title,snippet). Be frugal: ~40 queries max.
 - Scry: the scry MCP tools if your harness exposes them (mcp__scry__*: sql, find, fetch; key in
   ~/.scry-key). Use for HN/Reddit/forums discussion and for finding papers.
-- Papers: download PDFs to ~/paperbin/world-program-model/<firstauthor>-<short-title>-<year>.pdf and
+- Papers: cryptography/ePrint papers come from the LOCAL MIRROR ~/dev/gh/forks/IACR-eprint-mirror/<year>/<number>.pdf (never fetch eprint.iacr.org). Others: download PDFs to ~/paperbin/world-program-model/<firstauthor>-<short-title>-<year>.pdf and
   extract text beside it with `pdftotext -layout X.pdf X.txt`. arXiv: https://arxiv.org/pdf/<id>;
   ePrint: https://eprint.iacr.org/<year>/<n>.pdf. $ANNAS_SECRET_KEY exists for papers behind paywalls;
   use it only if the paper is clearly essential. Read the .txt with your file tools.
