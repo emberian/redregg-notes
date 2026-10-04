@@ -1,0 +1,198 @@
+CURRENT OBJECTIVE-ONLY CUTOVER — 2026-10-03 17:08 UTC
+
+Explicit human correction: Objective Bend is the sole language. The former
+BendTT controller proof described later in this file is HISTORICAL EVIDENCE,
+not a parallel supported language or proof of Objective execution.
+
+New actual qualified route: Assurance/ObjectiveBendZkClaims.lean.
+- ObjectiveBendProofSource.PackedRefinement maps accepted concrete Op edges
+  to zero or one ACTUAL ObjectiveBendDemandMachine.stepRaw transitions.
+  accepted_trace derives rawRun with count <= physical ticks.
+- completed_observation and completed_value use frozen Core4/r7 independent
+  source adequacy. Higher-order/lazy record/specification/prototype results
+  retain actual final MeaningsScoped and HeapRealizes with source valueMeaning.
+- ObjectiveBendCommittedSource.arithmetic_observes_source and
+  arithmetic_returns_source_value start from ARBITRARY satisfying field rows,
+  independently pinned source inputs and checked shared graph embeddings.
+  They derive actual unrolled physical execution and Objective source meaning
+  through the concrete packed/controller and result-readback laws.
+- ObjectiveProofContext is now a TT-free canonical context/hash/collision
+  boundary. Real frame/hash gates, prepare identity/alias proof, arbitrary-row
+  arithmetic consumer, unroll and PCS are retained. No old invocation import.
+
+Actual qualified checks: context/frame/shared network/prepare/committed run
+cohort PASS; new source/arithmetic receiver and claims root PASS16:58:38Z;
+higher-order extension PASS17:04:35Z. 89 local modules in new root's source
+import closure, zero BendTT/BendLiveMachine/BendClosure/BendInvocation/
+BendWorld/BendProofProjection/BendCommitmentReduction modules.
+No actual native Objective controller proof is claimed: composition must
+supply its concrete public ROM/packed microstep controller refinement.
+
+Publication to captain canonical inbox:
+r34 objective-only-zk-source-commitment-r34.tar.gz
+ SHA39a29301130d34ef2e016ff4c7eee01486e41b059f8bfeddb515cb4ab237394e
+ Includes11 source/docs/config files and explicit retirePaths for own old
+ semantic receivers, Projection/Reduction, four source-controller fixture
+ emitters and two native source-controller test drivers. Captain owns applying
+ the removal to active source; Git/private evidence is preserved.
+r35 objective-lazy-value-proof-receiving-r35.tar.gz
+ SHAa810958e0f9bd082230af067e3ff8d3cfa780c4bcb858963b449d30a5f4865b5
+ Two additive actual source receiving proof updates.
+Current public README is Objective-only and has current Cargo.lock hash.
+OBJECTIVE-ONLY-MIGRATION.txt records exact retirement and receiving contract.
+
+Qualified own Persvati overlay is objective-overlay/ (not old overlay/).
+Frozen Objective r7 source and exact paired oleans: own lane objective-r7/;
+source packet SHA1f3ce7404be2196ef4fd8defba1ce74dbba5266202b7d1e74eccd72056382316.
+The base old overlay is retained only as a warm generic dependency source;
+new active claims do not import its old-language modules. No jobs remain active.
+
+Concrete next receiving, not metadata promises:
+Composition owns immutable source ROM + mutable thunk/origin/cache + env/record
+arenas + update stack and physical microsteps. Must inhabit acceptedStep,
+initial representation and actual packed readback laws; intermediate physical
+work may stutter while retaining semantic prestate. Capacity/word refusal must
+not be recast as successful completion or language divergence.
+World owns exact current admitted source/input and canonical output/effect/
+charge/disclosure producer. Its latest message says Accepted Result/input
+producer does not yet exist; do not relabel the old one.
+Demand owner acknowledges r7 adequacy receiving; converse work is independent.
+Generic compiler owner owns Objective arithmetic specialization and actual Op
+producer. No new rival evaluator was authored by this lane.
+All cryptographic soundness/full-transcript hiding/FS/QROM limits below persist.
+
+---------------- HISTORICAL PRE-CUTOVER RECORD ----------------
+
+Bend zkVM/proof owner continuation — 2026-10-03 15:36 UTC
+Owner: bend_semantics_audit. Parent/root and runtime/captain received callbacks.
+
+ACHIEVED SINCE OUTAGE RESUMPTION
+
+Actual source-admitted full controller + private salt + SAME raw final-state
+commitment now ONE native proof, not separate proofs or an unconstrained hash.
+Latest explicit V5 profile passed in 67.837 seconds, with changed initial input,
+combined success, and digest rejected. Full graph: 240840 Boolean gates, 241147
+arithmetic columns, 301 public pins. The source example is Lab yes, 2 ticks,
+sourceSteps 0; salt is private 32-byte OS randomness. This is an inhabited
+complete controller consumer, not all-program or full-ZK completion.
+
+V5 binds exact independently supplied descriptor bytes through domain-separated
+cSHAKE256 plus u64 length, absorbing all digest bytes without lossy field folds.
+Actual same-semantic whitespace mutation first verifies with original seed,
+then refuses with independently recomputed changed-artifact seed. V4 also
+refuses the V5 proof. Binding assumes computational collision resistance, NOT
+impossible global injectivity. Native CLI V5 and historical for_capacity V4
+are deliberately distinct; preserved raw one-row disclosure test remains.
+
+Qualified general new proofs:
+- BendCommittedPreparation.prepare_exact / prepare_payload_aliases ties the
+  checked constructor to its actual graph and selected execution payload wires.
+- BendCommittedRunSound.direct_forces_both_success receives an ARBITRARY
+  satisfying field row, producing BOTH embedded graph relations + both success
+  bits. No honest-witness premise.
+- BendCommittedUnroll.accepted_run receives an ARBITRARY whole field row with
+  independently pinned input values and structural bounds, deriving EVERY
+  unrolled controller tick plus commitment graph/success.
+- BendDirectUnrolledSource.acceptedRun_startedDirect_source derives startup
+  representation and direct-entry source coverage from actual Machine.start
+  and successful source-code/closure allocation. Raw controller conformance
+  remains explicit; no global reachable source coverage claim.
+- BendQuotientMasking: actual -sum(ci/c_last * freeMask) cancellation and fixed
+  opening coupling. BendQuotientSelectors: derives normalization from actual
+  verifier finite-product formula. BendMaskingDescent: true prime-field
+  coefficient descent, exact degree preservation, bounded mask translation.
+- Native quotient_masking.rs calls actual PCS masking/DFT/bit-reversed output
+  and actual verifier recomposition, for 2 and 4 chunks of height 32; all LDE
+  points recompose correctly while chunks are nonzero. PASS 0.017 seconds.
+
+WHAT THESE RESULTS STILL DO NOT ESTABLISH
+
+No world proof admission has replaced reexecution. Diagnostic padded raw-state
+payload/sample Context is not the authorized native input/Result/effects/charge
+codec or disclosure token. World was asked twice for that exact producer; no
+new response received in this resumed window as of this handoff.
+
+Universal source coverage, raw controller/codec conformance, and universal
+byte-level Keccak refinement remain open. New lazy Objective language is a
+separate edition; current embedded upstream CBV proofs do not transfer by name.
+
+Native PCS verification -> formal arithmetic acceptance is unproved.
+Full adaptive quotient/FRI/Merkle transcript hiding, concrete native finite-field
+correspondence, Fiat-Shamir/QROM soundness, and instantiated composition/security
+bounds remain unproved. Fixed-point coupling, sample rank, degree conditioning,
+capacity checks and passing proofs do not establish those. No PQ/128-bit claim.
+Selvage's empty global BindingCommitment premise and isolated 2^-55 arithmetic
+are not imported as a solution. Retained one-row raw privacy refutation remains
+valid; OS randomness alone never fixed it.
+
+PUBLICATION / REPRODUCIBILITY
+
+All source is in captain's canonical SOURCE-INBOX (no Git by this owner):
+r31 bend-source-startup-quotient-descent-r31.tar.gz
+ SHA29637611a25041a426f7ec0681fde9a215b311a4ed2d09554d2d6496da480ec9
+r32 bend-full-controller-commitment-proof-r32.tar.gz
+ SHA7e473438fe51421348bb0cc01ef906dfb54b4ac13644820531deadb57e520fa8
+r33 bend-committed-unroll-artifact-v5-r33.tar.gz
+ SHAfec5740a15877402de6755d1e43fb3863bd8d28ffb8591bf4f34e90486958ea6
+Own archives: /Users/ember/workbox/bend-zkvm-20261003/publication-20261003
+hbox mirror: /home/hbox/workbox/codex-bend-trace-20261003/publication-20261003
+Canonical inbox: unified-integration-20261003/coordination/SOURCE-INBOX.jsonl
+Captain was asked to fix README's old lock SHA without undoing Host→Verify moves.
+Current Cargo.lock SHA d79fd70dd24c13098c191dccb5b3d61f1e0c339c1d485f271e0fa5d601edd364.
+Only direct root edges p3-matrix(dev), tiny-keccak(cshake) were added; no package
+versions or P3 pin changed. P3 stays82cfad73. Provisioned exact Bread slice is
+still an external prerequisite; dependencies.lock.json continues to pin it.
+
+Public source guides: native/bend-ir2-proof/QUALIFICATION-R32.txt and R33.txt.
+Neither includes private values or claims universal cryptographic soundness.
+The original README may remain stale until captain's narrow text correction.
+
+REMOTE OWNED STATE (RETAIN, DO NOT DELETE)
+
+Persvati Lean: /home/ember/workbox/persvati-bend-feedback-20261003
+ src/ has current sources; overlay/ has latest matching qualified own oleans.
+ direct-source-overlay/ additionally has exact r43 startup/source dependencies.
+ initialcoverage-r43/ is matched peer source/olean tar extraction.
+ job.log records exact Lean first failures/repairs/PASS; latest 15:32:27Z.
+ Leaf5 authority retained, 4GiB/2threads/180s, atomic shared guardian.
+
+Persvati Rust: /home/ember/workbox/persvati-ir2-20261003
+ native/bend-ir2-proof current V5 source; target warm; exact Bread dependency
+ slice via native/bend-proof-deps/bread. Rust1 authority retained,8GiB/jobs2,
+ RAYON2/offline/locked/180s. job.log latest V5 full joined proof PASS15:28:35Z.
+ qualified-v4-r32/ retains old V4 executable and joined proof privately.
+ Actual current binary is target/release/bend-ir2-proof (V5).
+
+Private generated fixture:
+ Lean lane fixtures/controller-commitment-20261003; contains private salt-derived
+ trace. Its salt file is private-controller-salt.bin mode0600. Do not publish
+ fixture, salt or proof. Current proof is Rust lane proof-results/
+ controller-commitment-20261003/controller-commitment.bin (V5).
+ Original raw disclosure fixtures/proofs and other historical witnesses retained.
+
+Job scripts (all TERMINAL; no build running at 15:35 probe):
+ Lean persvati-controller-commitment-{body,launch}.sh (fixture producer).
+ Lean persvati-committed-{sound,unroll,preparation}-*.sh (narrow proofs).
+ Rust persvati-controller-commitment-proof-{body,launch}.sh (one heavy test).
+ Rust persvati-artifact-binding-{body,launch}.sh (one small native test).
+ Rust persvati-quotient-native-{body,launch}.sh (actual PCS regression).
+ For reruns, inspect service/process state first; don't duplicate or rerun passed
+ suite. Changed protocol justified latest full fixture rerun; nothing else does.
+
+NEXT SUBSTANTIAL JOINS
+
+1. Receive World's actual Accepted/native observations -> canonical Result
+   producer and authorization token. Replace raw diagnostic payload wiring
+   with constrained real codec bytes; bind invocation/profile/generation/epoch/
+   authority/capacity and only authorized public projection. No caller masks.
+2. Receive universal/expanded source-controller conformance producers from
+   composition, compose with new arbitrary-field-row committed run theorem.
+3. Full hiding proof must compose bounded base-field interpolation, dependent
+   quotient masks, actual FRI randomizer/batching, adaptive challenge sampling
+   and hiding MMCS; do not infer this from the new fixed-observation lemmas.
+4. Instantiate actual native field/DFT/code correspondence and PCS soundness to
+   formal AIR. Artifact digest binding is helpful but not that proof.
+
+Known performance issue: private salt adds a full constrained sponge block;
+240k-gate diagnostic remains large. Public prefix optimization is already used;
+no private block or commitment relation was skipped for timing.

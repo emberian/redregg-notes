@@ -1,6 +1,100 @@
 Objective Bend collective/domain construction — 2026-10-03
 Owner: /root/bigdregg_product_architecture
 
+SERVICE COMMONS CONSTRUCTION — later direct root/product-lieutenant assignment
+Actual new authored modules ResidentServiceCommons, ServiceCommonsFaces and
+ServiceCommonsDemonstration pass sealed source+safe emission; all14 source
+modules pass latest evidence/public-driver-check8b.log. These are source-owned
+quote/reserve/request/recovery/recipient-acceptance programs, not a new kernel.
+Request binds exact method/artifact/program/export/schemas/input/context,
+resident home/room, audience/key epoch, acceptance method/reviewer, dispatch
+deadline, units/budget/escrow. Sponsorship authorizes bounded spending under its
+policy root; it does not attest provider claims or factual answer truth.
+
+Reserve proposes escrow+capacity+held-state jointly. Start retains actual
+Hermes request CELL+SEQUENCE+assignedResident+original native operation and full
+request binding BEFORE provider call. Uncertainty retains the same operation;
+no redispatch or timeout refund. resume_after_status is the real finite-Bool
+source continuation entry: false requests same-operation observation; true
+retains independently admitted matching completion, with no monetary effect.
+Separate recipient acceptance matches exact output/criterion/reviewer and
+proposes payout, current capacity release and recipient return commitment.
+General source laws prohibit uncertain redispatch/refund, double payout and
+denied-sponsor reservation. Named source scenario computes escrow6/cap5→3,
+start, late-start refusal, completion-only retention and reviewed payout6.
+
+ServiceCommonsFaces uses exact shared WorldSurface source to expose separate
+quote/providerclaim/sponsordecision/completion/recipientreview rows plus home,
+request and Activity mounts. Same run link survives uncertain/delivered state;
+actions still require independently prepared native intents and current grants.
+
+Actual owner joins: takeover_service physical provider/custody/public signed
+room request rows; graded_execution_architecture Activity pending/outcome and
+ResponseReady (heap row + both Bool continuations before call); world Plan
+source/current authority; native_performance_construction canonical book;
+docuverse owner shared Studio faces. Exact handler/schema sent to all. Current
+Activity pending constructor is WIP; no native receipt or private-result
+qualification inferred from these source checks. Product lieutenant routes
+callbacks, domain owner retains responsibility through native use.
+
+Immediate SOURCE-INBOX packets r6/r7/r8/r9 registered before checks. Latest
+r9 SHA3143c50a8ebf09ddee021dc9f12396d638f1680e2c11ea1fb7c46ac254686886
+repairs no-argument definition syntax in demonstration; all14 then source PASS.
+Service3 exact core packet own lane service3-check-packet.tar SHA
+744f699cf920bcf9f7c9c2f2eb6ef7db82ad54f5c59065bbd6d4240aa1553876.
+Source/main commits remain captain's; source publication must not wait on proof.
+
+PLACEMENT: original pending collective5 frozen packet sent redregg_evidence for
+Persvati4Gi/2threads warm leaf nomination by product lieutenant. Packet SHA
+3efdd3643801c946831926ad692cf4e4c75a8b0cd76b775d7c753d45a2a77a05,
+exact collective5-check-manifest.json included in review copies. No build
+active here. Await explicit placement acceptance before removing hbox duplicate;
+service3 is a later separate packet, not silently added to collective5.
+
+RESUMED TRANCHE — same day, current native money interface inspected
+ResourceMoneyOperationDomain now has actual authored prepareFrom and
+sampleFunding over one loaded original book and validated fee-first prefix.
+No extra per-account physical cells are introduced. Native compilation and
+shared invocation remain owned by native_performance_construction/world/captain.
+
+SharedBookSettlement and SharedSettlementDemonstration now pass the sealed
+source checker. Repeated role references to an account/asset must agree on the
+one sampled balance; unique table deduplication supports native sampleFunding;
+worst-case order reservation budgets aggregate by funding coordinate. Each
+reservation ID is unique and each private result distinguishes reservedBudget
+and unspentBudget from the full account balance. The actual source example
+accepts two orders sharing funds35 with budgets20+15 and payments12+9, but
+refuses copied funds20 and inconsistent balances35/36. Native table must be
+authenticated BEFORE execution, then every role projection bound to it.
+
+Immediate source-first r4/r5 packets were atomically registered SOURCE-INBOX:
+r4 SHA721967a09fc397f76913817b5c7720fdfadf965a5afe707f1db60e67a57f646f
+r5 SHAe9222131d7d76ad0ee21a0933e7a29fec9157245f8c222916f327b3669aa8429
+Final public portable driver now checks all11 modules PASS. Five original Books
+remain checked. Pending exact Book batch is now5: canonical2, actual-source
+demonstration, shared consumer and shared demonstration, frozen in
+evidence/monetary-source-results.json for check-book-core.sh. Captain must assign
+aux lease; no dependency rebuild. No native receipt inferred.
+
+Explicit producer trigger: world language/native money owners resume this owner
+when typed source result -> canonical operations/returns Plan and current debit
+authority/shared invocation are available. Domain owner then closes actual
+single-seller, shared-account and distinct DrEX native consumers/refusers with
+room settled-state + book + returns atomicity. No more parallel mechanisms are
+needed before that join. Numeric atom-scale refinement remains compiler-owned.
+
+PUBLICATION HANDOFF
+The consolidated SOURCE-ONLY r3 record was atomically appended to the captain's
+SOURCE-INBOX.jsonl under explicit captain authorization relayed by the room.
+Archive: hbox own lane /collective-source-r3.tar, SHA256
+8d8ea1983f0b433b7003b37767e7687bce194493962b2c5a7c4490c951a43279.
+Exact source-inbox-record.json records 11 final Mini files, per-file hashes,
+qualification and dependencies. Final authored source is world/Workshop/*.
+It supersedes r1/r2, shares the existing Prelude/CatalogReview/core checker,
+and includes no private research/runtime/cache/generated artifacts. Captain
+owns immediate common reconciliation/commit/push; commit SHA not yet returned.
+Remaining qualification is explicitly not a source-publication gate.
+
 Authoritative owned lane:
   hbox:/home/hbox/workbox/codex-collective-domain-20261003
 This directory is a reviewable copy of source, not a second evolving lane.
@@ -19,6 +113,14 @@ uniform-settlement-source-results.json pin their exact closures. Their Book
 checks remain queued, not claimed. No new native receipt has been produced by
 this domain lane. SingleSellerTransfers is a superseded source-checked candidate:
 the deeper actual receiver refuses all scalar account targets, including move.
+
+CollectiveDemonstration also source-checks the actual Book.settle result, with
+native roots/subjects/audiences/key epoch left as variables. Its named law proves
+the numeric receiving example below by source evaluation, not a host twin.
+The latest portable public driver source-checks all nine modules successfully.
+Pending exact core batch is check-book-core.sh over monetary-source-results.json
+(canonical single/uniform consumers plus demonstration); wait for captain's aux
+chain assignment, use the atomic lease, no dependency rebuild.
 
 IMPLEMENTED SOURCE
 CollectiveAdoption reuses the existing Workshop CatalogReview Candidate,
@@ -116,3 +218,44 @@ Compaction status: architecture source/cv evidence is in
 designs/BIGDREGG-PRODUCT-ARCHITECTURE-20261003.txt. This file records the later
 construction tranche and its still-open receiving seams. No Git, deployment,
 paid calls, shared registration or shared-source modifications by this lane.
+The sole shared metadata mutation was the explicitly authorized append-only
+source intake record described above; production registration remains captain's.
+
+2026-10-03 continued construction (bigdregg_product_architecture)
+The current receiving matrix is RECEIVING-HANDOFF-r13.txt. It supersedes
+earlier scalar-money/per-account-root descriptions: actual money uses ONE
+canonical resourceBook, authenticated post-funding sample rows, compact ordinal
+source IDs mapped to canonical native bytes, full current account consents,
+and one same-snapshot prepared batch. No raw account scalar balance writes.
+
+Actual canonical/DrEX/shared five Books PASS on Persvati11:47:49Z; exact packet
+3efdd364. New source-first generic Money Plan/typed adapter + real computed
+shared-settlement and separate DrEX source wrappers are registered in captain
+intake: consolidated r12 3cf6ab8451d517790ac37d0c7163be09cfb294ae84b3ee90de0bbe0714ac3476;
+additive r13 862baed89f3d54fc9c430d0ffacce4b290fe308d1f3e39d300b0ce348da718c3.
+No Git performed here, main publication remains captain-owned.
+
+The generic adapter preserves exact actual source trace/ABI, native batch/order,
+target-derived unique carrier placement, scalar phases, current logical-to-
+physical read-root conversion, and independent source-produced return slots.
+It is authored but NOT compiled/registered/native-received yet. Current blocker:
+qualified merged moneyConsent ResourceTransaction + normalized WorldPlan + r5
+scalar cohort. World owns native input binding/CLOSED codec/atomic invocation,
+money owner owns native table/financial semantics, domain owner retains actual-use
+and refuter construction. Product row remains OPEN.
+
+New Money source ABI/shared wrapper/demo/DrEX wrapper actual Book.check PASS
+(defs60/69/199/213/258). Service/base/views/demo all exhaustive actual Def.check
+PASS (169/192/183), same immutable libs/index/noopaque. DrEX demonstration's
+full computed equality at definition262 exceeds80s; preceding0..261 pass.
+Root representation-efficiency owner has exact workload; no source9 totalPASS.
+All bounded Persvati leaf6 jobs terminal/released12:23:30Z. No source/private
+market/recipient acceptance/native settlement claim inferred from these checks.
+
+World+money owners now explicitly accept sustained receiving through actual use.
+New concrete remaining join: world-owned canonical return Content-carrier
+normalizer, with final exact reinsertion/original signed-command authority.
+Current adapter must not weaken returnsExact or silently ignore Content.
+Representation-efficiency owner owns exact DrEX open-metadata normalization
+cache/refinement; no source-law weakening or global domain size cap.
+Precise callbacks in RECEIVING-HANDOFF-r13.txt. No live jobs; owner callable.

@@ -1,0 +1,60 @@
+{
+  "owner": "bend_representation_efficiency",
+  "base": "Qualified r3 supersedes r2: binding injectivity expression repair; all current gates and execution/refusal/restore rechecked PASS",
+  "archivePath": "/tank/dregg-build/codex-bend-efficiency-20261003/bend-representation-efficiency-r3.tar.gz",
+  "archiveSha256": "3d8eda728002807bab089d1929c0b5bc8e71785c3726bef0917ec8b53cdf2660",
+  "files": [
+    {
+      "finalPath": "Compiler/BendIndexedExecutionContext.lean",
+      "archiveMember": "Compiler/BendIndexedExecutionContext.lean",
+      "sha256": "da13eaaf7acf826012a918b0c47c14fba72acf68f998d32058447e2573368144",
+      "qualificationStatus": "Scoped Lean standard-three general axiom gates PASS; actual admitted typed clear-machine same-source-value/sourceSteps, edition/generation refusal and exact restore PASS. Native profile activation remains receiving work."
+    },
+    {
+      "finalPath": "Compiler/BendIndexedActivityProgram.lean",
+      "archiveMember": "Compiler/BendIndexedActivityProgram.lean",
+      "sha256": "3622060b41fc094887c64edea88246e77fe68556d88794f582a193c9a05dd31c",
+      "qualificationStatus": "Scoped Lean standard-three general axiom gates PASS; actual admitted typed clear-machine same-source-value/sourceSteps, edition/generation refusal and exact restore PASS. Native profile activation remains receiving work."
+    },
+    {
+      "finalPath": "tests/bend-representation-efficiency/BendIndexedActivityProbe.lean",
+      "archiveMember": "tests/bend-representation-efficiency/BendIndexedActivityProbe.lean",
+      "sha256": "fbdbfadead5e5ff8e3e1848335874435ac0a9f590f2f91b947164508ae0fe835",
+      "qualificationStatus": "Scoped Lean standard-three general axiom gates PASS; actual admitted typed clear-machine same-source-value/sourceSteps, edition/generation refusal and exact restore PASS. Native profile activation remains receiving work."
+    },
+    {
+      "finalPath": "tests/bend-representation-efficiency/BendClosureCompileIndexedBenchmark.lean",
+      "archiveMember": "tests/bend-representation-efficiency/BendClosureCompileIndexedBenchmark.lean",
+      "sha256": "f313d16c69555eee39f67bbe9932ef67e5f3d0d7698ab74db93849733b597653",
+      "qualificationStatus": "Scoped Lean standard-three general axiom gates PASS; actual admitted typed clear-machine same-source-value/sourceSteps, edition/generation refusal and exact restore PASS. Native profile activation remains receiving work."
+    },
+    {
+      "finalPath": "docs/BEND-REPRESENTATION-EFFICIENCY.md",
+      "archiveMember": "docs/BEND-REPRESENTATION-EFFICIENCY.md",
+      "sha256": "857508ea3049c5f77a91962bf2f7437b6070c4ff50891a0d7c479c96d379cdfb",
+      "qualificationStatus": "Scoped Lean standard-three general axiom gates PASS; actual admitted typed clear-machine same-source-value/sourceSteps, edition/generation refusal and exact restore PASS. Native profile activation remains receiving work."
+    }
+  ],
+  "deps": [
+    "Qualified r1 BendClosureCompileIndexed",
+    "Original qualified BendClosureContinuationCodec",
+    "Unchanged baseline BendActivityProgram source d224fa9c32cbcb39bf6eea0563f0a6ba8600584be7315087955097604e6ea770 first-qualified in this lane",
+    "World qualified CoreAdmission bcf2a10a9841767b4cba1db89ffef8fd9eeb92b2b6ac053494cfe42e8281c9b8"
+  ],
+  "overlaps": [
+    "Two additive modules and test; docs/compiler benchmark same owner only; no baseline source/codec/Machine/native receiver changes"
+  ],
+  "sourceOnly": true,
+  "qualificationLogs": [
+    "/tank/dregg-build/codex-bend-efficiency-20261003/check-context-02.log",
+    "/tank/dregg-build/codex-bend-efficiency-20261003/check-activity-06.log",
+    "/tank/dregg-build/codex-bend-efficiency-20261003/run-captured-01.log"
+  ],
+  "notes": [
+    "R2 was prematurely marked qualified before newly added binding_injective lemma diagnostic was read; HOLD sent captain. R3 explicitly fixes expression elaboration and actual source+execution checks now PASS. Use r1+r3, do not treat r2 Activity source as qualified.",
+    "Explicit signed Source(program,compilerEdition), injective canonical binding, unsupported edition refusal, exact expected context binds edition+native source+tables+limits.",
+    "Old checkpoints retained for explicit old receiver; new context refuses them; no pointer relocation.",
+    "Canonical source charge unchanged in actual typed clear-machine comparison; no public fee changed to code-row count.",
+    "Composition actual optimized source\u2192same ofCompiled\u2192fullcontroller PASS, reported24.1%AND reduction under same public source/profile; native activation separate."
+  ]
+}

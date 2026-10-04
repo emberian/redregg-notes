@@ -1,0 +1,63 @@
+{
+  "owner": "bend_representation_efficiency",
+  "base": "composition frozen BendLiveMachine f7b994796365f09eb24b860997369aa33f6e578140ed051127b5c1ac35600c88; additive exact indexed compiler",
+  "archivePath": "/tank/dregg-build/codex-bend-efficiency-20261003/bend-representation-efficiency-r1.tar.gz",
+  "archiveSha256": "37c1aaf507a6818701040e8764ae5de2773ba7232049a106b80e29c115d86fa8",
+  "files": [
+    {
+      "finalPath": "Compiler/BendClosureCompileIndexed.lean",
+      "archiveMember": "Compiler/BendClosureCompileIndexed.lean",
+      "sha256": "b3cac4b743cd33e55bcbe5343a015c662c60264f8694b20de5d390e291c5cafd",
+      "qualificationStatus": "Scoped Lean standard-three axiom gates and actual --run execution/translation checks PASS; native Host and full optimized controller receiving remain separate"
+    },
+    {
+      "finalPath": "Theory/BendBookIndex.lean",
+      "archiveMember": "Theory/BendBookIndex.lean",
+      "sha256": "602e0c8420a55bbf419ef3ff010d2c2924a07d9a935d94c7e5d6d8b7c75fc6b8",
+      "qualificationStatus": "Scoped Lean standard-three axiom gates and actual --run execution/translation checks PASS; native Host and full optimized controller receiving remain separate"
+    },
+    {
+      "finalPath": "Theory/BendLiveMachine.lean",
+      "archiveMember": "Theory/BendLiveMachine.lean",
+      "sha256": "f5233742e47a5d7d8676ee1887031b8f550669a940666a8e61b92a66eb7fd278",
+      "qualificationStatus": "Scoped Lean standard-three axiom gates and actual --run execution/translation checks PASS; native Host and full optimized controller receiving remain separate",
+      "preimageSha256": "f7b994796365f09eb24b860997369aa33f6e578140ed051127b5c1ac35600c88"
+    },
+    {
+      "finalPath": "docs/BEND-REPRESENTATION-EFFICIENCY.md",
+      "archiveMember": "docs/BEND-REPRESENTATION-EFFICIENCY.md",
+      "sha256": "f9f2b959c3ed1899404210cc86cf59a828fc2d41673a146e6e83d27036285cf7",
+      "qualificationStatus": "Scoped Lean standard-three axiom gates and actual --run execution/translation checks PASS; native Host and full optimized controller receiving remain separate"
+    },
+    {
+      "finalPath": "tests/bend-representation-efficiency/BendBookIndexBenchmark.lean",
+      "archiveMember": "tests/bend-representation-efficiency/BendBookIndexBenchmark.lean",
+      "sha256": "ebbf1b7bca137d762ee8de3c5ecb810cb05b80b8eedb5305bc2b3683376d1e1b",
+      "qualificationStatus": "Scoped Lean standard-three axiom gates and actual --run execution/translation checks PASS; native Host and full optimized controller receiving remain separate"
+    },
+    {
+      "finalPath": "tests/bend-representation-efficiency/BendClosureCompileIndexedBenchmark.lean",
+      "archiveMember": "tests/bend-representation-efficiency/BendClosureCompileIndexedBenchmark.lean",
+      "sha256": "d5998ede94d4a74873c2354dc1c3f7afff71186bae9ddb562bc15210fecf9925",
+      "qualificationStatus": "Scoped Lean standard-three axiom gates and actual --run execution/translation checks PASS; native Host and full optimized controller receiving remain separate"
+    }
+  ],
+  "deps": [
+    "Pinned Theory.BendTTSource",
+    "Existing Compiler.BendClosureCompile validators and Compiled interface"
+  ],
+  "overlaps": [
+    "One approved BendLiveMachine refactor against exact preimage; all remaining modules additive"
+  ],
+  "sourceOnly": true,
+  "qualificationLogs": [
+    "/tank/dregg-build/codex-bend-efficiency-20261003/check-index-04.log",
+    "/tank/dregg-build/codex-bend-efficiency-20261003/run-index-02.log",
+    "/tank/dregg-build/codex-bend-efficiency-20261003/check-compile-03.log"
+  ],
+  "notes": [
+    "Full dependent Execution equality proved for all Books/ticks/steps/terms.",
+    "Lowered compiler edition bendtt-indexed-code-v1; source identities unchanged, actual arrays/network digests differ.",
+    "Actual91-def captured Book code rows5317 to1221, actual checker and exact source validation PASS."
+  ]
+}

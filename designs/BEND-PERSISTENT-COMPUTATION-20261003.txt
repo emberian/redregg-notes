@@ -1,5 +1,5 @@
 OBJECTIVE BEND — PERSISTENT COMPUTATION CONSTRUCTION, 2026-10-03
-Owner: graded_execution_architecture. Actual source and proof status below.
+Construction status and implementation boundaries are stated below.
 
 DECISION AND PURPOSE
 Persist the actual running Bend activity, not just its user data or an app-specific
@@ -9,9 +9,9 @@ retry and post-durability machinery, while still specifying meaningful atomic
 sections, effects, domains and authority. Do not replace the store or pretend that
 domain-crossing consistency follows from local checkpointing.
 
-Read primary local sources:
- /Users/ember/dev/fareoo/sources/fci2017.md (full article)
- /Users/ember/dev/fareoo/sources/persist-model.md (main concept sections)
+Primary references:
+ https://fare.tunes.org/files/fci2017/fci.html
+ https://github.com/mighty-gerbils/gerbil-persist/blob/master/persist.md
 FCI's observability concerns recovering an abstract computation from an interrupted
 concrete implementation through bounded administrative synchronization; a category
 of state transitions alone is not a construction. The persistence model explicitly
@@ -20,13 +20,11 @@ out of ordinary application code. It preserves control stacks and lexical/effect
 contexts, separates persistence from publication, and requires durable barriers
 and idempotent messages for interactions with persistent peers.
 
-ACTUAL SOURCE, AUTHORED UNCOMPILED
-hbox:/tank/dregg-build/codex-private-lifecycle-20261003/src/
+QUALIFIED CHECKPOINT SOURCE (repository-relative paths)
  Compiler/BendClosureContinuationCodec.lean
  Host/BendContinuationProbe.lean
  Assurance/BendContinuationSourceJoin.lean (actual StateDenotes/DataCacheSound transfer)
-No second evaluator, service journal, private protocol, or source mutation outside
-owned new files. Captain scoped check requested; no independent build launched.
+These modules use the existing bounded controller and native persistence contracts.
 
 The codec consumes actual Theory/BendClosureMachine.State and its step/run:
  - Heap.rows and used frontier, including unused rows exactly.
@@ -53,7 +51,7 @@ untrusted checkpoint itself. Version1 wire unknown-tag/default aliases are refus
 by canonical re-encoding. Finite byte cap is not yet a formally bounded parser-
 allocation theorem; native framing must cap buffers before parsing too.
 
-General authored proofs (not yet qualified): code/row/frame/control roundtrip;
+Qualified general proofs: code/row/frame/control roundtrip;
 context_bytes_injective; decode_encode; decode_canonical; encode_injective;
 restore_encode; restore_preserves; serialized_resume_exact for ANY actual state
 and two tick budgets, via the actual Machine.run_add theorem. Restore preservation
@@ -74,8 +72,8 @@ At the explicit pure reference-machine boundary every State is a complete concre
 checkpoint: suspend performs no source transition and needs no I/O. The source
 interpretation is richer than a source expression: runtime frames omit some dead
 motives, so Simulation.StateDenotes uses relational ghost contexts and exact Book.
-The controller proof owner supplies StateDenotes + source Trace + ReadyPointer +
-DataCacheSound/reachability. Restoring equal actual State preserves those facts.
+Theory/BendClosureSimulation defines StateDenotes, source Trace/count relations,
+ReadyPointer and DataCacheSound; whole-controller reachability remains a separate proof. Restoring equal actual State preserves those facts.
 Refused states need the separately retained pre-failure source prefix; absence of
 StateDenotes for refused does not justify inventing a residual source term.
 
@@ -123,30 +121,31 @@ one activity record in Mini's store. There must be no second private app journal
 
 Captured provider context is immutable for an already-started invocation. Future
 inference reloads current signed projections; source edit/move/revoke invalidates
-dependent summaries. The resident context owner is supplying exact support manifests.
+dependent summaries. Kernel/ResidentContextProjection supplies the context/support
+manifest boundary; already-started provider context must remain immutable.
 A legacy SPK app process remains a transient/external adapter: its pending request
 and dispatch journal do not capture its stack/heap/OS context. It needs its own
 restartable protocol or actual execution-context capture to join this guarantee.
 
-CURRENT CONSUMER/OWNER CONNECTIONS
-- bend_controller_simulation: StateDenotes, continuation plug, source Trace/count,
-  ReadyPointer/DataCacheSound, semantic preservation. Owns heap uniqueness now.
-- astra_consensus_composition: actual bounded machine and code/heap decode.
-- graded_execution_architecture: canonical checkpoint/exact resume, code-table
-  completeness/uniqueness repair, lifecycle contract and restart consumer.
-- bend_world_language: actual typed Plan/Return/charge/effect suspension ABI and
-  source-owned activity coordinate, current source admission/release adapter.
-- takeover_kernel: common native receiver and admitted durable readback join.
-- bread_systems_archaeology: PortableContinuationManifest includes whole exact
-  DurableReceiver.Image + sourceIdentity/native canonical prefix + exact selected
-  artifact inventory + generation/predecessor custody pin. Machine checkpoint is
-  one source-owned artifact, never a replacement for the world image.
-- native_performance_construction: AsyncDispatch.offer persists exact transport
-  request/recovery/class reservation before Accepted; separate native semantic
-  receipt required. Fetch never redispatches; ambiguous claim/no-reply is Uncertain.
-- takeover_service: providerHold/residentCompletion/residentDelivery and original
-  native attempts; private journal is not member authority. Existing SPK dispatch
-  app/gen/session/op/transaction/event/requestDigest/permit identity retained.
+SOURCE CONTRACT CONNECTIONS
+- Theory/BendClosureMachine, BendClosureDecode and BendClosureSimulation define
+  the actual controller, exact code/heap interpretation and source invariants.
+- Compiler/BendClosureContinuationCodec and Host/BendContinuationProbe provide
+  canonical complete-state capture and the separate-process restart consumer.
+- Compiler/BendWorldPlan and BendPlanLowering define typed Plan/Return decoding;
+  Compiler/BendActivityYield retains the captured continuation beside Plan data.
+- Kernel/BendActivityIngress, BendActivityReceiver and NativeHostContext connect
+  phase transitions to current native permission, protected facets and readback.
+- Kernel/PortableContinuationManifest retains the whole DurableReceiver.Image,
+  exact source prefix, selected artifact inventory and custody generation. The
+  machine checkpoint is one selected artifact, never a replacement world image.
+- native/resource-client/src/async_dispatch.rs accepts physical custody only
+  after retaining exact request/recovery/class reservation. Its Accepted does
+  not supply a semantic receipt; ambiguous claimed work remains uncertain.
+- Native resident providerHold/residentCompletion/residentDelivery records and
+  original operation identities retain external effect obligations. SPK dispatch
+  identity includes app/generation/session/operation/transaction/event/request
+  digest/permit; those records do not capture the legacy process execution context.
 
 METACONTROL AND MIGRATION
 Inspection, suspend/resume scheduling, cancellation, checkpoint export and changing
@@ -177,13 +176,13 @@ the real agreement/reservation construction. Resource refusal preserves state an
 repair capacity; storage GC must preserve all pending messages/claims and retained
 continuation dependencies, not merely the most recent user-visible document.
 
-ROOT DECISION / NEXT CONCRETE INTEGRATION
+NEXT CONCRETE INTEGRATION
 Recommended: one source-owned Activity artifact kind with canonical checkpoint,
 pinned execution context, current generation and typed pending Plan/result slots.
 Reuse existing content/resource admission and private custody, making snapshot
-policy/control verbs explicit. Root should assign the exact native activity
-coordinate/receipt integration to world+captain; no user design approval is needed
-for this routine additive choice. Do not scatter a new saga format into every app.
+policy/control verbs explicit. Shared NativeHostContext must aggregate the Activity
+and joint-controller facets; typed Plan and native admission remain independent
+requirements. Application libraries should not repeat an individual saga format.
 First acceptance: actual activity saved mid-control, admitted and read back through
 Mini, restarted in a new process, finishes exact result/count; stale worker/context
 and unauthorized checkpoint export refused. Then one source-authored external
@@ -191,12 +190,190 @@ effect continues after durable outcome with lost-reply retry and no duplicate ac
 This extends pure-turn termination into persistent reactive activity; it does not
 claim that a resident's entire interactive lifetime must terminate.
 
-RELATED PROOF STATUS: Arena/Reification PASS check04, Machine/Decode PASS check05;
-CodeRefinement + controller-owned heap/environment uniqueness PASS
-controller-denotation-check-01.log. Simulation context/helper tranche PASS.
-Continuation codec/Host/SourceJoin remains awaiting its own check.
+RELATED PROOF STATUS: arena extension/reification, decoder completeness and
+code/heap uniqueness passed their scoped checks. Simulation context/helper proofs,
+continuation codec, actual response injection/source typing, SourceJoin and the
+separate-process restart consumer also passed. Whole-controller simulation and
+native admitted Activity lifecycle are distinct remaining joins.
 
-PENDING MACHINE EVOLUTION: composition is considering explicit reverseArguments/
-installArguments microsteps to replace walk-leaf O(A) push/reversal. Continuation
-codec must append exact tags and pin changed evaluator identity before integration;
-no currently qualified persisted wire is being silently migrated.
+MACHINE EVOLUTION: reverseArguments/installArguments microsteps v2 passed in the
+bounded controller implementation. The codec now retains both controls with tags 10/11 and pins
+DREGG.BEND.CLOSURE-MACHINE/microsteps-v2; no qualified old wire is silently migrated.
+
+ACTIVITY CONSTRUCTION UPDATE (source-first WIP, qualification pending)
+Kernel/BendActivity retains canonical whole checkpoint, ordinal, pure segment and
+prior source counts, pending exact native IntentRecord/response ABI and outcome.
+advance computes actual run from the retained predecessor; it cannot tick through
+a pending effect. resumeProposal uses the actual typed finite-enum heap injection
+into captured Q1 continuation and starts a new pure segment. Raw receipt bytes are
+not an authorized outcome; native receiving must supply that missing evidence.
+
+Kernel/BendActivityControl exports the protected-cell ordinary gate. Native
+initialization proceeds from governed neutral birth to CheckedInitialize with
+actual Machine.start; CheckedAdvance
+recomputes actual run from exact source context/generation/ordinal, checks the
+exact proposed payload and carries a native StableNullifier for the predecessor.
+The proposed installer theorem uses the actual DataSnapshot.install consumption
+rule to exclude NEW admission of the spent claim. Existing same-id retries retain
+the original outcome through the existing durable protocol. These modules are
+authored, uncompiled, and not wired to current source admission yet.
+
+Compiler/BendActivityYield reads actual completed Row.pair Q1 PlanData/continuation
+and uses the proof-producing heap decoder plus world BendPlanLowering.lower. It
+retains exact source Denotes for both pointers, the captured continuation pointer,
+and the general pair denotation. BoundCommand consumes actual matchesCommand and
+exposes exact ordered native payloads. This is a public/reference extractor, not
+a private trace guarantee or a reachability/typing/authority certificate.
+
+Remaining concrete join: source-selected protected facets must compose, and an
+Activity exemption must preserve all other facets. Exact current native command
+admission, funding, Appended readback, shared dispatch/outcome identity and worker
+fence must consume the same predecessor. Source authority alone cannot bless a
+forged checkpoint. No second application journal is introduced.
+
+QUALIFIED RESTART AND NEW NATIVE SOURCE PATH (2026-10-03 10:31 UTC)
+The whole machine codec, all-state serialized_resume_exact, actual finite-enum
+response injection, source typing/new-segment/progress join, and SourceJoin now
+PASS. Separate OS process save/resume at cuts 7 (lookup), 3 (evaluate), 12
+(complete) passes exact state/result/count plus context/generation/canonical/size
+refusals. The reproducible consumer is scripts/check-bend-continuation-restart.sh.
+This is process-restart conformance, not power-loss/fsync/native-authority evidence.
+Native portable chunk custody also repaired the genuine cut7 file with exact bytes;
+running the producer on that repaired file is the next runtime join.
+
+Authored next native path, UNCOMPILED:
+- Compiler/BendActivityProgram: canonical checked public Book + named Ref entry
+  joins actual ClosureCompile and InvocationAdmission; same Book/term and method
+  output type retained. Named function entries may return a function; completion
+  is not automatically an effect or a fully applied invocation.
+- BendActivityBootstrap: actual native governed absent→bare content birth.
+- BendActivityIngress event62: owner/current signed command admission, exact
+  actual-start initialization from bare or actual-run predecessor successor,
+  public bounded verifier tariff, preserved native writes/guards/all ten charge
+  lanes, exact predecessor nullifier and actual funded preflight.
+- BendActivityReceiver: existing native CAS/tail/readback, exact source-byte
+  recorded retry before recomputation, no second journal. The admitted token
+  grants only its Activity gate exception while otherFacetGate checks joint.
+  config.transport preserves consensus refusal of unordered local appends.
+
+Important refinement: the signature must authorize the complete action including
+ticks and public tariff inputs. A completed absorbing state otherwise permits
+an unsigned relay to inflate ticks while retaining the same signed post.
+Ingress now requires original command.nonce = domain-separated cSHAKE of canonical
+program/phase/generation/ordinal/ticks; it states the cryptographic assumption,
+not hash injectivity. Scope/semantics are additionally bound by original native
+signed ingress. Current owner/signature checks precede expensive source compile.
+
+NativeHostContext aggregates protected facets; NativeHostReplay must reconstruct
+the typed event62 admission at its exact source prefix for chronological replay.
+No external dispatch/response event is admitted yet. Next: qualify prerequisites,
+wire typed live/replay receiving, test native initialize/advance/retry/stale CAS,
+then pending yielded Plan→post-durability effect→authorized typed response.
+
+EXACT RESPONSE ORIGIN AND CLOSED YIELD ABI — AUTHORED, UNCOMPILED
+Compiler/BendActivityOrigin and BendActivitySegment retain the precise new source
+origin after an external response: the immutable captured continuation pointer,
+actual injected input pointer and response, plus a selected definition/interface
+in the same admitted Book and complete canonical type text. The dependent result
+type is rederived by source checking. Resumption does not restart the initial Ref.
+The v2 Activity record patch retains that origin and the pending signature; its
+private resumeCandidate returns the actual allocator/resume witness and preserves
+context, generation, prior source count and outcome. Native signed outcome and
+current predecessor consumption remain independently required.
+
+BendActivityYieldSource binds the actual complete heap pair and source count to
+BendRunCore.Checked. BendActivityResponseBinding then checks the exact captured
+continuation type and real resumption readiness for BOTH admitted Bool outcomes;
+its general theorem joins the actual new state to source application/typing.
+Bool is a finite response ABI, not an encoding of arbitrary provider output.
+
+BendActivityPlanAdapter is a closed output codec: it preserves the complete
+Tup Q1 PlanData/continuation source result while lowering only the Plan component.
+The native registry must explicitly select it; no source trace to the first
+component is fabricated. The initial adapter uses the canonical byte Plan ABI.
+A source-owned generated Activity control target must be checked together with
+the application effects before final current native admission; ignoring arbitrary
+extra targets or modifying an already-signed intent is not that join.
+
+The chat client append_proposal extraction exposes its existing unsigned current
+room/stream append and privacy selector; append_recorded reuses it. It performs no
+submission and grants no authority. Combining this target with Activity requires
+one final signed native proposal and current admission of every target. Until
+that constructor is connected, request publication remains an explicit retained
+phase with exact-operation recovery, not an asserted atomic cross-domain action.
+
+FIRST PUBLICATION ROUTE REFINEMENT
+The pending record retains exact separately signed application command bytes,
+not a synthetic application-only IntentRecord and not a final transaction which
+would recursively contain its own pending post. Suspension.pendingCandidate
+parses the original command, checks exact source Plan/application effects and
+excludes the Activity target. Parsing signed bytes is not signature verification:
+current native authorization, funding and actual Appended still gate publication.
+This first route is pending commit followed by publication/reconciliation of that
+same operation; a stale current admission refuses without silently resigning.
+Atomic generated-control normalization is a subsequent independently checked route.
+
+GUARDED PUBLICATION AND TYPED OUTCOME — SOURCE AUTHORED, NOT YET QUALIFIED
+Kernel/BendActivityPendingAdmission admits the exact pending phase through the
+current signed native controller and independent source/heap/response checks.
+Kernel/BendActivityDispatch reconstructs that admission at its original verified
+prefix, matches its entire retained native record, and rechecks the original
+application under current authority. Its actual installed read guards include the
+physical Activity LifecycleRoot. The real BendPreparedOutput usage admission is
+rerun with the full augmented guards; a missing fixed-capacity certificate refuses.
+The original operation identity/signature is retained. Moving the pending phase
+makes a stale dispatch through this typed route fail native preflight. Ordinary exact-charge
+profiles need an explicit signed phase tariff, not an uncharged added guard.
+
+Kernel/BendActivityOutcome accepts true only from the original-height dispatch
+admission matched against the entire actual publication record. It accepts false
+only as a current owner-authorized cancellation while the original operation is
+absent; the receiving source gate checks absence again. A missing reply alone
+never chooses false. Both paths use the same current pending phase, consume its
+predecessor nullifier, and install the actual response allocator's successor with
+its exact source origin and dependent result signature. Receipt references are
+bounded journal coordinates, not recursively embedded historical transactions.
+
+Kernel/BendActivityRecovery supplies the actual verified historical prefixes to
+these private constructors and uses the existing native receiving/readback/retry
+protocol. It introduces no service journal. The chronological event64 replay join,
+source qualification, and real signed native lifecycle exercise remain required.
+A publication receipt says that the request was published; it does not certify
+provider completion, recipient acceptance, escrow payout, private worker recovery,
+or indefinite progress. Those later transitions consume their own authenticated
+observations, current authority and funding. The first route deliberately retains
+pending then publishes; its pending admission does not reserve the app's future
+budget and does not claim an atomic multi-target request/control transaction.
+
+TYPED-ONLY APPLICATION ROUTE — REQUIRED BEFORE ACTIVATION
+The retained application signature must not be usable through ordinary event3
+or another wrapper such as joint reservation. Otherwise a worker can bypass the
+extra pending-root guard, and cancellation is unsafe. Compiler/BendActivityNonce
+reserves a signed nonce interval only for an explicitly selected new source
+profile. Its classifier and Kernel/BendActivityRoute ordinary gate are authored;
+the central default/typed admission split remains a required receiving join.
+Old profiles retain their nonce semantics. No effect64 activation is claimed.
+
+Kernel/BendActivityRoutePermit is below the native controller: its private token
+checks the actual protected pending record, exact stored signed application and
+physical LifecycleRoot. The typed controller must require the source-profile pin
+and this permit, retain the exact guard in usage/funding and installed intent,
+and every ordinary current-admission wrapper must reject the reserved namespace.
+A marker or an event tag alone grants no authority.
+
+Pending publication now stores an inert exact signed Application proposal and
+checks its scope/command/source Plan binding. Its own control is currently
+source-authorized. Application signature/current law/funding admission occurs at
+dispatch once the pending permit exists; preparation does not create an early
+AcceptedInvocation which could escape through another receiving route. This also
+avoids repeating speculative application admission before its actual phase.
+
+COMMON SIGNED STATEMENT DECISION
+The reserved nonce implementation is an inactive transition prototype, not the
+chosen language or permanent receiving contract. The selected direction is one
+explicit versioned signed invocation family binding route, domain, semantics and
+complete statement bytes. This binding must enter the actual authorization
+request/signing bytes; an unsigned outer envelope is insufficient. Old profile
+replay remains distinct. The pending permit will consume that exact statement
+and explicit dispatch route. The central signature and route exclusion join is
+still unqualified, so the new effect route remains disabled.

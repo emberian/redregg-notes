@@ -33,7 +33,7 @@ WHY COMPLETE GENERIC SIMPLEX IS THE PRESENT LOCAL BASELINE
 
 The selected algorithm is arXiv2609.32985v1, September26: outer protocol Figure1 and 1/3-VA Figures4/5, with the full continuation/timeout rules and AppendixC, not a two-message fast-path approximation [P1]. It has an explicit chain-valued interface, separates preparation from unique commitment, and continues old view work while later views progress. A safe proposal extends prepared ancestry and proves intervening views disabled. Commit excludes conflicting preparation and disabling in that view. Those mechanisms match a durable local source-history service and are comparatively direct to connect to executable Lean state transitions.
 
-Its coin-free, signature-free abstract communication is useful under the PQ preference: pairwise authentication can be realized separately from public certificate export, without assuming compact PQ threshold signatures or a trusted coin service. That is a practical construction advantage, not a quantum-UC or adaptive/mobile theorem. The current native experiment actually uses ML-DSA65 authenticated messages/certificate material; it does not receive the paper's signature-free byte price automatically.
+Its coin-free, signature-free abstract communication is useful under the PQ preference: pairwise authentication can be realized separately from public certificate export, without assuming compact PQ threshold signatures or a trusted coin service. That is a practical construction advantage, not a quantum-UC or adaptive/mobile theorem. The current native experiment actually uses ML-DSA65 authenticated messages/certificate material; it does not receive the paper's signature-free byte price automatically. The actual ordinary source fixture still uses existing Ed25519 resident credentials, so this is not an end-to-end PQ application profile.
 
 The theorem model is fixed membership, static Byzantine faults, n=3f+1 and q=2f+1, authenticated reliable channels, unknown GST and a KNOWN delay bound Delta thereafter, with the paper's clock/delivery assumptions. Valid/extend are locally evaluable with negligible cost in the latency analysis. Table1 gives 3delta healthy commitment, 5delta eventual worst-case commitment with active Byzantine behavior, and 2delta failure-free proposal interval; configured timeout is at least7Delta for the selected version. These are different endpoints from client-to-installed-private-result latency.
 
@@ -91,7 +91,7 @@ The decisive experiments are whole-operation comparisons: same source laws, comp
 
 ACTUAL CHECKPOINT AND REPRODUCIBILITY
 
-As of this writing, the complete engine has executed authenticated four-logical-party TCP traces with real ML-DSA, durable journals, selective COMMIT delivery, transferable original-send certificates, restart, lost CAS reply and stale/tampered evidence tests. This is one local harness, not four independent deployed failure domains. The source consumer and native reader are qualified against a frozen373-module receiver cohort; four independent same-seed source stores are initialized. Actual reader/profile/current-key probes pass. The resident lane is the sole producer of the first real signed workspace setup through the operator; this document does NOT claim that first source effect has completed. Cross-domain terminal private YES/install, dynamic membership, funded private recovery and full private execution remain separate open joins. Proof-owner reports of reachable-engine safety are more than paper sketches, but native signature-origin/storage assumptions and end-to-end receiver/liveness obligations must retain their exact statements.
+At the October3 16:09 UTC receiving checkpoint, the complete engine has executed authenticated four-logical-party TCP traces with real ML-DSA, durable journals, selective COMMIT delivery, transferable original-send certificates, restart, lost CAS reply and stale/tampered evidence tests. This is one local multi-party construction, not four independently deployed failure domains. The actual source consumer and native reader are qualified against a frozen373-module receiver cohort; four independent same-seed source stores and original resident signing custody were used. The resident's genuine room-birth first timed out under Lean --run with zero source effects but durable pending voting state. Read-only timing measured74.661s opening four replicas before service. The qualified retained-offer continuation was then linked into an actual native fixture (3387 objects,9 changed C leaves, binary SHA8485a1b64bf506c136048b4b2cf189b5aa14006e4180964465202fccddd76917). Native continuation also hit its180s response bound, but this time the source effect had completed. Four independent fresh native reader processes returned byte-identical confirmed.replayed receipts with acceptedCount1 for the exact original SignedCall; no new admission or journal reset occurred. An independent native lookup-all-call reopened all four receivers and matched their complete canonical source prefixes through the original ingress and exact receipts. The resident recovered the existing local room reference through ordinary lookup. Evidence: own native-resume-two-four-confirmed.log and runtime lookup-native-original-01.log; native Outcome SHA2a3bf0fd4f810d80a3f58dca458adb4163d8a6d9ecf4e485770f54fe22af84a2. This is the first real ordinary agreed effect plus lost-response recovery; the full review-note journey and sequential carrier receiving are subsequent work. A source-authored completion-barrier repair checks the same four receipt predicates after every receive/service instead of waiting through the rest of a64-packet batch; its Harness and Bridge source/olean/C qualified at16:17 UTC, but native relink and measured latency improvement remain pending. Cross-domain terminal private YES/install, dynamic membership, funded private recovery and full private execution remain separate open joins. Actual26-module reachable-engine proofclosure4a17d023 is ready; native signature-origin/storage assumptions and end-to-end liveness obligations retain their separate statements.
 
 The latest client integration exposed a legitimate Config copy: mini serve pins byte-identical settings beside its socket. The operator now accepts only a bounded owner-private regular single-link non-symlink file with identical bytes, while keeping its actual readerCommand pinned to the original. Nine focused tests pass; this is a compatibility repair, not an alternative authority path. Actual refusal callbacks take priority over this preservation task.
 
@@ -124,3 +124,45 @@ All local research paths below are under /Users/ember/workbox/mini-private-capac
 [S4] own reader-pass-r2/COHORT.json SHA0e27743374dc78df2b9f792aeaf0a73ae9d503cf08d994e89e3a24f87261e663. Host/SourceAgreementReader.lean and lower canonical-codec modules; testing/generic-simplex-operator.py. Actual ELF SHA361efa9f2f7b98c738ed8d87441b138e4cf52569b3a75bda47ebc6bca4b66074; native-reader-probe-r2.log/native-operator-probe-r2.log and operator-config-copy-check.log. These prove their tested endpoints, not the unexecuted full joint/private destination.
 
 The source-only publication inbox is hbox:/home/hbox/workbox/codex-unified-integration-20261003/coordination/SOURCE-INBOX.jsonl; the captain owns integration commits. Research claims, source qualification and integrated runtime behavior are deliberately separate records. This rationale should survive replacement of the first engine: the lasting architecture is explicit authority, monotone decision evidence, usable custody, actual atomic receiving and preserved obligations under transition.
+
+Receiving addendum, 2026-10-03 18:55 UTC
+
+The first two actual ordinary operations (room birth and document resource birth)
+are now installed exactly once on four independent physical source stores. The
+next document initialization is still pending at this checkpoint. This is an
+ordinary local four-participant receiving path, not a completed private joint
+world or independently deployed federation. Exact runtime evidence is retained
+in hbox:/home/hbox/workbox/codex-agreement-20261003/RESUME-CURRENT.txt and the
+cohort/log paths it names. Source and receiving status remain separate.
+
+The implementation exposed a distinction the abstract agreement choice does not
+settle: an application offer known only to one member can wait for that member's
+leader turn even though the agreement protocol is functioning. The new native
+application-candidate relay therefore uses its own exact-context/sender/recipient
+MAC domain to transmit a complete source prefix to the other members. It grants
+only durable unvalidated offers and pending historical validation. It must not
+be confused with the 1/3VA protocol's CANDIDATE message or a transferable source
+admission proof. Existing source validation is still the sole checked-input
+producer. Native tests cover tampering, wrong context/recipient, absence of an
+automatic checked grant, and restart retention. This is an availability repair,
+not a censorship-resistance or liveness theorem.
+
+Repeated old certificate traffic also made journal serialization dominate useful
+work. The current implementation suppresses only authenticated duplicate inputs
+already represented in exact durable replay; COMMIT requires a retained verified
+signature for the same exact member/view/full-block statement as well. Different
+valid randomized signatures must not be mistaken for new statements. Independent
+tick/poll service remains necessary: dropping a transport duplicate is not the
+claim that executing deliveryAt is an identity operation. No old evidence is
+pruned and no signature check is bypassed.
+
+A further operational distinction is process lifetime. A proof-bearing memo of
+full-context/full-byte replay, together with a checked incremental replay-append
+equivalence, removed redundant hot replay. A retained native participant session
+then reused those exact capabilities between ordinary requests. Actual same-PID
+replays of one previously installed original call took59.813 seconds cold and
+2.145 seconds warm, with identical native receipt bytes and no new source effect.
+This is evidence for eliminating repeated startup work, not an agreement latency
+benchmark. Whole-history journal encoding, fair funded service, fault recovery,
+long-term checkpoints/old-view liabilities, changing membership, and the larger
+private/joint construction remain distinct outstanding obligations.

@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-10-03T11:29:25.344467+00:00",
+  "updated_at": "2026-10-03T17:29:29.104158+00:00",
   "obligations": [
     {
       "id": "runtime-native-bend",
       "outcome": "Current-authorized source-derived funded native Plan and full return/effects admission",
       "owner": "bend_world_language",
-      "consumer": "product_lieutenant",
+      "consumer": "root",
       "coordinator": "runtime_lieutenant",
       "state": "building",
       "next_action": "Qualify merged PreparedBend output/Plan/Fits/current-law gate with money receiver; hand exact nativeAccepted token to Activity/OO/product",
@@ -22,8 +22,9 @@
         {
           "owner": "native_performance_construction",
           "deliverable": "canonical global Book receiver",
-          "next_action": "Qualify Wire/Receiver/audit3 then merged controller",
-          "ready": false
+          "next_action": "Retain immediate shared/native consumer diagnostics and settlement refuters",
+          "ready": true,
+          "evidence": "Global Book receiver + exact source sampled funding/table producer checked; world receiving acknowledgement/merged current native cohort still needed"
         },
         {
           "owner": "bend_data_representation",
@@ -40,10 +41,10 @@
       "owner": "member_oo_construction",
       "consumer": "docuverse_deos_construction",
       "coordinator": "runtime_lieutenant",
-      "state": "building",
-      "next_action": "Publish actual six Partial/Core under ordinary content authority, birth compact instance; qualify current-authorized ref loader and same-self dispatch",
+      "state": "waiting",
+      "next_action": "Wake retained OO on real v2 wrapper/current admission; language reference/surface/open recursion construction remains separately owned world/compiler",
       "acceptance": "Native stored exact IDs/core and fresh pinned instance acknowledged by Studio; current-law evolution and source dispatch remain open",
-      "progress_evidence": "Algebra4/Persistence/Instance/Reference/ReferenceInstance/InstanceLoader actual PASS",
+      "progress_evidence": "Actual canonical source publication, compact488/570byte pins, fresh heterogeneous instances, kindrev2/newinstance/oldpin continuity and current state write received; Studio ACK; this is carrier evolution, not completed Far\u00e9 OO",
       "waits_for": [
         {
           "owner": "objective_bend_linker",
@@ -58,6 +59,12 @@
           "next_action": "Provide actual authorized source reads",
           "ready": true,
           "evidence": "Kernel.BendInvocationInput1 PASS check-invocation-input-01.log"
+        },
+        {
+          "owner": "bend_world_language",
+          "deliverable": "qualified native v2 full source-wrapper/current-law method admission",
+          "next_action": "Finish central coherent native gate and followup retained OO for same-self method/evolution receiving",
+          "ready": false
         }
       ]
     },
@@ -68,32 +75,32 @@
       "consumer": "private_backend_construction",
       "coordinator": "runtime_lieutenant",
       "state": "building",
-      "next_action": "Walk/Controller2 then Fixtures and actual probe; repair and qualify literal conformance, emit Prepared execution producer",
+      "next_action": "Generate reachable readiness and generic raw decode/step conformance, then authenticated backend consumer.",
       "acceptance": "All controls/failure rollback actual probe plus generic decode/step conformance and real private backend receiving evidence",
-      "progress_evidence": "All12 tags authored; helpers and most dispatch qualified; direct original AUX assigned composition",
+      "progress_evidence": "Full12 circuit/source40 ticks/private-choice16 ticks and certified indexed24.1% AND reduction actually consumed. Large Plan serialization fixed with general exact-byte/decode equality and142645-byte9418-row roundtrip; not full private/refinement closure.",
       "waits_for": []
     },
     {
       "id": "runtime-source-refinement",
       "outcome": "Actual run/source Trace refinement connected to loader and fixed controller",
-      "owner": "bend_controller_simulation",
+      "owner": "astra_consensus_composition",
       "consumer": "astra_consensus_composition",
       "coordinator": "runtime_lieutenant",
       "state": "building",
-      "next_action": "Qualify repaired Beta/Value2 then Return/SupportedRun/RefusalPrefix3; connect real initializer and graph conformance",
+      "next_action": "Consume certified actual retained-CBV run/decoder theorem in raw controller and loaded-input joins; complete bit-level conformance, exact counter/meter and sufficient-capacity completeness.",
       "acceptance": "Actual source Trace/count/Value theorem consumed by exact fixed-controller/source join; coverage obligations explicit",
-      "progress_evidence": "Machine simulation/codec/control PASS; coherent central run theorem source-only",
+      "progress_evidence": "Composition r83 certified actual Machine.start/run/decoder source safety with no Covered or future-state oracle: run_total/run_complete/completedTerm_sound. Archive cfe9a84ada07ba119688d20a79888ca0e009a6988b1c05dcd348d38a3c409993 (72 matched modules). Raw bit controller and private loaded-input readiness remain separate.",
       "waits_for": [
-        {
-          "owner": "bend_controller_simulation",
-          "deliverable": "Beta/Value repair and central3 qualification",
-          "next_action": "Take exact independent warm feedback and repair",
-          "ready": false
-        },
         {
           "owner": "runtime_lieutenant",
           "deliverable": "actual loaded/bound initializer",
-          "next_action": "Implement real loadState plus Machine.bind environment basis",
+          "next_action": "Implement real loadState and bind environment basis",
+          "ready": false
+        },
+        {
+          "owner": "astra_consensus_composition",
+          "deliverable": "generic actual raw-state circuit conformance",
+          "next_action": "Complete protected word/vector/rollback proof program",
           "ready": false
         }
       ]
@@ -102,36 +109,39 @@
       "id": "runtime-loaded-initializer",
       "outcome": "Real canonical input allocation/binding basis for source invariant",
       "owner": "runtime_lieutenant",
-      "consumer": "bend_controller_simulation",
+      "consumer": "astra_consensus_composition",
       "coordinator": "runtime_lieutenant",
-      "state": "building",
-      "next_action": "Add loadState\u2192actual bind result with empty-env preservation and environment denotation",
+      "state": "checkpointed",
+      "next_action": "Checkpointed incomplete runtime initializer consumer; retain exact qualified source and resume with selected loaded-input consumer, not broad reassignment.",
       "acceptance": "SourceInvariant.initial consumes real control/stack/counter/environment basis; no cache certificate fabricated",
-      "progress_evidence": "BendClosureInput actual PASS; initializer desired fields agreed",
-      "waits_for": []
+      "progress_evidence": "BendClosureInitialize generic actual load/bind/state denotation qualified initializer-check-03. Does not assert CacheCertified or CapturedReady from structural equality. Composition actual allocation readiness helpers qualified r22. Actual initializer runner/refusers still owed.",
+      "waits_for": [],
+      "checkpoint_ref": "initializer-check-03 and BendClosureInitialize actual load/bind/state denotation; composition r83 actual start/readiness API",
+      "restart_condition": "Resume runtime initializer consumer when coherent fixed-controller/private loaded-input entry is selected and runtime has dedicated source/proof capacity.",
+      "unresolved_work": "Actual loader/bind inhabitants and capacity/literal refusers; extend recursively captured readiness/cache certification through loaded input. Existing structural equality alone does not establish those predicates."
     },
     {
       "id": "runtime-numeric-compiler",
-      "outcome": "Reusable checked composed numeric source emitter and canonical charge/return ABI",
+      "outcome": "Actual member surface Package frontend plus reusable numeric method/emitter/charge/return ABI",
       "owner": "bend_logic_compilation",
       "consumer": "homomorphic_bend_construction",
       "coordinator": "runtime_lieutenant",
       "state": "building",
-      "next_action": "Finish actual affine byte-list/current-observation source wrapper; qualify coherent grammar/Emit/source-cost/custom method batch",
-      "acceptance": "Real checked custom doubleSum/source wrapper emits same DAG; exact no-wrap and source charge consumed by FHE/world",
-      "progress_evidence": "Expr input/literal/add and soundness/completeness authored; Q2 duplication/affine wrapper seam explicit",
+      "next_action": "Integrate actual Studio signed capture through Objective parser and same demand machine with real diagnostics, while retaining independently versioned old BendTT numeric backend",
+      "acceptance": "Independent member .bend source capture produces checked exact Book/transcript/diagnostics used by Studio/linker; generic numeric graph and truthful charge consumed by FHE/world",
+      "progress_evidence": "Generic numeric artifact866e18d8 and checked ArtifactBinding actual qualified and FHE consuming. New Objective parser/capture retains first-class specs/laws/reusable extensions, mutual and repeated self calls. World same demand machine consumed eight exact immutable captures; Studio original capture consumed with honest old-fragment import diagnostic and new Objective capture ready.",
       "waits_for": []
     },
     {
       "id": "runtime-fhe-session",
       "outcome": "Current key/session actual physical evaluation and governed opaque release",
       "owner": "homomorphic_bend_construction",
-      "consumer": "product_lieutenant",
+      "consumer": "root",
       "coordinator": "runtime_lieutenant",
       "state": "building",
-      "next_action": "Finish SessionDriver/KeyRegistration and exact current-plan signing route; qualify manifest runtime and real native flow",
+      "next_action": "Original FHE owner connects explicit Objective source carrier and signed header227 with compiler/World, then matching new Host/profile native receiving; legacy TT physical artifacts refuse and are not revived as new admission.",
       "acceptance": "Real accepted key artifact, independent replay, opaque commit and current-authority signed release/readback",
-      "progress_evidence": "BFV three fragments real PASS; parser PASS; runtime-only Persvati accepted; driver source advancing",
+      "progress_evidence": "Physical BFV/Nat/PreludeMux/noise consumers PASS; latest Objective physical guard5 TT-artifact refusers PASS. Positive Objective carrier/source refinement pending, header227 connected without legacy fallback. Modern compiled source/Host/profile remains absent.",
       "waits_for": [
         {
           "owner": "bend_world_language",
@@ -144,50 +154,69 @@
           "owner": "bend_bread_archaeology",
           "deliverable": "canonical release authoring leaf",
           "next_action": "Qualify new release authoring and exact canonical reverse leaf",
-          "ready": false
+          "ready": true,
+          "evidence": "ReturnReleaseAuthoring+ScalarPlanCanonical2 actual standard-axiom PASS; direct SessionDriver handoff acknowledged"
         }
-      ]
+      ],
+      "checkpoint_ref": "FHE source20 archivecd9bc1e3 / qualified21 provenance; latest local retention Json7949a792, immutable artifact-declaration-olean",
+      "restart_condition": "Resume original homomorphic_bend_construction only with accepted bounded qualifier and capacity to carry actual Artifact/Driver consumer or matched Host native journey.",
+      "unresolved_work": "Positive Objective artifact producer and matching source-to-physical refinement; real governed source/key/prepare/opaque result/current release/original retry journey unexecuted; no TT source admission revival."
     },
     {
       "id": "runtime-release-authoring",
       "outcome": "Canonical source-context signature authoring and exact scalar reverse producer",
-      "owner": "bend_bread_archaeology",
-      "consumer": "homomorphic_bend_construction",
+      "owner": "homomorphic_bend_construction",
+      "consumer": "bend_world_language",
       "coordinator": "runtime_lieutenant",
-      "state": "building",
-      "next_action": "Take independent warm two-leaf Canonical/ReturnRelease feedback and repair; hand actual CLI bytes to session owner",
-      "acceptance": "SessionDriver uses canonical signing header/assembly with current context; decoded source AST reverse named law consumed",
-      "progress_evidence": "Scalar adapter actual PASS; Canonical/ReturnRelease new source frozen uncompiled",
-      "waits_for": []
+      "state": "receiving",
+      "next_action": "Resumed original FHE owner consumes exact qualified release authoring in real Artifact/Driver current session journey; matched native Host remains prerequisite.",
+      "acceptance": "SessionDriver compiled use and current-authority native release/readback acknowledged by world",
+      "progress_evidence": "FHE Driver/Cursor/Json uses qualified canonical signing/assemble leaf, actual latest closure passed; native current-authority release/readback is still owed.",
+      "waits_for": [
+        {
+          "owner": "bend_bread_archaeology",
+          "deliverable": "canonical release authoring and physical read guard binder",
+          "next_action": "Repair only actual consuming mismatch",
+          "ready": true,
+          "evidence": "ReturnReleaseAuthoring/Canonical/readr5 standard gatesPASS, direct FHE/world/money acknowledgements"
+        }
+      ],
+      "checkpoint_ref": "Scalar ReturnReleaseAuthoring+Canonical/read-r5 qualified, Driver06 actual compiled consumer",
+      "restart_condition": "Resume FHE native release receiving when matched Host/replay/profile and exact compiler Artifact are available; scalar only on a concrete consuming mismatch.",
+      "unresolved_work": "Actual current-authority signed native opaque result release/readback not executed."
     },
     {
       "id": "runtime-money-book",
       "outcome": "Atomic canonical global ordered Book settlement with native room/returns",
       "owner": "native_performance_construction",
-      "consumer": "mini_collective_construction",
+      "consumer": "bigdregg_product_architecture",
       "coordinator": "runtime_lieutenant",
-      "state": "building",
-      "next_action": "Qualify Wire/Receiver/audit3 then merged world transaction; drive exact collective source Plan consumer",
+      "state": "checkpointed",
+      "next_action": "Checkpointed original money/native receiving domain. World continues only explicitly acknowledged shared source input/output gate in runtime-native-bend.",
       "acceptance": "One fee-first Book batch + room/returns in guarded intent, exact consent positions and stale/replay refuters",
-      "progress_evidence": "Foundation2 actual Persvati PASS11:16; receiver r6 source refuters WIP",
-      "waits_for": []
+      "progress_evidence": "Money input/table/global receiver qualified and world explicitly ACKed sustained current-source native consumption; money no jobs, yields, actual native settlement OPEN",
+      "waits_for": [],
+      "checkpoint_ref": "NATIVE-RECEIVING-HANDOFF-r14.txt; BendMoneyInput9ef661e1/table/global receiver qualified; collective RECEIVING-HANDOFF-r13.txt",
+      "restart_condition": "Resume original money/collective consumers on actual merged Transaction moneyConsent/receiver+full source Plan/current funding native producer and accepted capacity for atomic receiving/refusers.",
+      "unresolved_work": "No actual fee-first atomic Book+room+returns receiving; money/DrEX/full financial product builders parked. World ACKed shared native input/output normalization seam but does not inherit the whole money domain."
     },
     {
       "id": "runtime-activity-effects",
       "outcome": "Persistent source Activity request/response lifecycle and atomic effects",
       "owner": "graded_execution_architecture",
-      "consumer": "product_lieutenant",
+      "consumer": "root",
       "coordinator": "runtime_lieutenant",
       "state": "building",
-      "next_action": "Qualify foundation/native modules; consume actual nativeAccepted Plan and chat append proposal; real init/advance/request/response",
+      "next_action": "Original graded owner implements explicit frame12 signed statement Activity continuation and default/typed routing with world; effect64 stays disabled until ordinary all-route exclusion. Baseline author2 native fixture remains separate ready work.",
       "acceptance": "Actual signed birth/init/two advances, retained operation identity, current typed response resumed segment and whole-intent facet guards",
-      "progress_evidence": "Separate OS cuts7/3/12 PASS; Activity event62/effect source WIP",
+      "progress_evidence": "Baseline Activity/Control/Ingress qualified373; helper r30+r32 source ready, not yet checked. Portable repaired cut7 actually resumed in separate process (exact-state/result/context), which does not prove native worker activation. Graded full event64 dispatch/outcome/Permit source retained r33; ordinary wrapper exclusion and native output qualification remain current world/receiver producers. Original owner explicitly resumed by root after outage and ACKed real source construction; no native journey completion claimed.",
       "waits_for": [
         {
           "owner": "joint_receiver_construction",
           "deliverable": "ContentControlFrame/Activity/Control foundation",
-          "next_action": "Resume saved main outputs through actual first failed source repair",
-          "ready": false
+          "next_action": "Retain exact baseline artifact; complete next typed-route/event64 chronological integration",
+          "ready": true,
+          "evidence": "Frozen373 actual qualified Activity/Control/Ingress baseline; effect64 next chronological/exclusion producer remains separate"
         },
         {
           "owner": "bend_world_language",
@@ -195,30 +224,35 @@
           "next_action": "Complete normalized full-output current authority gate",
           "ready": false
         }
-      ]
+      ],
+      "checkpoint_ref": "graded source r33; baseline author helper Compiler r30 plus Host r32, baseline373 qualified",
+      "restart_condition": "Resume original graded owner for author helper2/native baseline fixture with accepted capacity, or on world frozen signed-statement/controller and receiver typed-route exclusion for effect64.",
+      "unresolved_work": "Author helper2 uncompiled; actual signed init/advances not received; typed pending/guarded dispatch/outcome source unqualified and inactive; stale ordinary-route exclusion and current whole output gate pending."
     },
     {
       "id": "runtime-workdesk-four-source",
       "outcome": "Real inhabited review-note through four stores with lost reply/restart exact readback",
-      "owner": "runtime_lieutenant",
+      "owner": "astra_consensus_frontier",
       "consumer": "bread_programmable_archaeology",
       "coordinator": "runtime_lieutenant",
-      "state": "building",
-      "next_action": "Finish matched Config/genesis/operator bridge for ALL agreed setup and signed reads; run original retained call.bin using runCall",
+      "state": "receiving",
+      "next_action": "Diagnose native-stage cost after production/testsplit+fresh-tail driver still times180 for retained92a07 doc; no newadmission/reset. Resume sole resident only on measured coherent producer repair.",
       "acceptance": "Original signed prepared note reaches four stores once; restart/receipt/equal readbacks, named resident acknowledgement",
-      "progress_evidence": "Fixture source authored; native frontier recovery PASS; resident helper9 PASS; no signed fixture yet",
+      "progress_evidence": "Original room fdfc installed once all4count1, native independent receipt/full-prefix reopen PASS, carrier64samecall/scanrestart0dispatch PASS. Completion barrier native successor0e299 delivered; nextdoc92a07 timed180 and typedabsent, exact durable offer retained on node0. No recreate/resubmit/reset; production/test split and scheduling repair active frontier. Latest exact92a07 native continuation again180.255s/typedabsent after progress4; no later source transitions. Fundamental replay/service cost still open, not cured by ELF/scheduling qualification.",
       "waits_for": [
         {
-          "owner": "takeover_kernel",
-          "deliverable": "matched Settings/Host/client",
-          "next_action": "Qualify canonical jointConsensus settings and current receiver closure",
-          "ready": false
+          "owner": "astra_consensus_frontier",
+          "deliverable": "matched minimal SourceAgreementReader ELF and exact ordinary parser grammar",
+          "next_action": "Frontier supports concrete operator/grammar diagnostics during resident original signed setup.",
+          "ready": true,
+          "evidence": "r2 immutableCOHORT0e277433 and NATIVE-READER.json ELF361efa9f; four actual profile/current keys7+8 probes and failclosed direct op2/pin mutants PASS"
         },
         {
-          "owner": "astra_consensus_frontier",
-          "deliverable": "runCall/proposeCall/completedCall source harness",
-          "next_action": "Qualify actual call framing and four-store restart consumer",
-          "ready": false
+          "owner": "joint_receiver_construction",
+          "deliverable": "coherent qualified receiver/Replay dependency closure for retained frontier runCall/harness",
+          "next_action": "Frontier checks own consumer against exact immutable cohort then callback runtime matched genesis/setup/read transport",
+          "ready": true,
+          "evidence": "Frozen373b723a784 plus actual NativeHost7 cohort9c5176bc and frontier five source consumers/family guard all qualified"
         },
         {
           "owner": "bread_programmable_archaeology",
@@ -236,9 +270,9 @@
       "consumer": "bend_world_language",
       "coordinator": "runtime_lieutenant",
       "state": "building",
-      "next_action": "Qualify existing mask/projection leaves; build Boolean Keccak and Frobenius coupling; attach native-derived input identity",
+      "next_action": "Construct exact salted cSHAKE collision extraction and constrained sponge framing, close inhabited source premises and masking/transcript composition without global digest injectivity",
       "acceptance": "Actual current-native input/disclosure producer consumes exact statement; full quotient/FRI hiding remains proved obligation before proof admission",
-      "progress_evidence": "Raw one-row leak captured; rank-conditioned v3 real11 tests PASS; full ZK open",
+      "progress_evidence": "Actual arbitrary IR2 witness\u2192raw unrolled run\u2192conditional SourceInvariant qualified. Real minimal full-controller two-tick fixture:26,477gates/202,289wires/89pins native prove+verify and wrong input/handled/output refusal executed. Full transcript hiding/Fiat-Shamir/security/native authorization remain open.",
       "waits_for": [
         {
           "owner": "bend_world_language",
@@ -251,33 +285,151 @@
     {
       "id": "runtime-portable-private-successor",
       "outcome": "Governed private successor activation preserving old pending liabilities",
-      "owner": "private_backend_construction",
-      "consumer": "resume_recovery_construction",
+      "owner": "bread_systems_archaeology",
+      "consumer": "bread_systems_archaeology",
       "coordinator": "runtime_lieutenant",
-      "state": "building",
-      "next_action": "Construct actual privateRecovery/resharing producer after authenticated evaluator; preserve old responsibilities",
+      "state": "checkpointed",
+      "next_action": "Deliberately checkpointed incomplete. Resume original bread_systems_archaeology when actual private successor recovery/resharing and current source home worker/fence permit producer are available, or explicitly grant standalone substantive source inventory/activation construction.",
       "acceptance": "Actual coherent new descriptor/generation private custody plus old-host dispatch fence; no erasure claim",
-      "progress_evidence": "OS continuation PASS separately; successor privateRecovery unconstructed backend-owned",
-      "waits_for": []
+      "progress_evidence": "Actual bread_systems_archaeology consumer confirms native prepared CAS only, no phase\u2192activation receipt; backend actual privateRecovery/resharing remains unconstructed",
+      "waits_for": [],
+      "checkpoint_ref": "PORTABLE-CONTINUATION-CONSTRUCTION-20261003.txt; repaired cut7 actual separate-process resume; source home admission/receiver retained by bread_systems_archaeology",
+      "restart_condition": "Resume original bread_systems_archaeology when actual private successor recovery/resharing and current source home worker/fence permit producer are available, or explicitly grant standalone substantive source inventory/activation construction.",
+      "unresolved_work": "No actual privateRecovery successor activation; complete source-required inventory/WAL/outbox/pending liabilities and dispatch epoch/fence permission must be constructed; archive resume does not activate worker."
     },
     {
       "id": "runtime-failed-start-recovery",
       "outcome": "Lawful failed claimed START recovery from actual retained generation/request",
-      "owner": "runtime_lieutenant",
+      "owner": "takeover_service",
       "consumer": "takeover_service",
       "coordinator": "runtime_lieutenant",
-      "state": "building",
-      "next_action": "Implement native reconcile_failed_start adapter and exact current-law failedSTART endpoint; preserve g2 receipts, no restart/reset",
+      "state": "receiving",
+      "next_action": "Retain warm matched bridge/current78 receipt; service independently reads stoppedg3 and performs compatible source/profile/security-role continuation then lawful newg4. Runtime fixed recovery-family budget is future staged source only.",
       "acceptance": "Real retained g2 recovery Appended/receipt and stopped source state, physically no child; only then admitted next profile/generation",
-      "progress_evidence": "Actual bwrap EACCES after accepted BEGIN/CLAIM; grain_export literal UNRESOLVED receiving stub",
+      "progress_evidence": "Actual originalg2 recovery208 installed16:54:47 accepted78/stoppedg3; independent signed currentg3 read PASS. Exact same request/report/old profile, no reset/repeated submit. Budget206\u2013209 exhaustive3tests and bothnativebins PASS, immutable budget-family-r2 output; full resident/browser remains OPEN.",
       "waits_for": [
         {
-          "owner": "takeover_kernel",
-          "deliverable": "shared Host recovery endpoint",
-          "next_action": "Implement exact original-request/generation/recovery witness codec once adapter contract frozen",
+          "owner": "spk_recovery_endpoint",
+          "deliverable": "historical a593 bridge ELF and immutable public pins",
+          "next_action": "Complete active native bridge suffix build then service receiving",
           "ready": false
+        },
+        {
+          "owner": "runtime_lieutenant",
+          "deliverable": "matched resource-client privateServer206\u2013209 binary",
+          "next_action": "Stage public pins with actual bridge ELF; preserve original exact config",
+          "ready": true,
+          "evidence": "Matched resource-client privateServer206-209 binarydb98fb8f built and scoped private/public route boundary test executed"
         }
       ]
+    },
+    {
+      "id": "runtime-object-language-semantics",
+      "outcome": "Independent modular-extension/open-recursion meaning and actual reusable Objective source language",
+      "owner": "bend_world_language",
+      "consumer": "bend_logic_compilation",
+      "coordinator": "runtime_lieutenant",
+      "state": "receiving",
+      "next_action": "Consume Studio original member capture and hostile extension/reference cases through same demand machine; coordinate actual adequacy with objective_demand_proof and future-row/capture typing with objective_type_construction",
+      "acceptance": "Nontrivial inhabited intended semantics; implementation agrees and hostile shadowing/wrong-super/law-breaking implementations excluded; real member source consumed by frontend",
+      "progress_evidence": "Independent Objective Extensions/OpenRecursion/DemandMachine Core3 actual qualified. Exact imported Review self.review(self.review(3)) with whole-super executes7. Eight immutable real captures execute mutualEvenOdd, heterogeneous row additions, reusable captured factories, lazy unused divergence, shared field one evaluation, imported Review. New demand adequacy/type modules actively owned; no adequacy instance inferred. Same actual Studio request structured reference-result Nat8 heap5 and twice AddOne seed7\u2192Nat9 heap15 execute on same new core (check-objective-json-03.log). Demand Nat primitive bit-work remains unbounded by transition count; no native fixed tariff/Fits from preview counts.",
+      "waits_for": []
+    },
+    {
+      "id": "runtime-object-refinement",
+      "outcome": "Meaningful dispatch/composition/linker/incremental/law obligations K1\u2013K5 connected to actual source consumers",
+      "owner": "bend_world_language",
+      "consumer": "member_oo_construction",
+      "coordinator": "runtime_lieutenant",
+      "state": "building",
+      "next_action": "Pair composition and semantics statement review with elaborator implementation; SCC descent refuters, law-bearing providers and exact source receipt reuse; retain independent meaning; Objective language semantics/types/recursion/quantities may extend Bend calculus under explicit versioned metatheory, no current Book.check ceiling",
+      "acceptance": "Inhabited reference composition, noncommutative hostile layer witness, general linked Eval/Trace adequacy, grouped graph completeness and incremental checked prefix laws",
+      "progress_evidence": "K1\u2013K5 substantive statements not established by previous projection/rfl gates; source-capture/native carrier milestones remain distinct",
+      "waits_for": []
+    },
+    {
+      "id": "runtime-admission-reuse",
+      "outcome": "Immutable source checked-code receipt consumed once while current source authority and version checks still run",
+      "owner": "bend_logic_compilation",
+      "consumer": "bend_world_language",
+      "coordinator": "runtime_lieutenant",
+      "state": "building",
+      "next_action": "Inspect current ReferenceSource/Loader/InstanceLoader repeated admit chain; retain Checked identity with canonical source receipt, remove redundant parse/order/Book.check only with exact representation law",
+      "acceptance": "General equality of actual call admission/result/refusal and real arbitrary-member invocation; changed/revoked source and malformed receipt still refuse",
+      "progress_evidence": "Fable source identifies triple full Book.check per call; no current executable reuse closure established",
+      "waits_for": []
+    },
+    {
+      "id": "runtime-fhe-noise-security",
+      "outcome": "Actual noise lineage and justified BFV profile estimates for reusable source graph",
+      "owner": "homomorphic_bend_construction",
+      "consumer": "bend_world_language",
+      "coordinator": "runtime_lieutenant",
+      "state": "building",
+      "next_action": "Original FHE owner retains concrete same-graph numeric/noise diagnostic and conditional inherited lineage limits; actual bounded Rust scope requested captain.",
+      "acceptance": "Actual repeated source consumer retains measured margins/current key lineage; parameter assumptions explicit and hostile exhaustion refused",
+      "progress_evidence": "Review accepted missing measurements; generic interval/noise source constructed, deployed security estimate not qualified Original owner explicitly resumed by root after outage and ACKed real source construction; no native journey completion claimed.",
+      "waits_for": [],
+      "checkpoint_ref": "FHE packet09 offline measure_noise/generic Nat actual-artifact consumer source; architecture conservative fresh/add bounds",
+      "restart_condition": "Resume original FHE owner on concrete bounded Rust consumer allocation, with actual current artifact and source-profile bindings.",
+      "unresolved_work": "Physical generic numeric/noise diagnostic not run; byte/depth lineage cannot certify inherited noise/range; full parameter/security and implementation refinement incomplete."
+    },
+    {
+      "id": "runtime-typed-signed-statement",
+      "outcome": "One typed versioned signed invocation statement shared by source/object/Activity native routes",
+      "owner": "bend_world_language",
+      "consumer": "joint_receiver_construction",
+      "coordinator": "runtime_lieutenant",
+      "state": "building",
+      "next_action": "Design source/core/actor/input/current-observation/Plan/capacity signed statement schema and explicit compatible migration; captain applies shared codec/receiver hooks",
+      "acceptance": "Actual signature binds complete typed intended invocation; changed payload/input/actor/Plan refuses; nonce remains replay identity rather than sole payload binding recipe",
+      "progress_evidence": "Current feature nonce hash preimages remain substantive review gap; world explicitly assigned statement ownership; historical g2 recovery profile unchanged"
+    },
+    {
+      "id": "runtime-signature-first",
+      "outcome": "Invalid authority envelopes refuse before expensive resource preparation and claimed computation",
+      "owner": "runtime_lieutenant",
+      "consumer": "takeover_kernel",
+      "coordinator": "runtime_lieutenant",
+      "state": "building",
+      "next_action": "Qualify exact merged controller/Host branch and execute near-budget invalid-signature workload refuter; preserve current full positive admission and original recorded-call recovery.",
+      "acceptance": "Actual invalid envelope cannot invoke content/Nock/Bend preparation; valid commands retain complete current signature, policy, observations and execution admission",
+      "progress_evidence": "ResourceInvocationSignatureFirst helper3 named gates qualified; exact before/after shared Controller hunk+import applied and pushed3dd5a7b17e322e488ffc6874a566714ec3622d10. Composed native receiving still pending."
+    },
+    {
+      "id": "runtime-durable-antirollback",
+      "outcome": "Restart continuity detects rollback under explicit protected anchor custody",
+      "owner": "runtime_lieutenant",
+      "consumer": "takeover_kernel",
+      "coordinator": "runtime_lieutenant",
+      "state": "building",
+      "next_action": "Publish qualified receiving evidence+explicit physical assumptions, integrate mandatory pinned frontier mode in Host transport/config, then matched native source receiver regression. No existing Store switch or full Host refinement inferred.",
+      "acceptance": "Matched current Store restart refuses truncated/replaced histories and lost anchor; stronger tenant threat cannot restore both database and acknowledged frontier",
+      "progress_evidence": "Root-owned frontier+Store remote CAS implementation authored source r1 1042d47f0ba0004e9a99022908f6a1d44331a210dca8d175cf91b0b6b06fcf58. Scoped unit2+both binaries actual PASS; actual root-ledger/unprivileged tenant restored BOTH SQLite and sidecar, read refused after daemon restart; same-height/genesis/UID/missing-namespace/reset mutants refused. Native Host pinned config integration and live deployment remain open."
+    },
+    {
+      "id": "runtime-private205-endpoint",
+      "outcome": "Current-source closed private verifier plus genuinely funded fresh private receiving",
+      "owner": "scenario_private_native",
+      "consumer": "resume_private_construction",
+      "coordinator": "runtime_lieutenant",
+      "state": "receiving",
+      "next_action": "Original scenario owner links fresh fixture against terminal private205 objects/new worker pin then executes actual source bootstrap and private endpoint positive/refusers.",
+      "acceptance": "Real source-derived current private credentials, source receipt and protected backend result; no seededhistory or allocator-progress qualification.",
+      "progress_evidence": "Standalone native205 actualPASS333a02a7,3392 imports/16 C, paired Context/Replay; current setup3-leaf native source producer qualified, owner linking separately. No genuine source63 positive receiving yet.",
+      "waits_for": []
+    },
+    {
+      "id": "runtime-current-recipient-endpoint",
+      "outcome": "Matched native current-recipient query/readback consumed under actual custody",
+      "owner": "resume_private_construction",
+      "consumer": "joint_receiver_construction",
+      "coordinator": "runtime_lieutenant",
+      "state": "receiving",
+      "next_action": "Traffic consumes dedicated3verb ELF with matched four-source373 Config and actual current protected point; coordinate read-only open with sole resident.",
+      "acceptance": "Actual signed query, exact current admitted key, canonical readback and wrong profile/stale/current-role refusers. Query is not a private release grant.",
+      "progress_evidence": "Actual dedicated native95928d13 PASS3385imports/7C; bundlefingerprints and rawsource/olean/C verified. Frontier immutable NVMe3378object mirror solved link IO without source recompilation; callback delivered originaltraffic/receiver.",
+      "waits_for": []
     }
   ]
 }

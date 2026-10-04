@@ -84,3 +84,22 @@ Manifest 84adb34cc7e1183eb66c40eb1c458252f353b7f575ae6d804f37f9391d06d9d7,
 lock 849029284fa8a2ca14fbae4ae1ebfb603c7addd331909355447f862706b13360.
 Log/pins mirrored local workbox/persvati-dzk-20261003. Slot 2 released on terminal
 success. Machine-readable placement/evidence index catalog/persvati-build-placement.json.
+
+10:15 UTC ACTUAL REGRESSION RECEIVING
+Exact checked executable fixtures received and hashed. IR2 release regression
+ran but failed before proving: strict descriptor parser expected key t, found col.
+Owner repairs checked emitter serializer; never rerun old bytes or edit backend
+parser to bypass this mismatch. Unit r4 exit100, 1.3G peak; actual privacy finding
+remains unqualified. Log job-04 retained. dZK r2 exact two-file source delta passed
+eight selected tests, 50 outside explicit filter skipped, 4.258s. Both slots free.
+
+10:47 UTC actual updates:
+Legacy singleton disclosure reproduced after checked descriptor wire repair (r5); fixed256 CLI conformance passed with tamperedpublic/trailingbytes refused (r6), not a privacy repair. Owner-derived budget3 tests (r7), finite rank/offset2 tests (r8), current parameter/capacity-bound full-degree challenger11 selected instances (r9) passed. Rank tests deliberately not repeated in r9. Whole transcript hiding remains unqualified. Sh2t r2 eight protocol/store tests passed,58 unrelated excluded. All bounded8Gi/jobs2/swap0 slots terminal. Exact current4.30 Lean import projection has3348modules1.19GBoleans and2.69GBpaired artifact bundle; awaiting completed transfer/actual portable4 before declaring reusable qualification.
+
+12:01 UTC functioning warm farm:
+Exact3348 module/2.69GB paired-artifact mirror SHA6c1bdb transferred by preserved tail resume; actual Lean.readModuleData scan found2 metadata-omitted binary dependencies, separately hashed/added (patch f843e5). Complete3350 module readonly file union is private Persvati /home/ember/workbox/persvati-lean-20261003/complete-warm. Existing namespace fallbacks proved unsafe; new outputs use one file union. Source-specific extra imports are independently frozen/qualified, not inferred from common mirror.
+Root/Ember authorized6 Lean4Gi2thread seats +main16Gi4thread +2 Rust8Gi/jobs4 (sum56Gi/24threads). Native systemd controls swap0/runtime/CPU/pids; actual guardian logs preserve controls after transient units disappear. Sharedsource/cache/datamodels preserved; separate outputs and FD lifetime locks per seat/lane. Thin native launcher, not a new scheduler.
+Owners now control concrete frozen coherent tranches and ordinary repairs/new consumer joins, reporting actual start/error/terminal. Source errors repaired before retry; previous independent PASS not rerun. Actual source qualifications include moneyfoundation/receiver/table, portablecore, controllerrepair/central, Receive/GlobalCausal/Scope, Causal/History, FHE manifest, Collective5; native resident9 and newKing4+2+4 pass. See JSON rows/captured hashes for exact scopes. Experimental IR2 hiding results remain partial: concrete legacy disclosure and subsequent constructor/challenger/conformance gates are not a whole-transcript ZK proof.
+
+12:17 UTC owner lifecycle update:
+Arbitrary accepted-field IR2 witness soundness PASS12:07:36; historical global VOTE-origin2 PASS12:13:18. Terminal logs captured separately, preserving previous failed revisions. Service3/money4/DrEX2 actual nine-Book checker batch timed out124 after270s, no Book verdict flushed/noOOM; owner instruments definition progress and isolates unaffected cohort before retry. Card1 was nomination only, never accepted/run; returned ready hbox. Four reusable source-only infra helpers registered canonical SOURCE-INBOX (e56c81a), captain publication; all private catalogs/corpora/logs/artifacts excluded.

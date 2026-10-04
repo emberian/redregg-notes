@@ -1,0 +1,797 @@
+Nat.arms : ∀x0 : <Zero, Succ> -> *2 =
+  λ{.Zero: <()>; λ{.Succ: Σx0 : Nat -> <()>; λ{}}}
+
+Nat : *2 =
+  Σx0 : <Zero, Succ> -> (Nat.arms x0)
+
+List.q0.arms : ∀-x0 : *1 -> ∀x1 : <Nil, Con> -> *1 =
+  λ-x0 => λ{.Nil: <()>; λ{.Con: Σx1 : x0 -> Σx2 : (List.q0 -x0) -> <()>; λ{}}}
+
+List.q0 : ∀-x0 : *1 -> *1 =
+  λ-x0 => Σx1 : <Nil, Con> -> (List.q0.arms -x0 x1)
+
+List.q1.arms : ∀-x0 : *1 -> ∀x1 : <Nil, Con> -> *1 =
+  λ-x0 => λ{.Nil: <()>; λ{.Con: Σx1 : x0 -> Σx2 : (List.q1 -x0) -> <()>; λ{}}}
+
+List.q1 : ∀-x0 : *1 -> *1 =
+  λ-x0 => Σx1 : <Nil, Con> -> (List.q1.arms -x0 x1)
+
+List.q2.arms : ∀-x0 : *2 -> ∀x1 : <Nil, Con> -> *2 =
+  λ-x0 => λ{.Nil: <()>; λ{.Con: Σx1 : x0 -> Σx2 : (List.q2 -x0) -> <()>; λ{}}}
+
+List.q2 : ∀-x0 : *2 -> *2 =
+  λ-x0 => Σx1 : <Nil, Con> -> (List.q2.arms -x0 x1)
+
+Bool.arms : ∀x0 : <False, True> -> *2 =
+  λ{.False: <()>; λ{.True: <()>; λ{}}}
+
+Bool : *2 =
+  Σx0 : <False, True> -> (Bool.arms x0)
+
+Empty.arms : ∀x0 : <> -> *2 =
+  λ{}
+
+Empty : *2 =
+  Σx0 : <> -> (Empty.arms x0)
+
+Empty.efq : ∀x0 : Empty -> <> =
+  λ{(,): λ{}}
+
+Unit.arms : ∀x0 : <Unit> -> *2 =
+  λ{.Unit: <()>; λ{}}
+
+Unit : *2 =
+  Σx0 : <Unit> -> (Unit.arms x0)
+
+Empty.absurd : ∀-x0 : *1 -> ∀x1 : Empty -> x0 =
+  λ-x0 => λ{(,): λ{}}
+
+Sigma.q00.arms : ∀-x0 : *1 -> ∀-x1 : ∀-x1 : x0 -> *1 -> ∀x2 : <Tuple> -> *1 =
+  λ-x0 => λ-x1 => λ{.Tuple: Σx2 : x0 -> Σx3 : (x1 -x2) -> <()>; λ{}}
+
+Sigma.q00 : ∀-x0 : *1 -> ∀-x1 : ∀-x1 : x0 -> *1 -> *1 =
+  λ-x0 => λ-x1 => Σx2 : <Tuple> -> (Sigma.q00.arms -x0 -x1 x2)
+
+Sigma.q01.arms : ∀-x0 : *1 -> ∀-x1 : ∀-x1 : x0 -> *1 -> ∀x2 : <Tuple> -> *1 =
+  λ-x0 => λ-x1 => λ{.Tuple: Σx2 : x0 -> Σx3 : (x1 -x2) -> <()>; λ{}}
+
+Sigma.q01 : ∀-x0 : *1 -> ∀-x1 : ∀-x1 : x0 -> *1 -> *1 =
+  λ-x0 => λ-x1 => Σx2 : <Tuple> -> (Sigma.q01.arms -x0 -x1 x2)
+
+Sigma.q02.arms : ∀-x0 : *1 -> ∀-x1 : ∀-x1 : x0 -> *2 -> ∀x2 : <Tuple> -> *1 =
+  λ-x0 => λ-x1 => λ{.Tuple: Σx2 : x0 -> Σx3 : (x1 -x2) -> <()>; λ{}}
+
+Sigma.q02 : ∀-x0 : *1 -> ∀-x1 : ∀-x1 : x0 -> *2 -> *1 =
+  λ-x0 => λ-x1 => Σx2 : <Tuple> -> (Sigma.q02.arms -x0 -x1 x2)
+
+Sigma.q10.arms : ∀-x0 : *1 -> ∀-x1 : ∀-x1 : x0 -> *1 -> ∀x2 : <Tuple> -> *1 =
+  λ-x0 => λ-x1 => λ{.Tuple: Σx2 : x0 -> Σx3 : (x1 -x2) -> <()>; λ{}}
+
+Sigma.q10 : ∀-x0 : *1 -> ∀-x1 : ∀-x1 : x0 -> *1 -> *1 =
+  λ-x0 => λ-x1 => Σx2 : <Tuple> -> (Sigma.q10.arms -x0 -x1 x2)
+
+Sigma.q11.arms : ∀-x0 : *1 -> ∀-x1 : ∀-x1 : x0 -> *1 -> ∀x2 : <Tuple> -> *1 =
+  λ-x0 => λ-x1 => λ{.Tuple: Σx2 : x0 -> Σx3 : (x1 -x2) -> <()>; λ{}}
+
+Sigma.q11 : ∀-x0 : *1 -> ∀-x1 : ∀-x1 : x0 -> *1 -> *1 =
+  λ-x0 => λ-x1 => Σx2 : <Tuple> -> (Sigma.q11.arms -x0 -x1 x2)
+
+Sigma.q12.arms : ∀-x0 : *1 -> ∀-x1 : ∀-x1 : x0 -> *2 -> ∀x2 : <Tuple> -> *1 =
+  λ-x0 => λ-x1 => λ{.Tuple: Σx2 : x0 -> Σx3 : (x1 -x2) -> <()>; λ{}}
+
+Sigma.q12 : ∀-x0 : *1 -> ∀-x1 : ∀-x1 : x0 -> *2 -> *1 =
+  λ-x0 => λ-x1 => Σx2 : <Tuple> -> (Sigma.q12.arms -x0 -x1 x2)
+
+Sigma.q20.arms : ∀-x0 : *2 -> ∀-x1 : ∀-x1 : x0 -> *1 -> ∀x2 : <Tuple> -> *1 =
+  λ-x0 => λ-x1 => λ{.Tuple: Σx2 : x0 -> Σx3 : (x1 -x2) -> <()>; λ{}}
+
+Sigma.q20 : ∀-x0 : *2 -> ∀-x1 : ∀-x1 : x0 -> *1 -> *1 =
+  λ-x0 => λ-x1 => Σx2 : <Tuple> -> (Sigma.q20.arms -x0 -x1 x2)
+
+Sigma.q21.arms : ∀-x0 : *2 -> ∀-x1 : ∀-x1 : x0 -> *1 -> ∀x2 : <Tuple> -> *1 =
+  λ-x0 => λ-x1 => λ{.Tuple: Σx2 : x0 -> Σx3 : (x1 -x2) -> <()>; λ{}}
+
+Sigma.q21 : ∀-x0 : *2 -> ∀-x1 : ∀-x1 : x0 -> *1 -> *1 =
+  λ-x0 => λ-x1 => Σx2 : <Tuple> -> (Sigma.q21.arms -x0 -x1 x2)
+
+Sigma.q22.arms : ∀-x0 : *2 -> ∀-x1 : ∀-x1 : x0 -> *2 -> ∀x2 : <Tuple> -> *2 =
+  λ-x0 => λ-x1 => λ{.Tuple: Σx2 : x0 -> Σx3 : (x1 -x2) -> <()>; λ{}}
+
+Sigma.q22 : ∀-x0 : *2 -> ∀-x1 : ∀-x1 : x0 -> *2 -> *2 =
+  λ-x0 => λ-x1 => Σx2 : <Tuple> -> (Sigma.q22.arms -x0 -x1 x2)
+
+Pair : ∀-x0 : *1 -> ∀-x1 : *1 -> *1 =
+  λ-x0 => λ-x1 => (Sigma.q11 -x0 -λ-x2 => x1)
+
+Nat.eq : ∀x0 : Nat -> ∀x1 : Nat -> Bool =
+  λ{(,): λ{.Zero: λ{(): λ{(,): λ{.Zero: λ{(): (.True, ()); λ{}}; λ{.Succ: λ{(,): λx0 => λ{(): (.False, ()); λ{}}}; λ{}}}}; λ{}}; λ{.Succ: λ{(,): λx0 => λ{(): λ{(,): λ{.Zero: λ{(): (.False, ()); λ{}}; λ{.Succ: λ{(,): λx1 => λ{(): (Nat.eq x0 x1); λ{}}}; λ{}}}}; λ{}}}; λ{}}}}
+
+Bool.and : ∀x0 : Bool -> ∀x1 : Bool -> Bool =
+  λ{(,): λ{.False: λ{(): λx0 => (.False, ()); λ{}}; λ{.True: λ{(): λx0 => x0; λ{}}; λ{}}}}
+
+Bytes.eq : ∀x0 : (List.q2 -Nat) -> ∀x1 : (List.q2 -Nat) -> Bool =
+  λ{(,): λ{.Nil: λ{(): λ{(,): λ{.Nil: λ{(): (.True, ()); λ{}}; λ{.Con: λ{(,): λx0 => λ{(,): λx1 => λ{(): (.False, ()); λ{}}}}; λ{}}}}; λ{}}; λ{.Con: λ{(,): λx0 => λ{(,): λx1 => λ{(): λ{(,): λ{.Nil: λ{(): (.False, ()); λ{}}; λ{.Con: λ{(,): λx2 => λ{(,): λx3 => λ{(): (Bool.and (Nat.eq x0 x2) (Bytes.eq x1 x3)); λ{}}}}; λ{}}}}; λ{}}}}; λ{}}}}
+
+Truth : ∀x0 : Bool -> *2 =
+  λ{(,): λ{.False: λ{(): Empty; λ{}}; λ{.True: λ{(): Unit; λ{}}; λ{}}}}
+
+Bool.and_left : ∀+x0 : Bool -> ∀+x1 : Bool -> ∀x2 : (Truth (Bool.and x0 x1)) -> (Truth x0) =
+  λ{(,): λ{.False: λ{(): λ+x0 => λx1 => (Empty.absurd -(Truth (.False, ())) x1); λ{}}; λ{.True: λ{(): λ+x0 => λx1 => (.Unit, ()); λ{}}; λ{}}}}
+
+Bool.and_right : ∀+x0 : Bool -> ∀+x1 : Bool -> ∀x2 : (Truth (Bool.and x0 x1)) -> (Truth x1) =
+  λ{(,): λ{.False: λ{(): λ+x0 => λx1 => (Empty.absurd -(Truth x0) x1); λ{}}; λ{.True: λ{(): λ+x0 => λx1 => x1; λ{}}; λ{}}}}
+
+Nat.eq_sound : ∀+x0 : Nat -> ∀+x1 : Nat -> ∀x2 : (Truth (Nat.eq x0 x1)) -> {x0 == x1 : Nat} =
+  λ{(,): λ{.Zero: λ{(): λ{(,): λ{.Zero: λ{(): λx0 => {==}; λ{}}; λ{.Succ: λ{(,): λ+x0 => λ{(): λx1 => (Empty.absurd -{(.Zero, ()) == (.Succ, (x0, ())) : Nat} x1); λ{}}}; λ{}}}}; λ{}}; λ{.Succ: λ{(,): λ+x0 => λ{(): λ{(,): λ{.Zero: λ{(): λx1 => (Empty.absurd -{(.Succ, (x0, ())) == (.Zero, ()) : Nat} x1); λ{}}; λ{.Succ: λ{(,): λ+x1 => λ{(): λx2 => %(Nat.eq_sound +x0 +x1 x2) : x3, x4 => {(.Succ, (x0, ())) == (.Succ, (x3, ())) : Nat}; {==}; λ{}}}; λ{}}}}; λ{}}}; λ{}}}}
+
+Bytes.eq_sound : ∀+x0 : (List.q2 -Nat) -> ∀+x1 : (List.q2 -Nat) -> ∀+x2 : (Truth (Bytes.eq x0 x1)) -> {x0 == x1 : (List.q2 -Nat)} =
+  λ{(,): λ{.Nil: λ{(): λ{(,): λ{.Nil: λ{(): λ+x0 => {==}; λ{}}; λ{.Con: λ{(,): λ+x0 => λ{(,): λ+x1 => λ{(): λ+x2 => (Empty.absurd -{(.Nil, ()) == (.Con, (x0, (x1, ()))) : (List.q2 -Nat)} x2); λ{}}}}; λ{}}}}; λ{}}; λ{.Con: λ{(,): λ+x0 => λ{(,): λ+x1 => λ{(): λ{(,): λ{.Nil: λ{(): λ+x2 => (Empty.absurd -{(.Con, (x0, (x1, ()))) == (.Nil, ()) : (List.q2 -Nat)} x2); λ{}}; λ{.Con: λ{(,): λ+x2 => λ{(,): λ+x3 => λ{(): λ+x4 => %(Nat.eq_sound +x0 +x2 (Bool.and_left +(Nat.eq x0 x2) +(Bytes.eq x1 x3) x4)) : x5, x6 => {(.Con, (x0, (x1, ()))) == (.Con, (x5, (x3, ()))) : (List.q2 -Nat)}; %(Bytes.eq_sound +x1 +x3 +(Bool.and_right +(Nat.eq x0 x2) +(Bytes.eq x1 x3) x4)) : x5, x6 => {(.Con, (x0, (x1, ()))) == (.Con, (x0, (x5, ()))) : (List.q2 -Nat)}; {==}; λ{}}}}; λ{}}}}; λ{}}}}; λ{}}}}
+
+MarketMath.add : ∀x0 : Nat -> ∀x1 : Nat -> Nat =
+  λ{(,): λ{.Zero: λ{(): λx0 => x0; λ{}}; λ{.Succ: λ{(,): λx0 => λ{(): λx1 => (.Succ, ((MarketMath.add x0 x1), ())); λ{}}}; λ{}}}}
+
+MarketMath.sub : ∀x0 : Nat -> ∀x1 : Nat -> Nat =
+  λ{(,): λ{.Zero: λ{(): λ{(,): λ{.Zero: λ{(): (.Zero, ()); λ{}}; λ{.Succ: λ{(,): λx0 => λ{(): (.Zero, ()); λ{}}}; λ{}}}}; λ{}}; λ{.Succ: λ{(,): λ+x0 => λ{(): λ{(,): λ{.Zero: λ{(): (.Succ, (x0, ())); λ{}}; λ{.Succ: λ{(,): λx1 => λ{(): (MarketMath.sub x0 x1); λ{}}}; λ{}}}}; λ{}}}; λ{}}}}
+
+MarketMath.le : ∀x0 : Nat -> ∀x1 : Nat -> Bool =
+  λ{(,): λ{.Zero: λ{(): λx0 => (.True, ()); λ{}}; λ{.Succ: λ{(,): λx0 => λ{(): λ{(,): λ{.Zero: λ{(): (.False, ()); λ{}}; λ{.Succ: λ{(,): λx1 => λ{(): (MarketMath.le x0 x1); λ{}}}; λ{}}}}; λ{}}}; λ{}}}}
+
+MarketMath.lt : ∀x0 : Nat -> ∀x1 : Nat -> Bool =
+  λx0 => λx1 => (MarketMath.le (.Succ, (x0, ())) x1)
+
+MarketMath.choose_nat : ∀x0 : Nat -> ∀x1 : Nat -> ∀x2 : Bool -> Nat =
+  λx0 => λx1 => λ{(,): λ{.True: λ{(): x0; λ{}}; λ{.False: λ{(): x1; λ{}}; λ{}}}}
+
+MarketMath.choose_bool : ∀x0 : Bool -> ∀x1 : Bool -> ∀x2 : Bool -> Bool =
+  λx0 => λx1 => λ{(,): λ{.True: λ{(): x0; λ{}}; λ{.False: λ{(): x1; λ{}}; λ{}}}}
+
+MarketMath.min : ∀x0 : Nat -> ∀x1 : Nat -> Nat =
+  λ{(,): λ{.Zero: λ{(): λx0 => (.Zero, ()); λ{}}; λ{.Succ: λ{(,): λx0 => λ{(): λ{(,): λ{.Zero: λ{(): (.Zero, ()); λ{}}; λ{.Succ: λ{(,): λx1 => λ{(): (.Succ, ((MarketMath.min x0 x1), ())); λ{}}}; λ{}}}}; λ{}}}; λ{}}}}
+
+MarketMath.mul : ∀x0 : Nat -> ∀+x1 : Nat -> Nat =
+  λ{(,): λ{.Zero: λ{(): λ+x0 => (.Zero, ()); λ{}}; λ{.Succ: λ{(,): λx0 => λ{(): λ+x1 => (MarketMath.add x1 (MarketMath.mul x0 +x1)); λ{}}}; λ{}}}}
+
+MarketMath.not : ∀x0 : Bool -> Bool =
+  λ{(,): λ{.False: λ{(): (.True, ()); λ{}}; λ{.True: λ{(): (.False, ()); λ{}}; λ{}}}}
+
+MarketMath.Division.arms : ∀x0 : <MarketMath.Division> -> *2 =
+  λ{.MarketMath.Division: Σx0 : Nat -> Σx1 : Nat -> <()>; λ{}}
+
+MarketMath.Division : *2 =
+  Σx0 : <MarketMath.Division> -> (MarketMath.Division.arms x0)
+
+MarketMath.increment_quotient : ∀x0 : MarketMath.Division -> ∀x1 : Bool -> MarketMath.Division =
+  λ{(,): λ{.MarketMath.Division: λ{(,): λ+x0 => λ{(,): λ+x1 => λ{(): λ{(,): λ{.False: λ{(): (.MarketMath.Division, (x0, (x1, ()))); λ{}}; λ{.True: λ{(): (.MarketMath.Division, ((.Succ, (x0, ())), (x1, ()))); λ{}}; λ{}}}}; λ{}}}}; λ{}}}
+
+MarketMath.divide_step : ∀x0 : Nat -> ∀+x1 : Nat -> ∀x2 : Nat -> MarketMath.Division =
+  λ{(,): λ{.Zero: λ{(): λ+x0 => λx1 => (.MarketMath.Division, ((.Zero, ()), (x1, ()))); λ{}}; λ{.Succ: λ{(,): λx0 => λ{(): λ+x1 => λx2 => !+x3 = {(.Succ, (x2, ())) : Nat}; !+x4 = (Nat.eq x3 x1); (MarketMath.increment_quotient (MarketMath.divide_step x0 +x1 (MarketMath.choose_nat (.Zero, ()) x3 x4)) x4); λ{}}}; λ{}}}}
+
+MarketMath.divide : ∀x0 : Nat -> ∀x1 : Nat -> MarketMath.Division =
+  λ+x0 => λ{(,): λ{.Zero: λ{(): (.MarketMath.Division, ((.Zero, ()), (x0, ()))); λ{}}; λ{.Succ: λ{(,): λx1 => λ{(): (MarketMath.divide_step x0 +(.Succ, (x1, ())) (.Zero, ())); λ{}}}; λ{}}}}
+
+MarketMath.add_zero : ∀x0 : Nat -> {(MarketMath.add (.Zero, ()) x0) == x0 : Nat} =
+  λx0 => {==}
+
+MarketMath.sub_zero : ∀+x0 : Nat -> {(MarketMath.sub x0 (.Zero, ())) == x0 : Nat} =
+  λ{(,): λ{.Zero: λ{(): {==}; λ{}}; λ{.Succ: λ{(,): λ+x0 => λ{(): {==}; λ{}}}; λ{}}}}
+
+MarketMath.min_balance : ∀+x0 : Nat -> ∀+x1 : Nat -> {(MarketMath.add (MarketMath.min x0 x1) (MarketMath.sub x1 (MarketMath.min x0 x1))) == x1 : Nat} =
+  λ{(,): λ{.Zero: λ{(): λ+x0 => (MarketMath.sub_zero +x0); λ{}}; λ{.Succ: λ{(,): λ+x0 => λ{(): λ{(,): λ{.Zero: λ{(): {==}; λ{}}; λ{.Succ: λ{(,): λ+x1 => λ{(): %(MarketMath.min_balance +x0 +x1) : x2, x3 => {(.Succ, ((MarketMath.add (MarketMath.min x0 x1) (MarketMath.sub x1 (MarketMath.min x0 x1))), ())) == (.Succ, (x2, ())) : Nat}; {==}; λ{}}}; λ{}}}}; λ{}}}; λ{}}}}
+
+SingleSellerAllocation.Order.arms : ∀x0 : <SingleSellerAllocation.Order> -> *2 =
+  λ{.SingleSellerAllocation.Order: Σx0 : (List.q2 -Nat) -> Σx1 : (List.q2 -Nat) -> Σx2 : Nat -> Σx3 : Nat -> <()>; λ{}}
+
+SingleSellerAllocation.Order : *2 =
+  Σx0 : <SingleSellerAllocation.Order> -> (SingleSellerAllocation.Order.arms x0)
+
+SingleSellerAllocation.Ranked.arms : ∀x0 : <SingleSellerAllocation.Ranked> -> *2 =
+  λ{.SingleSellerAllocation.Ranked: Σx0 : Nat -> Σx1 : SingleSellerAllocation.Order -> <()>; λ{}}
+
+SingleSellerAllocation.Ranked : *2 =
+  Σx0 : <SingleSellerAllocation.Ranked> -> (SingleSellerAllocation.Ranked.arms x0)
+
+SingleSellerAllocation.Fill.arms : ∀x0 : <SingleSellerAllocation.Fill> -> *2 =
+  λ{.SingleSellerAllocation.Fill: Σx0 : Nat -> Σx1 : (List.q2 -Nat) -> Σx2 : (List.q2 -Nat) -> Σx3 : Nat -> <()>; λ{}}
+
+SingleSellerAllocation.Fill : *2 =
+  Σx0 : <SingleSellerAllocation.Fill> -> (SingleSellerAllocation.Fill.arms x0)
+
+SingleSellerAllocation.Allocation.arms : ∀x0 : <SingleSellerAllocation.Allocation> -> *2 =
+  λ{.SingleSellerAllocation.Allocation: Σx0 : Nat -> Σx1 : (List.q2 -SingleSellerAllocation.Fill) -> Σx2 : Nat -> <()>; λ{}}
+
+SingleSellerAllocation.Allocation : *2 =
+  Σx0 : <SingleSellerAllocation.Allocation> -> (SingleSellerAllocation.Allocation.arms x0)
+
+SingleSellerAllocation.index : ∀x0 : (List.q2 -SingleSellerAllocation.Order) -> ∀+x1 : Nat -> (List.q2 -SingleSellerAllocation.Ranked) =
+  λ{(,): λ{.Nil: λ{(): λ+x0 => (.Nil, ()); λ{}}; λ{.Con: λ{(,): λx0 => λ{(,): λx1 => λ{(): λ+x2 => (.Con, ((.SingleSellerAllocation.Ranked, (x2, (x0, ()))), ((SingleSellerAllocation.index x1 +(.Succ, (x2, ()))), ()))); λ{}}}}; λ{}}}}
+
+SingleSellerAllocation.precedes : ∀x0 : SingleSellerAllocation.Ranked -> ∀x1 : SingleSellerAllocation.Ranked -> Bool =
+  λ{(,): λ{.SingleSellerAllocation.Ranked: λ{(,): λx0 => λ{(,): λ{(,): λ{.SingleSellerAllocation.Order: λ{(,): λx1 => λ{(,): λx2 => λ{(,): λ+x3 => λ{(,): λx4 => λ{(): λ{(): λ{(,): λ{.SingleSellerAllocation.Ranked: λ{(,): λx5 => λ{(,): λ{(,): λ{.SingleSellerAllocation.Order: λ{(,): λx6 => λ{(,): λx7 => λ{(,): λ+x8 => λ{(,): λx9 => λ{(): λ{(): (MarketMath.choose_bool (MarketMath.le x0 x5) (MarketMath.lt x8 x3) (Nat.eq x3 x8)); λ{}}; λ{}}}}}}; λ{}}}}}; λ{}}}; λ{}}; λ{}}}}}}; λ{}}}}}; λ{}}}
+
+SingleSellerAllocation.insert_choice : ∀x0 : SingleSellerAllocation.Ranked -> ∀x1 : SingleSellerAllocation.Ranked -> ∀x2 : (List.q2 -SingleSellerAllocation.Ranked) -> ∀x3 : (List.q2 -SingleSellerAllocation.Ranked) -> ∀x4 : Bool -> (List.q2 -SingleSellerAllocation.Ranked) =
+  λx0 => λ+x1 => λx2 => λx3 => λ{(,): λ{.True: λ{(): (.Con, (x0, ((.Con, (x1, (x2, ()))), ()))); λ{}}; λ{.False: λ{(): (.Con, (x1, (x3, ()))); λ{}}; λ{}}}}
+
+SingleSellerAllocation.insert : ∀+x0 : SingleSellerAllocation.Ranked -> ∀x1 : (List.q2 -SingleSellerAllocation.Ranked) -> (List.q2 -SingleSellerAllocation.Ranked) =
+  λ+x0 => λ{(,): λ{.Nil: λ{(): (.Con, (x0, ((.Nil, ()), ()))); λ{}}; λ{.Con: λ{(,): λ+x1 => λ{(,): λ+x2 => λ{(): (SingleSellerAllocation.insert_choice x0 x1 x2 (SingleSellerAllocation.insert +x0 x2) (SingleSellerAllocation.precedes x0 x1)); λ{}}}}; λ{}}}}
+
+SingleSellerAllocation.sort : ∀x0 : (List.q2 -SingleSellerAllocation.Ranked) -> (List.q2 -SingleSellerAllocation.Ranked) =
+  λ{(,): λ{.Nil: λ{(): (.Nil, ()); λ{}}; λ{.Con: λ{(,): λx0 => λ{(,): λx1 => λ{(): (SingleSellerAllocation.insert +x0 (SingleSellerAllocation.sort x1)); λ{}}}}; λ{}}}}
+
+SingleSellerAllocation.take : ∀x0 : Nat -> ∀x1 : Nat -> ∀x2 : Nat -> Nat =
+  λ{(,): λ{.Zero: λ{(): λx0 => λx1 => (.Zero, ()); λ{}}; λ{.Succ: λ{(,): λx0 => λ{(): λx1 => λx2 => (MarketMath.min x1 x2); λ{}}}; λ{}}}}
+
+SingleSellerAllocation.last_price : ∀x0 : Nat -> ∀x1 : Nat -> ∀x2 : Nat -> Nat =
+  λ{(,): λ{.Zero: λ{(): λx0 => λx1 => x0; λ{}}; λ{.Succ: λ{(,): λx0 => λ{(): λx1 => λx2 => x2; λ{}}}; λ{}}}}
+
+SingleSellerAllocation.prepend : ∀x0 : Nat -> ∀x1 : (List.q2 -Nat) -> ∀x2 : (List.q2 -Nat) -> ∀x3 : Nat -> ∀x4 : SingleSellerAllocation.Allocation -> SingleSellerAllocation.Allocation =
+  λx0 => λx1 => λx2 => λx3 => λ{(,): λ{.SingleSellerAllocation.Allocation: λ{(,): λx4 => λ{(,): λx5 => λ{(,): λx6 => λ{(): (.SingleSellerAllocation.Allocation, (x4, ((.Con, ((.SingleSellerAllocation.Fill, (x0, (x1, (x2, (x3, ()))))), (x5, ()))), (x6, ())))); λ{}}}}}; λ{}}}
+
+SingleSellerAllocation.fill : ∀x0 : (List.q2 -SingleSellerAllocation.Ranked) -> ∀+x1 : Nat -> ∀x2 : Nat -> SingleSellerAllocation.Allocation =
+  λ{(,): λ{.Nil: λ{(): λ+x0 => λx1 => (.SingleSellerAllocation.Allocation, (x1, ((.Nil, ()), (x0, ())))); λ{}}; λ{.Con: λ{(,): λ{(,): λ{.SingleSellerAllocation.Ranked: λ{(,): λx0 => λ{(,): λ{(,): λ{.SingleSellerAllocation.Order: λ{(,): λx1 => λ{(,): λx2 => λ{(,): λ+x3 => λ{(,): λx4 => λ{(): λ{(): λ{(,): λx5 => λ{(): λ+x6 => λx7 => !+x8 = (SingleSellerAllocation.take x3 x4 x6); (SingleSellerAllocation.prepend x0 x1 x2 x8 (SingleSellerAllocation.fill x5 +(MarketMath.sub x6 x8) (SingleSellerAllocation.last_price x8 x7 x3))); λ{}}}; λ{}}; λ{}}}}}}; λ{}}}}}; λ{}}}}; λ{}}}}
+
+SingleSellerAllocation.allocate : ∀x0 : Nat -> ∀x1 : (List.q2 -SingleSellerAllocation.Order) -> SingleSellerAllocation.Allocation =
+  λx0 => λx1 => (SingleSellerAllocation.fill (SingleSellerAllocation.sort (SingleSellerAllocation.index x1 +(.Zero, ()))) +x0 (.Zero, ()))
+
+SingleSellerAllocation.empty_preserves_supply : ∀+x0 : Nat -> {(SingleSellerAllocation.allocate x0 (.Nil, ())) == (.SingleSellerAllocation.Allocation, ((.Zero, ()), ((.Nil, ()), (x0, ())))) : SingleSellerAllocation.Allocation} =
+  λ+x0 => {==}
+
+SingleSellerAllocation.sum_with_remaining : ∀x0 : (List.q2 -SingleSellerAllocation.Fill) -> ∀x1 : Nat -> Nat =
+  λ{(,): λ{.Nil: λ{(): λx0 => x0; λ{}}; λ{.Con: λ{(,): λ{(,): λ{.SingleSellerAllocation.Fill: λ{(,): λx0 => λ{(,): λx1 => λ{(,): λx2 => λ{(,): λx3 => λ{(): λ{(,): λx4 => λ{(): λx5 => (MarketMath.add x3 (SingleSellerAllocation.sum_with_remaining x4 x5)); λ{}}}; λ{}}}}}}; λ{}}}}; λ{}}}}
+
+SingleSellerAllocation.accounted : ∀x0 : SingleSellerAllocation.Allocation -> Nat =
+  λ{(,): λ{.SingleSellerAllocation.Allocation: λ{(,): λx0 => λ{(,): λx1 => λ{(,): λx2 => λ{(): (SingleSellerAllocation.sum_with_remaining x1 x2); λ{}}}}}; λ{}}}
+
+SingleSellerAllocation.take_balance : ∀+x0 : Nat -> ∀+x1 : Nat -> ∀+x2 : Nat -> {(MarketMath.add (SingleSellerAllocation.take x0 x1 x2) (MarketMath.sub x2 (SingleSellerAllocation.take x0 x1 x2))) == x2 : Nat} =
+  λ{(,): λ{.Zero: λ{(): λ+x0 => λ+x1 => (MarketMath.sub_zero +x1); λ{}}; λ{.Succ: λ{(,): λ+x0 => λ{(): λ+x1 => λ+x2 => (MarketMath.min_balance +x1 +x2); λ{}}}; λ{}}}}
+
+SingleSellerAllocation.prepend_accounted : ∀x0 : Nat -> ∀x1 : (List.q2 -Nat) -> ∀x2 : (List.q2 -Nat) -> ∀+x3 : Nat -> ∀+x4 : SingleSellerAllocation.Allocation -> {(SingleSellerAllocation.accounted (SingleSellerAllocation.prepend x0 x1 x2 x3 x4)) == (MarketMath.add x3 (SingleSellerAllocation.accounted x4)) : Nat} =
+  λx0 => λx1 => λx2 => λ+x3 => λ{(,): λ{.SingleSellerAllocation.Allocation: λ{(,): λ+x4 => λ{(,): λ+x5 => λ{(,): λ+x6 => λ{(): {==}; λ{}}}}}; λ{}}}
+
+SingleSellerAllocation.fill_conserves : ∀+x0 : (List.q2 -SingleSellerAllocation.Ranked) -> ∀+x1 : Nat -> ∀+x2 : Nat -> {(SingleSellerAllocation.accounted (SingleSellerAllocation.fill x0 +x1 x2)) == x1 : Nat} =
+  λ{(,): λ{.Nil: λ{(): λ+x0 => λ+x1 => {==}; λ{}}; λ{.Con: λ{(,): λ{(,): λ{.SingleSellerAllocation.Ranked: λ{(,): λ+x0 => λ{(,): λ{(,): λ{.SingleSellerAllocation.Order: λ{(,): λ+x1 => λ{(,): λ+x2 => λ{(,): λ+x3 => λ{(,): λ+x4 => λ{(): λ{(): λ{(,): λ+x5 => λ{(): λ+x6 => λ+x7 => !+x8 = (SingleSellerAllocation.take x3 x4 x6); !+x9 = (MarketMath.sub x6 x8); !+x10 = (SingleSellerAllocation.last_price x8 x7 x3); %(SingleSellerAllocation.take_balance +x3 +x4 +x6) : x11, x12 => {(SingleSellerAllocation.accounted (SingleSellerAllocation.prepend x0 x1 x2 x8 (SingleSellerAllocation.fill x5 +x9 x10))) == x11 : Nat}; %(SingleSellerAllocation.fill_conserves +x5 +x9 +x10) : x11, x12 => {(SingleSellerAllocation.accounted (SingleSellerAllocation.prepend x0 x1 x2 x8 (SingleSellerAllocation.fill x5 +x9 x10))) == (MarketMath.add x8 x11) : Nat}; (SingleSellerAllocation.prepend_accounted x0 x1 x2 +x8 +(SingleSellerAllocation.fill x5 +x9 x10)); λ{}}}; λ{}}; λ{}}}}}}; λ{}}}}}; λ{}}}}; λ{}}}}
+
+SingleSellerAllocation.allocation_conserves : ∀+x0 : Nat -> ∀x1 : (List.q2 -SingleSellerAllocation.Order) -> {(SingleSellerAllocation.accounted (SingleSellerAllocation.allocate x0 x1)) == x0 : Nat} =
+  λ+x0 => λx1 => (SingleSellerAllocation.fill_conserves +(SingleSellerAllocation.sort (SingleSellerAllocation.index x1 +(.Zero, ()))) +x0 +(.Zero, ()))
+
+CanonicalBookSettlement.Account.arms : ∀x0 : <CanonicalBookSettlement.Account> -> *2 =
+  λ{.CanonicalBookSettlement.Account: Σx0 : Nat -> Σx1 : Nat -> Σx2 : Nat -> <()>; λ{}}
+
+CanonicalBookSettlement.Account : *2 =
+  Σx0 : <CanonicalBookSettlement.Account> -> (CanonicalBookSettlement.Account.arms x0)
+
+CanonicalBookSettlement.Bid.arms : ∀x0 : <CanonicalBookSettlement.Bid> -> *2 =
+  λ{.CanonicalBookSettlement.Bid: Σx0 : SingleSellerAllocation.Order -> Σx1 : CanonicalBookSettlement.Account -> Σx2 : CanonicalBookSettlement.Account -> Σx3 : (List.q2 -Nat) -> Σx4 : (List.q2 -Nat) -> <()>; λ{}}
+
+CanonicalBookSettlement.Bid : *2 =
+  Σx0 : <CanonicalBookSettlement.Bid> -> (CanonicalBookSettlement.Bid.arms x0)
+
+CanonicalBookSettlement.Input.arms : ∀x0 : <CanonicalBookSettlement.Input> -> *2 =
+  λ{.CanonicalBookSettlement.Input: Σx0 : Nat -> Σx1 : (List.q2 -Nat) -> Σx2 : CanonicalBookSettlement.Account -> Σx3 : CanonicalBookSettlement.Account -> Σx4 : (List.q2 -CanonicalBookSettlement.Bid) -> <()>; λ{}}
+
+CanonicalBookSettlement.Input : *2 =
+  Σx0 : <CanonicalBookSettlement.Input> -> (CanonicalBookSettlement.Input.arms x0)
+
+CanonicalBookSettlement.Transfer.arms : ∀x0 : <CanonicalBookSettlement.Transfer> -> *2 =
+  λ{.CanonicalBookSettlement.Transfer: Σx0 : Nat -> Σx1 : Nat -> Σx2 : Nat -> Σx3 : Nat -> <()>; λ{}}
+
+CanonicalBookSettlement.Transfer : *2 =
+  Σx0 : <CanonicalBookSettlement.Transfer> -> (CanonicalBookSettlement.Transfer.arms x0)
+
+CanonicalBookSettlement.PrivateResult.arms : ∀x0 : <CanonicalBookSettlement.PrivateResult> -> *2 =
+  λ{.CanonicalBookSettlement.PrivateResult: Σx0 : (List.q2 -Nat) -> Σx1 : (List.q2 -Nat) -> Σx2 : (List.q2 -Nat) -> Σx3 : (List.q2 -Nat) -> Σx4 : Nat -> Σx5 : Nat -> Σx6 : Nat -> Σx7 : Nat -> <()>; λ{}}
+
+CanonicalBookSettlement.PrivateResult : *2 =
+  Σx0 : <CanonicalBookSettlement.PrivateResult> -> (CanonicalBookSettlement.PrivateResult.arms x0)
+
+CanonicalBookSettlement.Batch.arms : ∀x0 : <CanonicalBookSettlement.Batch> -> *2 =
+  λ{.CanonicalBookSettlement.Batch: Σx0 : (List.q2 -CanonicalBookSettlement.Transfer) -> Σx1 : (List.q2 -CanonicalBookSettlement.PrivateResult) -> <()>; λ{}}
+
+CanonicalBookSettlement.Batch : *2 =
+  Σx0 : <CanonicalBookSettlement.Batch> -> (CanonicalBookSettlement.Batch.arms x0)
+
+CanonicalBookSettlement.Result.arms : ∀x0 : <CanonicalBookSettlement.Refused, CanonicalBookSettlement.Prepared> -> *2 =
+  λ{.CanonicalBookSettlement.Refused: <()>; λ{.CanonicalBookSettlement.Prepared: Σx0 : Nat -> Σx1 : (List.q2 -Nat) -> Σx2 : (List.q2 -CanonicalBookSettlement.Transfer) -> Σx3 : (List.q2 -CanonicalBookSettlement.PrivateResult) -> Σx4 : SingleSellerAllocation.Allocation -> <()>; λ{}}}
+
+CanonicalBookSettlement.Result : *2 =
+  Σx0 : <CanonicalBookSettlement.Refused, CanonicalBookSettlement.Prepared> -> (CanonicalBookSettlement.Result.arms x0)
+
+CanonicalBookSettlement.Coordinate.arms : ∀x0 : <CanonicalBookSettlement.Coordinate> -> *2 =
+  λ{.CanonicalBookSettlement.Coordinate: Σx0 : Nat -> Σx1 : Nat -> <()>; λ{}}
+
+CanonicalBookSettlement.Coordinate : *2 =
+  Σx0 : <CanonicalBookSettlement.Coordinate> -> (CanonicalBookSettlement.Coordinate.arms x0)
+
+CanonicalBookSettlement.coordinate : ∀x0 : CanonicalBookSettlement.Account -> CanonicalBookSettlement.Coordinate =
+  λ{(,): λ{.CanonicalBookSettlement.Account: λ{(,): λx0 => λ{(,): λx1 => λ{(,): λx2 => λ{(): (.CanonicalBookSettlement.Coordinate, (x0, (x1, ()))); λ{}}}}}; λ{}}}
+
+CanonicalBookSettlement.coordinate_eq : ∀x0 : CanonicalBookSettlement.Coordinate -> ∀x1 : CanonicalBookSettlement.Coordinate -> Bool =
+  λ{(,): λ{.CanonicalBookSettlement.Coordinate: λ{(,): λx0 => λ{(,): λx1 => λ{(): λ{(,): λ{.CanonicalBookSettlement.Coordinate: λ{(,): λx2 => λ{(,): λx3 => λ{(): (Bool.and (Nat.eq x0 x2) (Nat.eq x1 x3)); λ{}}}}; λ{}}}; λ{}}}}; λ{}}}
+
+CanonicalBookSettlement.contains : ∀+x0 : CanonicalBookSettlement.Coordinate -> ∀x1 : (List.q2 -CanonicalBookSettlement.Coordinate) -> Bool =
+  λ+x0 => λ{(,): λ{.Nil: λ{(): (.False, ()); λ{}}; λ{.Con: λ{(,): λx1 => λ{(,): λx2 => λ{(): (MarketMath.choose_bool (.True, ()) (CanonicalBookSettlement.contains +x0 x2) (CanonicalBookSettlement.coordinate_eq x0 x1)); λ{}}}}; λ{}}}}
+
+CanonicalBookSettlement.distinct : ∀x0 : (List.q2 -CanonicalBookSettlement.Coordinate) -> Bool =
+  λ{(,): λ{.Nil: λ{(): (.True, ()); λ{}}; λ{.Con: λ{(,): λx0 => λ{(,): λ+x1 => λ{(): (Bool.and (MarketMath.not (CanonicalBookSettlement.contains +x0 x1)) (CanonicalBookSettlement.distinct x1)); λ{}}}}; λ{}}}}
+
+CanonicalBookSettlement.coordinates : ∀x0 : (List.q2 -CanonicalBookSettlement.Bid) -> (List.q2 -CanonicalBookSettlement.Coordinate) =
+  λ{(,): λ{.Nil: λ{(): (.Nil, ()); λ{}}; λ{.Con: λ{(,): λ{(,): λ{.CanonicalBookSettlement.Bid: λ{(,): λx0 => λ{(,): λx1 => λ{(,): λx2 => λ{(,): λx3 => λ{(,): λx4 => λ{(): λ{(,): λx5 => λ{(): (.Con, ((CanonicalBookSettlement.coordinate x1), ((.Con, ((CanonicalBookSettlement.coordinate x2), ((CanonicalBookSettlement.coordinates x5), ()))), ()))); λ{}}}; λ{}}}}}}}; λ{}}}}; λ{}}}}
+
+CanonicalBookSettlement.orders : ∀x0 : (List.q2 -CanonicalBookSettlement.Bid) -> (List.q2 -SingleSellerAllocation.Order) =
+  λ{(,): λ{.Nil: λ{(): (.Nil, ()); λ{}}; λ{.Con: λ{(,): λ{(,): λ{.CanonicalBookSettlement.Bid: λ{(,): λx0 => λ{(,): λx1 => λ{(,): λx2 => λ{(,): λx3 => λ{(,): λx4 => λ{(): λ{(,): λx5 => λ{(): (.Con, (x0, ((CanonicalBookSettlement.orders x5), ()))); λ{}}}; λ{}}}}}}}; λ{}}}}; λ{}}}}
+
+CanonicalBookSettlement.units_at : ∀+x0 : Nat -> ∀x1 : (List.q2 -SingleSellerAllocation.Fill) -> Nat =
+  λ+x0 => λ{(,): λ{.Nil: λ{(): (.Zero, ()); λ{}}; λ{.Con: λ{(,): λ{(,): λ{.SingleSellerAllocation.Fill: λ{(,): λx1 => λ{(,): λx2 => λ{(,): λx3 => λ{(,): λx4 => λ{(): λ{(,): λx5 => λ{(): (MarketMath.choose_nat x4 (CanonicalBookSettlement.units_at +x0 x5) (Nat.eq x0 x1)); λ{}}}; λ{}}}}}}; λ{}}}}; λ{}}}}
+
+CanonicalBookSettlement.valid_bids : ∀x0 : (List.q2 -CanonicalBookSettlement.Bid) -> ∀+x1 : (List.q2 -SingleSellerAllocation.Fill) -> ∀+x2 : Nat -> ∀+x3 : Nat -> ∀+x4 : Nat -> ∀+x5 : Nat -> Bool =
+  λ{(,): λ{.Nil: λ{(): λ+x0 => λ+x1 => λ+x2 => λ+x3 => λ+x4 => (.True, ()); λ{}}; λ{.Con: λ{(,): λ{(,): λ{.CanonicalBookSettlement.Bid: λ{(,): λ{(,): λ{.SingleSellerAllocation.Order: λ{(,): λx0 => λ{(,): λx1 => λ{(,): λ+x2 => λ{(,): λ+x3 => λ{(): λ{(,): λ{(,): λ{.CanonicalBookSettlement.Account: λ{(,): λx4 => λ{(,): λx5 => λ{(,): λ+x6 => λ{(): λ{(,): λ{(,): λ{.CanonicalBookSettlement.Account: λ{(,): λx7 => λ{(,): λx8 => λ{(,): λx9 => λ{(): λ{(,): λx10 => λ{(,): λx11 => λ{(): λ{(,): λx12 => λ{(): λ+x13 => λ+x14 => λ+x15 => λ+x16 => λ+x17 => !+x18 = (CanonicalBookSettlement.units_at +x17 x13); (Bool.and (Nat.eq x14 x5) (Bool.and (Nat.eq x15 x8) (Bool.and (MarketMath.le (MarketMath.mul x2 +x3) x6) (Bool.and (MarketMath.le x18 x3) (Bool.and (MarketMath.le (MarketMath.mul x16 +x18) x6) (Bool.and (MarketMath.choose_bool (.True, ()) (MarketMath.le x16 x2) (Nat.eq x18 (.Zero, ()))) (CanonicalBookSettlement.valid_bids x12 +x13 +x14 +x15 +x16 +(.Succ, (x17, ()))))))))); λ{}}}; λ{}}}}; λ{}}}}}; λ{}}}}; λ{}}}}}; λ{}}}}; λ{}}}}}}; λ{}}}}; λ{}}}}; λ{}}}}
+
+CanonicalBookSettlement.prepend : ∀x0 : CanonicalBookSettlement.Account -> ∀x1 : CanonicalBookSettlement.Account -> ∀x2 : CanonicalBookSettlement.Bid -> ∀+x3 : Nat -> ∀+x4 : Nat -> ∀x5 : CanonicalBookSettlement.Batch -> CanonicalBookSettlement.Batch =
+  λ{(,): λ{.CanonicalBookSettlement.Account: λ{(,): λx0 => λ{(,): λx1 => λ{(,): λx2 => λ{(): λ{(,): λ{.CanonicalBookSettlement.Account: λ{(,): λx3 => λ{(,): λx4 => λ{(,): λx5 => λ{(): λ{(,): λ{.CanonicalBookSettlement.Bid: λ{(,): λ{(,): λ{.SingleSellerAllocation.Order: λ{(,): λx6 => λ{(,): λx7 => λ{(,): λx8 => λ{(,): λx9 => λ{(): λ{(,): λ{(,): λ{.CanonicalBookSettlement.Account: λ{(,): λx10 => λ{(,): λx11 => λ{(,): λx12 => λ{(): λ{(,): λ{(,): λ{.CanonicalBookSettlement.Account: λ{(,): λx13 => λ{(,): λx14 => λ{(,): λx15 => λ{(): λ{(,): λx16 => λ{(,): λx17 => λ{(): λ+x18 => λ+x19 => λ{(,): λ{.CanonicalBookSettlement.Batch: λ{(,): λx20 => λ{(,): λx21 => λ{(): !+x22 = (MarketMath.mul x19 +x18); (.CanonicalBookSettlement.Batch, ((.Con, ((.CanonicalBookSettlement.Transfer, (x0, (x13, (x1, (x18, ()))))), ((.Con, ((.CanonicalBookSettlement.Transfer, (x10, (x3, (x4, (x22, ()))))), (x20, ()))), ()))), ((.Con, ((.CanonicalBookSettlement.PrivateResult, (x6, (x16, (x17, (x7, (x18, (x19, (x22, ((MarketMath.sub x12 x22), ()))))))))), (x21, ()))), ()))); λ{}}}}; λ{}}}; λ{}}}}; λ{}}}}}; λ{}}}}; λ{}}}}}; λ{}}}}; λ{}}}}}}; λ{}}}}; λ{}}}; λ{}}}}}; λ{}}}; λ{}}}}}; λ{}}}
+
+CanonicalBookSettlement.batch : ∀x0 : (List.q2 -CanonicalBookSettlement.Bid) -> ∀+x1 : (List.q2 -SingleSellerAllocation.Fill) -> ∀+x2 : CanonicalBookSettlement.Account -> ∀+x3 : CanonicalBookSettlement.Account -> ∀+x4 : Nat -> ∀+x5 : Nat -> CanonicalBookSettlement.Batch =
+  λ{(,): λ{.Nil: λ{(): λ+x0 => λ+x1 => λ+x2 => λ+x3 => λ+x4 => (.CanonicalBookSettlement.Batch, ((.Nil, ()), ((.Nil, ()), ()))); λ{}}; λ{.Con: λ{(,): λx0 => λ{(,): λx1 => λ{(): λ+x2 => λ+x3 => λ+x4 => λ+x5 => λ+x6 => (CanonicalBookSettlement.prepend x3 x4 x0 +(CanonicalBookSettlement.units_at +x6 x2) +x5 (CanonicalBookSettlement.batch x1 +x2 +x3 +x4 +x5 +(.Succ, (x6, ())))); λ{}}}}; λ{}}}}
+
+CanonicalBookSettlement.choose : ∀x0 : Nat -> ∀x1 : (List.q2 -Nat) -> ∀x2 : SingleSellerAllocation.Allocation -> ∀x3 : CanonicalBookSettlement.Batch -> ∀x4 : Bool -> CanonicalBookSettlement.Result =
+  λx0 => λx1 => λx2 => λ{(,): λ{.CanonicalBookSettlement.Batch: λ{(,): λx3 => λ{(,): λx4 => λ{(): λ{(,): λ{.False: λ{(): (.CanonicalBookSettlement.Refused, ()); λ{}}; λ{.True: λ{(): (.CanonicalBookSettlement.Prepared, (x0, (x1, (x3, (x4, (x2, ())))))); λ{}}; λ{}}}}; λ{}}}}; λ{}}}
+
+CanonicalBookSettlement.prepare : ∀x0 : Nat -> ∀x1 : (List.q2 -Nat) -> ∀+x2 : CanonicalBookSettlement.Account -> ∀+x3 : CanonicalBookSettlement.Account -> ∀+x4 : (List.q2 -CanonicalBookSettlement.Bid) -> ∀+x5 : SingleSellerAllocation.Allocation -> CanonicalBookSettlement.Result =
+  λx0 => λx1 => λ{(,): λ{.CanonicalBookSettlement.Account: λ{(,): λ+x2 => λ{(,): λ+x3 => λ{(,): λ+x4 => λ{(): λ{(,): λ{.CanonicalBookSettlement.Account: λ{(,): λ+x5 => λ{(,): λ+x6 => λ{(,): λ+x7 => λ{(): λ+x8 => λ{(,): λ{.SingleSellerAllocation.Allocation: λ{(,): λ+x9 => λ{(,): λ+x10 => λ{(,): λ+x11 => λ{(): (CanonicalBookSettlement.choose x0 x1 (.SingleSellerAllocation.Allocation, (x9, (x10, (x11, ())))) (CanonicalBookSettlement.batch x8 +x10 +(.CanonicalBookSettlement.Account, (x2, (x3, (x4, ())))) +(.CanonicalBookSettlement.Account, (x5, (x6, (x7, ())))) +x9 +(.Zero, ())) (Bool.and (CanonicalBookSettlement.distinct (.Con, ((CanonicalBookSettlement.coordinate (.CanonicalBookSettlement.Account, (x2, (x3, (x4, ()))))), ((.Con, ((CanonicalBookSettlement.coordinate (.CanonicalBookSettlement.Account, (x5, (x6, (x7, ()))))), ((CanonicalBookSettlement.coordinates x8), ()))), ())))) (CanonicalBookSettlement.valid_bids x8 +x10 +x6 +x3 +x9 +(.Zero, ())))); λ{}}}}}; λ{}}}; λ{}}}}}; λ{}}}; λ{}}}}}; λ{}}}
+
+CanonicalBookSettlement.settle : ∀x0 : CanonicalBookSettlement.Input -> CanonicalBookSettlement.Result =
+  λ{(,): λ{.CanonicalBookSettlement.Input: λ{(,): λx0 => λ{(,): λx1 => λ{(,): λ{(,): λ{.CanonicalBookSettlement.Account: λ{(,): λx2 => λ{(,): λx3 => λ{(,): λ+x4 => λ{(): λ{(,): λx5 => λ{(,): λ+x6 => λ{(): (CanonicalBookSettlement.prepare x0 x1 +(.CanonicalBookSettlement.Account, (x2, (x3, (x4, ())))) +x5 +x6 +(SingleSellerAllocation.allocate x4 (CanonicalBookSettlement.orders x6))); λ{}}}}; λ{}}}}}; λ{}}}}}}; λ{}}}
+
+CanonicalBookSettlement.ExactBook : ∀-x0 : Nat -> ∀-x1 : (List.q2 -Nat) -> ∀x2 : CanonicalBookSettlement.Result -> *1 =
+  λ-x0 => λ-x1 => λ{(,): λ{.CanonicalBookSettlement.Refused: λ{(): Unit; λ{}}; λ{.CanonicalBookSettlement.Prepared: λ{(,): λx2 => λ{(,): λx3 => λ{(,): λx4 => λ{(,): λx5 => λ{(,): λx6 => λ{(): (Pair -{x2 == x0 : Nat} -{x3 == x1 : (List.q2 -Nat)}); λ{}}}}}}}; λ{}}}}
+
+CanonicalBookSettlement.chosen_book_exact : ∀+x0 : Nat -> ∀+x1 : (List.q2 -Nat) -> ∀x2 : SingleSellerAllocation.Allocation -> ∀x3 : CanonicalBookSettlement.Batch -> ∀x4 : Bool -> (CanonicalBookSettlement.ExactBook -x0 -x1 (CanonicalBookSettlement.choose x0 x1 x2 x3 x4)) =
+  λ+x0 => λ+x1 => λx2 => λ{(,): λ{.CanonicalBookSettlement.Batch: λ{(,): λx3 => λ{(,): λx4 => λ{(): λ{(,): λ{.False: λ{(): (.Unit, ()); λ{}}; λ{.True: λ{(): (.Tuple, ({==}, ({==}, ()))); λ{}}; λ{}}}}; λ{}}}}; λ{}}}
+
+SharedBookSettlement.Lookup.arms : ∀x0 : <SharedBookSettlement.Missing, SharedBookSettlement.Found> -> *2 =
+  λ{.SharedBookSettlement.Missing: <()>; λ{.SharedBookSettlement.Found: Σx0 : Nat -> <()>; λ{}}}
+
+SharedBookSettlement.Lookup : *2 =
+  Σx0 : <SharedBookSettlement.Missing, SharedBookSettlement.Found> -> (SharedBookSettlement.Lookup.arms x0)
+
+SharedBookSettlement.PrivateResult.arms : ∀x0 : <SharedBookSettlement.PrivateResult> -> *2 =
+  λ{.SharedBookSettlement.PrivateResult: Σx0 : (List.q2 -Nat) -> Σx1 : (List.q2 -Nat) -> Σx2 : (List.q2 -Nat) -> Σx3 : (List.q2 -Nat) -> Σx4 : Nat -> Σx5 : Nat -> Σx6 : Nat -> Σx7 : Nat -> Σx8 : Nat -> <()>; λ{}}
+
+SharedBookSettlement.PrivateResult : *2 =
+  Σx0 : <SharedBookSettlement.PrivateResult> -> (SharedBookSettlement.PrivateResult.arms x0)
+
+SharedBookSettlement.Result.arms : ∀x0 : <SharedBookSettlement.Refused, SharedBookSettlement.Prepared> -> *2 =
+  λ{.SharedBookSettlement.Refused: <()>; λ{.SharedBookSettlement.Prepared: Σx0 : Nat -> Σx1 : (List.q2 -Nat) -> Σx2 : (List.q2 -CanonicalBookSettlement.Account) -> Σx3 : (List.q2 -CanonicalBookSettlement.Transfer) -> Σx4 : (List.q2 -SharedBookSettlement.PrivateResult) -> Σx5 : SingleSellerAllocation.Allocation -> <()>; λ{}}}
+
+SharedBookSettlement.Result : *2 =
+  Σx0 : <SharedBookSettlement.Refused, SharedBookSettlement.Prepared> -> (SharedBookSettlement.Result.arms x0)
+
+SharedBookSettlement.lookup_choice : ∀x0 : Nat -> ∀x1 : SharedBookSettlement.Lookup -> ∀x2 : Bool -> SharedBookSettlement.Lookup =
+  λx0 => λx1 => λ{(,): λ{.False: λ{(): x1; λ{}}; λ{.True: λ{(): (.SharedBookSettlement.Found, (x0, ())); λ{}}; λ{}}}}
+
+SharedBookSettlement.lookup : ∀+x0 : CanonicalBookSettlement.Coordinate -> ∀x1 : (List.q2 -CanonicalBookSettlement.Account) -> SharedBookSettlement.Lookup =
+  λ+x0 => λ{(,): λ{.Nil: λ{(): (.SharedBookSettlement.Missing, ()); λ{}}; λ{.Con: λ{(,): λ{(,): λ{.CanonicalBookSettlement.Account: λ{(,): λx1 => λ{(,): λx2 => λ{(,): λ+x3 => λ{(): λ{(,): λx4 => λ{(): (SharedBookSettlement.lookup_choice x3 (SharedBookSettlement.lookup +x0 x4) (CanonicalBookSettlement.coordinate_eq x0 (CanonicalBookSettlement.coordinate (.CanonicalBookSettlement.Account, (x1, (x2, (x3, ()))))))); λ{}}}; λ{}}}}}; λ{}}}}; λ{}}}}
+
+SharedBookSettlement.append_accounts : ∀x0 : (List.q2 -CanonicalBookSettlement.Bid) -> (List.q2 -CanonicalBookSettlement.Account) =
+  λ{(,): λ{.Nil: λ{(): (.Nil, ()); λ{}}; λ{.Con: λ{(,): λ{(,): λ{.CanonicalBookSettlement.Bid: λ{(,): λx0 => λ{(,): λx1 => λ{(,): λx2 => λ{(,): λx3 => λ{(,): λx4 => λ{(): λ{(,): λx5 => λ{(): (.Con, (x1, ((.Con, (x2, ((SharedBookSettlement.append_accounts x5), ()))), ()))); λ{}}}; λ{}}}}}}}; λ{}}}}; λ{}}}}
+
+SharedBookSettlement.same_balance : ∀x0 : Nat -> ∀x1 : SharedBookSettlement.Lookup -> Bool =
+  λx0 => λ{(,): λ{.SharedBookSettlement.Missing: λ{(): (.True, ()); λ{}}; λ{.SharedBookSettlement.Found: λ{(,): λx1 => λ{(): (Nat.eq x0 x1); λ{}}}; λ{}}}}
+
+SharedBookSettlement.consistent : ∀x0 : (List.q2 -CanonicalBookSettlement.Account) -> Bool =
+  λ{(,): λ{.Nil: λ{(): (.True, ()); λ{}}; λ{.Con: λ{(,): λ{(,): λ{.CanonicalBookSettlement.Account: λ{(,): λx0 => λ{(,): λx1 => λ{(,): λ+x2 => λ{(): λ{(,): λ+x3 => λ{(): (Bool.and (SharedBookSettlement.same_balance x2 (SharedBookSettlement.lookup +(CanonicalBookSettlement.coordinate (.CanonicalBookSettlement.Account, (x0, (x1, (x2, ()))))) x3)) (SharedBookSettlement.consistent x3)); λ{}}}; λ{}}}}}; λ{}}}}; λ{}}}}
+
+SharedBookSettlement.unique_choice : ∀x0 : CanonicalBookSettlement.Account -> ∀x1 : (List.q2 -CanonicalBookSettlement.Account) -> ∀x2 : SharedBookSettlement.Lookup -> (List.q2 -CanonicalBookSettlement.Account) =
+  λx0 => λ+x1 => λ{(,): λ{.SharedBookSettlement.Missing: λ{(): (.Con, (x0, (x1, ()))); λ{}}; λ{.SharedBookSettlement.Found: λ{(,): λx2 => λ{(): x1; λ{}}}; λ{}}}}
+
+SharedBookSettlement.unique : ∀x0 : (List.q2 -CanonicalBookSettlement.Account) -> (List.q2 -CanonicalBookSettlement.Account) =
+  λ{(,): λ{.Nil: λ{(): (.Nil, ()); λ{}}; λ{.Con: λ{(,): λ+x0 => λ{(,): λ+x1 => λ{(): (SharedBookSettlement.unique_choice x0 (SharedBookSettlement.unique x1) (SharedBookSettlement.lookup +(CanonicalBookSettlement.coordinate x0) x1)); λ{}}}}; λ{}}}}
+
+SharedBookSettlement.reservation_used : ∀+x0 : (List.q2 -Nat) -> ∀x1 : (List.q2 -CanonicalBookSettlement.Bid) -> Bool =
+  λ+x0 => λ{(,): λ{.Nil: λ{(): (.False, ()); λ{}}; λ{.Con: λ{(,): λ{(,): λ{.CanonicalBookSettlement.Bid: λ{(,): λ{(,): λ{.SingleSellerAllocation.Order: λ{(,): λx1 => λ{(,): λx2 => λ{(,): λx3 => λ{(,): λx4 => λ{(): λ{(,): λx5 => λ{(,): λx6 => λ{(,): λx7 => λ{(,): λx8 => λ{(): λ{(,): λx9 => λ{(): (MarketMath.choose_bool (.True, ()) (SharedBookSettlement.reservation_used +x0 x9) (Bytes.eq x0 x2)); λ{}}}; λ{}}}}}}; λ{}}}}}}; λ{}}}}; λ{}}}}; λ{}}}}
+
+SharedBookSettlement.reservations_unique : ∀x0 : (List.q2 -CanonicalBookSettlement.Bid) -> Bool =
+  λ{(,): λ{.Nil: λ{(): (.True, ()); λ{}}; λ{.Con: λ{(,): λ{(,): λ{.CanonicalBookSettlement.Bid: λ{(,): λ{(,): λ{.SingleSellerAllocation.Order: λ{(,): λx0 => λ{(,): λx1 => λ{(,): λx2 => λ{(,): λx3 => λ{(): λ{(,): λx4 => λ{(,): λx5 => λ{(,): λx6 => λ{(,): λx7 => λ{(): λ{(,): λ+x8 => λ{(): (Bool.and (MarketMath.not (SharedBookSettlement.reservation_used +x1 x8)) (SharedBookSettlement.reservations_unique x8)); λ{}}}; λ{}}}}}}; λ{}}}}}}; λ{}}}}; λ{}}}}; λ{}}}}
+
+SharedBookSettlement.reserved : ∀+x0 : CanonicalBookSettlement.Coordinate -> ∀x1 : (List.q2 -CanonicalBookSettlement.Bid) -> Nat =
+  λ+x0 => λ{(,): λ{.Nil: λ{(): (.Zero, ()); λ{}}; λ{.Con: λ{(,): λ{(,): λ{.CanonicalBookSettlement.Bid: λ{(,): λ{(,): λ{.SingleSellerAllocation.Order: λ{(,): λx1 => λ{(,): λx2 => λ{(,): λx3 => λ{(,): λx4 => λ{(): λ{(,): λx5 => λ{(,): λx6 => λ{(,): λx7 => λ{(,): λx8 => λ{(): λ{(,): λx9 => λ{(): (MarketMath.add (MarketMath.choose_nat (MarketMath.mul x3 +x4) (.Zero, ()) (CanonicalBookSettlement.coordinate_eq x0 (CanonicalBookSettlement.coordinate x5))) (SharedBookSettlement.reserved +x0 x9)); λ{}}}; λ{}}}}}}; λ{}}}}}}; λ{}}}}; λ{}}}}; λ{}}}}
+
+SharedBookSettlement.backed : ∀x0 : (List.q2 -CanonicalBookSettlement.Account) -> ∀+x1 : (List.q2 -CanonicalBookSettlement.Bid) -> Bool =
+  λ{(,): λ{.Nil: λ{(): λ+x0 => (.True, ()); λ{}}; λ{.Con: λ{(,): λ{(,): λ{.CanonicalBookSettlement.Account: λ{(,): λx0 => λ{(,): λx1 => λ{(,): λ+x2 => λ{(): λ{(,): λx3 => λ{(): λ+x4 => (Bool.and (MarketMath.le (SharedBookSettlement.reserved +(CanonicalBookSettlement.coordinate (.CanonicalBookSettlement.Account, (x0, (x1, (x2, ()))))) x4) x2) (SharedBookSettlement.backed x3 +x4)); λ{}}}; λ{}}}}}; λ{}}}}; λ{}}}}
+
+SharedBookSettlement.returns : ∀x0 : (List.q2 -CanonicalBookSettlement.Bid) -> ∀+x1 : (List.q2 -SingleSellerAllocation.Fill) -> ∀+x2 : Nat -> ∀+x3 : Nat -> (List.q2 -SharedBookSettlement.PrivateResult) =
+  λ{(,): λ{.Nil: λ{(): λ+x0 => λ+x1 => λ+x2 => (.Nil, ()); λ{}}; λ{.Con: λ{(,): λ{(,): λ{.CanonicalBookSettlement.Bid: λ{(,): λ{(,): λ{.SingleSellerAllocation.Order: λ{(,): λx0 => λ{(,): λx1 => λ{(,): λx2 => λ{(,): λx3 => λ{(): λ{(,): λx4 => λ{(,): λx5 => λ{(,): λx6 => λ{(,): λx7 => λ{(): λ{(,): λx8 => λ{(): λ+x9 => λ+x10 => λ+x11 => !+x12 = (CanonicalBookSettlement.units_at +x11 x9); !+x13 = (MarketMath.mul x10 +x12); !+x14 = (MarketMath.mul x2 +x3); (.Con, ((.SharedBookSettlement.PrivateResult, (x0, (x6, (x7, (x1, (x14, (x12, (x10, (x13, ((MarketMath.sub x14 x13), ())))))))))), ((SharedBookSettlement.returns x8 +x9 +x10 +(.Succ, (x11, ()))), ()))); λ{}}}; λ{}}}}}}; λ{}}}}}}; λ{}}}}; λ{}}}}; λ{}}}}
+
+SharedBookSettlement.choose : ∀x0 : Nat -> ∀x1 : (List.q2 -Nat) -> ∀x2 : (List.q2 -CanonicalBookSettlement.Account) -> ∀x3 : CanonicalBookSettlement.Batch -> ∀x4 : (List.q2 -SharedBookSettlement.PrivateResult) -> ∀x5 : SingleSellerAllocation.Allocation -> ∀x6 : Bool -> SharedBookSettlement.Result =
+  λx0 => λx1 => λx2 => λ{(,): λ{.CanonicalBookSettlement.Batch: λ{(,): λx3 => λ{(,): λx4 => λ{(): λx5 => λx6 => λ{(,): λ{.False: λ{(): (.SharedBookSettlement.Refused, ()); λ{}}; λ{.True: λ{(): (.SharedBookSettlement.Prepared, (x0, (x1, (x2, (x3, (x5, (x6, ()))))))); λ{}}; λ{}}}}; λ{}}}}; λ{}}}
+
+SharedBookSettlement.prepare : ∀x0 : Nat -> ∀x1 : (List.q2 -Nat) -> ∀+x2 : CanonicalBookSettlement.Account -> ∀+x3 : CanonicalBookSettlement.Account -> ∀+x4 : (List.q2 -CanonicalBookSettlement.Bid) -> ∀+x5 : SingleSellerAllocation.Allocation -> SharedBookSettlement.Result =
+  λx0 => λx1 => λ{(,): λ{.CanonicalBookSettlement.Account: λ{(,): λ+x2 => λ{(,): λ+x3 => λ{(,): λ+x4 => λ{(): λ{(,): λ{.CanonicalBookSettlement.Account: λ{(,): λ+x5 => λ{(,): λ+x6 => λ{(,): λ+x7 => λ{(): λ+x8 => λ{(,): λ{.SingleSellerAllocation.Allocation: λ{(,): λ+x9 => λ{(,): λ+x10 => λ{(,): λ+x11 => λ{(): !+x12 = {(.Con, ((.CanonicalBookSettlement.Account, (x2, (x3, (x4, ())))), ((.Con, ((.CanonicalBookSettlement.Account, (x5, (x6, (x7, ())))), ((SharedBookSettlement.append_accounts x8), ()))), ()))) : (List.q2 -CanonicalBookSettlement.Account)}; !+x13 = (SharedBookSettlement.unique x12); (SharedBookSettlement.choose x0 x1 x13 (CanonicalBookSettlement.batch x8 +x10 +(.CanonicalBookSettlement.Account, (x2, (x3, (x4, ())))) +(.CanonicalBookSettlement.Account, (x5, (x6, (x7, ())))) +x9 +(.Zero, ())) (SharedBookSettlement.returns x8 +x10 +x9 +(.Zero, ())) (.SingleSellerAllocation.Allocation, (x9, (x10, (x11, ())))) (Bool.and (SharedBookSettlement.consistent x12) (Bool.and (SharedBookSettlement.reservations_unique x8) (Bool.and (SharedBookSettlement.backed x13 +x8) (CanonicalBookSettlement.valid_bids x8 +x10 +x6 +x3 +x9 +(.Zero, ())))))); λ{}}}}}; λ{}}}; λ{}}}}}; λ{}}}; λ{}}}}}; λ{}}}
+
+SharedBookSettlement.settle : ∀x0 : CanonicalBookSettlement.Input -> SharedBookSettlement.Result =
+  λ{(,): λ{.CanonicalBookSettlement.Input: λ{(,): λx0 => λ{(,): λx1 => λ{(,): λ{(,): λ{.CanonicalBookSettlement.Account: λ{(,): λx2 => λ{(,): λx3 => λ{(,): λ+x4 => λ{(): λ{(,): λx5 => λ{(,): λ+x6 => λ{(): (SharedBookSettlement.prepare x0 x1 +(.CanonicalBookSettlement.Account, (x2, (x3, (x4, ())))) +x5 +x6 +(SingleSellerAllocation.allocate x4 (CanonicalBookSettlement.orders x6))); λ{}}}}; λ{}}}}}; λ{}}}}}}; λ{}}}
+
+SharedBookSettlement.ExactPrepared : ∀-x0 : Nat -> ∀-x1 : (List.q2 -Nat) -> ∀-x2 : (List.q2 -CanonicalBookSettlement.Account) -> ∀x3 : CanonicalBookSettlement.Batch -> ∀-x4 : (List.q2 -SharedBookSettlement.PrivateResult) -> ∀-x5 : SingleSellerAllocation.Allocation -> ∀x6 : SharedBookSettlement.Result -> *1 =
+  λ-x0 => λ-x1 => λ-x2 => λ{(,): λ{.CanonicalBookSettlement.Batch: λ{(,): λx3 => λ{(,): λx4 => λ{(): λ-x5 => λ-x6 => λ{(,): λ{.SharedBookSettlement.Refused: λ{(): Unit; λ{}}; λ{.SharedBookSettlement.Prepared: λ{(,): λx7 => λ{(,): λx8 => λ{(,): λx9 => λ{(,): λx10 => λ{(,): λx11 => λ{(,): λx12 => λ{(): {(.SharedBookSettlement.Prepared, (x7, (x8, (x9, (x10, (x11, (x12, ()))))))) == (.SharedBookSettlement.Prepared, (x0, (x1, (x2, (x3, (x5, (x6, ()))))))) : SharedBookSettlement.Result}; λ{}}}}}}}}; λ{}}}}; λ{}}}}; λ{}}}
+
+SharedBookSettlement.prepared_exact : ∀+x0 : Nat -> ∀+x1 : (List.q2 -Nat) -> ∀+x2 : (List.q2 -CanonicalBookSettlement.Account) -> ∀+x3 : CanonicalBookSettlement.Batch -> ∀+x4 : (List.q2 -SharedBookSettlement.PrivateResult) -> ∀+x5 : SingleSellerAllocation.Allocation -> ∀x6 : Bool -> (SharedBookSettlement.ExactPrepared -x0 -x1 -x2 x3 -x4 -x5 (SharedBookSettlement.choose x0 x1 x2 x3 x4 x5 x6)) =
+  λ+x0 => λ+x1 => λ+x2 => λ{(,): λ{.CanonicalBookSettlement.Batch: λ{(,): λ+x3 => λ{(,): λ+x4 => λ{(): λ+x5 => λ+x6 => λ{(,): λ{.False: λ{(): (.Unit, ()); λ{}}; λ{.True: λ{(): {==}; λ{}}; λ{}}}}; λ{}}}}; λ{}}}
+
+WorldPlanScalarBytes.Ref.arms : ∀x0 : <WorldPlanScalarBytes.Ref> -> *2 =
+  λ{.WorldPlanScalarBytes.Ref: Σx0 : (List.q2 -Nat) -> Σx1 : (List.q2 -Nat) -> <()>; λ{}}
+
+WorldPlanScalarBytes.Ref : *2 =
+  Σx0 : <WorldPlanScalarBytes.Ref> -> (WorldPlanScalarBytes.Ref.arms x0)
+
+WorldPlanScalarBytes.Write.arms : ∀x0 : <WorldPlanScalarBytes.Write> -> *2 =
+  λ{.WorldPlanScalarBytes.Write: Σx0 : Nat -> Σx1 : Nat -> Σx2 : Nat -> <()>; λ{}}
+
+WorldPlanScalarBytes.Write : *2 =
+  Σx0 : <WorldPlanScalarBytes.Write> -> (WorldPlanScalarBytes.Write.arms x0)
+
+WorldPlanScalarBytes.ScalarEffect.arms : ∀x0 : <WorldPlanScalarBytes.ScalarEffect> -> *2 =
+  λ{.WorldPlanScalarBytes.ScalarEffect: Σx0 : WorldPlanScalarBytes.Ref -> Σx1 : (List.q2 -WorldPlanScalarBytes.Write) -> <()>; λ{}}
+
+WorldPlanScalarBytes.ScalarEffect : *2 =
+  Σx0 : <WorldPlanScalarBytes.ScalarEffect> -> (WorldPlanScalarBytes.ScalarEffect.arms x0)
+
+WorldPlanScalarBytes.NativePlan.arms : ∀x0 : <WorldPlanScalarBytes.NativePlan> -> *2 =
+  λ{.WorldPlanScalarBytes.NativePlan: Σx0 : (List.q2 -WorldPlanScalarBytes.Ref) -> Σx1 : (List.q2 -WorldPlanScalarBytes.ScalarEffect) -> <()>; λ{}}
+
+WorldPlanScalarBytes.NativePlan : *2 =
+  Σx0 : <WorldPlanScalarBytes.NativePlan> -> (WorldPlanScalarBytes.NativePlan.arms x0)
+
+WorldPlanScalarBytes.guarded : ∀x0 : WorldPlanScalarBytes.Ref -> ∀x1 : (List.q2 -WorldPlanScalarBytes.Write) -> WorldPlanScalarBytes.ScalarEffect =
+  λx0 => λx1 => (.WorldPlanScalarBytes.ScalarEffect, (x0, (x1, ())))
+
+WorldPlanScalarBytes.plan : ∀x0 : (List.q2 -WorldPlanScalarBytes.Ref) -> ∀x1 : (List.q2 -WorldPlanScalarBytes.ScalarEffect) -> WorldPlanScalarBytes.NativePlan =
+  λx0 => λx1 => (.WorldPlanScalarBytes.NativePlan, (x0, (x1, ())))
+
+WorldPlanScalarBytes.guarded_exact : ∀x0 : WorldPlanScalarBytes.Ref -> ∀x1 : (List.q2 -WorldPlanScalarBytes.Write) -> {(WorldPlanScalarBytes.guarded x0 x1) == (.WorldPlanScalarBytes.ScalarEffect, (x0, (x1, ()))) : WorldPlanScalarBytes.ScalarEffect} =
+  λx0 => λx1 => {==}
+
+WorldPlanScalarBytes.plan_exact : ∀x0 : (List.q2 -WorldPlanScalarBytes.Ref) -> ∀x1 : (List.q2 -WorldPlanScalarBytes.ScalarEffect) -> {(WorldPlanScalarBytes.plan x0 x1) == (.WorldPlanScalarBytes.NativePlan, (x0, (x1, ()))) : WorldPlanScalarBytes.NativePlan} =
+  λx0 => λx1 => {==}
+
+WorldPlanScalarBytes.PlanResult.arms : ∀x0 : <WorldPlanScalarBytes.Refused, WorldPlanScalarBytes.Planned> -> *2 =
+  λ{.WorldPlanScalarBytes.Refused: Σx0 : Nat -> <()>; λ{.WorldPlanScalarBytes.Planned: Σx0 : WorldPlanScalarBytes.NativePlan -> <()>; λ{}}}
+
+WorldPlanScalarBytes.PlanResult : *2 =
+  Σx0 : <WorldPlanScalarBytes.Refused, WorldPlanScalarBytes.Planned> -> (WorldPlanScalarBytes.PlanResult.arms x0)
+
+WorldPlanScalarBytes.refused : ∀x0 : Nat -> WorldPlanScalarBytes.PlanResult =
+  λx0 => (.WorldPlanScalarBytes.Refused, (x0, ()))
+
+WorldPlanScalarBytes.planned : ∀x0 : (List.q2 -WorldPlanScalarBytes.Ref) -> ∀x1 : (List.q2 -WorldPlanScalarBytes.ScalarEffect) -> WorldPlanScalarBytes.PlanResult =
+  λx0 => λx1 => (.WorldPlanScalarBytes.Planned, ((.WorldPlanScalarBytes.NativePlan, (x0, (x1, ()))), ()))
+
+WorldPlanScalarBytes.refusal_exact : ∀x0 : Nat -> {(WorldPlanScalarBytes.refused x0) == (.WorldPlanScalarBytes.Refused, (x0, ())) : WorldPlanScalarBytes.PlanResult} =
+  λx0 => {==}
+
+WorldPlanMoney.Transfer.arms : ∀x0 : <WorldPlanMoney.Transfer> -> *2 =
+  λ{.WorldPlanMoney.Transfer: Σx0 : (List.q2 -Nat) -> Σx1 : (List.q2 -Nat) -> Σx2 : (List.q2 -Nat) -> Σx3 : Nat -> <()>; λ{}}
+
+WorldPlanMoney.Transfer : *2 =
+  Σx0 : <WorldPlanMoney.Transfer> -> (WorldPlanMoney.Transfer.arms x0)
+
+WorldPlanMoney.ReturnSlot.arms : ∀x0 : <WorldPlanMoney.ReturnSlot> -> *2 =
+  λ{.WorldPlanMoney.ReturnSlot: Σx0 : (List.q2 -Nat) -> Σx1 : (List.q2 -Nat) -> Σx2 : (List.q2 -Nat) -> Σx3 : (List.q2 -Nat) -> Σx4 : (List.q2 -Nat) -> Σx5 : (List.q2 -Nat) -> Σx6 : Nat -> Σx7 : (List.q2 -Nat) -> <()>; λ{}}
+
+WorldPlanMoney.ReturnSlot : *2 =
+  Σx0 : <WorldPlanMoney.ReturnSlot> -> (WorldPlanMoney.ReturnSlot.arms x0)
+
+WorldPlanMoney.NativePlan.arms : ∀x0 : <WorldPlanMoney.NativePlan> -> *2 =
+  λ{.WorldPlanMoney.NativePlan: Σx0 : WorldPlanScalarBytes.Ref -> Σx1 : (List.q2 -WorldPlanMoney.Transfer) -> Σx2 : (List.q2 -WorldPlanScalarBytes.Ref) -> Σx3 : (List.q2 -WorldPlanScalarBytes.ScalarEffect) -> Σx4 : (List.q2 -WorldPlanMoney.ReturnSlot) -> <()>; λ{}}
+
+WorldPlanMoney.NativePlan : *2 =
+  Σx0 : <WorldPlanMoney.NativePlan> -> (WorldPlanMoney.NativePlan.arms x0)
+
+WorldPlanMoney.PlanResult.arms : ∀x0 : <WorldPlanMoney.Refused, WorldPlanMoney.Planned> -> *2 =
+  λ{.WorldPlanMoney.Refused: Σx0 : Nat -> <()>; λ{.WorldPlanMoney.Planned: Σx0 : WorldPlanMoney.NativePlan -> <()>; λ{}}}
+
+WorldPlanMoney.PlanResult : *2 =
+  Σx0 : <WorldPlanMoney.Refused, WorldPlanMoney.Planned> -> (WorldPlanMoney.PlanResult.arms x0)
+
+WorldPlanMoney.prepare : ∀x0 : WorldPlanScalarBytes.Ref -> ∀x1 : (List.q2 -WorldPlanMoney.Transfer) -> ∀x2 : (List.q2 -WorldPlanScalarBytes.Ref) -> ∀x3 : (List.q2 -WorldPlanScalarBytes.ScalarEffect) -> ∀x4 : (List.q2 -WorldPlanMoney.ReturnSlot) -> WorldPlanMoney.PlanResult =
+  λx0 => λx1 => λx2 => λx3 => λx4 => (.WorldPlanMoney.Planned, ((.WorldPlanMoney.NativePlan, (x0, (x1, (x2, (x3, (x4, ())))))), ()))
+
+CanonicalSettlementPlan.Binding.arms : ∀x0 : <CanonicalSettlementPlan.Binding> -> *2 =
+  λ{.CanonicalSettlementPlan.Binding: Σx0 : Nat -> Σx1 : (List.q2 -Nat) -> <()>; λ{}}
+
+CanonicalSettlementPlan.Binding : *2 =
+  Σx0 : <CanonicalSettlementPlan.Binding> -> (CanonicalSettlementPlan.Binding.arms x0)
+
+CanonicalSettlementPlan.Table.arms : ∀x0 : <CanonicalSettlementPlan.Table> -> *2 =
+  λ{.CanonicalSettlementPlan.Table: Σx0 : (List.q2 -CanonicalSettlementPlan.Binding) -> Σx1 : (List.q2 -CanonicalSettlementPlan.Binding) -> <()>; λ{}}
+
+CanonicalSettlementPlan.Table : *2 =
+  Σx0 : <CanonicalSettlementPlan.Table> -> (CanonicalSettlementPlan.Table.arms x0)
+
+CanonicalSettlementPlan.Lookup.arms : ∀x0 : <CanonicalSettlementPlan.Missing, CanonicalSettlementPlan.Found> -> *2 =
+  λ{.CanonicalSettlementPlan.Missing: <()>; λ{.CanonicalSettlementPlan.Found: Σx0 : (List.q2 -Nat) -> <()>; λ{}}}
+
+CanonicalSettlementPlan.Lookup : *2 =
+  Σx0 : <CanonicalSettlementPlan.Missing, CanonicalSettlementPlan.Found> -> (CanonicalSettlementPlan.Lookup.arms x0)
+
+CanonicalSettlementPlan.Transfers.arms : ∀x0 : <CanonicalSettlementPlan.MissingTransfer, CanonicalSettlementPlan.Resolved> -> *2 =
+  λ{.CanonicalSettlementPlan.MissingTransfer: <()>; λ{.CanonicalSettlementPlan.Resolved: Σx0 : (List.q2 -WorldPlanMoney.Transfer) -> <()>; λ{}}}
+
+CanonicalSettlementPlan.Transfers : *2 =
+  Σx0 : <CanonicalSettlementPlan.MissingTransfer, CanonicalSettlementPlan.Resolved> -> (CanonicalSettlementPlan.Transfers.arms x0)
+
+CanonicalSettlementPlan.Context.arms : ∀x0 : <CanonicalSettlementPlan.Context> -> *2 =
+  λ{.CanonicalSettlementPlan.Context: Σx0 : WorldPlanScalarBytes.Ref -> Σx1 : Nat -> Σx2 : CanonicalSettlementPlan.Table -> Σx3 : WorldPlanScalarBytes.Ref -> Σx4 : Nat -> Σx5 : (List.q2 -WorldPlanScalarBytes.Ref) -> Σx6 : (List.q2 -Nat) -> Σx7 : (List.q2 -Nat) -> Σx8 : Nat -> <()>; λ{}}
+
+CanonicalSettlementPlan.Context : *2 =
+  Σx0 : <CanonicalSettlementPlan.Context> -> (CanonicalSettlementPlan.Context.arms x0)
+
+CanonicalSettlementPlan.lookup_choose : ∀x0 : (List.q2 -Nat) -> ∀x1 : CanonicalSettlementPlan.Lookup -> ∀x2 : Bool -> CanonicalSettlementPlan.Lookup =
+  λx0 => λx1 => λ{(,): λ{.False: λ{(): x1; λ{}}; λ{.True: λ{(): (.CanonicalSettlementPlan.Found, (x0, ())); λ{}}; λ{}}}}
+
+CanonicalSettlementPlan.lookup : ∀+x0 : Nat -> ∀x1 : (List.q2 -CanonicalSettlementPlan.Binding) -> CanonicalSettlementPlan.Lookup =
+  λ+x0 => λ{(,): λ{.Nil: λ{(): (.CanonicalSettlementPlan.Missing, ()); λ{}}; λ{.Con: λ{(,): λ{(,): λ{.CanonicalSettlementPlan.Binding: λ{(,): λx1 => λ{(,): λx2 => λ{(): λ{(,): λx3 => λ{(): (CanonicalSettlementPlan.lookup_choose x2 (CanonicalSettlementPlan.lookup +x0 x3) (Nat.eq x0 x1)); λ{}}}; λ{}}}}; λ{}}}}; λ{}}}}
+
+CanonicalSettlementPlan.clashes : ∀+x0 : CanonicalSettlementPlan.Binding -> ∀x1 : (List.q2 -CanonicalSettlementPlan.Binding) -> Bool =
+  λ{(,): λ{.CanonicalSettlementPlan.Binding: λ{(,): λ+x0 => λ{(,): λ+x1 => λ{(): λ{(,): λ{.Nil: λ{(): (.False, ()); λ{}}; λ{.Con: λ{(,): λ{(,): λ{.CanonicalSettlementPlan.Binding: λ{(,): λx2 => λ{(,): λx3 => λ{(): λ{(,): λx4 => λ{(): (MarketMath.choose_bool (.True, ()) (CanonicalSettlementPlan.clashes +(.CanonicalSettlementPlan.Binding, (x0, (x1, ()))) x4) (MarketMath.not (Bool.and (MarketMath.not (Nat.eq x0 x2)) (MarketMath.not (Bytes.eq x1 x3))))); λ{}}}; λ{}}}}; λ{}}}}; λ{}}}}; λ{}}}}; λ{}}}
+
+CanonicalSettlementPlan.distinct : ∀x0 : (List.q2 -CanonicalSettlementPlan.Binding) -> Bool =
+  λ{(,): λ{.Nil: λ{(): (.True, ()); λ{}}; λ{.Con: λ{(,): λx0 => λ{(,): λ+x1 => λ{(): (Bool.and (MarketMath.not (CanonicalSettlementPlan.clashes +x0 x1)) (CanonicalSettlementPlan.distinct x1)); λ{}}}}; λ{}}}}
+
+CanonicalSettlementPlan.cons_transfer : ∀x0 : CanonicalSettlementPlan.Lookup -> ∀x1 : CanonicalSettlementPlan.Lookup -> ∀x2 : CanonicalSettlementPlan.Lookup -> ∀x3 : Nat -> ∀x4 : CanonicalSettlementPlan.Transfers -> CanonicalSettlementPlan.Transfers =
+  λ{(,): λ{.CanonicalSettlementPlan.Found: λ{(,): λx0 => λ{(): λ{(,): λ{.CanonicalSettlementPlan.Found: λ{(,): λx1 => λ{(): λ{(,): λ{.CanonicalSettlementPlan.Found: λ{(,): λx2 => λ{(): λx3 => λ{(,): λ{.CanonicalSettlementPlan.Resolved: λ{(,): λx4 => λ{(): (.CanonicalSettlementPlan.Resolved, ((.Con, ((.WorldPlanMoney.Transfer, (x0, (x1, (x2, (x3, ()))))), (x4, ()))), ())); λ{}}}; λx4 => λx5 => (.CanonicalSettlementPlan.MissingTransfer, ())}}; λ{}}}; λx2 => λx3 => λx4 => λx5 => (.CanonicalSettlementPlan.MissingTransfer, ())}}; λ{}}}; λx1 => λx2 => λx3 => λx4 => λx5 => (.CanonicalSettlementPlan.MissingTransfer, ())}}; λ{}}}; λx0 => λx1 => λx2 => λx3 => λx4 => λx5 => (.CanonicalSettlementPlan.MissingTransfer, ())}}
+
+CanonicalSettlementPlan.transfers : ∀x0 : (List.q2 -CanonicalBookSettlement.Transfer) -> ∀+x1 : CanonicalSettlementPlan.Table -> CanonicalSettlementPlan.Transfers =
+  λ{(,): λ{.Nil: λ{(): λ+x0 => (.CanonicalSettlementPlan.Resolved, ((.Nil, ()), ())); λ{}}; λ{.Con: λ{(,): λ{(,): λ{.CanonicalBookSettlement.Transfer: λ{(,): λx0 => λ{(,): λx1 => λ{(,): λx2 => λ{(,): λx3 => λ{(): λ{(,): λx4 => λ{(): λ{(,): λ{.CanonicalSettlementPlan.Table: λ{(,): λ+x5 => λ{(,): λ+x6 => λ{(): (CanonicalSettlementPlan.cons_transfer (CanonicalSettlementPlan.lookup +x0 x5) (CanonicalSettlementPlan.lookup +x1 x5) (CanonicalSettlementPlan.lookup +x2 x6) x3 (CanonicalSettlementPlan.transfers x4 +(.CanonicalSettlementPlan.Table, (x5, (x6, ()))))); λ{}}}}; λ{}}}; λ{}}}; λ{}}}}}}; λ{}}}}; λ{}}}}
+
+CanonicalSettlementPlan.append : ∀x0 : (List.q2 -Nat) -> ∀x1 : (List.q2 -Nat) -> (List.q2 -Nat) =
+  λ{(,): λ{.Nil: λ{(): λx0 => x0; λ{}}; λ{.Con: λ{(,): λx0 => λ{(,): λx1 => λ{(): λx2 => (.Con, (x0, ((CanonicalSettlementPlan.append x1 x2), ()))); λ{}}}}; λ{}}}}
+
+CanonicalSettlementPlan.length : ∀x0 : (List.q2 -Nat) -> Nat =
+  λ{(,): λ{.Nil: λ{(): (.Zero, ()); λ{}}; λ{.Con: λ{(,): λx0 => λ{(,): λx1 => λ{(): (.Succ, ((CanonicalSettlementPlan.length x1), ())); λ{}}}}; λ{}}}}
+
+CanonicalSettlementPlan.digits : ∀x0 : Nat -> ∀x1 : MarketMath.Division -> (List.q2 -Nat) =
+  λ{(,): λ{.Zero: λ{(): λx0 => (.Nil, ()); λ{}}; λ{.Succ: λ{(,): λx0 => λ{(): λ{(,): λ{.MarketMath.Division: λ{(,): λ{(,): λ{.Zero: λ{(): λ{(,): λx1 => λ{(): (.Con, (x1, ((.Nil, ()), ()))); λ{}}}; λ{}}; λ{.Succ: λ{(,): λx1 => λ{(): λ{(,): λx2 => λ{(): (.Con, (x2, ((CanonicalSettlementPlan.digits x0 (MarketMath.divide (.Succ, (x1, ())) (.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())))), ()))); λ{}}}; λ{}}}; λ{}}}}}; λ{}}}; λ{}}}; λ{}}}}
+
+CanonicalSettlementPlan.encode_nat : ∀+x0 : Nat -> (List.q2 -Nat) =
+  λ{(,): λ{.Zero: λ{(): (.Con, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ((.Nil, ()), ()))); λ{}}; λ{.Succ: λ{(,): λ+x0 => λ{(): (CanonicalSettlementPlan.append (CanonicalSettlementPlan.digits (.Succ, (x0, ())) (MarketMath.divide (.Succ, (x0, ())) (.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())))) (.Con, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ((.Nil, ()), ())))); λ{}}}; λ{}}}}
+
+CanonicalSettlementPlan.encode_bytes : ∀+x0 : (List.q2 -Nat) -> (List.q2 -Nat) =
+  λ+x0 => (CanonicalSettlementPlan.append (CanonicalSettlementPlan.encode_nat +(CanonicalSettlementPlan.length x0)) x0)
+
+CanonicalSettlementPlan.payload : ∀x0 : (List.q2 -Nat) -> ∀x1 : Nat -> ∀x2 : Nat -> ∀x3 : Nat -> ∀x4 : Nat -> (List.q2 -Nat) =
+  λx0 => λx1 => λx2 => λx3 => λx4 => (CanonicalSettlementPlan.append (CanonicalSettlementPlan.encode_bytes +x0) (CanonicalSettlementPlan.append (CanonicalSettlementPlan.encode_nat +x1) (CanonicalSettlementPlan.append (CanonicalSettlementPlan.encode_nat +x2) (CanonicalSettlementPlan.append (CanonicalSettlementPlan.encode_nat +x3) (CanonicalSettlementPlan.encode_nat +x4)))))
+
+CanonicalSettlementPlan.suffix : ∀x0 : Nat -> (List.q2 -Nat) =
+  λ{(,): λ{.Zero: λ{(): (.Nil, ()); λ{}}; λ{.Succ: λ{(,): λx0 => λ{(): (.Con, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ((CanonicalSettlementPlan.suffix x0), ()))); λ{}}}; λ{}}}}
+
+CanonicalSettlementPlan.slot_name : ∀x0 : Nat -> (List.q2 -Nat) =
+  λx0 => (.Con, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ((.Con, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ((CanonicalSettlementPlan.suffix x0), ()))), ())))
+
+CanonicalSettlementPlan.book_returns : ∀x0 : (List.q2 -CanonicalBookSettlement.PrivateResult) -> ∀+x1 : (List.q2 -Nat) -> ∀+x2 : (List.q2 -Nat) -> ∀+x3 : Nat -> ∀+x4 : Nat -> (List.q2 -WorldPlanMoney.ReturnSlot) =
+  λ{(,): λ{.Nil: λ{(): λ+x0 => λ+x1 => λ+x2 => λ+x3 => (.Nil, ()); λ{}}; λ{.Con: λ{(,): λ{(,): λ{.CanonicalBookSettlement.PrivateResult: λ{(,): λx0 => λ{(,): λx1 => λ{(,): λx2 => λ{(,): λx3 => λ{(,): λx4 => λ{(,): λx5 => λ{(,): λx6 => λ{(,): λx7 => λ{(): λ{(,): λx8 => λ{(): λ+x9 => λ+x10 => λ+x11 => λ+x12 => (.Con, ((.WorldPlanMoney.ReturnSlot, ((CanonicalSettlementPlan.slot_name x12), (x9, (x10, (x0, (x2, (x1, (x11, ((CanonicalSettlementPlan.payload x3 x4 x5 x6 x7), ()))))))))), ((CanonicalSettlementPlan.book_returns x8 +x9 +x10 +x11 +(.Succ, (x12, ()))), ()))); λ{}}}; λ{}}}}}}}}}}; λ{}}}}; λ{}}}}
+
+CanonicalSettlementPlan.shared_returns : ∀x0 : (List.q2 -SharedBookSettlement.PrivateResult) -> ∀+x1 : (List.q2 -Nat) -> ∀+x2 : (List.q2 -Nat) -> ∀+x3 : Nat -> ∀+x4 : Nat -> (List.q2 -WorldPlanMoney.ReturnSlot) =
+  λ{(,): λ{.Nil: λ{(): λ+x0 => λ+x1 => λ+x2 => λ+x3 => (.Nil, ()); λ{}}; λ{.Con: λ{(,): λ{(,): λ{.SharedBookSettlement.PrivateResult: λ{(,): λx0 => λ{(,): λx1 => λ{(,): λx2 => λ{(,): λx3 => λ{(,): λx4 => λ{(,): λx5 => λ{(,): λx6 => λ{(,): λx7 => λ{(,): λx8 => λ{(): λ{(,): λx9 => λ{(): λ+x10 => λ+x11 => λ+x12 => λ+x13 => (.Con, ((.WorldPlanMoney.ReturnSlot, ((CanonicalSettlementPlan.slot_name x13), (x10, (x11, (x0, (x2, (x1, (x12, ((CanonicalSettlementPlan.append (CanonicalSettlementPlan.encode_nat +x4) (CanonicalSettlementPlan.payload x3 x5 x6 x7 x8)), ()))))))))), ((CanonicalSettlementPlan.shared_returns x9 +x10 +x11 +x12 +(.Succ, (x13, ()))), ()))); λ{}}}; λ{}}}}}}}}}}}; λ{}}}}; λ{}}}}
+
+CanonicalSettlementPlan.finish : ∀x0 : WorldPlanScalarBytes.Ref -> ∀x1 : WorldPlanScalarBytes.Ref -> ∀x2 : Nat -> ∀x3 : (List.q2 -WorldPlanScalarBytes.Ref) -> ∀x4 : (List.q2 -WorldPlanMoney.ReturnSlot) -> ∀x5 : CanonicalSettlementPlan.Transfers -> ∀x6 : Bool -> WorldPlanMoney.PlanResult =
+  λx0 => λx1 => λx2 => λx3 => λx4 => λ{(,): λ{.CanonicalSettlementPlan.Resolved: λ{(,): λx5 => λ{(): λ{(,): λ{.True: λ{(): (.WorldPlanMoney.Planned, ((.WorldPlanMoney.NativePlan, (x0, (x5, (x3, ((.Con, ((.WorldPlanScalarBytes.ScalarEffect, (x1, ((.Con, ((.WorldPlanScalarBytes.Write, (x2, ((.Zero, ()), ((.Succ, ((.Zero, ()), ())), ())))), ((.Nil, ()), ()))), ()))), ((.Nil, ()), ()))), (x4, ())))))), ())); λ{}}; λx6 => λx7 => (.WorldPlanMoney.Refused, ((.Succ, ((.Zero, ()), ())), ()))}}; λ{}}}; λx5 => λx6 => λx7 => (.WorldPlanMoney.Refused, ((.Succ, ((.Zero, ()), ())), ()))}}
+
+CanonicalSettlementPlan.from_book : ∀x0 : CanonicalSettlementPlan.Context -> ∀x1 : CanonicalBookSettlement.Result -> WorldPlanMoney.PlanResult =
+  λ{(,): λ{.CanonicalSettlementPlan.Context: λ{(,): λ{(,): λ{.WorldPlanScalarBytes.Ref: λ{(,): λx0 => λ{(,): λ+x1 => λ{(): λ{(,): λx2 => λ{(,): λ{(,): λ{.CanonicalSettlementPlan.Table: λ{(,): λ+x3 => λ{(,): λ+x4 => λ{(): λ{(,): λx5 => λ{(,): λx6 => λ{(,): λx7 => λ{(,): λx8 => λ{(,): λx9 => λ{(,): λx10 => λ{(): λ{(,): λ{.CanonicalBookSettlement.Refused: λ{(): (.WorldPlanMoney.Refused, ((.Zero, ()), ())); λ{}}; λ{.CanonicalBookSettlement.Prepared: λ{(,): λx11 => λ{(,): λx12 => λ{(,): λx13 => λ{(,): λx14 => λ{(,): λx15 => λ{(): (CanonicalSettlementPlan.finish (.WorldPlanScalarBytes.Ref, (x0, (x1, ()))) x5 x6 x7 (CanonicalSettlementPlan.book_returns x14 +x8 +x9 +x10 +(.Zero, ())) (CanonicalSettlementPlan.transfers x13 +(.CanonicalSettlementPlan.Table, (x3, (x4, ())))) (Bool.and (Nat.eq x2 x11) (Bool.and (Bytes.eq x1 x12) (Bool.and (CanonicalSettlementPlan.distinct x3) (CanonicalSettlementPlan.distinct x4))))); λ{}}}}}}}; λ{}}}}; λ{}}}}}}}}; λ{}}}}; λ{}}}}}; λ{}}}}; λ{}}}}; λ{}}}
+
+CanonicalSettlementPlan.from_shared : ∀x0 : CanonicalSettlementPlan.Context -> ∀x1 : SharedBookSettlement.Result -> WorldPlanMoney.PlanResult =
+  λ{(,): λ{.CanonicalSettlementPlan.Context: λ{(,): λ{(,): λ{.WorldPlanScalarBytes.Ref: λ{(,): λx0 => λ{(,): λ+x1 => λ{(): λ{(,): λx2 => λ{(,): λ{(,): λ{.CanonicalSettlementPlan.Table: λ{(,): λ+x3 => λ{(,): λ+x4 => λ{(): λ{(,): λx5 => λ{(,): λx6 => λ{(,): λx7 => λ{(,): λx8 => λ{(,): λx9 => λ{(,): λx10 => λ{(): λ{(,): λ{.SharedBookSettlement.Refused: λ{(): (.WorldPlanMoney.Refused, ((.Zero, ()), ())); λ{}}; λ{.SharedBookSettlement.Prepared: λ{(,): λx11 => λ{(,): λx12 => λ{(,): λx13 => λ{(,): λx14 => λ{(,): λx15 => λ{(,): λx16 => λ{(): (CanonicalSettlementPlan.finish (.WorldPlanScalarBytes.Ref, (x0, (x1, ()))) x5 x6 x7 (CanonicalSettlementPlan.shared_returns x15 +x8 +x9 +x10 +(.Zero, ())) (CanonicalSettlementPlan.transfers x14 +(.CanonicalSettlementPlan.Table, (x3, (x4, ())))) (Bool.and (Nat.eq x2 x11) (Bool.and (Bytes.eq x1 x12) (Bool.and (CanonicalSettlementPlan.distinct x3) (CanonicalSettlementPlan.distinct x4))))); λ{}}}}}}}}; λ{}}}}; λ{}}}}}}}}; λ{}}}}; λ{}}}}}; λ{}}}}; λ{}}}}; λ{}}}
+
+CanonicalSettlementPlan.settle : ∀x0 : CanonicalSettlementPlan.Context -> ∀x1 : CanonicalBookSettlement.Input -> WorldPlanMoney.PlanResult =
+  λx0 => λx1 => (CanonicalSettlementPlan.from_book x0 (CanonicalBookSettlement.settle x1))
+
+CanonicalSettlementPlan.settle_shared : ∀x0 : CanonicalSettlementPlan.Context -> ∀x1 : CanonicalBookSettlement.Input -> WorldPlanMoney.PlanResult =
+  λx0 => λx1 => (CanonicalSettlementPlan.from_shared x0 (SharedBookSettlement.settle x1))
+
+CanonicalSettlementPlan.refused_book_inert : ∀x0 : CanonicalSettlementPlan.Context -> {(CanonicalSettlementPlan.from_book x0 (.CanonicalBookSettlement.Refused, ())) == (.WorldPlanMoney.Refused, ((.Zero, ()), ())) : WorldPlanMoney.PlanResult} =
+  λ{(,): λ{.CanonicalSettlementPlan.Context: λ{(,): λ{(,): λ{.WorldPlanScalarBytes.Ref: λ{(,): λx0 => λ{(,): λx1 => λ{(): λ{(,): λx2 => λ{(,): λ{(,): λ{.CanonicalSettlementPlan.Table: λ{(,): λx3 => λ{(,): λx4 => λ{(): λ{(,): λx5 => λ{(,): λx6 => λ{(,): λx7 => λ{(,): λx8 => λ{(,): λx9 => λ{(,): λx10 => λ{(): {==}; λ{}}}}}}}}; λ{}}}}; λ{}}}}}; λ{}}}}; λ{}}}}; λ{}}}
+
+CanonicalSettlementPlan.refused_shared_inert : ∀x0 : CanonicalSettlementPlan.Context -> {(CanonicalSettlementPlan.from_shared x0 (.SharedBookSettlement.Refused, ())) == (.WorldPlanMoney.Refused, ((.Zero, ()), ())) : WorldPlanMoney.PlanResult} =
+  λ{(,): λ{.CanonicalSettlementPlan.Context: λ{(,): λ{(,): λ{.WorldPlanScalarBytes.Ref: λ{(,): λx0 => λ{(,): λx1 => λ{(): λ{(,): λx2 => λ{(,): λ{(,): λ{.CanonicalSettlementPlan.Table: λ{(,): λx3 => λ{(,): λx4 => λ{(): λ{(,): λx5 => λ{(,): λx6 => λ{(,): λx7 => λ{(,): λx8 => λ{(,): λx9 => λ{(,): λx10 => λ{(): {==}; λ{}}}}}}}}; λ{}}}}; λ{}}}}}; λ{}}}}; λ{}}}}; λ{}}}
+
+CanonicalSettlementPlan.resolved_cons_exact : ∀+x0 : (List.q2 -Nat) -> ∀+x1 : (List.q2 -Nat) -> ∀+x2 : (List.q2 -Nat) -> ∀+x3 : Nat -> ∀+x4 : (List.q2 -WorldPlanMoney.Transfer) -> {(CanonicalSettlementPlan.cons_transfer (.CanonicalSettlementPlan.Found, (x0, ())) (.CanonicalSettlementPlan.Found, (x1, ())) (.CanonicalSettlementPlan.Found, (x2, ())) x3 (.CanonicalSettlementPlan.Resolved, (x4, ()))) == (.CanonicalSettlementPlan.Resolved, ((.Con, ((.WorldPlanMoney.Transfer, (x0, (x1, (x2, (x3, ()))))), (x4, ()))), ())) : CanonicalSettlementPlan.Transfers} =
+  λ+x0 => λ+x1 => λ+x2 => λ+x3 => λ+x4 => {==}
+
+UniformProRata.Side.arms : ∀x0 : <UniformProRata.Bid, UniformProRata.Ask> -> *2 =
+  λ{.UniformProRata.Bid: <()>; λ{.UniformProRata.Ask: <()>; λ{}}}
+
+UniformProRata.Side : *2 =
+  Σx0 : <UniformProRata.Bid, UniformProRata.Ask> -> (UniformProRata.Side.arms x0)
+
+UniformProRata.Order.arms : ∀x0 : <UniformProRata.Order> -> *2 =
+  λ{.UniformProRata.Order: Σx0 : (List.q2 -Nat) -> Σx1 : (List.q2 -Nat) -> Σx2 : UniformProRata.Side -> Σx3 : Nat -> Σx4 : Nat -> <()>; λ{}}
+
+UniformProRata.Order : *2 =
+  Σx0 : <UniformProRata.Order> -> (UniformProRata.Order.arms x0)
+
+UniformProRata.Fill.arms : ∀x0 : <UniformProRata.Fill> -> *2 =
+  λ{.UniformProRata.Fill: Σx0 : Nat -> Σx1 : UniformProRata.Order -> Σx2 : Nat -> <()>; λ{}}
+
+UniformProRata.Fill : *2 =
+  Σx0 : <UniformProRata.Fill> -> (UniformProRata.Fill.arms x0)
+
+UniformProRata.Clearing.arms : ∀x0 : <UniformProRata.Clearing> -> *2 =
+  λ{.UniformProRata.Clearing: Σx0 : Nat -> Σx1 : Nat -> Σx2 : (List.q2 -UniformProRata.Fill) -> <()>; λ{}}
+
+UniformProRata.Clearing : *2 =
+  Σx0 : <UniformProRata.Clearing> -> (UniformProRata.Clearing.arms x0)
+
+UniformProRata.Result.arms : ∀x0 : <UniformProRata.InvalidGrid, UniformProRata.Cleared> -> *2 =
+  λ{.UniformProRata.InvalidGrid: <()>; λ{.UniformProRata.Cleared: Σx0 : UniformProRata.Clearing -> <()>; λ{}}}
+
+UniformProRata.Result : *2 =
+  Σx0 : <UniformProRata.InvalidGrid, UniformProRata.Cleared> -> (UniformProRata.Result.arms x0)
+
+UniformProRata.Crossing.arms : ∀x0 : <UniformProRata.Crossing> -> *2 =
+  λ{.UniformProRata.Crossing: Σx0 : Nat -> Σx1 : Nat -> <()>; λ{}}
+
+UniformProRata.Crossing : *2 =
+  Σx0 : <UniformProRata.Crossing> -> (UniformProRata.Crossing.arms x0)
+
+UniformProRata.Share.arms : ∀x0 : <UniformProRata.Share> -> *2 =
+  λ{.UniformProRata.Share: Σx0 : Nat -> Σx1 : UniformProRata.Order -> Σx2 : Bool -> Σx3 : Nat -> Σx4 : Nat -> <()>; λ{}}
+
+UniformProRata.Share : *2 =
+  Σx0 : <UniformProRata.Share> -> (UniformProRata.Share.arms x0)
+
+UniformProRata.same_side : ∀x0 : UniformProRata.Side -> ∀x1 : UniformProRata.Side -> Bool =
+  λ{(,): λ{.UniformProRata.Bid: λ{(): λ{(,): λ{.UniformProRata.Bid: λ{(): (.True, ()); λ{}}; λ{.UniformProRata.Ask: λ{(): (.False, ()); λ{}}; λ{}}}}; λ{}}; λ{.UniformProRata.Ask: λ{(): λ{(,): λ{.UniformProRata.Ask: λ{(): (.True, ()); λ{}}; λ{.UniformProRata.Bid: λ{(): (.False, ()); λ{}}; λ{}}}}; λ{}}; λ{}}}}
+
+UniformProRata.active : ∀x0 : UniformProRata.Side -> ∀x1 : Nat -> ∀x2 : Nat -> Bool =
+  λ{(,): λ{.UniformProRata.Bid: λ{(): λx0 => λx1 => (MarketMath.le x1 x0); λ{}}; λ{.UniformProRata.Ask: λ{(): λx0 => λx1 => (MarketMath.le x0 x1); λ{}}; λ{}}}}
+
+UniformProRata.total : ∀+x0 : UniformProRata.Side -> ∀+x1 : Nat -> ∀x2 : (List.q2 -UniformProRata.Order) -> Nat =
+  λ+x0 => λ+x1 => λ{(,): λ{.Nil: λ{(): (.Zero, ()); λ{}}; λ{.Con: λ{(,): λ{(,): λ{.UniformProRata.Order: λ{(,): λx2 => λ{(,): λx3 => λ{(,): λ+x4 => λ{(,): λx5 => λ{(,): λx6 => λ{(): λ{(,): λx7 => λ{(): (MarketMath.add (MarketMath.choose_nat x6 (.Zero, ()) (Bool.and (UniformProRata.same_side x0 x4) (UniformProRata.active x4 x5 x1))) (UniformProRata.total +x0 +x1 x7)); λ{}}}; λ{}}}}}}}; λ{}}}}; λ{}}}}
+
+UniformProRata.volume : ∀+x0 : Nat -> ∀+x1 : (List.q2 -UniformProRata.Order) -> Nat =
+  λ+x0 => λ+x1 => (MarketMath.min (UniformProRata.total +(.UniformProRata.Bid, ()) +x0 x1) (UniformProRata.total +(.UniformProRata.Ask, ()) +x0 x1))
+
+UniformProRata.scan : ∀x0 : Nat -> ∀+x1 : Nat -> ∀+x2 : (List.q2 -UniformProRata.Order) -> ∀x3 : Nat -> ∀+x4 : Nat -> UniformProRata.Crossing =
+  λ{(,): λ{.Zero: λ{(): λ+x0 => λ+x1 => λx2 => λ+x3 => (.UniformProRata.Crossing, (x2, (x3, ()))); λ{}}; λ{.Succ: λ{(,): λx0 => λ{(): λ+x1 => λ+x2 => λx3 => λ+x4 => !+x5 = (UniformProRata.volume +x1 +x2); !+x6 = (MarketMath.lt x4 x5); (UniformProRata.scan x0 +(.Succ, (x1, ())) +x2 (MarketMath.choose_nat x1 x3 x6) +(MarketMath.choose_nat x5 x4 x6)); λ{}}}; λ{}}}}
+
+UniformProRata.side_value : ∀x0 : UniformProRata.Side -> ∀x1 : Nat -> ∀x2 : Nat -> Nat =
+  λ{(,): λ{.UniformProRata.Bid: λ{(): λx0 => λx1 => x0; λ{}}; λ{.UniformProRata.Ask: λ{(): λx0 => λx1 => x1; λ{}}; λ{}}}}
+
+UniformProRata.make_share : ∀x0 : Nat -> ∀x1 : UniformProRata.Order -> ∀x2 : Bool -> ∀x3 : MarketMath.Division -> UniformProRata.Share =
+  λx0 => λx1 => λx2 => λ{(,): λ{.MarketMath.Division: λ{(,): λx3 => λ{(,): λx4 => λ{(): (.UniformProRata.Share, (x0, (x1, (x2, (x3, (x4, ())))))); λ{}}}}; λ{}}}
+
+UniformProRata.share_division : ∀x0 : Nat -> ∀x1 : Nat -> ∀x2 : Nat -> ∀x3 : Bool -> MarketMath.Division =
+  λx0 => λx1 => λx2 => λ{(,): λ{.True: λ{(): (MarketMath.divide (MarketMath.mul x0 +x1) x2); λ{}}; λ{.False: λ{(): (.MarketMath.Division, ((.Zero, ()), ((.Zero, ()), ()))); λ{}}; λ{}}}}
+
+UniformProRata.shares : ∀+x0 : Nat -> ∀+x1 : Nat -> ∀+x2 : Nat -> ∀+x3 : Nat -> ∀x4 : (List.q2 -UniformProRata.Order) -> ∀+x5 : Nat -> (List.q2 -UniformProRata.Share) =
+  λ+x0 => λ+x1 => λ+x2 => λ+x3 => λ{(,): λ{.Nil: λ{(): λ+x4 => (.Nil, ()); λ{}}; λ{.Con: λ{(,): λ{(,): λ{.UniformProRata.Order: λ{(,): λx4 => λ{(,): λx5 => λ{(,): λ+x6 => λ{(,): λ+x7 => λ{(,): λ+x8 => λ{(): λ{(,): λx9 => λ{(): λ+x10 => !+x11 = (UniformProRata.active x6 x7 x0); (.Con, ((UniformProRata.make_share x10 (.UniformProRata.Order, (x4, (x5, (x6, (x7, (x8, ())))))) x11 (UniformProRata.share_division x8 x1 (UniformProRata.side_value x6 x2 x3) x11)), ((UniformProRata.shares +x0 +x1 +x2 +x3 x9 +(.Succ, (x10, ()))), ()))); λ{}}}; λ{}}}}}}}; λ{}}}}; λ{}}}}
+
+UniformProRata.floors : ∀+x0 : UniformProRata.Side -> ∀x1 : (List.q2 -UniformProRata.Share) -> Nat =
+  λ+x0 => λ{(,): λ{.Nil: λ{(): (.Zero, ()); λ{}}; λ{.Con: λ{(,): λ{(,): λ{.UniformProRata.Share: λ{(,): λx1 => λ{(,): λ{(,): λ{.UniformProRata.Order: λ{(,): λx2 => λ{(,): λx3 => λ{(,): λx4 => λ{(,): λx5 => λ{(,): λx6 => λ{(): λ{(,): λx7 => λ{(,): λx8 => λ{(,): λx9 => λ{(): λ{(,): λx10 => λ{(): (MarketMath.add (MarketMath.choose_nat x8 (.Zero, ()) (UniformProRata.same_side x0 x4)) (UniformProRata.floors +x0 x10)); λ{}}}; λ{}}}}}; λ{}}}}}}}; λ{}}}}}; λ{}}}}; λ{}}}}
+
+UniformProRata.rank : ∀+x0 : UniformProRata.Side -> ∀+x1 : Nat -> ∀+x2 : Nat -> ∀x3 : (List.q2 -UniformProRata.Share) -> Nat =
+  λ+x0 => λ+x1 => λ+x2 => λ{(,): λ{.Nil: λ{(): (.Zero, ()); λ{}}; λ{.Con: λ{(,): λ{(,): λ{.UniformProRata.Share: λ{(,): λx3 => λ{(,): λ{(,): λ{.UniformProRata.Order: λ{(,): λx4 => λ{(,): λx5 => λ{(,): λx6 => λ{(,): λx7 => λ{(,): λx8 => λ{(): λ{(,): λx9 => λ{(,): λx10 => λ{(,): λ+x11 => λ{(): λ{(,): λx12 => λ{(): !+x13 = (MarketMath.choose_bool (MarketMath.lt x3 x1) (MarketMath.lt x2 x11) (Nat.eq x2 x11)); (MarketMath.add (MarketMath.choose_nat (.Succ, ((.Zero, ()), ())) (.Zero, ()) (Bool.and x9 (Bool.and (UniformProRata.same_side x0 x6) x13))) (UniformProRata.rank +x0 +x1 +x2 x12)); λ{}}}; λ{}}}}}; λ{}}}}}}}; λ{}}}}}; λ{}}}}; λ{}}}}
+
+UniformProRata.finish : ∀x0 : (List.q2 -UniformProRata.Share) -> ∀+x1 : (List.q2 -UniformProRata.Share) -> ∀+x2 : Nat -> ∀+x3 : Nat -> (List.q2 -UniformProRata.Fill) =
+  λ{(,): λ{.Nil: λ{(): λ+x0 => λ+x1 => λ+x2 => (.Nil, ()); λ{}}; λ{.Con: λ{(,): λ{(,): λ{.UniformProRata.Share: λ{(,): λ+x0 => λ{(,): λ{(,): λ{.UniformProRata.Order: λ{(,): λx1 => λ{(,): λx2 => λ{(,): λ+x3 => λ{(,): λx4 => λ{(,): λx5 => λ{(): λ{(,): λx6 => λ{(,): λ+x7 => λ{(,): λx8 => λ{(): λ{(,): λx9 => λ{(): λ+x10 => λ+x11 => λ+x12 => !+x13 = (UniformProRata.side_value x3 x11 x12); !+x14 = (MarketMath.choose_nat (.Succ, (x7, ())) x7 (Bool.and x6 (MarketMath.lt (UniformProRata.rank +x3 +x0 +x8 x10) x13))); (.Con, ((.UniformProRata.Fill, (x0, ((.UniformProRata.Order, (x1, (x2, (x3, (x4, (x5, ())))))), (x14, ())))), ((UniformProRata.finish x9 +x10 +x11 +x12), ()))); λ{}}}; λ{}}}}}; λ{}}}}}}}; λ{}}}}}; λ{}}}}; λ{}}}}
+
+UniformProRata.clear : ∀+x0 : (List.q2 -UniformProRata.Order) -> ∀x1 : UniformProRata.Crossing -> UniformProRata.Result =
+  λ+x0 => λ{(,): λ{.UniformProRata.Crossing: λ{(,): λ+x1 => λ{(,): λ+x2 => λ{(): !+x3 = (UniformProRata.shares +x1 +x2 +(UniformProRata.total +(.UniformProRata.Bid, ()) +x1 x0) +(UniformProRata.total +(.UniformProRata.Ask, ()) +x1 x0) x0 +(.Zero, ())); (.UniformProRata.Cleared, ((.UniformProRata.Clearing, (x1, (x2, ((UniformProRata.finish x3 +x3 +(MarketMath.sub x2 (UniformProRata.floors +(.UniformProRata.Bid, ()) x3)) +(MarketMath.sub x2 (UniformProRata.floors +(.UniformProRata.Ask, ()) x3))), ())))), ())); λ{}}}}; λ{}}}
+
+UniformProRata.allocate : ∀x0 : Nat -> ∀+x1 : (List.q2 -UniformProRata.Order) -> UniformProRata.Result =
+  λ{(,): λ{.Zero: λ{(): λ+x0 => (.UniformProRata.InvalidGrid, ()); λ{}}; λ{.Succ: λ{(,): λx0 => λ{(): λ+x1 => (UniformProRata.clear +x1 (UniformProRata.scan (.Succ, (x0, ())) +(.Zero, ()) +x1 (.Zero, ()) +(.Zero, ()))); λ{}}}; λ{}}}}
+
+UniformProRata.invalid_grid_refused : ∀x0 : (List.q2 -UniformProRata.Order) -> {(UniformProRata.allocate (.Zero, ()) +x0) == (.UniformProRata.InvalidGrid, ()) : UniformProRata.Result} =
+  λx0 => {==}
+
+CanonicalUniformSettlement.Participant.arms : ∀x0 : <CanonicalUniformSettlement.Participant> -> *2 =
+  λ{.CanonicalUniformSettlement.Participant: Σx0 : UniformProRata.Order -> Σx1 : CanonicalBookSettlement.Account -> Σx2 : CanonicalBookSettlement.Account -> Σx3 : (List.q2 -Nat) -> Σx4 : (List.q2 -Nat) -> <()>; λ{}}
+
+CanonicalUniformSettlement.Participant : *2 =
+  Σx0 : <CanonicalUniformSettlement.Participant> -> (CanonicalUniformSettlement.Participant.arms x0)
+
+CanonicalUniformSettlement.Input.arms : ∀x0 : <CanonicalUniformSettlement.Input> -> *2 =
+  λ{.CanonicalUniformSettlement.Input: Σx0 : Nat -> Σx1 : (List.q2 -Nat) -> Σx2 : CanonicalBookSettlement.Account -> Σx3 : CanonicalBookSettlement.Account -> Σx4 : Nat -> Σx5 : (List.q2 -CanonicalUniformSettlement.Participant) -> <()>; λ{}}
+
+CanonicalUniformSettlement.Input : *2 =
+  Σx0 : <CanonicalUniformSettlement.Input> -> (CanonicalUniformSettlement.Input.arms x0)
+
+CanonicalUniformSettlement.PrivateResult.arms : ∀x0 : <CanonicalUniformSettlement.PrivateResult> -> *2 =
+  λ{.CanonicalUniformSettlement.PrivateResult: Σx0 : (List.q2 -Nat) -> Σx1 : (List.q2 -Nat) -> Σx2 : (List.q2 -Nat) -> Σx3 : (List.q2 -Nat) -> Σx4 : UniformProRata.Side -> Σx5 : Nat -> Σx6 : Nat -> Σx7 : Nat -> Σx8 : Nat -> <()>; λ{}}
+
+CanonicalUniformSettlement.PrivateResult : *2 =
+  Σx0 : <CanonicalUniformSettlement.PrivateResult> -> (CanonicalUniformSettlement.PrivateResult.arms x0)
+
+CanonicalUniformSettlement.Result.arms : ∀x0 : <CanonicalUniformSettlement.Refused, CanonicalUniformSettlement.Prepared> -> *2 =
+  λ{.CanonicalUniformSettlement.Refused: <()>; λ{.CanonicalUniformSettlement.Prepared: Σx0 : Nat -> Σx1 : (List.q2 -Nat) -> Σx2 : (List.q2 -CanonicalBookSettlement.Transfer) -> Σx3 : (List.q2 -CanonicalUniformSettlement.PrivateResult) -> Σx4 : UniformProRata.Clearing -> <()>; λ{}}}
+
+CanonicalUniformSettlement.Result : *2 =
+  Σx0 : <CanonicalUniformSettlement.Refused, CanonicalUniformSettlement.Prepared> -> (CanonicalUniformSettlement.Result.arms x0)
+
+CanonicalUniformSettlement.orders : ∀x0 : (List.q2 -CanonicalUniformSettlement.Participant) -> (List.q2 -UniformProRata.Order) =
+  λ{(,): λ{.Nil: λ{(): (.Nil, ()); λ{}}; λ{.Con: λ{(,): λ{(,): λ{.CanonicalUniformSettlement.Participant: λ{(,): λx0 => λ{(,): λx1 => λ{(,): λx2 => λ{(,): λx3 => λ{(,): λx4 => λ{(): λ{(,): λx5 => λ{(): (.Con, (x0, ((CanonicalUniformSettlement.orders x5), ()))); λ{}}}; λ{}}}}}}}; λ{}}}}; λ{}}}}
+
+CanonicalUniformSettlement.coordinates : ∀x0 : (List.q2 -CanonicalUniformSettlement.Participant) -> (List.q2 -CanonicalBookSettlement.Coordinate) =
+  λ{(,): λ{.Nil: λ{(): (.Nil, ()); λ{}}; λ{.Con: λ{(,): λ{(,): λ{.CanonicalUniformSettlement.Participant: λ{(,): λx0 => λ{(,): λx1 => λ{(,): λx2 => λ{(,): λx3 => λ{(,): λx4 => λ{(): λ{(,): λx5 => λ{(): (.Con, ((CanonicalBookSettlement.coordinate x1), ((.Con, ((CanonicalBookSettlement.coordinate x2), ((CanonicalUniformSettlement.coordinates x5), ()))), ()))); λ{}}}; λ{}}}}}}}; λ{}}}}; λ{}}}}
+
+CanonicalUniformSettlement.units_at : ∀+x0 : Nat -> ∀x1 : (List.q2 -UniformProRata.Fill) -> Nat =
+  λ+x0 => λ{(,): λ{.Nil: λ{(): (.Zero, ()); λ{}}; λ{.Con: λ{(,): λ{(,): λ{.UniformProRata.Fill: λ{(,): λx1 => λ{(,): λx2 => λ{(,): λx3 => λ{(): λ{(,): λx4 => λ{(): (MarketMath.choose_nat x3 (CanonicalUniformSettlement.units_at +x0 x4) (Nat.eq x0 x1)); λ{}}}; λ{}}}}}; λ{}}}}; λ{}}}}
+
+CanonicalUniformSettlement.side_valid : ∀x0 : UniformProRata.Side -> ∀+x1 : Nat -> ∀+x2 : Nat -> ∀+x3 : Nat -> ∀+x4 : Nat -> ∀+x5 : Nat -> ∀+x6 : Nat -> Bool =
+  λ{(,): λ{.UniformProRata.Bid: λ{(): λ+x0 => λ+x1 => λ+x2 => λ+x3 => λ+x4 => λ+x5 => (Bool.and (MarketMath.le (MarketMath.mul x0 +x1) x4) (Bool.and (MarketMath.le (MarketMath.mul x2 +x3) x4) (MarketMath.choose_bool (.True, ()) (MarketMath.le x2 x0) (Nat.eq x3 (.Zero, ()))))); λ{}}; λ{.UniformProRata.Ask: λ{(): λ+x0 => λ+x1 => λ+x2 => λ+x3 => λ+x4 => λ+x5 => (Bool.and (MarketMath.le x1 x5) (Bool.and (MarketMath.le x3 x5) (MarketMath.choose_bool (.True, ()) (MarketMath.le x0 x2) (Nat.eq x3 (.Zero, ()))))); λ{}}; λ{}}}}
+
+CanonicalUniformSettlement.valid_participants : ∀x0 : (List.q2 -CanonicalUniformSettlement.Participant) -> ∀+x1 : (List.q2 -UniformProRata.Fill) -> ∀+x2 : Nat -> ∀+x3 : Nat -> ∀+x4 : Nat -> ∀+x5 : Nat -> Bool =
+  λ{(,): λ{.Nil: λ{(): λ+x0 => λ+x1 => λ+x2 => λ+x3 => λ+x4 => (.True, ()); λ{}}; λ{.Con: λ{(,): λ{(,): λ{.CanonicalUniformSettlement.Participant: λ{(,): λ{(,): λ{.UniformProRata.Order: λ{(,): λx0 => λ{(,): λx1 => λ{(,): λx2 => λ{(,): λx3 => λ{(,): λ+x4 => λ{(): λ{(,): λ{(,): λ{.CanonicalBookSettlement.Account: λ{(,): λx5 => λ{(,): λx6 => λ{(,): λx7 => λ{(): λ{(,): λ{(,): λ{.CanonicalBookSettlement.Account: λ{(,): λx8 => λ{(,): λx9 => λ{(,): λx10 => λ{(): λ{(,): λx11 => λ{(,): λx12 => λ{(): λ{(,): λx13 => λ{(): λ+x14 => λ+x15 => λ+x16 => λ+x17 => λ+x18 => !+x19 = (CanonicalUniformSettlement.units_at +x18 x14); (Bool.and (Nat.eq x15 x6) (Bool.and (Nat.eq x16 x9) (Bool.and (MarketMath.le x19 x4) (Bool.and (CanonicalUniformSettlement.side_valid x2 +x3 +x4 +x17 +x19 +x7 +x10) (CanonicalUniformSettlement.valid_participants x13 +x14 +x15 +x16 +x17 +(.Succ, (x18, ()))))))); λ{}}}; λ{}}}}; λ{}}}}}; λ{}}}}; λ{}}}}}; λ{}}}}; λ{}}}}}}}; λ{}}}}; λ{}}}}; λ{}}}}
+
+CanonicalUniformSettlement.side_total : ∀+x0 : UniformProRata.Side -> ∀x1 : (List.q2 -UniformProRata.Fill) -> Nat =
+  λ+x0 => λ{(,): λ{.Nil: λ{(): (.Zero, ()); λ{}}; λ{.Con: λ{(,): λ{(,): λ{.UniformProRata.Fill: λ{(,): λx1 => λ{(,): λ{(,): λ{.UniformProRata.Order: λ{(,): λx2 => λ{(,): λx3 => λ{(,): λx4 => λ{(,): λx5 => λ{(,): λx6 => λ{(): λ{(,): λx7 => λ{(): λ{(,): λx8 => λ{(): (MarketMath.add (MarketMath.choose_nat x7 (.Zero, ()) (UniformProRata.same_side x0 x4)) (CanonicalUniformSettlement.side_total +x0 x8)); λ{}}}; λ{}}}; λ{}}}}}}}; λ{}}}}}; λ{}}}}; λ{}}}}
+
+CanonicalUniformSettlement.transfer_for : ∀x0 : UniformProRata.Side -> ∀x1 : Bool -> ∀x2 : Nat -> ∀x3 : Nat -> ∀x4 : Nat -> ∀x5 : Nat -> ∀x6 : Nat -> ∀x7 : Nat -> ∀x8 : Nat -> ∀x9 : Nat -> CanonicalBookSettlement.Transfer =
+  λ{(,): λ{.UniformProRata.Bid: λ{(): λ{(,): λ{.True: λ{(): λx0 => λx1 => λx2 => λx3 => λx4 => λx5 => λx6 => λx7 => (.CanonicalBookSettlement.Transfer, (x2, (x0, (x4, ((MarketMath.mul x6 +x7), ()))))); λ{}}; λ{.False: λ{(): λx0 => λx1 => λx2 => λx3 => λx4 => λx5 => λx6 => λx7 => (.CanonicalBookSettlement.Transfer, (x1, (x3, (x5, (x7, ()))))); λ{}}; λ{}}}}; λ{}}; λ{.UniformProRata.Ask: λ{(): λ{(,): λ{.True: λ{(): λx0 => λx1 => λx2 => λx3 => λx4 => λx5 => λx6 => λx7 => (.CanonicalBookSettlement.Transfer, (x3, (x1, (x5, (x7, ()))))); λ{}}; λ{.False: λ{(): λx0 => λx1 => λx2 => λx3 => λx4 => λx5 => λx6 => λx7 => (.CanonicalBookSettlement.Transfer, (x0, (x2, (x4, ((MarketMath.mul x6 +x7), ()))))); λ{}}; λ{}}}}; λ{}}; λ{}}}}
+
+CanonicalUniformSettlement.transfers : ∀x0 : (List.q2 -CanonicalUniformSettlement.Participant) -> ∀+x1 : (List.q2 -UniformProRata.Fill) -> ∀+x2 : Nat -> ∀+x3 : Nat -> ∀+x4 : Nat -> ∀+x5 : Nat -> ∀+x6 : Nat -> ∀+x7 : Nat -> ∀+x8 : Bool -> (List.q2 -CanonicalBookSettlement.Transfer) =
+  λ{(,): λ{.Nil: λ{(): λ+x0 => λ+x1 => λ+x2 => λ+x3 => λ+x4 => λ+x5 => λ+x6 => λ+x7 => (.Nil, ()); λ{}}; λ{.Con: λ{(,): λ{(,): λ{.CanonicalUniformSettlement.Participant: λ{(,): λ{(,): λ{.UniformProRata.Order: λ{(,): λx0 => λ{(,): λx1 => λ{(,): λx2 => λ{(,): λx3 => λ{(,): λx4 => λ{(): λ{(,): λ{(,): λ{.CanonicalBookSettlement.Account: λ{(,): λx5 => λ{(,): λx6 => λ{(,): λx7 => λ{(): λ{(,): λ{(,): λ{.CanonicalBookSettlement.Account: λ{(,): λx8 => λ{(,): λx9 => λ{(,): λx10 => λ{(): λ{(,): λx11 => λ{(,): λx12 => λ{(): λ{(,): λx13 => λ{(): λ+x14 => λ+x15 => λ+x16 => λ+x17 => λ+x18 => λ+x19 => λ+x20 => λ+x21 => (.Con, ((CanonicalUniformSettlement.transfer_for x2 x21 x15 x16 x5 x8 x17 x18 x19 (CanonicalUniformSettlement.units_at +x20 x14)), ((CanonicalUniformSettlement.transfers x13 +x14 +x15 +x16 +x17 +x18 +x19 +(.Succ, (x20, ())) +x21), ()))); λ{}}}; λ{}}}}; λ{}}}}}; λ{}}}}; λ{}}}}}; λ{}}}}; λ{}}}}}}}; λ{}}}}; λ{}}}}; λ{}}}}
+
+CanonicalUniformSettlement.append : ∀x0 : (List.q2 -CanonicalBookSettlement.Transfer) -> ∀x1 : (List.q2 -CanonicalBookSettlement.Transfer) -> (List.q2 -CanonicalBookSettlement.Transfer) =
+  λ{(,): λ{.Nil: λ{(): λx0 => x0; λ{}}; λ{.Con: λ{(,): λx0 => λ{(,): λx1 => λ{(): λx2 => (.Con, (x0, ((CanonicalUniformSettlement.append x1 x2), ()))); λ{}}}}; λ{}}}}
+
+CanonicalUniformSettlement.remaining : ∀x0 : UniformProRata.Side -> ∀x1 : Nat -> ∀x2 : Nat -> ∀x3 : Nat -> ∀x4 : Nat -> Nat =
+  λ{(,): λ{.UniformProRata.Bid: λ{(): λx0 => λx1 => λx2 => λx3 => (MarketMath.sub x0 (MarketMath.mul x2 +x3)); λ{}}; λ{.UniformProRata.Ask: λ{(): λx0 => λx1 => λx2 => λx3 => (MarketMath.sub x1 x3); λ{}}; λ{}}}}
+
+CanonicalUniformSettlement.returns : ∀x0 : (List.q2 -CanonicalUniformSettlement.Participant) -> ∀+x1 : (List.q2 -UniformProRata.Fill) -> ∀+x2 : Nat -> ∀+x3 : Nat -> (List.q2 -CanonicalUniformSettlement.PrivateResult) =
+  λ{(,): λ{.Nil: λ{(): λ+x0 => λ+x1 => λ+x2 => (.Nil, ()); λ{}}; λ{.Con: λ{(,): λ{(,): λ{.CanonicalUniformSettlement.Participant: λ{(,): λ{(,): λ{.UniformProRata.Order: λ{(,): λx0 => λ{(,): λx1 => λ{(,): λ+x2 => λ{(,): λx3 => λ{(,): λx4 => λ{(): λ{(,): λ{(,): λ{.CanonicalBookSettlement.Account: λ{(,): λx5 => λ{(,): λx6 => λ{(,): λx7 => λ{(): λ{(,): λ{(,): λ{.CanonicalBookSettlement.Account: λ{(,): λx8 => λ{(,): λx9 => λ{(,): λx10 => λ{(): λ{(,): λx11 => λ{(,): λx12 => λ{(): λ{(,): λx13 => λ{(): λ+x14 => λ+x15 => λ+x16 => !+x17 = (CanonicalUniformSettlement.units_at +x16 x14); (.Con, ((.CanonicalUniformSettlement.PrivateResult, (x0, (x11, (x12, (x1, (x2, (x15, (x17, ((MarketMath.mul x15 +x17), ((CanonicalUniformSettlement.remaining x2 x7 x10 x15 x17), ())))))))))), ((CanonicalUniformSettlement.returns x13 +x14 +x15 +(.Succ, (x16, ()))), ()))); λ{}}}; λ{}}}}; λ{}}}}}; λ{}}}}; λ{}}}}}; λ{}}}}; λ{}}}}}}}; λ{}}}}; λ{}}}}; λ{}}}}
+
+CanonicalUniformSettlement.choose : ∀x0 : Nat -> ∀x1 : (List.q2 -Nat) -> ∀x2 : (List.q2 -CanonicalBookSettlement.Transfer) -> ∀x3 : (List.q2 -CanonicalUniformSettlement.PrivateResult) -> ∀x4 : UniformProRata.Clearing -> ∀x5 : Bool -> CanonicalUniformSettlement.Result =
+  λx0 => λx1 => λx2 => λx3 => λx4 => λ{(,): λ{.False: λ{(): (.CanonicalUniformSettlement.Refused, ()); λ{}}; λ{.True: λ{(): (.CanonicalUniformSettlement.Prepared, (x0, (x1, (x2, (x3, (x4, ())))))); λ{}}; λ{}}}}
+
+CanonicalUniformSettlement.prepare : ∀x0 : Nat -> ∀x1 : (List.q2 -Nat) -> ∀+x2 : CanonicalBookSettlement.Account -> ∀+x3 : CanonicalBookSettlement.Account -> ∀+x4 : (List.q2 -CanonicalUniformSettlement.Participant) -> ∀+x5 : UniformProRata.Clearing -> CanonicalUniformSettlement.Result =
+  λx0 => λx1 => λ{(,): λ{.CanonicalBookSettlement.Account: λ{(,): λ+x2 => λ{(,): λ+x3 => λ{(,): λ+x4 => λ{(): λ{(,): λ{.CanonicalBookSettlement.Account: λ{(,): λ+x5 => λ{(,): λ+x6 => λ{(,): λ+x7 => λ{(): λ+x8 => λ{(,): λ{.UniformProRata.Clearing: λ{(,): λ+x9 => λ{(,): λ+x10 => λ{(,): λ+x11 => λ{(): (CanonicalUniformSettlement.choose x0 x1 (CanonicalUniformSettlement.append (CanonicalUniformSettlement.transfers x8 +x11 +x2 +x5 +x3 +x6 +x9 +(.Zero, ()) +(.True, ())) (CanonicalUniformSettlement.transfers x8 +x11 +x2 +x5 +x3 +x6 +x9 +(.Zero, ()) +(.False, ()))) (CanonicalUniformSettlement.returns x8 +x11 +x9 +(.Zero, ())) (.UniformProRata.Clearing, (x9, (x10, (x11, ())))) (Bool.and (CanonicalBookSettlement.distinct (.Con, ((CanonicalBookSettlement.coordinate (.CanonicalBookSettlement.Account, (x2, (x3, (x4, ()))))), ((.Con, ((CanonicalBookSettlement.coordinate (.CanonicalBookSettlement.Account, (x5, (x6, (x7, ()))))), ((CanonicalUniformSettlement.coordinates x8), ()))), ())))) (Bool.and (Nat.eq (CanonicalUniformSettlement.side_total +(.UniformProRata.Bid, ()) x11) x10) (Bool.and (Nat.eq (CanonicalUniformSettlement.side_total +(.UniformProRata.Ask, ()) x11) x10) (CanonicalUniformSettlement.valid_participants x8 +x11 +x3 +x6 +x9 +(.Zero, ())))))); λ{}}}}}; λ{}}}; λ{}}}}}; λ{}}}; λ{}}}}}; λ{}}}
+
+CanonicalUniformSettlement.accept : ∀x0 : Nat -> ∀x1 : (List.q2 -Nat) -> ∀x2 : CanonicalBookSettlement.Account -> ∀x3 : CanonicalBookSettlement.Account -> ∀x4 : (List.q2 -CanonicalUniformSettlement.Participant) -> ∀x5 : UniformProRata.Result -> CanonicalUniformSettlement.Result =
+  λx0 => λx1 => λx2 => λx3 => λx4 => λ{(,): λ{.UniformProRata.InvalidGrid: λ{(): (.CanonicalUniformSettlement.Refused, ()); λ{}}; λ{.UniformProRata.Cleared: λ{(,): λx5 => λ{(): (CanonicalUniformSettlement.prepare x0 x1 +x2 +x3 +x4 +x5); λ{}}}; λ{}}}}
+
+CanonicalUniformSettlement.settle : ∀x0 : CanonicalUniformSettlement.Input -> CanonicalUniformSettlement.Result =
+  λ{(,): λ{.CanonicalUniformSettlement.Input: λ{(,): λx0 => λ{(,): λx1 => λ{(,): λx2 => λ{(,): λx3 => λ{(,): λx4 => λ{(,): λ+x5 => λ{(): (CanonicalUniformSettlement.accept x0 x1 x2 x3 x5 (UniformProRata.allocate x4 +(CanonicalUniformSettlement.orders x5))); λ{}}}}}}}}; λ{}}}
+
+CanonicalUniformSettlement.volume_equality : ∀+x0 : Nat -> ∀+x1 : Nat -> ∀+x2 : Nat -> ∀+x3 : (Truth (Bool.and (Nat.eq x0 x2) (Nat.eq x1 x2))) -> (Pair -{x0 == x2 : Nat} -{x1 == x2 : Nat}) =
+  λ+x0 => λ+x1 => λ+x2 => λ+x3 => (.Tuple, ((Nat.eq_sound +x0 +x2 (Bool.and_left +(Nat.eq x0 x2) +(Nat.eq x1 x2) x3)), ((Nat.eq_sound +x1 +x2 (Bool.and_right +(Nat.eq x0 x2) +(Nat.eq x1 x2) x3)), ())))
+
+DrEXSettlementPlan.side_byte : ∀x0 : UniformProRata.Side -> Nat =
+  λ{(,): λ{.UniformProRata.Bid: λ{(): (.Zero, ()); λ{}}; λ{.UniformProRata.Ask: λ{(): (.Succ, ((.Zero, ()), ())); λ{}}; λ{}}}}
+
+DrEXSettlementPlan.returns : ∀x0 : (List.q2 -CanonicalUniformSettlement.PrivateResult) -> ∀+x1 : (List.q2 -Nat) -> ∀+x2 : (List.q2 -Nat) -> ∀+x3 : Nat -> ∀+x4 : Nat -> (List.q2 -WorldPlanMoney.ReturnSlot) =
+  λ{(,): λ{.Nil: λ{(): λ+x0 => λ+x1 => λ+x2 => λ+x3 => (.Nil, ()); λ{}}; λ{.Con: λ{(,): λ{(,): λ{.CanonicalUniformSettlement.PrivateResult: λ{(,): λx0 => λ{(,): λx1 => λ{(,): λx2 => λ{(,): λx3 => λ{(,): λx4 => λ{(,): λx5 => λ{(,): λx6 => λ{(,): λx7 => λ{(,): λx8 => λ{(): λ{(,): λx9 => λ{(): λ+x10 => λ+x11 => λ+x12 => λ+x13 => (.Con, ((.WorldPlanMoney.ReturnSlot, ((CanonicalSettlementPlan.slot_name x13), (x10, (x11, (x0, (x2, (x1, (x12, ((.Con, ((DrEXSettlementPlan.side_byte x4), ((CanonicalSettlementPlan.payload x3 x6 x5 x7 x8), ()))), ()))))))))), ((DrEXSettlementPlan.returns x9 +x10 +x11 +x12 +(.Succ, (x13, ()))), ()))); λ{}}}; λ{}}}}}}}}}}}; λ{}}}}; λ{}}}}
+
+DrEXSettlementPlan.from_result : ∀x0 : CanonicalSettlementPlan.Context -> ∀x1 : CanonicalUniformSettlement.Result -> WorldPlanMoney.PlanResult =
+  λ{(,): λ{.CanonicalSettlementPlan.Context: λ{(,): λ{(,): λ{.WorldPlanScalarBytes.Ref: λ{(,): λx0 => λ{(,): λ+x1 => λ{(): λ{(,): λx2 => λ{(,): λ{(,): λ{.CanonicalSettlementPlan.Table: λ{(,): λ+x3 => λ{(,): λ+x4 => λ{(): λ{(,): λx5 => λ{(,): λx6 => λ{(,): λx7 => λ{(,): λx8 => λ{(,): λx9 => λ{(,): λx10 => λ{(): λ{(,): λ{.CanonicalUniformSettlement.Refused: λ{(): (.WorldPlanMoney.Refused, ((.Zero, ()), ())); λ{}}; λ{.CanonicalUniformSettlement.Prepared: λ{(,): λx11 => λ{(,): λx12 => λ{(,): λx13 => λ{(,): λx14 => λ{(,): λx15 => λ{(): (CanonicalSettlementPlan.finish (.WorldPlanScalarBytes.Ref, (x0, (x1, ()))) x5 x6 x7 (DrEXSettlementPlan.returns x14 +x8 +x9 +x10 +(.Zero, ())) (CanonicalSettlementPlan.transfers x13 +(.CanonicalSettlementPlan.Table, (x3, (x4, ())))) (Bool.and (Nat.eq x2 x11) (Bool.and (Bytes.eq x1 x12) (Bool.and (CanonicalSettlementPlan.distinct x3) (CanonicalSettlementPlan.distinct x4))))); λ{}}}}}}}; λ{}}}}; λ{}}}}}}}}; λ{}}}}; λ{}}}}}; λ{}}}}; λ{}}}}; λ{}}}
+
+DrEXSettlementPlan.settle : ∀x0 : CanonicalSettlementPlan.Context -> ∀x1 : CanonicalUniformSettlement.Input -> WorldPlanMoney.PlanResult =
+  λx0 => λx1 => (DrEXSettlementPlan.from_result x0 (CanonicalUniformSettlement.settle x1))
+
+DrEXSettlementPlan.refused_rule_inert : ∀x0 : CanonicalSettlementPlan.Context -> {(DrEXSettlementPlan.from_result x0 (.CanonicalUniformSettlement.Refused, ())) == (.WorldPlanMoney.Refused, ((.Zero, ()), ())) : WorldPlanMoney.PlanResult} =
+  λ{(,): λ{.CanonicalSettlementPlan.Context: λ{(,): λ{(,): λ{.WorldPlanScalarBytes.Ref: λ{(,): λx0 => λ{(,): λx1 => λ{(): λ{(,): λx2 => λ{(,): λ{(,): λ{.CanonicalSettlementPlan.Table: λ{(,): λx3 => λ{(,): λx4 => λ{(): λ{(,): λx5 => λ{(,): λx6 => λ{(,): λx7 => λ{(,): λx8 => λ{(,): λx9 => λ{(,): λx10 => λ{(): {==}; λ{}}}}}}}}; λ{}}}}; λ{}}}}}; λ{}}}}; λ{}}}}; λ{}}}
+
+DrEXSettlementPlan.bid_ask_distinct : {(DrEXSettlementPlan.side_byte (.UniformProRata.Bid, ())) == (.Zero, ()) : Nat} =
+  {==}
+
+DrEXSettlementPlanDemonstration.id : ∀x0 : Nat -> (List.q2 -Nat) =
+  λx0 => (.Con, (x0, ((.Con, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ((.Nil, ()), ()))), ())))
+
+DrEXSettlementPlanDemonstration.context : CanonicalSettlementPlan.Context =
+  (.CanonicalSettlementPlan.Context, ((.WorldPlanScalarBytes.Ref, ((DrEXSettlementPlanDemonstration.id (.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ())), ())), ()))), ((DrEXSettlementPlanDemonstration.id (.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ()))), ()))), ((.Zero, ()), ((.CanonicalSettlementPlan.Table, ((.Con, ((.CanonicalSettlementPlan.Binding, ((.Zero, ()), ((DrEXSettlementPlanDemonstration.id (.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ())), ())), ())), ()))), ()))), ((.Con, ((.CanonicalSettlementPlan.Binding, ((.Succ, ((.Zero, ()), ())), ((DrEXSettlementPlanDemonstration.id (.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ()))), ()))), ((.Con, ((.CanonicalSettlementPlan.Binding, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ((DrEXSettlementPlanDemonstration.id (.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ()))), ()))), ((.Nil, ()), ()))), ()))), ()))), ((.Con, ((.CanonicalSettlementPlan.Binding, ((.Zero, ()), ((DrEXSettlementPlanDemonstration.id (.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ()))), ()))), ((.Con, ((.CanonicalSettlementPlan.Binding, ((.Succ, ((.Zero, ()), ())), ((DrEXSettlementPlanDemonstration.id (.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ())), ()))), ()))), ((.Nil, ()), ()))), ()))), ()))), ((.WorldPlanScalarBytes.Ref, ((DrEXSettlementPlanDemonstration.id (.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ()))), ((DrEXSettlementPlanDemonstration.id (.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ()))), ()))), ((.Zero, ()), ((.Nil, ()), ((DrEXSettlementPlanDemonstration.id (.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ()))), ((DrEXSettlementPlanDemonstration.id (.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ()))), ((.Zero, ()), ()))))))))))
+
+DrEXSettlementPlanDemonstration.input : ∀+x0 : (List.q2 -Nat) -> ∀+x1 : (List.q2 -Nat) -> ∀+x2 : (List.q2 -Nat) -> ∀x3 : Nat -> CanonicalUniformSettlement.Input =
+  λ+x0 => λ+x1 => λ+x2 => λx3 => (.CanonicalUniformSettlement.Input, ((.Zero, ()), ((DrEXSettlementPlanDemonstration.id (.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ()))), ((.CanonicalBookSettlement.Account, ((.Zero, ()), ((.Succ, ((.Zero, ()), ())), ((.Zero, ()), ())))), ((.CanonicalBookSettlement.Account, ((.Zero, ()), ((.Zero, ()), ((.Zero, ()), ())))), (x3, ((.Con, ((.CanonicalUniformSettlement.Participant, ((.UniformProRata.Order, (x0, ((.Con, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ((.Nil, ()), ()))), ((.UniformProRata.Bid, ()), ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())))))), ((.CanonicalBookSettlement.Account, ((.Succ, ((.Zero, ()), ())), ((.Succ, ((.Zero, ()), ())), ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())))), ((.CanonicalBookSettlement.Account, ((.Succ, ((.Zero, ()), ())), ((.Zero, ()), ((.Zero, ()), ())))), (x1, (x2, ())))))), ((.Con, ((.CanonicalUniformSettlement.Participant, ((.UniformProRata.Order, (x0, ((.Con, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ((.Nil, ()), ()))), ((.UniformProRata.Ask, ()), ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())))))), ((.CanonicalBookSettlement.Account, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ((.Succ, ((.Zero, ()), ())), ((.Zero, ()), ())))), ((.CanonicalBookSettlement.Account, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ((.Zero, ()), ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())))), (x1, (x2, ())))))), ((.Nil, ()), ()))), ()))), ())))))))
+
+DrEXSettlementPlanDemonstration.operations : ∀x0 : WorldPlanMoney.PlanResult -> (List.q2 -WorldPlanMoney.Transfer) =
+  λ{(,): λ{.WorldPlanMoney.Refused: λ{(,): λx0 => λ{(): (.Nil, ()); λ{}}}; λ{.WorldPlanMoney.Planned: λ{(,): λ{(,): λ{.WorldPlanMoney.NativePlan: λ{(,): λx0 => λ{(,): λx1 => λ{(,): λx2 => λ{(,): λx3 => λ{(,): λx4 => λ{(): λ{(): x1; λ{}}; λ{}}}}}}}; λ{}}}}; λ{}}}}
+
+DrEXSettlementPlanDemonstration.actual_uniform_collects_then_distributes : ∀x0 : (List.q2 -Nat) -> ∀x1 : (List.q2 -Nat) -> ∀x2 : (List.q2 -Nat) -> {(DrEXSettlementPlanDemonstration.operations (DrEXSettlementPlan.settle DrEXSettlementPlanDemonstration.context (DrEXSettlementPlanDemonstration.input +x0 +x1 +x2 (.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ()))))) == (.Con, ((.WorldPlanMoney.Transfer, ((DrEXSettlementPlanDemonstration.id (.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ()))), ((DrEXSettlementPlanDemonstration.id (.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ())), ())), ())), ()))), ((DrEXSettlementPlanDemonstration.id (.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ())), ()))), ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ()))))), ((.Con, ((.WorldPlanMoney.Transfer, ((DrEXSettlementPlanDemonstration.id (.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ()))), ((DrEXSettlementPlanDemonstration.id (.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ())), ())), ())), ()))), ((DrEXSettlementPlanDemonstration.id (.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ()))), ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ()))))), ((.Con, ((.WorldPlanMoney.Transfer, ((DrEXSettlementPlanDemonstration.id (.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ())), ())), ())), ()))), ((DrEXSettlementPlanDemonstration.id (.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ()))), ((DrEXSettlementPlanDemonstration.id (.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ()))), ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ()))))), ((.Con, ((.WorldPlanMoney.Transfer, ((DrEXSettlementPlanDemonstration.id (.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ())), ())), ())), ()))), ((DrEXSettlementPlanDemonstration.id (.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ())), ()))), ((DrEXSettlementPlanDemonstration.id (.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ())), ()))), ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Succ, ((.Zero, ()), ())), ())), ())), ())), ())), ())), ()))))), ((.Nil, ()), ()))), ()))), ()))), ()))) : (List.q2 -WorldPlanMoney.Transfer)} =
+  λx0 => λx1 => λx2 => {==}
+
+DrEXSettlementPlanDemonstration.invalid_grid_never_plans : ∀x0 : (List.q2 -Nat) -> ∀x1 : (List.q2 -Nat) -> ∀x2 : (List.q2 -Nat) -> {(DrEXSettlementPlan.settle DrEXSettlementPlanDemonstration.context (DrEXSettlementPlanDemonstration.input +x0 +x1 +x2 (.Zero, ()))) == (.WorldPlanMoney.Refused, ((.Zero, ()), ())) : WorldPlanMoney.PlanResult} =
+  λx0 => λx1 => λx2 => {==}
+
+DrEXSettlementPlanDemonstration.side_encoding_bid : {(DrEXSettlementPlan.side_byte (.UniformProRata.Bid, ())) == (.Zero, ()) : Nat} =
+  {==}
+
+DrEXSettlementPlanDemonstration.side_encoding_ask : {(DrEXSettlementPlan.side_byte (.UniformProRata.Ask, ())) == (.Succ, ((.Zero, ()), ())) : Nat} =
+  {==}

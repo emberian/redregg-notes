@@ -156,7 +156,11 @@ incoherent malicious-dealer default and wrong/withheld reconstruction tests too.
 I subsequently inspected accepted_share freezing before the first RA Echo, the
 private_valid retained-share preference and the exact delayed-RA/replacement test.
 Owner bumped ASKS domain, wire and transcript to V2 to prevent reinterpretation of
-old r1 evidence. Source review is not a substitute for its narrow receiving run.
+old r1 evidence. Subsequent owner result: focused V2 execution 14/14 PASS,
+including this trace and exact expected h(0,[42,7]) key assertion; 14 unchanged
+tests skipped. Source SHA a230d6b21d7ffa5dcb336fd417a7bba6cc86c1bce49ecdab61d7ea1f51804e61,
+evidence/nextest-v2-focused-01.log. This closes the identified overwrite seam;
+it does not complete AVSS/ACS/AMPC or private output qualification.
 
 4. PRECISE METER/REFUND DISTINGUISHER (OUTER JOIN STILL OPEN)
 
@@ -235,7 +239,15 @@ retains a private refusal file. No invented native Pending. Owner also repairs
 native dispatch journal admission errors into conservative private transport
 uncertainty within the same broadcast, avoiding whole-epoch abort after prior
 native effects. These were source changes in progress, not inspected/tested yet
-at this report revision. Full resident cohort/lifetime qualification remains.
+at the first report revision. Subsequently owner froze PQ source
+957ae0605ec868732bb851f350d0b29379264c9d9677c25fd2d06104773fa344:
+seven focused guard tests and owned release build PASS, including cover fallback.
+The actual native pipeline MISSED the 1-second release after durable claim,
+without broadcast/catch-up/re-dispatch; a 5-second-phase file/process pipeline
+passed with two exact Host repair lookups, full broadcast capability scans and
+valid injected-packet refusal before claim. This is positive evidence of the
+receiving pole, and direct negative evidence against assuming a 1-second WCET.
+Live cohort daemon and source async continuation/WCET remain unqualified.
 
 Mailbox calls actual native Host sequentially. It persists claim/output and only
 publishes at the public deadline, but secret-dependent Host work can make it miss
@@ -335,14 +347,14 @@ certificate; neither may mint a new install/release from mere identity equality.
 9. OWNER COORDINATION / REMAINING RECEIVING WORK
 
 private_backend_construction: accepted-share repair and narrow malicious dealer
-trace are required; old r1 qualified status superseded. Owner test seat pending.
+trace passed focused V2 execution; old r1 qualified status superseded.
 bend_logic_compilation: removed stray final EOF marker reported by this audit;
 signed constant face added while FHE join continues. Same-output meter refuter sent.
 astra_consensus_composition: accepted same-output meter argument, recommends real
 versioned fixed-capacity native charge law and private diagnostics; forwarded it.
 resume_private_construction: exact guard inspection and cover/WCET receiving poles
-sent; owner is constructing cover-on-private-admission-refusal and contained
-native-journal uncertainty fixes. Current docs already state restricted registrar
+sent; cover-on-private-admission-refusal and contained native-journal uncertainty
+fixes passed owned checks. Current docs already state restricted registrar
 trust and lifecycle limits.
 root: concrete ASKS fault/owner response and source-marker repair communicated.
 

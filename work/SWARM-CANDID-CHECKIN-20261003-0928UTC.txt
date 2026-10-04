@@ -55,8 +55,8 @@ Initial live inventory:22 running non-root/non-facilitator owners. All22 were
 messaged. Completed research/proof lanes and obsolete pending-init lane were not
 woken. Root subsequently requested docuverse despite its completed turn; it was
 resumed only for this check-in and retained construction/repair responsibility.
-Total requested23;21 responses received at interim delivery, now22 received
-(service reply still pending at latest save). Individual response receipt status appears below and is
+Total requested23; all23 responded. Interim reports accurately recorded21 and22
+responses before the remaining replies arrived. Individual response receipt status appears below and is
 updated as replies arrive. Agent replies are attributed reports, not checks
 rerun by this auditor. No subjective states were inferred beyond their words.
 
@@ -309,7 +309,17 @@ Rust2 backend8 -> FHE. Selected exact warm role builds with review of hashes/imp
 avoid dependency cloning/recompile. Sealed parser checks independent2G/30s;
 foundation341-import change is genuinely large, not a tiny-check exception.
 
-takeover_service — REQUESTED, response pending at initial save
+takeover_service — RESPONDED
+Matched SPK four-role warm build PASS4seconds and released Rustseat. Deputized infra
+two paths reviewed7PASS/committed+pushed21a5a97,100pins delivered. Real archive
+review caught metadatahash mismatch and valid fixture directory-link refusal;
+13case fix and sealed successor moving captain. No paidcalls/r2 startup at this
+reply. Next actual sameworld browserCSV/doc/Hermes/recovery/restore. Excited concrete
+consumer review improves reusable namespace/credential authority. Worries stale
+build labels and private custody confused with public authority; per-role provenance
+and member projection explicit. Wants role-specific fastbuild plus immutablefamily/
+infra pins, no broad retests/new permission barriers. Context/portable/GM owners have
+actual source boundaries. Continues receiving on producer-triggered seal, no polling.
 
 docuverse_deos_construction — RESPONDED
 Matched candidate35 object,18 doc,21 creation/source/history/resident assertions

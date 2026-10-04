@@ -1,0 +1,199 @@
+COLLECTIVE / CANONICAL SETTLEMENT RECEIVING HANDOFF — 2026-10-03
+Owner: bigdregg_product_architecture. Receiving obligation remains OPEN.
+This file records implementation interfaces, not a native receipt.
+
+CURRENT OWNED SOURCE
+  hbox:/home/hbox/workbox/codex-collective-domain-20261003
+  r12 consolidated packet 3cf6ab8451d517790ac37d0c7163be09cfb294ae84b3ee90de0bbe0714ac3476
+  r13 distinct DrEX additions 862baed89f3d54fc9c430d0ffacce4b290fe308d1f3e39d300b0ce348da718c3
+  Both appended to captain SOURCE-INBOX. Captain owns shared reconciliation/main push.
+  r12 supersedes r10/r11; r13 is additive and updates checker/docs.
+
+SOURCE -> INTERFACE -> ACTUAL RECEIVER MATRIX
+
+1. ResourceMoneySampleTable (native_performance_construction)
+   Producer: prepare(actual SampledFunding, Bounds{accounts,assets,rows,nativeBytes})
+   Private Prepared.table:
+     book : canonical native Nat codec bytes
+     originalRoot : canonical digest codec bytes (ORIGINAL PHYSICAL durable root)
+     accountBindings/assetBindings : Binding{token:Nat,native:List UInt8}
+     rows : Row{accountToken,assetToken,balance:Nat}
+   Actual reported native PASS36b979c9 + six general resolution/balance/injectivity gates.
+   Receiver: WORLD native input binder (bend_world_language).
+   Required mapping: faithful UInt8→source ListNat; Context.book=table book/root;
+   Context.bookToken=0; Context.Table.accounts/assets from generated bindings;
+   every Book.Input role coordinate/balance from authenticated rows of SAME token.
+   Source/room/order/reservation/audience inputs must be retained and observed in
+   the same invocation/current read admission. Arbitrary caller Book.Account
+   balances or output samples cannot stand in for this constructor.
+   Remaining: actual native source-input term construction/observation binding.
+
+2. CanonicalSettlementPlan (this owner)
+   Public: world/Workshop/CanonicalSettlementPlan.bend
+   settle(Context, Book.Input) / settle_shared(Context, Book.Input) -> World.PlanResult
+   Calls actual Book.settle / Shared.settle. Resolves every computed transfer;
+   rejects duplicate tokens/native aliases/missing coordinates/book mismatch.
+   Emits actual room Scalar.Write(settledField,0,1) and per-result ReturnSlots.
+   Context includes book byteRef+token, Table, room logical Ref, field, reads,
+   bound result schema/encoding/generation. Operations are NOT input arguments.
+   Shared source demonstration proves actual four operations:
+     seller→buyer goods4, buyer→seller money12,
+     seller→buyer goods3, buyer→seller money9;
+   one buyer balance35 authenticates both orders (20 would refuse).
+   General mapping and refusal laws remain source-defined.
+   Receiver: same WorldPlanMoney + generic adapter below.
+
+3. DrEXSettlementPlan (this owner)
+   Public: world/Workshop/DrEXSettlementPlan.bend
+   settle(Context, CanonicalUniformSettlement.Input) -> same World.PlanResult
+   Distinct source method/rule/profile; source performs integer pro-rata clearing.
+   Source example computes uniform price2 and preserves entire collected-debits
+   prefix before pool distributions. Side byte0 Bid /1 Ask in return payload.
+   Same native adapter, sample tables and authority; no separate market kernel.
+   Remaining: native bound input role projection + use through same actual adapter.
+
+4. WorldPlanMoney / BendMoneyPlanAdapter (this owner; generic registration world)
+   examples/objective-bend-world/WorldPlanMoney.bend
+   Compiler/BendMoneyPlanAdapter.lean
+   Source NativePlan:
+     book:ScalarBytes.Ref; operations:List Transfer{canonical source/destination/
+       asset byte IDs, amount Nat}; reads:List ScalarBytes.Ref;
+     effects:ordered List ScalarBytes.ScalarEffect; returns:List ReturnSlot.
+   ReturnSlot native fields map exactly: UTF8 name; schema/encoding/recipient/
+   keyEpoch/audience native canonical codec bytes; generation Nat; payload bytes.
+   No source casts native IDs to huge unary Nats; no raw balance writes.
+   Adapter ABIBinding checks full source definitions and qualified Nat/List ABI.
+   Evaluated retains actual result Term, count, completed trace, Value, decoded
+   output and ABI. Existing completed trace may construct it; no duplicate
+   interpreter/reexecution requirement.
+   lowerEvaluated(deployment, loadedDirectory, command, entries,
+     money:ResourceMoneyReceiver.Prepared deployment durable.snapshot entries,
+     evaluated) -> optional BoundPlan.
+   BoundPlan retains:
+     canonical moneyEntries(command)=entries; unique actual carrier;
+     source.book.id=deployment.resourceBookId;
+     source-derived batch=money.batch (all operations/order/root);
+     exact scalar Ordered binding; current OrderedReads;
+     returns exact source returns; normalized exact matchesCommand.
+   Carrier inserted at its actual target index among ordered scalar phases.
+   Funding carrier may be last. Scalar relative order and complete inner Book
+   operation order remain exact. Native command orders have distinct invocation IDs.
+   Plan reads use money.readGuards (physical Book) ++ scalar reads derived from
+   actual loaded logical payload roots to physical lifecycle guards.
+   This adapter is AUTHORED/NOT YET COMPILED. It requires the COHERENT current
+   ResourceTransaction moneyConsent + normalized BendWorldPlan + scalar read-r5.
+   It does not authorize installation independently of current native receiver.
+
+5. Native canonical money (native_performance + captain)
+   Actual ResourceMoneyReceiver.Prepared contains same actual LoadedBook/funding,
+   exactly one batch carrier, gross debit-position coverage, sequential financial
+   preparation. Same snapshot shared by scalar binding.
+   Actual money foundation/receiver/sample-table reported PASS.
+   Required captain fan-in: compiled ResourceTransaction with moneyConsent, actual
+   signed account target/current capability/law admission, one Book write after
+   funding-prefix+application operations. OLD3350 warm Transaction lacks variant.
+   Required world fan-in: effectsOf skips auxiliary money legs with no batch;
+   one carrier normalizes to batchSome/positions[]/fundingNone only in application
+   projection. Full signed account consent data remains in command and receiver.
+   Parent world binds source/current roots/charge/evidence/return admission.
+   Remaining native use: one durable transaction combining Book write, guarded
+   room phase, independent returns; meaningful underfunded/alias/stale/replay/
+   altered-return/missing-consent refusers. No external deployment or paid calls.
+
+6. ResidentServiceCommons (this owner + Activity/service consumers)
+   Existing source reserve/start/uncertain/deliver/accept/cancel is reusable.
+   Live Run identity = actual room request cell+sequence+assigned Hermes+
+   original native operation ID, never a second room_call/wrapper journal.
+   Publication receipt success is NOT provider Completion.
+   Actual matching public reply/status and independently admitted Completion slot
+   precede deliver; recipient acceptance/criterion identity precede payment.
+   Source resume_after_status is for provider outcome only, never queued-request
+   publication. Current native Activity finite Enu[false,true] differs from our
+   actual Prelude Bool Data; converter must use ACTUAL source False/True terms,
+   not assumed Bool.false/true refs. Preserve continuation typing/read/funding guards.
+   Remaining consumers: world/native money Plan for reserve/payout/capacity;
+   graded_execution Activity pending/outcome join; takeover_service exact current
+   request publication/provider observation; source Faces via docuverse owner.
+   Publication/external uncertainty retains Run, no automatic redispatch/refund.
+
+QUALIFICATION
+  Original source5 actual no-opaque Book.check PASS.
+  Additional canonical/DrEX/shared collective5 actual Book.check PASS Persvati
+  11:47:49Z, definitions116/169/119/139/144; guardian PASS, no deps build.
+  ScalarBytes source and Money/wrappers/demo6 sealed source/safe emission PASS
+  money-driver13b. Service3 sourcePASS public-driver8b.
+  Remaining9 exact source Books: frozen b4374493f4346f03c526e14b604fd966b0e640e5c67fff5812ff822d13013bf1
+  running authorized Persvati leaf6 /persvati-collective9-20261003; exact terminal
+  callback required. Does not rerun earlier collective5 or qualify native effects.
+
+PRECISE NEXT PRODUCER TRIGGER
+  Captain/world publish qualified merged Transaction + normalized WorldPlan
+  cohort, with scalar read-r5 included. Notify/REACTIVATE this owner for one
+  current BendMoneyPlanAdapter leaf compile+actual constructor receiving checks.
+  World acknowledges sustained ownership of native input binding/CLOSED codec/
+  shared invocation/atomic actual-use; native money owner retains typed table and
+  financial preparation support. Product row remains OPEN until real native use,
+  even if source Books and this adapter compile.
+
+QUALIFICATION UPDATE 2026-10-03 12:23 UTC
+  Remaining9 original whole batch timed270s; no whole-nine PASS claim.
+  Next same actual Book.check with flushed progress PASSED:
+    WorldPlanScalarBytes60, WorldPlanMoney69, CanonicalSettlementPlan199,
+    CanonicalSettlementPlanDemonstration213, DrEXSettlementPlan258.
+  Exhaustive exact Def.check (same Book/libs/index as Book.check, noopaque):
+    ResidentServiceCommons169 PASS;
+    ServiceCommonsFaces192 PASS;
+    ServiceCommonsDemonstration183 PASS.
+  DrEXSettlementPlanDemonstration definitions0..261 PASS; definition262
+    actual_uniform_collects_then_distributes exceeded80s (also prior120s).
+  This is an unresolved expensive proof reduction, not a source rejection.
+  Root bend_representation_efficiency owns targeted checker/reduction diagnosis,
+  source/domain owner remains available for proof decomposition without weakening
+  rule/ABI. Exact logs under Persvati /home/ember/workbox/persvati-collective9-20261003.
+  All leaf6 jobs terminal/released. No more blind full batches.
+
+NATIVE HANDOFF ACKNOWLEDGMENT
+  native_performance_construction explicitly accepts support through combined
+  actual use; sample table/financial receiver remain stable and actualPASS.
+  bend_world_language commits actual money Table BEFORE source under a separate
+  explicit Context profile, normalized WorldPlan projection in next-cohort.
+  Final sustained native input/CLOSED codec/atomic-use acknowledgment requested;
+  not yet claimed qualified. Native MoneyPlanAdapter45ca14e8 awaits coherent
+  compiled Transaction+WorldPlan+scalar r5 imports, then one leaf/receiving batch.
+
+ACTIVITY CORRECTION
+  New native Publication Outcome true means original request intent committed,
+  not provider Completion; await existing Run. Certified false means original
+  intent absent and source-owner cancellation rechecked at receiver: source
+  may cancel still-Held reservation only with current state/grants/fresh roots.
+  This differs from provider-outcome false, which preserves external uncertainty.
+  Completion and recipient acceptance remain independently admitted observations.
+
+FINAL ACCEPTED HANDOFF / LIVE NATIVE GAP
+  World owner explicitly ACKNOWLEDGES sustained responsibility through actual
+  authenticated Table-before-source, CLOSED Money codec, current-authorized
+  atomic Book+room+independent-return use; will wake domain owner when coherent
+  cohort permits own native leaf/refusers. Money owner explicitly accepts same.
+  Source/adapter checks DO NOT CLOSE the product consumer obligation.
+
+  Shared return-storage gap discovered by receiving owner: generic Money source
+  scalar phase list cannot itself express the native Content createAtom carriers
+  for independent returns. Current full matchesCommand therefore safely refuses.
+  World owns exact normalizer: only COMPLETE canonical return-slot-derived
+  createAtom carriers are projected out of base application matching; final Plan
+  reinserts their exact typed payloads at original indices. The ORIGINAL signed
+  command remains current-authority/source/signature/audience input. If adapter
+  uses a command view, view preserves target indices/kinds/roots and moneyEntries
+  of original command. No arbitrary Content omission, no ciphertext claim.
+  This receiving fix is pending, not evidence of a completed native transfer.
+
+  Representation-efficiency owner identified exact DrEX proof obstruction:
+  open metadata List Nat binders cause checker cl=false Q2 substitution to
+  duplicate closed numeric redexes. Input itself is tiny; unary IDs and global
+  Book.index are not supported explanations. Owner investigates source-preserving
+  WNF/cache refinement keyed by full book/context/mode/fuel/term/spine; no forcing
+  cl=true and no weaker source law. Domain owner remains callable for consumer
+  proof decomposition; qualified source rule identity stays stable meanwhile.
+
+  All owned jobs terminal. Source packets r12+r13 are registered, not represented
+  here as a known GitHub commit SHA. Captain owns main publication/fan-in.

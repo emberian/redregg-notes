@@ -1,0 +1,59 @@
+PRIVATE NATIVE RECEIVING — scenario_private_native, 2026-10-03
+
+Concrete source closure now passes Lean+C for fourteen modules. Owned isolated
+hbox root: /home/hbox/workbox/codex-scenario-private-native-20261003.
+Latest packet private-native-source-r2.tar SHA256
+adfee74778aabeb1f5db9aeba1dca9fbae862c98ef6a067452f4f4e8c80bdef6.
+Exact source/C/olean manifest packet-r2/manifest.json SHA256
+a3ef81109055fcd2b6024a5474b5ac243a6c023631a554eb47b28733a1db908f.
+Captain owns common publication; no shared Main write occurred.
+
+Implemented: source-enrolled independent recipient encryption projection;
+public draft inner signing before cached cipher outer signing; current funded
+append admission requiring actual ciphertext (draft cannot dispatch); original
+source-prefix full-record/certificate recovery; closed recipient205 verifier;
+fresh physical-store replay plus current admission/certified order/Applied;
+configured worker dispatch only from private Applied/Recovered authority;
+30-second fixed child channel with retained UNKNOWN on refusal/uncertainty.
+The common controller sees party/sequence/hiding64/ciphertext/native credentials,
+not nonce/SIGN/body/result. Protocol4/5 enrollment is explicit. Global sequence
+nullifier excludes recipient, randomness and key rotation.
+
+Independent entry Host.PrivatePartyVerifierMain avoids the giant Main closure.
+argv: [protected-private-profile.json]. stdin INNER.REQUEST and stdout
+INNER.OUTCOME raw EOF, local16MiB. Source/mix203 remains262078/262070.
+Explicit profile fixed-private-source-v3 carries complete actual Config and
+jointControl/consensus/privatePartyEndpoint, protected storage/signature and
+certificate verifier settings. Restricted entry supports no Fn/Activity profile.
+Current resident deployment cannot silently gain this runtime pin. Context and
+Replay C must replace old ABI together because Config appended private endpoint.
+Minimal hunks against receiver next-cohort are in packet-r2; room67 untouched.
+
+Backend r30 has actual protected recipient worker/output WAL and fixed native
+image+argv verification. Worker output is only pending hidden egress commitment,
+not Qualified, release, plaintext result or a fresh successor sharing. Native
+positive receiving remains UNRUN: independent native link producer requested
+from runtime, and genuine v3 current enrollment/PENDING/funded63/full certificate
+fixture is still required. No existing public authority may be fabricated to
+bridge this missing fixture. Full active simulator/GOD, malicious joint rollback,
+allAppliedReady/fresh ReleaseAdmission remain separate outstanding obligations.
+
+Churn recovery: backend explicit refine_inner versions retain same hidden nonce,
+body and semantic commitment; each new credential/cipher/outer version is cached
+and retained (max8). Default seal remains original/idempotent. Source retains
+first admitted exact capsule;205 selects it by exact identity, never latest.
+Unrelated source append invalidating inner author height needs explicit current
+reauthor/refinement, not stale-grant acceptance or silent cipher regeneration.
+
+Evidence: native-private-verifier-r14.log entry PASS;
+native-private-worker-r15.log final WorkerIO+Source PASS. Earlier closure logs
+r2/r5/r6/r8/r10/r12/r13 establish dependencies, source and generated C. All frozen
+module hashes are in manifest. Warm only package dependencies from verified
+spk-recovery-sealed-prefix-20261003/companions-r1; never old capsule project
+Kernel/Host ABI. No new theorem of cryptographic qualification is claimed.
+
+Runtime lieutenant explicitly accepted independent private205 native link producer
+8Gi/C2/180 ownoutput; packet-r2/source/C/olean frozen for its link. Warm consumer
+Config constructor old-arity audit was explicitly requested: preserved field
+projections alone do not qualify imported constructor ABI. Entry builds updated
+Config itself; Main is not imported. Actual ELF pin remains pending.

@@ -1,0 +1,39 @@
+PERSVATI INFRASTRUCTURE HANDOFF — 2026-10-03 12:18 UTC
+Owner redregg_evidence; consolidation receiver captain takeover_kernel + astra_multimodel_room. No Git by this owner. This file and all evidence/corpus/catalog remain private; four reusable helper sources only are canonical SOURCE-INBOX registered.
+
+ACTUAL CAPABILITY
+Native systemd user cgroups plus guardian-held per-seat/per-lane lifetime flocks are field-tested. Independent owners run frozen coherent batch, first failure/source repair, and new qualified consumer lifecycle; retain previous independent PASS. No new grand scheduler. No active build is owned by infrastructure agent.
+
+API (Persvati absolute paths)
+/home/ember/workbox/persvati-lean-20261003/launch-seat.sh SEAT OWN_LANE OWN_BODY UNIQUE_UNIT
+Invoke with bash; OWN_LANE must /home/ember/workbox/persvati-*, unit persvati-*. SEAT lean-main, lean-leaf1..6, rust1/2. Body owns frozen source checks/output and job.log callback. Guardian /home/ember/workbox/persvati-lean-20261003/guardian.sh holds FD9 seat and FD8 lane locks until whole job ends. Do not manually clear flock or reset foreign outputs. REFUSED means never ran. Native systemd kills full cgroup on timeout/OOM. Actual cap lines remain in job.log after transient unit disappears.
+Main16Gi/4threads/CPU400/300s;6leaf4Gi/2threads/CPU200/300s;2Rust8Gi/jobs<=4/CPU400/1800s (owner narrower180s allowed); swap0/tasks256. Sum authorized56Gi/24threads. Launcher rechecks availability before job; ordinary headroom trading authorized by root. Last snapshot12:18:17:62587MiB available/276GiB disk; inherited system swap usage is outside these swap0 cgroups. No files/cache/datamodels deleted.
+
+EXACT WARM CLOSURE
+Readonly /home/ember/workbox/persvati-lean-20261003/complete-warm fixed3350-module file union. Initial paired companion bytes2690070992; archive953759216B SHA6c1bdb265bc576ac9ddd8fe012f9d4002d7548e05976530597ddaef71c71178d; manifest302cb362d3b8fa0ce23905f099f97712ac6e6c79e7e652d05e30bbaccc68a6e5. Initial3348 actual ModuleData scan found2 missing binary dependencies, individually supplied patchf843e5cd767fbaa97e1038ff2dbae300b983ba240e8b80ec5894ba9cfb4cd9a8. Lean4.30.0 same x86_64 compilerSHA3e0d0d3d801675359f2d4cf9815bfdb417b20b92fdd9d48b3b14c95bbae28bbf. Do not infer newest project qualification from common snapshot.
+make-overlay.py BASE OWN_OUTPUT --extra PINNED_EXTRA creates one namespace FILE union, own regular outputs protected; no empty Kernel namespace plus LEAN_PATH fallback. Companion .olean.private/.server/.ir/.ilean captured if available. Actual OleanImports.lean uses Lean.readModuleData; .ilean alone was insufficient for selected artifacts. Validate source/selected artifact pins and actual binary imports including compilerlib Init/Std before run. Different COMMON/scoped oleans can share source hash; explicit owner selection required. Source-only preflight helper from room validates first namespace/source/warm pins/topological order, and does not itself materialize dependencies.
+
+BendTTSource exact extra already qualified on destination:
+/home/ember/workbox/persvati-fhe-manifest-20261003/deps/Theory/BendTTSource.olean SHA7625f0d8c1f80ec69e333a3dc9a5146f01370f5ac26863bff3acc2a23bd1ad2d
+/home/ember/workbox/persvati-fhe-manifest-20261003/dep-sources/Theory/BendTTSource.lean SHA7b221b208344c69cef7962bdab264d0abf9528637ff55e2cf69787da4f753e38
+Actual direct imports only Init/Std.Data.HashMap. FHE closure extras archive164716ea5ab9a98823744f56b7da645c8ad56bc64875c3b7614dc903d56cfb32 retained; don't indiscriminately overlay unrelated own outputs.
+
+RETAINED OWNER LIFECYCLES / FRONTIER
+Main: bread_systems_archaeology portable core4 PASS11:35:39; new portable consumer batch latest callback STARTED after controller loan returned. No main unit running in12:18 snapshot; owner owns terminal/result and next scope.
+leaf1 native_performance_construction money foundation2/receiver3/sampletable1 PASS; new source account/token producer authoring. No running job in snapshot.
+leaf2 astra_adversarial_architecture Receive3/GlobalCausal/Scope3/Chronology/VOTE-origin2 PASS, latest12:13:18. Positive-view source batch next, owner retains ordinary lifecycle.
+leaf3 joint_reserve_birth_authority Causal full start/step/pump+PreparedHistory PASS. New coherent EmissionSupport producer accepted, owner controls its source/terminal.
+leaf4 released after bend_controller_simulation central3 PASS11:52:07; SourceJoin assigned separately hbox. FHE manifest runtime PASS11:38:25 retained, no parser dependency rebuild.
+leaf5 bend_semantics_audit ProofBytes/MaskDimension/Builder/Evaluation/Interpolation/Keccak compiled conformance/Mux/arbitrary accepted-field witness soundness PASS; last12:07:36. Coherent source/controller/projection join next only with exact qualified world closure. Experimental IR2 native full transcript ZK remains unqualified.
+leaf6 bigdregg_product_architecture actual collective5 PASS11:47:49. Nine service/money/DrEX Books timed out124 at12:15:24 after270s,1.37GB/noOOM/no Book verdict. Now ACTUAL running persvati-collective9-r2 diagnostic at12:18 snapshot, own run-diagnostic.sh flushes definition progress and isolates unaffected cohort. No blind rerun/no newgreen.
+Rust1 free: resident grain6+client3 PASS; Bend v4 conditioned EF4 parity/minnormal proof selected PASS later. Source owners retain results; no native ingress role claim.
+Rust2 private_backend_construction: King4 then NEWmalicious2 then NEWendpoint/nonzero4 PASS; latest11:43:01. Next independent recipient-sealed request/digest-only progress/private outbox source authoring; clear mailbox limitation remains, no full crypto/native authority claim.
+Card/Station nominations never accepted/run Persvati; Card explicitly returned ready to product/captain hbox. OO/Surface/Linker/Scalar nominations retired for captain hbox actual placements; never duplicate here.
+
+SOURCE-FIRST / EVIDENCE
+Four source helpers+manifest archive /Users/ember/workbox/persvati-lean-20261003/persvati-build-infra-source-r1.tar.gz SHAe56c81a77a25c15a22b471e4afaec3a1a74360c8331de06007fdbb9446e4bf46,3021B. Room uploaded/registered canonical SOURCE-INBOX under redregg_evidence; captain publication. Host-specific paths require review/parameterization. This packet excludes ALL private research/transcripts/catalog/logs/objects/fixtures/keys.
+Machine index /Users/ember/dev/redregg/catalog/persvati-build-placement.json records sources/deps/job pins and bounded claim classes. Private snapshots qualification-capture-1201.json and -1217.json in /Users/ember/workbox/persvati-lean-20261003 retain source failures alongside repaired PASS; do not call whole append logs all-green. Independent artifact/schema/index tools remain private /Users/ember/dev/redregg/catalog, raw historical corpus external. No remote created.
+
+Receiver ACK is required only to consolidate responsibility, not to run ordinary authorized jobs. No guarded job is interrupted during handoff; named owners already own every callback/repair. Infrastructure has no independent active build or necessary source fix remaining.
+
+ACKNOWLEDGED: captain takeover_kernel explicitly accepts sustained guardian/seat/resource/source accounting; room acknowledged packet/callback ledger but rotates. No infrastructure-owned job, no active owner job interrupted. Named source owners retain all actual jobs/repairs/terminal callbacks.

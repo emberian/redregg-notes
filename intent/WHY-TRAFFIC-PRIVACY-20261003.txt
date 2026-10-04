@@ -50,7 +50,9 @@ The authorized caller's observation of completion/continued absence is separate
 leakage; its timing is not automatically permitted because an old API exposed
 Pending. Publication and audience authorization are additional source duties.
 
-The current cascade has three separately owned mixing stages and a receiver.
+The deployment model requires three separately owned mixing stages and a receiver.
+The actual receiving experiments run these roles together on hbox; independent
+keys and guard checks do not manufacture independent administration or noncollusion.
 It uses actual ML-KEM-768 and XChaCha20Poly1305 onions, authenticates whole sets,
 shuffles whole batches and broadcasts the identical encrypted batch to every
 cohort member. A reply capability opens only its own response. This avoids
@@ -70,6 +72,16 @@ receive the same bytes. This avoids exposing real output readiness as a missing
 broadcast while the actual source custody remains authoritative. It does not
 make slow computation fast or establish worst-case execution time. Backlogs,
 fixed quotas and public lifetime need admission limits, not extra private bursts.
+
+A corrupt downstream relay can still observe an intermediate physical-unavailable
+record when an upstream producer misses readiness. The final shared cover batch
+protects audience broadcast shape; it does not erase that intermediate observation.
+The v11 shared-machine refutation shows private native I/O can disturb relay
+readiness through CPU/disk contention. The successful v12 fixture is not a proof
+that this is secret-independent under arbitrary contention. The next stronger
+join needs actual role/resource isolation with justified service bounds, or valid
+cover at every stage that preserves exact-set and durable-lineage guards. That
+obligation is separate from both packet cryptography and the send-clock check.
 
 WHY CUSTODY AND RECOVERY ARE INSIDE THE PRIVACY DESIGN
 
@@ -96,6 +108,12 @@ recipient encryption keys, source-enrolled purpose credentials and exact
 configuration/epoch/session/generation binding INSIDE the opaque carrier. The
 mailbox key must not become every party's secret channel key. Shared source
 admission must see ciphertext and hiding commitments, not all private shares.
+Four party labels do not establish a one-corrupt-party budget: independent
+agreement keys, independent source-enrolled protocol signing authority and
+independent recipient keys must all join. The initial two-source-caller fixture
+only tests sender0 to recipient1; full four-party source authority needs four
+actual enrollments. Real keys alone are public enrollment candidates, not
+source permits. Local shared administration remains an explicit deployment gap.
 Replies/PROGRESS/outbox must also be sealed; a plaintext digest of a low-entropy
 share is not hiding. The reusable provider validates an original persisted
 secret/public pair by actual encapsulation/decapsulation; AWS-LC restored secret
@@ -107,8 +125,12 @@ room key. SAME Prepared source authorization and Applied readback must precede
 transmitting its wrap. A later CAS refusal cannot undo disclosure. Sticky retained
 key-rotation attempts, original ingress, old/successor snapshots and source lookup
 rather than resubmission preserve recovery after post-admission/pre-install loss.
-These joins are still incomplete in actual native receiving; refusers are not a
-finished private lifecycle.
+Actual distinct native rotation receiving now qualifies one142 submission followed
+by original143 recovery after a dropped real response: no installation while
+uncertain, epoch1to2, retained successor installation, sticky result and changed
+destination refusal. That fixture uses legacy client continuity. Enabled protected
+client custody, the pre-fix legacy-attempt importer, and the current-recipient
+release joins are still incomplete; refusers are not a finished private lifecycle.
 
 ALTERNATIVES STILL WORTH BEATING THIS CONSTRUCTION
 
@@ -140,8 +162,15 @@ COSTS AND FALSIFIERS THAT CHANGED THE DESIGN
 For this exact four-layer wire, W clients and payload P, aggregate fixed-link
 bytes per epoch are P*(W*W+5*W)+17237*W+1016, before TCP/IP, native/MPC work,
 storage and enrollment. W4/P4096 costs217420 bytes/epoch,13914880 over64epochs.
-W4/P262144 costs9507148 bytes/epoch; that larger shape requires a shorter lifetime
-under the64MiB inventory bound or separately admitted fixed fragmentation.
+At that small profile, one client's fixed upload is8985 bytes/s and full-batch
+download16492 bytes/s. Repeating that always-online traffic shape for30days would
+reserve66.036GB/client and563.553GB aggregate across all physical legs; new
+lifetimes/enrollment/rekey add work and are not yet a qualified month-long service.
+These are traffic reservations, not useful payload throughput or provider bills. W4/P32768 still fits64epochs (9.634MB worst
+link inventory), carrying a24303-byte actual signed-call envelope without jumping
+to the maximum profile. W4/P262144 costs9507148 bytes/epoch; that larger shape
+requires a shorter lifetime under the64MiB inventory bound or separately admitted
+fixed fragmentation.
 T1second/G2 processing slots means one-second cadence, TEN seconds from client
 contribution to broadcast, not one-second delivery. Application completion and
 repair add more latency. These are derived actual codec costs; paper benchmarks
@@ -156,11 +185,26 @@ qualified v10 all-cover pole delivered64 valid broadcasts with maximum send
 lateness1.371ms. Its real-native pole delivered63/64, maximum1.134ms; initial
 native admission took1.983s against the1.975s readiness cutoff. Both actual source
 requests completed through reserved repair, with exactly two native dispatches.
-The new shared final fallback closes missing shape, not useful service; the next
-paired64epoch experiment requires SIXTEEN actual historical op3 outcomes, two
-reserved repair polls/job and exactly sixteen source calls. All outcome claims
-must be exact real source frames. Full trace/adaptive/churn/private-execution
-security and full rekey/restoration remain required, not inferred from this test.
+The shared final fallback then delivered64/64 identical canonical broadcasts
+to every audience in both v11 poles, with all768 sends and maximum real-pole
+lateness1.167ms. It STILL failed useful service: only12/16 native jobs reached the
+source. A nonblocking capability lock skipped four repair epochs; a client
+contribution missed readiness by251ms, and two relay outputs by74ms. This is why
+shape is not completion. The next repair prepares immutable future outbox entries
+before idle gaps, waits boundedly for the private capability lock, and reserves
+one fixed spare application slot/job to reoffer the EXACT original ID/body/access.
+The gateway caches or admits once; uncertainty never authorizes a second effect.
+Two original reserved fetch polls remain. The paired64epoch test still requires
+ALL SIXTEEN actual historical op3 outcomes and exactly sixteen source calls.
+All outcome claims must be exact real source frames. The v12 replacement passed
+with fixed adjacent appE+1 retransmission: all16 exact outcomes, exactly16 native
+dispatches,64 identical broadcasts per audience and768 fixed records in both
+poles. Maximum lateness was2.276ms cover/2.256ms real. This is a successful sustained
+fixture at0.25 readonly source calls/s, not a measured private evaluator capacity
+or worst-case service bound. It validates the usefulness of separating clock,
+preparation and authoritative custody while preserving original failure evidence.
+Full trace/adaptive/churn/private-execution security and full rekey/restoration
+remain required, not inferred from this test.
 
 PRIMARY AND LOCAL CONNECTIONS
 
@@ -183,5 +227,26 @@ pq_mailbox.rs:452 prepare_transition;640 live_broadcast_cover;830 live_relay;
 current_recipient_source.rs:106 locked source consumer; key_rotation.rs and
 key_rotation_custody.rs retained original-attempt/install custody.
 hbox:/tank/dregg-build/codex-traffic-20261003/native/crypto_transit.rs
-Current coherent source-only capsule bde2875e… in captain SOURCE-INBOX; no keys,
+Latest qualified source-only capsule52afabf0291ccf9501765b5f501fc8af2ecf76bc970ecf0a0851113c3909b05d
+in captain SOURCE-INBOX; current-recipient tests qualify locked point/readback
+binding, not yet actual native helper receiving. No keys,
 private journals, packet captures or native fixture state were published.
+
+A local source helper is trusted code, not a source authority merely because it
+prints a familiar JSON marker. The separate current-recipient executable cannot
+replace the receipt continuity verifier: the latter establishes the deployment
+identity and authenticates the durable anchor. The repaired physical runner
+selects a separately pinned closed helper under that SAME custody lock, binds
+exact Config and image bytes, and checks the exact source query/readback/point.
+Installation additionally requires a developer-approved source-cohort/contract
+and artifact mapping; arbitrary code echoing the expected identity cannot add
+itself to that registry. This mapping is a trusted development release binding,
+not a cryptographic theorem about binary semantics. A current-key token still
+does not authorize disclosing ciphertext of an already-used room key: the
+separate source release must reach its guarded Applied point before disclosure.
+The modern four-source fixture did not yet have a continuity-enabled workspace
+or native151 proof responder when the recipient helper linked. Manufacturing
+an anchor to fill that gap would erase exactly the anti-equivocation boundary
+this design needs, so its actual source/physical producer remains explicit.
+
+A source-authenticated root is not automatically an authenticated projection of the values a consumer uses. The room client consumes each full signed444 wrap row; a helper returning only current root/latest does not justify promotion of rendered content JSON. RoomHead approval is therefore held closed until the native helper returns the complete canonical native row projection and the strict consumer binds it to its selected snapshot. This is the same architectural reason the mix preserves exact inner bytes and source custody retains the original request: an intermediate representation must not silently replace the authority-bearing object. Current-key and Applied evidence remain distinct contracts, and current-key lookup remains insufficient to authorize disclosure of an already-used key.

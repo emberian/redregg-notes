@@ -3,13 +3,32 @@ BEND AS MINI'S WORLD PROGRAMMING LANGUAGE
 
 Decision and destination
 ------------------------
-Ember's choice is primary: like the web uses JavaScript, Mini uses Bend. Nock remains a supported historical runtime because useful work exists, not as the language shaping the world. Bend means the exact bendlang/bend source at 947db722640c86247849343657bf2f7ef01cb7f1, including bend2/bendtt.lean, not an older HVM language or a substitute invented syntax.
+Objective Bend is its own language. Bend supplies a starting calculus and a useful
+historical admitted execution profile; its existing type system, quantities,
+termination checker and call-by-value evaluator are not the ceiling. Ember has
+explicitly authorized new syntax, typing, recursion and core representations with
+stated semantics, metatheory and versioned interpretation.
 
-The destination is ordinary members authoring behaviors on persistent governed world objects: prototypes, instances, reusable methods and libraries, messages, private queries and results, content tools, resident processes and community evolution. These must use the same semantic and authority boundary as built-in objects. A parser demo or a second executor is an intermediate component, not this destination.
+The destination is members authoring reusable, manipulable modular specifications,
+heterogeneous target extensions, final-self open recursion and whole inherited
+super computations, laws, reflection and governed evolution on persistent objects.
+Specifications remain usable before closure and when their target diverges. A
+backend method dictionary, callback trampoline or rightmost signature resolver is
+not the reference definition of these semantics. Native current authorization,
+funding, effect admission and release remain separate from behavioral correctness.
 
-Pinned reality
---------------
-Upstream is read-only /Users/ember/dev/bend. Its AGENTS forbids editing human-written bend2/bend.ts. bend.ts owns parsing/checking; safe.ts elaborates checked definitions to BendTT; comp.ts emits C/Metal/CUDA/JS; main.ts loads imports and supplies the CLI. Native Bend modules already export source definitions into JavaScript via its loader. This is useful authoring/compiler infrastructure, not a Mini authority boundary.
+The new draft reference is Theory/ObjectiveBendOpenRecursion.lean: independent
+weak-head call-by-name Steps, lazy mix and computational Fix. Generic Fix returns
+its target; reflective prototype conflation is explicit specification × lazy target
+construction. Theory/ObjectiveBendDemandMachine.lean is an executable sharing
+candidate with suspended/evaluating/cached thunks and exact-state resumption.
+These new modules are currently UNCOMPILED and their sharing adequacy, capture
+ownership, type safety and effectful extension remain construction obligations.
+No BendTT termination or consistency theorem is inherited by the new Fix.
+
+Historical admitted profile and source evidence
+----------------------------------------------
+The pinned upstream snapshot at /Users/ember/dev/bend is retained for historical profile reproducibility. New Objective language implementation lives in separate versioned source; the historical upstream file policy is not a restriction on Objective syntax/core changes. bend.ts owns parsing/checking; safe.ts elaborates checked definitions to BendTT; comp.ts emits C/Metal/CUDA/JS; main.ts loads imports and supplies the CLI. Native Bend modules already export source definitions into JavaScript via its loader. This is useful authoring/compiler infrastructure, not a Mini authority boundary.
 
 Upstream BendTT requests Lean 4.34.0; Mini currently pins 4.30.0. No common checkpoint's toolchain or runtime profile is changed by this lane. Consensus/composition owns an exact namespace-adapted BendTT import and the explicit compatibility check, rather than pretending source text has been checked on Mini just because upstream built it.
 
@@ -25,15 +44,15 @@ Language contract
 -----------------
 1. Source packages are immutable artifacts. Retain exact author bytes, named modules and an ordered sealed import graph. Imports resolve by exact artifact/source digest; aliases are scoped and unambiguous. A mutable name such as community/math@latest is resolved before publication into an immutable lock entry; invoking a published method never fetches today's code. Author/repository labels and signatures are provenance separate from computational identity. Comments/source formatting may change the source artifact identity while the existing executable identity stays unchanged.
 
-2. Use upstream Bend parsing/checking, not a new surface-language interpreter. The source adapter must load only the sealed local package and explicitly pinned trusted library bytes. Arbitrary filesystem traversal, URL/hub import, implicit Base effects, FFI and @unsafe are unavailable during method execution. Compilation and source resolution are separate from invocation. Merely validating a declared import manifest is not proof that the parser used it: retain the actual parser dependency transcript and bind it to exact parsed/elaborated Book bytes.
+2. Objective source uses its own parser and elaborator, preserving authored extension bodies, independent self/super/output annotations, requirements, laws and immutable imports. The historical embedded-Bend profile continues using pinned upstream parsing/checking. The source adapter must load only the sealed local package and explicitly pinned trusted library bytes. Arbitrary filesystem traversal, URL/hub import, implicit Base effects, FFI and @unsafe are unavailable during method execution. Compilation and source resolution are separate from invocation. Merely validating a declared import manifest is not proof that the parser used it: retain the actual parser dependency transcript and bind it to exact parsed/elaborated Book bytes.
 
-3. The semantic core is a Book.check-admitted closed live entry term with BendTT Eval/Walk call-by-value semantics. Do not substitute Term.wnf checker conversion for runtime semantics. Q0 terms are dead; Q1 live values are affine; Q2 copies only immutable Data. An underapplied case-tree call retains its original reference and normalized argument spine; it is not a partially unfolded function. Rwt evidence is live until a separate erasure/refinement theorem applies. The source check proves facts about the accepted elaborated Book, not source-to-Book or Book-to-native-compiler equivalence.
+3. The historical embedded profile admits Book.check-checked closed live entries with BendTT Eval/Walk call-by-value semantics. The new Objective core has independent partial/lazy semantics and must establish its own typing, ownership, sharing and backend refinement; the following Q0/Q1/Q2 description applies only to that historical embedding. Do not substitute Term.wnf checker conversion for runtime semantics. Q0 terms are dead; Q1 live values are affine; Q2 copies only immutable Data. An underapplied case-tree call retains its original reference and normalized argument spine; it is not a partially unfolded function. Rwt evidence is live until a separate erasure/refinement theorem applies. The source check proves facts about the accepted elaborated Book, not source-to-Book or Book-to-native-compiler equivalence.
 
 4. A world method is a pure computation over a kernel-created typed invocation sample and produces a typed Plan. Plan is data: exact read dependencies, typed proposed effects, message envelopes, private return slots, status and canonical charge evidence. No effect handler runs while speculative/private computation explores a branch. The receiving kernel constructs actual effects and checks current grants, revocation, laws, descriptor constraints, target roots, structural source/kind revisions, budget/clock/payer consent, message audience and release authorization. A well-typed program cannot grant itself authority.
 
 5. World references are Data identifying object+kind/schema revision+audience and optional opaque capability references. Copying a reference copies an address, not a right to mutate. Current authorization is resolved on every invocation. Typed quantities cannot express expiry, revocation, fresh law edits or audience transitions alone. Read-only-looking queries must still authenticate complete dependency roots, including current authority and release rules. Missing sample values refuse; they are never silently replaced by zero.
 
-6. Persistent prototypes retain source and immutable method-definition IDs, declared compatible schema and Data environment. Each call creates an affine runtime closure. General closures are not automatically reusable Q2 values. Instances retain persistent application state in governed typed world fields. A resident service stores continuations/checkpoints and mailbox cursor as governed state, then resumes through bounded invocations; it is not an ambient native process with inherited host rights. Doors can provide a useful lifecycle adapter, but Nock's special door record is not the conceptual definition of Bend objects.
+6. Persistent prototypes retain immutable specification identity and a lazy target, with qualified reusable closures and transitively reusable captures. Affine handles and continuations require explicit ownership and cannot become copyable because an environment is serialized. The historical embedded profile restricts reusable captures to its own admitted Data; that restriction does not define all Objective values. Instances retain persistent application state in governed typed world fields. A resident service stores continuations/checkpoints and mailbox cursor as governed state, then resumes through bounded invocations; it is not an ambient native process with inherited host rights. Doors can provide a useful lifecycle adapter, but Nock's special door record is not the conceptual definition of Bend objects.
 
 7. Dynamic method selection, reflective lookup and self/super must resolve exact versions before execution or record the authenticated resolution reads. Prototype method evolution is a governed change of immutable method references plus declared migration. Old method invocations cannot cross a changed kind/source/revocation/audience root without revalidation. Parent ordering and definition revisions belong to type/object evolution; governance composition and authorization are distinct.
 

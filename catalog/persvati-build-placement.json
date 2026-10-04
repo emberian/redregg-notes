@@ -47,6 +47,107 @@
       "tests_skipped": 50,
       "test_seconds": 5.706,
       "finished_utc": "2026-10-03T09:57:06Z"
+    },
+    {
+      "lane": "ir2",
+      "service": "persvati-ir2-20261003-r4",
+      "scope": "actual regression executable; descriptor parse fails before prove/verify",
+      "status": "FAIL",
+      "tests_run": 1,
+      "tests_pass": 0,
+      "tests_failed": 1,
+      "test_seconds": 0.004,
+      "finished_utc": "2026-10-03T10:14:53Z",
+      "error": "expected key t, found col; emitter serializer owner repairs; no privacy result yet"
+    },
+    {
+      "lane": "dzk",
+      "service": "persvati-dzk-20261003-r2",
+      "scope": "eight selected dZK release tests after exact two-file delta",
+      "status": "PASS",
+      "tests_run": 8,
+      "tests_pass": 8,
+      "tests_skipped": 50,
+      "test_seconds": 4.258,
+      "finished_utc": "2026-10-03T10:14:49Z"
+    },
+    {
+      "lane": "ir2",
+      "service": "persvati-ir2-20261003-r5",
+      "scope": "Actual legacy singleton privacy disclosure demonstrated; both private witnesses verify, opening exposes singleton",
+      "status": "PASS",
+      "tests_run": 1,
+      "tests_pass": 1,
+      "tests_skipped": 0,
+      "test_seconds": 0.131,
+      "finished_utc": "2026-10-03T10:27:17Z"
+    },
+    {
+      "lane": "ir2",
+      "service": "persvati-ir2-20261003-r6",
+      "scope": "Experimental256 CLI true/alternate proof verify; tamperedpublic/trailingbytes refused; not privacy repair",
+      "status": "PASS",
+      "tests_run": 0,
+      "tests_pass": 0,
+      "tests_skipped": 0,
+      "test_seconds": 0,
+      "finished_utc": "2026-10-03T10:31:53Z"
+    },
+    {
+      "lane": "ir2",
+      "service": "persvati-ir2-20261003-r7",
+      "scope": "Derived27-observation32-row budget guard and min32/normal256 proof conformance; not full transcript privacy",
+      "status": "PASS",
+      "tests_run": 3,
+      "tests_pass": 3,
+      "tests_skipped": 0,
+      "test_seconds": 1.001,
+      "finished_utc": "2026-10-03T10:36:13Z"
+    },
+    {
+      "lane": "ir2",
+      "service": "persvati-ir2-20261003-r8",
+      "scope": "Finite concrete mask-map rank27 and offset regression; not full map theorem",
+      "status": "PASS",
+      "tests_run": 2,
+      "tests_pass": 2,
+      "tests_skipped": 0,
+      "test_seconds": 0.004,
+      "finished_utc": "2026-10-03T10:39:10Z"
+    },
+    {
+      "lane": "ir2",
+      "service": "persvati-ir2-20261003-r9",
+      "scope": "Degree4 conditioning, bounded fail-closed draws, exact parameter/capacity transcript prefix binding; four unit tests instantiated twice plus three proof/budget tests",
+      "status": "PASS",
+      "tests_run": 11,
+      "tests_pass": 11,
+      "tests_skipped": 2,
+      "test_seconds": 1.059,
+      "finished_utc": "2026-10-03T10:47:16Z"
+    },
+    {
+      "lane": "sh2t",
+      "service": "persvati-sh2t-20261003-r2",
+      "scope": "Protocol/store recipient reconstruction, malformed evidence and canonical refusal tests",
+      "status": "PASS",
+      "tests_run": 8,
+      "tests_pass": 8,
+      "tests_skipped": 58,
+      "test_seconds": 4.729,
+      "finished_utc": "2026-10-03T10:47:49Z"
+    },
+    {
+      "lane": "sh2t",
+      "service": "persvati-sh2t-20261003-r3",
+      "scope": "New7partyf2 degree4/two-withheld reconstruction plus original8 protocol/storetests",
+      "status": "PASS",
+      "tests_run": 9,
+      "tests_pass": 9,
+      "tests_skipped": 58,
+      "test_seconds": 4.701,
+      "finished_utc": "2026-10-03T10:52:53Z",
+      "source_archive_sha256": "2e2a606c013d61baf88169fcdd6ce4b71923615d2ebbb40db5085187d062fd51"
     }
   ],
   "evidence": [
@@ -75,6 +176,28 @@
           "sha256": "da77ba070c7f8b8831dc36d7149ef17d77abd901bfa62e96a13fc7ee9e39bafb",
           "bytes": 2016
         }
+      ],
+      "current_capture_pins": [
+        {
+          "path": "/Users/ember/workbox/persvati-portable-20261003/binary.sha256",
+          "sha256": "29d08ac13193a1461fde76d2d449da8706f3877c505d7c0a4d46ee05cff0e711",
+          "bytes": 155
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-portable-20261003/input-pins.txt",
+          "sha256": "09a924da5252ce20e07fa816328ac82f93096c66e3593f2744c4828423ce0ea4",
+          "bytes": 502
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-portable-20261003/job-01.log",
+          "sha256": "27e9568e5f5b6ff6aefad3889183f9bf0c273f4ad9eefe749d25f5f397c34b58",
+          "bytes": 2990
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-portable-20261003/run.sh",
+          "sha256": "da77ba070c7f8b8831dc36d7149ef17d77abd901bfa62e96a13fc7ee9e39bafb",
+          "bytes": 2016
+        }
       ]
     },
     {
@@ -83,14 +206,14 @@
       "persvati_source_output": "/home/ember/workbox/persvati-ir2-20261003",
       "pins": [
         {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/fixture-hashes.json",
+          "sha256": "9eadb39f5bac65b5b36bc9464c7d5022e224e6f45e4252a161341898b47bcb27",
+          "bytes": 596
+        },
+        {
           "path": "/Users/ember/workbox/persvati-ir2-20261003/input-pins.txt",
           "sha256": "2e7c698cc3d62a3ccfa74ba896eeac64827285b1bbbff940aa7a19bc707665bd",
           "bytes": 781
-        },
-        {
-          "path": "/Users/ember/workbox/persvati-ir2-20261003/ir2-resolved-Cargo.lock",
-          "sha256": "43c1a9e1484ddd9645a5215a85aaad10cc5d651efe97532a2aa7245c2dd9d926",
-          "bytes": 27486
         },
         {
           "path": "/Users/ember/workbox/persvati-ir2-20261003/job-01.log",
@@ -108,9 +231,19 @@
           "bytes": 10521
         },
         {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/job-04.log",
+          "sha256": "99fa56b1df1998d4c901e9c3b7313aba20f5ba814e2dc9f1a9b79a14fa229021",
+          "bytes": 16994
+        },
+        {
           "path": "/Users/ember/workbox/persvati-ir2-20261003/job-journal.txt",
           "sha256": "1723817cf47b3a977a9d0dd8c9df5af3cbc77e1964233da1129623b95ec31cf5",
           "bytes": 1106
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/receiving-journal-02.txt",
+          "sha256": "a5a964a3f259457d4ea25acbb230c07487ae9b000a8139d9aece6fc2fa631760",
+          "bytes": 812
         },
         {
           "path": "/Users/ember/workbox/persvati-ir2-20261003/resolved-lock.sha256",
@@ -128,6 +261,11 @@
           "bytes": 2135
         },
         {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/run-04.sh",
+          "sha256": "7d4b1dabd66c64a496072d09cb7407163dacb72e721fd3b6a90bfeac0cb03132",
+          "bytes": 2495
+        },
+        {
           "path": "/Users/ember/workbox/persvati-ir2-20261003/run.sh",
           "sha256": "bf30c78f4c7a0e17eb163e14096d375ee4a8344df3fc8e1bc75cbf62b8470500",
           "bytes": 2119
@@ -141,6 +279,153 @@
           "path": "/Users/ember/workbox/persvati-ir2-20261003/source-hashes.json",
           "sha256": "da1d36e0809abb0ca438122f76f6e24ee0ccf222fd62cbb2f1183bfe61867138",
           "bytes": 176820
+        }
+      ],
+      "current_capture_pins": [
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/fixture-hashes-r1.json",
+          "sha256": "9eadb39f5bac65b5b36bc9464c7d5022e224e6f45e4252a161341898b47bcb27",
+          "bytes": 596
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/fixture-hashes.json",
+          "sha256": "266d589cf47607cd40ffde9a15049ef5ffc4566e8de2b1233e45b3e21bcc7c03",
+          "bytes": 593
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/input-pins.txt",
+          "sha256": "2e7c698cc3d62a3ccfa74ba896eeac64827285b1bbbff940aa7a19bc707665bd",
+          "bytes": 781
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/job-01.log",
+          "sha256": "40843bf665217a91487c1dafbc6849466972c1e7b60ed764358b4eec9458b73f",
+          "bytes": 484
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/job-02.log",
+          "sha256": "f3e493c022e743f4fd374507df220de9d77c7a1664e91bedd37396b8647f53ba",
+          "bytes": 17149
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/job-03.log",
+          "sha256": "97005c07dde0b6ab6e98c5ac57e27c808121426a7308e799ae6d1fb0223ac66f",
+          "bytes": 10521
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/job-04.log",
+          "sha256": "99fa56b1df1998d4c901e9c3b7313aba20f5ba814e2dc9f1a9b79a14fa229021",
+          "bytes": 16994
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/job-05.log",
+          "sha256": "9aba2f38b63ccff9112303186257d8c8477a6b4c086b07a228d9c6f967074934",
+          "bytes": 10831
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/job-06.log",
+          "sha256": "4ea574d4e49e1a36f43ebee00f529a110be138157db386e4c75b9e2c773ef9c4",
+          "bytes": 11045
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/job-07.log",
+          "sha256": "fb0b971bd739923f080e30f10d74f9c4ddb7aee4d84ae5a7413fc3b0e823cefa",
+          "bytes": 21942
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/job-08.log",
+          "sha256": "0d5dfc8bb587594b831f3364477a34125c2014f97f180457c80183981b757f16",
+          "bytes": 21075
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/job-09.log",
+          "sha256": "3e686be8162aec7212523d075f1878053954689ec759f2915fd3645ee4c44434",
+          "bytes": 22983
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/job-journal.txt",
+          "sha256": "1723817cf47b3a977a9d0dd8c9df5af3cbc77e1964233da1129623b95ec31cf5",
+          "bytes": 1106
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/receiving-journal-02.txt",
+          "sha256": "a5a964a3f259457d4ea25acbb230c07487ae9b000a8139d9aece6fc2fa631760",
+          "bytes": 812
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/rejected-descriptor-r1.json",
+          "sha256": "d473fa1dc02c0a032cf7dfb6f266ab532e4f0cc932a09adca14a5c75ba4cfbcb",
+          "bytes": 4610
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/resolved-lock.sha256",
+          "sha256": "4e8e4a2b52557b2a31c7dee2bfa1dd97435af610b578efd09eb4f70bfee8e2a7",
+          "bytes": 99
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/run-02.sh",
+          "sha256": "5f0cc70b3d42c4d60f7f1da4ea9d010f9c52e24b57935a8f928993961562a969",
+          "bytes": 2135
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/run-03.sh",
+          "sha256": "0bb91d2f80e13fd73ed219d34351519fa20cae816987c78537601c6978c72518",
+          "bytes": 2135
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/run-04.sh",
+          "sha256": "7d4b1dabd66c64a496072d09cb7407163dacb72e721fd3b6a90bfeac0cb03132",
+          "bytes": 2495
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/run-05.sh",
+          "sha256": "bab11c7ff2e16027b2b2594625f33c61a682a1fc5574c859167313934326f652",
+          "bytes": 2495
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/run-06.sh",
+          "sha256": "2e22ad611cce82c365dee3577f3554d0adb6f0cc1072cf2a081946b43f7ae102",
+          "bytes": 3368
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/run-07.sh",
+          "sha256": "682c89f3aa5e5ca320802d5cb2e09b4e8bb7dba44034a49ad9d7ba3eedad242a",
+          "bytes": 2913
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/run-08.sh",
+          "sha256": "b7b84c0c642df926406bee8cc39aa5f68a38a9d4abe5f10f86557550294fb4c9",
+          "bytes": 2750
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/run-09.sh",
+          "sha256": "15e95c7a6586335614a0680992a72eb5ac513e3ce73e954711719328721e9805",
+          "bytes": 2970
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/run.sh",
+          "sha256": "bf30c78f4c7a0e17eb163e14096d375ee4a8344df3fc8e1bc75cbf62b8470500",
+          "bytes": 2119
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/source-hashes-r1.json",
+          "sha256": "aacf19be1187656b23b631d72761aef54c065b4be911e3d72580b6bdb4cc9ee8",
+          "bytes": 176442
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/source-hashes-r2.json",
+          "sha256": "da1d36e0809abb0ca438122f76f6e24ee0ccf222fd62cbb2f1183bfe61867138",
+          "bytes": 176820
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/source-hashes-r8.json",
+          "sha256": "3502457226ea13e5cd8f810b556f339bdd06d6ef74e07c8280b51b552aafecd8",
+          "bytes": 177454
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-ir2-20261003/source-hashes.json",
+          "sha256": "6672ee71270c6b13e913c4c884cf6b302867dba0006207be984f0abb8c63b87b",
+          "bytes": 177421
         }
       ]
     },
@@ -160,9 +445,19 @@
           "bytes": 2331
         },
         {
+          "path": "/Users/ember/workbox/persvati-dzk-20261003/job-02.log",
+          "sha256": "6d9355209be3c474cfc128a27d5e51536a3b2ffcb5da5576edfa1c9c2b254f53",
+          "bytes": 2259
+        },
+        {
           "path": "/Users/ember/workbox/persvati-dzk-20261003/job-journal.txt",
           "sha256": "d3389f3850d37014dfd1e46bc1cc46b9d475d5845955f397de563bb7f2fd29b9",
           "bytes": 284
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-dzk-20261003/run-02.sh",
+          "sha256": "f32602c9a928d4e1fa514afd157c41e56417a015b076139d1e27f7e2d5c630e7",
+          "bytes": 1912
         },
         {
           "path": "/Users/ember/workbox/persvati-dzk-20261003/run.sh",
@@ -170,9 +465,76 @@
           "bytes": 1912
         },
         {
-          "path": "/Users/ember/workbox/persvati-dzk-20261003/source-hashes.json",
+          "path": "/Users/ember/workbox/persvati-dzk-20261003/source-hashes-r1.json",
           "sha256": "7bd6024056717da29f1c2047adf06bb8fc27df15a6f71139505054f8081347cb",
           "bytes": 3663
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-dzk-20261003/source-hashes.json",
+          "sha256": "23557e471ce1cadffcaa3f03851da03360d24871fb5c7d8fa2f51cefb52a1999",
+          "bytes": 3843
+        }
+      ],
+      "current_capture_pins": [
+        {
+          "path": "/Users/ember/workbox/persvati-dzk-20261003/input-pins.txt",
+          "sha256": "bfb8dfbe5037a53b0e2d74bd0b91ec9cd96eb1bb10374d3db542a1e78024e5b9",
+          "bytes": 590
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-dzk-20261003/job-01.log",
+          "sha256": "a50eb98a2d96b9a25b6f179a5ccaecddad46b67b0febc7d2c38b81a45e9ee7cc",
+          "bytes": 2331
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-dzk-20261003/job-02.log",
+          "sha256": "6d9355209be3c474cfc128a27d5e51536a3b2ffcb5da5576edfa1c9c2b254f53",
+          "bytes": 2259
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-dzk-20261003/job-03.log",
+          "sha256": "18d118d650da32438d33f3c3378a8bf7eab4038f5c56e55ad4c42b6182903309",
+          "bytes": 2354
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-dzk-20261003/job-journal.txt",
+          "sha256": "d3389f3850d37014dfd1e46bc1cc46b9d475d5845955f397de563bb7f2fd29b9",
+          "bytes": 284
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-dzk-20261003/run-02.sh",
+          "sha256": "f32602c9a928d4e1fa514afd157c41e56417a015b076139d1e27f7e2d5c630e7",
+          "bytes": 1912
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-dzk-20261003/run-03.sh",
+          "sha256": "9203fd24268e90c069a7b7589e3507ca7c8c355100f620cb7f14ed4c9ebcaab3",
+          "bytes": 1927
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-dzk-20261003/run-04.sh",
+          "sha256": "3c49e88fa7c404a6a950ca04c8d704b447d3f57861a181e5d986582949a919bc",
+          "bytes": 1925
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-dzk-20261003/run.sh",
+          "sha256": "a919a5271e6089aac314c2aca0b8776c5989091641201e90ec66db95c04d7d2e",
+          "bytes": 1912
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-dzk-20261003/source-hashes-r1.json",
+          "sha256": "7bd6024056717da29f1c2047adf06bb8fc27df15a6f71139505054f8081347cb",
+          "bytes": 3663
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-dzk-20261003/source-hashes-r2.json",
+          "sha256": "23557e471ce1cadffcaa3f03851da03360d24871fb5c7d8fa2f51cefb52a1999",
+          "bytes": 3843
+        },
+        {
+          "path": "/Users/ember/workbox/persvati-dzk-20261003/source-hashes.json",
+          "sha256": "9a0eac801b2f677eb4ab912cea2d28f234c2c4b010a5c21c6567dfde9aa46d89",
+          "bytes": 4117
         }
       ]
     }
@@ -182,5 +544,295 @@
     "No old target/cache blindly reused or deleted",
     "No datamodel traversal/deletion",
     "No current Mini cache compatibility or general proof-security claim established"
-  ]
+  ],
+  "current_lean_projection": {
+    "status": "actual binary header closure validated; multiple leaf source qualifications completed",
+    "modules": 3350,
+    "initial_metadata_projection_modules": 3348,
+    "olean_bytes_initial": 1186966520,
+    "artifact_bytes_initial": 2690070992,
+    "complete_archive_sha256": "6c1bdb265bc576ac9ddd8fe012f9d4002d7548e05976530597ddaef71c71178d",
+    "manifest_sha256": "302cb362d3b8fa0ce23905f099f97712ac6e6c79e7e652d05e30bbaccc68a6e5",
+    "binary_patch_sha256": "f843e5cd767fbaa97e1038ff2dbae300b983ba240e8b80ec5894ba9cfb4cd9a8",
+    "missing_metadata_dependencies": [
+      "Kernel.NativeObservationOpeningCache",
+      "Kernel.WorldPrototypeConstruction"
+    ],
+    "readonly_destination": "persvati:/home/ember/workbox/persvati-lean-20261003/complete-warm",
+    "limits": "Selected fixed snapshot; additional independently qualified lane-specific modules are pinned separately. Not current all-project qualification."
+  },
+  "current_seat_controls": {
+    "authorized_memory_cap_sum_gib": 56,
+    "authorized_thread_cap_sum": 24,
+    "lean_leaf_count": 6,
+    "lean_leaf": {
+      "memory_max_gib": 4,
+      "cpu_quota_percent": 200,
+      "lean_threads": 2,
+      "runtime_max_seconds": 300
+    },
+    "lean_main": {
+      "memory_max_gib": 16,
+      "cpu_quota_percent": 400,
+      "lean_threads_max": 4,
+      "runtime_max_seconds": 300
+    },
+    "rust_count": 2,
+    "rust": {
+      "memory_max_gib": 8,
+      "cpu_quota_percent": 400,
+      "cargo_jobs_max": 4,
+      "runtime_max_seconds": 1800
+    },
+    "all": {
+      "swap_max_bytes": 0,
+      "tasks_max": 256,
+      "kill_mode": "control-group",
+      "oom_policy": "stop"
+    },
+    "guardian": "persvati:/home/ember/workbox/persvati-lean-20261003/guardian.sh",
+    "launcher": "persvati:/home/ember/workbox/persvati-lean-20261003/launch-seat.sh",
+    "atomic_lifetime": "Per-seat FD9 flock, per-owned-lane FD8 flock, native systemd cgroup kills whole job; each owner controls its frozen source/output and retained consumer lifecycle."
+  },
+  "owner_lifecycle_qualifications": [
+    {
+      "lane": "lean-money2",
+      "scope": "money foundation2",
+      "finished_utc": "2026-10-03T11:16:02Z",
+      "status": "PASS",
+      "claim": "Repaired Prop-as-Type and proof source errors; exact COMMON six pins; both modules+axiom gates",
+      "evidence_class": "owner callback plus captured guardian log where indexed; not independent theorem-statement audit"
+    },
+    {
+      "lane": "portable4",
+      "scope": "portable core4",
+      "finished_utc": "2026-10-03T11:35:39Z",
+      "status": "PASS",
+      "claim": "Reserved prefix binder and prefix transitivity repaired; four source modules+axiom gates",
+      "evidence_class": "owner callback plus captured guardian log where indexed; not independent theorem-statement audit"
+    },
+    {
+      "lane": "controller2",
+      "scope": "Beta+Value2",
+      "finished_utc": "2026-10-03T11:40:25Z",
+      "status": "PASS",
+      "claim": "Frozen12 qualified dependency pairs; actual header closure152; exact2 modules",
+      "evidence_class": "owner callback plus captured guardian log where indexed; not independent theorem-statement audit"
+    },
+    {
+      "lane": "receive",
+      "scope": "Receive3",
+      "finished_utc": "2026-10-03T11:34:19Z",
+      "status": "PASS",
+      "claim": "ReceiveProvenance then conditionalStructure/GlobalReceive actual source gates",
+      "evidence_class": "owner callback plus captured guardian log where indexed; not independent theorem-statement audit"
+    },
+    {
+      "lane": "receive",
+      "scope": "GlobalCausal1",
+      "finished_utc": "2026-10-03T11:41:49Z",
+      "status": "PASS",
+      "claim": "Actual Reachable voteOnce/commitCandidateLock consumer; repaired actual source first",
+      "evidence_class": "owner callback plus captured guardian log where indexed; not independent theorem-statement audit"
+    },
+    {
+      "lane": "receive",
+      "scope": "Scope3",
+      "finished_utc": "2026-10-03T11:51:21Z",
+      "status": "PASS",
+      "claim": "Actual source metadata/composite start-step/count prior-send support",
+      "evidence_class": "owner callback plus captured guardian log where indexed; not independent theorem-statement audit"
+    },
+    {
+      "lane": "causal",
+      "scope": "Causal1",
+      "finished_utc": "2026-10-03T11:35:17Z",
+      "status": "PASS",
+      "claim": "Full actual start/step/pump module after source repairs",
+      "evidence_class": "owner callback plus captured guardian log where indexed; not independent theorem-statement audit"
+    },
+    {
+      "lane": "causal",
+      "scope": "PreparedHistory1",
+      "finished_utc": "2026-10-03T11:45:56Z",
+      "status": "PASS",
+      "claim": "Actual start/step/isSafe producer",
+      "evidence_class": "owner callback plus captured guardian log where indexed; not independent theorem-statement audit"
+    },
+    {
+      "lane": "fhe-manifest",
+      "scope": "runtime manifest1",
+      "finished_utc": "2026-10-03T11:38:25Z",
+      "status": "PASS",
+      "claim": "Actual retained public manifest and strict refusal cases; no parser/dependency rebuild",
+      "evidence_class": "owner callback plus captured guardian log where indexed; not independent theorem-statement audit"
+    },
+    {
+      "lane": "collective5",
+      "scope": "five frozen Books",
+      "finished_utc": "2026-10-03T11:47:49Z",
+      "status": "PASS",
+      "claim": "Book.parse/no opaque/Book.check real frozen5",
+      "evidence_class": "owner callback plus captured guardian log where indexed; not independent theorem-statement audit"
+    },
+    {
+      "lane": "money-receiver",
+      "scope": "receiver3",
+      "finished_utc": "2026-10-03T11:39:45Z",
+      "status": "PASS",
+      "claim": "Funding issuer net footprint credit source correction; finite coverage and audit gates",
+      "evidence_class": "owner callback plus captured guardian log where indexed; not independent theorem-statement audit"
+    },
+    {
+      "lane": "money-receiver",
+      "scope": "sample table1",
+      "finished_utc": "2026-10-03T11:48:55Z",
+      "status": "PASS",
+      "claim": "Exact full-byte decoder+early cap and six generic source gates",
+      "evidence_class": "owner callback plus captured guardian log where indexed; not independent theorem-statement audit"
+    },
+    {
+      "lane": "controller-central3",
+      "scope": "Return/SupportedRun/Refusal3",
+      "finished_utc": "2026-10-03T11:52:07Z",
+      "status": "PASS",
+      "claim": "Source pattern repair; retained ReturnPASS then only affected2 retry",
+      "evidence_class": "owner callback plus captured guardian log where indexed; not independent theorem-statement audit"
+    },
+    {
+      "lane": "receive",
+      "scope": "Chronology1",
+      "finished_utc": "2026-10-03T12:04:46Z",
+      "status": "PASS",
+      "claim": "Actual strict local/global event index and PreparedHistory SafeAt source consumer; owner repair retained previous qualifications.",
+      "evidence_class": "Owner callback; matching terminal guardian log captured where present. Not independent theorem-statement audit."
+    },
+    {
+      "lane": "receive",
+      "scope": "VOTE-origin2",
+      "finished_utc": "2026-10-03T12:13:18Z",
+      "status": "PASS",
+      "claim": "Actual OriginInvariant start/step and historical global voteOrigin source consumer.",
+      "evidence_class": "Owner callback; matching terminal guardian log captured where present. Not independent theorem-statement audit."
+    },
+    {
+      "lane": "bend-feedback",
+      "scope": "emitMux1",
+      "finished_utc": "2026-10-03T12:01:18Z",
+      "status": "PASS",
+      "claim": "Actual emitMux run/output/old-wire preservation; five standard axiom gates.",
+      "evidence_class": "Owner callback; matching terminal guardian log captured where present. Not independent theorem-statement audit."
+    },
+    {
+      "lane": "bend-feedback",
+      "scope": "arbitrary field witness soundness1",
+      "finished_utc": "2026-10-03T12:07:36Z",
+      "status": "PASS",
+      "claim": "Accepted IR2 field wires yield bits and actual Network.evaluate result; source fa1b57c8b9ab34c637e4d56033989cb1906842cf6f8d7f6f171a2b2438481746. No whole-transcript hiding claim.",
+      "evidence_class": "Owner callback; matching terminal guardian log captured where present. Not independent theorem-statement audit."
+    },
+    {
+      "lane": "collective9",
+      "scope": "service3/money4/DrEX2 Books",
+      "finished_utc": "2026-10-03T12:15:24Z",
+      "status": "TIMEOUT",
+      "claim": "status124 after270s/noOOM/1.37GB peak by owner; no Book verdict flushed; no green. Owner instruments per-definition progress and isolates unaffected cohort.",
+      "evidence_class": "Owner callback; matching terminal guardian log captured where present. Not independent theorem-statement audit."
+    },
+    {
+      "lane": "collective9",
+      "scope": "diagnostic decomposition",
+      "finished_utc": "2026-10-03T12:23:30Z",
+      "status": "PARTIAL",
+      "claim": "Actual Book.check PASS five money/scalar/plan Books. Exhaustive Def.check/no-opaque PASS all definitions in Service169/Faces192/Demo183. DrEXDemo262 actual_uniform_collects_then_distributes unresolved timeout80; prior0..261 PASS. Aggregate9 not PASS.",
+      "evidence_class": "Owner callback; not independently captured/audited in this update."
+    },
+    {
+      "lane": "money-receiver",
+      "scope": "BendMoneyInput1",
+      "finished_utc": "2026-10-03T12:33:30Z",
+      "status": "PASS",
+      "claim": "Kernel.BendMoneyInput source9ef661e1/output1d78914c, seven gates, no dependency rebuild; owner callback.",
+      "evidence_class": "Owner callback; not independently captured/audited in this update."
+    },
+    {
+      "lane": "bend-feedback",
+      "scope": "ArithmeticQualification with SourceJoin",
+      "finished_utc": "2026-10-03T12:46:13Z",
+      "status": "PASS",
+      "claim": "Whole-run IR2 general theorem and finite state carry/refusal/zero-tick checks preceding final Assurance.BendArithmeticQualification including conditional actual SourceJoin receiver; no full masking/commitment relation or native proof gate claim.",
+      "evidence_class": "Owner callback; not independently captured/audited in this update."
+    }
+  ],
+  "flow_corrections": [
+    "Resume existing immutable transfer tail via direct SSH rather than restart whole archive",
+    "Use actual Lean ModuleData binary imports; .ilean metadata can mismatch chosen olean",
+    "One namespace file union with own outputs; empty own namespace does not fall back",
+    "Pin COMMON versus scoped artifact selection explicitly even when source hash matches",
+    "Reuse qualified exact individual extra module (BendTTSource) instead waiting whole lane mirror",
+    "Delegate owner full frozen tranche/repair/consumer lifecycle; no per-leaf approval queue; retain partialPASS and stop only dependent failures"
+  ],
+  "qualification_capture": {
+    "path": "/Users/ember/workbox/persvati-lean-20261003/qualification-capture-1201.json",
+    "sha256": "6dbb9dd5a09fdb34359088836e42b510fde7b20dafdeaa98a337e69c2b4586f2",
+    "scope": "Private SSH log snapshots/cgroup proof captured2026-10-03T12:01:01UTC; contains multiple distinct source revisions and partial failures, not one all-green log."
+  },
+  "lean_support_helpers": [
+    {
+      "path": "/Users/ember/workbox/persvati-lean-20261003/guardian.sh",
+      "sha256": "9d69d5bf44fd1b005213c9827599940952418cadb5578043d3f85ba76beac995"
+    },
+    {
+      "path": "/Users/ember/workbox/persvati-lean-20261003/launch-seat.sh",
+      "sha256": "dc2cd990cb252ebd465add85646854e33b14e0bb786777cc633cc8063b35e4ab"
+    },
+    {
+      "path": "/Users/ember/workbox/persvati-lean-20261003/make-overlay.py",
+      "sha256": "d6906347d982a118147a1adf6768a4feb4dfa91f8fc2b3130bae8ad60509476b"
+    },
+    {
+      "path": "/Users/ember/workbox/persvati-lean-20261003/OleanImports.lean",
+      "sha256": "295ff43b49d8bdbae13ca1a26989f327465891a36c74545a8747352b6940498c"
+    },
+    {
+      "path": "/Users/ember/workbox/persvati-lean-20261003/lean-warm-preflight.py",
+      "sha256": "d08e973331f625ba8f4eeaee157a733c85ad6cacb0786b7174730d297f7c2c50"
+    }
+  ],
+  "latest_qualification_capture": {
+    "path": "/Users/ember/workbox/persvati-lean-20261003/qualification-capture-1217.json",
+    "sha256": "0b1506823f5f0e68b934cd8b89a1a4f01eab5e7460487a593d6452c648c415aa",
+    "captured_utc": "2026-10-03T12:17:51.082925+00:00",
+    "scope": "Three latest bounded guardian log snapshots; prior source failures retained alongside repaired terminal PASS. Source9 timeout is not qualification."
+  },
+  "source_only_infrastructure_packet": {
+    "path": "/Users/ember/workbox/persvati-lean-20261003/persvati-build-infra-source-r1.tar.gz",
+    "sha256": "e56c81a77a25c15a22b471e4afaec3a1a74360c8331de06007fdbb9446e4bf46",
+    "status": "Room uploaded and canonical SOURCE-INBOX registered under redregg_evidence; captain owns publication",
+    "scope": "Four reusable infrastructure sources plus manifest only; host-specific paths need deployment parameterization; excludes private evidence/corpus/logs/objects/fixtures/keys"
+  },
+  "placement_returns": [
+    {
+      "scope": "Card1",
+      "status": "NOMINATED_NOT_ACCEPTED",
+      "disposition": "Returned ready to product lieutenant/captain hbox; no Persvati launch exists."
+    }
+  ],
+  "infrastructure_handoff": {
+    "status": "ACKNOWLEDGED",
+    "owner": "takeover_kernel captain",
+    "room_ack": true,
+    "active_infrastructure_owned_jobs": 0,
+    "owner_lifecycles_preserved": true,
+    "handoff_path": "/Users/ember/dev/redregg/work/PERSVATI-INFRA-HANDOFF-20261003.txt",
+    "ack_utc": "2026-10-03T12:20:29.893035+00:00",
+    "remaining_scope": "Captain sustained guardians/seat/resource/source accounting; named source owners retain actual job/error/terminal callbacks; receiver owns DAG continuation.",
+    "post_handoff_backend_confirmation": {
+      "status": "Retained Rust2 confirmed free actual systemd snapshot; owner may launch under guardian, captain receives lifecycle callbacks",
+      "available_mib": 63731,
+      "root_disk_available_gib": 276,
+      "source_manifest": "c680821c67e7fd7ff41447ad9de91ed085e2525fa31716c1e79f4fe05060f713",
+      "scope": "New security/consumer r18 only; own changed lock2a2268, no prior suite rerun."
+    }
+  }
 }

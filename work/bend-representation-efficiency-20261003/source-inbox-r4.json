@@ -1,0 +1,57 @@
+{
+  "owner": "bend_representation_efficiency",
+  "base": "Isolated explicit env-sub-v1 kernel fork of qualified BendTTSource SHA7b221b208344c69cef7962bdab264d0abf9528637ff55e2cf69787da4f753e38; reconcile owner source before selected-edition receiving; no default activation",
+  "archivePath": "/tank/dregg-build/codex-bend-efficiency-20261003/bend-representation-efficiency-r4.tar.gz",
+  "archiveSha256": "1b483958d85e03015eb8f216510ac29c32242c1324121aa9450d8558718f598a",
+  "files": [
+    {
+      "finalPath": "Theory/BendTTSource.lean",
+      "archiveMember": "./Theory/BendTTSource.lean",
+      "sha256": "f4eb0d1b0c63ad06c453c2021ee97c114d05e468b358b40599b20e7d05333981",
+      "qualificationStatus": "Isolated fork source full kernel proof PASS, actual run probe PASS; DrEX law remains timed out; source review/explicit selected-edition receiving required, no default activation"
+    },
+    {
+      "finalPath": "docs/BEND-EMPTY-ENV-SUBSTITUTION.md",
+      "archiveMember": "./docs/BEND-EMPTY-ENV-SUBSTITUTION.md",
+      "sha256": "c69d6813c8b93b8d4d8fe43379659dabb9795875badc1721ca771c9de471c68e",
+      "qualificationStatus": "Isolated fork source full kernel proof PASS, actual run probe PASS; DrEX law remains timed out; source review/explicit selected-edition receiving required, no default activation"
+    },
+    {
+      "finalPath": "docs/BEND-EMPTY-ENV-SUBSTITUTION.patch",
+      "archiveMember": "./docs/BEND-EMPTY-ENV-SUBSTITUTION.patch",
+      "sha256": "8cc217538b2a7e21f5fb509cfa569f66b910526ed05ff104d8df2d5022047745",
+      "qualificationStatus": "Isolated fork source full kernel proof PASS, actual run probe PASS; DrEX law remains timed out; source review/explicit selected-edition receiving required, no default activation"
+    },
+    {
+      "finalPath": "tests/bend-representation-efficiency/CheckOne.lean",
+      "archiveMember": "./tests/bend-representation-efficiency/CheckOne.lean",
+      "sha256": "02e3cfcefcf45a4d89fa0d3dd8e61188041346978b3af372d7f58848dbf85d69",
+      "qualificationStatus": "Isolated fork source full kernel proof PASS, actual run probe PASS; DrEX law remains timed out; source review/explicit selected-edition receiving required, no default activation"
+    },
+    {
+      "finalPath": "tests/bend-representation-efficiency/EmptyEnvProbe.lean",
+      "archiveMember": "./tests/bend-representation-efficiency/EmptyEnvProbe.lean",
+      "sha256": "a0a397dfb7bd43881e897ac1e1b3ec501a710e0da7862f51192ead2b18273de5",
+      "qualificationStatus": "Isolated fork source full kernel proof PASS, actual run probe PASS; DrEX law remains timed out; source review/explicit selected-edition receiving required, no default activation"
+    }
+  ],
+  "deps": [
+    "Builtin Std.Data.HashMap only; full source existing proofs qualified in owned leaf"
+  ],
+  "overlaps": [
+    "Theory/BendTTSource.lean is isolated selected fork; do not silently replace world current edition or baseline artifact"
+  ],
+  "sourceOnly": true,
+  "qualificationLogs": [
+    "/tank/dregg-build/codex-bend-efficiency-20261003/checker-fork/check-01.log",
+    "/tank/dregg-build/codex-bend-efficiency-20261003/checker-fork/probe-01.log",
+    "/tank/dregg-build/codex-bend-efficiency-20261003/checker-fork/def262-01.log"
+  ],
+  "notes": [
+    "Actual generic traversal delta qualified: source+existing kernel proofs PASS, general csimp equality all env/terms; actual run whole term+fuel equality88ms\u2192<1ms.",
+    "DrEX exact source law262 still TIMEOUT60; no acceptance/refusal or fix claim. Runtime/world own exact caching/fuel refinement continuation; product owns domain law.",
+    "Original evaluator strategy, source charges and fuel unchanged. Logical wrapper body exactly original substitution; only native identity environment skips traversal.",
+    "No baseline native receiver/default profile changed. Retain old compiler artifact and explicit selected native edition.",
+    "Main efficient compiled source/profile intake is r1+r3; r2 superseded. AUX released; no further builds scheduled."
+  ]
+}

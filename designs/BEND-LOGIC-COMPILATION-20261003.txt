@@ -1,3 +1,63 @@
+CURRENT UPDATE — OBJECTIVE BEND ONLY — 2026-10-03 19:15 UTC
+
+The earlier upstream-kernel work below is historical inventory, not the active
+source target. Ember explicitly retired the TT source/runtime path. Objective
+Bend edition1 with scalar Core4/wire2 is the current language; its source Step,
+sharing DemandMachine and repaired ownership checker are independent semantics.
+Useful generic AIR/Emit/SSA/ripple machinery transfers without TT imports.
+
+Actual saved-source path now received: Studio NotebookReview immutable signed
+capture b433090… -> pinned Objective capture/elaboration -> checked closed
+callable arrow canonical4c807bcc… -> ObjectiveSourcePackage51958B ab55123d…,
+new package identity3f255847…a13ff. The package producer reparses exact source,
+checks AST/import/tool/selected-declaration binding and uses an Objective-only
+canonical frame/domain. World/Doc own current source authority, native hostInput
+funding and whole-result reception; a package label does not establish these.
+
+Objective arithmetic now compiled AND physically consumed: actual authored
+weighted(a,b)=(a+a)+b, all-expression/all-Nat selected module/fix/beta source
+normalization, same constructive signed/field Emit graphs, arbitrary-witness
+soundness/completeness conditional on original assignment, integer no-wrap.
+Artifact13327B 218f020c671ea63de647e2fc0ade3699f0eceeffa17a0da962cda2cd48e42acd
+at hbox:/home/hbox/workbox/codex-bend-logic-20261003/run-objective-natural-emit-01.
+Input order[a,b] explicitly permutes Core binders[1,0]; caps256/outputMax765.
+Real BFV consumer ran all4096slots and independent secretless ciphertext replay;
+asymmetric input2,7 produced11. Real source-selection, primitive, codec-overflow,
+no-wrap and physical identity/representation refusals also ran.
+Requested compiler capacity is explicitly not Demand exhaustion proof, native
+registered tariff, fee/funding admission, encrypted input validity or Rust/BFV
+refinement. New physical consumer admits only Objective schemas; old TT
+artifacts were refused. Native computation authority/release remain separate.
+
+General bit add survived migration: all-width carry-preserving SSA proof and
+canonical width8 Plan379B c6aa69b5… consumed actual ACSS16 private bits+King32
+real tuples, counted qualification/whole-plan burn, LayerMPC255+1=256, only
+recipient1 +private completed-result reopen. Field/bit encodings are not silently
+equated, and this physical graph test is not an Objective source theorem.
+
+Current broader compiler construction: ObjectiveNaturalResidual reuses the
+qualified law-checker checkScope/reduceOne/scoped_step_substitute to partially
+evaluate actual public helper/repeated calls into the same Expr/DAG. Source73/74
+published WIP; bounded check underway. No second source evaluator was authored.
+The current executable numeric profile has two curried Nat formals and public
+literal/input/add bodies; the general language/frontend/type/runtime remain
+broader. Next joins: helper-call source->same emitted artifact, native FHE
+Checked source/package/emitter replay binding, and registered capacity/funding.
+
+Real source law frontier also joined: byte-identical IdentityReview source was
+captured/emitted into closed candidate/seed/retained-law proposals. Type owner
+received preserved Wrap candidate as proved partial-equation for symbolic input;
+changed +1 candidate is welltyped but demonstrated false at input0. Retained law
+metadata remains undischarged until this actual behavioral certificate consumer.
+
+Qualified numeric sources/pins: hbox:/home/hbox/workbox/codex-bend-logic-20261003/
+objective-natural-qualified-01/PINS.json, warm qualified overlay /tank/dregg-build/
+codex-objective-natural-qualified01-20261003/olean. Source72 archive7e2183ca…631a
+in canonical SOURCE-INBOX; report does not claim publication SHA without captain
+commit-map evidence. Current source docs: docs/OBJECTIVE-NUMERIC-COMPILER.md.
+
+----- HISTORICAL EARLIER INVENTORY / SUPERSEDED TARGET STATUS -----
+
 BEND LOGIC COMPILATION: SOURCE-GROUNDED CONSTRUCTION 2026-10-03
 Owner: Codex bend_logic_compilation. Upstream kernel pin:
 947db722640c86247849343657bf2f7ef01cb7f1 (bend2/bendtt.lean).
@@ -498,3 +558,241 @@ Immutable qualified compiler checkpoint:
 Includesallqualified3blocks+representationfirst3, actual3artifacts/captured
 Boolfrontsources+passinglogs/checkscripts; excludespendingnumericmodules.
 No fullHost/sourceclosure rebuild or binarydistribution is implied.
+
+2026-10-03 source publication and next arithmetic contract checkpoint
+All three previously qualified artifacts have actual real-BFV receiving evidence,
+including captured Prelude Bool negation 51efc99c... in run-prelude-01. No new
+BFV rerun occurred in this checkpoint.
+
+Authored source is now shipped before qualification via canonical coordination/
+SOURCE-INBOX.jsonl. Isolated lane /home/hbox/workbox/codex-bend-logic-20261003:
+- packet01 a877ccdbe0513a1ea9adb7ec7723b93c26cf083426ed7a3d0c70177825587e9d:
+  qualified isolated compiler/Host modules and scoped recipes; common integration
+  is separate. No logs/cache/runtime outputs/secrets in source packet.
+- packet02 0b5852e0790a11b8dac8e22d61514fb1b6195b6a2249fcba72f90e3aa2bc90ef:
+  UNCOMPILED BendLogicPreludeMux and Host emitter. Actual captured selector
+  splits Bool tag/unit before the two remaining Q1 arm lambdas. Exact checked
+  Bool Book, transparent selected interface/body, existing SAME mux descriptor
+  and retained constructive expression; arbitrary-witness -> selected Ref Trace1.
+  No generated artifact yet, pending BendSourceBoolChoose qualification.
+- packet03 6b552a1edb23744e354dc1b4f80672fad37315f908c7efd07ccdcf8300cb6c0d:
+  UNCOMPILED Compiler/BendLogicNatAdd.lean (source SHA
+  9ad5b410b8c46cebbc1fa8b9512764f6f2b50ec00152e4ab9b0db0a88daf878e).
+  Width-generic existing AirBignum/Emit adapter, exact Nat.arms/Nat/Nat.add
+  structural Book binding plus Book.check; arbitrary auxiliary witnesses force
+  exact integer addition, actual captured Nat.add normalization and actual Nat
+  typed input/output witnesses. Retains constructive little-endian recomposition
+  plus addition polynomial and field-cast relation. Nat source terms only occur
+  as proposition witnesses; runtime does not construct enormous unary terms.
+  Per-limb 2*2^limbBits<=p is a schoolbook no-wrap premise. Whole scalar plaintext
+  range is an additional backend premise, never inferred from per-limb no-wrap.
+  No physical numeric artifact, canonical witness/completeness, custom MarketMath
+  source lowering, multiplication/division, cost law or governed charge claim.
+- packet04 9ed6619598100faa4ac3316ef8905520084531dafaef7d427c23df0377dd4bc1:
+  UNCOMPILED path-only Host integration revisions, apply after packets01/02.
+  Canonical source-root tests/bend-source-representation/{BoolSource,
+  BoolChooseSource}.{bend,bendtt} bytes unchanged and representation-owned.
+  Adds portable caller-configured pinned-Lean warm-only scoped check runner.
+  Prior qualified source/emitted artifact hashes remain immutable evidence;
+  path-only revisions have not generated a new qualified artifact.
+
+Ownership retained, no build seat held. Exact resume triggers: representation
+owner qualifies BendSourceNatOperation+BendSourceNatTyped -> one-module
+check-nat-add.sh; or qualifies BendSourceBoolChoose -> two-module Prelude mux
+source emitter check, then actual emitted artifact to existing FHE receiver.
+Producer has been asked to message root/room to followup_task this lane when
+ready. No polling turn is needed. Captain owns reconciliation/commit/push onto
+Mini main; no shared Git or branch mutations by this lane.
+
+Resume checkpoint: representation ALL10 now actual Lean4.30 PASS with standard
+three axiom gates, including NatOperation, NatTyped and BoolChoose. APIs read
+from final repaired source; own dependent compilation not yet run. New packet05
+SHA fa61ef2a9e9b8e69ef6db72b2f9690801b0a363ee3e89be153ade4d18b835dfc
+(source NatAdd3555455033106526369e237a5ccfaaca78d3d96a4fbcf7968b340dd4cde97b75)
+adds generic declared limb-capacity bound and explicit whole-integer <p scalar
+exact-decoding theorem; seven general axiom assertions authored. Indexed in
+canonical SOURCE-INBOX before qualification. Earlier 329 source-file main push
+2ebce376 includes 16 owned files; packet05 is newer source awaiting reconciliation.
+Assigned aux chain world5 -> tracewire2 -> this lane NatAdd/PreludeMux3 -> linker3
+-> portable4. Combined child check-nat-prelude.sh frozen, no dependency rebuild.
+No seat held. Trace owner asked root/room followup_task on explicit release;
+waiting-only turn parked with ownership retained, no polling/ps-race.
+
+Actual dependent qualification attempt 2026-10-03 10:28:33-35 UTC:
+Assigned OO explicitrelease -> guardian check-nat-prelude-01 ran, FAIL/released
+exit1 after2s. NatAdd descriptorHolds transport used syntactic wrapper equality
+where target was unfolded emit expression (lines103/141); source/math APIs
+available, but failed proof produces sorryAx and gates correctly reject it.
+PreludeMux was not run. Direct followup objective_bend_linker next in terminal
+chain; no heldrepair/relaunch. Off-seat repair makes wrapper transport explicit
+before unfolding descriptor, no theorem statement changes. Packet06/source-only
+indexed immediately, SHAe1f0fa5baf28411490981b2d15f793039a5bc25e1d7e8a39693949d2920d5861
+source899bd7741254364a82c7361288a8af500fcff57e557aebe25399ce0b7dbef91c.
+Repair remains UNCOMPILED; future captain check needed. Prior three BFV source
+artifacts remain qualified; no rerun/no new numeric artifact produced.
+
+2026-10-03 10:50:14-20 UTC qualification success after second explicit OO handoff:
+Same guardian bounded compiler3 check reran revised source, PASS exit0/released6s.
+Log /home/hbox/workbox/codex-bend-logic-20261003/check-nat-prelude-02.log
+SHA00ca538139501d464e8e770787b69b495c4b933a6a77d9d73e6f1df7a96c3892.
+NatAdd899bd7741254364a82c7361288a8af500fcff57e557aebe25399ce0b7dbef91c
+seven general standard-three axiom gates PASS:
+ bookBinding_sound, compile_exact, wordExpr_cast, compiled_source_sound,
+ compiled_output_cast, compiled_result_bound, compiled_output_exact_val.
+This is genuine width-generic arbitrary-witness emitted AIR -> exact integer
+addition -> exact typed captured Nat.add semantics, plus declared result capacity
+and separate whole-value field decoding premise. No physical numeric artifact,
+canonical input witness producer/completeness proof, custom method optimizer,
+canonical resource/failure law or governed/native numeric result claim.
+
+Fourth qualified compiler artifact is ACTUAL captured Prelude Bool selector:
+Compiler/BendLogicPreludeMux e26ef80956360576ce7bdd1470c12cc9402c74139d0b93d4a765be12d4010136
+Host/BendLogicPreludeMuxEmit d4fefc0bddba99dac0aad768d06d6ba62e4fdf30950b31ca864996e9979f7a42
+prelude-mux-artifact.json d158cff51aaf88f75f0ab1beb1a76dd1d59775f429f491fe8e92a490b12bd6a2.
+Schema dregg.bend.prelude-bool-mux.v1, signedConstantPolicy dynamic-bool-mux-v1,
+tagEncoding bend-prelude-bool-sigma-unit-v1; exact captured frontend scope;
+inputOrder selector,trueArm,falseArm; wires1/2/3,output0,nPublic0. Existing SAME
+Mux retained DAG and descriptor. General arbitrary-witness selected source Ref
+Trace1 proof and gates PASS; actual captured Book.check +all8 source outputs
+count1+wrong outputs/changed Bool/type/opaque/absent/oldenum/publicsplit refusals
+PASS. Surface source530e1a48ae8c1d0a47f3227e999abe5597e22d6a557ad88e676b92151a616c6b,
+emitted Book588ba33aa6891afd271d1b3bed11e561e2bdf849021983a2ae3c7d3a9bc0d5cd.
+Source paths canonical tests/bend-source-representation, bytes unchanged.
+FHE receiver has actual artifact, will consume same native dynamic interpreter
+when own native current-authority/key/session/release tranche allotted. Fourth
+physical encrypted execution NOT yet claimed. Prior three actual BFV runs remain.
+
+Direct followup linker3 terminal handoff sent. No compiler job/seat remains.
+Qualified-source packet07 indexed SOURCE-INBOX, archiveSHA
+ d9b6e880a35733abaa60dc674d142cd3b5984191de56118cc2dc521b70dd543d.
+Contains only these three exact source files+qualification manifest, no artifacts,
+logs/cache/private data. Captain owns reconciliation and common qualification.
+
+Reusable logic compiler construction resumed (no NatAdd/PreludeMux ceiling):
+Seven new generic modules plus actual source emitter authored, UNCOMPILED:
+ Compiler/BendNaturalExpression: input(Fin arity)/literal Nat/add grammar,
+ source lowering and SAME Air DSL, monotone caps/source count upper bounds,
+ explicit charged complete/exhausted outcome and uniform admitted budget.
+ Compiler/BendNaturalSource: actual captured Nat.add Trace(a+1), compositional
+ nested argument+call Trace with exact source count, actual Eval/Walk only.
+ Compiler/BendNaturalCircuit: existing AirRange and Emit for every input/output;
+ arithmetic equality, arbitrary-witness exact integer soundness and generic
+ boolean-decomposition range/witness completeness. Public syntax/topology.
+ Compiler/BendNaturalMethod: exact selected Q2Nat Data method/body/type Book
+ admission; Q2 permits duplicated inputs without allowing closure copying.
+ Source-call Trace adds one actual Eval.call to expression source count.
+ Compiler/BendNaturalCompiler: executable source-expression recovery from actual
+ checked method; full structural admission, arity/profile/source/public budget
+ and field/plaintext bounds. No declared graph substitution.
+ Compiler/BendNaturalWorldSource: actual AllQ1(SigQ1 List.q2Nat List.q2Nat) Nat
+ source wrapper. Exactly n Nat-byte argument constructors consumed by source
+ Walk; Q2 Data heads allow reuse; observations are discarded affinely (no Q0
+ field convention). One Eval.call then exact expression schedule. Generic
+ extractor/source trace/input typing proofs authored, not qualified yet.
+ Compiler/BendNaturalRefinement: emitted arbitrary wires ->source bounded Nat
+ result/type/world trace; all admitted input witness/source completeness.
+ Host/BendNaturalEmit: actual captured custom SourceNat.doubleSum, structurally
+ recovered model, generated admitted native affine wrapper and exact Book.check,
+ retained SAME generic signed/field constructive expression and range relation.
+ Real source consumer/count/descriptor/refusal cases authored, not run yet.
+
+First real custom surface Q2Nat doubleSum(a,b)=(a+b)+(a+b), inputs0..255,
+outputMax inclusive1020, source exact charge3a+b+4, public reservation1024.
+Exact charge counts source Eval, never gate census. Input model uses deBruijn
+index0 lastformal; published inputOrder b,a and wires1,2 explicitly. Runtime
+source shape/classification/output-size bounds remain independently required;
+source Trace theorem alone is not executeChecked or native allocator success.
+
+FHE reusable schema confirmed with actual receiving owner:
+ dregg.bend.public-natural-expression.v1
+ bounded-natural-polynomial-v1
+ bend-prelude-nat-scalar-v1
+ Expr JSON input/index, literal/Nat, add/twochildren; inputCaps EXCLUSIVE,
+ outputMax INCLUSIVE below actual plaintext1032193 and proof-field modulus,
+ constructive nVars=n+1, inputWires1..n,output0, relationalnPublic0.
+ Add-only fresh scalar Nat inputs; native owner derives wire intervals and
+ conditional coefficient-noise bounds independently, no relinearization key.
+ Native encrypted input-range validity/admission stays explicit. No numeric
+ artifact yet, no handwritten fixture or physical numeric success claimed.
+
+World's actual native input is an affine pair of authored argument bytes and
+current-observation bytes. CLEAR reference wrapper consumes plaintext byte-Nat
+inputs. FHE requests carry ciphertext serialization; those bytes are NOT the
+same source plaintext arguments. Private source input qualification must bind
+same authenticated request to ghost plaintext vector. Cipher/native authority,
+return codec/registration/current-key release joins remain with actual owners.
+ScalarPlanAdapter qualified by archaeology owner handles source PlanResult to
+native guarded payloads; it does not supply this numeric input wrapper or imply
+Nat result is already a typed complete native Plan. Exact numeric return schema
+must bind admitted Book + Nat output type + domain/codec, not guessed valueSchema.
+
+Source-first packets indexed before qualification:
+ packet08 b9f342fc34787eeb2656dfba6c48b64d61f3646a817021a96b8b014abafb1248
+ packet09 2a6d5b89caa1ce145917d55cdaebcde9b608447dbc24f93f561ab63977ebbd1a
+ packet10 cca97a1cb782409e1fb0f7399097b1e3a1d63c14e1c2e20efcb476a3dfd561d4.
+All source-only WIP; no caches/private logs/emitted runtime artifacts. Captain
+requested scoped warm proof/capture seat, no build launched unallocated. Actual
+same Op(Boolean AND/XOR) numeric lowering not yet supplied by arithmetic Air DAG;
+these are existing separate backend readings, not silently equated or schema edited.
+
+2026-10-03 continuation: Objective Bend source and receiving joins
+
+Objective Bend is now treated as its own versioned language. The pinned BendTT
+fragment remains an explicitly admitted embedding, not a restriction on new
+open recursion, specification closures, types or quantities. The additive
+native/bend-source/objective-parser.ts and objective-frontend.ts preserve actual
+source bodies, byte spans, sealed imports, spec requirements/laws, heterogeneous
+inherited/context/provided types, captured reusable extensions, whole-super,
+compose/fix and lazy specification values. Output AST/source snapshots record
+exact parser/producer/source hashes; canonical Mini Package IDs remain distinct
+from these SHA byte fingerprints. World owns the independent new reference
+core/demand semantics and type/effect admission.
+
+The actual generic captured-source cohort now executes on the SAME World demand
+machine: even(7)=false, heterogeneous final z=10, captured seed7=12, resolved
+incomplete spec result4=5, unused divergent argument and field both return7,
+shared field returns512 with one first entry of its actual field-thunk address,
+and imported final-self/super Review.twice(3)=7. These are actual source-to-core
+receiving tests; a general elaboration adequacy theorem, typing/ownership,
+law enforcement and native governed/private return remain separate obligations.
+New reflection-over-divergent-target and repeated-extension multiplicity source
+probes have been captured for the same evaluator, without forcing specifications
+merely to inspect metadata.
+
+The real Studio signed source capture was consumed unchanged. Its embedded
+pinned-Bend path emits a precise upstream diagnostic for def seed(): return7:
+missing -> return type (a typeless def fills an existing law). The new Objective
+edition explicitly adopts the same immutable source package, preserving original
+request/module hashes, named-from imports, return-form bodies and '_' inference
+annotations. This is not a fabricated typed TT replacement of the member input.
+
+Reusable numeric input/literal/add source compilation and its actual custom
+Nat.doubleSum method now have generic source Trace/count, typed Nat output,
+bounded integer/no-wrap, arbitrary-witness AIR soundness and witness existence.
+The public scalar artifact has private inputs<256, outputMax1020, reservation1024,
+three constructive additions and exact private source count3a+b+4. Physical
+BFV/Boolean cost never replaces canonical source charge. Generic CLI output is
+produced from actual captured source/Book, not an independent expression fixture.
+
+Compiler/BendNaturalCheckedCompiler consumes actual CoreAdmission receipts.
+General equivalence theorems reuse the original source compiler and eliminate
+repeated Book.check calls during selection. Compiler/BendArtifactBinding matches
+native canonical Book/entry/source bytes with regenerated source/expression/DAG/
+relation; planId is cSHAKE('DREGG.BEND.CONSTRUCTIVE-PLAN/v1', exact compiler bytes).
+Entry params are DREGG/BEND/ENTRY/v1 plus canonical string encoding. Actual source
+capacity is profile.bounds[7], not historical carrier ABI fuel. Four-module
+receipt/binding/frontend qualification and actual generic package/core/numeric
+CLI cohort passed; native Artifact positive/refuser tests are still receiving
+work. Binding grants no current authority, crypto input validity/noise, disclosure
+or native execution receipt. Prelude direct Bool signatures are not a native
+bytes-pair invocation. New Objective semantics are not admitted by this TT gate.
+
+Source-only packets20-27 are in canonical SOURCE-INBOX for captain integration.
+The additive ObliviousNatAdd reusable full-adder/ripple/Expr-to-SAME-Op-Network
+construction is source-published WIP, with explicit carry wires. General actual
+Builder/weighted-sum/source refinement and authenticated Boolean consumption
+remain required. The existing generic AND/XOR Network is preserved; there is no
+new private interpreter or Op/Machine schema. EmitSystemFast from trace owner
+has an exact old-descriptor equality theorem and actual large-controller use;
+consume it rather than duplicating a flatten rewrite. Sustained open-reduction
+cache/consumed-fuel work remains live for actual DrEX262 slow Book checking.

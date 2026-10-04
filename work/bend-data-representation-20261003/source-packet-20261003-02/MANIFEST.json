@@ -1,0 +1,182 @@
+{
+  "schema": "dregg.source-packet.v1",
+  "owner": "bend_data_representation",
+  "packet": "source-packet-20261003-02",
+  "destination": "canonical current main via captain; fresh additive paths only",
+  "base": {
+    "kernelPin": "947db722640c86247849343657bf2f7ef01cb7f1",
+    "canonicalMini": "captain-owned current main; child performed no git reads/operations",
+    "warmSourceBatch": "source548 per captain; first-three actual checked against warm current source/compiler oleans"
+  },
+  "files": [
+    {
+      "path": "Compiler/BendSourceBoolChoose.lean",
+      "sha256": "127a01f66fbf830c418bd51d4d740157ca5756535de4dde26bd3285db139d0b0",
+      "status": "authored-uncompiled-WIP",
+      "finalPath": "Compiler/BendSourceBoolChoose.lean"
+    },
+    {
+      "path": "Compiler/BendSourceByteCodec.lean",
+      "sha256": "48d7f8c926f52da38141a3b3b6bd7cf93732244ffbbe8ee9488858ca1578cf40",
+      "status": "qualified-standard-three",
+      "finalPath": "Compiler/BendSourceByteCodec.lean"
+    },
+    {
+      "path": "Compiler/BendSourceCanonicalCodec.lean",
+      "sha256": "e68184cd72f60bbc852304b723e44a217e9dd24d14f0bffa28844c3b8ec77823",
+      "status": "authored-uncompiled-WIP",
+      "finalPath": "Compiler/BendSourceCanonicalCodec.lean"
+    },
+    {
+      "path": "Compiler/BendSourceListTyped.lean",
+      "sha256": "d7ff677bf0cf3fb2ade6e6a2dac40d0e27d8144af04fc55bea27b2b7253d58d1",
+      "status": "authored-uncompiled-WIP",
+      "finalPath": "Compiler/BendSourceListTyped.lean"
+    },
+    {
+      "path": "Compiler/BendSourceNatOperation.lean",
+      "sha256": "1b7c55140c56d04fa65f3e9a84f1c99dcce274cff6b6596676948c63f82b7501",
+      "status": "authored-uncompiled-WIP",
+      "finalPath": "Compiler/BendSourceNatOperation.lean"
+    },
+    {
+      "path": "Compiler/BendSourceNatTyped.lean",
+      "sha256": "7f832f9be5f2fe9883afce3349e7cefcb7b1e48545035e0feb58b7304a80d35e",
+      "status": "authored-uncompiled-WIP",
+      "finalPath": "Compiler/BendSourceNatTyped.lean"
+    },
+    {
+      "path": "Compiler/BendSourceRepresentation.lean",
+      "sha256": "b9bafd51ec94d776e04d72ea9dcefae250c3cc73f933c7f87e704aab4aadb05f",
+      "status": "qualified-standard-three",
+      "finalPath": "Compiler/BendSourceRepresentation.lean"
+    },
+    {
+      "path": "Compiler/BendSourceTypedRepresentation.lean",
+      "sha256": "3d4933b142a5817454667428a511172de1208771c061e9387cb49459aef0d150",
+      "status": "qualified-standard-three",
+      "finalPath": "Compiler/BendSourceTypedRepresentation.lean"
+    },
+    {
+      "path": "Compiler/BendSourceWordCodec.lean",
+      "sha256": "8195520d4f782b37e4d2af19a5488dc68714726c335feea51f71d37882ae047b",
+      "status": "authored-uncompiled-WIP",
+      "finalPath": "Compiler/BendSourceWordCodec.lean"
+    },
+    {
+      "path": "Compiler/BendSourceWordTyped.lean",
+      "sha256": "4f42586ccab61c461af87aaa2698f9d9d1691f3a84cc9230179d5d0b53cddfbc",
+      "status": "authored-uncompiled-WIP",
+      "finalPath": "Compiler/BendSourceWordTyped.lean"
+    },
+    {
+      "path": "docs/BEND-DATA-REPRESENTATION-20261003.txt",
+      "sha256": "63315340433a5288db712fdb266b91fecef70b098054fd2d0c405326a07f84ef",
+      "status": "source-fixture-or-doc-check-script",
+      "finalPath": "docs/BEND-DATA-REPRESENTATION-20261003.txt"
+    },
+    {
+      "path": "scripts/check-representation-extension.sh",
+      "sha256": "2cc7dd6cb664391c92d70e2633772d79a6465cfc2bdb7574ed297f9b1de24638",
+      "status": "AUTHORED portable scoped harness UNRUN; five new proof modules UNCOMPILED",
+      "finalPath": "scripts/check-bend-source-representation-extension.sh"
+    },
+    {
+      "path": "scripts/check-representation.sh",
+      "sha256": "f5cfd126dbb094add6d7ac1bea296656626512766569ca8e207f70a4fd015afe",
+      "status": "AUTHORED portable scoped harness UNRUN; first3 proof modules qualified via original lane harness",
+      "finalPath": "scripts/check-bend-source-representation.sh"
+    },
+    {
+      "path": "tests/bend-source-representation/BoolChooseSource.bend",
+      "sha256": "530e1a48ae8c1d0a47f3227e999abe5597e22d6a557ad88e676b92151a616c6b",
+      "status": "source-fixture-or-doc-check-script",
+      "finalPath": "tests/bend-source-representation/BoolChooseSource.bend"
+    },
+    {
+      "path": "tests/bend-source-representation/BoolChooseSource.bendtt",
+      "sha256": "588ba33aa6891afd271d1b3bed11e561e2bdf849021983a2ae3c7d3a9bc0d5cd",
+      "status": "source-fixture-or-doc-check-script",
+      "finalPath": "tests/bend-source-representation/BoolChooseSource.bendtt"
+    },
+    {
+      "path": "tests/bend-source-representation/BoolSource.bend",
+      "sha256": "c1be23a030b952c3ac539d8ef5361327ee2eff7ccbdd556b902480dd95980747",
+      "status": "source-fixture-or-doc-check-script",
+      "finalPath": "tests/bend-source-representation/BoolSource.bend"
+    },
+    {
+      "path": "tests/bend-source-representation/BoolSource.bendtt",
+      "sha256": "20ee16d2324107b2068f5871ff3c71ffd4e12af0e67fbec8af19c8a937fdd6ed",
+      "status": "source-fixture-or-doc-check-script",
+      "finalPath": "tests/bend-source-representation/BoolSource.bendtt"
+    },
+    {
+      "path": "tests/bend-source-representation/NatSource.bend",
+      "sha256": "895eecdcc10de165d920a2df8c8a7832b61c257e4a4c6d3f83f3a40a8d12e79d",
+      "status": "source-fixture-or-doc-check-script",
+      "finalPath": "tests/bend-source-representation/NatSource.bend"
+    },
+    {
+      "path": "tests/bend-source-representation/NatSource.bendtt",
+      "sha256": "75f520cda6453abae71ddfe4fc24eaba7488b1b955af5f35eac1c24b0b750e99",
+      "status": "source-fixture-or-doc-check-script",
+      "finalPath": "tests/bend-source-representation/NatSource.bendtt"
+    },
+    {
+      "path": "tests/bend-source-representation/WordSource.bend",
+      "sha256": "2e9c266d744fb780d05f5f90280a1b54778035897c4bb7727a48b909f3acf836",
+      "status": "source-fixture-or-doc-check-script",
+      "finalPath": "tests/bend-source-representation/WordSource.bend"
+    },
+    {
+      "path": "tests/bend-source-representation/WordSource.bendtt",
+      "sha256": "e282e8f5602eda4a187bffacc8edc954d4cc8b275d944baff693684380f241a4",
+      "status": "source-fixture-or-doc-check-script",
+      "finalPath": "tests/bend-source-representation/WordSource.bendtt"
+    }
+  ],
+  "dependencies": {
+    "BendSourceRepresentation": [
+      "Compiler.BendLogicSpecialization"
+    ],
+    "BendSourceTypedRepresentation": [
+      "Compiler.BendSourceRepresentation"
+    ],
+    "BendSourceByteCodec": [
+      "Compiler.BendSourceTypedRepresentation"
+    ],
+    "BendSourceCanonicalCodec": [
+      "Compiler.BendSourceByteCodec"
+    ],
+    "BendSourceWordCodec": [
+      "Compiler.BendSourceCanonicalCodec"
+    ],
+    "BendSourceNatOperation": [
+      "Compiler.BendSourceRepresentation"
+    ],
+    "BendSourceNatTyped": [
+      "Compiler.BendSourceTypedRepresentation"
+    ],
+    "BendSourceListTyped": [
+      "Compiler.BendSourceNatTyped"
+    ],
+    "BendSourceBoolChoose": [
+      "Compiler.BendSourceTypedRepresentation",
+      "Compiler.BendLogicMux"
+    ],
+    "BendSourceWordTyped": [
+      "Compiler.BendSourceNatTyped",
+      "Compiler.BendSourceNatOperation"
+    ]
+  },
+  "actualEvidence": {
+    "firstThree": "actual direct Lean4.30 checks pass standard-three gates, auxiliary4G2threads,2026-10-03T09:35:22Z..09:35:28Z exit0/released",
+    "compilerConsumer": "owner reported actual Prelude parse/check/Ref execution and changed-type/interface refusals PASS check-prelude-01",
+    "physicalConsumer": "FHE owner reported actual4096-slot BFV +independent replay/refusals PASS run-prelude-01"
+  },
+  "remaining": "seven source modules are WIP/uncompiled; five-file extension script awaits assigned auxiliary chain, separate choose/WordTyped require later checks; captain reconciles fixture/script paths for canonical tree",
+  "excluded": "No keys, runtime journals, private conversations, caches or build outputs.",
+  "supersedes": "source-packet-20261003-01 (same Lean/fixture bytes; final mapped portable script source now explicit)",
+  "canonicalFixtures": "tests/bend-source-representation/*.bend and *.bendtt; compiler Host owners must read these paths from canonical source root (not lane parent paths)"
+}

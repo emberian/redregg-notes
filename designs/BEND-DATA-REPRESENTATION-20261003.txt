@@ -146,3 +146,19 @@ initial lambdas. Fresh BendSourceBoolChoose.lean is source-only, not included in
 the existing extension script. It supplies generic actual Walk/Eval.call and
 same BendLogicMux arbitrary-descriptor witness source-result theorem; compiler
 owner owns exact method/Bool Book admission and actual physical consumer.
+
+2026-10-03 ALL TEN MODULES QUALIFIED (supersedes extension pending above)
+Actual captain-assigned extension5 and final2 checks PASS through atomic aux
+4G/two threads/180sec wrapper, standard-three #assert_axioms gates. Canonical
+reverse byte/Nat/List/Word decoding, width/integer codec, actual source Nat.add,
+Nat/List constructor typing, actual captured choose and dependent source Word
+constructor typing are now checked. Word substitution proofs explicitly use
+canonical Nat source closedness, no unproved erased-index substitution claim.
+Own check lease released; direct world5 handoff occurred and world started.
+Compiler owner resumed by producer followup_task with actual qualified APIs;
+compiler NatAdd/PreludeMux check waits world-priority auxiliary chain.
+Four repaired source deltas frozen source-repair-20261003-03.tar.gz and appended
+canonical SOURCE-INBOX, independent of passing consumer checks. Captain landing
+SHA pending; no child Git operation. Generic compact arithmetic/native refinement,
+source charging conversion, custom MarketMath.mul/divide and malicious input
+heap/cipher domain qualification remain substantial consumer work.

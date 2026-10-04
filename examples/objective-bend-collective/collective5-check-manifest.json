@@ -1,0 +1,45 @@
+{
+  "owner": "bigdregg_product_architecture",
+  "status": "frozen exact5 emitted Books from source-public-driver5 PASS; actual Book checks pending; no active build",
+  "checker": "actual Theory.BendTTSource Book.parse + opaque refusal + Book.check",
+  "requiredReadOnlyImport": "Theory/BendTTSource.olean exact upstream port + dependencies in existing warm lane",
+  "files": [
+    {
+      "path": "/home/hbox/workbox/codex-collective-domain-20261003/CheckCollective.lean",
+      "archiveMember": "CheckCollective.lean",
+      "sha256": "99deac2d78acdfd60be6246a7493ab61deacf7e34f35101b61742d6c5278aee7"
+    },
+    {
+      "module": "CanonicalBookSettlement",
+      "path": "/home/hbox/workbox/codex-collective-domain-20261003/evidence/public-driver5/sealed-bend-Q3h1BY/book.bendtt",
+      "archiveMember": "CanonicalBookSettlement.bendtt",
+      "sha256": "a088f8fd60dc2946a0e3b809c0e72375cb659f2a4caa1021ad607c2a1c28b5d1"
+    },
+    {
+      "module": "CanonicalUniformSettlement",
+      "path": "/home/hbox/workbox/codex-collective-domain-20261003/evidence/public-driver5/sealed-bend-FuLIDV/book.bendtt",
+      "archiveMember": "CanonicalUniformSettlement.bendtt",
+      "sha256": "c3f6cef007bb2445448ca687ecfe0fdf7e1c3c61012841d46e1254ab0e35d133"
+    },
+    {
+      "module": "CollectiveDemonstration",
+      "path": "/home/hbox/workbox/codex-collective-domain-20261003/evidence/public-driver5/sealed-bend-PyIdcG/book.bendtt",
+      "archiveMember": "CollectiveDemonstration.bendtt",
+      "sha256": "810fdfd6bb5d0f7db42a2885d8529b1db58b002275c551ce82d17ee8f4a36645"
+    },
+    {
+      "module": "SharedBookSettlement",
+      "path": "/home/hbox/workbox/codex-collective-domain-20261003/evidence/public-driver5/sealed-bend-DQDFHT/book.bendtt",
+      "archiveMember": "SharedBookSettlement.bendtt",
+      "sha256": "49d6237e8a6b1d505007fc3822aef7afbdd488d67b8c907e000e5642e04d7f35"
+    },
+    {
+      "module": "SharedSettlementDemonstration",
+      "path": "/home/hbox/workbox/codex-collective-domain-20261003/evidence/public-driver5/sealed-bend-T4wB7C/book.bendtt",
+      "archiveMember": "SharedSettlementDemonstration.bendtt",
+      "sha256": "8eabf1db2bb0adba352bfcfca9aee4f3e8b682635f9a26c95c9b6556db89715c"
+    }
+  ],
+  "archivePath": "/home/hbox/workbox/codex-collective-domain-20261003/collective5-check-packet.tar",
+  "archiveSha256": "3efdd3643801c946831926ad692cf4e4c75a8b0cd76b775d7c753d45a2a77a05"
+}

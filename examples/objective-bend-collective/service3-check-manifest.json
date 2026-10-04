@@ -1,0 +1,32 @@
+{
+  "owner": "bigdregg_product_architecture",
+  "status": "Exact sourcePASS/safe emission Books, actual core pending; no active build",
+  "files": [
+    {
+      "path": "/home/hbox/workbox/codex-collective-domain-20261003/CheckCollective.lean",
+      "archiveMember": "CheckCollective.lean",
+      "sha256": "99deac2d78acdfd60be6246a7493ab61deacf7e34f35101b61742d6c5278aee7"
+    },
+    {
+      "module": "ResidentServiceCommons",
+      "path": "/home/hbox/workbox/codex-collective-domain-20261003/evidence/public-driver8b/sealed-bend-jWh8ia/book.bendtt",
+      "archiveMember": "ResidentServiceCommons.bendtt",
+      "sha256": "59cef823a150ffdd1b8e80409fed7babb9b0620c2117026d3281dc07221ccfc8"
+    },
+    {
+      "module": "ServiceCommonsFaces",
+      "path": "/home/hbox/workbox/codex-collective-domain-20261003/evidence/public-driver8b/sealed-bend-m7SlC4/book.bendtt",
+      "archiveMember": "ServiceCommonsFaces.bendtt",
+      "sha256": "04e60a956d4c47e073a59243b32202742b122e7f59404050531a6a76a655d3e6"
+    },
+    {
+      "module": "ServiceCommonsDemonstration",
+      "path": "/home/hbox/workbox/codex-collective-domain-20261003/evidence/public-driver8b/sealed-bend-6T5HO9/book.bendtt",
+      "archiveMember": "ServiceCommonsDemonstration.bendtt",
+      "sha256": "4a50da345720566397c3123bf398a1208d5a32ab4278a1e554a44a46c73e137b"
+    }
+  ],
+  "archivePath": "/home/hbox/workbox/codex-collective-domain-20261003/service3-check-packet.tar",
+  "archiveSha256": "744f699cf920bcf9f7c9c2f2eb6ef7db82ad54f5c59065bbd6d4240aa1553876",
+  "check": "actual Theory.BendTTSource Book.parse/noopaque/Book.check"
+}

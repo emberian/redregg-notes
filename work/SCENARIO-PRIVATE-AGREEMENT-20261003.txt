@@ -1,0 +1,73 @@
+Actual scenario-private-agreement closure 2026-10-03 ~16:25UTC.
+
+Canonical sources (captain notified, Git publication belongs root/captain):
+ hbox:/home/hbox/workbox/codex-unified-integration-20261003/src/testing/
+ agreement-carrier-packet.rs SHA295c2d6ce7ba765fca6eaef85011dfa7765d90dc2b25dae4114d97b38ffbe199
+ agreement-carrier-scenario.py SHA80e6a0aa73a605d49b3c0615ce0231e24e2732e1ffaedae9a253764e0912ed5d
+ AGREEMENT-CARRIER.md (final actual scope/cost update)
+Exporter std-onlyLinux: originalSignedCall+exactprivateConfig+HostSHA→existingv2
+socketbody; no signature/semanticdecode/admission/receipt producer.2wiretests+4physical
+refusersPASS; nofollow+nonblock privateownedboundedinputs, create-new600+fsync output.
+Existing transport.rs already admits signedop2 in completev2 pinned envelope;
+public_envelope [0..=11] permits it, nativeHost remains source authority. No gate
+widening/new controller introduced. Initial experimental rawPythonadapter RETIRED,
+never published. Receiving Python is byte-transparent orchestration over REALRust
+cohort/native source, copied from traffic qualification, not semantic replica.
+
+ACTUALR3 terminalPASS:
+ /home/hbox/workbox/agreement-carrier-full64-r3-evidence-20261003
+ {receiving.log,source-after.json,scanner-restart.json,delivery-states.json,
+  native-delayed/public-run-summary.json,all-cover/public-run-summary.json}
+ supervisor /home/hbox/workbox/agreement-carrier-full64-r3-supervisor-20261003.log
+ immutabletrafficELF /tank/dregg-build/codex-traffic-20261003/artifacts/mini-sustained-repair-qualified
+ SHA32c93db25ae01c53766621c62de65a76f2d275fd95f7ee9bebee483a513f40f8
+ wrapperHostSHA7c4d9b63e6c70c938fdd4ac7377d591be2547a7ef743f41d2c26328ddaaec6db
+ exactConfigSHA30b2ad7be2cab90d88b8369c5fdca9b9e90572ae8c1ce9ab6fac993141d5c23e
+ exactSignedCallSHAfdfcd3028f5deab2c39db7762e5761406cdffbc5fb67ab5d652723af424c9c69
+ actualconfirmed.replayedOutcomeSHA2a3bf0fd4f810d80a3f58dca458adb4163d8a6d9ecf4e485770f54fe22af84a2
+
+Actual fixedwidth4/P32768/full64epochs/T1000/G2/bothpoles: ALL768fixedauthenticated
+TCPrecords eachpole, all4audiences64canonicalbroadcasts, realnativeop2replay1dispatch,
+exact actual132byte sourceconfirmed.replayed outcome +opcode2+transport0 (134bytes).
+Fixedsamebody/id/access spareapplicationE1 retaineddedup; repairE3/E7/E63 freshcaps,
+no second semantic/source dispatch. Wirelatency min0.097ms/max2.1084ms,no errors.
+Four independent native reader processes before+after return EXACTsame132byte
+canonicalreceipt/acceptedCount1. Fresh native scanner process reopened finalE63
+exact134byte physicalresult (SHA7907d64d26a7f96d1ba5f269667f0ee02b2d36385b573140509bd0996efa3f46)
+with0newnetwork/source dispatch, alloriginalreceivercaps andjournals retained.
+
+Actual scope MUSTremain: original birth already genuinelyinstalled by resident/
+frontier before carrier. Its original caller lostresponse; source recovery later
+readexactfourstore receipt. This scenario joins carrier REPLAY/recovery to that
+real source effect; it does NOT prove firstnew effecttransported privately, nor
+source203/204/205 confidential evaluation. Nativeendpoint seesordinarycall/result.
+E0/E1/E3/E7actualdurablecustody status3, no nativeverdict; E63status0exactresult.
+Native operator attempt8ca63fa08039485eadaf94060391b424 call→outputmtime5.498s,
+plusdeclared2sproxy delay/3scustodyhold. FixedE15 repair nextplausiblelatency gain;
+currentqualification only promisesfinalE63, not early bound.
+
+Cost: Config21591/call2674/envelope24303 bytes SHA3dc1242a60db0519e87aa6ac6c0970bb521e3b84ebd040ceea44998c575a4fd9.
+P4096cannotcarry; anypayload1024..262144 legal (noalignment); choosepublic32768
+rather than256KiB+shorterlifetime. Requestcap32702/reply32694. Worstlinkinventory
+9,633,664bytes<64MiB; total79,975,168wirebytes/pole (~160MBpairedfulltrace).
+
+Preservedrefusers:
+ R1 agreement-carrier-full64-evidence-20261003: own copiedwalltimeout old80+N+5G
+ expired beforedeclared120startup+fullschedule; alsoobserveridle120 expiresbefore
+ phase1firstsend123s. Nativecalls0; brokenpipes harnesscaused, NOTsourcefailure.
+ R2 agreement-carrier-full64-r2-evidence-20261003: wallfixed, observeridle120stillbad;
+ bothpoles no nativecalls. No oldfiles/jobsreset/deleted. R3fixedwall160+N+5G and
+ fixedobserver240 (publicorigin/T/G/25ms unchanged) qualifies. Additionalnative
+ calls onlyactualR3one, sameoriginalreplayed; no resubmituncertaineffect.
+
+Observer: matchingpublicphase/slot/epoch/wiresize+boundedtiming, finalaudiencebytes;
+co-located roles/ordinarynativeendpoint andintermediateunavailable/serviceleakage
+still real limits. Requires≥2honestcontributions,≥1honestwholebatchshuffle,honest
+noncolludingexactsetregistrar,honestprivateantirollbackreceiver. Nofull anonymity/
+adaptivekeycompromise/lifetime theorem inferred fromciphertexts/shape.
+
+Resident exclusiveworld handed off explicitly, source mutationsheld throughout.
+AllownedscenarioPIDs terminal (R3PID2326966). Resident RELEASED via followup_task
+with exactterminalartifact+COUNT1evidence, so ongoingcontextjourney actuallyresumes.
+Frontier notified directly. No sourcejobs/files/keys deleted; no Git/subagentcommit.
+Local contextualmap /Users/ember/workbox/scenario-private-agreement-20261003/INTERFACE-MAP.txt.
