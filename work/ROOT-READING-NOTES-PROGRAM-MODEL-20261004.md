@@ -43,3 +43,34 @@ Rule from Ember (10-04): read the referents, not only the syntheses.
 - MEM lamesauce critique (06-11): "our caveats and predicates are lamesauce"; the keystone question:
   what predicate/caveat LANGUAGE makes real apps natural — derive it from what apps could not say.
   MINI READING: the law-language fork should be decided from an app-gap list, not from elegance.
+
+## Laws literature, read at source (~/paperbin/world-program-model)
+- mackay-necessity-specs-2022 (OOPSLA): "robust modules guarantee to do ONLY what they are supposed to do
+  even with untrusted malicious clients", incl. EMERGENT behaviour across many calls. Sufficient
+  conditions (Hoare) vs NECESSARY conditions: "balance does not ever decrease in the future unless some
+  external object now has access to the current password" — API-independent. MINI READING: Mini's
+  per-write law check gives the single-step necessity for free (every write judged); the multi-step one
+  needs a history/capability notion ("who can reach the authority now"), i.e. laws over capability
+  reachability, which Mini's kernel-held caps could make decidable.
+- drossopoulou-external-calls-2025: PROTECTION: o is protected if no external object indirectly
+  accessible from the current frame has direct access to o; calling a method can only SHRINK the set of
+  indirectly accessible objects; SCOPED INVARIANTS hold in every external state of the scoped future
+  (until the current call returns). Effects of external calls are precluded or LIMITED (happen only as a
+  direct consequence of calls from the owner). MINI READING: in-turn calls into other principals' code
+  need exactly this: what a callee can do is bounded by the capabilities reachable from what it is
+  handed; Mini can compute reachability in the turn's heap.
+- bernauer-daml-2023, §3.6 authorization rules (verbatim shape): Create needs S ⊆ A; Fetch needs
+  A ∩ (S ∪ O) ≠ ∅; Exercise needs C ⊆ A AND its consequences are checked in context S ∪ C (signatories
+  pre-authorized the consequences at creation); A does NOT propagate to consequences (delegation not
+  transitive, deliberately: the authority inside a choice is fixed by the template, independent of the
+  calling context); a transaction is well-authorized iff all top-level actions are. MINI READING: this
+  is a complete, four-rule authorization judgement for a CALL TREE — a direct candidate for how nested
+  in-turn calls get authority in Mini.
+- grossman-ecf-callback-free-2018: an object is ECF in a trace if an equivalent trace without callbacks
+  to it exists; dynamically checkable online; all Ethereum history except the DAO-like contracts is ECF.
+  MINI READING: admission re-executes and has the whole trace, so an ECF check at admission is cheap and
+  kills reentrancy as a class while still allowing callbacks that commute.
+- Zoe offer safety (Agoric docs): a proposal {give, want, exit}; the user gets at least `want` or a full
+  refund of `give`, never worse, enforced by Zoe holding the escrow and paying out, whatever the contract
+  does; payout liveness on exit. MINI READING: the caller's own terms as part of the signed invocation,
+  enforced by the kernel around the callee's code — the caller-side contract Mini lacks.
