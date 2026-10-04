@@ -53,10 +53,14 @@ Tags where they matter: READ (seen in source on main), RECORD (a report or ledge
 1. **Common world:** re-genesis a fresh one from the post-cut base, or re-home it from the 22:55
    copy (losing anything written after it). Task `01a105b6-8396`. Root's lean: re-genesis; nothing
    depends on its history except Studio demo state.
-2. **Executor for admission:** keep Lean `runBounded`, now that the proved fast machine exists
-   (measure it first), or put the C machine behind the differential gate as the native executor
-   with Lean as its specification. Task `01a10564-84ef`. Root's lean: land the fast machine,
-   measure, and decide with numbers. A C executor adds a trusted 1.5k-line C file to admission.
+2. **Executor for admission — now mostly settled by measurement.** The proved fast Lean machine
+   landed (`09adc743`, main `a2a8a203`): `stepRaw`, `step`, `runBounded` and `forceWith` are proved
+   equal to linear-heap implementations and installed with `@[csimp]`, so admission re-execution
+   runs the fast code with every theorem unchanged. Measured: 15–38 s became 25–292 ms, within
+   2–4× of the C runtime. Root's recommendation: Lean stays the admission executor; the C machine
+   stays a differential oracle and a future fast path, so admission trusts no C. Task
+   `01a10564-84ef` can close on your word. Remaining: the C differential with the fast code
+   installed, run on the warm base.
 3. **The charge law:**
    - **The three options:** clear execution charges measured ticks, private profiles charge a
      signed envelope; or everything charges a signed versioned envelope (ticks plus heap/stack),
@@ -164,14 +168,16 @@ prefixes.
 - `runBounded` is the specification.
 - The C machine is `stepRaw` transcribed. It agrees on 340 of 340 differential cases with mutants
   caught, and is 900 to 2,900 times faster. Nothing proves it equal to `stepRaw`.
-- The proved fast Lean machine (`stepRaw_eq_fast`, `step_eq_fast`, `runBounded_eq_fast`,
-  `@[csimp]`) exists in the fast-machine lane, not on main.
+- The proved fast Lean machine is on main (`stepRaw_eq_fast`, `step_eq_fast`, `runBounded_eq_fast`,
+  `forceWith_eq_fast`, all `@[csimp]`, pinned to `[propext, Quot.sound]`): 15–38 s became
+  25–292 ms. A Lean-vs-Lean differential passes 3,590 of 3,590 cases with a mutant caught, and a
+  speed regression row exists.
 - HVM, interaction nets and upstream `comp.ts` transfer nothing; parallelism comes across runs.
   This is the backends lane's verdict.
 
 **Next moves:**
-1. Land the fast machine and measure admission re-execution before and after.
-2. Decision 2 (the executor).
+1. Done: the fast machine landed. Run the C differential against it on the warm base.
+2. Decision 2 (the executor), now a confirmation.
 3. Gate the C differential, then the C ≡ `stepRaw` refinement (`01a10564-8480`).
 4. Decision 3 (the charge law), then implement the tariff in admission.
 5. One code table and one State format for the C machine and the oblivious network (`-84c3`).
