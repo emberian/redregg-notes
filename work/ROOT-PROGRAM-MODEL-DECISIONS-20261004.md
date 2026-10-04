@@ -106,9 +106,13 @@ checkpoint/heap design kept; ambitious; re-genesis free. Positions marked OPEN a
 - Causal edges on every receipt; unhandled faults route to the object's keeper.
 
 ## I. fn
-- fn is Mini's archive, feed and transport for exact bytes now (finalized blocks, receipts, checkpoints at
-  cadence, deal messages, replay kits); under the hot per-turn log later, gated on fn's page
-  representation and the fn-store-1 freeze. Contract after the fn session's FN-CHECK.
+- fn is Mini's archive, feed and transport for exact bytes now: finalized blocks and receipts (bundled
+  several blocks per article), replay kits, published package bytes, cross-domain deal and saga messages.
+  NO checkpoints of any kind in fn (signed articles are never reclaimable by theorem); hibernated object
+  data and replay logs only if paid for as permanent history. Under the hot per-turn log later, gated on
+  fn's page representation and the fn-store-1 freeze. Mini pins fn by image digest, node identity, schema
+  digest, format word and history-id (history-id alone survives export/import). Contract:
+  designs/MINI-FN-660-REQUIREMENTS-20261004.md (scribe notes SN-1..SN-6 accepted by root 10-04).
 
 ## OPEN for Ember
 1. Synchronous cross-principal `call` (D1) at all, versus Agoric's "never synchronous across trust
