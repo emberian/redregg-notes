@@ -19,6 +19,6 @@ POST-MERGE gate (all on one warm copy at the rebased tip):
 - hbox base (/tank/dregg-build/claude-lanes/warm-base): see FROZEN
 
 ## REQUESTS
-(none yet)
+- deploy3 | hbox:/tank/dregg-build/claude-lanes/deploy3/landable branch lane/deploy3 | b374fee3, 3ba7b139 (on 36fca3ac; deploy/candidate only: one Rust role list incl. mini-keys/mini-spk-broker/spk-hostd, keys role required; consent build refuses only on compiled-input change; test-package.py 13 ok, test-lane-build.sh 4 ok) | root | QUEUED
 
 ## LOG
