@@ -146,8 +146,9 @@ performance is reasonable at 100 sec. intervals."
 > "The hard part is bounded rollback using local checkpoint ... The problem of independent failure domains isn't
 > going to go away, and once you have to deal with it *anywhere* the incentive to expand individual failure
 > domains is greatly reduced."
-> "all of the "pointers" (the object references) point from the invoker to the invokee. That turns out to be
-> essential if you want to implement transparent orthogonal persistence."
+> (his own earlier post, quoted in this one) "all of the "pointers" (the object references) point from the
+> invoker to the invokee. That turns out to be essential if you want to implement transparent orthogonal
+> persistence."
 > "The hardest part of persistence in EROS was that the "node" object had so many possible interpretations"
 
 **Shapiro, 2021-03-23**, L4-Hurd (`gmane.os.hurd.l4::CAAP=3QNYy=sFFyLO36OdYFTvYp9HPT9g90-OCKQd8p0fcRKqcA@mail.gmail.com`), on the bypass:
@@ -784,3 +785,328 @@ accepting either (1) a very loose definition of "consistency" within the distrib
 qualitatively harder data schema and associated applications that cope with partial consistency by making it
 explicit ... real programmers simply bet that failures are unlikely enough to be ignorable."
 
+---
+
+# Part 2 — Per system: what its builders said worked, what failed, and why
+
+Each entry cites the Part 1 quotes by author and date. "Status" is the builders' own account of the outcome.
+
+### KeyKOS / Gnosis (Tymshare, then Key Logic; Hardy, Frantz, Landau, Ann Hardy; 1973–1991)
+- **Worked.**
+  - *Whole-system checkpoints.* Every five minutes, with a pause of about one second, most of it spent on a
+    consistency check. Landau: "In the 17-year history of KeyKOS, the only cases in which a damaged system state
+    was checkpointed occurred as a result of kernel development and testing" (1992).
+  - *Kernel upgrade was free:* "The new kernel can simply restart using the data checkpointed by the old kernel".
+  - *Authority survives restarts,* which is how login works without a superuser (Shapiro 2005, describing the
+    KeyKOS family).
+  - *A journaling escape hatch* for committed transactions. It covers data pages only; "journaling of nodes is not allowed" (Landau 1992). In 50 years
+    nobody found another use for it (Shapiro 2021).
+  - *Device capabilities come back invalidated after a restart,* which forces the driver to reconnect explicitly
+    (Miller's thesis p.127, quoted by Lemmer-Webber 2019).
+  - *Metering was reproducible:* "Making these measures reproducible was one of the neat tricks" (Frantz 2019).
+  - *Space banks supplied by the caller,* checked with "Is B a bank" (Hardy 2017).
+- **Failed or stayed hard.**
+  - *User-code upgrade.* It "must be planned in advance" (Landau 1992). Long-lived objects were avoided.
+  - *The one real live upgrade,* of the clock, was "open-heart surgery … ugly beyond belief" (Frantz 2008).
+  - *No schema* — Shapiro calls that "a failing", and the upgrade stories "just that: stories" (2008).
+  - *Meters were never used for scheduling;* scheduling policy "almost brought the team to blows" and was never
+    settled (Frantz 2018). Only CPU time was metered (Frantz 2019).
+  - *No GC,* so code must survive "bloody stumps" (Hardy 2012).
+  - *Administration* meant one account-maker holding the service keys to every bank and meter, which "allowed
+    intervention in the user's world" (Hardy 2006).
+- **Why it ended.** Market and owner, not the technology:
+  - McDonnell-Douglas bought Tymshare; "security did not sell"; Key Logic closed in 1991 (Landau 2008).
+  - "When the PC killed the commercial timesharing business" (Frantz 2008).
+  - "The KeyKOS family is the single most perfect OS design ever conceived. Didn't take." (Miller 2012). Laurie's
+    diagnosis: "rewrite everything".
+
+### EROS (Shapiro, 1991–2006)
+- **Worked.**
+  - The KeyKOS design ran on commodity x86.
+  - Stopping the machine for the snapshot is "just plain easier" than concurrent consistent cuts (2000).
+  - It checked system state before saving.
+- **Failed.**
+  - The checkpoint implementation was "unduly complicated" from trying to reuse space cleverly (2000).
+  - Nodes had "so many possible interpretations" (2021).
+  - Processes were built from nodes, which bred corner cases. KeyKOS and EROS "independently implemented the same
+    live-lock bug" (2005).
+  - Resume capabilities forced a per-node "call count" that constrained disk layout (2005).
+  - Stray pointers survive into the checkpoint: "yes" (2000).
+  - The meter tree is "inconsistent with hard or soft real-time scheduling" (2025).
+- **Why.** Shapiro nearly removed persistence after he "mis-diagnosed the real source of the complexity". He kept
+  it, because "the transactional consistency properties … should not be abandoned" (2005).
+
+### CapROS (Landau and Frantz, 2006–2015)
+- **Worked.**
+  - Incremental checkpointing: "only write out objects that were changed since the last checkpoint" (Landau 2009).
+  - Linux drivers ran in protected domains (Landau 2022).
+- **Failed, and why.** People and funding, not design:
+  - "My work on CapROS stopped in 2013 when I had to take a full-time job. The last running CapROS system stopped
+    in 2015 when lightning struck the hardware … the EROS documentation has been lost" (Landau 2022).
+  - A dispute over credit for the checkpoint design surfaced in public (Shapiro 2008-04-10,
+    `gmane.comp.capabilities.general::1207803636.22822.41.camel@vmx.home`).
+
+### Coyotos (Shapiro et al., 2004–; Rust revival 2025–26)
+- **What changed from EROS.**
+  - Persistence kept: dropping it would be "*much* slower" and would lose cross-process consistency (2005).
+  - Processes and memory objects became first class, and "more than two object types" were allowed, which
+    "greatly simplified the rest of the architecture" (2025).
+  - Endpoints replaced resume capabilities (2005).
+  - IPC receive moved to scheduler activations (2021, 2025).
+  - The snapshot became "about ten instructions to flip the generation number" (2026).
+  - Meters were headed for abandonment in favour of a BVT-style scheduler (2025).
+- **Never done.** "A log-structured checkpoint system was designed, but never implemented" (2025). Scheduling is
+  still open: "I'm still not confident which ones are the right ones" (William ML Leslie, 2025).
+- **Status.** Never widely deployed. A Rust port and a book are under way (2025-12).
+
+### Lucasfilm's Habitat (Morningstar and Farmer, 1985–88; Fujitsu Habitat and WorldsAway after)
+- **Persistence.** Ordinary database records on the backend ("may be stored on disk when not 'in use'"), not
+  orthogonal persistence.
+- **Worked.** An object model at the level of user concepts; communication at the behavioural level, not the
+  presentation level.
+- **Failed.**
+  - The operators were a bottleneck for all new content.
+  - A pricing error quintupled the money supply overnight. It was legal play under the rules, and the operators
+    noticed it only through a daily status report.
+  - An operator's out-of-world intervention "painfully violated" the players.
+- **Why it mattered.** "Detailed central planning is impossible"; "Work within the system". The authors predicted
+  that decentralising would make cheating by node owners the main problem.
+
+### Electric Communities / Original-E (1994–2001)
+- **Worked.** "We built such a system for our object framework, and it worked" (Morningstar 2006). It was
+  KeyKOS-inspired orthogonal persistence.
+- **Failed.**
+  - "The problem of schema migration … proved effectively intractable … we lost literally years of development
+    resources to the blind alley." They "fell back on a scheme that compelled programmers to be much more
+    deliberate about what state was checkpointed, and when" (Morningstar 2006).
+  - Miller's write-up: the runtime representation "becomes the schema that needs to evolve … often to a fatal
+    extent"; a process kept that way is "a living fossil".
+- **Why the company failed.** Business. Original-E was born of "a business panic" (Miller 2011), and the CEO was
+  "bankrupting company trying to create a media portal" (Morningstar's résumé). E survived as open source.
+
+### E (erights.org, 1998–c. 2012)
+- **Worked.**
+  - Non-blocking promises via `when`, and pipelining (Miller 2011).
+  - Broken promises as the error channel (Stiegler 2004).
+  - The live-ref / sturdy-ref failure model, which Miller still prefers "with timeouts more like 20 years rather
+    than 20 seconds" (2017).
+  - Causeway's causality view for post-mortem debugging (2004).
+- **Failed.**
+  - Persistence by uncall: "intractably unusable", and "the only core requirement for which E is … not yet usable"
+    (Stiegler 2004). Pairs (sealer/unsealer) were "apparently impossible" to persist.
+  - Morningstar found the approach "too ascetic", with an API name like "a dead fish" (2004).
+  - Interactive debugging never arrived: it needed "a 'full VM' implementation" (Reid 2007).
+
+### Joule (Agorics Inc., early 1990s; Tribble)
+Only second-hand in this corpus:
+- the first combination of pervasively concurrent promises with pipelining (Miller 2011);
+- exceptions escalated to the vat's keeper, with VM faults going to the keeper first (Tribble 2003);
+- the contract dispute with Electric Communities that produced Original-E (Miller 2011).
+
+### Waterken (Tyler Close, c. 2004–2012)
+- **Worked.**
+  - Orthogonal persistence at the end of every turn, "before any externally visible I/O". Delaying messages until
+    the checkpoint commits makes every node's latest checkpoint globally consistent (Karp 2019).
+  - Exactly-once messaging: "magnificent to use" (Stiegler 2015).
+  - A documented set of upgrade patterns: keep views ephemeral; minor surgery with `touch.jar` (atomic); amputation
+    behind eventual references; implants (separate state from behaviour); offload to documents. Close himself
+    thought upgrade "a manageable problem" (2008).
+- **Failed.**
+  - Stiegler: "terrified" to add a feature to a six-user pilot; "throw away the whole universe" (2008).
+  - Karp threw away serialized state after incompatible changes (2008).
+  - Garbage got persisted, and the vat granularity needed for GC caused "truly spectacular upgrade problems"
+    (Stiegler 2008).
+  - A replayed lost response could leak post-commit state (Frantz/Karp 2011).
+- **Why.** Essentially one author. Its messaging and failure model live on in Agoric (Miller 2019, 2026).
+
+### Agoric SwingSet / Endo (2018–)
+- **The arc, in its builders' words.**
+  - 2019: orthogonal persistence of the "full SES heap state", by replay and later XS heap snapshots (Miller).
+  - 2020: commit at crank boundaries; kill a deterministically failing vat (Morningstar).
+  - 2023: vat upgrade in production on mainnet (Connolly).
+  - 2024: durable promises (vows) to "mask upgrade trauma" (#9608, Hibbert).
+  - 2026: orthogonal persistence "just to ensure that all honest validators produce the same deterministic
+    computation"; upgrade by durable state (Exos) or by async-flow replay (Miller).
+- **Worked.** Upgrade in production that "preserves capability security"; "preserve long-term state, but abandon
+  any work that was in-progress".
+- **Failed or hurt.**
+  - "Promises do not cross the upgrade boundary".
+  - A safety feature leaked about 60% of storage (#8400). Reference cycles held about 310 MB (#8401). Terminating
+    the bloated vats could "crash the chain" (#8928).
+  - An engine change invalidates every heap snapshot, so "restart-all-vats" works at 87 vats but "not … a
+    thousand" (#8955).
+  - A missing durable kind halted the chain (#12138, 2025).
+  - Parking a failed replay is "wishful thinking" (#12315, 2026).
+  - Running out of meter terminates the vat (metering doc).
+- **Why this matters.** It is the largest production test of capability persistence and upgrade, and its builders
+  moved from transparent persistence toward declared durable state.
+
+### Spritely Goblins (Lemmer-Webber, Tallon; 2018–)
+- **Decision.** It rejects orthogonal persistence explicitly: it "tends to result in difficult to upgrade
+  systems" (2024).
+- **Worked.**
+  - Self-portraits that can claim only the authority the object holds.
+  - A version on every object, defaulting to 0, and a migrations macro that chains one-step migrations.
+  - Deltas found by introspecting the transaction.
+  - Far references restored as promises (2024).
+- **Failed.**
+  - The first Aurie was "cumbersome".
+  - Version 0.13 persisted references within one vat only.
+  - Incremental dirty tracking missed objects that copy another object's data (Lemmer-Webber 2020).
+
+### NLTSS (Donnelley, LLNL)
+- **Worked.** Service processes owned their objects' persistence, across restarts and upgrades.
+- **Hard, but rare.** Header-format migrations were "a bit of a tricky transition" that "didn't happen very
+  often". Persisting process stacks across code upgrades "sounds pretty ambitious to me" (2008).
+
+### Squeak / Smalltalk
+- **Worked.** Versioned classes with migration methods "used to work pretty damn well", and the system warned when
+  a layout change lacked a migration (Freudenberg 2013).
+- **Failed.**
+  - Image updates break images (Miranda 2015).
+  - Miller: Smalltalk live upgrade "cannot be made reliable, and is instead designed for
+    programmers-as-customers".
+
+---
+
+# Part 3 — Synthesis (≤1500 words): lessons that should bind Mini
+
+Read with the Part 1 quotes and the root note's Morningstar passage. All mappings to Mini are INFERRED.
+
+**0. The one-line verdict of the record.** Every team that built a persistent capability system made the same
+discovery:
+- transparent persistence is excellent for crashes, for consistency inside one failure domain, and (Agoric) for
+  deterministic replication;
+- it is ruinous as the **upgrade schema**.
+
+KeyKOS planned upgrades "in advance". EC lost years. Waterken users were "terrified". Agoric abandons the heap at
+upgrade. Goblins rejects orthogonal persistence. Miller's 2026 position completes the arc: orthogonal persistence
+exists "just to ensure that all honest validators produce the same deterministic computation", and the durable
+state of state-based upgrade "will also provide persistence". Mini should adopt this split as law, not as advice.
+
+**1. Persistence vs declared durable state (fork 5, fork 4).**
+- **Keep the whole-machine Core4 checkpoint.** Shapiro kept persistence after nearly dropping it because "the
+  transactional consistency properties … should not be abandoned". In Mini the checkpoint is what makes a resident
+  activity resumable and re-executable.
+- **It must never be the thing that migrates.**
+  - Every object type declares its durable state: typed, first-order, versioned, defaulting to version 0 as in
+    Goblins. The law judges that state and upgrade transforms it.
+  - Admission should refuse an object type without that declaration. Agoric's lesson is that retention must exist
+    "from the very beginning: if v1 fails to retain something, v2 cannot get access to it".
+- **Make the declaration first-class syntax in .obend,** not a reflective hook. Morningstar's verdict on
+  `__optUncall`, and Stiegler's "intractably unusable", are the usability warning.
+- **Run the consistency check before the root moves.** KeyKOS's check at every checkpoint is why "the only cases in
+  which a damaged system state was checkpointed occurred as a result of kernel development". Stray pointers
+  otherwise "*will* survive" (Shapiro).
+
+**2. Upgrade (fork 4).**
+- **Frantz's ranking is the design order:**
+  1. short-lived activities and objects;
+  2. serialize → new version → reload, preferably "assum[ing] the least about the relationship between the internal
+     structure of the two versions";
+  3. self-upgrading objects only where unavoidable.
+- **Upgrade only at quiescence,** "when the stack is (nearly) empty". For Mini that means at yields, with no
+  continuation carried across versions unless it is drained on its pinned package.
+- **Running-state surgery is the clock story: "ugly beyond belief".** Do not offer a mapping of resume points as a
+  general mechanism.
+- **Make upgrade authority a visible, law-governed capability.** "The ability to upgrade a vat is also the ability
+  to control its behavior". Tezos made upgrade "mostly a governance issue". Upgrade should be all-or-nothing, like
+  `touch.jar` and Agoric's rollback when the upgrade phase fails.
+
+**3. Promises and calls across upgrade and failure (fork 1).**
+- **Decide before building what happens to an answer slot whose decider is upgraded.** Agoric did not: "Promises
+  do not cross the upgrade boundary", and vows came later to "mask upgrade trauma".
+- **Miller's rule** — references survive partition, but live references are severed across an upgrade ("This also help manage version
+  skew") — is the right default. Outstanding results resolve to a typed `Upgraded`. Durable, retryable
+  promises are a separate declared type with an idempotence contract.
+- **Bound failure payloads** to a code plus one word (Shapiro on CapIDL).
+- **Pipelining** is real but "far more work to implement than … the promises themselves" (Stiegler), and Agoric
+  valued it only off-host. Build answer slots first; add pipelining on cross-domain links only.
+- **Output commit.** Nothing externally visible may leave before commit (Waterken; Miller: "hangover inconsistency
+  … don't do it"). Capabilities to anything outside the root revive *invalidated* after any rollback, as KeyKOS
+  device capabilities did. Reads that leak post-commit state on replay (Frantz/Karp 2011) argue for versioned reads.
+
+**4. Failure domains (forks 1, 3).** "Persistence stops at the machine boundary". Once you must handle independent
+failure "*anywhere* the incentive to expand individual failure domains is greatly reduced" (Shapiro 2021).
+- Each Mini domain root is one failure domain with full consistency.
+- Across domains, choose one failure model and expose it: Waterken-style exactly-once, or E-style breakage with
+  very long timeouts.
+- Miller warns that this choice is "entangled" with upgrade, GC and ordering. Co-design them; do not bolt them on
+  one at a time.
+
+**5. Metering and storage.**
+- **Meters are accounting, not scheduling.** KeyKOS "never built a scheduler using the meters", only metered CPU,
+  and never settled scheduling. EROS found meter trees "inconsistent with … real-time". Coyotos was "abandoning
+  meters entirely".
+- **Keep what worked:**
+  - deterministic, reproducible charges (KeyKOS: "one of the neat tricks"; Agoric computrons);
+  - caller-supplied, verifiable storage (the space-bank handshake "Is B a bank");
+  - the owner of an invariant paying for its own critical section (Hardy's lock meter).
+- **Never terminate an object on exhaustion.** Agoric terminates vats, and had to invent suspension (#8955).
+  Refuse the turn and suspend the object instead.
+- **Storage is the leak.** A safety feature consumed about 60% of Agoric's store, and Waterken persisted garbage.
+  - Charge storage per payer.
+  - Make deletion incremental and metered: killing big vats risked the chain (#8928).
+  - Skip distributed GC; tolerate "bloody stumps" with typed broken references.
+
+**6. Administration.**
+- **KeyKOS's account-maker held service keys to every bank and meter.** Mini's equivalent must be an explicit,
+  law-bounded capability that the projection shows to the affected viewer.
+- **Habitat's operators learned to "work within the system".** An out-of-world fix of in-world state broke trust.
+  Interventions should be ordinary admitted turns with receipts.
+- **Laws do not catch economic design errors.** Habitat's money bug broke no rule. Mini needs aggregate monitors
+  (a status report on the money supply), not only per-write laws.
+
+**7. Debugging.**
+- **Causeway's causal view** (turn → message → child turn) was the one debugger this community shipped, and it
+  was post-mortem.
+- **Mini's re-execution admission** gives what E could not: a complete, deterministic, replayable record. Record
+  causal edges on every receipt, and ship Morningstar's "simulate the operation of the chain" tooling from the
+  start.
+- **Failure handling.** Tribble's keeper model — unhandled faults go to an object's keeper, not to `abort()` — fits
+  Mini's per-object law and handler.
+
+**8. Why they did not succeed.**
+- **The causes were rarely the core idea.** They were markets (timesharing's death, "security did not sell"),
+  owners (MDC, EC's CEO), one maintainer (CapROS, Waterken), and usability (E persistence).
+- **Mini's exposure is the last two.**
+  - Keep docs inside the system: Gnosis wrote "documentation … complete before the implemention", and CapROS lost
+    its docs.
+  - Do not ask application writers to be ascetic.
+
+## Where the record disagrees with the other scholars
+
+**D1. SCHOLAR-OS §4 proposes a checked `decode_old → encode_new` for the Core4 codec.** The record argues against
+migrating *machine state*:
+- Smalltalk live upgrade "cannot be made reliable" (Miller);
+- EC's attempt was "effectively intractable";
+- KeyKOS has "stories" only (Shapiro);
+- Agoric never migrates heaps, and an engine change made every snapshot "unusable" (#8955).
+
+*Recommendation:* a Core4 or codec epoch change drains or aborts activities. Only declared durable state migrates.
+
+**D2. SCHOLAR-OS §8 and SCHOLAR-CALLS idea 8 offer four dispositions: drain, abort, map and replay-into-Failed.**
+- **Map** is Frantz's clock surgery.
+- **Replay that parks divergent flows** is, in Agoric's 2026 words, "wishful thinking", and a sibling defect
+  halted the chain (#12138).
+
+*Recommendation:* start with drain (pinned) and abort (`Upgraded`). Add replay only with fail-the-upgrade
+semantics (#12315). Do not offer map.
+
+**D3. SCHOLAR-OS §6 and SCHOLAR-FRONTIER adopt KeyKOS/Agoric two-level meters.**
+- Agree on the per-turn cap and the payer.
+- Disagree on importing a meter *tree* as a scheduling instrument; its builders never used it that way, and
+  Coyotos dropped it.
+- Disagree, more strongly, with any terminate-on-exhaustion rule.
+
+**D4. The root note says a checkpoint "must not become the long-lived form" of state.** The record agrees, with a
+caution: Shapiro (2005, 2021) and Miller (2026) defend transparent persistence for crash-consistency and
+replication. The dissenters' "persistent state hurts" (Donald 2008) and Goblins' rejection apply to the *schema*
+role, not to Mini's resumable activities.
+- Keep checkpoints.
+- Keep them short-lived and pinned.
+- Never treat them as the archive.
+
+**D5. SCHOLAR-CALLS and SCHOLAR-FRONTIER rank kernel answer slots plus pipelining highly.** The record agrees on
+the slots. It puts pipelining's value in cross-host latency only and its cost high (Stiegler 2015; Agoric's
+comms-vat-only use). Sequence it after answer slots and the upgrade semantics of slots.
