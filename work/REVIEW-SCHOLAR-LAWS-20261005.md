@@ -1,8 +1,6 @@
 # REVIEW-SCHOLAR-LAWS (2026-10-05)
 
-Reviewer: SCHOLAR-LAWS (my report: `work/SCHOLAR-LAWS-CONTRACTS-20261004.md`, cited LAWS). Domain: design
-§E, seats, Daml authority, necessity/protection, history slots, protocol objects, publish-time
-certificates, OPEN question 2. Code read at `emberian/minidregg` main `36fca3ac` (fresh blobless clone,
+Reviewer: SCHOLAR-LAWS (report `work/SCHOLAR-LAWS-CONTRACTS-20261004.md`, cited LAWS). Code read at `emberian/minidregg` main `36fca3ac` (fresh blobless clone,
 read-only). Tags: **read** = I read the code at the path; **inferred** = my conclusion.
 
 ## 1. Verdict
@@ -15,28 +13,20 @@ law disposes" holds for ordinary resource commands, not for objects.
 
 ## 2. What the design and the code got right
 
-- **Laws judge the exact writes, before execution, and acceptance binds both** (read:
-  `Kernel/DeclaredResourceController.lean` `admitObjective` 1655–1684). `admitAuthority` runs every
-  target leg's committed law (`verifyAndAuthorizeLeg`, `lawLeaf`, 1087, 615) on the signed command's
-  writes. Only then does `ObjectiveBendNativeAdmission.admit` re-execute the method and require its Plan
-  to equal those writes (`Output.exact` → `BendWorldPlan.matchesCommand`). Finally `AcceptedInvocation`
-  requires `execution.isSome` for the Objective family. So a refused law costs no execution, which is
-  the design's "method guard" property. This is the Scilla/ConCert/EUTXO split (LAWS C4, C5, C11).
-- **No solver on the admission path.** Admission evaluates `Pred.eval` on concrete projected states.
-  The range and cast checks (`inputsInRange`, `castInjOn`) refuse rather than reinterpret (read, 600–606).
-- **Refusals already name a leaf under a disclosure policy.** `lawRefusal fieldsOf` returns
-  `ComposedLawDiagnostics.publicRefusal` filtered by the requester's grant, and `lawRefusal_isSome`
-  proves disclosure never changes the verdict (read, 740–760). The design lists the redaction policy as
-  new; it exists.
-- **The activity kernel's resume contract is real.** `birth_checkpoint_typed` and
-  `delivery_checkpoint_typed` (read: `Kernel/ObjectiveResumeContract.lean`) give typing from the actual
-  preservation theorems. Consume-once is a compare-and-swap on the record cell, and fees are
-  measurement-free (read: `Kernel/ObjectiveActivity.lean` header). Every await has a mandatory deadline
-  height, which is idea 4's Marlowe rule (LAWS C12).
-- **Root resolutions E1, C1 and D2 are correct against the literature.** E1 (finite transition table
-  plus payload atoms) is the only way a difference-logic judge can host a session type. D2 (frames writing
-  the same slot abort unless the law declares a commutative delta) is what CISE's conflict relation needs
-  (LAWS F3).
+- **Laws judge the exact writes before execution, and acceptance binds both** (read:
+  `Kernel/DeclaredResourceController.lean` `admitObjective` 1655–1684): every target leg's committed law
+  runs on the signed writes (`verifyAndAuthorizeLeg`, `lawLeaf`); then the method is re-executed and its
+  Plan must equal those writes (`Output.exact`); `AcceptedInvocation` needs both. A refused law costs no
+  execution (the design's method-guard property), and admission never calls a solver.
+- **Refusals already name a leaf under a disclosure policy** (`lawRefusal fieldsOf` →
+  `publicRefusal`; `lawRefusal_isSome` proves disclosure never changes the verdict; read 740–760). The
+  design lists redaction as new; it exists.
+- **The resume contract is real** (`birth_checkpoint_typed`, `delivery_checkpoint_typed` from the actual
+  preservation theorems; consume-once CAS; measurement-free fees; a mandatory deadline on every await,
+  idea 4's Marlowe rule, LAWS C12).
+- **Root resolutions E1 and D2 are right**: a finite transition table plus payload atoms is the only way
+  a difference-logic judge hosts a session type; D2's commutative-delta exception is CISE's conflict
+  relation (LAWS F3).
 
 ## 3. What native admission checks today, against my eight ideas (all read at `36fca3ac`)
 
@@ -56,15 +46,10 @@ law disposes" holds for ordinary resource commands, not for objects.
 
 ### D-1. The Objective path cannot pin an object to its package (Defect in landed code; design §A, §E)
 
-**Evidence.**
-- The law state for an Objective invocation has no method or package slot, because `prepared.run = none`
-  and nothing replaces it (read; see the §3 table).
-- The ordinary route (`admitOrdinary`) can write the same cells with any payload the cell's law accepts.
-- The Nock route had `ran program`, "this step's writes ARE the product of program" (`Pred/Core.lean`).
-  The Objective route has no analogue.
-- So an object's package pin is enforced by nothing. Any signer whose envelope passes the cell's law can
-  bypass the object's methods entirely, which defeats §A's "law + package pin" object and makes method
-  guards impossible to express.
+**Evidence (read).** The Objective law state has no method or package slot (`run = none`, §3), while
+`admitOrdinary` can write the same cells with any payload the law accepts; the Nock route's `ran program`
+has no Objective analogue. So the package pin is enforced by nothing: a signer can bypass the object's
+methods, and method guards cannot be expressed.
 
 The fix is sound without reordering. The slot can be projected from the signed claim's `sourceAtom`
 (the method artifact identity, which commits package and declaration) before execution, because
@@ -88,19 +73,13 @@ true.
 
 ### D-2. The single Receiver makes law judgement optional (design missed; receiver collapse)
 
-**Evidence.**
-- `Kernel.Receiving.Family` has `postLaw : Prepared → Bool`, documented as "family checks on the post
-  images beyond the standard shape" (read: `Kernel/Receiving.lean` 141).
-- `shape` = distinct cells ∧ current roots ∧ `postLaw` (169–180).
-- The first migrated family, `SubjectKeyRotation`, sets `postLaw` to `PhysicalPostLaw` (physical
-  well-formedness), not a committed `Pred` (read: `Kernel/Receivers/SubjectKeyRotation.lean` 239).
-
-Nothing in `Theory.Receiving.Receiver` or `Family` requires that every written cell's committed law
-judged its step. Robust safety, a check on every write whoever proposed it (LAWS B17, Part II opening),
-is therefore a discipline 33 families must each remember, and the collapse's single proof
-(`receive_committed`) says nothing about laws. Its migration step 3 moves `DeclaredResourceController`
-onto `Family`, where today the law check lives inside `prepare`. The collapse is the moment to make law
-judgement structural; after step 8 it would be a retrofit across every family.
+**Evidence (read).** `Family.postLaw : Prepared → Bool` is "family checks on the post images beyond the
+standard shape" (`Kernel/Receiving.lean` 141), and `shape` = distinct cells ∧ current roots ∧ `postLaw`
+(169–180); the first migrated family sets it to `PhysicalPostLaw`, not a committed `Pred`
+(`Receivers/SubjectKeyRotation.lean` 239). Nothing makes every written cell's law judge its step, so
+robust safety (LAWS B17) is a discipline 33 families must each remember, and `receive_committed` says
+nothing about laws. Step 3 moves `DeclaredResourceController`, whose law check lives inside `prepare`,
+onto `Family`: now is the moment to make it structural, not after step 8.
 
 **Replacement text (new §E paragraph "Where laws are judged"):**
 
@@ -121,14 +100,11 @@ judgement structural; after step 8 it would be a retrofit across every family.
 
 ### D-3. The activity kernel writes object state with no law, and its "owner" is the fee payer (landed demo; blocks the running native-route lane)
 
-**Evidence (read: `Kernel/ObjectiveActivity.lean`).**
-- `commitYield` posts `plan.state` straight to the object cell (`statePost := postAt snapshot object
-  stateBytes`, ~520). No law is judged, and the state is not checked against a declared state type.
-- `writeState` lets `request.subject = record.escrow.payer` overwrite the object (934–941). The account
-  that funded an activity's await fees becomes the owner of the object's state.
-- The scratch world says honestly that it has no signature layer (read: `Host/ObjectiveActivityWorld.lean`
-  header). The lane bringing activities onto the native route is running now; it should not inherit
-  these two shapes.
+**Evidence (read: `Kernel/ObjectiveActivity.lean`).** `commitYield` posts `plan.state` straight to the
+object cell (`statePost`, ~520) with no law and no declared-type check; `writeState` lets
+`request.subject = record.escrow.payer` overwrite the object (934–941), so the fee payer is the owner.
+The scratch world is honest that it has no signature layer; the running native-route lane must not
+inherit either shape.
 
 **Replacement text (§B, add to Mechanism):**
 
@@ -140,15 +116,12 @@ judgement structural; after step 8 it would be a retrofit across every family.
 
 ### D-4. "Law" and "requires" already mean something else in Objective Bend (design §E, §5 Q2; also BREAD §3.2)
 
-**Evidence (read).**
-- In the surface language, `law name(args): expr` is a universally quantified property of *methods*
-  (`law positive(n: Nat): self.v(n) < n`; `native/bend-source/objective-elaborate-tv.ts` 49). It
-  elaborates to a closure in spec metadata (`Compiler/ObjectiveBendElaborate.lean` 690–697), and
-  "nothing discharges them" (`docs/OBJECTIVE-BEND.md` 222).
-- `requires` declares a method the specification needs from final self (`requires odd(n: Nat) -> Bool`;
-  `objective-parser.ts` 178 pushes a *signature*). It is not a precondition.
-- The design's method guards and the Bread scholar's "generate clauses from `.obend` (`requires`,
-  invariants)" would collide with both meanings.
+**Evidence (read).** Surface `law name(args): expr` is a ∀-property of *methods*
+(`law positive(n: Nat): self.v(n) < n`, `objective-elaborate-tv.ts` 49), elaborated to a closure in spec
+metadata (`ObjectiveBendElaborate.lean` 690–697) that "nothing discharges" (`docs/OBJECTIVE-BEND.md`
+222). `requires` declares a member needed from final self (`objective-parser.ts` 178 pushes a
+*signature*), not a precondition. The design's guards and BREAD's "generate clauses from `requires`"
+collide with both.
 
 **Replacement text (§E, new "Surface" paragraph):**
 
@@ -241,7 +214,7 @@ safety is tested (LAWS B15, B16), so `call` should land only after D-1 and D-2. 
 no law can tell a callee's write from a direct write. Without the Receiver judging every write, a new
 `call` family could skip the callee's laws.
 
-**Q3 (REPLAY).** Agree with the root's provisional drop. My domain adds nothing for keeping it.
+**Q3 (REPLAY).** Agree with the provisional drop.
 
 **Q4 (order).** Insert D-1 and D-2 before L1's native route lands, and certainly before L5 (`call`). D-3
 must be in the activity native-route lane's acceptance check: a yielded state write that violates its
@@ -249,40 +222,25 @@ cell's law is refused.
 
 ## 6. Commits
 
-None. D-1 changes the law state of every Objective invocation, so it is a semantics-edition bump of
-`DeclaredResourceController`'s projection, plus the Host closure and surface re-pins. D-2 is the
-Receiver's core record. Neither is a small, well-scoped edit for a review lane. Separately, the local
-data volume (`/System/Volumes/Data`) is at 99% (113 GiB free of 7.3 TiB, measured with `df` at review
-time). Under the lane protocol's under-10% rule, I wrote nothing beyond this file and a 124 MB read-only
-clone in my scratchpad.
+None: D-1 is a semantics-edition bump with Host-closure re-pins and D-2 is the Receiver's core record;
+neither is a small review-lane edit. The local data volume is at 99% (113 GiB free of 7.3 TiB, `df`), so
+under the protocol's 10% rule I wrote only this file and a 124 MB read-only clone in my scratchpad.
 
 ## 7. Quests I would take next
 
-**QUEST-LAWS-PIN (D-1).**
-- Scope: Objective artifact and method slots in `projectCommonSlots` from `command.objectiveClaim`.
-- Scope: `Pred` helpers `artifactSlot` and `methodSlot` beside `ranSlot`.
-- Scope: a `semanticsId` bump and receiving-contract string.
-- Scope: a kernel pin clause at object birth (with L3).
-- Acceptance: an ordinary command writing an Objective object's state cell is refused, naming the pin
-  clause.
-- Acceptance: the same write through the pinned method is accepted.
-- Acceptance: theorem `objective_artifact_slot_sound`: in an `AcceptedInvocation`, the projected
-  artifact slot equals the executed artifact's identity; `#assert_axioms`-pinned.
-- Build: `swarm-build env LEAN_NUM_THREADS=4 lake build Minidregg Host.Main:leanArts ObjectiveProofs`
-  on hbox.
+**QUEST-LAWS-PIN (D-1).** Artifact/method slots in `projectCommonSlots` from `command.objectiveClaim`;
+`artifactSlot`/`methodSlot` beside `ranSlot`; `semanticsId` bump; the kernel pin clause at birth (with
+L3). Acceptance: an ordinary write to an Objective object's state cell is refused naming the pin clause,
+the pinned method's write accepts, and `objective_artifact_slot_sound` (the projected slot equals the
+executed artifact in every `AcceptedInvocation`) is `#assert_axioms`-pinned. Gate: `swarm-build env
+LEAN_NUM_THREADS=4 lake build Minidregg Host.Main:leanArts ObjectiveProofs` on hbox.
 
-**QUEST-LAWS-RECEIVER (D-2).**
-- Scope: `Family.step`, `KernelCellClass` with its writer-proof registry, and `receive_committed_lawful`.
-- Scope: `SubjectKeyRotation` migrated as the first instance.
-- Acceptance: the theorem is pinned.
-- Acceptance: the fixture family's law violation is refused with the check and committed without it.
-- Acceptance: rotation intents are byte-identical.
-- Coordinate with the RECEIVER-COLLAPSE lane before its step 3.
+**QUEST-LAWS-RECEIVER (D-2).** `Family.step`, `KernelCellClass` with its writer proof,
+`receive_committed_lawful`; `SubjectKeyRotation` first. Acceptance: theorem pinned; the fixture
+violation refused with the check and committed without it; rotation intents byte-identical. Before the
+collapse's step 3.
 
-**QUEST-LAWS-L4a.**
-- Scope: `leOld` through `Pred.Sat` (extending `decide_never_unknown` and `certificate_unsat`).
-- Scope: `Pred/Entailment` (equivalence, subsumption, dead and vacuous clauses, with certificates).
-- Scope: D-7's install-time floor check.
-- Acceptance: the necessity law "balance decreases only if `request/cap/owner` is presented" refuses a
-  forged withdrawal.
-- Acceptance: an always-false clause is reported at publish.
+**QUEST-LAWS-L4a.** `leOld` through `Pred.Sat` (`decide_never_unknown`, `certificate_unsat` extended),
+`Pred/Entailment` with certificates, D-7's install-time floor check. Acceptance: the necessity law
+"balance decreases only if `request/cap/owner` is presented" refuses a forged withdrawal; an always-false
+clause is reported at publish.

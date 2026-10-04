@@ -154,3 +154,35 @@ checkpoint/heap design kept; ambitious; re-genesis free. Positions marked OPEN a
 - fn: SN-1..SN-6 accepted (see §I).
 OPEN for Ember after these: 1 (sync cross-principal `call`), 2 (laws generate-now vs unify), 3 (replay:
 provisionally dropped), 4 (build order).
+
+## Root rulings on the 2026-10-05 scholar reviews (historian, Bread, frontier, OS converge)
+- RESUME WITH VIEW (supersedes T1(e) and the earlier "Conflict" outcome): every resume delivers its outcome
+  TOGETHER WITH a fresh view of the object's declared state (with its version), read in the same turn; a
+  Plan state write is refused if that version moved since the view (optimistic, retry-able); Plans write
+  fields or deltas, not whole records. `conflict` leaves the outcome sum. Refused/broken reasons are a small
+  fixed sum delivered to the activity. (Bread D-1/R1, historian F2, frontier 1.)
+- OBJECT AUTHORITY: object state cells live in their own kernel namespace; every declared-state write needs a
+  facet capability of that object AND is judged by the object's law (old vs new); the payer is never
+  authority; birth/delivery/invocation refuse a non-object cell by name. (OS W1, Bread D-2, historian F1,
+  frontier 2.)
+- UPGRADE (refines C1): while an upgrade drains, the object admits NO new births or calls unless the old
+  state type is a subtype of the new; an old activity's write is admitted only if migrate(s') type-checks and
+  satisfies the new law, so the final MIGRATE cannot fail (OS W2, historian F5, frontier 5). Large objects
+  migrate over several turns: object closed, a cursor cell holds progress, any upgrade-capability holder
+  advances it (OS W3). Dispositions: DRAIN, ABORT, and REBIRTH (abort + re-birth from the record's stored
+  input on the migrated state; restartability checked at publish) (historian F6). REPLAY stays dropped.
+- METERING: exhaustion charges the full declared envelope (historian F3); one shared tariff and usage vector
+  for native admission and activities, package type-check verdict cached at publish, checkpoint encode/decode
+  priced, a storage deposit on each checkpoint re-priced at each yield (OS W4, W7; Bread D-5).
+- DISPOSAL: records deleted on done/faulted; abandon turn after deadline + grace; decided slots reclaimed;
+  every retention cell has a payer (historian F4, Bread D-6, frontier 3).
+- PRESENTATION: affordance states Hidden / Disabled(reason) / Possible (law satisfiable) / Enabled (simulated
+  admission succeeds) (OS W8).
+- SEATS: invitations bound to a contract instance, who may debit a seat named, offerSafe corrected for zero
+  `want` (frontier 4).
+- OPEN QUESTIONS — all four reviewing scholars agree with the root's leans: (1) synchronous cross-principal
+  `call`: YES, callee reads the turn snapshot, writes deferred/applied at frame return, re-entry refused,
+  callee billed to the caller's envelope; (2) laws generated from .obend now; (3) REPLAY dropped, REBIRTH
+  added; (4) build order: OBJECT-RECORD and RESUME-WITH-VIEW before `call`, then seats/scoped grants, then
+  `call`, then `send`. Recommended to Ember as settled unless she objects.
+- FOR EMBER (custody): the mini-keys broker holds all three secret classes in one account (OS W9).
