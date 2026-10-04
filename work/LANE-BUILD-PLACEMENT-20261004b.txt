@@ -1,0 +1,16 @@
+BUILD PLACEMENT ADDENDUM (2026-10-04 ~09:45) — binding for lanes launched now
+- hbox is HELD for the fn swarm's image builds until the root says otherwise. Do not start any build or
+  test on hbox. Reading files on hbox over ssh is fine.
+- Build and test on persvati (ssh persvati; 24 cores, 83 GB RAM, disk at 86%: ~255 GB free) or on this Mac.
+  On persvati: lane dir /home/ember/workbox/claude-lanes/<lane>/ (mkdir -p), clone
+  https://github.com/emberian/minidregg.git into src, CARGO_TARGET_DIR=<lane>/target, run cargo as
+  `nice -n 10 cargo ... -j 6`, check `uptime` first (wait if load > 20) and `df -h ~` (stop and report if
+  free < 120 GB). Remove your own target/ when you finish and say so. Never touch persvati's existing
+  workbox dirs, its launch-seat Lean seats, or any unit/process.
+- Linux-only crates (spk-host sandbox, seccomp, bwrap) must build on persvati; resource-client tests do
+  not compile on macOS (F_SETPIPE_SZ), so run them on persvati.
+- No Lean umbrella builds anywhere: the warm base is being built. If a change needs Lean, author it,
+  compile single modules with plain `lean` only if their imports resolve, and mark it uncompiled.
+- Everything else in /Users/ember/dev/redregg/work/SONNET-LANE-COMMON-20261004.txt applies (commits on
+  lane/<lane>, unsigned, no push, filtered tests only, never an unfiltered -p suite, cv task deferrals,
+  final report with commit ids in landing order and evidence class each).
