@@ -1,0 +1,10 @@
+HBOX HOLD (2026-10-05 ~11:15): hbox load ~50 vs the agreed combined cap of 16; Mini lanes are the bulk
+(one lane compiling Mathlib from scratch). Until the root says otherwise:
+- STOP any lake/cargo/lean build you started on hbox now (your own processes only; kill by PID, never
+  pkill -f a pattern that matches your own ssh command). Reading files and git fetch on hbox are fine.
+- Build on PERSVATI instead: `ssh persvati /home/ember/workbox/claude-lanes/persvati-base/mk-lane.sh <lane>`
+  (warm base, packages shared via hardlinks; NEVER let lake fetch or build Mathlib yourself — if a build
+  starts compiling Mathlib, stop: your clone is not warm). Read /Users/ember/dev/redregg/work/
+  PERSVATI-BASE-LANE-BRIEF-20261004.txt. LEAN_NUM_THREADS ≤ 4; check `uptime` first (wait if load > 20).
+- Relief: fn is moving heavy work to rented boxes within the hour; Mini may get its own burst boxes
+  (work/HCLOUD-BURST-PLAN-20261005.md) — the root will announce.
