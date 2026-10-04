@@ -1,326 +1,362 @@
-SWARMPLAN DRAFT — Mini grows into Dregg, Claude root, 2026-10-03 ~21:30 EDT
-Status: DRAFT for Ember's back-and-forth. Nothing launched. Grounded in the seven
-round-1 scout reports under work/scouts-20261003/ (A–G), Ember's 127+ messages in
-the codex session (EMBER-ONLY.txt, read whole), both Fable reviews, and the first
-orientation receipt. Round-2 scouts (security residuals, the native-Accepted chain,
-agreement liveness, Bread mining, leanuweave) are running and will revise this.
+SWARMPLAN DRAFT v2 — Mini grows into Dregg, Claude root, 2026-10-03 ~23:10 EDT
+Status: DRAFT v2 for Ember's back-and-forth. Nothing launched. v1 was grounded in the
+seven round-1 scouts (work/scouts-20261003/A–G) + Ember's full codex-session record +
+both Fable reviews. v2 folds in round 2 (R2-1 security residuals, R2-2 the native
+Accepted chain, R2-3 agreement liveness, R2-4 Bread mining, R2-5 leanuweave). Every
+claim below is traceable to a scout file; the scouts are READ/RECORD/INFERRED-tagged.
 
 ================================================================================
-PART I — THE GROUNDED PICTURE (what the scouts agree on)
+PART I — THE GROUNDED PICTURE (v2: what round 2 changed is marked ►)
 ================================================================================
 
-1. THE SEMANTIC CORE IS REAL BUT ISLANDED. Core4 (Theory/ObjectiveBend*) has a
-   283-line reference semantics with general fix, a 201-line demand machine, a
-   certifying checker, and ~6.9k lines of adequacy/preservation proof, axioms
-   pinned, zero sorry. But: (a) only Host/ObjectiveBendPreview runs runBounded,
-   the proven function; the Plan path runs an unproven forceWith/materialize twin
-   and has NO consumer; (b) the proofs live in the opt-in ResearchWip target, so
-   the default build never checks them; (c) the Objective path emits no receipt
-   and is not priced (fee preparation still charges the BendTT path); (d) the
-   37 KB TypeScript front end is trusted, duplicates compose() 2^k, refuses typed
-   packets for any package declaring a spec, and cannot emit affine/linear; (e)
-   the Rust Studio preview speaks wire v1 against an adapter that wants v2;
-   (f) completeness is open (r11's 5,301-line Adequacy never landed; leaf75/76
-   PASS are log claims). [B]
+1. THE SEMANTIC CORE IS REAL BUT ISLANDED. Core4 (Theory/ObjectiveBend*): 283-line
+   reference semantics with general fix, 201-line demand machine, certifying checker,
+   ~6.9k lines of adequacy/preservation proof, axioms pinned, zero sorry. But only
+   Host/ObjectiveBendPreview runs runBounded (the proven function); the Plan path runs
+   an unproven forceWith/materialize twin; the proofs live in the opt-in ResearchWip
+   target so the default build never checks them; the Objective path emits no receipt
+   and is not priced; the 37 KB TS front end duplicates compose() 2^k, refuses typed
+   packets for any package declaring a spec, cannot emit affine/linear; the Rust
+   Studio preview speaks wire v1 against an adapter that wants v2; completeness is
+   open (r11's 5,301-line Adequacy never landed). [B]
+   ► R2-2: the receipt does NOT need a new type or the forceWith≡runBounded theorem;
+   the repo's discipline is deterministic re-execution at admission and on every
+   replay, and NativeHostCodec.Receipt is route-agnostic. The theorem is needed before
+   saying "effects = source semantics"; until then the honest label is "Core4
+   executeWith output", which evaluatorId already says.
 
-2. THE LANGUAGE GAPS ARE CONCRETE AND SOURCED. Faré's core moves are present
-   (heterogeneous partial specs, mix with one final self, fix as computation,
-   lazy records, conflation + reflect). Missing, in value order: sums/case (and
-   therefore any Boolean eliminator — a==b cannot drive control flow today);
-   effects-as-yield + a checkpoint codec (State is already first-order);
-   declared ancestry with C4 linearization + method combination at elaboration;
-   checked `requires` and closed-object discharge at fix; an extensible package
-   root + label equality + dynamic get. Backends constrain the design: a
-   statically recognizable sealed/static fragment; sums must lower both-arms/mux
-   for oblivious; effects never inside a forced shared thunk; a public resource
-   vector (Limits + ticks already has the shape); bounded fail-stop arithmetic;
-   decide observability before adding reflection. [A]
+2. THE LANGUAGE GAPS ARE CONCRETE AND SOURCED. Present: heterogeneous partial specs,
+   mix with one final self, fix as computation, lazy records, conflation + reflect.
+   Missing, in value order: sums/case (hence any Boolean eliminator: a==b cannot
+   drive control flow); effects-as-yield + checkpoint codec; declared ancestry with
+   C4 linearization + method combination at elaboration; checked `requires` and
+   closed-object discharge at fix; an extensible package root + label equality +
+   dynamic get. Backend constraints: a statically recognizable sealed fragment;
+   both-arms/mux lowering for sums; no effect inside a forced shared thunk; a public
+   resource vector; bounded fail-stop arithmetic; decide observability before
+   reflection constructors. [A]
+   ► R2-5: leanuweave/preoscript is a contract language about promises under
+   replication, orthogonal to Core4 at the constructor level, touching exactly C14
+   (laws), C1/move 4 (requires) and C16 (Plan as data). Fold three ideas natively
+   (future-indexed certificates first); keep the repo separate; DELETE Mini's current
+   edge (a tracked lakefile `uwueave` require nothing tracked uses + one untracked
+   projection file whose Rust test cannot compile).
 
-3. GEN-1 IS CLEAN TO DELETE; BENDTT RETIRES THROUGH SIX MODULES. No production
-   code imports Gen-1 (20 files + WorkshopCardReturn + examples/objective-bend-
-   workshop); host-closure.pin is the control (must not move). 773 modules reach
-   BendTT through exactly Kernel.ResourceTransaction, DeclaredResourceController,
-   NativeHostContext, NativeHostReplay, Compiler.ObliviousNatAdd, Verify.Native-
-   ActivitySourceFixture. The wall snapshot cuts two, but CANNOT BUILD AS-IS:
-   Host.Main imports Kernel.ObjectiveBendNativeAdmission, which exists only in a
-   RED lane tarball (sorryAx + typeclass failure), and three modules import files
-   the snapshot deleted. ~20 docs/designs still present Gen-1 as the design. The
-   objective-bend-{collective,workshop,station} examples are upstream-Bend
-   programs checked by BendTT Book.check; their DOMAIN designs survive, their
-   artifacts do not. The review composition is already ported (.obend). [C, A]
+3. GEN-1 IS CLEAN TO DELETE; BENDTT RETIRES THROUGH SIX MODULES. No production code
+   imports Gen-1 (20 files + WorkshopCardReturn + objective-bend-workshop); the
+   host-closure pin is the control. 773 modules reach BendTT through exactly
+   Kernel.ResourceTransaction, DeclaredResourceController, NativeHostContext,
+   NativeHostReplay, Compiler.ObliviousNatAdd, Verify.NativeActivitySourceFixture.
+   ~20 docs/designs still present Gen-1 as the design. [C]
+   ► R2-2 CORRECTS C: the r4 bend-world lane is NOT red. Its "sorryAx" was Lean's
+   error-recovery placeholder in a stale 13:57 check; the same sources passed later
+   checks with C emitted (check-modern-export-11 at 15:07). The caveat is that every
+   "pass" ran against a mixed file set symlinked from ~6 lanes, never one coherent
+   build. The wall snapshot still cannot build alone (Host/Main imports the lane's
+   admission module; the snapshot's ResourceTransaction lacks the `family` field).
+   The missing pieces are not proofs: the deriveDraft producer does not exist
+   anywhere, the Claim v2 SOURCE exists only as a compiled file, and
+   AuthenticatedInputs is authored but never compiled.
 
-4. THE WORLD IS SLOW FOR READABLE REASONS. Cold audit = a genesis re-walk per
-   check (614 s for 78 records, superlinear at 1000). Room query ≈ 2 s because
-   every room pre-declares fields 2..1000 and each read returns a 1,016-item
-   proof (~65 KB). The Lean session appends to a List, dedups quadratically, and
-   recomputes the whole-prefix root for any historical lookup. `room new` = 216 s
-   = ~1,080 Host exchanges + 94 verifier spawns + 7 child `mini` processes. One
-   serial Host behind a 64/32 queue with 600 s read deadlines and no queue
-   deadline. 268M-check circuit scan fix sits unlanded. Duplication: 33 version
-   twins (ApplicationLifecycle v1+V2+V3 side by side), 52 Receiver modules, ~161
-   opcode arms, 7 `Observation` types, ~10 Reservation types, 40 attempt-custody
-   copies (two with bugs), no shared activity index. None of the SHARED-CONTRACTS
-   identities (ObjectRef, RevisionRef, InvocationId, ArtifactRef, the six cuts,
-   snapshot classes) exist in source. The .spw audits yielded 11 landed fixes and
-   are worth keeping as a hash-pinned DEFECT LEDGER, not a topology. [D]
+4. THE WORLD IS SLOW FOR READABLE REASONS. Cold audit = a genesis re-walk per check
+   (614 s / 78 records, superlinear). Room query ≈ 2 s: every room pre-declares
+   fields 2..1000 and each read carries a 1,016-item proof (~65 KB). The Lean session
+   appends to a List, dedups quadratically, recomputes the whole-prefix root per
+   historical lookup. `room new` = 216 s = ~1,080 Host exchanges + 94 verifier spawns
+   + 7 child `mini` processes. One serial Host, 64/32 queue, 600 s read deadlines, no
+   queue-residence deadline. 268M-check circuit scan fix unlanded. Duplication: 33
+   version twins, 52 Receiver modules, ~161 opcode arms, 7 Observation types, ~10
+   Reservation types, 40 attempt-custody copies, no shared activity index. None of
+   the SHARED-CONTRACTS identities exist in source. .spw = a hash-pinned defect
+   ledger worth keeping, not a topology. [D]
 
-5. PRIVACY AND AGREEMENT ARE ONE-HOST FIXTURES WITH REAL PIECES. Traffic: a real
-   PQ 4-layer onion with cover and exactly-once reply recovery, but every role on
-   127.0.0.1, an honest registrar assumed, the endpoint sees plaintext, and the
-   "16/16 useful outcomes" are ONE read-only request replayed. Agreement: a
-   genuine Lean safety theorem over the executable engine (prefix consistency),
-   but four replicas on one host from one seed, ~2 min per cold operation, and
-   the third operation (init 00f711) stalled at view 17 with 2 of 3 COMMITs —
-   liveness is the open fault. MPC: delivery/recovery plumbing shown on PUBLIC
-   inputs with deterministic preprocessing. FHE: real BFV 2a+b with a key-less
-   evaluator, owner = decryptor = same host; the depth-2 mux PASS belongs to the
-   retired language. zk: the "89-module TT-free closure" is CONDITIONAL on a
-   PackedRefinement hypothesis nobody has inhabited; ZkClaims.lean is a 9-line
-   import root. Oblivious: fixed-access AND/XOR DAG, no ORAM, 15/18 constructors,
-   same missing PackedRefinement; a concrete step-count leak if any public fee
-   reveals the count. [F]
+5. PRIVACY AND AGREEMENT ARE ONE-HOST FIXTURES WITH REAL PIECES. Traffic: real PQ
+   onion with cover and exactly-once reply recovery; every role on 127.0.0.1; honest
+   registrar assumed; endpoint sees plaintext; "16/16" = ONE read-only request
+   replayed. Agreement: a genuine Lean safety theorem; four replicas on one host from
+   one seed; ~2 min per cold op. MPC: plumbing on PUBLIC inputs. FHE: real BFV 2a+b,
+   owner = decryptor = same host; the depth-2 mux PASS belongs to the retired
+   language. zk: conditional on an uninhabited PackedRefinement; ZkClaims.lean is a
+   9-line import root. Oblivious: fixed-access DAG, no ORAM, same missing
+   PackedRefinement, a step-count leak if any public fee reveals the count. [F]
+   ► R2-3 DIAGNOSES THE STALL: init 00f711 is not a lost message. Replicas 0 and 1
+   hit the 100 s view timer before collecting q=3 VOTEs, lawfully sent ⊥, and from
+   then on 1/3-VA forbids them to COMMIT in that view; the same repeated in views 18
+   and 19. Cause: all four replicas run SEQUENTIALLY IN ONE OS PROCESS that spawns a
+   DEBUG-build crypto subprocess per MAC/signature and rewrites a 3.5 MB journal per
+   message, so real Δ (15–27 s per drive iteration) is far above timeout/7 ≈ 14 s;
+   and the engine only ticks while a client request is open, then gets SIGTERMed at
+   180 s mid-view. A lookup now can ONLY return absent (no replica committed record
+   3; stores untouched). The call is not doomed: the record is prepared in views
+   17–19 and extended by replica 3's view-20 proposal; one healthy view installs it.
+   Three hosts ≠ four failure domains (one host must carry two replicas; losing it
+   stalls, safely). NEVER copy a live replica to a second host (equivocating signer):
+   move or re-genesis.
 
-6. NOTHING NEWER THAN OCT 1 IS DEPLOYED; THE DEMO HAS NEVER RUN. The public node
-   runs candidate 5688775a (re-genesised 10-01), Hermes/Discord/payments OFF, four
-   operator keys (ember + three j9 test identities), zero friends. The deploy
-   pipeline (persvati build.sh → ship.sh) cannot take the sealed capsules hbox now
-   produces. Two journey instruments (journey.sh, composed-scenario.py) and
-   neither reaches the end on the current capsule. "Two friends + Hermes in one
-   world" has never run anywhere. Ten product rows are marked done/qualified
-   beyond their evidence (SPK "integrated" = recovery of a failed START; "0.61 s
-   write" = a store microbenchmark while `room new` takes 216 s; Discord "30 tests
-   PASS" against a fake Discord; the four-replica workdesk "receiving" with zero
-   accepted effects). A friend's first hour is gated on ember's action bundle (cv
-   01a0f54c-d1dd) AND on the room-latency fix. [G]
+6. NOTHING NEWER THAN OCT 1 IS DEPLOYED; THE DEMO HAS NEVER RUN. Public node runs
+   candidate 5688775a (10-01), Hermes/Discord/payments OFF, four operator keys (ember
+   + three j9 test identities), zero friends. ship.sh cannot take the sealed capsules
+   hbox now produces. Two journey instruments, neither reaches the end on the current
+   capsule. Ten product rows claim beyond their evidence. [G]
+   ► R2-1 FIRST-FRIEND PRECONDITION: one uid `mini` for every friend, the Store, the
+   operator socket and the seal key, plus a passwordless sudo rule (OPEN, critical,
+   no lane); say --operation-record still writes to any absolute path (OPEN, high);
+   proxy signing is FIXED IN SOURCE (fail-closed on a separately selected consent
+   binary) but the candidate build ships no consent binary and FRIENDS.md never
+   mentions the three env vars; private rooms are closed BY A STUB THAT ALWAYS
+   REFUSES (real verifier in the member-oo lane; AAD still lacks the revision);
+   refusals with valid signatures are uncharged (~1 s of re-execution each on one
+   serial Host); the durable anchor is an unkeyed sibling file under the same uid;
+   share tickets never expire; the grain journal fix is lane-only; root loop-mounts
+   an operator-supplied image on an e2fsck alone. Landed in main: the broker symlink
+   race, setuid drop, signature-first on opcode 2, per-sender replay quotas, cohort
+   re-accept, rotate-key crash recovery, credit/tariff/hex, tail --discover,
+   job-name traversal, terminal escapes, the cold-start gate. NONE of the new
+   regression tests runs in any gate. CI is red 6/13 at c8fdd000, and the lake-build
+   failure is a #guard_msgs docstring mismatch in
+   Compiler/FiniteDependentMapCachedOrdering.lean:209-213.
 
-7. THE INFRA IS LIVE BUT UNSUPERVISED. The common OO world (socket jm.ESPsOH)
-   that seven Studio servers depend on runs in an ssh session scope with its
-   socket+config in tmpfs: a reboot or scope kill loses it and nothing recreates
-   it. Every agreement/Studio/GitWeb unit is transient with Restart=no. The
-   broker's native child is dead. The mesh depends on files inside the r2 world's
-   candidate dir. The r2 broker runs as root. sudo is NOPASSWD ALL. Orphans: a
-   solana validator with a deleted ledger listening on 0.0.0.0:43146, a 37-day
-   stuck tailscale login. The real fn node is pid 1477123 (fn-node.service),
-   fn 6.6.0, format-10 store; redeploy is "complete, then cut", not improvised.
-   The 00f711 lookup procedure is defined (direct mini-f retry --mode lookup;
-   never submit; never the .py wrapper). [E]
+7. THE INFRA IS LIVE BUT UNSUPERVISED. The common OO world (socket jm.ESPsOH, seven
+   Studio servers depend on it) runs in an ssh session scope with its socket+config
+   in tmpfs; a reboot or scope kill loses it. Every agreement/Studio/GitWeb unit is
+   transient with Restart=no. The broker's native child is gone (by design: SIGTERM
+   at the 180 s deadline). The mesh depends on files inside the r2 world's candidate
+   dir. The r2 broker runs as root. sudo is NOPASSWD ALL. Orphans: a solana
+   validator with a deleted ledger on 0.0.0.0:43146, a 37-day stuck tailscale login.
+   The real fn node is pid 1477123 (fn-node.service), fn 6.6.0, format-10 store. [E]
+   ► The fn Claude session (9627d694) has its own swarmplan (work/FN-SWARMPLAN-
+   20261004.md); footprints exchanged and compatible; all fn node steps run through
+   this root on Ember's word; nothing fn touches the Mini worlds or the mesh.
 
-8. WHAT EMBER ACTUALLY ASKED FOR, ACROSS 127 MESSAGES. Ambition over myopia;
-   hold attention wide; weld seams with end-to-end scenarios; no endless review
-   ("do something Bigger"); commit to main constantly, no side branches ("where
-   work goes to be forgotten"), fix-forward, optimistic batching; use persvati and
-   hbox hard; agents mostly Sol (=opus here), Astra/Fable rare; ≤16–24 running,
-   bursts to 30; serialize dying streams to filesystem state rather than
-   reassigning them; efficiency rewriters for repeated validations/replays; a
-   scholar-rescuer for hard things; "it isn't a real Faré OO system" and "the
-   proof engineering is not up to snuff" after the reviews; Objective Bend is its
-   own language, Bend is its calculus, fork and Lean-upgrade allowed; mechanized
-   proofs of correctness desired; implement the BEST versions of Faré's ideas;
-   rewrite OBJECTIVE-BEND.md (tighten) and README; every graded modality of
-   private computation; traffic privacy + agreement are Oct 13 conditions;
-   "only trusted development access" for the public box today; Oct 26 and
-   November releases exist; "replay the creation of dregg" is an aspiration.
+8. BREAD: NOTHING BIG IS WORTH CARRYING; SIX SMALL EXACT MODULES ARE. ► R2-4:
+   ATLAS.md (08-06) was the founding mining map and six of its "take verbatim" items
+   were never taken (GovernedDynamics, kernelShield, ReachGame, CaveatChain,
+   DischargedFor, Membrane/FogOfWar/DocMerge). Top-6 BRING: the ResearchRegime chain
+   (Disputation → OptimisticAdjudication → ResearchRegime + Adversary/Schema, ~1.25k
+   lines: types who settles a change and how strongly it may be displayed = Objective
+   Bend's governed-evolution typing); the Cramer–Nardi-FIXED Polishchuk–Spielman
+   (Mini's Selvage states the UN-FIXED form Bég19 has counterexamples for ⇒ FIRST
+   ARTIFACT IS A REFUTATION ATTEMPT, per "prove the floor false"); BFV noise +
+   smudging (the threshold-decrypt release precondition Mini's BFV lacks); the Cert-F
+   weak-duality verifier (DrEX clearing verify side); the designated-verifier
+   transferability dial (all Mini evidence is ML-DSA = public and non-repudiable;
+   traffic privacy + deniable authorization need the DV pole); a Simplex
+   reconfiguration STATEMENT mined from Bread's reading docs. False-friends list in
+   R2-4 §3; two constraints on Mini's claims in §4 (premise inhabitation; proven ≠
+   routable, emitted ≠ sound).
 
-================================================================================
-PART II — DISCIPLINE (how every lane runs; non-negotiable)
-================================================================================
-
-D1 GROUND-TRUTH-FIRST BRIEFS. Every brief carries absolute paths, the real
-   signatures/types it must consume (pasted, not described), the verdict ARTIFACT
-   list (files/receipts/bytes, never a wrapper's exit code), and the CONTROL
-   (counts unchanged / bytes identical / pin unchanged). Claims in the brief are
-   marked READ / RECORD / ASSUMED-BY-ROOT.
-D2 ONE WARM BASE PER BOX, cp -al CLONES. hbox warm = codex-unified-integration
-   src (c8fdd000 + snapshot WIP; un-share inodes after cloning). persvati warm =
-   complete-warm union (pinned; overlays via make-overlay.py). Advance the base
-   after every landing. Never two lanes rebuilding the same delta.
-D3 NARROW CHECKS. `lake env lean <file>` and scoped olean chains for Lean;
-   `cargo nextest -E 'test(...)'` for Rust; `--umbrella` only at integration.
-   Never a bare -p suite. swarm-build on hbox always; persvati seats via
-   launch-seat.sh. Foreground waits only.
-D4 MAIN IS THE ONLY BRANCH. Lanes commit named files in their clone (`git commit
-   --only`, prose messages via -F), rebase onto origin/main, push. The root
-   rebuilds the warm base from main and runs the umbrella + host-closure +
-   import-boundary gates every ~2 h; red is fixed FORWARD by the lane that
-   broke it, named by the root within the hour. No stash, no reset, no side
-   branches. The one exception is the serialized Phase-0 cut (below), which
-   touches hot files and goes alone.
-D5 EVIDENCE CLASSES ARE DISTINCT. authored / compiled / executed / integrated /
-   deployed, in every report, every obligation row, every commit message that
-   claims progress. "Qualified" means a named check on a named artifact, cited.
-D6 PREMISES MUST HAVE INHABITANTS. Every new theorem statement is read by a peer
-   for vacuity (empty premise, identity carrier, projection-as-theorem, #guard in
-   theorem's clothes). Discriminating consumers are authored in the SURFACE
-   language (.obend), not as hand-written Lean manifests.
-D7 DEFERRALS ARE TASKS. A "later" goes into `cv task open` before the reply.
-D8 LANE LIFECYCLE. ≤16 running steady, burst to 24 for a sprint. A lane that
-   stops with its work actionable is serialized to filesystem state (STATUS +
-   exact restart condition) and its ownership row updated; it is not silently
-   handed to whoever looks free. Root check-in every ~60 min, light.
-D9 BOX SAFETY. swarm-build (96G slice), earlyoom, no unfiltered suites, disk
-   pressure = stop and report. Never touch the reference worlds (A1, r1, r2),
-   the mesh, or the fn node without an explicit, logged reason. Coordinate hbox
-   build seats with the fn swarm (session 9627d694) by message.
+9. WHAT EMBER ASKED FOR, ACROSS 127 MESSAGES (unchanged from v1): ambition over
+   myopia; attention wide; seams welded by end-to-end scenarios; no endless review;
+   commit to main constantly, no side branches, fix-forward, optimistic batching; use
+   persvati and hbox hard; mostly Sol (=opus), Fable rare; ≤16–24 lanes, bursts to
+   30; serialize dying streams to filesystem state; efficiency rewriters; a
+   scholar-rescuer for hard things; Objective Bend is its own language, Bend its
+   calculus, fork and Lean-upgrade allowed; mechanized proofs desired; the BEST
+   versions of Faré's ideas; rewrite OBJECTIVE-BEND.md (tighten) and README; every
+   graded modality of private computation; traffic privacy + agreement are Oct 13
+   conditions; "only trusted development access" for the public box today; Oct 26
+   and November releases; delete Gen-1 and its docs so they do not mislead.
 
 ================================================================================
-PART III — PHASES AND LANES (draft; numbers are first guesses)
+PART II — DISCIPLINE (unchanged; non-negotiable)
 ================================================================================
-
-PHASE 0 — THE CUT AND THE ANCHORS (serial on source; parallel on infra). ~day 1.
-  L0.1 THE CUT (one lane, hot files, alone on main). Apply wall-snapshot minus
-       the two .orig files; resolve its dangling imports forward (land or drop
-       the ObjectiveBendNativeAdmission hunk per R2-2's finding; fix BendRunCore/
-       BendNaturalExpression/BendClosureSupportedRun/ResearchWip); DELETE Gen-1
-       (scout C §1 list + WorkshopCardReturn + objective-bend-workshop +
-       BendQualification/ResearchWip import lines + lean-build-surfaces entry,
-       regenerate JSON); split the TT-free scalar binder out of
-       BendScalarPlanAdapter and repoint ObjectiveBendPlanAdapter; move the
-       Objective Theory modules into a default/qualification target so the
-       proofs are gated. Controls: host-closure.pin byte-identical at step 1;
-       ObjectiveBendPreparedOutput's import closure contains no Bend(TT|Live-
-       Machine|CoreAdmission); umbrella green; scout C's command set.
-  L0.2 GEN-1 DOC PURGE + OBJECTIVE-BEND.md REWRITE (tighten, not append) + README
-       rewrite. Inputs: scout A §4 and scout C §4 lists. Control: `rg` for the
-       Gen-1 module names returns only Git history and archive/.
-  L0.3 INFRA ANCHORS (no source overlap): put the common OO world and the Studio
-       servers under user units with Restart=on-failure and a socket dir that is
-       recreated (keep the SAME socket path so dependents survive); same for the
-       mesh and broker; record each unit's binary SHAs in a manifest; retire the
-       orphan solana validator/rpc proxy/tailscale login only after ember says so
-       (they are not ours to kill); write the 00f711 lookup as a one-shot script
-       that writes NEW log names, and run it ONCE, recording the outcome; fix the
-       dead broker child (why it died) before any new submit.
-  L0.4 SECURITY RESIDUALS (brief from R2-1): the tree audit's open defects at
-       HEAD, in severity order, each with its regression test; precondition list
-       for the first friend's key.
-
-PHASE 1 — PLUMP (parallel, after L0.1 lands; ~days 2–6). Lane families:
-
-  LANGUAGE (Core4 is the kernel; Bend the calculus)
-  L1.1 SUMS/CASE + BOOLEAN ELIMINATOR: constructors inject/case (+ if as the
-       2-arm case), machine frame, Value/RuntimeValue, Scoped, Typing (variant
-       rows, exhaustive case), DemandTyping/Preservation/Invariant/Adequacy case
-       splits. Discriminating .obend consumers: a==b driving a branch; a list;
-       a Plan as a sum of actions. Control: existing adequacy/preservation
-       theorems unchanged in statement; axiom pins unchanged.
-  L1.2 COMPLETENESS: land the r11 Adequacy (5,301 lines) from the lane dir after
-       verification, leaf76 → finite completion statement (Scoped 0 s →
-       Evaluates s v → Observes v r → ∃ n, rawRun finishes); inhabit
-       Representation with Supported := the real predicate (not False).
-  L1.3 forceWith ≡ runBounded + DEEP DATA SOUNDNESS, so the Plan output is a
-       theorem, not a test. Then PRICE the Objective path: PreparedOutput.Usage
-       (ticks, nodes, bytes, heap) → the SAME fee preparation the native path
-       charges; no caller-written accounting.
-  L1.4 FRONT END: fix compose() duplication (share the inherited composite),
-       lift the spec-typing refusal, make affine/linear reachable, fix the
-       Studio wire (v1/v2) on the side R2-2 names; then EITHER a Lean elaborator
-       with an adequacy theorem OR an explicit, named trusted-frontend boundary
-       with pinned-frontend replay on import and invoke (Doc r24 already does the
-       latter for publish). Decide which in week 1; do not leave it implicit.
-  L1.5 CHECKED REQUIRES + FINAL-SELF DISCHARGE at fix/compose; declared ancestry
-       with ordered C4 linearization + method combination at elaboration (zero
-       new constructors; one theorem: ordered-presentation invariance); make the
-       package root a specification so another package can extend it. Faré
-       sources cited in scout A for each.
-  L1.6 EFFECTS AS YIELD + CHECKPOINT CODEC (the Core4 activity): perform/yield
-       constructor, Control.yielded + resume rule, State codec; decide
-       effects-inside-shared-thunks (council Q1) explicitly. This is what makes a
-       resident a typed guarded fixed point across turns (review direction 2).
-
-  NATIVE OBJECTIVE ACCEPTED (the human priority; the chain R2-2 maps)
-  L1.7 ONE HONEST RECEIPT: clear or replace the red ObjectiveBendNativeAdmission;
-       implement OBJECTIVE-AUTHENTICATED-QUOTE (separate signed query envelopes
-       inside the Claim, complete CAS guards); Core227 over the original
-       QuoteRequest; Studio publish → invoke → atomic effects + structured result
-       → readback on the common OO world; refusers: wrong-source, wrong-authority,
-       altered input order/kind/grant, output injection, stale funding, current-
-       law. Receipt = the same native Accepted receipt the resource path emits.
-       Then re-target ONE former Gen-1 domain (CollectiveAdoption poll) to it.
-
-  DEOS EFFICIENCY (scout D's top-8, each with its measurement + control)
-  L1.8 INCREMENTAL AUDIT: no genesis walk in the cold path (Session.walked +
-       checkpoint+suffix). 614 s → <60 s on same-cut-78; control: 78 receipts
-       byte-identical.
-  L1.9 ROOM SCHEMA: sparse roster cell, delete the 2..1000 pre-declaration and
-       the 499 cap (RE-GENESIS; say so). 2 s → ~0.2 s/query; 65 KB → <5 KB.
-  L1.10 INDEXED SESSION STATE: Array accepted, incremental cell-id set, txid
-       index, per-record roots, each with a refinement theorem to the List
-       definition; control: worldRoot bytes unchanged at every height.
-  L1.11 CLIENT BATCHING / NO CHILD mini PROCESSES: 216 s → <20 s `room new`;
-       ~1,080 → <100 Host exchanges; control: identical admitted records.
-       Plus land D12 (circuit scan) and add the queue-residence deadline (D15).
-
-  DEOS SEMANTICS (delete twins, name the contracts)
-  L1.12 DELETE VERSION TWINS (ApplicationLifecycle v1/V2, FnEmptyPoll legacy, …)
-        with their opcode arms; re-genesis; old shapes refuse to load. Control:
-        journey J0–J8 on a fresh world.
-  L1.13 ONE ATTEMPT-CUSTODY ENVELOPE (InvocationId / attempt / outcome with the
-        recovered/uncertain/refused cuts) + ONE Rust AttemptCustody used by job,
-        selected_exchange, publisher, Discord; a shared activity index. Control:
-        D2/D5/D7 regressions unchanged.
-  L1.14 NAME THE CONTRACT TYPES: ObjectRef/RevisionRef/ArtifactRef and the
-        Observe…Retire cuts as Lean structures; refine the 7 Observation / ~10
-        Reservation types into them; typed SnapshotClass; ObjectPresentation
-        consumed by web/Studio/Discord. Control: canonical bytes of every codec
-        identical (#assert_axioms on the refinements). Collapse the receivers
-        toward ONE Receiver declaration (tree audit item 4) as the families
-        are touched.
-
-  PRIVACY + AGREEMENT (Oct 13 conditions; honest labels)
-  L1.15 AGREEMENT LIVENESS: diagnose and fix the view-17 2/3-COMMIT stall
-        (R2-3); harness schedule that drops one COMMIT and expects recovery;
-        warm session as the standard path; integrate proof closure 4a17d023
-        with abstract signature authentication stated as an assumption.
-  L1.16 THREE FAILURE DOMAINS: replicas on hbox + persvati + the Mac; the
-        traffic cohort's roles split across hosts/uids; live authenticated
-        enrollment adapter instead of CSV paths.
-  L1.17 FIRST NEW PRIVATE EFFECT: carry a NEW effect (not a replay) through the
-        carrier into the agreement-backed host; publish the P1 leakage card and
-        the n=4/f=1 single-domain agreement profile as the user-facing claim.
-  L1.18 PRIVATE EXECUTION TRUTH: inhabit PackedRefinement for one real Objective
-        network (or state honestly that the zk/oblivious closures are
-        conditional); build the public fixed-capacity tariff so step count does
-        not leak; MPC with NON-public inputs and real preprocessing entropy on a
-        small artifact; FHE native funding/signing/release join.
-
-  PRODUCT (scout G's top-8; the friend's first hour)
-  L1.19 DEPLOY-3 FROM THE hbox LINE: capsule → ship.sh path (exporter or capsule
-        mode), jdeploy3 green, re-genesis, retire j9, verify.sh 0 FAILs.
-        Precondition: L0.4's first-friend list + L1.9's room latency.
-  L1.20 ONE GATE THAT REACHES THE END: composed-scenario.py (rooms, apps,
-        connector, residents, restart; N members) + journey.sh J0–J8+G on the
-        same capsule; both become the DEPLOY gate. Ends "component green".
-  L1.21 HERMES ON MAIN: unit tests for adapter 1b622faf reconciled with main;
-        composed `residents` phase on r2 with scripted ACP; providers.json when
-        ember supplies it. Kill-and-restart → no second reply.
-  L1.22 FIRST BROWSER APP + STUDIO FOR MEMBERS + DISCORD GO-LIVE: lawful g4 START
-        on app 8502 + Playwright EtherCalc → CSV → shared doc; Studio through the
-        member entrance; Discord app once ember creates it.
-
-PHASE 2 — PUBLIC TESTING AND ITERATION (Oct 10–13 → Oct 26 → November).
-  Friend #1 on DEPLOY-3 with the honest labels; measure the first hour; batch
-  redeploys ~daily from the one living tree; Oct 26: the private-execution and
-  OO-composition prototypes integrated; November: the inhabited world.
+D1 Ground-truth-first briefs (absolute paths, pasted signatures, artifact verdict
+   list, stated control; claims marked READ/RECORD/ASSUMED-BY-ROOT).
+D2 One warm base per box, cp -al clones (un-share inodes), advance after landing.
+D3 Narrow checks only; swarm-build on hbox; launch-seat on persvati; foreground waits.
+D4 Main is the only branch: lanes `git commit --only` named files, rebase, push; the
+   root rebuilds the warm base and runs umbrella + host-closure + import-boundary +
+   check-rust-tests every ~2 h; red is fixed forward by its author within the hour.
+   The serialized Phase-0 cut is the one exception (hot files, alone on main).
+D5 Evidence classes named in every claim: authored / compiled / executed / integrated
+   / deployed. "Qualified" = a named check on a named artifact, cited.
+D6 Premises must have inhabitants; discriminating consumers authored in .obend.
+D7 Deferrals are `cv task` rows before the reply.
+D8 ≤16 lanes steady, burst 24; dying streams serialize to STATUS + restart condition.
+D9 Box safety: 96G slice, earlyoom, no unfiltered suites, disk pressure = stop and
+   report; never touch the reference worlds, the mesh or the fn node without a
+   logged reason; coordinate hbox seats with the fn swarm by message.
 
 ================================================================================
-PART IV — BOX FOOTPRINT (first guess; coordinate with the fn swarm)
+PART III — PHASES AND LANES (v2; wave 1 ≤ 16)
 ================================================================================
-hbox: warm base + up to 6 Lean lanes (2 seats each at LEAN_NUM_THREADS=2, under
-the 96G slice) + the reference worlds + the mesh. persvati: the pinned warm union
-for proof lanes (lean-main + 6 leaf seats), the second agreement/traffic failure
-domain, the DEPLOY-3 reference build. Mac: scouts, root, the third failure domain
-for the mesh demo only. fn's swarm gets its footprint by message; its node stays up.
+
+PHASE 0 — THE CUT AND THE ANCHORS. Day 1. L0.1 is SERIAL and alone on main; the
+rest run in parallel with no source overlap.
+
+L0.1 THE CUT = ONE COHERENT BASE (R2-2 §3 step 1 + C §7 steps 0–2 + R2-5 edge).
+   Start from c8fdd000 + wall-snapshot minus the two .orig files. Add the newest
+   lane sources R2-2 lists (Compiler: NativeInvocation{Statement,Profile},
+   ObjectiveInvocationClaim [recover its v2 SOURCE first], ObjectiveSourcePackage,
+   ObjectiveBendSourceArtifact, ObjectiveNativeScalarBinding, ObjectiveBendPlanAdapter,
+   ObjectiveBendNativePlanData, ObjectiveBend{Result,Combined,Generic}Result,
+   BendWorldPlan; Kernel: ResourceTransaction, DeclaredResourceController,
+   ObjectiveBend{ArtifactSource,PublishedPackage,NativeInput,NativeAdmission,
+   PreparedOutput}, RunComputeBudgetDomain; Host: Json r2 patch, Main,
+   ObjectiveStudioPublication). DELETE: Gen-1 (C §1 list + WorkshopCardReturn +
+   examples/objective-bend-workshop + the BendQualification/ResearchWip import lines
+   + the lean-build-surfaces entry, regenerate JSON); Command.bend,
+   historicalSourceDisabled, Compiler/BendExecutionClaim, Kernel/BendPreparedOutput,
+   Kernel/BendComputeCapacity, admitActivity + BendActivityDispatch's call, Rust
+   invocation_bend; the uwueave lakefile/manifest require + UwueavePreoProjectionV2
+   (+ its prover twin). SPLIT the TT-free scalar binder out of BendScalarPlanAdapter
+   and repoint ObjectiveBendPlanAdapter. GATE the Objective Theory modules in a
+   default/qualification target. FIX the CI red (FiniteDependentMapCachedOrdering
+   #guard_msgs). Controls: host-closure.pin byte-identical for the Gen-1 step;
+   ObjectiveBendPreparedOutput's closure has no Bend(TT|LiveMachine|CoreAdmission);
+   whole-tree `swarm-build lake build Minidregg` + `+Host.Main:leanArts` green;
+   scout C's command set; `rg` for Gen-1 names empty outside Git/archive.
+L0.2 DOC PURGE + OBJECTIVE-BEND.md (tighten, not append) + README rewrite. Inputs: A
+   §4, C §4, R2-5 (archive the PREOSCRIPT records' Gen-1 lines), R2-2 §6 (the named
+   trusted-frontend boundary, stated as such).
+L0.3 INFRA ANCHORS: user units with Restart=on-failure for the common OO world, the
+   Studio servers, the mesh and the broker, keeping the SAME socket paths; a
+   receiving manifest of binary SHAs per unit; a daily tarball of the replica
+   journals and the world store to /tank (read-only copies, never served). Do NOT
+   run the 00f711 lookup (R2-3: can only be absent). Orphans untouched until E5.
+L0.4 GATES: add the landed regression tests (broker custody, replay quota, anchor
+   truncation, key rotation, roomkey, journal) to scripts/check-rust-tests.sh; name
+   the widened import-boundary table as relaxed; make the hyp-ledger's three
+   toothless families real reds with satisfying + refuting instances.
+
+PHASE 1 — PLUMP. Wave 1 (≤16 lanes, after L0.1 lands), then Wave 2.
+
+WAVE 1
+ W1.1 NATIVE ACCEPTED, PART A (R2-2 steps 2–4): AuthenticatedInputs.Verified as the
+      input source (delete Reads/selectInputs/inputRefAt; Claim v3 inputEnvelopes;
+      route guards := verified.guards, replacing the vacuous []); the TARIFF
+      (claim.capacity.proofWork = Policy.workOf capacity, a fixed public formula over
+      the signed envelope); bind lowererSha256 into the package identity (re-publish)
+      or delete the pin. Files per R2-2. Control: #assert_axioms unchanged; the
+      compiled lane modules re-check in the coherent base.
+ W1.2 NATIVE ACCEPTED, PART B (R2-2 steps 5–8): Host/ObjectiveInvocationQuote.lean
+      (the missing deriveDraft; prove the "lower binds by resource+root, never reads
+      payloads" lemma first); Core227's ExtraObjective calling it on the client's
+      Verified image with full-plan comparison + pinned-frontend replay on import and
+      invoke; Studio invoke action + the dual-edition studio_preview.rs with v1
+      DELETED; the ten refusal checks + lost-reply recovery, `-E 'test(objective_
+      native)'`, on the common OO world. Deliverable: the first honest
+      NativeHostCodec.Receipt for an ordinary .obend method, labelled "Core4
+      executeWith output"; then re-target the CollectiveAdoption poll to it.
+ W1.3 CORE4 SUMS/CASE + BOOLEAN ELIMINATOR (A move 1; B gap 4): inject/case (+ if as
+      the 2-arm case), machine frame, Value/RuntimeValue, Scoped, variant rows with
+      exhaustive-case typing, the three DemandTyping/Preservation/Invariant splits,
+      the Adequacy graph lemmas. Discriminating .obend consumers (a==b branch; a list;
+      a Plan as a sum of actions). Control: existing theorem statements unchanged;
+      axiom pins unchanged.
+ W1.4 CORE4 COMPLETENESS: verify and land the r11 Adequacy from the lane dir; leaf76
+      → the finite-completion statement; inhabit Representation with the real
+      Supported predicate. Then forceWith ≡ runBounded + deep Data soundness (so the
+      Plan output becomes a theorem).
+ W1.5 FRONT END (B gap 5; A finding 1,3): share the inherited composite in compose();
+      lift the spec-typing refusal; make affine/linear reachable; lower the operators
+      the parser already accepts once W1.3 lands; name the trusted boundary (E2) or
+      start the Lean elaborator.
+ W1.6 CHECKED REQUIRES + DECLARED ANCESTRY (A moves 3–4): required row checked against
+      the composed provided row at fix; width/row-extension rules; static DAG with
+      ordered C4 linearization + method combination at elaboration (zero constructors;
+      one theorem: ordered-presentation invariance); package root as a specification.
+ W1.7 AGREEMENT LIVENESS (R2-3 fixes A+B, then C): serve-replica standing loop;
+      client deadline returns "uncertain" without SIGTERM; fresh budget drains the
+      current+previous view's outbox; no pre-reopen starvation; in-process RELEASE
+      crypto; append-only journal; rate-limited candidateSlice; then the adaptive
+      timeout with GenericSimplexEngineSafety re-checked and the known-Δ deviation
+      stated. Tests: the kernel-harness "two replicas time out before q votes" schedule
+      and the native withhold-one-COMMIT + kill-client-at-180 s run. Then resolve
+      00f711 on hbox by resuming the SAME retained call under the new driver.
+ W1.8 SECURITY A — TENANCY (R2-1 #4, #4a, #6, (a)(b)(h)): per-session uids with the
+      Store, operator socket, seal key and sudo rule unreachable; --operation-record
+      through session_fs + the is_absolute grep gate; a keyed or root-held durable
+      high-water mark outside the mini uid; FRIENDS.md custody line corrected. Tests:
+      EACCES from a session process on the operator socket and credentials.key; the
+      anchor rewrite as mini still refuses.
+ W1.9 SECURITY B — SHIP THE FIXES (R2-1 (c)(d)(e)(f)): consent binaries in the
+      candidate + bin/clients + the three env vars documented; private rooms land
+      the member-oo verifier AND bind the revision into the AAD (or stay disabled
+      and say so); the grain journal lane landed (journal_io, controller_digest,
+      public_status); per-subject refusal charging after authentication; loop-mount
+      verifies a signature over the hash or copies into a fresh filesystem; the
+      full-length torn tail truncates; share tickets get notAfter + tombstone + the
+      8→2 / →7 edges.
+ W1.10 DEOS EFFICIENCY A — INCREMENTAL AUDIT (D lane 1): the audit consumes
+      Session.walked + checkpoint+suffix; 614 s → <60 s on same-cut-78; control: 78
+      receipts byte-identical. Plus land D12 (circuit scan) and the queue-residence
+      deadline (D15) with the 254-only-before-forward invariant test.
+ W1.11 DEOS EFFICIENCY B — ROOM SCHEMA + INDEXED SESSION (D lanes 2–3): sparse roster
+      cell, delete the 2..1000 pre-declaration and the 499 cap (RE-GENESIS; said so);
+      Array accepted, incremental cell-id set, txid index, per-record roots, each
+      with a refinement theorem to the List definition; controls: identical refusal
+      set on fixture rooms; worldRoot bytes unchanged at every height.
+ W1.12 PRODUCT A — DEPLOY-3 FROM THE hbox LINE + ONE GATE THAT REACHES THE END (G
+      lanes 1, 7): capsule → ship.sh path; jdeploy3 green; composed-scenario.py with
+      apps/connector/residents/restart over N members + journey.sh J0–J8+G on the
+      same capsule as THE deploy gate. Precondition for shipping to the public node:
+      W1.8 + W1.9 (a)–(f) and W1.11's latency.
+ W1.13 BREAD BRING A (R2-4 top-6 #1, #2): the ResearchRegime chain + GovernedDynamics
+      into Theory/ (control: #assert_axioms set equals Bread's; no GenericSimplex*
+      statement changes); the Polishchuk–Spielman REFUTATION attempt first, then port
+      the fixed form and restate the BW route (control: HypothesisLedger row flips).
+ W1.14 CONTRACT TYPES + leanuweave FOLD (D lane 8 + R2-5 items 1–3): ObjectRef/
+      RevisionRef/ArtifactRef and the Observe…Retire cuts as Lean structures; the 7
+      Observation / ~10 Reservation types refined into them; typed SnapshotClass;
+      future-indexed certificates (futures_not_interchangeable) re-stated over Mini's
+      accepted-history and observation types. Control: canonical bytes of every codec
+      identical (#assert_axioms on the refinements).
+ W1.15 EFFICIENCY REWRITER (Ember's ask; D hotspot 6): chat::client and shell.rs call
+      in-process functions; templates become one proposal; verifier not re-copied per
+      session; `room new` 216 s → <20 s; ~1,080 → <100 exchanges; control: identical
+      admitted records.
+ W1.16 ROOT/INTEGRATOR (me): warm base, gates every ~2 h, obligation ledger, lane
+      check-ins, `cv task` hygiene (≈60 stale claims from dead lanes), the fn
+      session's hbox coordination.
+
+WAVE 2 (as wave-1 lanes land; each a serialized STATUS first)
+ Effects-as-yield + checkpoint codec (A move 2); extensible root + label equality +
+ dynamic get (A move 5); DELETE VERSION TWINS (D lane 6, re-genesis); one
+ attempt-custody envelope + shared activity index (D lane 7); collapse the receivers
+ toward one Receiver declaration (tree audit #4); THREE FAILURE DOMAINS (R2-3 §4:
+ move, never copy; persvati Linger; a fourth box = E4); FIRST NEW PRIVATE EFFECT
+ through the carrier + the P1 leakage card + the n=4/f=1 profile as the user-facing
+ claim; inhabit PackedRefinement for one real Objective network or label the zk/
+ oblivious closures conditional; the public fixed-capacity tariff (step-count leak);
+ MPC with non-public inputs and real preprocessing entropy; FHE native funding/
+ signing/release + BFV noise+smudging (R2-4 #3) + an estimator-backed parameter
+ claim; Cert-F verify side (R2-4 #4); designated-verifier dial (R2-4 #5); Simplex
+ reconfiguration statement (R2-4 #6); Hermes on main; first browser app; Studio for
+ members; Discord go-live; Bool/label case lowering both-arms/mux for oblivious.
+
+PHASE 2 — PUBLIC TESTING AND ITERATION (Oct 10–13 → Oct 26 → November): friend #1
+ on DEPLOY-3 with the honest labels (F §Oct 13; R2-3 §5); the first hour measured;
+ batch redeploys ~daily from the one living tree; Oct 26 the private-execution and
+ OO-composition prototypes integrated; November the inhabited world.
 
 ================================================================================
-PART V — WHAT IS EMBER'S TO DECIDE (the short list)
+PART IV — BOX FOOTPRINT (exchanged with the fn swarm; compatible)
 ================================================================================
-E1 Go on the Phase-0 cut (it is the one irreversible-feeling step: Gen-1 and the
-   BendTT-surface examples leave the tree; history stays in Git).
-E2 The front-end trust decision (Lean elaborator vs named trusted boundary).
-E3 The action bundle for the first friend (cv 01a0f54c-d1dd): pushes, age key,
-   Solana address + week rate, providers.json, Discord app, FRIENDS.md lines.
-E4 Whether persvati and the Mac may host agreement/traffic replicas (ports, keys).
-E5 Whether the orphan hbox processes (solana validator, rpc proxy, tailscale
-   login, smoke9p) may be stopped.
-E6 The Oct 13 label: ship the four honest demos with their caveats, or hold for
-   the first new private effect.
+hbox: warm base + ≤6 Lean lanes (LEAN_NUM_THREADS=2, swarm-build, 96G slice) + one
+serialized umbrella every ~2 h + the reference worlds, the mesh, the Studio servers.
+fn swarm peak ≤8 box jobs, load ≤16, everything under swarm-build. persvati: the
+pinned warm union for proof lanes (lean-main + ≤4 leaf seats via launch-seat.sh), the
+DEPLOY-3 reference build, later a replica host (Linger must be enabled). Mac: scouts,
+root, later a replica host for the demo only. A FOURTH BOX is required for four
+agreement failure domains (dregg-workhorse is the candidate).
+
+================================================================================
+PART V — EMBER'S DECISIONS (v2)
+================================================================================
+E1 Go on the Phase-0 cut (L0.1) as specified, including the uwueave edge deletion.
+E2 Front-end trust: a Lean elaborator with an adequacy theorem, or a NAMED trusted
+   boundary with pinned replay on import and invoke (R2-2 §6 lists exactly what sits
+   inside it). The cut proceeds either way; W1.5 needs the answer.
+E3 The first-friend action bundle (cv 01a0f54c-d1dd) AND acceptance that no friend's
+   key goes on the box before W1.8 + W1.9 (a)–(f); paid self-enrollment stays off.
+E4 Replica hosts and key custody: may persvati and the Mac hold committee secret
+   keys; is dregg-workhorse the fourth failure domain; who holds which committee.sk.
+E5 Whether the orphan hbox processes (solana validator with a deleted ledger on
+   0.0.0.0:43146, rpc proxy, stuck tailscale login, smoke9p) may be stopped.
+E6 The Oct 13 label: the four honest demos with their caveats (F; R2-3 §5), or hold
+   for the first new private effect and a live agreement install.
+E7 Tenancy design (W1.8): per-session uids is the recommended shape; it is a
+   strengthening, not a widening, so it proceeds unless you want a different model.
+E8 Private rooms: land the lane verifier + AAD revision, or keep them disabled and
+   say so in FRIENDS.md. (Either is honest; shipping the stub as "private" is not.)
