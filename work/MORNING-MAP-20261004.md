@@ -1,5 +1,14 @@
 # Morning map — Mini, 2026-10-04
 
+> **Read first (added overnight 10-04):** the program-model design `designs/MINI-PROGRAM-MODEL-20261004.md`,
+> the root's decisions with resolutions and the 4 OPEN questions `work/ROOT-PROGRAM-MODEL-DECISIONS-20261004.md`,
+> and Mini's fn 6.6.0 requirements `designs/MINI-FN-660-REQUIREMENTS-20261004.md` (fn team's check pending).
+> Evidence: eight scholar reports `work/SCHOLAR-*-20261004.md` and the root's spot checks
+> `work/ROOT-READING-NOTES-PROGRAM-MODEL-20261004.md`. Ember's rulings since this map: re-genesis by default;
+> Lean stays the executor; signed envelope charge law; delete all BendTT; hybrid PQ everywhere; ambitious
+> tenancy; keep the Simplex mesh toward multi-party domains.
+
+
 Written by the root (Claude, session breadstuffs-89) overnight, for Ember and the root to restart from.
 It is built from: every substantive root message of last night (recovered with `cv` after the
 compaction), the swarmplan v2, both Fable reviews, scout A, the shared-contracts / Bend-direction /
