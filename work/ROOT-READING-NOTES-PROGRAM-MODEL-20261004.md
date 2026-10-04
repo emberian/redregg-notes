@@ -96,3 +96,12 @@ Rule from Ember (10-04): read the referents, not only the syntheses.
   (check-then-act across a yield) applies; remedies: re-validate declared reads at resume (footprint
   check), escrow anything that must not change across the gap (Bread's no-reservation rule), and make
   the response type carry Refused/Unknown/TimedOut/Upgraded so failure is handled at receive.
+
+## Calls/concurrency scholar, spot-checked at source
+- grossman-ecf 2018 lines 1181-1182: "only 10 executions out of about 100 million were legitimately
+  non-ECF" — the statistic the calls scholar uses to recommend refusing re-entry outright (the ECF
+  check stays an opt-in). Confirmed verbatim.
+- gelashvili-block-stm-2022 Corollary 2 (line 1333): MVMemory snapshot after completion equals the
+  sequential execution — the basis for "parallel admission, root = sequential fold". Confirmed present.
+- Scholar conflicts to resolve in the design: footprints learned at admission (calls) vs declared (OS);
+  checkpoints long-lived if code pinned + capture rule (calls) vs short-lived by policy (OS, Morningstar).
