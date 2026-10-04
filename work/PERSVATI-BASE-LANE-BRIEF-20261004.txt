@@ -1,0 +1,23 @@
+PERSVATI WARM-BASE LANES (2026-10-04 night) — binding with LANE-PROTOCOL-20261004.txt
+- GitHub main is 5b6d6eca = the cut (Gen-1 and the BendTT command path deleted; ObjectiveProofs target).
+  Its Lean files are byte-identical to persvati's frozen warm base 6786301c, green on all 9607 jobs.
+- Get a warm private copy: on persvati,
+    /home/ember/workbox/claude-lanes/persvati-base/mk-lane.sh <lane>      (add --verify to prove 0 modules recompile)
+  It creates /home/ember/workbox/claude-lanes/<lane>/src (read its LANE-ORIGIN.txt). Then
+    cd .../<lane>/src && git remote add github https://github.com/emberian/minidregg.git && git fetch github
+  and rebase your work onto github/main before reporting.
+  NEVER edit lake-manifest.json or lean-toolchain (package build outputs are shared with the base).
+- Build: `PATH=$HOME/.elan/bin:$PATH LEAN_NUM_THREADS=6 nice -n 10 lake build <targets>` in the foreground
+  with long timeouts; log to your lane's logs/; re-attach by reading the log; never rerun a build just to read
+  its output. The full gate is `lake build Minidregg +Host.Main:leanArts ObjectiveProofs`. Do not use the
+  launch-seat.sh seats. `uptime` first (wait if load > 20: other lanes share persvati); `df -h ~` (stop
+  and report if free < 120 GB). Remove your own lane dir's build products when you finish, unless the root
+  asks you to keep them.
+- hbox is HELD for the fn swarm; read-only access only (git fetch from hbox paths is fine).
+- Commits: named files only, unsigned (-c commit.gpgsign=false -c user.name="ember arlynx"
+  -c user.email="cmrx64@gmail.com"), on branch lane/<lane>; do NOT push; the root lands.
+- Evidence classes on every claim (authored/compiled/executed); no sorry, no new axiom, no weakened
+  statement or widened pin; a theorem's premises must be inhabited; filtered Rust tests only.
+- Rescue copies of lane work that predates the hbox workbox wipe:
+  Mac ~/workbox/claude-lane-wip-20261004/ (bundles, diffs, untracked tgz, lane-status-files.tgz) and
+  hbox /tank/dregg-build/claude-lanes/wip-rescue-20261004/.
