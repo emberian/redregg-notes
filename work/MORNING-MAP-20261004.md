@@ -85,7 +85,10 @@ Tags where they matter: READ (seen in source on main), RECORD (a report or ledge
 8. **Tenancy versus go-live:** split tenancy refuses `discord.env` and `provider-service.json`, while
    the product plan turns on Discord and pooled Hermes. The key-service behind a `mini-core` socket
    is the reconciling design (step B, "by ear").
-9. **Already open in your inbox:**
+9. **Enrollment price unit:** the tariff stores an hourly rate, so 50 DREGG/week is configured as
+   297,619 atomic per hour = 49.999992 DREGG per week (a floor, so an exact 50 always renews). The
+   alternative is a weekly tariff unit (a Lean change plus re-genesis). Task `01a105c0-0292`.
+10. **Already open in your inbox:**
    - sponsor key custody (default A lands in three days);
    - GitHub drafts;
    - dregg-infra push (split tenancy and `jdeploy3` exist only on `hbox:/srv/git`);
