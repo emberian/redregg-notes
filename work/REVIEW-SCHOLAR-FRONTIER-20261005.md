@@ -1,11 +1,10 @@
 # REVIEW-SCHOLAR-FRONTIER (2026-10-05): Agoric's lessons and the 2022–26 frontier, against the design and main
 
-Read: `designs/MINI-PROGRAM-MODEL-20261004.md` (all), `work/ROOT-PROGRAM-MODEL-DECISIONS-20261004.md` (with the
-root's resolutions), the ledger rows for 796d7d7a and the activity kernel, and the code, from a fresh read-only
-clone of main `36fca3ac`: `Kernel/ObjectiveActivity.lean` (all 1,161 lines), `Kernel/AnswerSlot.lean`,
+Read: the design (all), the root's decisions and resolutions, the ledger rows, and the code on a fresh clone of
+main `36fca3ac`: `Kernel/ObjectiveActivity.lean` (all 1,161 lines), `Kernel/AnswerSlot.lean`,
 `Kernel/ObjectiveBendNativeAdmission.lean`, `Host/ObjectiveConsent.lean`, `Compiler/ObjectiveInvocationClaim.lean`
 and `world/activity/Tally.obend`. My evidence is in `work/SCHOLAR-FRONTIER-AGORIC-20261004.md`, cited below as
-FRONTIER. Nothing was committed. The reason is in §4.
+FRONTIER. Nothing was committed (§4).
 
 ## 1. Verdict
 
@@ -84,11 +83,9 @@ record. Its recorded reads are the fields it read, not its own write. Otherwise 
 unjudged, and `birth` lets any subject write any object (ledger). "Code proposes, law disposes" is not yet true for
 activities, and the running native-route lane lists ownership, Book fees and GC, but not laws.
 
-**Ownership comes from payment.** `writeState` refuses with `.notOwner` unless
-`request.subject = record.escrow.payer`. The owner is whoever funded the first activity. That conflates the
-*meter* with *authority*, which KeyKOS separated on purpose and which Agoric keeps separate: whoever holds the meter
-does not hold the object (FRONTIER §1.4; HIST 1F). A sponsor who pays for someone's resident must not become its
-owner.
+**Ownership comes from payment.** `writeState` checks `request.subject = record.escrow.payer`, so whoever funded
+the first activity owns the object. KeyKOS and Agoric keep meter and authority apart (FRONTIER §1.4; HIST 1F); a
+sponsor must not become the owner.
 
 **Replacement text, §A Mechanism, after the `ObjectRecord` block:**
 > Every write a Plan makes to an object's declared state (from a method turn, an activity yield, or a resume) is
@@ -99,22 +96,15 @@ owner.
 
 ### 3.3 GAP (landed): retention cells without a payer, and unpriced kernel work (design §G)
 
-The activity kernel creates five kinds of cell that nothing ever reclaims and nobody holds a deposit for:
-- record cells (a `done` or `faulted` record keeps its result forever);
-- decided slot cells;
-- package cells;
-- fee-account cells;
-- checkpoints, which grow (4,359 → 4,991 B over two resumes, per the ledger).
-
-The escrow price is `base + perTick · ticks` only. It ignores the checkpoint bytes it encodes and decodes, and the
-full re-check of the package (`loadProgram` → `checkWithin` + `check`, under `config.typeFuel`) that every
-`resolve` and every `deliver` performs.
+Record cells (kept forever once `done` or `faulted`), decided slots, package cells, fee accounts and growing
+checkpoints (4,359 → 4,991 B over two resumes) are never reclaimed and carry no deposit. The escrow price is
+`base + perTick · ticks`; it ignores checkpoint codec bytes and the full package re-check (`loadProgram` →
+`checkWithin` + `check`) that every `resolve` and `deliver` performs.
 
 This is FRONTIER §1.4–1.5 in miniature (Agoric #8400: an unpaid retention structure held about 60% of mainnet kv).
 
-There are also now two tariffs, `ObjectiveActivity.Tariff` (base, perTick) and `ObjectiveBendNativeAdmission.Tariff`
-(nine terms including typeFuel), plus two money rails: the fee-account cells "stand in for the Book". That is two
-shapes that agree today, and the repo doctrine says to delete one.
+There are now two tariffs (activity: base, perTick; native: nine terms) and two money rails (fee accounts
+"stand in for the Book"): two shapes, one to delete.
 
 **Replacement text, §G Mechanism, appended:**
 > One tariff prices every Objective turn (method, birth, resolve, deliver): the native `Tariff.workOf` terms plus
@@ -176,23 +166,18 @@ The refinement moves a check out of the upgrade turn.
 
 ### 3.6 Smaller corrections
 
-- **§D, pipelines and consent.** The landed consent path (Core227) makes the caller sign the exact Plan, so any
-  concurrent change refuses the invocation; two of the 13 refusals were `stale-root`. Write it down: exact-plan
-  signing is the default caller protection for single-turn invocations. Seats are the protection that tolerates
-  movement (a price changed, a balance moved). A pipeline signer signs its segment's exact sub-Plan, or a seat.
-  Without seats, every trade in a busy domain will retry forever.
-- **§3, the theorems.** Add **T0, Agreement**, which the ledger names as open ("meaning not proved unique"). Admission
-  needs a deterministic big-step semantics whose result is unique. That is the vWasm split (FRONTIER 2.D D1): the
-  sandboxing theorem must not depend on it, and replica agreement does. Until T0 exists, the card should label
-  native receipts with the regime that settled them, as the ledger's receipt label already does.
+- **§D, consent.** Core227 makes the caller sign the exact Plan, so any concurrent change refuses (two of the 13
+  refusals were `stale-root`). State it: exact-plan signing is the default protection; seats tolerate movement.
+  Without seats, every trade in a busy domain retries.
+- **§3.** Add **T0, Agreement**: a deterministic big-step semantics with a unique result, open per the ledger
+  ("not proved unique"). Per the vWasm split (FRONTIER 2.D D1), sandboxing must not depend on it; replica agreement
+  does.
 - **§H.** Show each activity's decider on the card; today nothing shows viewers who can answer an await.
 
 ## 4. Commits
 
-None. The two code defects (§3.1, §3.3) sit in `Kernel/ObjectiveActivity.lean`, which the running "activity native
-route" lane is rewriting (ownership, Book fees, GC at yield). A parallel edit would collide with it. §3.1 is also a
-design-sentence change (T1(e)) that needs the root's ruling first. I am handing both to that lane as acceptance
-requirements (§5) instead.
+None. §3.1 and §3.3 are in `Kernel/ObjectiveActivity.lean`, which the running native-route lane is rewriting, and
+§3.1 needs the root's ruling on T1(e). They go to that lane as acceptance requirements (§5).
 
 ## 5. Acceptance additions for the running activity-native-route lane
 
@@ -211,8 +196,7 @@ stack", so getters and proxies re-enter mid-operation, and Agoric's defence is a
 design's `call` differs on both counts: the callee reads the turn's snapshot, its writes are deferred fragments,
 and re-entry is refused. A callee therefore never observes a caller's half-done state, which is the property
 Agoric's clean stack buys. The condition: writes stay deferred and reads stay on the snapshot. If a later change
-lets a callee see the caller's in-turn writes, the answer flips to no. Put the condition in T2 as a statement:
-`frame_reads_snapshot`.
+lets a callee see the caller's in-turn writes, the answer flips to no. State it in T2 as `frame_reads_snapshot`.
 
 **OPEN 2: generate laws now, unify later.** Agoric is a single-language system (all JavaScript), and it still built
 a separate, decidable pattern language (`@endo/patterns`, the `M.*` matchers) for guards, state shapes and

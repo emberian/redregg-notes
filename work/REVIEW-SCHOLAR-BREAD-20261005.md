@@ -38,8 +38,8 @@ All READ in `Kernel/ObjectiveActivity.lean` unless noted.
 5. **Deposits are measurement-free.** The fee pair is priced from declared envelopes. Exactly one half pays
    the ending turn and the other half returns to the payer (`refund_measurement_free`,
    `submitter_charge_declared`). This is cleaner than Bread's refund-or-burn deposit.
-6. **One async mechanism.** The answer slot plus the activity record is the only wait path, and `message`
-   is reserved to join it. This avoids Bread's five unconnected mechanisms (BREAD §2.2).
+6. **One async mechanism**: slot plus record is the only wait path; `message` is reserved to join it
+   (Bread had five, BREAD §2.2).
 7. **No state from a request**; `ObjectiveResumeContract` proves every stored checkpoint is typed.
 
 ---
@@ -87,14 +87,11 @@ Plan. For `send`, the decider must be the *callee's delivery turn*, a role hande
 callee (design §D: "the decider role is linear"). A subject cannot be handed on.
 `decide_single_decider` will need restating over a role. Flag it before L6 freezes the slot codec.
 
-**D-5: kernel work per resume is unpriced.** Every `deliver` (and `resolve` with a reply) re-runs
-`loadProgram`: the full `checkWithin` of the package plus a re-check of the instantiation. That is paid by
-nobody: the escrow prices ticks only. Anyone may submit deliveries, so this is the "unpriced kernel work"
-decision G rules out. A cache keyed by `pin` (checked once at `publish`, as the
-`ObjectiveBendSourceArtifact.Checked` value already proves) removes it. INFERRED fix.
+**D-5: kernel work per resume is unpriced.** Every `deliver` (and reply `resolve`) re-runs `loadProgram`,
+a full `checkWithin` of the package, paid by nobody (the escrow prices ticks only): the "unpriced kernel
+work" decision G rules out. A check cached by `pin` at `publish` removes it (INFERRED fix).
 
-**D-6: answer-slot cells have no payer and are never reclaimed.** A decided slot outlives its activity.
-Design G: "every retention structure is a cell with a payer".
+**D-6: decided answer-slot cells have no payer and are never reclaimed** (design G wants a payer).
 
 **T1 coverage.** Landed: (a) consume-once, (b) binds checkpoint, (c) typed (via `ObjectiveResumeContract`),
 (e) as stated, and (f) single decider. Missing: (d) `resume_rechecks_today`, because there is no law on the
@@ -185,11 +182,9 @@ closes Bread's factory-transparency versus `SetProgram` contradiction (BREAD §2
 
 ## 4. The OPEN questions
 
-**1. Synchronous cross-principal `call`: yes.** Bread is the controlled experiment for "no in-turn
-call". Its cross-cell children were `DelegationDenied` unless `SnapshotRefresh`, and `ParentsOwn`/`Inherit`
-were never implemented (`execute_tree.rs:1415-1455`, READ; BREAD §1.2). Composition fell back to
-client-computed effect lists (`invoke()`), and the user-level result was ember's "lamesauce … i am a toy"
-(BREAD §0). The safety case is the re-entry guard *plus R2*: with apply-at-return, the only interleaving a
+**1. Synchronous cross-principal `call`: yes.** Bread was the experiment without it: cross-cell children
+were `DelegationDenied` and `ParentsOwn`/`Inherit` never got built (`execute_tree.rs:1415-1455`, READ),
+composition fell back to client-computed effects, and the result was ember's "lamesauce" (BREAD §0). The safety case is the re-entry guard *plus R2*: with apply-at-return, the only interleaving a
 callee can cause is one the guard already forbids.
 
 **2. Laws: generate from `.obend` now.** Same as BREAD §3.2. Bread's mirrored Rust and Lean law languages
@@ -242,6 +237,5 @@ only this file and a scratch clone.)
   - A two-activities-on-one-object scenario keeps both activities' writes.
   - Full gate `lake build Minidregg +Host.Main:leanArts ObjectiveProofs` on hbox via `swarm-build`.
   - The demo is re-run with every check green.
-- **Est.:** one lane; touches one kernel module, one theory module, one `.obend` and one script.
 
 Beyond my report I cite only Stingray (arXiv:2501.06531; metadata checked via the arXiv API, not downloaded).

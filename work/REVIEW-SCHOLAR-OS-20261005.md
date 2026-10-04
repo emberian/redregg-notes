@@ -3,27 +3,19 @@
 **Reviewer.** SCHOLAR-OS. My evidence base is `work/SCHOLAR-OS-LINEAGE-20261004.md`, cited below as OS
 §n (with OS Part I for the synthesis).
 
-**What I read.**
-- `designs/MINI-PROGRAM-MODEL-20261004.md` §1, §2.A–C, F–I, §4, §5 and §6.
-- `work/ROOT-PROGRAM-MODEL-DECISIONS-20261004.md`, all of it.
-- Code at minidregg main `36fca3ac`, from a fresh clone at `hbox:/tank/dregg-build/claude-lanes/scholar-os-review/src`:
-  - `Kernel/ObjectiveActivity.lean`, all 1161 lines;
-  - `Host/ObjectiveActivityWorld.lean`, the header and config;
-  - the tariff and usage sections of `Kernel/ObjectiveBendNativeAdmission.lean`;
-  - `Kernel/RefusalLane.lean`;
-  - `native/mini-keys`: `main.rs` and `server/{mod,member,native}.rs`.
+**What I read.** The design (§1, §2.A–C, F–I, §4–6); the root's decisions in full; minidregg main
+`36fca3ac` (fresh clone, `hbox:/tank/dregg-build/claude-lanes/scholar-os-review/src`):
+`Kernel/ObjectiveActivity.lean` in full, `Host/ObjectiveActivityWorld.lean` header and config, the
+tariff/usage parts of `Kernel/ObjectiveBendNativeAdmission.lean`, `Kernel/RefusalLane.lean`, and
+`native/mini-keys` (`main.rs`, `server/{mod,member,native}.rs`).
 
 **Tags.** READ means I read the code or text. INFERRED means my own judgment.
 
 ## Verdict
 
-The design adopted the lineage's spine almost whole. Identity is separate from the package hash.
-Durable state is declared and the checkpoint is never the migrated thing. The await is the only commit
-point, with typed outcomes, deadlines and escrow. Upgrade is a governed turn with a disposition per
-activity. Kernel work is metered, retention has payers and objects hibernate. Presentation is a projection.
-
-The landed activity kernel is good engineering. Consume-once is a compare-and-swap (CAS) at the decide
-point. Resume reads only the stored checkpoint. Refunds are proved measurement-free.
+The design adopted the lineage's spine almost whole, and the landed activity kernel is good engineering
+(consume-once as a CAS at the decide point, resume only from the stored checkpoint, refunds proved
+measurement-free).
 
 But in the OS dimension the activity kernel still sits *beside* the object model rather than inside it,
 in three ways:
@@ -70,11 +62,10 @@ READ in `Kernel/ObjectiveActivity.lean@36fca3ac`:
 - **Ownership is payership.** `writeState` authorises with `request.subject ≠ record.escrow.payer → notOwner`
   (line 937). Banga et al. (OS §5) separate the resource principal from the protection domain. Here,
   paying for an activity is what confers the right to overwrite the object.
-- **The module's own "What is not here" list (line 42) omits laws and object authority.** It lists GC,
-  upgrade, sends and fees.
+- **The module's "What is not here" list (line 42) omits laws and object authority.**
 
-The ledger records "object ownership" as ACTIVITY-NATIVE's job. This entry exists so that lane's fix is
-the right one, not `owner = payer` hardened.
+ACTIVITY-NATIVE owns "object ownership" (ledger 17:05); this entry is so its fix is the right one, not
+`owner = payer` hardened.
 
 **Replacement text for design A, appended to Mechanism:**
 > Object cells live in a kernel namespace: an object's state cells are derived as
@@ -107,13 +98,10 @@ live over one state of different shapes.
 
 ### W3. "Large objects … cannot upgrade" should not be a rule (design C, Cost and Rules out)
 
-**Why it is wrong.** The design accepts that an object whose migration exceeds one envelope can never
-upgrade, and it rules out every multi-step form. That is precisely the dead end Motoko's serialise-on-
-upgrade design hit ("leaving the program in an evolutionary dead end, unable to upgrade", Bläser et al.
-2024, VMIL §5.3; OS §3.7). The proven escape hatches:
-- seL4 stores the progress of an unbounded destruction in a capability, so any later caller continues it
-  (Klein et al. 2009; OS §3.3).
-- Motoko's "migration path of last resort" is an incremental graph copy across many transactions.
+**Why it is wrong.** It makes a rule of the dead end Motoko's serialise-on-upgrade design hit ("an
+evolutionary dead end, unable to upgrade", Bläser et al. 2024 §5.3; OS §3.7). The proven escapes: seL4
+keeps an unbounded operation's progress in a capability any later caller continues (Klein 2009; OS §3.3);
+Motoko's last-resort migration is an incremental graph copy over many transactions.
 
 **Replacement text for C (Rules out):**
 > … upgrades that discover replay failure after commit; host-level upgrade powers; silent loss of
@@ -153,14 +141,10 @@ This is Broken Metre's class: cost driven by hidden size while the price is flat
 
 ### W5. The refusal lane is wall-clock Host state (code; design G)
 
-**What landed.** `RefusalLane` (READ) debits per-subject *wall time*, with a 50 ms minimum, from
-Host-process memory that "starts full when the Host starts". As a mempool guard on one Host it is fine.
-
-**Why it is not enough.**
-- Wall time is not a function of state and invocation. Wasmtime calls epochs "non-deterministic" for
-  exactly this reason (OS §5).
-- In a committee domain, two replicas will disagree about whether a command was refused.
-- It is also not money. Design G says the AdmissionPrologue *charges* the refusal.
+`RefusalLane` (READ) debits per-subject *wall time* from Host memory that "starts full when the Host
+starts": fine as a mempool guard on one Host, but wall time is not a function of state and invocation
+(Wasmtime's epochs are "non-deterministic" for this reason, OS §5), two committee replicas will disagree,
+and it is not money, whereas design G charges the refusal.
 
 **Replacement text for G:**
 > An authenticated invocation that preparation or admission refuses is charged the tariff price of its
@@ -170,10 +154,9 @@ Host-process memory that "starts full when the Host starts". As a mempool guard 
 
 ### W6. Design G is silent on admission order under saturation
 
-"Meters are accounting, not scheduling" follows the historian (HIST D3) and I accept it for *meter
-trees*. But some policy still orders admission when the Host or committee is saturated, and the design
-names none. Miller and Drexler's point is that a round-robin scheduler is a commons, and per-entity
-fairness invites Sybil splitting (OS §5).
+"Meters account, not schedule" (HIST D3) is right for meter trees, but under saturation something still
+orders admission and the design names nothing. A per-entity order is a commons that Sybil splitting
+exploits (Miller & Drexler; OS §5).
 
 **Replacement text for G (Decision, after "Meters are accounting, not scheduling"):**
 > Under saturation the sequencer orders pending invocations by a published deterministic rule over their
@@ -182,9 +165,8 @@ fairness invites Sybil splitting (OS §5).
 
 ### W7. Root G1's refund rule needs a storage clause
 
-G1 allows returning only measurement-free amounts. A checkpoint-storage deposit is collateral on public,
-persisted bytes, not a measurement of a private run. Unless the excess deposit comes back when collection
-shrinks a checkpoint, GC at yield gives authors no incentive (OS §4; Solana's rent-exempt deposits).
+A storage deposit is collateral on public bytes, not a measurement of a private run; without returning
+the excess when collection shrinks a checkpoint, GC at yield gives authors no incentive (OS §4).
 
 **Replacement text, appended to G1:**
 > Storage deposits are collateral on bytes that are committed and public. A deposit is re-priced at each
@@ -199,11 +181,8 @@ acceptance test ("every `Enabled` affordance admits") therefore fails by constru
 code refuses or yields a non-witnessing Plan. Naked Objects and Causeway separate *usable* (`disableX`)
 from *valid with these arguments* (`validateX(args)`) for the same reason (OS §6.C).
 
-H also omits four things the lineage found load-bearing (OS §6, §3.5, §4.2):
-- provenance against a certified root;
-- per-viewer petnames;
-- a kernel-pinned meta-card renderer, because an image breaks its own browser;
-- the three-layer split: consensus cells, the pure projection, and local-first viewer state.
+H also omits provenance against a certified root, petnames, a kernel-pinned meta-card renderer, and the
+split between cells, projection and local-first viewer state (OS §6, §3.5, §4.2).
 
 **Replacement text for H (Mechanism, replacing the affordances sentence):**
 > `affordances` returns, per method:
@@ -255,12 +234,9 @@ later lane assumes object authority and a law over activity writes.
 
 ## Commits
 
-None.
-- W1 is the right fix, but it needs `ObjectRecord` (design L3), and ACTIVITY-NATIVE is already changing
-  the same module. A second writer would collide. A local patch that refused "kernel-looking" cell ids
-  would be a containment the CLAUDE.md doctrine forbids.
-- Also, the Mac data volume is at 99% used (113 GiB free), below the protocol's 10% line, so I wrote
-  nothing large locally. I used hbox only for a read-only clone.
+None. W1's right fix needs `ObjectRecord` (L3) and ACTIVITY-NATIVE is editing the same module; a patch
+refusing "kernel-looking" cell ids would be a containment the doctrine forbids. The Mac data volume is at
+99% (113 GiB free), under the protocol's 10% line, so I wrote nothing large locally (hbox clone only).
 
 ## Quest I want next
 
