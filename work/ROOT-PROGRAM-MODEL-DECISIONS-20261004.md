@@ -121,3 +121,36 @@ checkpoint/heap design kept; ambitious; re-genesis free. Positions marked OPEN a
 3. REPLAY as an upgrade disposition at all, or DRAIN/ABORT only.
 4. Order of building: answer slots and the resume contract first, then `call`, pipelines, seats, protocol
    objects; cross-domain pipelining last.
+
+## Root resolutions of the design scribe's notes (2026-10-04 night)
+- A1 identity: an object's id is its cell id and nothing derived from its schema. If `ObjectRef.kind` carries
+  a schema digest, split it: `kind` names the semantic kind; the schema digest is a separate, mutable field.
+- B1 capture rule: accepted; it constrains the kernel's activity record, Core4 values satisfy it by construction.
+- B2: add `Conflict` to the await outcome sum (Reply | Refused | Unknown | TimedOut | Broken | Upgraded | Conflict).
+- B3: kernel-produced checkpoints are well-typed by theorem; the before-root check is codec validity plus the
+  digest binding to the producing turn; no foreign checkpoint is ever admitted.
+- B4: GC at yield is a build item (its own lane), and storage is charged on the post-GC size once it exists.
+- C1 DRAIN, refined to a two-phase upgrade: (1) ADOPT turn: new package pinned for new activities; the object's
+  declared state is NOT migrated while any old activity remains; (2) old activities run on their pinned
+  package against the unmigrated state until their awaits end OR a mandatory drain deadline height, after
+  which they are aborted with Upgraded; (3) MIGRATE turn: state migrated and the law re-judged when the last
+  old activity ends. Looping residents are bounded by the deadline.
+- C2 REPLAY: dropped for now (needs a full interaction log Mini does not keep; the historian's record agrees).
+  Dispositions are DRAIN (with deadline) and ABORT. This answers OPEN 3 provisionally; Ember may reopen it.
+- C3: a Core4 or codec epoch change is always a re-genesis (greenfield); frozen objects therefore never need
+  to survive one.
+- D1: the "10 of ~100M" figure counts legitimately non-ECF executions, not re-entrant ones; the cost of
+  refusing all re-entry is unmeasured. Keep the refusal (conservative) and measure it on Mini's own cohorts.
+- D2 write-write: two frames of one turn writing the same slot abort the turn, unless that slot's law
+  declares the write a commutative delta (then deltas compose and the law judges the sum).
+- D3: in a multi-party pipeline each signer's envelope covers that signer's segment; the turn is refused if
+  any segment exceeds its envelope.
+- E1: protocol objects are compiled at publish time into a finite transition table; payload-dependent
+  conditions are law atoms on payload fields at a transition (control states stay finite).
+- G1 refunds: the never-refund rule covers MEASURED quantities (unused envelope, ticks); exhaustion parks the
+  activity and its resume needs a new envelope. Deterministic, measurement-free amounts MAY be returned:
+  postage of sends that were never delivered (broken slots) and the unused one of an escrowed resume/timeout
+  fee pair. No refund ever depends on how much computation ran.
+- fn: SN-1..SN-6 accepted (see §I).
+OPEN for Ember after these: 1 (sync cross-principal `call`), 2 (laws generate-now vs unify), 3 (replay:
+provisionally dropped), 4 (build order).

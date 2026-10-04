@@ -105,14 +105,12 @@ structure ObjectRecord where
   activities  : List ActivityId                 -- each an ObjectiveActivity record (§B)
 ```
 
-The declared state lives in ordinary cells of the store; the record holds its type, not its bytes.
-The front end (`native/bend-source/objective-parser.ts`, `objective-elaborate.ts`) gains a `state`
-declaration on `spec … for T`, and admission refuses a package that defines an object kind without
-one. `UpgradePolicy` may move only from `governed` to a stricter `governed` or to `frozen`, and its
-floors may only be added; the record's own law enforces that with a `writeOnce`-style clause on the
-frozen flag and an entailment check on the floor list (§C). Durable state is first-order: the
-`Ty.shareable` check already refuses `Ty.computation`, and the declaration additionally refuses arrows
-and `Ty.custody`, so no closure, thunk or activity can enter durable state.
+The declared state lives in ordinary store cells; the record holds its type, not its bytes. The front
+end (`native/bend-source/objective-parser.ts`, `objective-elaborate.ts`) gains a `state` declaration on
+`spec … for T`, and admission refuses an object kind without one. `UpgradePolicy` may move only to a
+stricter `governed` or to `frozen`, and floors may only be added; the record's own law enforces both
+(a `writeOnce`-style clause on the frozen flag, entailment on the floor list, §C). The declaration
+refuses arrows, `Ty.custody` and `Ty.computation`, so no closure, thunk or activity enters durable state.
 
 **Why.** Every persistent capability system kept whole-machine persistence for crash consistency and
 found it unworkable as the thing that migrates. Landau (1992, §8.2) wrote that KeyKOS upgrades "must be
@@ -125,11 +123,11 @@ ensure that all honest validators produce the same deterministic computation" (H
 code into session identity, so every code change made a new world (OS Part I §1). Salehi et al. (2022)
 found 48% of upgradeable Ethereum systems one signing key from a rewrite (CALLS H6).
 
-**Cost.** One record type, one front-end declaration form, and one admission check. Authors must
+**Cost.** It needs one record type, one front-end declaration form and one admission check. Authors must
 state what persists; Agoric's lesson that "if v1 fails to retain something, v2 cannot get access to it"
 (HIST 1C) makes that a day-one obligation rather than a later migration.
 
-**Rules out.** Objects whose identity changes with their code; durable state that contains closures;
+**Rules out.** It rules out objects whose identity changes with their code; durable state that contains closures;
 upgrade authority held by an unnamed key; and the "heap / virtual / durable" zone taxonomy Agoric had
 to retrofit (FRONTIER §1.6).
 
@@ -220,12 +218,12 @@ receive: E's broken promises are contagious, IC exposes `SYS_UNKNOWN`, IBC carri
 Marlowe proves that contracts with timeouts close (CALLS A1, E4, G4; LAWS C12). Pinning rests on
 content-addressed code (CALLS H7, Part II.4); the capture rule comes from Pony's iso/val/tag (CALLS B6).
 
-**Cost.** One record type, one answer-slot module over `ReactiveTerminalCell`, one resume receiver, and
-the escrow postings. Each yield writes a checkpoint proportional to the live heap, which grows about 120
+**Cost.** It needs one record type, one answer-slot module over `ReactiveTerminalCell`, one resume
+receiver and the escrow postings. Each yield writes a checkpoint proportional to the live heap, which grows about 120
 tokens per turn in `EventCounter.serve` until collection exists (task `01a1056f-00a4`). Because every
 await has a deadline, a resident that serves forever pays one timeout turn per deadline period.
 
-**Rules out.** Long-lived state held only in continuations; a second resume of one yield; client-supplied
+**Rules out.** It rules out long-lived state held only in continuations; a second resume of one yield; client-supplied
 checkpoints; awaits that can wait forever; and Bread's five unconnected async mechanisms (BREAD §0).
 
 > **Scribe note B1 (capture rule versus Core4).** Core4's runtime values (`RuntimeValue`) include no
@@ -305,13 +303,13 @@ counter, and "Nothing fails. There is no error." (CALLS E18). Floor entailment i
 `Pred/Satisfiable` returns a witness or a certificate and `decide_never_unknown` excludes `unknown`;
 Bread's `Polis.NonRegressive` and svenvs `Admissible` were `Prop`s nothing could run (META §7.1–7.2).
 
-**Cost.** A subtype judgement on rows, a linear-migration check, an entailment call per floor, an
-interface-compatibility check, and a replay executor for REPLAY. `Pred.Sat` returns `none` for laws
+**Cost.** It needs a subtype judgement on rows, a linear-migration check, an entailment call per floor,
+an interface-compatibility check and a replay executor for REPLAY. `Pred.Sat` returns `none` for laws
 containing `witnessed`, `hashEq` or `ran`, and for DNFs past `dnfCap = 1024`; such floors make every
 upgrade of that object refuse, so floors must stay inside the difference fragment (LAWS Part II §7).
 Large objects whose migration exceeds one turn's envelope cannot upgrade.
 
-**Rules out.** Bread's bare `SetProgram` swap (BREAD §1.5); lazy migration on first touch; upgrades that
+**Rules out.** It rules out Bread's bare `SetProgram` swap (BREAD §1.5); lazy migration on first touch; upgrades that
 discover replay failure after commit; host-level upgrade powers; and silent loss of in-flight work.
 
 > **Scribe note C1 (DRAIN versus migrated state, and no drain bound).** A drained activity keeps its old
@@ -409,12 +407,12 @@ Cap'n Web make the caller-composed pipeline a production pattern, and Anoma comp
 without 2PC (FRONTIER 2.E E1, E6; 2.G). Waterken persisted before any externally visible I/O, and Durable
 Objects hold outgoing messages until the write completes (CALLS A16; FRONTIER 2.E E2).
 
-**Cost.** A call stack with a re-entry guard and per-frame authority contexts; a grant table per turn;
-inbox cells and answer slots, each paid (§G); a pipeline form; and segment signatures for multi-party
+**Cost.** It needs a call stack with a re-entry guard and per-frame authority contexts, a grant table per
+turn, paid inbox cells and answer slots (§G), a pipeline form, and segment signatures for multi-party
 composition. A `PlanFragment` with more than one action needs recursive Plan data, which Core4 lacks
 today (Plans and responses "must be non-recursive data", EVENTS; task `01a1056f-00a4`).
 
-**Rules out.** Callbacks into an object already on the stack; callees spending a caller's authority
+**Rules out.** It rules out callbacks into an object already on the stack; callees spending a caller's authority
 beyond what the caller signed; a third call order; and early delivery inside one domain.
 
 > **Scribe note D1 (the re-entry statistic).** The decision cites "10 of ~100M Ethereum executions were
@@ -458,7 +456,9 @@ monotone` (the only two-state atoms), `eqSlots | leSlots | leSlotsOff`, `witness
 --   "request/method", "request/invoker", "request/cap/<i>", "request/height"
 -- (the convention already exists: Pred/Leaf's boardLaw reads "request/verb";
 --  Pred/Core reads "request/target")
-def necessity (A B C : Pred) : Pred := .any [.not A, .not B', C]  -- `from A to B onlyIf C`; B' is B on new
+def necessity (A B C : Pred) : Pred := .any [.not A, .not B, C]   -- `from A to B onlyIf C`
+-- A and C read old slots and request slots, B reads new slots; this needs old-slot forms of
+-- eq/le/memberOf, which Pred.Sat's `.old` nodes already represent
 ```
 
 `leOld` needs no new decision machinery: `Pred/Satisfiable`'s `Node` already has `.old s` and `.new s`,
@@ -522,11 +522,11 @@ whole life (`zcfSeat.js:267-270`; ROOT), but inside the contract's own vat, with
 deny-by-default, forbid-overrides-permit language has sound-and-complete subsumption at 30–80 ms per
 check (LAWS D1).
 
-**Cost.** About four atom families, an action-scoped `LawView`, a history-slot compiler and its monitor
+**Cost.** It needs about four atom families, an action-scoped `LawView`, a history-slot compiler and its monitor
 theorem, method guards in the package format, a seat module, a protocol-object module, an entailment
 module, and a redaction policy. None needs a proof system in admission.
 
-**Rules out.** Laws as closures (today `spec` laws are "callable closures stored in metadata; nothing
+**Rules out.** It rules out laws as closures (today `spec` laws are "callable closures stored in metadata; nothing
 discharges them", `docs/OBJECTIVE-BEND.md`); input validation inside method bodies; caller protections
 enforced by contract code; Bread's catalogue of 69 hand-named atoms (BREAD §2.2); and solver calls on the
 admission path.
@@ -595,11 +595,11 @@ sufficient for coordination-free execution, and 10 of 12 TPC-C invariants are I-
 Herlihy, Liskov and Shrira sketch a proof that a semi-synchronous deal needs one ledger every party
 consults, and escrow into it is a prepare that cannot fail (CALLS G1, A1).
 
-**Cost.** A multiversion map, a scheduler, a refinement theorem, delta actions, a coordination ladder,
-lease templates, deal cells and saga compensations. Bread had none of this running: it executed turns
+**Cost.** It needs a multiversion map, a scheduler, a refinement theorem, delta actions, a coordination
+ladder, lease templates, deal cells and saga compensations. Bread had none of this running: it executed turns
 serially under one lock (BREAD §1.4).
 
-**Rules out.** Declared write locks as the scheduling unit; batch-dependent semantics (Aria, CALLS F4);
+**Rules out.** It rules out declared write locks as the scheduling unit; batch-dependent semantics (Aria, CALLS F4);
 locks held across yields by default; and implicit two-phase commit across domains.
 
 ### G. Metering and storage
@@ -644,10 +644,10 @@ invent suspension (#8955). An unpaid safety feature, ERTP recovery sets, held ab
 key-value entries (#8400), and a 310 MB cross-vat cycle was uncollectable (#8401) (FRONTIER §1.5).
 Ethereum's rent stalled, Solana replaced rent with deposits, and ICP deletes frozen canisters (OS §4, §5).
 
-**Cost.** A cost semantics and two theorems; kernel-work pricing per input size; payer fields on every
-retention cell; hibernation and restoration; a tracing collector over the capability graph.
+**Cost.** It needs a cost semantics and its theorems, kernel-work pricing per input size, payer fields on
+every retention cell, hibernation and restoration, and a tracing collector over the capability graph.
 
-**Rules out.** Terminating objects for lack of funds; meters as a scheduling instrument; unpriced kernel
+**Rules out.** It rules out terminating objects for lack of funds; meters as a scheduling instrument; unpriced kernel
 work; and storage nobody pays for.
 
 > **Scribe note G1 (refunds).** The 10-04 charge law reads "refuse on excess; never refund" (SWARM-LEDGER
@@ -684,10 +684,10 @@ for a card as an authorized view plus behaviour (OS §6.C). Agoric's governance 
 debugger the E community shipped, and Tribble's keeper model routed faults to an object's keeper (HIST
 1G).
 
-**Cost.** One projection module, a satisfiability call per affordance per render, and causal fields on
-receipts.
+**Cost.** It needs one projection module, a satisfiability call per affordance per render, and causal
+fields on receipts.
 
-**Rules out.** Cards that can show an affordance admission would refuse; projection code that writes; and
+**Rules out.** It rules out cards that show an affordance admission would refuse; projection code that writes; and
 upgrade or termination powers invisible to the viewer.
 
 ### I. fn
@@ -711,7 +711,8 @@ distinct and idempotent resend, which is what an archive and a transport need (F
 hbox's ZFS rule out one record per turn before the D41 page representation lands (FN §3.2). Its durability
 theorem for the current format is not certified at current source (FN §0).
 
-**Cost.** One article profile, an outcome mapping, and pins. **Rules out.** fn as the only copy of
+**Cost.** It needs one article profile, an outcome mapping and pins. **Rules out.** It rules out fn as the
+only copy of
 anything Mini needs before `fn-store-1`, and Mini decisions that depend on fn's local numbering or arrival
 order.
 
@@ -736,8 +737,8 @@ applies. (d) `resume_rechecks_today`: the resume is judged under the current law
 current root, the activity receives `Conflict`, never the bare outcome. (f) `slot_single_decider` and
 `resolution_grants_nothing`: an answer slot is resolved by at most one turn, by the holder of its decider
 role, and resolving it adds no capability to any c-list beyond the resolved value's own references.
-*Premises.* A checked program (`Checked source []`), an admitted yield, and the kernel's install relation.
-*Inhabitant.* `EventCounter.serve` run natively for three resumes. *Teeth.* Removing the nullifier spend
+*Premises.* The program is checked (`Checked source []`), the yield was admitted, and installation is the
+kernel's own relation. *Inhabitant.* `EventCounter.serve` runs natively for three resumes. *Teeth.* Removing the nullifier spend
 makes a second delivery install; replacing the digest check with "trust the submitted bytes" lets a forged
 checkpoint install; dropping read revalidation lets a stale resume deliver `Reply`. Bread's
 `commit_resumes_once` shows what to avoid: its handler premise `resumeWith : (Reply : Type u) → Reply` is
@@ -748,8 +749,8 @@ in every admitted turn, no object occurs twice on any call stack the real `callS
 `frame_conflict_refused`: no admitted turn contains a frame whose read set intersects a later-applied
 fragment's write set. (c) SeRIF's semantic form (FRONTIER 2.F F1): for every per-object invariant `I`
 expressed as a law, if every callback-free execution preserves `I` then every admitted execution does.
-*Premises.* The real call-stack executor; no premise about programs. *Inhabitant.* An A→B→C call chain
-that admits. *Teeth.* An A→B→A chain is refused; a DAO-shaped example (a withdraw whose callee calls back
+*Premises.* The statements are about the real call-stack executor and assume nothing about programs.
+*Inhabitant.* An A→B→C call chain admits. *Teeth.* An A→B→A chain is refused; a DAO-shaped example (a withdraw whose callee calls back
 and withdraws again with a stale balance read, every write individually law-valid) commits when the guard
 is removed and is refused with it. Statement (c) alone would be close to a tautology given (a); its
 content is (a) and (b) over the executor admission actually runs, and the DAO tooth shows the guard is
@@ -762,8 +763,8 @@ admissible given its envelope, and it posts exactly the seat's allocation to the
 `seat_conserves`: every admitted posting touching a seat conserves per-asset totals (from
 `Operation.apply_conserves`). Payout liveness is (b) plus a justness assumption on inclusion of submitted
 turns (van Glabbeek; LAWS H2), stated as a hypothesis on the schedule, never on the seat. *Premises.*
-Initial allocation = `give` (the `offer` action establishes it); seat slots total. *Inhabitant.* A
-two-party swap seat that settles, and one that exits. *Teeth.* A reallocation that leaves less than
+The initial allocation equals `give` (the `offer` action establishes it), and seat slots are total.
+*Inhabitant.* A two-party swap seat settles, and another exits. *Teeth.* A reallocation that leaves less than
 `want` and less than `give` is refused; a contract clause that forbids `exit` does not stop it; making a
 seat slot absent instead of 0 flips the verdict of `not le` and must be caught by a totality check.
 
@@ -771,7 +772,7 @@ seat slot absent instead of 0 flips the verdict of `not le` and must be caught b
 *Statement.* `parallel_eq_fold`: for every pre-state and batch, the parallel run's receipts, refusals and
 root equal `batch.foldl admitOne s`. *Premises.* `admitOne` is deterministic (re-execution is), and the
 multiversion map returns, for every read, the latest earlier write in log order. *Inhabitant.* Two
-batches: one with disjoint footprints and one where invocation 2 reads a cell invocation 1 writes.
+batches are built: one with disjoint footprints and one where invocation 2 reads a cell invocation 1 writes.
 *Teeth.* Skipping validation produces a different root on the conflicting batch; treating a delta as a
 read changes nothing in results but must show in the published DAG.
 
@@ -779,7 +780,8 @@ read changes nothing in results but must show in the published DAG.
 with task `01a1056f-00a4`). *Statement.* `collect_bisim`: for a yielded state `s`, `collect s` is
 yielded, `state_roundTrip` holds for it, and for every closed response `r` of type `R`, running `resume r s`
 and `resume r (collect s)` produce outcomes equal up to heap-address renaming, with the same Plans.
-*Premises.* A typed yield (`typed_yield_quiescent`). *Inhabitant.* `EventCounter.serve` after ten turns.
+*Premises.* The yield is typed (`typed_yield_quiescent`). *Inhabitant.* `EventCounter.serve` is collected
+after ten turns.
 *Teeth.* A collector that frees a cell still reachable from the stack changes the next Plan.
 
 **T6. Cost semantics** (`Theory/ObjectiveBendCost.lean`). *Statements.* (a) `cost_function`: cost is a
@@ -787,7 +789,7 @@ function of (pre-state, invocation). (b) `meter_dominates`: machine transitions 
 tokens, collection work, law constraints evaluated, Merkle nodes rewritten, cells forced) are at most the
 cost. (c) `envelope_sound`: an admitted turn's cost is at most its signed envelope, and its charge equals
 the envelope. *Premises.* The tariff is a public function of the cost terms. *Inhabitant.* The
-`EventCounter` turn and a seat reallocation. *Teeth.* A turn with few ticks and a large checkpoint or a
+`EventCounter` turn and a seat reallocation are priced. *Teeth.* A turn with few ticks and a large checkpoint or a
 large law: dropping the codec or law term from `cost` breaks (b) on it.
 
 **T7. Upgrade gate soundness** (`Kernel/ObjectUpgrade.lean`). *Statements.* (a)
@@ -796,9 +798,9 @@ satisfies every frozen floor (from the `SysCert` and `certificate_unsat`). (b) `
 the migrated state conforms to the new declared type and satisfies the new law. (c)
 `upgrade_dispositions_total`: the committed upgrade assigns exactly one disposition to every live activity.
 (d) `replay_admitted_only_if_equal`: a REPLAY disposition commits only if every replayed Plan equals the
-logged Plan. (e) `upgrade_refusal_inert`: a refused upgrade changes no cell. *Premises.* Floors inside the
-difference fragment; a typed migration term. *Inhabitant.* An upgrade that adds a field with a default
-and one that renames a field. *Teeth.* An upgrade that weakens a floor is refused with a certificate; an
+logged Plan. (e) `upgrade_refusal_inert`: a refused upgrade changes no cell. *Premises.* Floors lie inside the
+difference fragment, and the migration term is typed. *Inhabitant.* One upgrade adds a field with a
+default, and another renames a field. *Teeth.* An upgrade that weakens a floor is refused with a certificate; an
 upgrade that omits an activity's disposition is refused; Bread's `migrate_conforms` false premise (field
 add does not conform to the new schema, META §7.1) must reappear as a refusal, not a theorem.
 
@@ -806,8 +808,8 @@ add does not conform to the new schema, META §7.1) must reappear as a refusal, 
 `protocol_step_sound`: an admitted turn on a protocol object moves its state from `q` to `q'` only if `q'`
 is the residual of a `GStep` of the global type denoted by `q`, by the role bound to the signer, on the
 invoked label. (b) `protocol_progress`: for a guarded global type whose residual is not `done`, the law is
-satisfiable: `Pred.Sat` returns a witness for some role's step. *Premises.* A guarded global type compiled
-by the module's own compiler. *Inhabitant.* A three-party escrow protocol run to `done`. *Teeth.* An
+satisfiable: `Pred.Sat` returns a witness for some role's step. *Premises.* The global type is guarded and
+compiled by the module's own compiler. *Inhabitant.* A three-party escrow protocol runs to `done`. *Teeth.* An
 out-of-order step is refused; Bread's two refutations (`deadlock_initial_counterexample`,
 `privacy_var_counterexample`) are kept as regression theorems so the false statements cannot return.
 
