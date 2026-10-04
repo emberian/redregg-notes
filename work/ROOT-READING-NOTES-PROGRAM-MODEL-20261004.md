@@ -74,3 +74,25 @@ Rule from Ember (10-04): read the referents, not only the syntheses.
   refund of `give`, never worse, enforced by Zoe holding the escrow and paying out, whatever the contract
   does; payout liveness on exit. MINI READING: the caller's own terms as part of the signed invocation,
   enforced by the kernel around the callee's code — the caller-side contract Mini lacks.
+
+## OS lineage, read at source
+- morningstar-smart-people-rationalize-2006 (Chip Morningstar, Electric Communities, verbatim): built
+  KeyKOS-inspired orthogonal persistence, "and it worked"; but "for most kinds of objects, the amount of
+  state you actually need to save persistently is a small fraction of the full run-time state ... in an
+  orthogonal scheme you save it all, indiscriminately. The problem is not so much that it's bulky ... but
+  that the volume of semantic meaning that you are now committed to maintain in near-perpetuity is
+  vastly increased ... The problem of schema migration as new versions of objects were developed ...
+  proved effectively intractable. Ultimately we fell back on a scheme that compelled programmers to be
+  much more deliberate about what state was checkpointed, and when." MINI READING: this is the strongest
+  evidence in the whole corpus and it bears directly on Mini's whole-machine checkpoints. Ember is fine
+  with the checkpoint/heap design; the lesson is about its ROLE: a Core4 machine checkpoint is exact and
+  cheap to take, but it must not become the long-lived form of an object's state. Durable object state =
+  declared, first-order, typed data (what the law judges and migration transforms); a checkpoint = an
+  in-flight activity, pinned to the package that made it, drained/replayed/mapped/aborted at upgrade.
+- dfinity message-execution properties: code after `await` on an inter-canister call is a SEPARATE
+  message execution; in Motoko `await` always commits the current state (await* need not); requests
+  between a pair are delivered in send order; reentrancy bugs arise because state committed at the await
+  can change before the callback. MINI READING: Mini's yield = ICP's await-commit, so the same bug class
+  (check-then-act across a yield) applies; remedies: re-validate declared reads at resume (footprint
+  check), escrow anything that must not change across the gap (Bread's no-reservation rule), and make
+  the response type carry Refused/Unknown/TimedOut/Upgraded so failure is handled at receive.
