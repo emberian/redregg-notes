@@ -1,0 +1,616 @@
+CODEX LANE MINING — every codex-wave lane directory, opened and classified (2026-10-04)
+Read-only lane under the Claude root. Tags: READ = artifact/source read or hashed by me; RECORD = a codex note says so; INFERRED = my judgement.
+
+METHOD (READ)
+- Inventory: hbox /home/hbox/workbox {codex-*, *-20261003} (79), /tank/dregg-build {codex-*20261003*, *-20261003, codex-unified-service-family-*} (65),
+  Mac /Users/ember/workbox {*-20261003, *-20261002} (74), persvati /home/ember/workbox/persvati-*-20261003 (38) = 256 entries.
+  Out of wave and not classified: 9 August Pickles/Mina items on /tank (codex-bn254-harness 07-15, codex-descent-spine 08-04,
+  codex-mina-* / codex-pasta-* / codex-wrap-referee-* 08-11, codex-mina-regen-544068c30.bundle 416M, 11 codex-*-20260811.log).
+- Per dir: du -sh (20 s cap; per-dir du OVERCOUNTS cp -al hard links), top listing, newest files, STATUS/RESUME/REPORT/HANDOFF/
+  SOURCE-INBOX/RECEIPT heads, newest 3 logs' tails, PASS/FAIL counts, packets, binaries, git heads.
+- "Not on main": every .lean/.rs/.ts/.py/.md/.json/.sh/... file (<2 MB) hashed as a git blob and compared against EVERY blob ever
+  reachable from GitHub main (fetched 9c2de2f1, re-checked names at 0c148911 = main after the 09:50 shipfix landing).
+  A file whose blob is anywhere in main history is "on main"; tags: N = name not on main, M = same path on main but different bytes.
+- Lane patches: sampled 8-12 added lines per patch and git-grepped them in main (e.g. sparse-board 8/8, opening-cache 8/8 => landed).
+- Intake: claude-*-20261004/INTAKE*.txt, SWARM-LEDGER-20261004.txt, every claude lane clone searched by file name.
+- Survey raw output: scratchpad out-{hb,mac,pv}-*.txt of session c1e4d723 (not copied here).
+
+VERDICT KEY: MINE-NOW (artifact with evidence, not on main, not intaken; named consumer) · SPEC-ONLY (record worth reading; file named) ·
+SUPERSEDED (content landed on main or replaced by a Claude landing; says by what) · DUPLICATE (copy/link output/intermediate of another dir) ·
+DEAD (Gen-1/BendTT/build cache/job log/abandoned) · WORKING-STATE (keep: live/integration/evidence state).
+Evidence class: authored < compiled < native-linked < executed < integrated(on main).
+
+(A) TABLE — loc | dir | size | purpose | best evidence (class; newest log) | intaken by Claude? | VERDICT | what to take / why
+loc: hbox=/home/hbox/workbox, tank=/tank/dregg-build, mac=/Users/ember/workbox, pv=persvati:/home/ember/workbox
+COUNTS: 256 entries = MINE-NOW 13 · SPEC-ONLY 15 · WORKING-STATE 5 · SUPERSEDED 114 · DUPLICATE 50 · DEAD 59
+
+hbox | agreement-carrier-fixture-20261003 | 56K | agreement-carrier packet fixture inputs (host.config, request.native) | authored inputs | N | SUPERSEDED | inputs of the r3 carrier run; r3 receiving.log holds the result
+hbox | agreement-carrier-full64-evidence-20261003 | 217M | cover-traffic carrier run r1 (64 epochs) | executed; newest log REFUTED (timeout) | N | SUPERSEDED | by full64-r3 PASS
+hbox | agreement-carrier-full64-r2-evidence-20261003 | 234M | cover-traffic carrier run r2 | executed; newest log REFUTED (actor failed) | N | SUPERSEDED | by full64-r3 PASS
+hbox | agreement-carrier-full64-r3-evidence-20261003 | 459M | cover-traffic carrier run r3: 768 authenticated fixed TCP records, matched public shapes all-cover vs delayed | executed; receiving.log PASS 12:25 | N (traffic lane used v12, not this) | SPEC-ONLY | evidence for the traffic LEAKAGE card: receiving.log, delivery-states.json, scanner-restart.json
+hbox | agreement-carrier-packet-evidence-20261003 | 4.5M | carrier packet exporter + result | executed (result.json) | N | SUPERSEDED | subsumed by full64-r3
+hbox | agreement-carrier-packet-tests-20261003 | 7102K file | a 7 MB test binary (file, not dir) | build output | N | DEAD | test binary
+hbox | captain-money-qualified-20261003 | 1.1M | frozen money oleans for qualification | compiled oleans only | N | SUPERSEDED | money receiver patches r6/r7 found on main 8/8
+hbox | codex-agreement-20261003 | 1.7G | agreement engine lane: GenericSimplex IO/Native/Participant, operator/session bridge, session broker evidence | executed; session preflight PASS, broker 15:18 'completion uncertain' | Y (W1.7 bde7fab2, INTAKE.txt) | WORKING-STATE | evidence (session-broker-r1, four-source-operator-r1 attempts) until the agreement successor lands and 00f711 is cut over; ReplayCache + SourceReaderLegacyDiagnostic deliberately not taken
+hbox | codex-authored-workshop-20261003 | 519M | Gen-1 BendTT authored workshop / card return | compiled; card-return-check-04 PASS | N | DEAD | Gen-1 (deleted by the cut)
+hbox | codex-bend-logic-20261003 | 39M | Objective source package tooling + ObjectiveNatural* (numeric functions -> plan/circuit, residual specialization, refusers) | compiled; natural-residual-02 PASS 15:19, refusers PASS | P (ObjectiveSourcePackage by cut; produce.py tooling used by native-b) | MINE-NOW | objective-natural-qualified-01/{Compiler/ObjectiveNatural{Artifact,Declaration,Plan,Function,Circuit}.lean, Host/ObjectiveNaturalEmit.lean, Verify/ObjectiveNaturalArtifactImportAudit.lean}, source-packet-20261003-74/Compiler/ObjectiveNaturalResidual.lean, check-objective-natural-refusers-01.log
+hbox | codex-bend-scalar-20261003 | 121M | BendScalarPlan(Bytes)Adapter physical reads (BendTT era) | compiled; physical-reads-03 PASS | N | SUPERSEDED | BendScalarPlanBytesAdapter on main
+hbox | codex-bend-trace-20261003 | 12G | BendTT trace/IR2 prototypes, keccak/mask publications r12-r35, objective-source-audit ZK claims | compiled; lean-wire-check PASS 06:26 | P (ZkClaims/ProofSource/CommittedSource via zktruth+cut wall snapshot) | DEAD | 12 GB of BendTT trace fixtures; nothing left to take (Assurance files already intaken)
+hbox | codex-bend-world-20261003 | 130M | Bend world language, native admission r1-r4, host Json family packets | compiled; objective-json-03 complete | P (objective-source-qualified-r3/native-qualified-r4 via cut) | SUPERSEDED | by codex-objective-source-artifact (cut intake) and the cut's Gen-1 deletion
+hbox | codex-captain-registry-20261003 | 40K | one olean + check.sh | compiled | N | DEAD | scratch
+hbox | codex-captain-surface-v2-20261003 | 24M | BendSurfaceJson malformed-input check | compiled; check-01 PASS | N | SUPERSEDED | BendSurfaceJson on main (Gen-1 surface)
+hbox | codex-client-consent-20261003 | 64M | client consent: receipt-confirmed consent (NativeReceiptConsent), confirmed-receipts.patch, receipt-rust job.rs/client_consent.rs, objective-core wrapper | compiled + native-linked; native-receipt-01 'NATIVE RECEIPT CONSENT PASS' 15:12; status QUALIFIED_SOURCE_AND_NATIVE_LINK_RECEIVING_PENDING | N (shipfix ships main's ClientConsentSession) | MINE-NOW | confirmed-receipts.patch, receipt-rust-r1/{job.rs,client_consent.rs}, objective-core-r1/ClientConsentCore.lean (authored 15:15), QUALIFIED-RECEIPT-PROVIDER-r1.json; source of record = /tank/.../codex-client-consent-receipt-native-20261003/src
+hbox | codex-collective-domain-20261003 | 13M | Gen-1 collective/DrEX settlement books (.bend) | executed BendTT book checks PASS | N | DEAD | Gen-1
+hbox | codex-current-source-continuity-native-20261003 | 204M | native current-source continuity verifier (rooted room release) r1 | compiled + native-linked binary | N | DUPLICATE | of -r2
+hbox | codex-current-source-continuity-native-r2-20261003 | 192M | native current-source continuity verifier r2 (RoomRelease{HeadIO,Receiver,ProofIO,Deliveries}, RoomSourceVerifier, CurrentSourceContinuity*) | compiled + native-linked; continuity-guardian-r5 PASS | N | SUPERSEDED | rooms lane chose founder-pinned lineage; its STATUS lists rooted-release Lean as ResearchWip 'retire or repurpose'
+hbox | codex-docuverse-deos-20261003 | 156M | docuverse deos journey + chromium + recovery check | executed; recovery-check ok 03:31 | N | SUPERSEDED | landed in the first-night/integration commits
+hbox | codex-docuverse-objective-bend-20261003 | 111M | surface source-only packet (workspace.rs) | executed rust checks 5/5 | N | SUPERSEDED | packet landed
+hbox | codex-docuverse-objective-surface-20261003 | 5.5M | ObjectiveBendSurface{Adapter,Json,Read} (Studio surface over Objective values) | compiled; leaf-01 'OBJECTIVE-SURFACE COMPILED PASS' (Read authored after) | N | MINE-NOW | src/Compiler/ObjectiveBendSurfaceAdapter.lean, src/Host/ObjectiveBendSurfaceJson.lean, src/Host/ObjectiveBendSurfaceRead.lean (low rank; frontend/native-b decide)
+hbox | codex-docuverse-second-20261003 | 459M | second docuverse receive (UI diff, receive scripts) | executed rust build | N | SUPERSEDED | landed
+hbox | codex-docuverse-studio-20261003 | 1.6G | Studio publication/definition: ObjectiveStudioPublication, studio_definition.rs, studio-publication.py, publication runner/replay receipts | executed (runner-01 replay receipt; studio-r9 'STUDIO CALLABLE RELEASE PASS'); publication-leaf-02 FAIL (Mathlib missing from path) | P (ObjectiveStudioPublication by cut) | MINE-NOW | src/native/resource-client/src/workspace/studio_definition.rs, src/native/bend-source/studio-publication.py, receiving-publication-runner-r1/receipt.json, receiving-generic-source-r1/
+hbox | codex-docuverse-surface-lowering-20261003 | 23M | BendSurfaceLowering packets r1-r10 | compiled; check-r2 FAIL | N | DEAD | Gen-1 surface lowering
+hbox | codex-docuverse-surface-v2-20261003 | 108K | surface v2 source packets | authored | N | SUPERSEDED | by native-b v2-only Studio
+hbox | codex-dzk-20261003 | 488K | private-backend sh2t id + authenticated ingress | executed via persvati-dzk 9/9 | N | SUPERSEDED | sh2t_id.rs and authenticated_ingress.rs on main
+hbox | codex-homomorphic-bend-20261003 | 2.3G | FHE Objective: weighted r34 (real BFV, owner decode), ReturnRelease r35, source binding/artifact/return consent r36 | executed; check-objective-weighted-01 PASS (decrypted 11 from [2,7]); return-03 PASS; r36 authored only | P (r8 return-closure modules by cut) | MINE-NOW | r34 packet homomorphic-objective-weighted-qualified-source-inbox-20261003-34.tar.gz (native/fhe-bend/src/{natural,owner}.rs, OBJECTIVE-NATIVE-RECEIVING.md, check-objective-*.sh); r35 Kernel/ObjectiveFheReturnRelease.lean + Host/ObjectiveFheReturnReleaseAuthoring.lean; r36 Compiler/ObjectiveFhe{SourceBinding,Artifact}.lean + Host/ObjectiveFheReturnConsent.lean (authored); src/Host/ObjectiveFheArtifactCheck.lean
+hbox | codex-horse-consistency-20261003 | 1.6M | horse .spw audit fixes (job/readback/refund/replan) + objective quote | executed; refund runtime logs | Y (patches on main 8/8; quote via cut) | SUPERSEDED | D-fixes landed; objective-quote intaken by cut (authored only)
+hbox | codex-joint-receiver-20261003 | 982M | receiver source deltas r10-r19 + room-release-r1 (rooted release admission/authority/intent/continuity) | compiled; continuity-native-r2 PASS, guardian-r4 FAIL | N | SUPERSEDED | receiver deltas landed in integration; room-release superseded by rooms lane (founder-pinned lineage)
+hbox | codex-joint-reserve-birth-20261003 | 95M | reserve birth host boundary | authored packet | Y (patch on main 3/3) | SUPERSEDED | landed
+hbox | codex-member-oo-20261003 | 303M | member objects: roomkey r1-r18, objective member partial author, workspace variants | compiled; roomkey tests PASS; objective-stateful-02 FAIL (sorryAx) | P (rooms lane took parse_room_head checks; r18 REFUSED) | SUPERSEDED | by rooms lane 4564a8fa/8c67fc66/d38116cd
+hbox | codex-mini-docs-20261003 | 312K | docs rewrite packets r1-r10 (README, OBJECTIVE-BEND guide) | authored | N | SUPERSEDED | by L0.2 docs lane (README 188 lines, OBJECTIVE-BEND.md 389 lines on main)
+hbox | codex-multiuser-capacity-20261003 | 100M | multiuser capacity: web/proxy admission, contention receive, receiver equality | executed native capacity receive; equality-leaf r2 repair2 exit 0 | N | SUPERSEDED | cached Store ordering landed (3f81c7db); DurableReceiverEquality superseded by main's encode-based DecidableEq
+hbox | codex-native-async-20261003 | 95M | async PQ mailbox + scheduled transport | executed 10/10 | Y (patches on main) | SUPERSEDED | landed
+hbox | codex-native-money-20261003 | 96M | native money receiver/host r4-r7 | compiled | Y (patches on main 8/8) | SUPERSEDED | landed
+hbox | codex-native-perf-20261003 | 95M | native performance (query counts) | executed PASS 05:01 | Y (patch on main 8/8) | SUPERSEDED | landed
+hbox | codex-objective-linker-20261003 | 24M | Gen-1 objective linker + workshop | compiled; refinement-02 FAIL (sorryAx) | N | DEAD | Gen-1
+hbox | codex-objective-main-weld-20261003 | 26M | NativeHostContext/NativeInvocation weld + ProtectedContentGate | compiled; check-r4 PASS | Y (cut/native-b) | SUPERSEDED | intaken
+hbox | codex-objective-types-20261003 | 4.1M | Core4 typing/preservation r14/r24/r55 + frozen-law-r8 | compiled; r55 PASS | Y (r55 on main history) | DUPLICATE | laws: take the newer /tank/.../codex-objective-laws-20261003 instead of frozen-law-r8
+hbox | codex-persvati-lean-mirror-20261003 | 16K | closure packaging scripts | authored | N | DEAD | tooling scratch
+hbox | codex-persvati-money-mirror-20261003 | 2.0G | warm olean closure tarballs for persvati | build cache | N | DEAD | 2 GB regenerable closures
+hbox | codex-portable-continuation-20261003 | 326M | portable continuation archive/consumers r1-r17; bend-custody repaired.bin | executed; repaired-continuation-r1 PASS | Y (PortableHome* on main) | SUPERSEDED | keep evidence/bend-custody-r1/repaired.bin only if Activity is rebuilt
+hbox | codex-private-backend-20261003 | 281M | private backend r11-r42 deltas, ACS audit models, PrivatePartyReserveAuthor | executed (persvati king r42 nextest PASS) | Y (W2.G ed1162c9) | SUPERSEDED | intaken; residual primary-acs-audit/*.py is SPEC; PrivatePartyReserveAuthor belongs with scenario-private-native
+hbox | codex-private-fixture-native-20261003 | 34M | private party source-fixture link r1 | compiled C | N | DUPLICATE | link output of codex-scenario-private-native
+hbox | codex-private-fixture-native-r4-20261003 | 34M | private party source-fixture link r4 | compiled C | N | DUPLICATE | link output of codex-scenario-private-native
+hbox | codex-private-fixture-native-r5-20261003 | 32M | private party source-fixture link r5 | compiled C | N | DUPLICATE | link output of codex-scenario-private-native
+hbox | codex-private-fixture-native-r6-20261003 | 186M | private party source-fixture link r6 (binary) | native-linked | N | DUPLICATE | link output of codex-scenario-private-native
+hbox | codex-private-fixture-native-r7-20261003 | 187M | private party source-fixture link r7 (binary) | native-linked | N | DUPLICATE | link output of codex-scenario-private-native
+hbox | codex-private-v4-author-r1-20261003 | 2.5M | v4 setup-author C only | compiled C | N | DUPLICATE | superseded by author-r5
+hbox | codex-private-v4-author-r2-20261003 | 201M | v4 setup-author binary r2 | native-linked | N | DUPLICATE | superseded by author-r5
+hbox | codex-private-v4-author-r5-20261003 | 205M | v4 setup-author binary r5 (latest) | native-linked; v4-author-link-r5 PASS | N | DUPLICATE | derived from codex-scenario-private-native (keep binary as evidence with it)
+hbox | codex-private-v4-fixture-r2-20261003 | 198M | v4 fixture binary r2 | native-linked | N | DUPLICATE | superseded by fixture-r6
+hbox | codex-private-v4-fixture-r4-20261003 | 202M | v4 fixture binary r4 (INVALID.txt) | native-linked; marked INVALID | N | DUPLICATE | superseded by fixture-r6
+hbox | codex-private-v4-fixture-r5-20261003 | 202M | v4 fixture binary r5 | native-linked; retry-r5 timeout | N | DUPLICATE | superseded by fixture-r6
+hbox | codex-private-v4-fixture-r6-20261003 | 201M | v4 fixture binary r6 (latest) | native-linked; v4-fixture-link-r6 PASS; validate-original-r6 refused (transactionConflict) | N | DUPLICATE | derived from codex-scenario-private-native
+hbox | codex-private-v4-verifier-r1-20261003 | 196M | v4 verifier binary r1 | native-linked | N | DUPLICATE | superseded by verifier-r2
+hbox | codex-private-v4-verifier-r2-20261003 | 198M | v4 verifier binary r2 (latest) | native-linked | N | DUPLICATE | derived from codex-scenario-private-native
+hbox | codex-r2-service-20261003 | 932K | r2 live world service identity, broker/controller plans, apps-sheet scenario | executed scenario 07:14 | N | WORKING-STATE | R2-LIVE-SERVICE-IDENTITY.json / WORLD-IDENTITY.json describe the live r2 world; keep
+hbox | codex-resident-context-20261003 | 1.6G | resident context sources a-f + native four-source evidence | executed; four-source socket 15:19 'agreement process failed; original call retained' | Y (ResidentContext on main) | SUPERSEDED | landed; post-push docs/RESIDENT-CONTEXT.md edit is the only delta
+hbox | codex-root-consent-20261003 | 308K | NativeClientConsent scoped check | compiled; check-03 PASS | Y (on main) | SUPERSEDED | landed
+hbox | codex-runtime-current-recipient-native-20261003 | 155M | current-recipient verifier binary (rooted release) | native-linked; link-03 PASS | N | SUPERSEDED | rooms lane design
+hbox | codex-runtime-fixture-native-20261003 | 151M | four-source fixture binary | native-linked | N | SUPERSEDED | agreement lane rebuilt fixtures
+hbox | codex-runtime-lieutenant-20261003 | 539M | runtime lieutenant: four-source replica journals, reader/fixture link scripts, NativeJointSourceDiagnostics | executed; replica agreement.bin 15:18 | P (R2-3 used the journals) | WORKING-STATE | evidence/four-source-r1/replica-*/ journals (00f711 diagnosis); also src/Verify/NativeJointSourceDiagnostics.lean (not on main) for the agreement successor
+hbox | codex-runtime-money-qualified-20261003 | 1.8M | money input persvati qualification | executed persvati PASS | N | SUPERSEDED | landed
+hbox | codex-runtime-private205-native-20261003 | 191M | private verifier binary for op205 (earliest) | native-linked | N | DUPLICATE | superseded by private-v4-verifier-r2
+hbox | codex-scenario-private-native-20261003 | 576M | private committee v4: per-job Party from funded PENDING, sealed codec, setup/reserve/ordinary/bootstrap authors, verifier, source fixture | compiled (QUALIFIED-LEAVES 14 modules Lean+C) + native-linked; newest: v4-validate-original-r6 refused (transactionConflict), check-bootstrap-r7 FAIL (file missing) | N (MPC took private-backend Rust only) | MINE-NOW | src/{Compiler/JointBackendPartySealedCodec, Host/PrivateParty{SetupAuthor,SetupAuthorMain,ReserveAuthor,ReserveBirth,OrdinaryAuthor,VerifierMain,BootstrapAuthor}, Host/JointBackendParty{Inner,Source,WorkerIO}, Verify/PrivatePartySourceFixture(+Main)}.lean + the M versions of Kernel/JointBackendParty{Admission,Receiver,Recovery}, Compiler/JointBackendPartyCodec, Host/JointBackendPartyWire; QUALIFIED-LEAVES.json; packet private-native-source-v4-r5.tar; design /Users/ember/dev/redregg/work/PRIVATE-ENROLLMENT-V4-DECISION-20261003.txt
+hbox | codex-simplex-causal-20261003 | 6.9M | GenericSimplexCausal placement/output history | compiled; causal-check-05 PASS | Y (main newer per W1.7 INTAKE) | SUPERSEDED | main kept newer Causal
+hbox | codex-simplex-proof-20261003 | 27M | GenericSimplex proofs, source-intake r9-r30 | compiled; structure PASS, GlobalReceive PASS | Y (Kernel/*Simplex* identical to main per W1.7) | SUPERSEDED | landed
+hbox | codex-station-world-20261003 | 97M | Gen-1 station world (.bend) | BendTT emission PASS | N | DEAD | Gen-1
+hbox | codex-takeover-kernel-20261003 | 4.8G | takeover: opening cache | compiled; check-direct PASS 03:01 | Y (opening-cache.patch on main 8/8) | SUPERSEDED | 4.8 GB repo copy around one landed patch
+hbox | codex-unified-integration-20261003 | 15G | captain integration tree (src at c8fdd000 + 24 dirty WIP files), coordination/SOURCE-INBOX.jsonl, finite-public-validation copies, rust-target | integrated (pushed c8fdd000; did not build fresh) | Y (dirty WIP via cut step 1a 'wall snapshot') | WORKING-STATE | keep until the cut lands; coordination/SOURCE-INBOX.jsonl is the index of every packet the wave produced
+hbox | discord-world-20261003 | 286M | Discord world integration (entrance + native runs) | executed native runs; tests r2 | N | SUPERSEDED | by W2.H SDK: discord-entrance rebuilt on mini-sdk, custody.rs deleted (c0957bb8)
+hbox | fable-credit-fixes-20261003 | 58M | credit/hex fixes v1-v3 from the Fable review | authored + tests | Y (changes-v3.patch on main 8/8) | SUPERSEDED | landed
+hbox | scenario-consent-lifecycle-20261003 | 329M | lifecycle consent (15 families) + HistoricalRecoveryConsent probe for the stuck op206 recovery | native-linked; probe r2 TIMEOUT at 30 min after 4/11 checks | Y (Host/NativeLifecycleConsent on main) | SPEC-ONLY | recovery-status-r1/status.json + receipt.json (what the 206 recovery plan check covered); HistoricalRecoveryConsent.lean only if 206 recovery consent is revisited
+hbox | scenario-objective-world-20261003 | 73M | Objective world journeys: Studio->candidate, notebook generic/native content proposal, live checks | executed; native-prepare-07 'ACTUAL CHECKED Notebook.remember ... PASS' 15:05 | P (native-consumers-r8 sources via cut) | MINE-NOW | CheckLive{Generic,Combined,Prepared}Objective.lean, CheckLoadedNativeObjective.lean, NotebookAppendMessage.obend, notebook-generic-source-r2.tar.gz, source-journey-01/report.json as acceptance probes for the native-b successor
+hbox | scenario-service-recovery-20261003 | 28M | service recovery: session boundary, job atomic, discovery test | executed session-fs tests | Y (patches on main) | SUPERSEDED | landed
+hbox | share-issuer-authority-source-20261003 | 372K | SPK platform member share-issuer authority v1-v3 (fee) | authored ('narrow checks pending') | N | MINE-NOW | member-share-issuer-authority-v3-fee.tar (scripts/spk-platform/share-issuer-authority.py + tests, ws-continuity-fixture.py) for the SPK successor; low rank
+hbox | spk-recovery-sealed-prefix-20261003 | 18G | native host phase builds native-r3..r9 (159 MB minidregg-host), capsule-r1, native-performance successor (receiver equality) | native-linked; image-equality r7 PASS | N | DEAD | 18 GB of build output; native-r9 ELF is the bridge the live SPK g2 recovery used (keep that one binary + its stage-plan.sha256 as evidence)
+mac | app-document-20261002 | 36M | app document export receipt / grain route / source display (night 1) | authored + patch | Y (source-display.patch on main 8/8) | SUPERSEDED | landed
+mac | authored-workshop-additive-20261003 | 216K | Gen-1 workshop source + card return | BendTT check PASS | N | DEAD | Gen-1; Mac mirror of hbox codex-authored-workshop
+mac | bend-persistence-review-20261003 | 128K | grok/opus review prompts + simplex source packet | authored | N | SUPERSEDED | simplex landed
+mac | bend-world-additive-20261003 | 3.7M | Mac working copy: objective source artifact chain, laws, r12 Adequacy, host Json family | authored (compiles happened on hbox) | P (cut took the hbox copies) | DUPLICATE | of codex-objective-source-artifact / codex-objective-laws / codex-objective-demand-bool (identical sizes)
+mac | bend-world-source-packet-20261003 | 352K | objective source packet 05:59 (STATUS.md) | authored | N | SUPERSEDED | by the source-artifact chain
+mac | bend-zkvm-20261003 | 49M | Mac mirror of bend-trace publications + objective-source-audit | authored | P (zktruth) | DUPLICATE | of codex-bend-trace / persvati-bend-feedback
+mac | bigstep-deos-20261002 | 12K | deos design (12 KB) | authored design | N | SPEC-ONLY | design.md
+mac | candidate-packaging-20261002 | 20K | build.sh | authored | Y (blob on main) | SUPERSEDED | on main
+mac | cgroup-worker-proof-20261002 | 20K | cgroup_stop.rs | authored | Y (blob on main) | SUPERSEDED | on main
+mac | continuity-client-20261002 | 332K | provider continuity client (night 1) | authored | Y | SUPERSEDED | landed night 1
+mac | continuity-client-current-20261002 | 264K | provider continuity current | authored | Y | SUPERSEDED | landed night 1
+mac | continuity-client-guarded-20261002 | 244K | provider continuity guarded | authored | Y | SUPERSEDED | landed night 1
+mac | discord-world-20261003 | 264K | Discord world status + edit scripts | authored | N | DUPLICATE | of hbox discord-world (superseded by SDK)
+mac | fable-credit-fixes-20261003 | 920K | credit fixes src | authored | Y | DUPLICATE | of hbox fable-credit-fixes (landed)
+mac | fareoo-primary-scholar-20261003 | 5.6M | pommette/fareoo scholar: SYNTHESIS, COUNCIL-CRITIQUE, provenance | authored record | P (frontend C4 used pommette vectors) | SPEC-ONLY | SYNTHESIS.txt, COUNCIL-CRITIQUE.txt, pommette-provenance.json
+mac | fhe-manifest-placement-20261003 | 27M | persvati dep tarballs for the FHE manifest job | build input | N | DEAD | regenerable closures
+mac | homelab-converged-20261002 | 908K | provider/hermes outcome (night 1) | authored | Y | SUPERSEDED | landed night 1
+mac | homelab-inference-20261002 | 1.0M | inference scheduler (night 1) | authored | Y | SUPERSEDED | main's scheduler is newer (shipfix 0c148911)
+mac | homelab-native-20261002 | 1.1M | provider retirement / pending prepare (night 1) | authored | Y | SUPERSEDED | landed night 1
+mac | homelab-ops-20261002 | 196K | inference placement ops + INTERFACES.md | authored | Y | SUPERSEDED | landed night 1
+mac | homelab-query-retry-20261002 | 52K | query race / observation | authored | Y | SUPERSEDED | landed night 1
+mac | horse-entries-20261003 | 1.8M | horse map source r1-r2, sparse-board patch, board harness | executed board-harness-test | Y (sparse-board.patch on main 8/8) | SUPERSEDED | D1 landed
+mac | joined-member-20261002 | 80K | joined member journey | authored | Y (blob on main) | SUPERSEDED | on main
+mac | joint-reserve-birth-20261003 | 1.3M | reserve birth policy/controller drafts | authored | Y | SUPERSEDED | patch landed; ResourceReserveBirthPolicy.lean draft never needed
+mac | mini-handoff-20261002 | 10M | 74 first-night lane message transcripts + index | record | N | SPEC-ONLY | lane-evidence.json, make_index.py output (record of night 1)
+mac | mini-horse-consistency-20261003 | 5.5M | horse consistency patches + objective quote + NATIVE-JOB-RECOVERY | executed | Y (patches 8/8; quote via cut) | SUPERSEDED | NATIVE-JOB-RECOVERY-20261003.txt is the only record worth reading
+mac | mini-multiuser-capacity-20261003 | 376K | capacity handoff + receiver equality drafts | authored | N | DUPLICATE | of hbox codex-multiuser-capacity
+mac | mini-objective-bend-docs-20261003 | 167M | docs packets r1-r10 + a repo copy | authored | N | SUPERSEDED | by L0.2 docs lane
+mac | mini-private-capacity-review-20261002 | 544M | the codex wave's RECORD LIBRARY: per-lane *-CONSTRUCTION/RESUME records, architecture/astra/literature/scout notes, intent extractions, room-release + studio source packets, integration bundles | records | N | SPEC-ONLY | read first: GRADED-ACTIVITY-RESUME, HOMOMORPHIC-BEND-CONSTRUCTION, JOINT-RECEIVER-CONSTRUCTION, CONSTRUCTION-PRIVATE-BACKEND, RESIDENT-CONTEXT-CONSTRUCTION, PORTABLE-CONTINUATION-CONSTRUCTION, TAKEOVER-SERVICE, astra-*.txt, literature-*.txt; keep whole
+mac | mini-private-objects-20261002 | 2.6G | private objects night 1: AWS-LC component cost reports, audience adversarial review, acceptance journeys, src copy | executed (cost REPORTs 'NOT qualified') | Y (ObjectAudience on main) | SUPERSEDED | SPEC: component-costs-singlecatalog-20261002/REPORT.md, audience-adversarial-review.md
+mac | mini-product-lieutenant-20261003 | 48K | product lieutenant census/consolidation | record | N | SPEC-ONLY | CONSOLIDATION-1215.txt
+mac | mini-runtime-lieutenant-20261003 | 3.3M | runtime lieutenant records + spk-recovery packet + deadline206 + private205 link scripts | records + executed (money PASS) | P | SPEC-ONLY | CONTINUATION-20261003-1605.txt (states the live SPK g2 recovery and agreement facts); spk-recovery/ duplicates the MINE item
+mac | mini-session-recovery-20261003 | 75M | extraction of Ember-only prompts from the codex session | record | N | SPEC-ONLY | EMBER-ONLY.txt
+mac | mini-spend-audit-20261002 | 1.1M | night-1 spend audit | record | N | SPEC-ONLY | priced-estimate.json, credit-observations.json
+mac | mini-spk-recovery-endpoint-20261003 | 1.4M | SPK v4 retry/claim/completion Lean + native build scripts | authored; 5 Kernel leaves + BeginV4Authoring compiled on hbox | Y (W2.F 75671e8d, 14 files) | SUPERSEDED | intaken by W2.F
+mac | mini-unified-push-20261003 | 135M | Claude root's push clone | integrated | n/a | WORKING-STATE | Claude's
+mac | objective-bend-fable-council-20261003 | 2.1M | Fable council on Objective Bend (2 turns) | record | N | SPEC-ONLY | response-1.txt, response-2.txt
+mac | objective-bend-linker-20261003 | 184K | Gen-1 linker tars | authored | N | DEAD | Gen-1
+mac | objective-demand-proof-r10-core4-20261003 | 360K | Adequacy r10 | compiled on hbox | N | DUPLICATE | intermediate of r11
+mac | objective-demand-proof-r11-core4-20261003 | 372K | Adequacy r11 (5,301 lines) | compiled, sorry-free | Y (W1.4 c1e5d4a8) | SUPERSEDED | landed on main
+mac | objective-demand-proof-r4-core4-20261003 | 168K | Adequacy r4 | compiled | N | DUPLICATE | intermediate of r11
+mac | objective-demand-proof-r5-core4-20261003 | 208K | Adequacy r5 | compiled | N | DUPLICATE | intermediate of r11
+mac | objective-demand-proof-r6-core4-20261003 | 216K | Adequacy r6 | compiled | N | DUPLICATE | intermediate of r11
+mac | objective-demand-proof-r7-core4-20261003 | 228K | Adequacy r7 (on main history) | compiled | Y | DUPLICATE | intermediate of r11
+mac | objective-demand-proof-r8-core4-20261003 | 260K | Adequacy r8 | compiled | N | DUPLICATE | intermediate of r11
+mac | objective-demand-proof-r9-core4-20261003 | 304K | Adequacy r9 | compiled | N | DUPLICATE | intermediate of r11
+mac | objective-type-guide-r55-20261003 | 48K | OBJECTIVE-BEND guide r55 patch | authored | Y | SUPERSEDED | docs lane rewrote the guide
+mac | objective-types-core4-r55-20261003 | 264K | typing/preservation r55 | compiled PASS | Y (on main history) | SUPERSEDED | landed
+mac | persvati-cleanup-20261002 | 1.5M | persvati archive/cleanup scripts + CLAUDE-VERIFY-STATE | executed (archive verified 4,895,399 entries) | N | SPEC-ONLY | CLAUDE-VERIFY-STATE.md (where hbox:/home/hbox/archive/persvati-build-20261002 came from)
+mac | persvati-dzk-20261003 | 364K | persvati dzk job inputs | executed | N | DUPLICATE | of persvati:persvati-dzk
+mac | persvati-ir2-20261003 | 693M | persvati IR2 job inputs + Bread checkout copy | executed | N | DUPLICATE | of persvati:persvati-ir2
+mac | persvati-lean-20261003 | 9.5M | persvati seat tooling + infra source packet | executed | N | DUPLICATE | of persvati:persvati-lean (PERSVATI-INFRA-HANDOFF in redregg/work is the record)
+mac | persvati-portable-20261003 | 28K | portable job inputs | executed | N | DUPLICATE | of persvati:persvati-portable
+mac | persvati-resident-20261003 | 4.0K | one run script | authored | N | DUPLICATE | of persvati:persvati-resident
+mac | provider-history-admission-20261002 | 488K | NativeProviderHistory(Admission) (night 1) | authored | Y (on main history) | SUPERSEDED | landed
+mac | provider-resolution-runtime-20261002 | 176K | provider resolution runtime journey (night 1) | authored | Y | SUPERSEDED | landed
+mac | roomkey-security-20261003 | 2.3M | ROOMKEY-TRUST-REPAIR record + roomkey r16 secret patch | authored | P | SUPERSEDED | rooms lane; ROOMKEY-TRUST-REPAIR-20261003.txt is a readable record
+mac | root-broker-merge-20261003 | 260K | broker volume custody packet | authored | Y (blob on main) | SUPERSEDED | landed
+mac | root-client-consent-20261003 | 20K | NativeClientConsent + obligations updater | compiled | Y | SUPERSEDED | landed
+mac | root-continuity-sealed-20261003 | 140K | receipt continuity sealed patch | authored | Y (8/8) | SUPERSEDED | landed
+mac | root-hex-consumers-20261003 | 2.3M | hex consumer repair (before 0/3, after 3/3) | executed | Y (8/8) | SUPERSEDED | landed
+mac | root-objective-qualification-20261003 | 4.0K | BendArithmeticQualification edit | authored | Y (wall snapshot via cut) | SUPERSEDED | intaken
+mac | root-terminal-render-20261003 | 2.2M | terminal escape repair (base FAIL, repaired PASS) | executed | Y (8/8) | SUPERSEDED | landed
+mac | scenario-consent-lifecycle-20261003 | 648K | consent lifecycle STATUS + historical consent scripts | authored | Y | DUPLICATE | of hbox scenario-consent-lifecycle (STATUS.txt here is the readable record)
+mac | scenario-objective-world-20261003 | 364K | objective world checks (Mac copy) | authored | P | DUPLICATE | of hbox scenario-objective-world
+mac | scenario-private-agreement-20261003 | 92K | private agreement carrier design + packet adapter | authored | N | SPEC-ONLY | AGREEMENT-CARRIER.md, INTERFACE-MAP.txt (agreement_carrier_packet.rs only if carrier traffic is resumed)
+mac | scenario-private-native-20261003 | 1.2M | v4 edit sources (BootstrapAuthor, SetupAuthorMain) + packet scripts | authored | N | DUPLICATE | of hbox codex-scenario-private-native (newest BootstrapAuthor 15:21 is here)
+mac | scenario-service-recovery-20261003 | 1.1M | service recovery receiving receipt + patches | authored | Y | DUPLICATE | of hbox scenario-service-recovery
+mac | share-issuer-authority-20261003 | 92K | SPK share issuer authority py + tests | authored | N | DUPLICATE | of hbox share-issuer-authority-source (MINE item)
+mac | shared-names-20261002 | 764K | shared names (night 1) | authored | Y | SUPERSEDED | landed night 1
+mac | source-publication-recovery-20261003 | 2.8M | recovered unpublished historical sources (preo projection, fn consumer, licensing, docuverse convergence note) | record | N | SPEC-ONLY | REPORT.txt + classification.json; LICENSING.md and docuverse-convergence-2026-10-02.md if not elsewhere
+mac | studio-callable-20261003 | 180K | Studio callable/publication packets r17-r27 (Mac) | authored | N | DUPLICATE | of hbox codex-docuverse-studio (MINE item)
+mac | studio-preview-v2-20261003 | 160K | Studio preview v2 Rust (studio_web.rs, studio_workspace.rs) + surface Lean | authored | N | SUPERSEDED | native-b landed v2-only Studio preview (2ea8cea7)
+mac | world-kinds-20261002 | 448K | world kind Lean (night 1) | authored | Y | SUPERSEDED | main versions newer
+pv | persvati-bend-feedback-20261003 | 808M | objective-only commitment + lazy source receiving proof jobs (BendTT bodies r1-r5) | executed; job PASS 13:04 | P (ZK claims via zktruth/cut) | DEAD | 808 MB of BendTT job bodies; nothing left to take
+pv | persvati-causal-20261003 | 65M | simplex causal/history/emission jobs | executed PASS | Y | SUPERSEDED | landed
+pv | persvati-collective5-20261003 | 54M | Gen-1 collective book check | executed PASS | N | DEAD | Gen-1
+pv | persvati-collective9-20261003 | 1.6M | Gen-1 collective nine-book check | executed; job FAIL 124 (timeout) | N | DEAD | Gen-1
+pv | persvati-controller-central3-20261003 | 55M | BendClosure controller proof job | executed PASS | N | DEAD | BendTT controller
+pv | persvati-controller2-20261003 | 99M | BendClosure value steps job | executed PASS | N | DEAD | BendTT controller
+pv | persvati-dzk-20261003 | 23M | dzk / sh2t id tests | executed 9/9 | Y | SUPERSEDED | landed
+pv | persvati-fhe-manifest-20261003 | 149M | FHE owner manifest runtime check | executed PASS | Y | SUPERSEDED | manifest on main
+pv | persvati-ir2-20261003 | 2.1G | IR2 proof experiments over a Bread checkout (masking budget, controller + private salt shared proof) | executed; job PASS 11:28 | N | SUPERSEDED | bend-ir2-proof sources match main; 2.1 GB is a Bread copy + targets
+pv | persvati-lean-20261003 | 5.2G | persvati Lean seat: warm closures, portable/agreement packets r4-r30 | build cache + compiled | N | DEAD | 5.2 GB closures; packets duplicated on hbox
+pv | persvati-lean-money2-20261003 | 12K | job log only | executed PASS | N | DEAD | job log
+pv | persvati-lean-portable4-20261003 | 20K | job log only | executed FAIL | N | DEAD | job log
+pv | persvati-money-receiver-20261003 | 56M | money input job | executed PASS | Y | SUPERSEDED | landed
+pv | persvati-portable-20261003 | 76M | portable tests + release helper | executed PASS | Y | SUPERSEDED | landed
+pv | persvati-portable-ack-r18-20261003 | 8.0K | single portable proof job log | executed; job PASS | N | DEAD | job log of a landed module (PortableHome* on main)
+pv | persvati-portable-activation-r20-20261003 | 12K | single portable proof job log | executed; job FAIL | N | DEAD | job log of a landed module (PortableHome* on main)
+pv | persvati-portable-activation-r21-20261003 | 8.0K | single portable proof job log | executed; job PASS | N | DEAD | job log of a landed module (PortableHome* on main)
+pv | persvati-portable-attempt-r22-20261003 | 8.0K | single portable proof job log | executed; job PASS | N | DEAD | job log of a landed module (PortableHome* on main)
+pv | persvati-portable-authority-r19-20261003 | 8.0K | single portable proof job log | executed; job PASS | N | DEAD | job log of a landed module (PortableHome* on main)
+pv | persvati-portable-consumers-r10-20261003 | 8.0K | single portable proof job log | executed; job FAIL | N | DEAD | job log of a landed module (PortableHome* on main)
+pv | persvati-portable-consumers-r11-20261003 | 8.0K | single portable proof job log | executed; job FAIL | N | DEAD | job log of a landed module (PortableHome* on main)
+pv | persvati-portable-consumers-r12-20261003 | 8.0K | single portable proof job log | executed; job FAIL | N | DEAD | job log of a landed module (PortableHome* on main)
+pv | persvati-portable-consumers-r13-20261003 | 8.0K | single portable proof job log | executed; job FAIL | N | DEAD | job log of a landed module (PortableHome* on main)
+pv | persvati-portable-consumers-r14-20261003 | 8.0K | single portable proof job log | executed; job FAIL | N | DEAD | job log of a landed module (PortableHome* on main)
+pv | persvati-portable-consumers-r8-20261003 | 8.0K | single portable proof job log | executed; job FAIL | N | DEAD | job log of a landed module (PortableHome* on main)
+pv | persvati-portable-consumers-r9-20261003 | 8.0K | single portable proof job log | executed; job FAIL | N | DEAD | job log of a landed module (PortableHome* on main)
+pv | persvati-portable-envelope-r23-20261003 | 8.0K | single portable proof job log | executed; job FAIL | N | DEAD | job log of a landed module (PortableHome* on main)
+pv | persvati-portable-envelope-r24-20261003 | 8.0K | single portable proof job log | executed; job PASS | N | DEAD | job log of a landed module (PortableHome* on main)
+pv | persvati-portable-receiver-r17-20261003 | 8.0K | single portable proof job log | executed; job FAIL | N | DEAD | job log of a landed module (PortableHome* on main)
+pv | persvati-portable-recovery-r15-20261003 | 8.0K | single portable proof job log | executed; job FAIL | N | DEAD | job log of a landed module (PortableHome* on main)
+pv | persvati-portable-recovery-r16-20261003 | 8.0K | single portable proof job log | executed; job PASS | N | DEAD | job log of a landed module (PortableHome* on main)
+pv | persvati-portable4-r7-20261003 | 8.0K | single portable proof job log | executed; job FAIL | N | DEAD | job log of a landed module (PortableHome* on main)
+pv | persvati-portable4-r7b-20261003 | 8.0K | single portable proof job log | executed; job FAIL | N | DEAD | job log of a landed module (PortableHome* on main)
+pv | persvati-portable4-r8-20261003 | 8.0K | single portable proof job log | executed; job FAIL | N | DEAD | job log of a landed module (PortableHome* on main)
+pv | persvati-portable4-r9-20261003 | 8.0K | single portable proof job log | executed; job PASS | N | DEAD | job log of a landed module (PortableHome* on main)
+pv | persvati-private-backend-king-20261003 | 133M | private backend King/ACSS MPC jobs r13-r42 | executed; nextest-r42 PASS (identity ACSS MPC diagnostic recovery) | Y (W2.G) | SUPERSEDED | intaken; nextest-r42.log is the evidence
+pv | persvati-receive-20261003 | 470M | simplex receive/observation/receiver safety jobs | executed PASS | Y | SUPERSEDED | landed
+pv | persvati-resident-20261003 | 389M | resident fg client/context tests + mini-f build | executed PASS | Y | SUPERSEDED | landed
+tank | codex-bend-arithmetic-20261003 | 2.3M | oleans: oblivious nat add/ripple | compiled oleans | N | DEAD | olean cache
+tank | codex-bend-binding-20261003 | 3.9M | oleans: Bend artifact binding | compiled oleans | N | DEAD | olean cache
+tank | codex-bend-binding-declaration-20261003 | 3.6M | one olean | compiled | N | DEAD | olean cache
+tank | codex-bend-efficiency-20261003 | 16M | BendTT checker env-sub fork + indexed Activity compiler | compiled; def262 TIMEOUT (exit 124) | N | DEAD | BendTT (Gen-1 checker)
+tank | codex-bend-native-core-next-20261003 | 3.2M | BendNativeRun/BendReceiving scoped checks | compiled PASS | N | SUPERSEDED | pre-Objective Bend native path
+tank | codex-bend-natural-20261003 | 2.4M | oleans: Bend natural artifact | compiled | N | DEAD | olean cache
+tank | codex-bend-scalar-20261003 | 6.8M | oleans: scalar plan adapters | compiled | N | DEAD | olean cache
+tank | codex-client-consent-core-native-20261003 | 157M | consent core native link | native-linked | N | DUPLICATE | superseded by consent-receipt-native
+tank | codex-client-consent-fixture-native-20261003 | 64M | specialized consent fixture binary | native-linked | N | DUPLICATE | superseded by consent-receipt-native
+tank | codex-client-consent-full-native-20261003 | 159M | full lifecycle consent binary | native-linked | N | DUPLICATE | superseded by consent-receipt-native
+tank | codex-client-consent-native-20261003 | 156M | first consent binary | native-linked | N | DUPLICATE | superseded
+tank | codex-client-consent-receipt-native-20261003 | 159M | receipt-confirmed consent native build (source of record for NativeReceiptConsent) | native-linked; NATIVE-CONSENT-RECEIPT.json 15:12 | N | MINE-NOW | src/Kernel/NativeReceiptConsent.lean, src/Host/ClientConsentCore.lean (M), NATIVE-CONSENT-RECEIPT.json; pairs with codex-client-consent
+tank | codex-client-consent-rust-20261003 | 1.1G | Rust tree copy for consent (studio v1 files M) | build | N | SUPERSEDED | native-b v2-only Studio
+tank | codex-hyp-ledger-diagnostic-20261003 | 22K | hypothesis-ledger failure diagnosis | executed; 3 failures | N | SUPERSEDED | gates lane L0.4 fixed the toothless families
+tank | codex-member-oo-next-20261003 | 7.3M | objective member pins/reference binds | compiled; pin PASS | N | SUPERSEDED | member objects superseded
+tank | codex-multiuser-capacity-20261003 | 36M | cached store order r8-r10, historical image equality r7, native receiving | compiled; cached-store-order-r10 PASS | Y (cached ordering on main) | SUPERSEDED | landed / superseded
+tank | codex-native-family-20261003 | 6.6M | ResourceTransaction codec + ObjectiveInvocationClaim v1 | compiled; claim-18-02 PASS | Y (ResourceTransaction 46e3bd55 by cut) | SUPERSEDED | intaken; claim v1 rejected for v3
+tank | codex-objective-arithmetic-20261003 | 4.1M | oleans: ObjectiveNatural* | compiled | N | DUPLICATE | oleans of codex-bend-logic natural sources
+tank | codex-objective-bool-v2-20261003 | 1.7M | oleans | compiled | N | DEAD | olean cache
+tank | codex-objective-definition-checker10-20261003 | 747M | 747 MB full olean closure | compiled | N | DEAD | olean closure
+tank | codex-objective-demand-bool-20261003 | 43M | post-r11 Adequacy (+606 lines: traversal-work measure, whole-derivation progress, administrative frontier) | compiled; check-adequacy-78 exit 0 15:16, 0 sorry | N | SUPERSEDED | completeness closed by W1.4 (Theory/ObjectiveBendDemandCompleteness.lean); read the traversal-work measure only if a cost bound is wanted
+tank | codex-objective-demand-proof-20261003 | 3.7M | Adequacy r1-r3 | compiled | N | SUPERSEDED | by r11 (landed)
+tank | codex-objective-demand-typing-20261003 | 7.1M | demand typing/preservation v1 | compiled PASS | Y | SUPERSEDED | landed
+tank | codex-objective-demand-typing-v2-20261003 | 14M | demand typing v2 r1-r55 | compiled; r55 PASS | Y | SUPERSEDED | landed
+tank | codex-objective-laws-20261003 | 16M | Objective law interfaces + constructive checked law certificates + law consumer (preserved/changed candidate) | compiled; check-law-r15 PASS 15:21, law-consumer-01 PASS; 0 sorry | N | MINE-NOW | source/Theory/ObjectiveBendLaw{Interfaces,Checking}.lean, source/examples/CheckSelectedLaw.lean, consume.sh, {preserved,changed}Candidate.receipt.json; built on pre-sums r11 core, needs a port onto the sums core
+tank | codex-objective-linker-next-20261003 | 3.5M | Gen-1 linker joined check | executed PASS | N | DEAD | Gen-1
+tank | codex-objective-native-qualified-r4-20261003 | 7.1M | native admission r4 sources | compiled; native-objective-01 FAIL (sorryAx) | N | SUPERSEDED | by codex-objective-source-artifact (cut intake)
+tank | codex-objective-natural-qualified01-20261003 | 2.3M | oleans | compiled | N | DUPLICATE | oleans of bend-logic natural
+tank | codex-objective-numeric-emitter-20261003 | 1.6M | oleans | compiled | N | DUPLICATE | oleans of bend-logic natural
+tank | codex-objective-package-20261003 | 1.6M | oleans | compiled | N | DEAD | olean cache
+tank | codex-objective-preview-20261003 | 4.8M | oleans | compiled | N | DEAD | olean cache
+tank | codex-objective-preview-v2-20261003 | 4.9M | oleans | compiled | N | DEAD | olean cache
+tank | codex-objective-reference-20261003 | 1.7M | oleans | compiled | N | DEAD | olean cache
+tank | codex-objective-residual-20261003 | 16M | oleans (laws + natural residual) | compiled | N | DUPLICATE | oleans of laws/bend-logic
+tank | codex-objective-source-artifact-20261003 | 9.8M | Objective admission chain: source artifact, native admission/input, published package, authenticated inputs, controller | compiled; modern-export-11 PASS 15:07 (AuthenticatedInputs authored 15:18) | Y (cut INTAKE, six modules) | SUPERSEDED | intaken by the cut
+tank | codex-objective-source-package-frozen02-20261003 | 1.6M | oleans | compiled | N | DEAD | olean cache
+tank | codex-objective-types-20261003 | 3.3M | typing r1-r20 + generic/receiving probes | compiled PASS | Y | SUPERSEDED | landed
+tank | codex-objective-types-v2-20261003 | 4.1M | typing v2 | compiled PASS | Y | SUPERSEDED | landed
+tank | codex-private-lifecycle-20261003 | 1.7G | graded/activity + Objective demand oblivious backend (literal/record/recursive/application/extend/binary networks, physical, codecs, continuation wire) + ObjectiveActivity*; claim v3 | compiled (scoped PASS for ~30 modules); claim-v3 PASS 15:13; Numeric/BinaryNetwork authored 15:21 | P (claim v3 by cut; 11 ZK-tranche modules by cut/zktruth) | MINE-NOW | src/Compiler/ObjectiveDemand{Record,Recursive,Application,Extend,Binary}Network, ObjectiveDemand{Record,Recursive,Application}Physical, ObjectiveDemand{Expansion,CompleteRecords,ContinuationCodec,ContinuationWire,CodeWire,PackedBits,Admission,Artifact,Numeric}, Assurance/ObjectiveDemand{Record,Recursive,Application,Extend,Numeric}Checks, Kernel/ObjectiveActivity{Control,Input}, Compiler/ObjectiveActivity{Computation,GuardedComputation}, Host/Objective{Activity,Extraction}RecoveryProbe, Compiler/ObjectiveExtractionCheckpoint, docs/OBJECTIVE-PHYSICAL-CONTROLLER.md
+tank | codex-roomkey-security-20261003 | 977M | roomkey r4/r10 Rust checks | executed 21/21 | N | SUPERSEDED | rooms lane
+tank | codex-runtime-fixture-completion-native-20261003 | 821K | fixture completion qualify | compiled | N | SUPERSEDED | agreement intake
+tank | codex-runtime-fixture-native-20261003 | 838K | fixture qualify r1-r6 | compiled; r4/r5 FAIL | N | SUPERSEDED | agreement intake
+tank | codex-runtime-protected-frontier-20261003 | 42M | root-owned protected head ledger (anti same-UID rollback) for the link store: frontier.rs, minidregg-head-frontier daemon, CONTRACT.txt | executed; 'PROTECTED-FRONTIER ACTUAL TENANT-ROLLBACK REFUTER PASS', RESULT.json PASS | N | MINE-NOW | src/src/{frontier.rs,bin/minidregg-head-frontier.rs,lib.rs,anchor.rs,main.rs}, TEST-PROTECTED-FRONTIER.py, CONTRACT.txt, evidence/root-tenant-r1/RESULT.json, runtime-protected-frontier-r1.tar.gz
+tank | codex-runtime-reader-native-20261003 | 177M | source-agreement reader binary r2 | native-linked | N | SUPERSEDED | agreement lane
+tank | codex-runtime-spk-recovery-20261003 | 2.5G | SPK failed-START recovery host receiver + recovery op206-209 response budget 1800 s | compiled + native tests: recovery-rust-check-03 SCOPED_NATIVE_PASS; budget r2 'all3 PASS', nativeSpk PASS; used in the live g2 recovery (208 installed 16:54) | N | MINE-NOW | runtime-recovery-budget-source-r2.tar (src/native/spk-host/src/dispatch_native.rs, client-source/.../transport.rs), RECOVERY-BUDGET-R2-SOURCE.json, DEADLINE206-QUALIFIED.json; with hbox codex-runtime-lieutenant runtime-spk-recovery-r2.tar (grain_export.rs, hostd.rs, grain.rs) -- main still has the UNRESOLVED reconcile_failed_start stub
+tank | codex-scenario-service-recovery-20261003 | 611M | service recovery grain check | executed | Y | SUPERSEDED | landed
+tank | codex-service-20261003 | 58M | service tree r1 (+ adapters/combined/incremental patches beside it) | executed | Y (patches on main 8/8) | SUPERSEDED | landed
+tank | codex-service-20261003-adapters.patch | 18K file | patch file | authored | Y | SUPERSEDED | on main
+tank | codex-service-20261003-r1-baseline | 103K | baseline tree | n/a | Y | SUPERSEDED | baseline
+tank | codex-service-20261003-service-combined.patch | 84K file | patch file | authored | Y | SUPERSEDED | on main
+tank | codex-service-20261003-service-r2-final-combined.patch | 87K file | patch file | authored | Y | SUPERSEDED | on main
+tank | codex-service-20261003-service-r2-final-incremental.patch | 76K file | patch file | authored | Y | SUPERSEDED | on main
+tank | codex-service-20261003-service-r2-incremental.patch | 72K file | patch file | authored | Y | SUPERSEDED | on main
+tank | codex-service-r2-20261003 | ? | service r2 (grain journal) | executed | Y (W1.9 shipfix 71483825 grain journal tar) | SUPERSEDED | intaken
+tank | codex-source-surfaces-20261003 | 766K | JointDecisionRecovery surface check | compiled; check-r2 FAIL | N | DEAD | never compiled
+tank | codex-spk-recovery-endpoint-20261003 | ? | SPK recovery endpoint native bridge r1-r2, phase guard, RECOVERY-HANDOFF | native bridge r2 Terminated at lean 366/561 | P (v4 Lean via W2.F from the Mac copy) | SPEC-ONLY | RECOVERY-HANDOFF-20261003.json
+tank | codex-studio-r9-20261003 | 1.2G | Studio callable/publication release builds r23-r26 | executed; 'STUDIO CALLABLE RELEASE PASS' r26 15:14 | N | DUPLICATE | evidence for the docuverse-studio MINE item (configs + artifacts/mini-studio-callable-r26)
+tank | codex-surface-next-20261003 | 3.9M | surface lowering smoke | compiled; smoke-r1 FAIL | N | DEAD | Gen-1 surface
+tank | codex-traffic-20261003 | 2.3G | traffic privacy lane source + sustained-repair binaries | executed v12 evidence | Y (no-op: byte-identical to main, W2.B INTAKE) | SUPERSEDED | identical to main
+tank | codex-unified-service-family-3edf7ee0 | 241M | service family snapshot (older) | build | N | DUPLICATE | of a593a970
+tank | codex-unified-service-family-a593a970 | 241M | service family snapshot (release helper source) | build | Y (W1.7 copied the release helper) | SUPERSEDED | intaken
+tank | horse-bounds-20261003 | 2.0G | horse bounds consumer r1-r3 | executed; BOUNDS_CLIENT_RECEIVING_PASS 13:20 | Y (4 files differ from main, all older) | SUPERSEDED | landed in integration
+tank | horse-exits-restart-20261003 | 52M | horse exits transport restart/config/sealed/local-invocation patches | executed 3/3, 4/4 | Y (patches on main 7-12/12) | SUPERSEDED | landed
+tank | receiver-dag-20261003 | 390M | receiver-ready373 scoped DAG guardian runs | executed; guardian-r13 PASS | N | SUPERSEDED | build-ordering tooling run
+tank | validation-replay-efficiency-20261003 | 213M | session receiving efficiency v1-v6 | executed | Y (changes-v6.diff on main 12/12) | SUPERSEDED | landed
+
+(B) RANKED TOP-15 MINE-NOW (rank = value x evidence x how much depends on it)
+1. SPK failed-START recovery, host side + recovery response budget -> SPK successor (W2.F successor), with deploy told.
+   READ: main (0c148911) native/spk-host/src/grain_export.rs still has `reconcile_failed_start` returning "UNRESOLVED ... receiver is absent (K-SPK)";
+   no 206-209 budget in dispatch_native.rs. RECORD (mac mini-runtime-lieutenant CONTINUATION-20261003-1605.txt): the live original g2 recovery
+   "actually 208 installed 16:54:47, accepted78/stopped g3; independent signed g3 read PASS" using bridge native-r9 and these sources.
+   => the live SPK world's state was produced by code that is on no branch. Take:
+   hbox:/home/hbox/workbox/codex-runtime-lieutenant-20261003/runtime-spk-recovery-r2.tar (native/spk-host/src/{grain_export,hostd,grain}.rs;
+   SCOPED_NATIVE_PASS per spk-recovery/source-entry-r2.json); /tank/dregg-build/codex-runtime-spk-recovery-20261003/runtime-recovery-budget-source-r2.tar
+   (src/native/spk-host/src/dispatch_native.rs + client-source/native/resource-client/src/transport.rs), RECOVERY-BUDGET-R2-SOURCE.json,
+   DEADLINE206-QUALIFIED.json, budget-family-r2/QUALIFIED.json; evidence binary hbox:spk-recovery-sealed-prefix-20261003/native-r9/minidregg-host.
+2. Private committee v4 (stable membership + per-job Party from funded PENDING; sealed recipient codec) -> MPC/backends successor (W2.G successor).
+   Compiled Lean+C for 14 leaves (QUALIFIED-LEAVES.json) and native-linked author/verifier/fixture binaries; the end-to-end run did NOT pass
+   (v4-validate-original-r6: transactionConflict refusal; retry-r5 timeout; check-bootstrap-r7 file missing). Take from
+   hbox:/home/hbox/workbox/codex-scenario-private-native-20261003/src: Compiler/JointBackendPartySealedCodec, Host/PrivateParty{SetupAuthor,
+   SetupAuthorMain,ReserveAuthor,ReserveBirth,OrdinaryAuthor,VerifierMain}, Host/JointBackendParty{Inner,Source,WorkerIO},
+   Verify/PrivatePartySourceFixture(+Main), and the changed Kernel/JointBackendParty{Admission,Receiver,Recovery}, Compiler/JointBackendPartyCodec,
+   Host/JointBackendPartyWire; Host/PrivatePartyBootstrapAuthor.lean (authored 15:21, never compiled) is in both hbox src/Host and mac:/Users/ember/workbox/scenario-private-native-20261003/v4-edit/. Design:
+   /Users/ember/dev/redregg/work/PRIVATE-ENROLLMENT-V4-DECISION-20261003.txt. All codex-private-v4-* / private-fixture-native-* dirs are its link outputs.
+3. Objective laws -> sums successor (W1.3's deferred "requires/laws"). Compiled, 0 sorry: check-law-r15 "OBJECTIVE LAW PASS
+   ObjectiveBendLaw{Interfaces,Checking}" 15:21; law-consumer-01 PASS on a preserved and a changed candidate. Take
+   /tank/dregg-build/codex-objective-laws-20261003/source/Theory/ObjectiveBendLaw{Interfaces,Checking}.lean (47,350 B),
+   source/examples/CheckSelectedLaw.lean, consume.sh, {preserved,changed}Candidate.receipt.json. Built on the pre-sums r11 core: port, then gate.
+   Audit the statements first (finite certificate search, "a missed certificate is not proof the law is false").
+4. Objective demand oblivious backend + Objective Activity -> backends/ZK successor, and the cut's DEFERRED "rebuild Activity route on Objective DemandMachine".
+   about 22 modules beyond the ZK tranche have scoped-PASS logs in the lane (mixed closure; requalify): /tank/dregg-build/codex-private-lifecycle-20261003/src/
+   Compiler/ObjectiveDemand{Record,Recursive,Application,Extend}Network, ObjectiveDemand{Record,Recursive,Application}Physical,
+   ObjectiveDemand{Expansion,CompleteRecords,ContinuationCodec,ContinuationWire,CodeWire,PackedBits,Admission,Artifact},
+   Assurance/ObjectiveDemand{Record,Recursive,Application,Extend}Checks, Host/ObjectiveContinuationProbe; Activity: Kernel/ObjectiveActivity{Control,Input},
+   Compiler/ObjectiveActivity{Computation,GuardedComputation}, Host/Objective{Activity,Extraction}RecoveryProbe, Compiler/ObjectiveExtractionCheckpoint;
+   authored only: ObjectiveDemand{Numeric,BinaryNetwork}, Assurance/ObjectiveDemandNumericChecks; docs/OBJECTIVE-PHYSICAL-CONTROLLER.md.
+   The 11 ZK-tranche modules of this stack are already in the cut. ZK-truth found PackedRefinement vacuous: read these "Checks" statements before trusting them.
+5. FHE over Objective -> FHE successor. Executed with real BFV: check-objective-weighted-01 "offline inputs [2,7]; decrypted output 11 ...
+   PHYSICAL-CONFORMANCE PASS; real BFV; 4096 slots; owner-only decode; refusals"; ReturnRelease scoped PASS (check-objective-return-03).
+   Take from hbox:/home/hbox/workbox/codex-homomorphic-bend-20261003: packet ...-weighted-qualified-source-inbox-20261003-34.tar.gz
+   (native/fhe-bend/src/{natural,owner}.rs newer than main, OBJECTIVE-NATIVE-RECEIVING.md, check-objective-*.sh), r35 Kernel/ObjectiveFheReturnRelease.lean +
+   Host/ObjectiveFheReturnReleaseAuthoring.lean, r36 (authored only) Compiler/ObjectiveFhe{SourceBinding,Artifact}.lean, Host/ObjectiveFheReturnConsent.lean,
+   src/Host/ObjectiveFheArtifactCheck.lean. Record: mac mini-private-capacity-review-20261002/HOMOMORPHIC-BEND-CONSTRUCTION-20261003.txt.
+6. Receipt-confirmed client consent -> shipfix successor (consent item). Native-linked: "NATIVE RECEIPT CONSENT PASS 5b2c726f..." 15:12;
+   status QUALIFIED_SOURCE_AND_NATIVE_LINK_RECEIVING_PENDING. Take /tank/dregg-build/codex-client-consent-receipt-native-20261003/src/
+   Kernel/NativeReceiptConsent.lean + Host/ClientConsentCore.lean (changed), NATIVE-CONSENT-RECEIPT.json; hbox codex-client-consent-20261003/
+   confirmed-receipts.patch, receipt-rust-r1/{job.rs,client_consent.rs}, QUALIFIED-RECEIPT-PROVIDER-r1.json. Shipfix currently ships main's ClientConsentSession only.
+7. Protected head frontier (root-owned ledger; defeats same-UID rollback of DB + sidecar) -> tenancy successor (TENANCY-DESIGN step B).
+   Executed: "PROTECTED-FRONTIER ACTUAL TENANT-ROLLBACK REFUTER PASS"; RESULT.json (daemon restart, same-height conflict, wrong UID, missing namespace
+   all refused). Take /tank/dregg-build/codex-runtime-protected-frontier-20261003/{CONTRACT.txt, src/src/frontier.rs, src/src/bin/minidregg-head-frontier.rs,
+   changed src/src/{lib,anchor,main}.rs, TEST-PROTECTED-FRONTIER.py, evidence/root-tenant-r1/RESULT.json, runtime-protected-frontier-r1.tar.gz}.
+8. ObjectiveNatural (numeric Objective functions -> plan/circuit, partial-evaluation residual, plaintext-wrap refusers) -> FHE/backends successor.
+   Compiled: natural-residual-02 PASS 15:19, refusers PASS. Take hbox:/home/hbox/workbox/codex-bend-logic-20261003/objective-natural-qualified-01/
+   {Compiler/ObjectiveNatural{Artifact,Declaration,Plan,Function,Circuit},Host/ObjectiveNaturalEmit,Verify/ObjectiveNaturalArtifactImportAudit}.lean,
+   source-packet-20261003-74/Compiler/ObjectiveNaturalResidual.lean.
+9. Studio definition/publication path -> native-b successor. Executed: studio-r9 "STUDIO CALLABLE RELEASE PASS" r26 15:14; publication runner replay receipt;
+   last Lean leaf check FAILED on a missing Mathlib path (environment). Take hbox codex-docuverse-studio-20261003/src/native/resource-client/src/workspace/studio_definition.rs,
+   src/native/bend-source/studio-publication.py, receiving-publication-runner-r1/, receiving-generic-source-r1/; configs in /tank/.../codex-studio-r9-20261003.
+   (Host/ObjectiveStudioPublication.lean is already in the cut.)
+10. Objective world acceptance probes -> native-b successor (first Objective receipt). Executed lean --run probes: native-prepare-07 "ACTUAL CHECKED
+   Notebook.remember WHOLE GUARDED EXTRACTION + NATIVE CONTENT ACTIONS + DURABLE MESSAGE + STRUCTURED CLEAR REVIEW RETURN PASS" (no signing/install).
+   Take hbox:/home/hbox/workbox/scenario-objective-world-20261003/{CheckLive{Generic,Combined,Prepared}Objective.lean, CheckLoadedNativeObjective.lean,
+   NotebookAppendMessage.obend, notebook-generic-source-r2.tar.gz, source-journey-01/report.json} as regression probes.
+11. Agreement diagnostics + replica journals -> agreement successor. hbox codex-runtime-lieutenant-20261003/src/Verify/NativeJointSourceDiagnostics.lean
+   (not on main, not in W1.7 INTAKE) and evidence/four-source-r1/replica-*/ (journals R2-3 used). Keep the dir until 00f711 is cut over.
+12. Objective surface JSON -> frontend/native-b (low). Compiled PASS: hbox codex-docuverse-objective-surface-20261003/src/{Compiler/ObjectiveBendSurfaceAdapter,
+   Host/ObjectiveBendSurfaceJson,Host/ObjectiveBendSurfaceRead}.lean.
+13. SPK share-issuer authority (fee-corrected) -> SPK successor (low; authored, "narrow checks pending"): hbox share-issuer-authority-source-20261003/
+   member-share-issuer-authority-v3-fee.tar (scripts/spk-platform/share-issuer-authority.py + tests, ws-continuity-fixture.py).
+14. Cover-traffic carrier evidence (SPEC) -> traffic successor: hbox agreement-carrier-full64-r3-evidence-20261003/receiving.log ("768 authenticated
+   fixed TCP records ... matched public shapes at 1s ... no catch-up burst"), delivery-states.json; design mac scenario-private-agreement-20261003/AGREEMENT-CARRIER.md.
+15. The codex record library (SPEC) -> docs + every successor: mac /Users/ember/workbox/mini-private-capacity-review-20261002/*.txt
+   (GRADED-ACTIVITY-RESUME, JOINT-RECEIVER-CONSTRUCTION, CONSTRUCTION-PRIVATE-BACKEND, RESIDENT-CONTEXT-CONSTRUCTION, PORTABLE-CONTINUATION-CONSTRUCTION,
+   TAKEOVER-*, astra-*/literature-*/scout-* research notes, INTENT-* extractions). Keep whole; it is the only place many lane decisions are written down.
+Not ranked but read once: tank codex-objective-demand-bool-20261003 (compiled, sorry-free post-r11 Adequacy +606 lines: a traversal-work measure and
+whole-derivation progress; superseded as a completeness route by W1.4, possibly useful for a cost bound).
+No item for rooms (rooted release + roomkey r18 superseded by the rooms lane) or events (no codex lane maps to it).
+
+(C) ARCHIVE CANDIDATES (to /tank, not deletion; Ember decides). Sorted by size; per-dir du, cp -al links overcount.
+
+DEAD: 59 dirs, 39.7 GB measured (+ '?' sizes)
+      18G  hbox:spk-recovery-sealed-prefix-20261003  -- 18 GB of build output; native-r9 ELF is the bridge the live SPK g2 recovery used (keep that one binary + its stage-plan.sha256 as evidence)
+      12G  hbox:codex-bend-trace-20261003  -- 12 GB of BendTT trace fixtures; nothing left to take (Assurance files already intaken)
+     5.2G  pv:persvati-lean-20261003  -- 5.2 GB closures; packets duplicated on hbox
+     2.0G  hbox:codex-persvati-money-mirror-20261003  -- 2 GB regenerable closures
+     808M  pv:persvati-bend-feedback-20261003  -- 808 MB of BendTT job bodies; nothing left to take
+     747M  tank:codex-objective-definition-checker10-20261003  -- olean closure
+     519M  hbox:codex-authored-workshop-20261003  -- Gen-1 (deleted by the cut)
+      99M  pv:persvati-controller2-20261003  -- BendTT controller
+      97M  hbox:codex-station-world-20261003  -- Gen-1
+      55M  pv:persvati-controller-central3-20261003  -- BendTT controller
+      54M  pv:persvati-collective5-20261003  -- Gen-1
+      27M  mac:fhe-manifest-placement-20261003  -- regenerable closures
+      24M  hbox:codex-objective-linker-20261003  -- Gen-1
+      23M  hbox:codex-docuverse-surface-lowering-20261003  -- Gen-1 surface lowering
+      16M  tank:codex-bend-efficiency-20261003  -- BendTT (Gen-1 checker)
+      13M  hbox:codex-collective-domain-20261003  -- Gen-1
+  7102K file  hbox:agreement-carrier-packet-tests-20261003  -- test binary
+     6.8M  tank:codex-bend-scalar-20261003  -- olean cache
+     4.9M  tank:codex-objective-preview-v2-20261003  -- olean cache
+     4.8M  tank:codex-objective-preview-20261003  -- olean cache
+     3.9M  tank:codex-bend-binding-20261003  -- olean cache
+     3.9M  tank:codex-surface-next-20261003  -- Gen-1 surface
+     3.6M  tank:codex-bend-binding-declaration-20261003  -- olean cache
+     3.5M  tank:codex-objective-linker-next-20261003  -- Gen-1
+     2.4M  tank:codex-bend-natural-20261003  -- olean cache
+     2.3M  tank:codex-bend-arithmetic-20261003  -- olean cache
+     1.7M  tank:codex-objective-bool-v2-20261003  -- olean cache
+     1.7M  tank:codex-objective-reference-20261003  -- olean cache
+     1.6M  pv:persvati-collective9-20261003  -- Gen-1
+     1.6M  tank:codex-objective-package-20261003  -- olean cache
+     1.6M  tank:codex-objective-source-package-frozen02-20261003  -- olean cache
+     766K  tank:codex-source-surfaces-20261003  -- never compiled
+     216K  mac:authored-workshop-additive-20261003  -- Gen-1; Mac mirror of hbox codex-authored-workshop
+     184K  mac:objective-bend-linker-20261003  -- Gen-1
+      40K  hbox:codex-captain-registry-20261003  -- scratch
+      20K  pv:persvati-lean-portable4-20261003  -- job log
+      16K  hbox:codex-persvati-lean-mirror-20261003  -- tooling scratch
+      12K  pv:persvati-lean-money2-20261003  -- job log
+      12K  pv:persvati-portable-activation-r20-20261003  -- job log of a landed module (PortableHome* on main)
+     8.0K  pv:persvati-portable-ack-r18-20261003  -- job log of a landed module (PortableHome* on main)
+     8.0K  pv:persvati-portable-activation-r21-20261003  -- job log of a landed module (PortableHome* on main)
+     8.0K  pv:persvati-portable-attempt-r22-20261003  -- job log of a landed module (PortableHome* on main)
+     8.0K  pv:persvati-portable-authority-r19-20261003  -- job log of a landed module (PortableHome* on main)
+     8.0K  pv:persvati-portable-consumers-r10-20261003  -- job log of a landed module (PortableHome* on main)
+     8.0K  pv:persvati-portable-consumers-r11-20261003  -- job log of a landed module (PortableHome* on main)
+     8.0K  pv:persvati-portable-consumers-r12-20261003  -- job log of a landed module (PortableHome* on main)
+     8.0K  pv:persvati-portable-consumers-r13-20261003  -- job log of a landed module (PortableHome* on main)
+     8.0K  pv:persvati-portable-consumers-r14-20261003  -- job log of a landed module (PortableHome* on main)
+     8.0K  pv:persvati-portable-consumers-r8-20261003  -- job log of a landed module (PortableHome* on main)
+     8.0K  pv:persvati-portable-consumers-r9-20261003  -- job log of a landed module (PortableHome* on main)
+     8.0K  pv:persvati-portable-envelope-r23-20261003  -- job log of a landed module (PortableHome* on main)
+     8.0K  pv:persvati-portable-envelope-r24-20261003  -- job log of a landed module (PortableHome* on main)
+     8.0K  pv:persvati-portable-receiver-r17-20261003  -- job log of a landed module (PortableHome* on main)
+     8.0K  pv:persvati-portable-recovery-r15-20261003  -- job log of a landed module (PortableHome* on main)
+     8.0K  pv:persvati-portable-recovery-r16-20261003  -- job log of a landed module (PortableHome* on main)
+     8.0K  pv:persvati-portable4-r7-20261003  -- job log of a landed module (PortableHome* on main)
+     8.0K  pv:persvati-portable4-r7b-20261003  -- job log of a landed module (PortableHome* on main)
+     8.0K  pv:persvati-portable4-r8-20261003  -- job log of a landed module (PortableHome* on main)
+     8.0K  pv:persvati-portable4-r9-20261003  -- job log of a landed module (PortableHome* on main)
+
+DUPLICATE: 50 dirs, 5.1 GB measured (+ '?' sizes)
+     1.2G  tank:codex-studio-r9-20261003  -- evidence for the docuverse-studio MINE item (configs + artifacts/mini-studio-callable-r26)
+     693M  mac:persvati-ir2-20261003  -- of persvati:persvati-ir2
+     241M  tank:codex-unified-service-family-3edf7ee0  -- of a593a970
+     205M  hbox:codex-private-v4-author-r5-20261003  -- derived from codex-scenario-private-native (keep binary as evidence with it)
+     204M  hbox:codex-current-source-continuity-native-20261003  -- of -r2
+     202M  hbox:codex-private-v4-fixture-r4-20261003  -- superseded by fixture-r6
+     202M  hbox:codex-private-v4-fixture-r5-20261003  -- superseded by fixture-r6
+     201M  hbox:codex-private-v4-author-r2-20261003  -- superseded by author-r5
+     201M  hbox:codex-private-v4-fixture-r6-20261003  -- derived from codex-scenario-private-native
+     198M  hbox:codex-private-v4-fixture-r2-20261003  -- superseded by fixture-r6
+     198M  hbox:codex-private-v4-verifier-r2-20261003  -- derived from codex-scenario-private-native
+     196M  hbox:codex-private-v4-verifier-r1-20261003  -- superseded by verifier-r2
+     191M  hbox:codex-runtime-private205-native-20261003  -- superseded by private-v4-verifier-r2
+     187M  hbox:codex-private-fixture-native-r7-20261003  -- link output of codex-scenario-private-native
+     186M  hbox:codex-private-fixture-native-r6-20261003  -- link output of codex-scenario-private-native
+     159M  tank:codex-client-consent-full-native-20261003  -- superseded by consent-receipt-native
+     157M  tank:codex-client-consent-core-native-20261003  -- superseded by consent-receipt-native
+     156M  tank:codex-client-consent-native-20261003  -- superseded
+      64M  tank:codex-client-consent-fixture-native-20261003  -- superseded by consent-receipt-native
+      49M  mac:bend-zkvm-20261003  -- of codex-bend-trace / persvati-bend-feedback
+      34M  hbox:codex-private-fixture-native-20261003  -- link output of codex-scenario-private-native
+      34M  hbox:codex-private-fixture-native-r4-20261003  -- link output of codex-scenario-private-native
+      32M  hbox:codex-private-fixture-native-r5-20261003  -- link output of codex-scenario-private-native
+      16M  tank:codex-objective-residual-20261003  -- oleans of laws/bend-logic
+     9.5M  mac:persvati-lean-20261003  -- of persvati:persvati-lean (PERSVATI-INFRA-HANDOFF in redregg/work is the record)
+     4.1M  hbox:codex-objective-types-20261003  -- laws: take the newer /tank/.../codex-objective-laws-20261003 instead of frozen-law-r8
+     4.1M  tank:codex-objective-arithmetic-20261003  -- oleans of codex-bend-logic natural sources
+     3.7M  mac:bend-world-additive-20261003  -- of codex-objective-source-artifact / codex-objective-laws / codex-objective-demand-bool (identical sizes)
+     2.5M  hbox:codex-private-v4-author-r1-20261003  -- superseded by author-r5
+     2.3M  tank:codex-objective-natural-qualified01-20261003  -- oleans of bend-logic natural
+     1.6M  tank:codex-objective-numeric-emitter-20261003  -- oleans of bend-logic natural
+     1.2M  mac:scenario-private-native-20261003  -- of hbox codex-scenario-private-native (newest BootstrapAuthor 15:21 is here)
+     1.1M  mac:scenario-service-recovery-20261003  -- of hbox scenario-service-recovery
+     920K  mac:fable-credit-fixes-20261003  -- of hbox fable-credit-fixes (landed)
+     648K  mac:scenario-consent-lifecycle-20261003  -- of hbox scenario-consent-lifecycle (STATUS.txt here is the readable record)
+     376K  mac:mini-multiuser-capacity-20261003  -- of hbox codex-multiuser-capacity
+     364K  mac:persvati-dzk-20261003  -- of persvati:persvati-dzk
+     364K  mac:scenario-objective-world-20261003  -- of hbox scenario-objective-world
+     360K  mac:objective-demand-proof-r10-core4-20261003  -- intermediate of r11
+     304K  mac:objective-demand-proof-r9-core4-20261003  -- intermediate of r11
+     264K  mac:discord-world-20261003  -- of hbox discord-world (superseded by SDK)
+     260K  mac:objective-demand-proof-r8-core4-20261003  -- intermediate of r11
+     228K  mac:objective-demand-proof-r7-core4-20261003  -- intermediate of r11
+     216K  mac:objective-demand-proof-r6-core4-20261003  -- intermediate of r11
+     208K  mac:objective-demand-proof-r5-core4-20261003  -- intermediate of r11
+     180K  mac:studio-callable-20261003  -- of hbox codex-docuverse-studio (MINE item)
+     168K  mac:objective-demand-proof-r4-core4-20261003  -- intermediate of r11
+      92K  mac:share-issuer-authority-20261003  -- of hbox share-issuer-authority-source (MINE item)
+      28K  mac:persvati-portable-20261003  -- of persvati:persvati-portable
+     4.0K  mac:persvati-resident-20261003  -- of persvati:persvati-resident
+
+SUPERSEDED: 114 dirs, 25.5 GB measured (+ '?' sizes)
+     4.8G  hbox:codex-takeover-kernel-20261003  -- 4.8 GB repo copy around one landed patch
+     2.6G  mac:mini-private-objects-20261002  -- SPEC: component-costs-singlecatalog-20261002/REPORT.md, audience-adversarial-review.md
+     2.3G  tank:codex-traffic-20261003  -- identical to main
+     2.1G  pv:persvati-ir2-20261003  -- bend-ir2-proof sources match main; 2.1 GB is a Bread copy + targets
+     2.0G  tank:horse-bounds-20261003  -- landed in integration
+     1.6G  hbox:codex-resident-context-20261003  -- landed; post-push docs/RESIDENT-CONTEXT.md edit is the only delta
+     1.1G  tank:codex-client-consent-rust-20261003  -- native-b v2-only Studio
+     982M  hbox:codex-joint-receiver-20261003  -- receiver deltas landed in integration; room-release superseded by rooms lane (founder-pinned lineage)
+     977M  tank:codex-roomkey-security-20261003  -- rooms lane
+     611M  tank:codex-scenario-service-recovery-20261003  -- landed
+     470M  pv:persvati-receive-20261003  -- landed
+     459M  hbox:codex-docuverse-second-20261003  -- landed
+     390M  tank:receiver-dag-20261003  -- build-ordering tooling run
+     389M  pv:persvati-resident-20261003  -- landed
+     326M  hbox:codex-portable-continuation-20261003  -- keep evidence/bend-custody-r1/repaired.bin only if Activity is rebuilt
+     303M  hbox:codex-member-oo-20261003  -- by rooms lane 4564a8fa/8c67fc66/d38116cd
+     286M  hbox:discord-world-20261003  -- by W2.H SDK: discord-entrance rebuilt on mini-sdk, custody.rs deleted (c0957bb8)
+     281M  hbox:codex-private-backend-20261003  -- intaken; residual primary-acs-audit/*.py is SPEC; PrivatePartyReserveAuthor belongs with scenario-private-native
+     241M  tank:codex-unified-service-family-a593a970  -- intaken
+     234M  hbox:agreement-carrier-full64-r2-evidence-20261003  -- by full64-r3 PASS
+     217M  hbox:agreement-carrier-full64-evidence-20261003  -- by full64-r3 PASS
+     213M  tank:validation-replay-efficiency-20261003  -- landed
+     192M  hbox:codex-current-source-continuity-native-r2-20261003  -- rooms lane chose founder-pinned lineage; its STATUS lists rooted-release Lean as ResearchWip 'retire or repurpose'
+     177M  tank:codex-runtime-reader-native-20261003  -- agreement lane
+     167M  mac:mini-objective-bend-docs-20261003  -- by L0.2 docs lane
+     156M  hbox:codex-docuverse-deos-20261003  -- landed in the first-night/integration commits
+     155M  hbox:codex-runtime-current-recipient-native-20261003  -- rooms lane design
+     151M  hbox:codex-runtime-fixture-native-20261003  -- agreement lane rebuilt fixtures
+     149M  pv:persvati-fhe-manifest-20261003  -- manifest on main
+     133M  pv:persvati-private-backend-king-20261003  -- intaken; nextest-r42.log is the evidence
+     130M  hbox:codex-bend-world-20261003  -- by codex-objective-source-artifact (cut intake) and the cut's Gen-1 deletion
+     121M  hbox:codex-bend-scalar-20261003  -- BendScalarPlanBytesAdapter on main
+     111M  hbox:codex-docuverse-objective-bend-20261003  -- packet landed
+     100M  hbox:codex-multiuser-capacity-20261003  -- cached Store ordering landed (3f81c7db); DurableReceiverEquality superseded by main's encode-based DecidableEq
+      96M  hbox:codex-native-money-20261003  -- landed
+      95M  hbox:codex-joint-reserve-birth-20261003  -- landed
+      95M  hbox:codex-native-async-20261003  -- landed
+      95M  hbox:codex-native-perf-20261003  -- landed
+      76M  pv:persvati-portable-20261003  -- landed
+      65M  pv:persvati-causal-20261003  -- landed
+      58M  hbox:fable-credit-fixes-20261003  -- landed
+      58M  tank:codex-service-20261003  -- landed
+      56M  pv:persvati-money-receiver-20261003  -- landed
+      52M  tank:horse-exits-restart-20261003  -- landed
+      43M  tank:codex-objective-demand-bool-20261003  -- completeness closed by W1.4 (Theory/ObjectiveBendDemandCompleteness.lean); read the traversal-work measure only if a cost bound is wanted
+      36M  mac:app-document-20261002  -- landed
+      36M  tank:codex-multiuser-capacity-20261003  -- landed / superseded
+      28M  hbox:scenario-service-recovery-20261003  -- landed
+      27M  hbox:codex-simplex-proof-20261003  -- landed
+      26M  hbox:codex-objective-main-weld-20261003  -- intaken
+      24M  hbox:codex-captain-surface-v2-20261003  -- BendSurfaceJson on main (Gen-1 surface)
+      23M  pv:persvati-dzk-20261003  -- landed
+      14M  tank:codex-objective-demand-typing-v2-20261003  -- landed
+     9.8M  tank:codex-objective-source-artifact-20261003  -- intaken by the cut
+     7.3M  tank:codex-member-oo-next-20261003  -- member objects superseded
+     7.1M  tank:codex-objective-demand-typing-20261003  -- landed
+     7.1M  tank:codex-objective-native-qualified-r4-20261003  -- by codex-objective-source-artifact (cut intake)
+     6.9M  hbox:codex-simplex-causal-20261003  -- main kept newer Causal
+     6.6M  tank:codex-native-family-20261003  -- intaken; claim v1 rejected for v3
+     5.5M  mac:mini-horse-consistency-20261003  -- NATIVE-JOB-RECOVERY-20261003.txt is the only record worth reading
+     4.5M  hbox:agreement-carrier-packet-evidence-20261003  -- subsumed by full64-r3
+     4.1M  tank:codex-objective-types-v2-20261003  -- landed
+     3.7M  tank:codex-objective-demand-proof-20261003  -- by r11 (landed)
+     3.3M  tank:codex-objective-types-20261003  -- landed
+     3.2M  tank:codex-bend-native-core-next-20261003  -- pre-Objective Bend native path
+     2.3M  mac:roomkey-security-20261003  -- rooms lane; ROOMKEY-TRUST-REPAIR-20261003.txt is a readable record
+     2.3M  mac:root-hex-consumers-20261003  -- landed
+     2.2M  mac:root-terminal-render-20261003  -- landed
+     1.8M  hbox:codex-runtime-money-qualified-20261003  -- landed
+     1.8M  mac:horse-entries-20261003  -- D1 landed
+     1.6M  hbox:codex-horse-consistency-20261003  -- D-fixes landed; objective-quote intaken by cut (authored only)
+     1.4M  mac:mini-spk-recovery-endpoint-20261003  -- intaken by W2.F
+     1.3M  mac:joint-reserve-birth-20261003  -- patch landed; ResourceReserveBirthPolicy.lean draft never needed
+     1.1M  hbox:captain-money-qualified-20261003  -- money receiver patches r6/r7 found on main 8/8
+     1.1M  mac:homelab-native-20261002  -- landed night 1
+     1.0M  mac:homelab-inference-20261002  -- main's scheduler is newer (shipfix 0c148911)
+     908K  mac:homelab-converged-20261002  -- landed night 1
+     838K  tank:codex-runtime-fixture-native-20261003  -- agreement intake
+     821K  tank:codex-runtime-fixture-completion-native-20261003  -- agreement intake
+     764K  mac:shared-names-20261002  -- landed night 1
+     488K  hbox:codex-dzk-20261003  -- sh2t_id.rs and authenticated_ingress.rs on main
+     488K  mac:provider-history-admission-20261002  -- landed
+     448K  mac:world-kinds-20261002  -- main versions newer
+     372K  mac:objective-demand-proof-r11-core4-20261003  -- landed on main
+     352K  mac:bend-world-source-packet-20261003  -- by the source-artifact chain
+     332K  mac:continuity-client-20261002  -- landed night 1
+     312K  hbox:codex-mini-docs-20261003  -- by L0.2 docs lane (README 188 lines, OBJECTIVE-BEND.md 389 lines on main)
+     308K  hbox:codex-root-consent-20261003  -- landed
+     264K  mac:continuity-client-current-20261002  -- landed night 1
+     264K  mac:objective-types-core4-r55-20261003  -- landed
+     260K  mac:root-broker-merge-20261003  -- landed
+     244K  mac:continuity-client-guarded-20261002  -- landed night 1
+     196K  mac:homelab-ops-20261002  -- landed night 1
+     176K  mac:provider-resolution-runtime-20261002  -- landed
+     160K  mac:studio-preview-v2-20261003  -- native-b landed v2-only Studio preview (2ea8cea7)
+     140K  mac:root-continuity-sealed-20261003  -- landed
+     128K  mac:bend-persistence-review-20261003  -- simplex landed
+     108K  hbox:codex-docuverse-surface-v2-20261003  -- by native-b v2-only Studio
+     103K  tank:codex-service-20261003-r1-baseline  -- baseline
+  87K file  tank:codex-service-20261003-service-r2-final-combined.patch  -- on main
+  84K file  tank:codex-service-20261003-service-combined.patch  -- on main
+      80K  mac:joined-member-20261002  -- on main
+  76K file  tank:codex-service-20261003-service-r2-final-incremental.patch  -- on main
+  72K file  tank:codex-service-20261003-service-r2-incremental.patch  -- on main
+      56K  hbox:agreement-carrier-fixture-20261003  -- inputs of the r3 carrier run; r3 receiving.log holds the result
+      52K  mac:homelab-query-retry-20261002  -- landed night 1
+      48K  mac:objective-type-guide-r55-20261003  -- docs lane rewrote the guide
+      22K  tank:codex-hyp-ledger-diagnostic-20261003  -- gates lane L0.4 fixed the toothless families
+      20K  mac:candidate-packaging-20261002  -- on main
+      20K  mac:cgroup-worker-proof-20261002  -- on main
+      20K  mac:root-client-consent-20261003  -- landed
+  18K file  tank:codex-service-20261003-adapters.patch  -- on main
+     4.0K  mac:root-objective-qualification-20261003  -- intaken
+        ?  tank:codex-service-r2-20261003  -- intaken
+
+(D) WHAT THE LAST 16 HOURS ACTUALLY PRODUCED (03:30 UTC -> 19:20 UTC Oct 3)
+It was not "status and lane WIP", but it was mostly integration of small, already-scoped work. By category, with the dirs as evidence:
+(1) Defect and runtime fixes that LANDED through codex's own 54 "Codex integration" commits (READ: 25 of 31 sampled lane patches have most of their sampled
+added lines on main; the 6 that do not are SPK grain_export, roomkey r16, native-bulk-builder, two multiuser equality patches, compute-relocate): horse D-fixes (codex-horse-consistency, horse-entries sparse-board, horse-exits-restart, horse-bounds), native async/perf/money,
+service r1/r2, takeover opening cache, validation-replay efficiency v6, scenario-service-recovery, fable credit/hex, root-* hex/terminal/continuity/broker.
+About 114 of the 256 dirs are SUPERSEDED mainly for this reason: their content is on main. (2) Proof/semantics: the Core4 Adequacy run r4->r11
+(eight Mac dirs, 11:26->14:47), typing r55, simplex proofs r9->r30 (all on main or landed by Claude), plus two compiled, sorry-free pieces nobody
+took: the laws (codex-objective-laws, PASS 15:21) and a post-r11 Adequacy (codex-objective-demand-bool, PASS 15:16). (3) The Objective admission
+chain and native weld (source-artifact, native-family, claim v3, main-weld, homomorphic r8): taken by the cut, landing pending. (4) Backends, the
+biggest unmined block: the oblivious-network compiler for the demand machine (codex-private-lifecycle, about 22 compiled modules beyond the 11 the
+cut took), Objective Activity on the demand machine, FHE over Objective with a real BFV execution (codex-homomorphic-bend r34-r36), ObjectiveNatural
+(codex-bend-logic), and private committee v4 (codex-scenario-private-native, compiled and native-linked, final run refused). (5) Runtime and ops:
+the SPK failed-START recovery that the live world used (RECORD) with its host receiver and 206-209 budget still off main (READ), the protected
+head frontier (executed), receipt-confirmed consent (native-linked), the agreement session broker and replica journals. (6) Waste: Gen-1 lanes
+(workshop, collective, station, linker; 9 dirs, about 0.7 GB), BendTT trace/feedback/efficiency/controller jobs (12 GB + 0.8 GB), roughly 30 olean-only
+or link-output dirs, 9 private-v4 and 5 private-fixture relinks (about 2.3 GB), 21 persvati portable job-log dirs (07:32-08:33, 14 of the
+21 FAIL on sorryAx/parse/missing-olean: retry churn), 18 GB of native-host phase rebuilds in spk-recovery-sealed-prefix (resume scripts v2-v8), and 2-5 GB of
+warm-closure tarballs. Per-dir du overcounts cp -al links, so treat the GB figures as upper bounds (INFERRED).
+
+What the retrospective got right and wrong. Right (READ): the narrow core it named (r11, admission chain, agreement engine, private backend r31-r42,
+SPK v4) is exactly what the swarm intaken; Gen-1 is dead; codex-unified-integration is legitimate working state; status discipline was poor
+(the classification here needed blob hashing because statuses did not say what landed). Wrong: "~130 of 146 unused" mixed up "not intaken by Claude"
+with "not landed". Most of those dirs had already landed through codex's integration commits, so they were used and are now archive candidates,
+not losses. The retrospective also missed the ~10 dirs that hold real, evidenced work that is neither on main nor intaken. Most serious: the live SPK
+world was recovered (RECORD, 16:54 g2 recovery, g3 stopped) with a host receiver and response budget that exist on no branch, while main still reports
+"UNRESOLVED ... receiver is absent". Also missed: the compiled laws module, the oblivious backend plus Objective Activity (the very thing the cut
+deferred), FHE-over-Objective with a real BFV run, private committee v4, the protected frontier, and receipt consent. Its size list named the wrong
+things: bend-trace is dead, takeover-kernel's one patch landed, money-mirror is a cache, resident-context landed. Answer to "do we need to mine more?":
+yes, but narrowly. Section B's 13 MINE-NOW dirs (about 9 GB as listed, much of it build output around a few hundred KB of source) are the whole remaining
+value; everything else is SUPERSEDED/DUPLICATE/DEAD (about 223 dirs) or kept as working state (5).
