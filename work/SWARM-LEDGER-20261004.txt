@@ -1,0 +1,56 @@
+SWARM LEDGER — Claude root (breadstuffs-89), launched 2026-10-04 ~00:10 EDT after Ember's go (E1–E8).
+Protocol: work/LANE-PROTOCOL-20261004.txt. Plan: designs/SWARMPLAN-DRAFT-20261003.txt (v2).
+All lanes model=opus, read the protocol + named scout sections first. Lane dirs on hbox under
+/home/hbox/workbox/claude-<lane>-20261004/ (STATUS.txt + logs/ + evidence/); proof lanes also
+/home/ember/workbox/persvati-<lane>-20261004/. The ROOT pulls landings from lane clones into
+/Users/ember/workbox/mini-unified-push-20261003 and pushes to GitHub; lanes never push.
+
+LANE          DIR (hbox)                      DELIVERABLE (short)                                   STATE
+L0.1 cut      claude-cut-20261004             one coherent base: snapshot+lane sources, Gen-1 and    launched; holds the hbox seat
+                                              leftovers deleted, binder split, proofs gated, CI fix,
+                                              umbrella green (8 commits, step-wise)
+L0.2 docs     claude-docs-20261004            Gen-1 doc purge; OBJECTIVE-BEND.md tightened; README   launched (author-only lane)
+L0.3 infra    claude-infra-20261004           live manifest; units for world/Studio/mesh/broker       launched (units, no restarts)
+                                              (present, not started); evidence copies; hazards
+L0.4 gates    claude-gates-20261004           arm landed regression tests; fail-open gates; CI root   launched; lands after cut
+                                              causes; hyp-ledger real reds
+W1.2 native-b claude-native-b-20261004        deriveDraft (Host/ObjectiveInvocationQuote), Core227,   launched; lands after cut
+                                              Studio v2 (v1 deleted), 10 refusal checks, first receipt
+W1.3 sums     claude-sums-20261004 + persvati  sums/case/Bool eliminator: design note, defs/typing/   launched; proofs after W1.4
+                                              machine, proof cases in new files, .obend consumers
+W1.4 complete claude-completeness-20261004 +  land r11 Adequacy (verified), finite completion,        launched (persvati lean-main)
+              persvati                        Representation, forceWith≡runBounded + deep Data
+W1.5 frontend claude-frontend-20261004        compose dup, spec typing, affine/linear, operators,     launched
+                                              ancestry/C4/root-as-spec, Lean elaborator + TV (E2)
+W1.7 agreement claude-agreement-20261004      intake lane source; fix A standing replicas, B cut Δ,  launched; COPIES only; cutover
+                                              C adaptive timeout; tests; CUTOVER.md                   is the root's
+W1.8 tenancy  claude-tenancy-20261004         TENANCY-DESIGN; peer-uid allowlist; session_fs sweep;  launched (E7: by ear)
+                                              keyed anchor; FRIENDS.md custody line
+W1.9 shipfix  claude-shipfix-20261004         consent binaries shipped; grain journal landed; torn    launched
+                                              tail; refusal charging + receiver sweep; loop-mount;
+                                              tickets expiry/tombstone/wedge; small opens
+W1.9b rooms   claude-rooms-20261004           PRIVATE-ROOMS-DESIGN; land member-oo verifier; AAD      launched (E8: build up)
+                                              revision; pre-disclosure ordering; PQ path
+W1.10 audit   claude-audit-20261004           incremental cold audit (refusal test first; 614 s →     launched
+                                              <60 s; receipts identical); D12; D15; D16
+W1.11 schema  claude-rooms-schema-20261004    sparse roster (RE-GENESIS, epoch bump); indexed session launched
+                                              with refinement theorems; before/after numbers
+W1.12 deploy  claude-deploy-20261004          capsule→ship.sh; one gate reaching the end; DEPLOY-3    launched; public box untouched
+                                              candidate; SHIP-RUNBOOK
+W1.13 bread-a claude-bread-a-20261004 +       PS refutation-first then fixed port; ResearchRegime     launched (persvati seats)
+              persvati                        chain + one real instance
+W1.15 rewriter claude-rewriter-20261004       no child mini; one proposal per template; verifier     launched
+                                              once per candidate; signature bytes in-memory;
+                                              --operation-record confinement; room new numbers
+ROOT (me)     Mac                             warm base, gates every ~2 h, landings/pushes, cv task   active
+                                              hygiene, fn coordination, 00f711 cutover decision
+DEFERRED TO WAVE 2 (not launched): W1.1 native-A (tariff, Verified inputs, lowerer pin — after
+the cut), W1.14 contract types + leanuweave fold (after the cut), effects-as-yield, extensible
+root/dynamic get, version-twin deletion, attempt-custody envelope, receiver collapse, three
+failure domains (move replicas; fourth box), first new private effect, PackedRefinement, public
+capacity tariff, MPC non-public inputs, FHE funding/release + BFV noise, Cert-F, designated
+verifier, Simplex reconfig statement, Hermes on main, browser app, Studio for members, Discord.
+SHARED BOX STATE: fn swarm (session 9627d694) running certify run-20261004T021720Z-f0ab (16 jobs)
++ emission on hbox; our hbox seats: 1 (the cut) until the fn certify closes, then ramp to ≤6.
+Orphans (E5): rpc proxy 3501219 and tailscale login 1160617 stopped; solana validator 4106046 and
+smoke9p 152051 handled in the next step (see git log for the result).
