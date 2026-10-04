@@ -186,3 +186,13 @@ provisionally dropped), 4 (build order).
   added; (4) build order: OBJECT-RECORD and RESUME-WITH-VIEW before `call`, then seats/scoped grants, then
   `call`, then `send`. Recommended to Ember as settled unless she objects.
 - FOR EMBER (custody): the mini-keys broker holds all three secret classes in one account (OS W9).
+- LAWS (2026-10-05, from REVIEW-SCHOLAR-LAWS): D-1 SECURITY: the native Objective path projects no artifact/method
+  slot into the law state, so dropping the claim turns an Objective command into an ordinary one with the same
+  writes; fix = project objective/artifact and objective/method slots from the signed claim + a pin clause on
+  object state cells at creation (QUEST-LAWS-PIN, running). D-2: the single Receiver must evaluate every
+  written cell's law itself (receive_committed_lawful + kernel-only cell registry) before more families move
+  onto it (QUEST-LAWS-RECEIVER, next). Q2 recommendation refined: unify the SYNTAX now (invariant / guard /
+  permit / forbid clauses compiled by the Lean elaborator to Pred, refusing anything outside the fragment);
+  Pred stays the judge; Objective Bend method `law`s stay package evidence. Seats with empty `want` need an
+  explicit `donate`; ObjectRecord gains `creators` (Daml signatories); floors outside the fragment refused at
+  install.
