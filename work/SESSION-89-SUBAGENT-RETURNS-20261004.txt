@@ -1,0 +1,271 @@
+# sub-agents of c1e4d723
+
+── a634621b  general-purpose · 49 msg ──
+  task: CUT-REBASE: rebase cut, build warm base
+  ↩ Now set up the warm-base dir.
+
+── a4968806  general-purpose · 144 msg ──
+  task: S10 sonnet: Mini SDK deepening
+
+── a50f58b8  general-purpose · 223 msg ──
+  task: S9 sonnet: private rooms build-out
+
+── a4e31392  general-purpose · 286 msg ──
+  task: S8 sonnet: backlog closure and front-end gates
+  ↩ Now edit local-gates.sh.
+
+── a477359b  general-purpose · 214 msg ──
+  task: S7 sonnet: deploy config wiring
+  ↩ The template's own comment mentions "AGE-SECRET-KEY" and trips the validator. I'll reword the comment.
+
+── aa60bf2b  general-purpose · 176 msg ──
+  task: S6 sonnet: Rust-side burndown
+  ↩ Apply the deletion.
+
+── a6cbd7c8  general-purpose · 293 msg ──
+  task: LANDER sonnet: sweep lane clones, land safe commits
+  ↩ Main already has an equivalent fix (the `bind` variant). Skip.
+
+── a96c50cd  general-purpose · 248 msg ──
+  task: FASTMACHINE: linear-heap stepRaw with a csimp equality
+
+── a77696da  general-purpose · 161 msg ──
+  task: S5 sonnet: cv task backlog hygiene
+  ↩ The backlog pass is done and the write-up is in `/Users/ember/dev/redregg/work/TASK-BACKLOG-20261004.md`. Nothing was closed, abandoned or committed.  **Counts (459 non-terminal tasks):** - **LIVE:** 231. All now carry a successor-lane tag. That includes non-swarm tasks, so the per-lane lists in the file can be reproduced with `cv task list --tag`. - **LANDED-VERIFY:** 74. Each has a note naming …
+
+── aed69a92  general-purpose · 167 msg ──
+  task: S4 sonnet: refresh stale example drivers
+  ↩ Lane S4 is committed in the clone as `370e972d`, on top of `github/main` e598326e. It is not pushed, since hbox can't push. The script passes all rows, including the full preview cohort.  I kept four drivers. The other seven drivers and StudioNotebook are deleted, and every one has a row in `tests/objective-bend-source/preview-cohort.json`.  | Old driver | Result | Why | |---|---|---| | GenericEx…
+
+── ac062827  general-purpose · 172 msg ──
+  task: S3 sonnet: Objective Bend tutorial with runnable examples
+  ↩ Chapters 1–9 of the tutorial are written and committed in `/home/hbox/workbox/claude-s3-tutorial-20261004/src`, rebased on `github/main`. I ran all 64 commands twice and the transcripts were identical.  **Commits:** - `9d49f513`: 16 `.obend` files plus `docs/tutorial/run.ts`, a runner that wraps capture, elaborate and preview and prints status, type, turns and result. `--json` prints the preview …
+
+── abbe52d2  general-purpose · 214 msg ──
+  task: S2 sonnet: port collective/commons/station domains to .obend
+  ↩ Let me read the docs whole.
+
+── ac9f73d8  general-purpose · 197 msg ──
+  task: S1 sonnet: port market/settlement domain to .obend
+  ↩ The market ports are done, in `world/market/*.obend`. The preview checker accepts every typed packet and every entry evaluates (`runBounded`) to its expected value. I ran this with the official `check-preview.ts`: 70 items in `preview-cohort.json` and 196 in the new `world/market/market-cohort.json` pass. No Lean build was needed. I did not run elaborate-tv.  The `*-source-results.json` files hol…
+
+── aaaed457  general-purpose · 394 msg ──
+  task: FOLLOWUPS: sweep no-build follow-ups from the ledger
+  ↩ Let me read the test and the code that needs `canonical`.
+
+── a822f4d1  general-purpose · 407 msg ──
+  task: PROOF-ENG: modular cases, pins, vacuity gates
+  ↩ Commit deliverable 3.
+
+── a007e197  general-purpose · 327 msg ──
+  task: MINE: what is actually in the 146 codex lane dirs
+  ↩ The last batch of the /tank survey (the slow one I mentioned) has now finished, and nothing in it changes the findings. Before writing my report I had already checked those last nine directories by hand. Their results now match: codex-source-surfaces is 766K and dead (its check log fails), and horse-bounds is 2.0G and already on main.  The saved table at `/Users/ember/dev/redregg/work/CODEX-LANE-…
+
+── a0dbeb01  general-purpose · 151 msg ──
+  task: CRITIQUE: how did the codex wave do?
+  ↩ # Codex wave retrospective: root 01a0fa81, Oct 2 02:46 UTC to the usage wall at 19:20:49 UTC Oct 3  **Bottom line.** Your sense is about half right. The wave spent the most and was loudest on breadth and status, and most of its volume has not been used. But a narrow core of what it made was real, and this session has been built directly on it. If the scouts' findings had cost nothing, the codex w…
+
+── ad786c7e  general-purpose · 167 msg ──
+  task: Research HVM interaction-net runtime
+  ↩ The answer is mostly no if "compiled to HVM" means turning the machine's λ-terms into HVM's own duplication nodes. It is safe if the machine runs on HVM as a first-order interpreter, but then it only gets lazy, cheap-to-copy data and not optimal sharing of functions. Tags below: READ = source I read, WEB = fetched from the web, INFERRED = my reasoning.  **Where the sources came from.** `~/crates.…
+
+── a0d1c8c3  general-purpose · 81 msg ──
+  task: Read Bend comp.ts backend
+  ↩ Bottom line: `comp.ts` compiles the TypeScript checker's validated Book (not the Lean kernel's terms) into strict, call-by-value C or JS. There are no thunks, no laziness and no interaction nets. Memory is reference-counted, and only where the compiler finds sharing. Parallelism comes from fork tasks in a 128×128 grid of rings (the "cube"), run on pthreads or on the GPU through Metal or CUDA. No …
+
+── a5110b7f  general-purpose · 321 msg ──
+  task: W3.BACKENDS: C emission from stepRaw; HVM/GPU feasibility
+  ↩ The C backend works: it matches the Lean demand machine exactly on all 224 test cases, and runs 900–2900× faster. Nothing has landed yet. The two commits sit on `main` in `/home/hbox/workbox/claude-backends-20261004/src`, rebased onto `github/main` 0c148911, for you to pull. - `2100c3c7`: the C backend, the Lean emitter, the state format and the test harness. - `aa6c2cf9`: the two docs, the evide…
+
+── ae21f755  general-purpose · 747 msg ──
+  task: W3.EVENTS: effects-as-yield + deos scripting comparison
+  ↩ All four steps are done and three have landed: the root put the design, semantics, front end and proofs on GitHub main. The docs commit `f68f8509` is still waiting in my clone for the root to pull.  **Commits** - `8df0e87d` (step 1): `EVENTS-DESIGN.txt` in the repo root, about 2,200 words, as you approved. - `2ccd6290` (step 2, semantics):   - `Term.perform` and `Term.done`. `Step` only gains `do…
+
+── ad78de8e  Explore · 189 msg ──
+  task: Audit fn/bend/joint receivers order
+  ↩ Of the receivers you listed, only the native fn path (opcodes 20, 24, 40, 60, 62, and 12–18 as operator sessions) and reserve birth (opcodes 201/202) are in the `minidregg-host` binary. Every one of those fn receivers verifies first. The only live prepare-before-verify I found in your area is the reserve-birth submit. The Bend, Joint, Room, Portable and Objective receivers are built only in `Rese…
+
+── a6256d7b  Explore · 146 msg ──
+  task: Audit application-family receivers order
+  ↩ All 13 submit paths prepare before they verify the request's own signature, except share-issue and agent-lifetime-grant, which first run the cheap, state-free `ApplicationShareIssueSource.prepare`. None of them uses `ResourceInvocationSignatureFirst.authenticate`. Rows are tagged R (read) or I (inferred).  **Submit opcodes in Host/Main.lean** - Fresh `dispatchSession`: share issue 6019→1470, grai…
+
+── af6e0930  Explore · 79 msg ──
+  task: Audit pay-family receivers order
+  ↩ Short answer: 10 of the 12 receivers run expensive preparation before the signature check. Only PayClaim verifies first, and PayEnrol/PayEnrolV2 only check a memo signature first. All rows below are READ at HEAD c8fdd000. ResourceMoneyReceiver has no entry point of its own.  Every prepare-before-verify receiver has the same shape. `receiveLoaded` decodes and does a replay lookup by transaction id…
+
+── ace58417  general-purpose · 158 msg ──
+  task: Sweep receivers prepare-before-auth
+  ↩ Another wait timer has finished. Nothing new came in, so the audit report above is still the final answer.
+
+── a9a11277  general-purpose · 193 msg ──
+  task: Author spk-host v4 retry client
+  ↩ That notification was the read-only search for app 8502's directory finishing. I had already found the directory another way and used it, so this changes nothing, and my earlier report stands as written.
+
+── a9cc355b  general-purpose · 167 msg ──
+  task: Author Host v4 retry authoring
+  ↩ I've written the Host side of the v4 failed-create retry: seven new Lean modules, plus wiring in `Host/Main.lean` and `Host/Json.lean`. Nothing has been built, per the brief, so none of it is known to compile.  **Created** (in `/home/hbox/workbox/claude-spk-20261004/src/Host/`), each modelled on the v3 file in brackets: - `ApplicationLifecycleRetryClaimV4Authoring.lean` (`ApplicationLifecycleLaun…
+
+── a6d7a53a  general-purpose · 24 msg ──
+  task: Extract reconfiguration rules from Bread docs
+  ↩ I read all five files in full (the four reference docs on the Mac, and `GENERIC-SIMPLEX-NATIVE.md` on hbox over ssh, read-only). Nothing was edited.  Abbreviations: **FDG** = `docs/reference/FEDERATION-DESIGN-GAPS-2026-08-08.md`, **DCL** = `DYNAMIC-COMMITTEE-LITERATURE-…`, **FM** = `FLUID-MEMBERSHIP-…`, **RB** = `READING-BLOCKLACE-…`, **GSN** = hbox `…/src/docs/GENERIC-SIMPLEX-NATIVE.md`.  Two fr…
+
+── a97a7c8f  general-purpose · 391 msg ──
+  task: W2.H MINI-SDK: one client library + wasm/TS; extension design
+  ↩ Both Linux test sets on hbox now pass. mini-sdk needed one fix to its tests, which is a single new commit, `0f3de3c3`, the only commit ahead of `github/main`.  **mini-sdk.** The first run failed one test (`linux-mini-sdk.log`); a second test then turned out to be flaky. Both problems were in the tests' scripted stand-in processes, not in the SDK: - On hbox, `/bin/sh` is dash, which gives a backgr…
+
+── a762f568  general-purpose · 236 msg ──
+  task: W2.G MPC TRUTH: non-public inputs, entropy, 429 rerun
+  ↩ I stopped on your order with deliverables 1 and 2 committed. Deliverables 3–5 are not done. Nothing was built or run on hbox, because the fn window was never announced closed. Your message also asked about a v4 endpoint intake and claude-spk-scratch-* units: neither is part of this lane, I started no units, and I didn't check any r2 mtimes.  **Commits** (in `L=/home/hbox/workbox/claude-mpc-202610…
+
+── a9cbec91  general-purpose · 649 msg ──
+  task: W2.F SPK lawful g4 + browser app on scratch world
+  ↩ Lane W2.F is paused on your request. Everything is committed, but **none of it has been compiled or run**: the build window never opened for this lane. App 8502 has not started on any world and the browser step did not happen.  **Clone:** `/home/hbox/workbox/claude-spk-20261004/src`, rebased on github/main 44b2446a, working tree clean. These commits are in the clone only; you haven't landed them:…
+
+── ab4bf667  general-purpose · 181 msg ──
+  task: W2.E ZK/OBLIVIOUS TRUTH: inhabit PackedRefinement
+  ↩ Understood. I'm parked as `$L/STATUS.txt` describes and will run nothing on hbox, even after the fn window closes. I'll start the five compiles only when you send an explicit go.  Clone state stays as reported: commits `932ea893` and `82548487` on clone `main`, with the tranche and wall-snapshot inputs still uncommitted (sha256s in `$L/INTAKE.txt`). Everything is still unchecked; nothing has been…
+
+── a0dbab6c  general-purpose · 247 msg ──
+  task: W2.D PROOF PORTS: BFV noise, Cert-F, DV dial, reconfig
+  ↩ I've stopped as you asked: the finished work is committed, the two unfinished files are left uncommitted, and nothing new is running. Of the five deliverables, the BFV noise work (item 1) and transferability (item 3) are committed. CertF (item 2) and the reconfiguration file (item 4) exist but neither has compiled yet. BREAD-PORTS.md (item 5) is not written. The `#print axioms` lines aren't yet i…
+
+── a6c5ea0b  general-purpose · 314 msg ──
+  task: W2.C THREE-HOSTS PREP: persvati/Mac/4th box for the mesh
+  ↩ I've stopped as the root asked. Nothing is running: the Mac Lean build had already finished, and it failed. The fresh devnet context is only partly done. Keys are generated and placed on every host. Phase 2 (the public `context.bin`, `genesis.bin`, `seed.bin`, `manifest.json`, initial journals) and phase 3 (per-replica store init, `agreement.bin`, `host-settings.json`) never ran, because the sour…
+
+── a8d5b4df  general-purpose · 351 msg ──
+  task: W2.B TRAFFIC: roles across hosts, enrollment, first new effect
+  ↩ Serialized as you asked. I committed three changes in the clone. Nothing was built or run on hbox or persvati, so the baseline, the two-host run and the new-effect run haven't happened. No processes of mine are running on either host. I never started a tmux session on persvati. The only thing I ran there was a 30-second TCP echo listener to measure round-trip time, and it exited by itself. Nothin…
+
+── affbbf7a  general-purpose · 246 msg ──
+  task: W2.A CONTRACTS: shared contract types + futures
+  ↩ I've stopped as you asked. Four of the five Lean files are committed in my hbox clone; `Refinements.lean` is uncommitted and has never compiled, and `docs/CONTRACTS.md` isn't written. Nothing of mine is running on hbox.  **Committed** (in `/home/hbox/workbox/claude-contracts-20261004/src`, not yet pulled by you, new files only): - `ba18aabf` `Kernel/Contracts/Identities.lean` - `ff4b3139` `Kernel…
+
+── a5826c70  general-purpose · 568 msg ──
+  task: W1.15 REWRITER: in-process client, no child mini, op-record
+  ↩ I've stopped as you asked. One commit is done, the rest is saved but not committed, and I'm running nothing more on hbox. None of the five deliverables is fully done: there is no before/after measurement, and the Lean side has not been compiled.  **Committed: `f882bd01`** - **No child `mini` in chat:** `chat::client` (used by chat, story and hermes) now runs the workspace operation inside the sam…
+
+── a14b75b1  general-purpose · 331 msg ──
+  task: W1.13 BREAD-A: ResearchRegime port, PS refutation
+  ↩ W1.13 is stopped on your serialize order. Three commits are in my clone at `/home/hbox/workbox/claude-bread-a-20261004/src`. They are not rebased onto `origin/main` and not pushed, and no new persvati jobs were started.  **Commits** - **`84c0e74a`** — Mini's un-fixed `PolishchukSpielman` Prop is refuted. The def and everything that assumed it are deleted. - **`28632004`** — Bread's corrected Poli…
+
+── a4675b02  general-purpose · 584 msg ──
+  task: W1.12 DEPLOY: capsule to ship.sh, one gate to the end
+  ↩ Deliverables 1, 2 and 4 are committed in my two hbox clones. Deliverable 3, the DEPLOY-3 candidate itself, is not built: you stood me down from the full Host build over Lean-seat contention. That also means no real gate run happened yet — no journey J0–J8+G at 1000 records and no `verify.sh --restart` dry run. Nothing touched dregg-workhorse except one read-only check of its glibc.  **Capsule → s…
+
+── adc54493  general-purpose · 912 msg ──
+  task: W1.11 ROOM SCHEMA + indexed session state
+  ↩ Steps 1–3 are committed and rebased on github/main (391311a0), but none of it is verified on a Host yet: no b12 binary exists, so the after-numbers (step 2's re-run and step 4) haven't been taken. Per your order I stopped the seat-wait loop; b12 never started. It waits for the shared warm base you announce. Nothing has landed on GitHub yet.  **Commits in `/home/hbox/workbox/claude-rooms-schema-20…
+
+── abc1d585  general-purpose · 513 msg ──
+  task: W1.10 AUDIT: incremental cold audit, D12, D15
+  ↩ I've stopped as ordered. I hold no Lean seat and no lane processes are running on hbox. The successor brief is at `/home/hbox/workbox/claude-audit-20261004/STATUS.txt`. Nothing I committed has been compiled or run yet.  **Commits** (clone `/home/hbox/workbox/claude-audit-20261004/src`, rebased on github/main 391311a0): - **fd3fdf54 (D12):** `circuit_batch.rs` replaced with the 880b0988 postimage,…
+
+── ad5364e3  general-purpose · 344 msg ──
+  task: W1.9b PRIVATE ROOMS: verifier, AAD revision, design
+  ↩ Lane W1.9b is done, but private rooms have only been tested in unit tests against a fake node. No full found → invite → sync → seal → kick run has happened on a real Host. The three commits are in my clone, rebased onto GitHub main (86bb0b05); they are not landed until you pull them.  **Commits** (hbox:/home/hbox/workbox/claude-rooms-20261004/src): - `860726d2` — private rooms: the room's authori…
+
+── a1171bdb  general-purpose · 663 msg ──
+  task: W1.9 SHIP-FIXES: consent binaries, grain journal, refusals, tickets
+  ↩ W1.9 has stopped as ordered. Five of the seven items are committed in `$L/src` on `main` (L=/home/hbox/workbox/claude-shipfix-20261004). The clone is based on c8fdd000 and is **not yet rebased onto 59c4f1cd**. Items 4 and 6 (refusal charging, tickets/install wedge) are written but have no compile evidence, so I left them uncommitted. The Lean seat is released and nothing of this lane is running. …
+
+── a00415cc  general-purpose · 402 msg ──
+  task: W1.8 TENANCY: per-session uids, anchor, custody line
+  ↩ W1.8 is done in my lane clones. Step A of the tenancy design is implemented as an option, and on the minidregg side it changes nothing unless the new flags are used. The infra side is written and syntax-checked but has never run on a box. Nothing was pushed, and nothing on the public box was touched.  **Design note** (`/home/hbox/workbox/claude-tenancy-20261004/TENANCY-DESIGN.txt`, 128 lines). It…
+
+── a61985a5  general-purpose · 561 msg ──
+  task: W1.7 AGREEMENT: liveness fix A/B/C, tests
+  ↩ Stopped on your order; everything is written up for a successor. I got through intake, fix A, and fix B. Fix C, the tests, and CUTOVER.md are open, and nothing is rebased onto 391311a0 yet.  1. **Commits, in my clone only (still on c8fdd000):**    - `bde7fab2` intake (sources and sha256s in `$L/INTAKE.txt`)    - `af6501ee` fix A + fix B transport/crypto/journal: one standing `serve-replica` proce…
+
+── adda6e94  general-purpose · 419 msg ──
+  task: W1.5 FRONT END: TS fixes, wire v2, ancestry, Lean elaborator
+  ↩ All four steps are committed in my clone at `/home/hbox/workbox/claude-frontend-20261004/src`, on top of base c8fdd000. I did not rebase: this clone's `origin` is `/home/hbox/build/mini-bigstep/lanes/opus-dev`, a different repo with no minidregg main, so you'll need to pull these onto the real main yourself.  **Commits (oldest first)** - **4ad92ba4 — step 1, TS fixes:**   - `compose` now binds th…
+
+── a7c79ee0  general-purpose · 275 msg ──
+  task: W1.4 CORE4 COMPLETENESS + forceWith theorem
+  ↩ W1.4 is done: all three steps are committed, each checked on a persvati Lean seat. Only one theorem, whether the deep Data is unique, is still open.  **Commits** (in `/home/hbox/workbox/claude-completeness-20261004/src`, stacked in order on c8fdd000): - `23bf24cf`: lands the r11 Adequacy file. The root has already fast-forwarded it onto main. - `1ead1c5e`: finite completion, in the new file `Theo…
+
+── acdadd56  general-purpose · 456 msg ──
+  task: W1.3 CORE4 SUMS/CASE + Bool eliminator
+  ↩ Sums, case and a Boolean branch are now in the Core4 language, and every proof file still checks with no `sorry`. The root pushed the whole range to GitHub main, rebased on 5cd663a2.  **What landed** - **927a1d95, design note:** `SUMS-DESIGN.txt`. §9 gives the surface syntax the front-end lane (W1.5) built from; §11 gives the exact core JSON and annotation paths. - **e95738e1, the language extens…
+
+── acd8ef50  general-purpose · 879 msg ──
+  task: W1.2 NATIVE-B: deriveDraft, Core227, Studio v2, refusals
+  ↩ There is no Objective receipt yet, on the scratch world or anywhere else. The gate side compiles, but the native host can't be built. `Kernel/NativeHostReplay` is red in the base tree: about 50 constructors of `Derived` pass 11 fields where 14 are now required. That blocks NativeHost, Host/Main, the quote producer and the Core227 consent adapter. The refusal tests are not written.  I stopped at t…
+
+── ac4503f3  general-purpose · 467 msg ──
+  task: L0.4 GATES: arm regression tests, CI, hyp-ledger
+  ↩ L0.4 GATES has finished all five tasks. My six commits are rebased onto GitHub main at 17a6489c and are waiting for you to pull them. The cut lane (L0.1) has not landed yet: its Lean file is unchanged on main, so I'll rebase again once it does. The rust-tests gate is still red on two existing test defects. Both have known causes and are passed to their owners below.  **Commits** (clone `/home/hbo…
+
+── a60a9004  general-purpose · 218 msg ──
+  task: L0.3 INFRA: supervise live worlds, manifests, journals
+  ↩ I've applied your five decisions, and the lane is complete. Nothing running was started, stopped or signalled: I re-checked the pids of A1, A2, A3, the mesh, the broker and the Studio servers after each step, and they are unchanged.  1. **A1 adopt:** not run. The script is still at `$L/scripts/mini-common-oo-world-adopt.sh --i-am-the-root` (`$L` = `/home/hbox/workbox/claude-infra-20261004`) for t…
+
+── a5b6a217  general-purpose · 307 msg ──
+  task: L0.2 DOCS: purge Gen-1, rewrite OBJECTIVE-BEND.md + README
+  ↩ All five tasks are done and committed on `main` in the hbox clone. Nothing is landed until you pull and push it; hbox has no push credentials. This lane only wrote docs, so nothing was built or run, and every change is in the "authored" class.  **Where the commits are** - Clone: `/home/hbox/workbox/claude-docs-20261004/src`. - GitHub main had moved from c8fdd000 to cbd849c4 (one "spw update" comm…
+
+── abe0b7a9  general-purpose · 749 msg ──
+  task: L0.1 THE CUT: one coherent base
+  ↩ The cut base is built and green at `0f8322e7` in `/home/hbox/workbox/claude-cut-20261004/src` (main), but I have not rebased it onto current github/main. The disk holding `/home` reached 94% used (27G free, falling from 34G while my lane was idle), and the protocol says stop writing below 10% free. The base sits on github/main `17a6489c`, so check the disk before you pull.  **Commits, in order:**…
+
+── a5d17cf5  general-purpose · 92 msg ──
+  task: R2-5: leanuweave/preoscript vs Objective Bend
+  ↩ I read the whole record, and I did no builds, edits or commits.  ## What lean-uwueave / preoscript is  `/Users/ember/dev/leanuweave` (public repo `emberian/lean-uwueave`, branch `dev`, clean at f145066 "sweep-up commit from usage wall", 2026-08-14 — nothing since) is a Lean-core library with no mathlib, on Lean 4.30.0. It answers one question: can a promise about replicated state be kept without …
+
+── a6f4b731  general-purpose · 205 msg ──
+  task: R2-4: Bread assets worth bringing to Mini
+  ↩ I've built the mining map. The most important finding: Mini already has two earlier mining maps, and the best things to bring are small, exact Lean modules. None of Bread's big systems is worth carrying over.  **Read-only. Tags:** READ = I opened the file or ran the grep. RECORD = taken from the memory index, docs or reviews, not re-checked. INFERRED = my judgement.  ## 0. Prior maps you should n…
+
+── ab5405fe  general-purpose · 132 msg ──
+  task: R2-3: agreement liveness fault + 3-host plan
+  ↩ **Agreement mesh scout: why the 00f711 initialization stalled, and the three-host plan**  I changed nothing and started or signalled no process. I made no lookup or submit call. Read-only copies of the four replica journals (sha256 matched on hbox) and the hbox lane's Simplex sources are in my scratchpad, under `/private/tmp/claude-501/-Users-ember-dev-breadstuffs/c1e4d723-6d9e-4af8-a2e6-bc8abe10…
+
+── a6dce7af  general-purpose · 195 msg ──
+  task: R2-2: path to first native Objective Accepted
+  ↩ A late search result fills in the one source the report said was missing: the invocation Claim. Both versions exist on hbox, and v3 passes its check. The plan above stands.  - **Claim v2 source** is at `/tank/dregg-build/codex-private-lifecycle-20261003/objective-claim-v2/` and `objective-claim-v2-qualified-r1/` (`Compiler/ObjectiveInvocationClaim.lean`, 15:00–15:02). This is presumably the sourc…
+
+── a46aa1a1  general-purpose · 329 msg ──
+  task: R2-1: security residuals at HEAD
+  ↩ I've built the residual ledger at HEAD c8fdd000. I made no edits, builds, commits, stashes or checkouts. The only things I ran were the import-boundary script, after reading it to confirm it only reads files, and read-only `gh` and hbox ssh commands. Tags: **READ** means I read the code at c8fdd000 (`git show c8fdd000:<path>`), **RECORD** means it comes from a document or log, and **INFERRED** me…
+
+── ad7aa6a2  general-purpose · 120 msg ──
+  task: Scout G: product journey + public testing path
+  ↩ I didn't run the end-to-end demo the Oct 13 bar is about, and it hasn't run anywhere else either: two friends plus a hosted Hermes, joined in one world, has never been run in any single world. The public node is still on the 10-01 candidate, with Hermes, Discord and payments off and only ember plus three test keys on the roster. Everything newer exists only on hbox dev worlds, and the ship script…
+
+── a5e180a0  general-purpose · 163 msg ──
+  task: Scout F: privacy + agreement guarantees
+  ↩ I've split this into the six areas you asked for. Tags: READ means I read the code or artifact myself. RECORD means a report or log says it and I didn't re-run anything. INFERRED is my own conclusion. Everything was read-only. The brief got two things wrong, and I've noted both inline: `Host/PrivatePartyBootstrapAuthor.lean` does exist on hbox, and the depth-2 FHE mux belongs to the retired langu…
+
+── a1e1867d  general-purpose · 127 msg ──
+  task: Scout E: infra takeover runbook
+  ↩ I have everything I need. Here is the runbook.  ---  # hbox / agreement mesh / fn node / Mini: operational runbook (scouted 2026-10-03 ~20:50 EDT, read-only)  Tags: **READ** means I saw it directly on the box or in the file. **RECORD** means a lane note or document says it. **INFERRED** means my reasoning.  ## 0. Three corrections to the brief, up front  1. **pid 3153612 is not the fn node.** It …
+
+── ab1e1c70  general-purpose · 166 msg ──
+  task: Scout D: deos/world efficiency + semantics
+  ↩ I've finished the scout. Nothing was edited, built or run. Every claim is tagged READ (I read it in source or a file), RECORD (a swarm note says so), or INFERRED (my judgement).  **Three corrections to the brief, up front:** - **`83afdca9` and `213c7084` are not commits.** They are sha256 prefixes of file contents. The audits identify landings by file hash, not by commit. I checked each claimed p…
+
+── ae2c01f9  general-purpose · 199 msg ──
+  task: Scout C: Gen-1 and BendTT deletion census
+  ↩ I've finished the census. I didn't edit, build, stash or commit anything; the only files I wrote are scratch scripts. Tags: **READ** means I read the code or file, **RECORD** means a lane or document says so, **INFERRED** is my analysis.  ## Answers to your direct questions  - **How Gen-1 is wired in (READ):** no production code imports it. Nothing in `Host.Main`, `Deployed` or the umbrella targe…
+
+── ae990246  general-purpose · 130 msg ──
+  task: Scout B: Core4 formal deep read
+  ↩ I've finished the audit (read-only, at c8fdd000; nothing edited, built or run). The short version: the Core4 proofs are real and their statements are not vacuous, but they cover a different function from the one the native path runs, the default build never checks them, completeness is still open, and the front end can't yet produce most of what the theory talks about. Tags: READ = I read it in t…
+
+── abbae0bd  general-purpose · 119 msg ──
+  task: Scout A: Faré OO + Houyhnhnm vs Core4
+  ↩ I read the primary sources from disk, the Core4 Lean files you named, the surface parser and elaborator, all four design records, both Fable council responses and the 10-03 scholar synthesis, and grepped the Gen-1 docs. The primary texts are all local, so I made no web fetches. I made no edits, builds or commits.  Tags: **[R]** I read it. **[REC]** a record or note says so. **[I]** my judgement. …
+
+── a042ccbb  general-purpose · 115 msg ──
+  task: Scout: parallel initiatives beyond codex root
+  ↩ I mapped every session active since Oct 2. Only one other initiative is doing work right now: a Claude session auditing the **fn** codex root, which hit the same usage wall as Mini. Almost everything else is wound down, waiting on ember, or a resident bot that won't collide.  **Times.** All times are UTC. `cv ls` tables print local EDT (UTC-4), but its JSON and the transcripts are UTC. The Mini r…
+
+── afddf974  general-purpose · 98 msg ──
+  task: Scout: swarm workstreams and live state
+  ↩ The Codex swarm is fully stopped: no builds are running on hbox or Persvati. But one agreement call was left in an uncertain state, and some unpublished work exists only as uncommitted files in three places: about 30 files in the canonical hbox source tree, 16 `.spw` audit files in your local minidregg checkout, and 45 notes files in redregg.  **Tags:** READ = I checked it directly just now. RECO…
+
+── a093e8c0  general-purpose · 112 msg ──
+  task: Scout: Objective Bend vs BendTT state
+  ↩ I read every requested design record in full, plus the directly relevant `PREOSCRIPT`/`CHECKPOINT` notes. Source is from `/Users/ember/dev/minidregg` at HEAD `c8fdd000`, read-only, with nothing built. Tags: READ (I read the source), RECORD (from a design note), INFERRED (my judgement).  **Short version:** two different things are both called "Objective Bend" in the source. - **Gen-1** elaborates …
+
