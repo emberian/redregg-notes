@@ -1,0 +1,46 @@
+BURST2 BOXES (Latitude, rented 2026-10-07T00:47Z, planned deletion 2026-10-09T00:47Z = creation + 48h) - binding with LANE-PROTOCOL-20261004.txt
+Supersedes BURST-LANE-BRIEF-20261005.txt (those boxes are gone); its amendments are folded in below.
+Hosts (ssh as user ember with the Mac's key; if the alias does not resolve, use ember@IP; ssh config: ~/.ssh/burst2-20261006.conf):
+  burst2-a  ember@67.213.117.197  f4-metal-medium EPYC 4564P Zen5 4.5 GHz, 16 cores, SMT OFF (16 threads), 187 GB, LON2 -- merge keeper gates here (slot-1 + slot-mk are the GATE's)
+  burst2-b  ember@67.213.117.179  f4-metal-medium, same CPU, SMT ON (32 threads), 187 GB, LON2                            -- lanes (all four slots)
+Both are in LON2 (London): NYC had stock for only one, so both moved. Expect transatlantic ssh latency.
+Warm base on each: /srv/warm-base (FROZEN at GitHub main 4ef4e808; cold build ~12.7 min, 9737 jobs). Frozen tip is also /srv/warm-base/FROZEN.
+Make a lane:  ssh burst2-b '/srv/warm-base/mk-lane.sh <lane>'  ->  /srv/lanes/<lane>   (add --verify: must show 0 modules compiled; mk-lane re-checks FROZEN/tip AFTER the copy and refuses if the base moved)
+Build:        LEAN_NUM_THREADS=4 SWARM_MEM_MAX=24G swarm-build lake build <targets>
+              swarm-build default cap is 24G per build; all builds on a box share swarm.slice, capped at 112G (box cap). A FULL umbrella cold build needs more:
+              use SWARM_MEM_MAX=64G inside a held slot (the cold build here ran at 64G).
+SLOTS (flock files, 4 per box at 24G, 4 x 24G = 96G < 112G slice). Take one before any Lean build or cargo of the native host:
+    flock -n /srv/build-slot-2 <cmd> || flock -n /srv/build-slot-3 <cmd> || flock /srv/build-slot-4 <cmd>      (burst2-a lanes)
+    flock -n /srv/build-slot-1 <cmd> || flock -n /srv/build-slot-2 <cmd> || ...slot-3, slot-4                    (burst2-b lanes)
+  burst2-a: /srv/build-slot-1 AND /srv/build-slot-mk (also created, for the merge keeper's 32G+ gate builds) are RESERVED for the merge gate; lanes NEVER take them.
+            Lanes on burst2-a have slots 2-4. There is no other slot: do not invent slots. See /srv/SLOTS.txt.
+  Caveat: the repo's scripts/pipeline/lib.sh + slot.sh only know TWO slots (1, then 2). On burst2-a, ember's ~/.profile exports PIPELINE_SLOT_1=/srv/build-slot-2 PIPELINE_SLOT_2=/srv/build-slot-3
+            so lane-check never touches the gate's slot (use a login shell / `source ~/.profile` in non-interactive ssh). The merge keeper must set PIPELINE_SLOT_1=/srv/build-slot-1 explicitly.
+            Do not call scripts/pipeline/slot.sh directly on burst2-a: it hard-codes slot-1.
+  Single-module `lake env lean` checks need no slot, BUT see lane-check below.
+Rebase onto current GitHub main inside your lane (git fetch https://github.com/emberian/minidregg.git main). The base advances via the merge keeper.
+INNER LOOP: after any fetch/rebase use /srv/pipeline/scripts/lane-check FILE.lean (installed on both from scripts/pipeline/, identical to the repo's copy; the whole
+  scripts/pipeline/ directory is at /srv/pipeline/scripts since lane-check sources lib.sh). Bare `lake env lean FILE` reads STALE imported oleans after a rebase and gives false
+  reds AND false greens. lane-check builds only the stale imports, in a slot under swarm-build, then checks FILE. Do not delete traces.
+Run builds in tmux so an ssh drop does not kill them. Check `uptime` and `free -g` first; if load > 1.5x threads, wait.
+NOT installed on these boxes (unlike the 10-05 pair): sccache, /srv/artifacts publishing, the journey runner, and a burst2-e2e VM. Install from scripts/pipeline/ (install-sccache) if the
+  pipeline needs them; nothing in this brief assumes them.
+NO SECRETS on these boxes: no devnet keys, tokens, env dumps, no Latitude/hcloud credentials. Never scp ~/.* or environment output to them.
+NOTHING MAY LIVE ONLY ON THE BOXES. They are deleted at 2026-10-09T00:47Z (earlier if ember decides). Everything a lane produces must be committed in the lane AND bundled off:
+    git bundle create /tmp/<lane>.bundle <range>   then   scp it to hbox:/tank/dregg-build/claude-lanes/bundles/    (or push/fetch via GitHub)
+  and landable ranges are reported into MERGE-QUEUE.md before then. Logs and result tables worth keeping go to the same bundles dir. Assume anything not off-box by T-2h is lost.
+Only resources tagged burst2-20261006 (project dregg proj_jmlR57Ro4NWgY) belong to this burst. Do not touch fn's VMs or any other cloud resource.
+Bare-metal quota on the team is 2: these two are all there is.
+
+LEAN-ASK (LEAN-INTERACTIVE, 10-07 ~01:45Z): an interactive inner loop, installed on BOTH boxes at /srv/pipeline/scripts/lean-ask
+(REPL at /srv/pipeline/repl). Run it inside your lane's src/; the first call starts a resident session for that tree (memory-capped
+under swarm-build, exits after 2 h idle). Edit the file, then:
+    /srv/pipeline/scripts/lean-ask check Kernel/Foo.lean          errors/warnings; re-elaborates only from your first changed line
+    /srv/pipeline/scripts/lean-ask goals Kernel/Foo.lean:120      proof state at line 120 (:COL optional)
+    /srv/pipeline/scripts/lean-ask eval '#check @foo' --after Kernel/Foo.lean      snippet at the end of Foo (sees Foo's own decls)
+    /srv/pipeline/scripts/lean-ask eval 'example : ... := by ...' --file Kernel/Foo.lean   snippet against Foo's imports (or --imports A,B)
+Exit 0 clean, 1 Lean errors, 2 infra, 3 REFUSED: an import changed since the session loaded it (rebase, fetch, your edit to an
+imported module). Then add --reload: it rebuilds the stale imports in a build slot (the lane-check rule) and answers. It never answers
+from stale oleans, so it replaces lane-check as the inner loop. Measured: proof edit -> feedback 3.6-7 s (lane-check) -> 0.35-0.4 s;
+an edit high in a file costs the re-elaboration of everything below it. Still build your affected closure ONCE before queueing.
+`lean-ask stop` ends the session; `lean-ask --help` for the rest.

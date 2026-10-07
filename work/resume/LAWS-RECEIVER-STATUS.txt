@@ -1,0 +1,16 @@
+LAWS-RECEIVER STATUS (2026-10-04 ~21:00Z, wind-down)
+LAST STATE: DONE and QUEUED. lane/laws-receiver-final = df0cd116..90e4afbf (5939700b laws! + 90e4afbf pins) on burst-gate /srv/lanes/laws-receiver/src (checked out). Bundles: persvati:/home/ember/workbox/claude-lanes/bundles/laws-receiver.bundle (= laws-receiver-final.bundle), Mac /Users/ember/dev/redregg/work/bundles/laws-receiver-final.bundle (prereq df0cd116, verified). MERGE-QUEUE line appended.
+Older branches lane/laws-receiver (86c27427), lane/laws-receiver-wip (1cee3988), lane/laws-receiver-visit (199e86c1 WIP) are SUPERSEDED by -final; nothing unique left in them.
+BUILDS RUNNING: none (tmux lr-build/lr-b3..b6 all finished rc=0). Logs: /srv/lanes/laws-receiver/logs/b6.log (umbrella 9676 rc=0 at rebased tip), objproofs-final.log (PASS, statements unchanged), mutant-tooth.log + mutant-theorems-red.log (planted mutation red).
+NEXT STEP: none in lane; wait for MERGE-KEEPER (on conflict in generated pins: take main's, regenerate). If bounced: rebase lane/laws-receiver-final on main, umbrella, re-pin (check-host-closure.sh --update, lean-build-surfaces.py generate).
+
+DECISIONS (with reasons):
+- Theory.Receiving gets a generic `Fault`/`lawFault` and `Refusal.law`: Theory may not import Pred/Compiler (import-boundary), so the law content lives in Kernel; lawFault runs after the physical shape so admit_signature_first is untouched. (SCHOLAR-LAWS accepted.)
+- Law lookup is a `ReceivingLaw.Laws` value; the deployed `Laws.physical` is installed by receiveLoaded/admitNative themselves (rfl lemmas) so a host cannot hand another source. Reason: a closed fixture over a resolving physical world is infeasible (cSHAKE, no world fixture in tree); theorems hold for every Laws; the physical side is covered by physical_resolve_some_iff + the shared resolver.
+- ONE resolver: PhysicalLawResolution.targetConfig + judge; DRC policyConfigFromStep IS targetConfig and authorizeLeg calls judge. Reason: two resolvers that agree today are a twin (consultant HARD condition). judge_portal_irrelevant covers the differing capability portal.
+- The Receiver, not the family, picks the law target (= the written cell) and reads kind/birth from the write's own bytes/pre-root. Reason: T2/T3, a family must not choose a permissive target or flag.
+- Law-bearing births refuse (lawUnavailable .birth) until registry birthParent exists (cv 01a1087d-8a12). Reason: newborn has no law; "skip" is the bypass; no family on Family births today.
+- pay/clock/stream classified lawBearing although some writers judge other laws today. Reason: their writers must meet the cell's own law at migration rather than be exempted; clock is a LIVE bypass (PayObservation/PayEnrol) filed cv 01a1087d-8a58 for ROOT scheduling. Kind doc corrected.
+- kernelOnly rows carry per-writer reasons; authority-field shape lemmas deferred to cv 01a10887-e79f (scope: Receiver lane).
+- Law-source guards join records only for law-bearing writes, so SubjectKeyRotation intents stay byte-identical (readGuards_unjudged).
+- Single clean commit built with commit-tree on top of the WIP base instead of rewriting branches (never reset/force).

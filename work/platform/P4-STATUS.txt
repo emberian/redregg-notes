@@ -1,0 +1,21 @@
+P4-PLAN-SCOPED-REPLAY STATUS  (updated 2026-10-06)
+Phase A: DONE. Design: /Users/ember/dev/redregg/work/platform/PLAN-SCOPED-REPLAY-DESIGN.md
+Deputy rulings received: F1 b (gate_refuse_only over the ACTUAL gate list), F2 no openings, F3 delete expectedTargetRoot,
+  F4 reader-monad port, F5 interval guard (commit must state it binds less than an exact balance; the consented debit is exact),
+  F6 worker picks in Phase B and records why, F7 delete op 155 / W06b not landed, F8 = cv 01a113e6.
+Phase B: NOT dispatched (no boxes until BURST2-BRIEF-20261006.txt). Order: (0) P7 repro on main, (1) signed R + executor + P5/P6,
+  (2) scoped view + frame + P2-P4, (3) re-genesis notes.
+
+(0) P7, desk check by reading main 4ef4e808 (NOT yet a run; the scratch-world repro needs a box):
+  READ Kernel/ResourceTransaction.lean:731-739: the post-state of a `world actions` target is
+    WorldKindCell.preparePatch pre.logical actions. It reads only the target's own pre.logical, which carries the
+    instance's own descriptor (WorldKindInstance.prepare uses value.descriptor; prepared_preserves_descriptor).
+  READ Compiler/WorldKindLawDependencies.lean:27-49: the kind-definition cell contributes `additional : List PolicyRef`
+    (law predicates, which are gates) and a physical-root readGuard. A comment there says it reads the definition for
+    existence/identity only.
+  READ Kernel/WorldKindMethods.lean:1-3: executable methods are "not activated by the frozen native runtime profile".
+  => INFERRED: a kind-definition change between consent and admission can flip accept to refuse (law gate) but cannot
+     change the committed effect. P7 as I framed it is most likely NOT a defect. The scratch-world run must still decide it.
+  Remaining effect inputs not covered by the signature: ambient.height via blinding (READ :678-767). That is the F6 question,
+  and it is logical-content-neutral if blinding is only commitment randomness (to verify in Phase B).
+Next: wait for box details; meanwhile author Theory/ScopedRead.lean in the clone (no builds).

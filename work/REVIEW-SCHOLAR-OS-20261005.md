@@ -252,3 +252,71 @@ refusing "kernel-looking" cell ids would be a containment the doctrine forbids. 
   - The Tally world's 46 checks still pass.
   - A theorem `activity_write_judged`: every committed activity state write satisfies the object's law at
     `(old, new)`, pinned with `#assert_axioms`.
+
+---
+
+## Appendix: OBJECT-RECORD design (2026-10-05, approved quest; interfaces agreed with BREAD, HISTORIAN and ACTIVITY-NATIVE)
+
+**Ranges.**
+- **R1:** a new module `Kernel/ObjectRecord.lean`. It touches no shared file except the umbrella.
+- **R2:** `Role.object` in `ObjectiveActivityCell` (tag 4, key = object id), a `create` turn, and the
+  wiring of `admitWrite` into birth, delivery and the direct write, on ACTIVITY-NATIVE's protected
+  `stateCell domain object`. It uses BREAD's `Kernel/ObjectState` and BREAD's `stateWrite` hook.
+- **R3:** the shared `Kernel/ObjectiveTariff`. The activity is priced by the native `Capacity`, and the
+  package type-check verdict is cached at publish. HISTORIAN builds every pricing term on top of it.
+
+**Types (R1).**
+```lean
+inductive UpgradePolicy | frozen | governed (authority : Pred) (floors : List Pred)
+structure ObjectRecord where
+  id : Digest              -- the object's native resource id; never a package hash
+  pin : Digest             -- package identity its new activities and calls run
+  schemaVersion : Nat      -- declared-state schema version (migration bumps it); NOT the write counter
+  law : Pred               -- judges every declared-state write over (old, new) views + request facts
+  upgrade : UpgradePolicy  -- frozen by default; may only tighten (UpgradePolicy.permits)
+  continuity : Nat         -- bumped by every re-pin and law change
+  payer : AccountId        -- funds the record and the state cell; never read by any judgment
+structure Facts where subject : SubjectId; height : Nat; target : Nat; turn : Nat
+def admitWrite (r : ObjectRecord) (f : Facts) (old : Option Data) (new : Data) : Except WriteRefusal Unit
+```
+The activity list is derived (record cells keyed by the object), never stored. The write counter is
+`ObjectState.version`, which belongs to BREAD. Typing `new` at the declared state type stays with the
+caller, which holds the checked program (`ObjectiveActivity.typeData`). R1 decides the law half only.
+
+**Views.** A value projects to scalar slots under `state/`. Records nest with `.`. A variant sets
+`p@label = 1` and nests its payload under `p.label`. Labels project nothing. A name containing `.`, `@`
+or `/` is refused as unprojectable. The request facts use the canonical names from
+`CanonicalRuntimeProfileCore.requestSlots` (`request/subject`, `request/height`, `request/target`), plus
+`request/turn`. Refusals reuse `RefusalReason.LawLeaf.of`, so the explanation is the first failing
+clause of the same evaluation.
+
+**R1 theorems.**
+- `admitWrite_ok_iff`: admitted ↔ the views exist ∧ `eval law before after = true`.
+- `admitWrite_lawDenied_fails`: a refusal names a clause of the law that is false on the same views.
+- `admitWrite_payer_irrelevant`.
+- `frozen_absorbing`.
+- `strengthens_sound`, `permits_tightens`: a tightened policy never admits an upgrader the old one
+  refused, and never drops a floor.
+- `record_roundTrip`.
+
+**The R2 acceptance theorem.**
+```lean
+theorem activity_write_judged
+    {turn : AdmittedStateWrite config snapshot height request}   -- birth | delivery | direct write
+    (post : Post) (member : post ∈ turn.intent.posts)
+    (onState : post.cellId = stateCell config.domain object) :
+    ∃ record old new,
+      decodeObjectRecord (snapshot.canonicalBytes (objectCell config.domain object)) = some record ∧
+      currentValue snapshot object = old ∧ post.bytes = stateImage object new ∧
+      TypedAt record new.value ∧
+      ObjectRecord.admitWrite record (factsOf request height object) old new.value = .ok () ∧
+      objectHolder … request = true
+```
+Also in R2:
+- A birth on a cell with no object record is refused by name (`.notAnObject`).
+- A birth whose `pin` differs from the record's pin is refused (`.pinMismatch`). A draining upgrade
+  later relaxes this; that is the upgrade lane's work.
+- A payer that holds no facet cannot write (`writeState_requires_object_holder`, kept from
+  ACTIVITY-NATIVE).
+- A law refusal refuses the whole turn. Nothing commits, the explanation is returned, and the activity
+  stays parked at its yield until a write the law admits, or its deadline.

@@ -1,0 +1,15 @@
+journey/J0	PASS	3.674	?	service up and a signed read answered in 3.643s
+journey/J1	PASS	6.372	?	subject 9773585697404822224, record 1; key absent from genesis/config; lookup = same receipt
+journey/J2	PASS	3.200	?	object 15022976850739854361 under all[], record 2
+journey/J3	PASS	5.610	?	child 16077176866856555306 verbs observe,mutate, record 3
+journey/J4	PASS	8.905	?	read 1.714s, write 4.513s, readback field 2 = 1, record 4
+journey/J5	FAIL	29.871	?	2 of 6 stranger attempts were not refused by the Host (see /srv/journeys/c28d4875af095b8ac908e3af5d52363e97be7752/rows/journey/step-J5/refusals.tsv)
+journey/J6	PASS	8.702	?	reopen to first signed read 2.962s; J1 receipt and field 2 = 1 recovered; retry replayed tx with its original (root, height); read (root, height) unchanged: 7183428653042955456515267487440136681808925290942343365018194848269030809344 15
+journey/J7	PASS	22.017	?	law v1 not(any[]) installed (submit 3.095s); J3 grant wrote 1->7 (submit 3.020s). The new law is still permit-all
+journey/J8	FAIL	18.322	?	1 of 5 attempts under deny-all were not refused by the Host (see /srv/journeys/c28d4875af095b8ac908e3af5d52363e97be7752/rows/journey/step-J8/refusals.tsv)
+journey/JROT	FAIL	240.496	?	hook exit 1: JROT: 3 of 30 checks failed (see /srv/journeys/c28d4875af095b8ac908e3af5d52363e97be7752/rows/journey/step-JROT/jrot/jrot.tsv)
+journey/JROTL	PASS	71.786	?	JROTL: 10/10 checks; a lost op-142 reply recovered by op-143 lookup (epoch 2, one submit); a never-seen rotation looks up absent and is never resubmitted
+objective	PASS	369	?	{"allPass": true, "rows": 17, "readbacks": 2}
+rooms	FAIL	127	?	J5      FAIL;JPRIV1  FAIL 0 rows, 0 red, 0/88 expected rows present and ok
+activity	ABSENT	0	?	
+seats	ABSENT	0	?	

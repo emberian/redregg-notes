@@ -1,0 +1,19 @@
+tip 2f3ca037ccb3985a8f68f1da19e4a5f811c629e3  labels: next green main
+journey wall 963 s on burst-20261005-e2e-e2e7d (8 CPUs), finished 2026-10-04T19:52:40Z; set built 2026-10-04T19:33:23Z
+
+ROW            STATUS  WALL_S   OWNER                                                                      DETAIL
+journey/J0     PASS    4.474    9a743f41d162 journey: the run has a wall budget, and a step the clock cut  service up and a signed read answered in 4.437s
+journey/J1     PASS    7.392    9a743f41d162 journey: the run has a wall budget, and a step the clock cut  subject 16548226494256328455, record 1; key absent from genesis/config; lookup = same receipt
+journey/J2     PASS    3.514    9a743f41d162 journey: the run has a wall budget, and a step the clock cut  object 13879700944870789145 under all[], record 2
+journey/J3     PASS    6.738    9a743f41d162 journey: the run has a wall budget, and a step the clock cut  child 13768992327533291776 verbs observe,mutate, record 3
+journey/J4     PASS    10.243   9a743f41d162 journey: the run has a wall budget, and a step the clock cut  read 2.214s, write 5.438s, readback field 2 = 1, record 4
+journey/J5     FAIL    28.869   9a743f41d162 journey: the run has a wall budget, and a step the clock cut  2 of 6 stranger attempts were not refused by the Host (see /srv/journeys/2f3ca037ccb3985a8f68f1da19e4a5f811c629e3/rows/journey/step-J5/refusals.tsv)
+journey/J6     PASS    8.441    9a743f41d162 journey: the run has a wall budget, and a step the clock cut  reopen to first signed read 2.892s; J1 receipt and field 2 = 1 recovered; retry replayed tx with its original (root, height); read (root, height) unchanged: 31918226649086069264576198430566068629163275706157138084434540272618925261684 15
+journey/J7     PASS    22.229   9a743f41d162 journey: the run has a wall budget, and a step the clock cut  law v1 not(any[]) installed (submit 3.123s); J3 grant wrote 1->7 (submit 3.525s). The new law is still permit-all
+journey/J8     FAIL    20.357   9a743f41d162 journey: the run has a wall budget, and a step the clock cut  1 of 5 attempts under deny-all were not refused by the Host (see /srv/journeys/2f3ca037ccb3985a8f68f1da19e4a5f811c629e3/rows/journey/step-J8/refusals.tsv)
+journey/JROT   FAIL    247.577  9a743f41d162 journey: the run has a wall budget, and a step the clock cut  hook exit 1: JROT: 3 of 30 checks failed (see /srv/journeys/2f3ca037ccb3985a8f68f1da19e4a5f811c629e3/rows/journey/step-JROT/jrot/jrot.tsv)
+journey/JROTL  PASS    74.506   9a743f41d162 journey: the run has a wall budget, and a step the clock cut  JROTL: 10/10 checks; a lost op-142 reply recovered by op-143 lookup (epoch 2, one submit); a never-seen rotation looks up absent and is never resubmitted
+objective      PASS    390      ?                                                                          {"allPass": true, "rows": 17, "readbacks": 2}
+rooms          FAIL    132      ?                                                                          J5      FAIL;JPRIV1  FAIL 0 rows, 0 red, 0/88 expected rows present and ok
+activity       ABSENT  0        ?                                                                          
+seats          ABSENT  0        ?                                                                          

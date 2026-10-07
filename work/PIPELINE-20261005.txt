@@ -1,0 +1,20 @@
+PIPELINE REGIME (2026-10-05, Ember: "pipeline, forward, optimistically... not full green") - binding with VERIFY-ONCE
+1. OPTIMISTIC MAIN, GREEN TAG. The merge keeper fast-forwards main after a SMOKE gate (the affected closure builds + the
+   lanes' named checks + the cheap pin checks: host-closure, import-boundary, surfaces). The FULL gate (umbrella +
+   objective-proofs snapshot + Rust rows + journeys) runs right after, asynchronously. Green -> move tag `green` to that tip.
+   Red -> fix forward within the hour or revert the offending range (bisect the batch); never leave main red silently.
+   Deploy candidates and anything shipped build from `green`, never from main.
+2. NEXT = MAIN + EVERYTHING QUEUED. The merge keeper keeps a speculative branch `next` (main + every queued range, rebased)
+   and a warm base of it. New lanes and rebasing lanes start from `next`, so conflicts surface at queue time, not landing.
+3. ARTIFACTS ONCE PER TIP. Each gated tip publishes its native binaries (minidregg-host, consent pair, mini, mini-keys,
+   spk pieces) under /srv/artifacts/<tip>/ on the f4s with SHA256SUMS. A lane that needs a Host and did not change Lean
+   uses them; a lane that did change Lean relinks incrementally from the warm base, never cold. Rust builds share sccache.
+4. JOURNEYS RUN CONTINUOUSLY. burst-e2e runs the journey set (J0-J8, JROT/JRLANE/JROTL, native acceptance, activity
+   acceptance, seats, private rooms e2e) against every new `next` artifact set, and posts red rows to MERGE-QUEUE.md with the
+   owning lane. Lanes stop running whole journey suites themselves; they run the rows their change touches.
+5. INNER LOOP = SINGLE FILE. Lanes iterate with `lake env lean <file>` on a warm clone (seconds on the f4s); a lane builds
+   its affected closure once, when it is about to queue.
+6. REVIEW IN PARALLEL, NOT IN SERIES. Consultants (finished veterans) review queued ranges in their domain while the gate
+   runs; a review finding becomes a fix-forward commit, not a hold.
+7. NEVER IDLE ON A BUILD. Run long builds in tmux and author the next item meanwhile; check the build by reading its log.
+   (Do not background-and-wait-for-a-notification: that strands.)

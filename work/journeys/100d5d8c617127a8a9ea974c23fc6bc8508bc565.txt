@@ -1,0 +1,19 @@
+tip 100d5d8c617127a8a9ea974c23fc6bc8508bc565  labels: green main
+journey wall 876 s on burst-20261005-e2e-e2e7d (8 CPUs), finished 2026-10-04T18:52:03Z; set built 2026-10-04T18:30:30Z
+
+ROW            STATUS  WALL_S   OWNER  DETAIL
+journey/J0     PASS    3.560    ?      service up and a signed read answered in 3.534s
+journey/J1     PASS    6.091    ?      subject 11598786781624153857, record 1; key absent from genesis/config; lookup = same receipt
+journey/J2     PASS    2.851    ?      object 16956293041872949369 under all[], record 2
+journey/J3     PASS    6.195    ?      child 17661208257174227821 verbs observe,mutate, record 3
+journey/J4     PASS    8.912    ?      read 1.875s, write 4.589s, readback field 2 = 1, record 4
+journey/J5     FAIL    28.415   ?      2 of 6 stranger attempts were not refused by the Host (see /run/user/1001/pj.89nS8z/j/steps/J5/refusals.tsv)
+journey/J6     PASS    8.485    ?      reopen to first signed read 2.966s; J1 receipt and field 2 = 1 recovered; retry replayed tx with its original (root, height); read (root, height) unchanged: 5093246041618872192450060441464075253642874479762813351447554026589623462134 15
+journey/J7     PASS    22.846   ?      law v1 not(any[]) installed (submit 2.981s); J3 grant wrote 1->7 (submit 3.281s). The new law is still permit-all
+journey/J8     FAIL    20.647   ?      1 of 5 attempts under deny-all were not refused by the Host (see /run/user/1001/pj.89nS8z/j/steps/J8/refusals.tsv)
+journey/JROT   FAIL    236.846  ?      hook exit 1: JROT: 3 of 30 checks failed (see /run/user/1001/pj.89nS8z/j/steps/JROT/jrot/jrot.tsv)
+journey/JROTL  PASS    69.333   ?      JROTL: 10/10 checks; a lost op-142 reply recovered by op-143 lookup (epoch 2, one submit); a never-seen rotation looks up absent and is never resubmitted
+objective      PASS    346      ?      {"allPass": true, "rows": 17, "readbacks": 2}
+rooms          FAIL    110      ?      J5      FAIL;JPRIV1  FAIL 0 rows, 0 red, 0/88 expected rows present and ok
+activity       ABSENT  0        ?      
+seats          ABSENT  0        ?      

@@ -1,0 +1,10 @@
+{
+  "authority": "requires-current-admission",
+  "delegation": null,
+  "effect": "none",
+  "intentPath": "/run/user/1001/p7.Ktv9IO/r/world/sponsor/proposals/p7-revise/intent.json",
+  "intentSha256": "0afff642162f7e3607538809c0b6786264a78a47d0767ec28f5fee6eb111b747",
+  "proposalId": "p7-revise",
+  "renounce": null,
+  "type": "minidregg-workspace-proposal-result-v1"
+}

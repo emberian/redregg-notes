@@ -1,0 +1,16 @@
+fix(invariant): the checkpoint invariant reads the retired image; the source-gate and route modules compile
+
+Kernel/ObjectiveCheckpointInvariant stated record safety over the tombstone
+model (recordBody/recordOfBody/vacant/slotVacate), which retention-payers
+deletes. Re-stated over the retired model: recordIn decodes the record body
+directly, recordIn_recordImage (an ended record is the retired image, which
+holds no record), recordIn_retired, slot_retire_safe (a slot retirement is a
+safe post: it holds no record and its pre-image holds no package), and
+commitYield_safe reads the slot-fresh witness (no payload and not retired).
+The invariant's statement is unchanged. NativeHostContext.transport_sourceGate
+is stated after Config.transport and quantifies the snapshot and intent;
+ObjectiveActivityGateRoute names rootBytes by its full path. settlePurse_prefix
+zeta-reduces settlePurse's `have` before splitting (the proof in ea266ffa did not
+check).
+
+Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>

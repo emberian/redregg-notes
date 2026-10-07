@@ -1,0 +1,13 @@
+fix(config): the deployment's storageRate; the Host JSON names a retired cell; the driver and docs say retired
+
+Config gained storageRate, so ObjectiveKernelConfig.configOf must set it
+(storageRate := 1 credit per record byte, beside maxPatience). A retired
+activity cell is no activity payload: Host/ObjectiveActivityJson.cellJson now
+reports kind "retired" (the empty-body "reclaimed" branch is deleted, since no
+cell holds an empty-body payload any more), and the native acceptance driver's
+reclaimed checks read "retired". docs/OBJECTIVE-BEND-EVENTS.md states the
+retirement and the swept, closed purse.
+
+Breaks: the JSON kind "reclaimed" (and its tombstoneBytes) is gone.
+
+Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>

@@ -1,0 +1,45 @@
+kernel(activity)!: stored_checkpoints_typed; only the kernel activity writes its protected coordinates; the allowlist is classified
+
+CHECKPOINT-INVARIANT (a1733960 + 88916c8d on c12), merged onto retention-payers.
+
+- ObjectiveActivity.AdmittedTurn: one admitted kernel turn (publish, create,
+  birth, resolve, deliver, topUp, writeState, exhaust, abandon), each the
+  private-mk witness of its admission function; AdmittedTurn.intent, posts,
+  intent_writes. ObjectiveActivityReceiver.Decided is an abbrev of it.
+- Kernel/ObjectiveCheckpointInvariant (ObjectiveProofs): CheckpointTyped,
+  RecordCellsTyped, Step (an admitted turn under any sealing and schedule, or
+  an intent ordinaryGate admits), Reachable; stored_checkpoints_typed;
+  reachable_delivery_typed (the delivery theorem with no premise left). No hash
+  or coordinate disjointness is assumed: each turn READ every cell it writes.
+  Not stated: liveness.
+- Kernel/ObjectiveActivityGate: ordinaryGate refuses, naming the cell
+  (RejectReason.protectedWrite), any intent that writes a coordinate >=
+  reservedBase; NativeHost.Config.sourceGate runs it for every facet but the new
+  ControlFacet.objectiveActivity (Config.activityTransport is the activity's
+  own). Kernel/ObjectiveActivityGateRoute.derived_route: every record the
+  replay walk judges is an AdmittedTurn's intent or passes the gate.
+- Kernel refusals the proof needed: Publication and Birth record `fresh` (the
+  package / record coordinate held no activity cell at all); commitYield's
+  slotFresh refuses a slot coordinate holding ANY activity payload.
+- Over-named theorems: second_delivery_refused DELETED (only an awaitId
+  collision inhabits its premise); resume_binds_checkpoint renamed
+  delivery_fields_bind_checkpoint; refund_measurement_free's first conjunct is
+  stated on the batch the delivery posts (settlePurse_prefix).
+- Hypothesis ledger: QuorumSystem gains `nonempty` (and the theorems assuming no
+  quorum are DELETED: cannot_forge, no_progress_without_quorum,
+  no_finality_without_any_quorum, check_false_of_no_quorum, the deadQuorums
+  sibling); SignatureOrigin.EUFBreak is a definition; AckVerifier and
+  SameCoinHidingLaws take the relation as a parameter (named instance
+  tagVerifier with teeth); the trivial-structure allowlist is classified DATA |
+  PARAMETER | PREMISE and the ledger checks the named declarations (self-test
+  (f)).
+
+Say what you broke: DurableDataIntent.RejectReason gains protectedWrite;
+ControlFacet gains objectiveActivity; NativeHostReplay.Derived gains
+`activity`; Birth and Publication gain `fresh`; QuorumSystem, SignatureOrigin,
+AckVerifier and SameCoinHidingLaws change shape. An ordinary receiver that
+writes a cell id >= 2^256 is now refused (none does). The objective statement
+snapshot changes (regenerated in the pins commit). Nothing persisted changes.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>

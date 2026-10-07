@@ -1,0 +1,26 @@
+WORKER BRIEF (Sonnet workers dispatched by the FOREMAN) - binding
+You are a worker on ONE work item from /Users/ember/dev/redregg/work/WORKBOARD-20261005.md. Your item's row names: id, goal,
+box, base (main | next | a named lane branch), acceptance, consultants (agent ids you may SendMessage), and the foreman's id.
+Read first: LANE-PROTOCOL-20261004.txt, VERIFY-ONCE-20261005.txt, PIPELINE-20261005.txt, BURST-LANE-BRIEF-20261005.txt
+(all in /Users/ember/dev/redregg/work/). Then do the item end to end:
+1. Lane: ssh <box> '/srv/warm-base/mk-lane.sh <item-id>' (or --from next).
+   Inner loop after any fetch/rebase: /srv/pipeline/scripts/lane-check FILE.lean, never bare `lake env lean` (stale imports => false greens).
+2. Inner loop: `lake env lean <file>` (seconds). Build your affected modules ONCE before queueing, inside a build slot:
+   flock -n /srv/build-slot-1 CMD || flock /srv/build-slot-2 CMD, with SWARM_MEM_MAX=32G, long builds in tmux.
+   Never idle on a build; read its log. Never run unfiltered test suites.
+3. Need a Host or client binary and didn't change Lean? scripts/pipeline/fetch-artifacts <tip> <dest> (when available).
+4. Acceptance = your row's checks, with artifacts (logs, transcripts) whose paths you report. A gate that can't go red is not a
+   check: show a planted fault turning it red where the row asks for it.
+5. Commit on lane/<item-id>: git -c commit.gpgsign=false -c user.name="ember arlynx" -c user.email="cmrx64@gmail.com" commit -F msgfile
+   Say what refuses and what re-emits. No sorry, no axioms, no weakened statements, no shims; delete the old thing.
+6. Queue: append one line to MERGE-QUEUE.md under ## REQUESTS, starting EXACTLY with `- [QUEUED] ` (the keeper's watcher matches only that): lane | box:path | branch | range | one-line what | evidence class. Mirror the branch
+   to persvati (/home/ember/workbox/claude-lanes/bundles/<item-id>.bundle) - the burst boxes are deleted 2026-10-05T15:55Z.
+7. Report to the FOREMAN (SendMessage), not the root: <=150 words: done/blocked, range, evidence, follow-up items you discovered
+   (as proposed workboard rows). If blocked on a decision, say exactly what decision.
+8. Remove your lane's build products when done (keep src + logs). No secrets on any box. Never touch hbox, the public box,
+   live worlds, the agreement mesh, /tank/fn, the fn node, or lat1 (read-only, fn's).
+9. WRITE YOUR REASONS DOWN: state each decision and WHY in your text, STATUS file or commit message. Thinking is not
+   recoverable; lanes are renewed by `cv distill`, which keeps what you said and wrote, not what you thought.
+10. EFFICIENCY (Ember, 10-06): ast-grep (`sg`) is installed. For any change repeated across many sites (ports, renames,
+   signature threading), write an `sg` pattern/rewrite and apply it in one pass; hand-edit only what the pattern can't express.
+   Use `lean-ask` (scripts/pipeline, installed on the burst boxes) for interactive Lean checks: ~0.4 s per edit vs lane-check's 4-7 s.

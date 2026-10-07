@@ -1,0 +1,13 @@
+VERIFY ONCE (2026-10-05, Ember: "does a workitem get reverified severally for no reason?") - binding, supersedes "full gate green" lines in earlier briefs
+Each fact is established ONCE, by the party whose job it is:
+1. LANE: builds and checks what it CHANGED: the affected modules (lake builds only changed modules + dependents on a warm
+   clone anyway), the theorems/tests/journeys that exercise its change, and its named acceptance checks. A lane does NOT run
+   the full post-merge gate list (host-closure, import-boundary, hygiene, surfaces, objective-proofs snapshot) unless its
+   change touches exactly those pins; that is the merge keeper's job. Do not rebuild after every upstream landing: rebase
+   once, just before queueing.
+2. MERGE KEEPER: the ONLY full post-merge gate, once per batch, on ONE box (burst-gate). Batches as large as can be resolved.
+   No second, independent gate of the same tip on another box.
+3. BASES: the gated clone IS the new base. Other boxes receive its build products by copy (rsync box-to-box inside LAX2;
+   persvati pulls at its own pace or lags), never by rebuilding the same tip again.
+4. CI (GitHub): an independent audit after the fact, not a gate anyone waits on.
+5. ROOT: reads artifacts, not re-runs.

@@ -1,0 +1,52 @@
+OB-LTUO CONTINUATION (for a successor; written by the OB-LTUO lane at its context ceiling)
+Rows: /Users/ember/dev/redregg/work/OB-LTUO-20261005.md. Design: docs/objective-bend/MODULAR-TYPING.md (in lane).
+Lane: persvati /home/ember/workbox/claude-lanes/ob-ltuo-2/src, branch lane/ob-ltuo, on main 2dc3f37b.
+Bundle: persvati:/home/ember/workbox/claude-lanes/bundles/ob-ltuo.bundle (prereq 2dc3f37b). Queue lines ob-ltuo, -d3, -s2, -d6, -s3.
+
+LANDED ON THE LANE (each queued; commit messages carry decisions + reasons)
+ d1b24415 LT0 probes: tests/objective-bend-source/ltuo/ (probe-cohort.json + check-probes.ts, gate row ltuo-probes).
+          Each row pins CURRENT, names TARGET + owner; met-but-unpromoted = RED; any other move = RED.
+ 29a53670 LT1: Specification<T> = specification(SpecMeta, Extension<T>); SpecMeta/SpecLaws built-in sums ($builtin);
+          laws = hidden knot fields M.S#law#l, status `unchecked`. Proofs Compiler/ObjectiveBendSpecificationClosure.lean.
+ 1ac8325f LT2 design doc.
+ df54e73d step 1 (D3/D4): chainFix/layerAt: partial seeds over closed plain specs; named refusals.
+ 7c185b06 step 2: Theory/ObjectiveBendTemplates.lean canonical_instantiate (+ snapshot re-pin).
+ 7118d790 step 3a (D6): self-referring records = bounded variable; closed layer at such a target rebuilds the record.
+ a6de7b67 step 3b (D1/D5): open extensions/specs `X[Self has {..}, Super has {..}]`, `Super with {..}`, method members in
+          row types, expected-target plumbing (St.resultType/fixTarget: tail position or annotated let), discharge at fix.
+Probes: 26 rows, 25 at target; only W08 (law impossible: false, owner LT6) pending.
+
+DECISIONS (the ones a successor must not re-litigate without reason)
+ - Uniform first-order SpecMeta over an existential: no Core4 change; provenance by match. (LT1 commit.)
+ - Templates are instantiated by RE-ELABORATION at each (Self, Super), memoized knot fields M.X@i; the declaration's
+   own field is its instance at its bounds (the declaration-time check). No Core4 forall (D1).
+ - Self of an open decl = bounded variable "$Self:<key>" in the sum-variable table, bound = Self row ∪ requires.
+ - Recursive record target: discharge against its row; last layer annotated with the variable (fix needs output = target
+   syntactically; one-head alias unfold makes the row agree).
+ - Closed extensions in a chain keep declared types (inherited-mismatch). Whole-target seeds over closed plain specs keep
+   the old lowering (no term churn; examples' typed packets unchanged).
+ - NEVER run anything in the lane tree while a gate runs there (a gate's need_lean rebuilds; a mid-run copy contaminated
+   one run; and `pkill -f objective-frontend` from ssh kills the ssh itself).
+
+OPEN (in order)
+ 4. D2 + infer_instantiate (MODULAR-TYPING §6). Plan:
+    a. Theory/ObjectiveBendTyping: Assumptions gains `rigid : List Nat := []`; sameType's two alias clauses require
+       index ∉ rigid. With rigid = [] it is today's checker; re-run check-objective-proofs.sh proofs --update and
+       confirm only sameType's body hash + new decls move. Machine proofs never see rigid (instances are closed).
+    b. Front end: checkTemplate = the core check of the bound instance with the Self variable RIGID (today it is an alias:
+       stricter than nothing, not the rigid check; see the doc's "What stands in for D2").
+    c. Theorem infer_instantiate, by induction on fuel mirroring `infer` (Theory/ObjectiveBendTyping.lean:286-517).
+       Hypotheses: σ j = .variable j off rigid; non-rigid bounds mention no rigid var; every rigid var is in
+       shareableVariables and σ k is shareable under the instance's; σ k supports bound[σ] (Ty.supports, exact member
+       types); σ k not a computation. Conclusion: infer at A' = {rigid := [], bounds := non-rigid} with annotations
+       σ∘ann and ctx[σ] returns a type equal to r.type.instantiate σ (exact in get/extend/inject; canonical in the
+       conversion/agree cases via canonical_eq_instantiate — already proved). Needed lemmas: instantiate_id_of_no_rigid,
+       Ty.canonical idempotent, shareableUnder_instantiate. Hard cases: conversion (alias clause on a NON-rigid
+       variable: use no-rigid-in-bound + canonical_instantiate + idempotence), mix/fix exact equalities (σ applied to
+       both sides keeps syntactic equality).
+    d. Front-end corollary instance_accepted; planted fault: drop the `unsupported` discharge in chainFix and watch the
+       corollary fail to build.
+ - Not covered yet (stated in the doc): ancestry (non-plain) specs in partial-seed or open chains; open templates as
+   first-class values (they are their bound instance); partial seeds when the chain's provided row is not a record row.
+ - LT3/LT4/LT5/LT6 untouched except the reflection-contract draft (docs/objective-bend/REFLECTION.md).
+EVIDENCE LOGS: ob-ltuo-2/logs/{gate.log,gate-d3.log,gate-d6b.log,gate-s3.log,s2.log,probes-*}.

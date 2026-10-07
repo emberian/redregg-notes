@@ -1,0 +1,12 @@
+fix(activity): storageDeposit_awaiting precedes its use; the delivery's yield commit is derived from the resumed segment
+
+Two things did not compile once retention-payers' activity range met main.
+(1) storageDeposit_tracks_size used storageDeposit_awaiting before it was
+defined; the lemma moves above it. (2) SCHOLAR-CALLS (3573afaf) replaced
+Delivery.yieldedExact (a segmentCommit equation) with endExact (resumedSegment
+= .ok (segment, yielded)), so a faulted resume has no yield. The census proofs
+used the old field; resumedSegment_commit proves the same equation from
+endExact (a fault commits none, which is segmentCommit of a faulted segment),
+and Delivery.retention_cells_have_payer uses it. No statement changed.
+
+Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>

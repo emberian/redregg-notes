@@ -1,0 +1,9 @@
+gates: re-pin the Host closure and build surfaces for retention-payers + checkpoint-invariant
+
+Kernel.ObjectiveActivityGate enters the Host closure (the source gate calls it for
+every non-activity facet), and the build-surfaces manifest is regenerated for the
+modules this range touches. `check-host-closure.sh --update` and
+`lean-build-surfaces.py generate` output only. The objective statement snapshot
+regenerates to identical rows.
+
+Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>

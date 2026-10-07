@@ -1,0 +1,51 @@
+run root /run/user/1001/p7.Ktv9IO/r
+  step   hook    bytes  margin  socket (sun_path holds 107)
+  J0     world      35      72  /run/user/1001/jm.XXXXXX/world.sock
+  M3     m3         44      63  /run/user/1001/jm.XXXXXX/m3/public/mini.sock
+  M4     m4         50      57  /run/user/1001/jm.XXXXXX/m4/store/public/mini.sock
+  M5     m5         66      41  /run/user/1001/jm.XXXXXX/m5/hermes/state/mcp-0000000000000011.sock
+  M7     m7         44      63  /run/user/1001/jm.XXXXXX/m7/public/mini.sock
+  M8     m8         52      55  /run/user/1001/jm.XXXXXX/m8/fixture/public/mini.sock
+  J13    j13        51      56  /run/user/1001/jm.XXXXXX/j13/store/public/mini.sock
+  JN2    jnock2     54      53  /run/user/1001/jm.XXXXXX/jnock2/world/public/mini.sock
+  JN3    jnock3     54      53  /run/user/1001/jm.XXXXXX/jnock3/world/public/mini.sock
+  JN5    jnock5     54      53  /run/user/1001/jm.XXXXXX/jnock5/world/public/mini.sock
+  JPAY4  jpay4      58      49  /run/user/1001/jm.XXXXXX/jpay4/acceptance/public/mini.sock
+  JPAY6  jpay6      70      37  /run/user/1001/jm.XXXXXX/jpay6/runtime-state/mcp-0000000000000011.sock
+  JROTL  jrotl      37      70  /run/user/1001/jm.XXXXXX/jrotl/f.sock
+STEP J0: clean start: private single-authority service, one sponsor ...
+STEP J0 PASS 2.103s service up and a signed read answered in 2.081s
+STEP J1: enroll an independently generated newcomer key ...
+STEP J1 PASS 3.047s subject 11527919601322900226, record 1; key absent from genesis/config; lookup = same receipt
+STEP J2: sponsor creates a resource under a permissive law ...
+STEP J2 PASS 1.236s object 16639864360055984115 under all[], record 2
+STEP J3: sponsor delegates observe+mutate (no control) to newcomer ...
+STEP J3 PASS 2.401s child 11737175847146714768 verbs observe,mutate, record 3
+STEP J4: newcomer signed read, writes field to 1, reads back 1 ...
+STEP J4 PASS 3.186s read 0.723s, write 1.510s, readback field 2 = 1, record 4
+STEP P7KR: P7: a kind-definition revision between consent and admission never commits a different effect ...
+STEP P7KR PASS 8.767s P7 verdict: SAME-EFFECT
+
+step  status      wall_s  what / detail / deciding artifact
+J0   PASS         2.103  clean start: private single-authority service, one sponsor
+                          service up and a signed read answered in 2.081s
+                          -> /run/user/1001/p7.Ktv9IO/r/world/handoff.json
+J1   PASS         3.047  enroll an independently generated newcomer key
+                          subject 11527919601322900226, record 1; key absent from genesis/config; lookup = same receipt
+                          -> /run/user/1001/p7.Ktv9IO/r/world/attempts/newcomer/submit.json
+J2   PASS         1.236  sponsor creates a resource under a permissive law
+                          object 16639864360055984115 under all[], record 2
+                          -> /run/user/1001/p7.Ktv9IO/r/world/sponsor/attempts/create-shared/outcome.json
+J3   PASS         2.401  sponsor delegates observe+mutate (no control) to newcomer
+                          child 11737175847146714768 verbs observe,mutate, record 3
+                          -> /run/user/1001/p7.Ktv9IO/r/world/sponsor/attempts/grant-newcomer/outcome.json
+J4   PASS         3.186  newcomer signed read, writes field to 1, reads back 1
+                          read 0.723s, write 1.510s, readback field 2 = 1, record 4
+                          -> /run/user/1001/p7.Ktv9IO/r/world/newcomer-workspace/attempts/first-action/outcome.json
+P7KR  PASS         8.767  P7: a kind-definition revision between consent and admission never commits a different effect
+                          P7 verdict: SAME-EFFECT
+                          -> /run/user/1001/p7.Ktv9IO/r/steps/P7KR/jkind-revise-consent/rows.tsv
+
+FRONTIER: END   (accepted records: 4; load average start/end: 8.64 8.56 8.70 / 11.75 9.31 8.94 on 16 CPUs; result: /run/user/1001/p7.Ktv9IO/r/journey-result.json)
+JOURNEY-EXIT 0
+COPIED

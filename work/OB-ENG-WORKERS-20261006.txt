@@ -1,0 +1,40 @@
+OB-ENG WORKERS (burst 2, 2026-10-06) - binding addendum to WORKER-BRIEF-20261005.txt for workers of DEPUTY-OB-ENG
+Foreman = DEPUTY-OB-ENG (your parent agent). Your final message is your report to it (<=250 words + artifact paths).
+
+HARD CONSTRAINT (Ember): NO change to Objective Bend's MEANING until the GPT-6 grounding round: no change to Core4 typing
+rules, Core4/DemandMachine semantics, the .obend parser/elaborator, the Ty language, or what a well-typed program means.
+Kernel turns, records, laws judged by the kernel, codecs, proofs ABOUT existing semantics: allowed. If your item turns out to
+need a meaning change, STOP that part, write the design question in your STATUS (what, why, options) and report it.
+
+BASE: GitHub main 4ef4e808 (https://github.com/emberian/minidregg.git). Before queueing: git fetch + rebase onto the newest
+main (or `next` if the merge keeper publishes one); conflicts are resolved forward.
+
+PHASE 1 (now, boxes not yet provisioned): AUTHOR in your local clone
+  /private/tmp/claude-501/-Users-ember-dev-breadstuffs/ce776c01-2f59-4f57-8177-23008d71bf57/scratchpad/obeng/<item>
+  (branch lane/<item>, at main 4ef4e808, git identity configured). It has NO .lake: do NOT build Lean locally (no lake, no
+  lean on the Mac - it is a laptop and a resource grab). Read code, design, write the source and the proofs as carefully
+  as you can without a checker, commit locally.
+PHASE 2 (box): the burst boxes are ready when /Users/ember/dev/redregg/work/BURST2-BRIEF-20261006.txt exists. Read it whole;
+  it supersedes any box detail here. Your box is burst2-b. Make a lane there per that brief (mk-lane), bring your commits
+  (git bundle from your local clone -> scp -> fetch), then inner loop with /srv/pipeline/scripts/lane-check FILE.lean (or what
+  the brief names), build the affected closure ONCE in a build slot, filtered checks only.
+  To wait for the brief, foreground-wait in bounded chunks, e.g.
+    for i in $(seq 1 9); do [ -f /Users/ember/dev/redregg/work/BURST2-BRIEF-20261006.txt ] && break; sleep 60; done
+  (timeout 600000), and keep authoring between checks. Never background-and-wait for a notification.
+
+FILES: DEPUTY-OB-ENG owns Kernel/ObjectiveActivity*, Kernel/ObjectRecord*, Kernel/ObjectState*, Kernel/ObjectiveCall,
+  Kernel/ObjectiveSend, Kernel/AnswerSlot, Kernel/Seat*, Kernel/ActivitySeatEnd, Kernel/ObjectiveCheckpointInvariant,
+  Kernel/ObjectiveAdmittedTurn, Host/SeatJson, Host/ObjectiveActivityJson. Sibling OB-ENG workers may edit the same files
+  (notably ObjectiveActivity.lean): keep hunks small and local, rebase forward, never revert a sibling. Any OTHER deputy's
+  file (Kernel/Receiving*, Kernel/Pay*, Store crate, Host/Main ops, native/resource-client, world/*) -> ask the foreman first.
+  Generated pins (protocol/lean-build-surfaces.json, scripts/gates/host-closure.pin, objective-proofs snapshot): regenerate
+  with the repo's scripts at your tip; the keeper re-pins on conflict.
+
+ASSURANCE: theorems are stated about the ADMITTING FUNCTION (f ... = .ok x -> ...), premises inhabitable (name an
+  inhabitant), no identity carriers, no projection-as-theorem, no #guard (GUARD-DISCIPLINE: named theorem + #assert_axioms;
+  native_decide only with #assert_compiled), no sorry, no new axioms, no weakened statement under a promised name. Each
+  tooth: show a planted fault turning it red (keep the log). Commit message: what shape changed, what re-emits, what
+  re-genesis, what now refuses to load. End commit messages with:
+  Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>   (Sonnet workers: Claude Sonnet, same form)
+QUEUE: do NOT append to MERGE-QUEUE.md yourself; report the range to the foreman, who reviews and queues.
+STATUS: keep <your lane dir>/STATUS.txt (phase 1: <local clone>/STATUS.txt, untracked) with decisions AND reasons.

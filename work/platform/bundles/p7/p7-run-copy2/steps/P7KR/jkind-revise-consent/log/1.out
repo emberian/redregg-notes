@@ -1,0 +1,31 @@
+/run/user/1001/p7.Ktv9IO/r/world/sponsor/sources/create-p7-poll.authoring/g0001/intent.bin
+{
+  "acceptedCount": "5",
+  "confirmation": "installed",
+  "eventId": "24009233825952711899113926127463171145561552266601783856732291827938678606417",
+  "transactionId": "56766484810118868376684942855110333698822920868121636893782257974476618881427",
+  "type": "confirmed",
+  "worldRoot": "48593613076760228612873162667751458599062444855166361326834035484103658983886"
+}
+{
+  "authority": "hint-only",
+  "controlCapability": "11438370937836614812",
+  "kind": "object",
+  "name": "p7-poll",
+  "observeCapability": "11906578564637142280",
+  "operationCapability": "11906578564637142280",
+  "provenance": {
+    "birthReceipt": {
+      "acceptedCount": "5",
+      "confirmation": "installed",
+      "eventId": "24009233825952711899113926127463171145561552266601783856732291827938678606417",
+      "transactionId": "56766484810118868376684942855110333698822920868121636893782257974476618881427",
+      "type": "confirmed",
+      "worldRoot": "48593613076760228612873162667751458599062444855166361326834035484103658983886"
+    },
+    "reservationDigest": "71eb3851d55c9b7b18546837ad0441ca50ee9592ba49a5cf689dd6898289b081",
+    "reservationRecord": "/run/user/1001/p7.Ktv9IO/r/world/namespace/request-71eb3851d55c9b7b18546837ad0441ca50ee9592ba49a5cf689dd6898289b081.json"
+  },
+  "target": "18373116056229274132",
+  "type": "minidregg-participant-reference-v1"
+}

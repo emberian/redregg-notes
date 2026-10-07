@@ -1,0 +1,5 @@
+219:rc=0
+219 /srv/lanes/rollup/act-09.log
+reopen-view-identical                        check     ok {"before": "155", "after": "155"}
+{"rows": 204, "failed": []}
+rc=0

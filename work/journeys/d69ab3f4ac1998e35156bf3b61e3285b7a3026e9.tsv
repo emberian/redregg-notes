@@ -1,0 +1,15 @@
+journey/J0	PASS	4.062	?	service up and a signed read answered in 4.036s
+journey/J1	PASS	6.385	?	subject 17029742838652548391, record 1; key absent from genesis/config; lookup = same receipt
+journey/J2	PASS	2.700	?	object 13378158799774017530 under all[], record 2
+journey/J3	PASS	6.132	?	child 14873101527881991768 verbs observe,mutate, record 3
+journey/J4	PASS	8.948	?	read 1.972s, write 4.623s, readback field 2 = 1, record 4
+journey/J5	FAIL	28.151	?	2 of 6 stranger attempts were not refused by the Host (see /run/user/1001/pj.EJj2SZ/j/steps/J5/refusals.tsv)
+journey/J6	PASS	8.505	?	reopen to first signed read 2.846s; J1 receipt and field 2 = 1 recovered; retry replayed tx with its original (root, height); read (root, height) unchanged: 88528353858400380472600497119151116329392717020201042671933477232527509932273 15
+journey/J7	PASS	21.754	?	law v1 not(any[]) installed (submit 2.877s); J3 grant wrote 1->7 (submit 3.495s). The new law is still permit-all
+journey/J8	FAIL	19.827	?	1 of 5 attempts under deny-all were not refused by the Host (see /run/user/1001/pj.EJj2SZ/j/steps/J8/refusals.tsv)
+journey/JROT	FAIL	236.123	?	hook exit 1: JROT: 3 of 30 checks failed (see /run/user/1001/pj.EJj2SZ/j/steps/JROT/jrot/jrot.tsv)
+journey/JROTL	PASS	70.363	?	JROTL: 10/10 checks; a lost op-142 reply recovered by op-143 lookup (epoch 2, one submit); a never-seen rotation looks up absent and is never resubmitted
+objective	PASS	360	?	{"allPass": true, "rows": 17, "readbacks": 2}
+rooms	FAIL	122	?	J5      FAIL;JPRIV1  FAIL 0 rows, 0 red, 0/88 expected rows present and ok
+activity	ABSENT	0	7dd88709f852 kernel(activity)!: a yield stores the Plan extraction's stat	
+seats	ABSENT	0	?	

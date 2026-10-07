@@ -219,3 +219,228 @@ volume is also at 98% (113 GiB free of 7.3 TiB), under the protocol's 10% stop l
     activity's escrow returned;
   - full gate on hbox (`Minidregg +Host.Main:leanArts ObjectiveProofs`).
 - **After that:** REBIRTH as part of the L3/upgrade lane.
+
+---
+
+## Appendix A — ACTIVITY-METERING-DISPOSAL: theorem statements and demo scenarios (2026-10-05)
+
+**Quest.** Approved by the root as ACTIVITY-METERING-DISPOSAL. It covers:
+- F3: exhaustion charges the full declared envelope;
+- F4: records deleted on done/faulted, and an abandon turn after deadline plus grace that returns escrow;
+- Bread D-6: decided slots reclaimed, and every retention cell has a payer.
+
+**Sequence** (one writer per file): ACTIVITY-NATIVE → OBJECT-RECORD → RESUME-WITH-VIEW → this lane. I will watch
+`work/MERGE-QUEUE.md` and clone from the hbox warm base when it is my turn.
+
+**Caveat on names.** The statements below are written against main `36fca3ac`: the `Delivery` structure, `Escrow`,
+`Path`, `intentOf`, `awaitClaim` and `AnswerSlot.decisionClaim`. RESUME-WITH-VIEW and OBJECT-RECORD will rename
+fields (the outcome sum loses `conflict`; object cells get their own namespace). I will restate on the tip I rebase
+onto, keeping the *content* below fixed.
+
+### A.1 Design rulings this lane implements (from the root's 10-05 rulings)
+
+- **Exhaustion is a committed turn, not a refusal.**
+  - **When it is admitted.** Only when the settled outcome, typed and resumed exactly as in `deliver`, makes
+    `runSegment` return `.error .exhausted` under envelope `escrow.ticks path + extraTicks`. No submitter can
+    "declare" an exhaustion: it is admitted if and only if no `Delivery` exists for the same snapshot, height and
+    request.
+  - **What it charges.** It debits `escrow.used path`, which the record then sets to 0 (the activity is
+    `AwaitsFunding`). It also debits the submitter `tariff.price extraTicks`.
+  - **What it leaves unchanged:** checkpoint, digest, generation, phase and await id. The await claim is NOT spent,
+    so the activity stays at its yield.
+  - **Zero envelope.** An exhaustion whose total charge would be 0 is refused (`unfunded`), so repeated free
+    attempts are impossible.
+  - **Why this is measurement-free.** Both amounts are declared envelopes. This satisfies the root's G1 ruling
+    together with the 10-05 METERING ruling.
+- **Disposal on terminal segments.** When a birth or delivery segment ends `finished` or `faulted`:
+  - the record cell is written *vacant*: the unwritten-cell image `[]` (ASSUMED: `[]` is the store's absent-cell
+    image; to be confirmed against the sparse-Merkle leaf encoding before landing, or a real delete added);
+  - the result or fault bytes go into the turn's event, so the receipt is the only copy;
+  - the unused fee of the pair is returned, as today.
+- **Decided slots reclaimed.** A delivery that settles from a decided slot writes that slot's cell vacant in the
+  same intent. Expiry on delivery or abandon does too.
+- **Abandon turn.**
+  - **When.** Anyone may submit it at a height strictly greater than `await.deadline + config.abandonGrace`.
+  - **What it does, in one intent:**
+    - spends `awaitClaim` (so it races deliveries under consume-once);
+    - if the source is an open slot, spends `decisionClaim` and vacates the slot cell;
+    - vacates the record cell;
+    - consumes `escrow.timeoutFee` as the abandon turn's own fee;
+    - credits the payer `escrow.resumeFee`, whatever exhaustion has left of it.
+  - **Why.** This is KeyKOS's "junk queue" with a built-in exit, and Agoric's #8955 done up front.
+- **Payers.** Every cell a kernel turn writes with non-vacant bytes classifies to exactly one payer:
+  - a record cell → `record.escrow.payer`;
+  - a slot cell → the payer of the record it names;
+  - an account cell → its subject;
+  - a package cell → its publisher (publish gains a `publisher` field: a new package frame);
+  - an object state cell → the OBJECT-RECORD payer.
+
+### A.2 Theorem statements (all `#assert_axioms`-pinned; none vacuous)
+
+```lean
+/-- **Exhaustion is never free.** An admitted exhaustion charges the DECLARED
+price of the envelope it ran under, positive, and leaves the activity exactly at
+its yield with the path's fee spent. -/
+theorem exhaustion_charges_declared
+    (ex : Exhaustion config snapshot height request) :
+    ex.charge = ex.record.escrow.used ex.settlement.path + config.tariff.price request.extraTicks ∧
+    0 < ex.charge ∧
+    ex.next.checkpoint = ex.record.checkpoint ∧
+    ex.next.checkpointDigest = ex.record.checkpointDigest ∧
+    ex.next.generation = ex.record.generation ∧
+    ex.next.phase = ex.record.phase ∧
+    ex.next.escrow.used ex.settlement.path = 0 ∧
+    awaitClaim ex.await.id ∉ ex.intent.nullifiers
+
+/-- Exhaustion is a fact about the run, not a claim of the submitter: for one
+record, snapshot, height and request, an exhaustion and a delivery never both
+exist. -/
+theorem exhaustion_excludes_delivery
+    (ex : Exhaustion config snapshot height request)
+    (delivery : Delivery config snapshot height request) : False
+
+/-- The charge depends on the record, the path and the declared extra envelope
+only: any two exhaustions of one record at one snapshot and height, with equal
+declared extras, charge the same. -/
+theorem exhaustion_charge_measurement_free
+    (one : Exhaustion config snapshot height first) (two : Exhaustion config snapshot height second)
+    (sameRecord : first.record = second.record) (sameExtra : first.extraTicks = second.extraTicks) :
+    one.charge = two.charge
+
+/-- **Disposal frees the record.** A delivery whose segment finished or faulted
+leaves the record cell vacant, the settled decided slot vacant, and the result in
+the turn's event (the receipt is the only copy). -/
+theorem disposal_frees_record
+    (delivery : Delivery config snapshot height request) (terminal : delivery.segment.terminal)
+    (installed : DurableDataIntent.execute .complete snapshot delivery.intent = .accepted next) :
+    next.canonicalBytes request.record = vacant ∧
+    (∀ slot decider, delivery.await.source = .reply slot decider →
+      next.canonicalBytes (AnswerSlot.cell slot) = vacant) ∧
+    terminalBytes delivery.segment <:+: delivery.intent.event.canonicalBytes
+
+/-- A birth whose first segment is terminal writes no record at all. -/
+theorem birth_terminal_writes_no_record
+    (b : Birth config snapshot height request) (terminal : b.segment.terminal) :
+    b.cell ∉ (b.intent.writes.filter (fun w => w.bytes ≠ vacant)).map DataWrite.cellId
+
+/-- **Decided slots are reclaimed, and a reclaimed slot is never decided
+again.** -/
+theorem decided_slot_reclaimed
+    (delivery : Delivery config snapshot height request)
+    (fromDecided : delivery.settlement.path = .resumed) (slot decider)
+    (source : delivery.await.source = .reply slot decider)
+    (installed : DurableDataIntent.execute .complete snapshot delivery.intent = .accepted next) :
+    next.canonicalBytes (AnswerSlot.cell slot) = vacant ∧
+    ∀ later (r : ResolveRequest), r.slot = slot → (resolve config next later r).isOk = false
+
+/-- **Abandon returns escrow.** An admitted abandonment is past deadline plus
+grace, spends the await (so it races deliveries under consume-once), vacates the
+record and any open slot, consumes the timeout fee as its own and credits the
+payer the remaining resume fee, a function of the record alone. -/
+theorem abandon_returns_escrow
+    (ab : Abandonment config snapshot height request) :
+    ab.await.deadline + config.abandonGrace < height ∧
+    awaitClaim ab.await.id ∈ ab.intent.nullifiers ∧
+    (ab.record.escrow.payer, 0, ab.record.escrow.resumeFee) ∈ ab.movements ∧
+    postAt snapshot request.record vacant ∈ ab.posts ∧
+    (∀ slot decider, ab.await.source = .reply slot decider → ab.slotOpen →
+      AnswerSlot.decisionClaim slot ∈ ab.intent.nullifiers ∧
+      postAt snapshot (AnswerSlot.cell slot) vacant ∈ ab.posts)
+
+/-- Once an abandonment installs, no delivery and no exhaustion of that await is
+ever accepted, and vice versa (both spend `awaitClaim` / CAS the record). -/
+theorem abandon_delivery_exclusive
+    (ab : Abandonment config snapshot height request)
+    (installed : DurableDataIntent.execute .complete snapshot ab.intent = .accepted next)
+    (later : DataIntent rootBytes) (again : awaitClaim ab.await.id ∈ later.nullifiers) :
+    ∀ schedule after, DurableDataIntent.execute schedule next later ≠ .accepted after
+
+/-- **Every retention cell has a payer.** Every non-vacant post of every kernel
+turn (publish, birth, resolve, deliver, exhaust, abandon) targets a cell whose
+payer the post-state names. -/
+theorem retention_cells_have_payer (turn : KernelTurn config snapshot height)
+    (installed : DurableDataIntent.execute .complete snapshot turn.intent = .accepted next) :
+    ∀ post ∈ turn.posts, post.bytes ≠ vacant → (retentionPayer next post.cell).isSome
+```
+
+**Teeth.** Each theorem gets a falsifier in the demo, with the mutation's effect asserted before the verdict is read:
+- for `exhaustion_charges_declared`: make the exhaustion path commit nothing, and the balance check of S1 must go
+  red;
+- for `disposal_frees_record`: skip the vacate post, and the S8 census must report the leaked record;
+- for `abandon_returns_escrow`: return `pair` instead of `resumeFee`, and the S5 conservation sum must go red.
+
+### A.3 Demo scenarios (`Host/ObjectiveActivityWorld`, world/activity programs; every check asserted by exit status)
+
+- **S1 Exhaustion charges.**
+  - A Tally variant whose resume needs `resumeTicks + k`. A delivery with `extraTicks = 0` is accepted as an
+    `exhausted` receipt:
+    - the payer's balance drops by exactly `price resumeTicks`;
+    - the record's checkpoint digest, generation and await id are byte-identical;
+    - the escrow path fee is 0.
+  - A second delivery with `extraTicks = 0` is refused `unfunded` (and no balance moves).
+  - A delivery with `extraTicks ≥ k` succeeds, charging the submitter `price extraTicks`; the payer gets
+    `timeoutFee` back.
+- **S2 Looping resident charged per attempt.** A program that never yields within `maxTicks`. Each of N attempts
+  with `extraTicks = maxTicks - resumeTicks` is an accepted `exhausted` receipt; submitter balances fall by exactly
+  N × price; at no step does an attempt cost 0.
+- **S3 Done disposal.**
+  - The activity finishes, and after the turn:
+    - the record cell and its decided slot cell are vacant;
+    - the receipt event contains the result bytes;
+    - the unused fee is credited.
+  - Re-delivery is refused `recordMissing`; re-resolving the slot is refused `slotMissing` (and its claim is
+    already spent).
+- **S4 Faulted disposal.** A program that diverges after its first resume: the record is vacant, the fault reason
+  is in the event, and the unused fee is returned.
+- **S5 Abandon.**
+  - A reply await whose decider never decides.
+  - Abandon at `deadline + grace` is refused (`notYetAbandonable`); at `deadline + grace + 1` it is accepted:
+    - the slot is expired and vacant, and the record is vacant;
+    - the payer is credited `resumeFee`, and `timeoutFee` is consumed;
+    - the conservation sum over all accounts before and after equals the fees consumed.
+  - Afterwards: a late `resolve` is refused, a late `deliver` is refused, and an exact retry of the abandon replays.
+- **S6 Abandon after exhaustion.** S1's parked activity, abandoned after grace, returns only what exhaustion left
+  (`resumeFee = 0` ⇒ credit 0, and the turn still vacates both cells).
+- **S7 Race.** At a height past `deadline + grace`, a timeout delivery and an abandon are both admissible. Whichever
+  installs first wins; the other is refused `alreadyConsumed` or `stalePreRoot`, in both orders.
+- **S8 Retention census.**
+  - After S1–S7, scan every non-vacant cell of the scratch world and classify it with `retentionPayer`; the run
+    fails on any unclassified cell.
+  - Expected classifications: zero record cells and zero slot cells for ended activities; one account cell per
+    subject; one package cell per publisher.
+
+**Acceptance** (as approved): the theorems above pinned in `ObjectiveProofs`; S1–S8 green with their falsifiers
+demonstrated red; full gate on hbox (`swarm-build env LEAN_NUM_THREADS=4 lake build Minidregg +Host.Main:leanArts
+ObjectiveProofs` plus the MERGE-QUEUE post-merge checks). Commit on `lane/activity-metering-disposal`, unsigned,
+never pushed; I append the request line to MERGE-QUEUE.
+
+**Out of scope (named so nobody assumes otherwise):**
+- the storage deposit re-priced at each yield, and pricing checkpoint encode/decode (METERING: OS W4/W7, Bread D-5);
+  this lane only guarantees each retention cell *has* a payer;
+- collection at the yield;
+- REBIRTH.
+
+### A.4 As built (2026-10-05, range 1 on lane/metering-disposal over Bread's resume-view 46b9d4fd)
+
+The A.2 statements were implemented under these names, all in `Kernel/ObjectiveActivity.lean` and pinned with
+`#assert_axioms`:
+- **Exhaustion:** `exhaustion_charges_declared`, `exhaust_charges_are_declared`, `exhaustion_spends_nothing`,
+  `exhaustion_excludes_delivery`, `exhaustion_charge_measurement_free`, `Exhaustion.conserves`.
+- **Disposal and slot reclamation:** `delivery_end_vacates`, `birth_end_vacates`, `settle_reclaims_slot`,
+  `delivery_reclaims_slot`, `recordOfBody_vacant`, `slotOfBody_vacant`.
+- **Abandonment:** `abandon_returns_escrow`, `abandon_closes_open_slot`, `abandon_delivery_exclusive`,
+  `Abandonment.conserves`.
+
+Changes from A.1 and A.2:
+- **The vacated image** is `image role key []`, a registry-live cell with an empty kernel body. It is not `[]`,
+  because PhysicalPostLaw admits only `.live` images and `.retired` is refused by the bridge.
+- **Readers refuse an empty body explicitly** (`recordOfBody`, `slotOfBody`), because `String.toUTF8` frame
+  literals do not reduce in the kernel. The refusal is therefore stated at the body, not the cell bytes.
+- **No zeroing of the escrow fee.** The purse balance itself carries `AwaitsFunding`: after an exhaustion, the
+  next delivery's used fee may not be payable until a `topUp`.
+- **Deliveries also refuse early.** `deliver` refuses an envelope at or below `tried` before running.
+- **Range 2 (open):**
+  - `retention_cells_have_payer`;
+  - package-cell payers;
+  - Book `deregisterAccount` for emptied purses (the consultant's design: a third Batch field, conserving);
+  - storage deposits per checkpoint.

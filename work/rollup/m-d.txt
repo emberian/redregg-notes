@@ -1,0 +1,11 @@
+fix(invariant): settlePurse_prefix over the deposit-taking settlePurse; OutboxDelivery imports AssertAxioms
+
+CHECKPOINT-INVARIANT's settlePurse_prefix was proved against the settlePurse of
+main; retention-payers' settlePurse takes the next record's storage deposit and
+an ending turn appends a sweep and a deregistration, so the lemma is restated
+with the deposit argument and proved over the new two arms (a yield keeps the
+turn's own batch; an end appends to its operations). refund_measurement_free
+is unchanged. Kernel/OutboxDelivery states #assert_axioms without importing
+Theory.AssertAxioms (it elaborated only against a stale import closure).
+
+Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>

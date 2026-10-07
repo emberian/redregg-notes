@@ -1,0 +1,7 @@
+{
+  "host": "/srv/lanes/P4-PLAN-SCOPED-REPLAY/src/.lake/build/bin/minidregg-host",
+  "mini": "/srv/lanes/P4-PLAN-SCOPED-REPLAY/target/release/mini",
+  "shell": "/srv/lanes/P4-PLAN-SCOPED-REPLAY/target/release/mini",
+  "store": "/srv/lanes/P4-PLAN-SCOPED-REPLAY/target/release/minidregg-link-sqlite-store",
+  "verifier": "/srv/lanes/P4-PLAN-SCOPED-REPLAY/target/release/minidregg-credential-signature-verifier"
+}

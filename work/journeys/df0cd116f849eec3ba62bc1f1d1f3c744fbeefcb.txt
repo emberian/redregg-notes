@@ -1,0 +1,19 @@
+tip df0cd116f849eec3ba62bc1f1d1f3c744fbeefcb  labels: next green main
+journey wall 982 s on burst-20261005-e2e-e2e7d (8 CPUs), finished 2026-10-04T20:28:03Z; set built 2026-10-04T20:06:30Z
+
+ROW            STATUS  WALL_S   OWNER  DETAIL
+journey/J0     PASS    5.046    ?      service up and a signed read answered in 4.999s
+journey/J1     PASS    6.815    ?      subject 16963845052155241889, record 1; key absent from genesis/config; lookup = same receipt
+journey/J2     PASS    3.255    ?      object 16021134750974870881 under all[], record 2
+journey/J3     PASS    7.397    ?      child 11021491717401767382 verbs observe,mutate, record 3
+journey/J4     PASS    11.888   ?      read 2.539s, write 6.070s, readback field 2 = 1, record 4
+journey/J5     FAIL    31.916   ?      2 of 6 stranger attempts were not refused by the Host (see /srv/journeys/df0cd116f849eec3ba62bc1f1d1f3c744fbeefcb/rows/journey/step-J5/refusals.tsv)
+journey/J6     PASS    9.012    ?      reopen to first signed read 3.171s; J1 receipt and field 2 = 1 recovered; retry replayed tx with its original (root, height); read (root, height) unchanged: 96415485881629089444793648693524301037294711046008508903877432758267410801487 15
+journey/J7     PASS    22.604   ?      law v1 not(any[]) installed (submit 3.027s); J3 grant wrote 1->7 (submit 3.524s). The new law is still permit-all
+journey/J8     FAIL    21.481   ?      1 of 5 attempts under deny-all were not refused by the Host (see /srv/journeys/df0cd116f849eec3ba62bc1f1d1f3c744fbeefcb/rows/journey/step-J8/refusals.tsv)
+journey/JROT   FAIL    245.306  ?      hook exit 1: JROT: 3 of 30 checks failed (see /srv/journeys/df0cd116f849eec3ba62bc1f1d1f3c744fbeefcb/rows/journey/step-JROT/jrot/jrot.tsv)
+journey/JROTL  PASS    76.344   ?      JROTL: 10/10 checks; a lost op-142 reply recovered by op-143 lookup (epoch 2, one submit); a never-seen rotation looks up absent and is never resubmitted
+objective      PASS    410      ?      {"allPass": true, "rows": 17, "readbacks": 2}
+rooms          FAIL    123      ?      J5      FAIL;JPRIV1  FAIL 0 rows, 0 red, 0/88 expected rows present and ok
+activity       ABSENT  0        ?      
+seats          ABSENT  0        ?      

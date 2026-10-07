@@ -1,0 +1,78 @@
+kernel(activity)!: ended activities and settled slots are RETIRED through the World's retires; the purse is swept and closed on the Book; every yield reserves a storage deposit; every retained cell names its payer
+
+Retire, not tombstone.
+- `retiredImage` is the registry's retired lifecycle image. An ended record
+  (`recordImage`: done or faulted) and every settled or abandoned slot
+  (`slotRetire`) are written as that image. `vacant`, `recordBody`,
+  `recordOfBody` and `slotOfBody` are deleted, and readers decode directly.
+- A retired coordinate refuses by name: `recordRetired` / `slotRetired`
+  (`absentRecord`/`absentSlot`), proved for deliver, exhaust, abandon, topUp and
+  resolve (`*_retired_refused`). A birth refuses a retired record coordinate, and
+  a yield refuses to open a slot at a retired one.
+- The bridge: `TurnOfIntent.Codec` gains `retires` (the codec's retirement bytes,
+  which read as absent). A write of them over a present cell is
+  `Delta.retire`: a guarded leg to the empty store, plus the id in the derived
+  turn's `retires`. `ofCells` takes the retired set and refuses any write of a
+  retired cell (`retiredCell`) or a retirement of an absent one
+  (`retireAbsent`). `ofCells_step` is re-proved with retires
+  (`sysPatch_valid_derived`, `applyRetires_exists`), and its premise "nothing is
+  retired" is gone. `retires_iff`: a derived turn retires exactly the written
+  cells whose bytes are the retirement. `DeployedBridge.decodeCell` reads the
+  retired image as absent and `retiresCell` marks it. `HostRefinesWorld`:
+  `SnapRepresents.retired` is now exact (retired in the world iff the deployed
+  bytes are the retirement) instead of G-RETIRE's "never", and `ofIntent_run`
+  proves it is preserved. `deployed_cells_iff` gains the retired disjunct.
+- `PhysicalPostLaw` admits the retired image only at protected coordinates
+  (>= `ObjectiveActivityCell.reservedBase`). This is the one widening, and the
+  bridge still requires a guarded emptying leg.
+
+The purse is swept and closed. An ending settlement (`settlePurse`) and an
+abandonment (`abandonCharges`) sweep every positive balance the purse holds,
+in every asset (`sweep`, `purseAssets`), to the payer's account, and deregister
+the purse in the same batch. `Delivery.end_closes_purse` and
+`Abandonment.closes_purse` show it is no Book account afterwards, so any later
+posting naming it is refused by the Book by name.
+
+Storage deposit. `Config.storageRate`. Every yield (birth and delivery) must
+leave pair + `storageDeposit` (rate * |encodeRecord next|) in the purse after
+the turn's own postings, or the yield is refused `awaitsFunding` (parked).
+`underfunded` at birth names the same reserve. Theorems: `yield_reserves_pair`,
+`settlePurse_yields`, `Delivery.yield_reserves_deposit` (re-priced at each
+resume from the new record), `Birth.yield_reserves_deposit`,
+`storageDeposit_tracks_size`, `yield_short_parks`, `storageDeposit_ended`, and
+`purse_released_only_at_end` (only an ending settlement moves purse funds out).
+
+Retention census. `payerRoute` names a route for every activity role (record:
+escrow; slot: the record it answers; state: its object's `ObjectRecord.payer`;
+package: `Stored.payer`; object: its own payer), and `payerOf` reads it from
+the cell bytes. `retention_census_paid` (decide) holds for the role census;
+`planted_census_unpaid` shows a census with one more kind that has no route
+fails it. The semantic half is over each turn's installed bytes (`afterPosts` =
+`DataSnapshot.install`, `install_afterPosts`): `Birth/Delivery/Exhaustion/
+Publication/Creation/StateWrite/Resolution.retention_cells_have_payer`. Every
+written cell that holds an activity payload afterwards resolves to a payer.
+Named coordinate premises: a birth's/delivery's posts miss the object-record
+cell; state vs object cell; slot vs activity cell. Retired cells hold no
+payload and need no payer.
+
+Also: ObjectiveResumeContract's installed-record theorems are restated for
+retired records (`installed_record_ended` now yields `isRetired`), and its
+duplicate `bodyOf_image` is deleted (it lives in ObjectiveActivity).
+tests/objective-native/ActivityReplay.lean's Config is repaired (Tariff.unit,
+abandonGrace, storageRate; it did not elaborate on main).
+
+Say what you broke: Config gains `storageRate`, so every Config literal and
+configOf must set it. Ended record cells and settled slots hold the retired
+image instead of an empty-body payload, and any reader of the old tombstone sees
+`retired` (the native route's JSON `reclaimed` kind becomes `retired`). Late
+turns refuse `recordRetired`/`slotRetired` instead of
+`recordMissing`/`slotMissing`. Ending turns' Book batches gain a sweep and a
+deregistration: a top-up of an ended activity is refused by the Book. Births and
+yields need pair + deposit, so deposits must grow by storageRate * record size.
+TurnOfIntent.Codec has two new fields, `ofCells` takes the retired set, and
+`ofCells_step` drops its `unretired` premise. SnapRepresents.retired is
+restated. PhysicalPostLaw admits retired images at protected coordinates.
+Re-genesis every world that has activity tombstones. No VK/descriptor
+re-emit.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>

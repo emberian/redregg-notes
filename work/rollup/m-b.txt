@@ -1,0 +1,12 @@
+fix(bridge): HostRefinesWorld proves the retire arm of the derived turn
+
+The retire delta (TurnOfIntent.Delta.retire) and Derived's retired parameter
+left four proofs stale: decodes_of_derived (now takes the retired set, and a
+retired write decodes to the absent slot), ofIntent_run's retired field (a
+written cell is retired iff its post bytes are the retirement; an unwritten
+one keeps the represented value), ofIntent_policySource_birth (a retire delta
+contradicts an absent cell) and deployedRepresents_cells (a deployed cell's
+bytes are the canonical encoding or the retired image over an absent cell).
+SnapRepresents.retired is exact, no statement is weakened.
+
+Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>

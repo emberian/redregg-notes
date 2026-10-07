@@ -1,0 +1,15 @@
+fix(activity): the native receiver admits a retirement; the acceptance driver quotes the storage deposit
+
+ObjectiveActivityReceiver.ActivityOrBook admitted only the Book and activity
+payloads at their coordinate, so every turn that retired a record or slot (the
+retired image, which holds no payload) was refused physicalPreparation by the
+Host and by minidregg-client-consent: a third disjunct admits the registry's
+retired image at a protected coordinate (reservedBase <=), the same bound
+PhysicalPostLaw uses. The 202-row driver: a birth's deposit must cover the fee
+pair plus the record's storage deposit, so the funding scenario learns the
+exact need from the Host's own underfunded refusal (deposit-reserves-pair-and-
+storage) and the purse arithmetic uses it. Evidence so far: deliver-a installs
+natively on a scratch world (run-04); the full 202 rows are NOT yet run on this
+tree.
+
+Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>

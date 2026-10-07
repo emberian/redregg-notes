@@ -1,0 +1,5 @@
+journey	FAIL	410	unknown (no commit since the previous green touched native/resource-client/journey|native/resource-client/journey.d/)	frontier J5
+objective	PASS	345	unknown (no commit since the previous green touched objective-native|Host/Objective|tests/objective-native)	{"allPass": true, "rows": 17, "readbacks": 2}
+rooms	FAIL	116	unknown (no commit since the previous green touched rooms-e2e|jpriv)	  expected row absent or red: restart check: after everything, the Store holds no private line in any encoding
+activity	ABSENT	0	unknown (no commit since the previous green touched activity)	
+seats	ABSENT	0	unknown (no commit since the previous green touched [Ss]eat)	

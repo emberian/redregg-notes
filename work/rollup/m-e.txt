@@ -1,0 +1,16 @@
+gate(activity): the widened PhysicalPostLaw reaches only the kernel activity
+
+retention-payers' PhysicalPostLaw admits the registry's retired image at
+protected coordinates (>= reservedBase), which every receiver's prepared writes
+are judged by. That is acceptable only because nothing but the kernel activity
+writes a protected coordinate. The two are now tied by theorems:
+physicalPostLaw_retired_protected (the retired image is admitted only at a
+protected coordinate), ordinary_physicalPostLaw_live (a write of an intent the
+ordinary gate admitted that obeys PhysicalPostLaw decodes to a live cell under
+its registry law), and Config.sourceGate_physicalPostLaw_live (the same for any
+facet but objectiveActivity, through sourceGate_ordinary) with
+Config.transport_sourceGate (the deployment transport judges through
+sourceGate none; only activityTransport is exempt). Kernel.ObjectiveActivityGate
+now imports Kernel.ResourceBirthController.
+
+Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>

@@ -1,0 +1,6 @@
+J0	PASS	2.103	/run/user/1001/p7.Ktv9IO/r/world/handoff.json	service up and a signed read answered in 2.081s
+J1	PASS	3.047	/run/user/1001/p7.Ktv9IO/r/world/attempts/newcomer/submit.json	subject 11527919601322900226, record 1; key absent from genesis/config; lookup = same receipt
+J2	PASS	1.236	/run/user/1001/p7.Ktv9IO/r/world/sponsor/attempts/create-shared/outcome.json	object 16639864360055984115 under all[], record 2
+J3	PASS	2.401	/run/user/1001/p7.Ktv9IO/r/world/sponsor/attempts/grant-newcomer/outcome.json	child 11737175847146714768 verbs observe,mutate, record 3
+J4	PASS	3.186	/run/user/1001/p7.Ktv9IO/r/world/newcomer-workspace/attempts/first-action/outcome.json	read 0.723s, write 1.510s, readback field 2 = 1, record 4
+P7KR	PASS	8.767	/run/user/1001/p7.Ktv9IO/r/steps/P7KR/jkind-revise-consent/rows.tsv	P7 verdict: SAME-EFFECT

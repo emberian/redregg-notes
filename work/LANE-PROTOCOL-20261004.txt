@@ -112,3 +112,6 @@ stories for these early milestones; that's the thing that gets proven about." Co
   recorded in the ledger, with the port landing the same day.
 - A theorem that is not yet proved is stated as a named hypothesis with an inhabitant, never a
   sorry; a semantics change says in its commit which proof cases it opens.
+
+AMENDMENT 2026-10-05 (cv distill): state every decision and its reason in your visible text, STATUS or commit messages.
+Renewal now distills your transcript into a fresh, smaller lane; reasons that lived only in thinking are lost.

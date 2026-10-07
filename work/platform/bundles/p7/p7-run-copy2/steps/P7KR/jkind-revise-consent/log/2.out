@@ -1,0 +1,31 @@
+/run/user/1001/p7.Ktv9IO/r/world/sponsor/sources/create-p7-one.authoring/g0001/intent.bin
+{
+  "acceptedCount": "6",
+  "confirmation": "installed",
+  "eventId": "60381651528742874990759584537809935617273068111216404085419630378057284773832",
+  "transactionId": "6207574762277160433061910427139156220140099632104303190908150221538732572160",
+  "type": "confirmed",
+  "worldRoot": "99513930859254974620457763783484443050988748028845467273352179923280353707855"
+}
+{
+  "authority": "hint-only",
+  "controlCapability": "13022423326384892993",
+  "kind": "object",
+  "name": "p7-one",
+  "observeCapability": "9484142943308488250",
+  "operationCapability": "9484142943308488250",
+  "provenance": {
+    "birthReceipt": {
+      "acceptedCount": "6",
+      "confirmation": "installed",
+      "eventId": "60381651528742874990759584537809935617273068111216404085419630378057284773832",
+      "transactionId": "6207574762277160433061910427139156220140099632104303190908150221538732572160",
+      "type": "confirmed",
+      "worldRoot": "99513930859254974620457763783484443050988748028845467273352179923280353707855"
+    },
+    "reservationDigest": "0a88c118022570bf1d560abda08f83bca2a6adeeb8a8b73bb8377ea08738d153",
+    "reservationRecord": "/run/user/1001/p7.Ktv9IO/r/world/namespace/request-0a88c118022570bf1d560abda08f83bca2a6adeeb8a8b73bb8377ea08738d153.json"
+  },
+  "target": "9809055637956154262",
+  "type": "minidregg-participant-reference-v1"
+}

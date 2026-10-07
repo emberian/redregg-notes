@@ -1,0 +1,8 @@
+WIND-DOWN (2026-10-05 ~21:00Z): the token allocation runs out for ~3 hours. Do this NOW, in order, then STOP:
+1. Commit everything that compiles on your lane branch; commit unfinished work to <branch>-wip (never leave it only in a
+   working tree). git -c commit.gpgsign=false -c user.name="ember arlynx" -c user.email="cmrx64@gmail.com" commit -F msgfile
+2. Queue every landable range with a `- [QUEUED] ` line in /Users/ember/dev/redregg/work/MERGE-QUEUE.md (evidence class included).
+3. Mirror: git bundle of your branch (and -wip) to persvati:/home/ember/workbox/claude-lanes/bundles/<lane>.bundle.
+4. Write/refresh your STATUS (lane dir) with: last state, the exact next step, builds still running (tmux name + log path), and
+   every decision with its REASON (renewal uses `cv distill`, which keeps only what you wrote).
+5. Long builds may keep running in tmux; say so in STATUS. Then stop. You will be resumed by message.

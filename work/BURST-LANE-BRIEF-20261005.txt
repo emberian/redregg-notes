@@ -1,0 +1,35 @@
+BURST BOXES (Latitude, rented 2026-10-04T15:55Z, deleted 2026-10-05T15:55Z) - binding with LANE-PROTOCOL-20261004.txt
+Hosts (ssh as user ember with the Mac's key; if the alias does not resolve, use ember@IP):
+  burst-gate   ember@67.213.124.13  f4-metal-small Zen5 4.4 GHz, 24 threads, 93 GB, LAX2  -- merge keeper gates here AND runs lanes between gates
+  burst-lane1  ember@162.43.189.7   f4-metal-small, same                                 -- lanes
+  burst-e2e    ember@152.236.4.24   vm.medium 8 vCPU 31 GB, DAL, sudo                    -- disposable worlds, journeys, split-tenancy (root-needing tests)
+Warm base on each f4: /srv/warm-base (FROZEN at GitHub main 5f9aa259; cold build there took ~10 min).
+Make a lane:  ssh burst-laneN '/srv/warm-base/mk-lane.sh <lane>'   ->  /srv/lanes/<lane>   (--verify must show 0 recompiled)
+Build:        LEAN_NUM_THREADS=4 SWARM_MEM_MAX=16G swarm-build lake build <targets>   (swarm-build caps memory; all builds on a box share 84G)
+Capacity: ~4 heavy lanes per f4 at 4 threads/16G. Check `uptime` and `free -g` before starting a build; if load > 20, wait.
+Rebase onto current GitHub main inside your lane (git fetch https://github.com/emberian/minidregg.git main). The base advances via the merge keeper.
+NO SECRETS on these boxes: no devnet keys, tokens, env dumps. Never scp ~/.* or environment output to them.
+The boxes are deleted at 15:55Z on 10-05: push nothing there that is not also committed in your lane and fetchable; report landable ranges into MERGE-QUEUE.md before then.
+
+AMENDMENT 16:45Z (after OOM kills in swarm.slice 16:36-16:39Z):
+- Lake 4.30 has no -j: one build spawns many lean processes at 4-6 GB each, so 3-4 concurrent full builds exceed the box's 84G slice.
+  RULE: at most TWO concurrent Lean builds per f4 box. Take a slot before building:
+    flock -n /srv/build-slot-1 <cmd> || flock /srv/build-slot-2 <cmd>
+  (use the same wrapper for lake and cargo-of-the-native-host). Single-module `lake env lean` checks need no slot.
+- Build tools file, sqlite3, age and /usr/bin/time are now installed on both f4s and on burst-e2e (DEPLOY-3B found them missing).
+- AMENDMENT 2: a full umbrella build under SWARM_MEM_MAX=16G is OOM-killed (lake spawns many lean processes). Use SWARM_MEM_MAX=32G inside a held slot (2 slots x 32G < the 84G slice). Run long builds in tmux so an ssh drop does not kill them.
+- AMENDMENT 3 (PIPELINE-INFRA self-test): Lake itself is NOT fooled by mk-lane's hardlinked traces after a fetch/rebase, but bare
+  `lake env lean FILE` reads STALE imported oleans and can give false reds and FALSE GREENS. After any fetch or rebase use
+  /srv/pipeline/scripts/lane-check FILE.lean (builds only stale imports, in a slot, then checks FILE). Do not delete traces.
+  sccache runs on both f4s; per-tip binaries publish under /srv/artifacts/<tip>/ (first set 3b709c87 building).
+
+AMENDMENT 18:30Z (PIPELINE-INFRA; scripts live in the Mini repo under scripts/pipeline/, installed on every box at /srv/pipeline/scripts):
+- SCCACHE (both f4s): `. /srv/pipeline/sccache.env` before any cargo. It sets RUSTC_WRAPPER=/srv/pipeline/bin/sccache and uses one shared disk cache per box (/srv/sccache, 120G). The server is the user unit pipeline-sccache.service in swarm.slice: it runs rustc, so it sits under the slice's memory cap. Registry dependencies hit across lanes. A lane's own crates hit only with CARGO_INCREMENTAL=0 at the same absolute path (the candidate builders' fixed build root). `sccache --show-stats` shows the counts.
+- ARTIFACTS: each tip the merge keeper gates (main/green, and next once it has a base) is published once on burst-gate at /srv/artifacts/<tip>/ (bin/, SHA256SUMS, provenance.json, manifest.json, PROVENANCE, timings.tsv) and mirrored to burst-lane1 and burst-e2e at the same path. /srv/artifacts/{main,green,next} are symlinks. A lane that needs a Host and did NOT change Lean runs:
+    /srv/pipeline/scripts/fetch-artifacts green /srv/lanes/<lane>/art     (or a sha; prints the manifest path; 1-2 s)
+  and passes art/manifest.json to journey.sh, or art/bin to objective-native-acceptance.py --bin. Never build a Host for an unchanged tree.
+- INNER LOOP: after any fetch/rebase use `/srv/pipeline/scripts/lane-check File.lean` instead of bare `lake env lean File.lean`. Bare lake env lean reads stale import oleans after a rebase, which gives false reds and false greens (measured by scripts/pipeline/lane-staleness-selftest). lane-check builds the stale imports first, in a build slot under swarm-build.
+- JOURNEYS: burst-e2e runs scripts/pipeline/journey-runner continuously (tmux session `journeys`). The row set is scripts/pipeline/journey-rows in the tip's tree: add your journey's row there in the same commit. Tables are in burst-e2e:/srv/journeys/<tip>/table.txt. Red rows are relayed into MERGE-QUEUE.md under "## JOURNEYS". Lanes run only the rows their change touches.
+- AMENDMENT 4 (merge keeper starved, load 33): burst-gate has a RESERVED slot /srv/build-slot-mk for the merge keeper only
+  (32G); lanes NEVER take it. Lanes on burst-gate use slot-1/slot-2 at 24G max. There is NO slot-3: do not invent slots; a
+  lane that can't get a slot waits or moves to burst-lane1. Heavy lane builds should prefer burst-lane1.

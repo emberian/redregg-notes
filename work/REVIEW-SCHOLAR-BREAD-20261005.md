@@ -239,3 +239,256 @@ only this file and a scratch clone.)
   - The demo is re-run with every check green.
 
 Beyond my report I cite only Stingray (arXiv:2501.06531; metadata checked via the arXiv API, not downloaded).
+
+---
+
+## Appendix (2026-10-05, after the root's ruling): RESUME-WITH-VIEW, exact statements and the new Tally
+
+This appendix follows the ruling (`ROOT-PROGRAM-MODEL-DECISIONS-20261004.md`, final section). It is written
+against `Kernel/ObjectiveActivity` at 36fca3ac. Names that ACTIVITY-NATIVE or OBJECT-RECORD will introduce
+are marked **(tip)**; the lane renames them to whatever lands. Nothing here is built yet.
+
+### A.1 Shapes
+
+- **Object state cell (tip).** The object's declared state lives in `stateCell object`, a kernel-namespaced
+  cell holding `ObjectState := { version : Nat, value : Data }`. Every committed write sets
+  `version := version + 1`. Birth may create the cell (version 0 → 1); nothing else may.
+- **The response.** The program's response type `R` must be a sum with exactly one member, `resumed`,
+  whose payload is a record `{outcome : O, view : V}`.
+  - `V = {version : Nat, state : S}`, where `S` is the declared state type.
+  - `O` is the outcome sum: `reply : T | refused : Refusal | unknown | timedOut | broken : Breakage | upgraded`.
+  - `Refusal` and `Breakage` are kernel-fixed sums. Today they are `Refusal = decider` and
+    `Breakage = decider | dependency | notAReference`; the `send` lane fills the later members.
+  - `replyType` becomes the `reply` member of `O`.
+  - `birth` types every kernel outcome × a sample view at `R`, as `kernelOutcomes` does today.
+  - `conflict` is deleted.
+- **The write.** A Plan names a write, not a state.
+  - `W(S)` has one field per field of `S`, each of type `Edit(T) = keep | set : T | add : T`. `add` is
+    allowed only for `Nat`/`Int` fields; `set` writes a value; `keep` writes nothing.
+  - `PlanAwait.state : Data` becomes `PlanAwait.write : Data`, typed at `W(S)` by the actual checker.
+  - `applyWrite : Data → Data → Option Data` applies it to `view.state`, field by field, and is pure.
+  - An all-`keep` write posts nothing.
+- **Version check.** The state post is a CAS against the root the view was read from, in the same turn.
+  A moved version makes the whole delivery refused (`stalePreRoot`), and the delivery is retryable: a fresh
+  delivery reads the fresh view. A Plan never carries a version: the kernel binds it.
+- **Birth is never blind.** The first segment runs with no view. Its write may use `set` only when
+  `stateCell object` is absent (creation); otherwise any `set` is refused `blindWrite`, and `add`/`keep` are
+  admitted.
+- **The read set** of a record becomes `[stateCell object at the root the delivery wrote, or read if keep]`.
+  `staleCount`, `revalidate` and `AwaitOutcome.conflict` are deleted.
+
+### A.2 Theorem statements (to be pinned with `#assert_axioms`)
+
+```lean
+namespace Minidregg.Kernel.ObjectiveActivity
+variable {rootBytes : Bytes → Digest} {config : Config} {snapshot : Snapshot rootBytes}
+  {height : Nat} {request : DeliverRequest}
+
+/-- The settled outcome reaches the activity unchanged: no kernel path
+replaces, drops or rewrites it. (Replaces `stale_reads_conflict` and
+`current_reads_exact`.) -/
+theorem resume_outcome_preserved (delivery : Delivery config snapshot height request) :
+    delivery.outcome = delivery.settlement.decided
+
+/-- The view the activity is resumed with is the object's declared state and
+version AT THE DELIVERING SNAPSHOT, and it is exactly what the response datum
+carries. -/
+theorem resume_view_current (delivery : Delivery config snapshot height request) :
+    ObjectState.decode (snapshot.canonicalBytes (stateCell delivery.record.object)) =
+        some ⟨delivery.view.version, delivery.view.state⟩ ∧
+      delivery.response.datum =
+        .variant "resumed" (.record [("outcome", delivery.outcome.data),
+          ("view", .record [("version", .natural delivery.view.version), ("state", delivery.view.state)])])
+
+/-- Every state write a delivery commits is computed from the view it
+delivered, in the same turn: its expected pre-root is the root the view was
+read from, its version is the view's plus one, and its value is the Plan's
+write applied to the view's state. -/
+theorem yield_write_from_current_read (delivery : Delivery config snapshot height request)
+    {state : State} {plan : PlanAwait} (yielded : delivery.segment = .yielded state plan)
+    (writes : plan.write ≠ keepAll) :
+    ∃ post ∈ delivery.posts, ∃ value,
+      post.cellId = stateCell delivery.record.object ∧
+      post.expectedRoot = snapshot.model.roots (stateCell delivery.record.object) ∧
+      applyWrite plan.write delivery.view.state = some value ∧
+      ObjectState.decode post.bytes = some ⟨delivery.view.version + 1, value⟩
+
+/-- The ruling's "refused if the version moved": a delivery prepared on one
+snapshot is never accepted on a snapshot where the state cell moved, under any
+schedule. (From the durable executor's pre-root check; the lane cites the
+existing lemma.) -/
+theorem moved_version_refused (delivery : Delivery config snapshot height request)
+    {state : State} {plan : PlanAwait} (yielded : delivery.segment = .yielded state plan)
+    (writes : plan.write ≠ keepAll) (later : Snapshot rootBytes)
+    (moved : later.model.roots (stateCell delivery.record.object) ≠
+      snapshot.model.roots (stateCell delivery.record.object))
+    (schedule : DurableCommitProtocol.Schedule) (after : Snapshot rootBytes) :
+    DurableDataIntent.execute schedule later delivery.intent ≠ .accepted after
+
+/-- Sequential composition: a delivery built on the snapshot a previous
+installed intent produced sees that intent's write (the second activity of one
+object never works from the first one's pre-state). -/
+theorem view_sees_prior_write {first : DataIntent rootBytes} {next : Snapshot rootBytes}
+    (installed : DurableDataIntent.execute .complete snapshot first = .accepted next)
+    {post : Post} (member : post ∈ first.posts)
+    (delivery : Delivery config next height request)
+    (same : post.cellId = stateCell delivery.record.object) :
+    some ⟨delivery.view.version, delivery.view.state⟩ = ObjectState.decode post.bytes
+
+/-- Deltas commute: two `add`-only writes applied in either order give the
+same state (what lets two activities' replies both land). -/
+theorem add_writes_commute (s : Data) {w₁ w₂ : Data} (h₁ : addOnly w₁) (h₂ : addOnly w₂) :
+    (applyWrite w₁ s >>= applyWrite w₂) = (applyWrite w₂ s >>= applyWrite w₁)
+
+/-- Birth is never blind: a first Plan with a `set` field is refused unless it
+creates the state cell. -/
+theorem birth_set_requires_creation {request : BirthRequest}
+    (born : Birth config snapshot height request) {state : State} {plan : PlanAwait}
+    (yielded : born.segment = .yielded state plan) (hasSet : setsSomeField plan.write) :
+    ObjectState.decode (snapshot.canonicalBytes (stateCell request.object)) = none
+end Minidregg.Kernel.ObjectiveActivity
+```
+
+**Teeth** (each must turn a theorem or a demo check red):
+- Restoring `revalidate` to replace the outcome breaks `resume_outcome_preserved`.
+- Reading the view from the record's stored read set instead of the snapshot breaks `resume_view_current`,
+  and scenario B ends at 12 instead of 106.
+- Posting the state against the root recorded at the yield instead of the view's root breaks
+  `yield_write_from_current_read`.
+- Allowing `set` at birth on an existing object makes scenario E lose activity 1's initial state.
+
+### A.3 The new `world/activity/Tally.obend`
+
+The response is a one-member sum (`resumed`), so the existing `match perform(...)` form binds it; the
+member, field and reason names are kernel-fixed. INFERRED: that the parser accepts a sum member whose
+payload is `Nat` (`set: Nat`); if not, it becomes `set: {value: Nat}`.
+
+```
+edition ObjectiveBend 1
+# A tally resident on the resume-with-view kernel. Each resume delivers the
+# await's outcome together with a fresh view of the object's declared state
+# and its version, read in the same turn. The tally writes DELTAS: a reply of
+# `amount` is `add amount`, so a concurrent write by the owner or by another
+# tally on the same object is kept, never overwritten. Its only `set` is the
+# initial total, which the kernel admits only when the birth creates the state.
+record State:
+  total: Nat
+sum EditNat:
+  keep: {}
+  set: Nat
+  add: Nat
+record Write:
+  total: EditNat
+record Start:
+  init: EditNat
+  decider: Nat
+record Ask:
+  decider: Nat
+record At:
+  at: Nat
+sum Source:
+  reply: Ask
+  height: At
+record Await:
+  write: Write
+  on: Source
+  patience: Nat
+sum Plan:
+  await: Await
+record Reply:
+  amount: Nat
+sum Refusal:
+  decider: {}
+sum Breakage:
+  decider: {}
+  dependency: {}
+  notAReference: {}
+sum Outcome:
+  reply: Reply
+  refused: Refusal
+  unknown: {}
+  timedOut: {}
+  broken: Breakage
+  upgraded: {}
+record View:
+  version: Nat
+  state: State
+record Step:
+  outcome: Outcome
+  view: View
+sum Resumed:
+  resumed: Step
+def ask(start: Start, write: Write) -> Activity<Plan, Resumed, Nat>:
+  match perform(Plan.await({write: write, on: Source.reply({decider: start.decider}), patience: 4n})):
+    case resumed(step):
+      match step.outcome:
+        case reply(r): ask(start, {total: EditNat.add(r.amount)})
+        case unknown(_): ask(start, {total: EditNat.keep({})})
+        case refused(_): step.view.state.total
+        case timedOut(_): step.view.state.total
+        case broken(_): step.view.state.total
+        case upgraded(_): step.view.state.total
+def tally(start: Start) -> Activity<Plan, Resumed, Nat>:
+  ask(start, {total: start.init})
+```
+
+### A.4 Demo changes (`native/resource-client/objective-activity-demo.py`)
+
+- **A** is unchanged in substance: born with `init: set 0`, reply 5, state 5.
+- **B, the acceptance check:** the owner writes 99, the decider replies 7, and the delivery yields
+  `reply` with view total 99. **The state is 106.** A further reply of 4 gives 110. A delivery prepared
+  before the owner's write and submitted after it is refused `stalePreRoot`. A fresh delivery then
+  succeeds.
+- **C** is unchanged.
+- **D:** born with `init: set 40`; the timeout returns 40.
+- **E, new:** two tallies on one object. E1 is born with `init: set 0`, and E2 with `init: keep` (E2 born
+  with `set 0` is refused `blindWrite`). E1 receives reply 3 and E2 receives reply 4, in either order:
+  **the state is 7** and both records advance. A version-0 view is never delivered after a write.
+
+### A.5 As implemented (lane/resume-view 46b9d4fd on activity-native 9c9608b0; COMPILED and lane-gated 9642 jobs; merge keeper gated it as 67362781 in batch c2; EXECUTED: not yet, needs the native route)
+
+These names differ from A.1–A.2; the code is authoritative.
+
+- **`Kernel/ObjectState.lean`** (new; SCHOLAR-OS imports it rather than defining its own):
+  `ObjectState {version, value}`, frame `DREGG/OBJECTIVE/OBJECT-STATE/v1`, `objectState_roundTrip`,
+  `decodeObjectState_canonical`.
+- **The state cell is ACTIVITY-NATIVE's protected `stateCell domain object`.** It now holds an
+  `ObjectState`, read by `readState`: absent → `none`, foreign bytes → `stateCodec`.
+- **`stateWrite config snapshot object current viewed write`** is the single point where a declared-state
+  write is built. It returns `StateWritten {before, after, post}`; SCHOLAR-OS's `admitWrite` wraps it.
+- **Writes.** `Edit = keep | set | add`. `decodeWrite` takes a record of field edits, each field named once.
+  `applyWrite`:
+  - all `keep` → no write;
+  - absent state → every edit must `set`;
+  - present state → every edited field must exist, and `add` applies only to naturals.
+- **Removed:** `Record.reads` (record frame v3), `staleCount`, `revalidate`, `AwaitOutcome.conflict` and
+  `conflictReplyType`.
+- **Delivery:**
+  - it carries `view` and `viewExact`, and the response is `responseData settlement.decided view`;
+  - its guards always include `stateCell`;
+  - the yield is built with `(some view) true`.
+- **Birth:**
+  - it carries `current`; the yield is built with `current false`;
+  - it guards `stateCell`;
+  - a yielding birth must type the view it leaves (`viewProtocol`);
+  - `outcomeProtocol` checks the `resumed {outcome, view}` shape.
+- **`writeState`** installs version + 1.
+- **Theorems:**
+  - `resume_outcome_preserved`: stated from the decided slot to the delivered response.
+  - `resume_view_current`: `viewExact`, plus an accepted delivery leaves the state cell's root unmoved
+    between the delivering snapshot and the commit.
+  - `yield_write_from_current_read`.
+  - `moved_state_refuses`.
+  - `stateWrite_unviewed_never_sets`.
+  - Helpers: `accepted_posts_current`, `accepted_guards_current`, `Delivery.posts_current`,
+    `settle_posts_current`, `stateWrite_spec`, `commitYield_spec`, `segmentCommit_spec`.
+  - Deleted: `stale_reads_conflict` and `current_reads_exact`.
+  - `add_writes_commute` IS stated and proved (with `editField_add_comm`, `editFields_add_comm`; `applyWrite`
+    now uses a recursive `editFields` instead of `mapM`).
+- **Tally.obend** is as in A.3 except that `EditNat.keep()` takes no argument. Evidence: parsed and
+  elaborated locally with bun at b31d8be8's frontend.
+- **Acceptance** (`objective-activity-native-acceptance.py`):
+  - scenario "view": a delivery prepared before the owner's write is refused; the fresh delivery gives
+    total **106** at state version 4;
+  - scenario "two tallies": a birth that `set`s present state is refused `blindWrite`, and a `keep` birth
+    joins; **total 7**.

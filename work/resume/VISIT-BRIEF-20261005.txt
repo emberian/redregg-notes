@@ -1,0 +1,20 @@
+VISIT BRIEF (Opus fairies, 2026-10-05) - prepare paused lanes for an orderly resumption
+Main = green = next is about d27d1cad or later (`git ls-remote https://github.com/emberian/minidregg.git main`). Boxes: burst-gate
+ember@67.213.124.13, burst-lane1 ember@162.43.189.7, burst-e2e ember@152.236.4.24 (deleted 2026-10-05T15:55Z), persvati (Ember's
+laptop). Read /Users/ember/dev/redregg/work/resume/INDEX.md and each assigned lane's resume/<LANE>.md (written by FAIRY-RESUME), the
+lane's own STATUS, and `cv show c1e4d723 --agent <id> --last 20` for its final intent. Rules: VERIFY-ONCE, PIPELINE,
+BURST-LANE-BRIEF (amendment 3: lane-check, never bare `lake env lean` after a rebase), WORKER-BRIEF; all in work/.
+For EACH assigned lane:
+1. VERIFY at source: branch tip, uncommitted state, whether its work (or part of it) has LANDED on main meanwhile (git log
+   main --grep / patch-id), and what landed on main since its base that touches its files.
+2. PREPARE, mechanically only: rebase its branch onto current main if it's clean or textual (resolve only obvious textual
+   conflicts by reading both sides; anything touching logic stays for the lane); run lane-check on its changed modules; record
+   green/red with the first error. Never write new proof or design code. Never discard a lane's commits or WIP: on a hard
+   conflict, leave the branch as it was and describe the conflict precisely.
+3. VERDICT, appended as a "## VISIT" section to resume/<LANE>.md: READY (rebased, checks run, next step exact) /
+   NEEDS-LANE (a logic conflict or red it must resolve itself; exact hunk or error) / SUPERSEDED (the work landed elsewhere; say
+   where) / BLOCKED-ON (another lane or a decision, named), plus the expected next 1-2 hours of work and which box it should use.
+4. Dependencies: which other lanes it must coordinate with or wait for.
+Then write resume/ORDER-<GROUP>.md: your group's proposed resumption order in waves (wave 1 = READY and unblocking others),
+with one line of reasoning each. Be token-frugal. Builds go one at a time in a slot. Never touch hbox, the public box, live
+worlds, /tank/fn or lat1. Final report to the root: <= 200 words, your ORDER file path and verdict counts.

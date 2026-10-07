@@ -1,10 +1,20 @@
-HBOX HOLD (2026-10-05 ~11:15): hbox load ~50 vs the agreed combined cap of 16; Mini lanes are the bulk
-(one lane compiling Mathlib from scratch). Until the root says otherwise:
-- STOP any lake/cargo/lean build you started on hbox now (your own processes only; kill by PID, never
-  pkill -f a pattern that matches your own ssh command). Reading files and git fetch on hbox are fine.
-- Build on PERSVATI instead: `ssh persvati /home/ember/workbox/claude-lanes/persvati-base/mk-lane.sh <lane>`
-  (warm base, packages shared via hardlinks; NEVER let lake fetch or build Mathlib yourself — if a build
-  starts compiling Mathlib, stop: your clone is not warm). Read /Users/ember/dev/redregg/work/
-  PERSVATI-BASE-LANE-BRIEF-20261004.txt. LEAN_NUM_THREADS ≤ 4; check `uptime` first (wait if load > 20).
-- Relief: fn is moving heavy work to rented boxes within the hour; Mini may get its own burst boxes
-  (work/HCLOUD-BURST-PLAN-20261005.md) — the root will announce.
+HBOX HOLD — PARTIALLY LIFTED (2026-10-05 ~21:00Z, agreed with the fn root)
+- (10-05 ~22:30: fn roll-up done, cap back to TWO) Mini may run at most TWO Lean builds on hbox at a time, each under `swarm-build` with LEAN_NUM_THREADS=4, SWARM_MEM_MAX=32G,
+  behind flock on /tank/dregg-build/claude-lanes/build-slot-1 or build-slot-2. Combined Mini load on hbox stays <= ~10
+  (fn + Mini <= 16). Never bare lake, never a cold Mathlib build.
+- The hbox warm base (/tank/dregg-build/claude-lanes/warm-base) is re-warmed by COPY from burst-gate's frozen base (merge keeper),
+  not rebuilt. mk-lane.sh refuses until FROZEN is back.
+- fn pings the root before any heavy fn hbox job; the root relays STOP and Mini lanes on hbox pause their builds immediately.
+- Never touch /tank/fn, fn processes, live worlds, the agreement mesh.
+- 2026-10-05 ~06:20 (root): build-slot-1 on hbox is RESERVED for the merge keeper's gate (landings beat lane throughput). Lanes
+  use ONLY build-slot-2. Never more than two Mini builds total (fn agreement).
+- 2026-10-05 ~06:40 (root): fn RELEASE image build (60-90 min heavy /tank IO): Mini holds at ONE hbox build = the merge gate on slot-1; slot-2 PAUSED for lanes (finish the build in progress, start no new one) until fn pings.
+- 2026-10-05 ~07:40 (root): fn heavy phase over -> slot-2 REOPENED for lanes (slot-1 stays the merge gate's). Combined hbox load <= 16.
+- 2026-10-05 ~09:00 (root): fn rehearsal R1 (45-75 min heavy /tank IO): Mini at ONE build = merge gate (slot-1); slot-2 PAUSED for lanes until fn pings.
+- 2026-10-05 ~10:00 (root): fn R1 done -> slot-2 REOPENED for lanes (slot-1 = merge gate).
+- 2026-10-05 ~01:00Z (root): fn m1-durable-5 heavy phase started; Mini at ONE build max until fn pings (Mini currently runs none).
+- 2026-10-05 ~01:50Z (root): fn heavy /tank phase ENDED; fn now runs a CPU-only certify. Mini back to TWO builds (slot-1 merge gate, slot-2 lanes), combined load <= 16.
+- 2026-10-05 ~02:00Z (root): CORRECTION per fn integrator-6: heavy /tank phase still running (teeth-21 certify + perf native5 image). Mini at ONE build max until fn pings.
+- 2026-10-05 ~02:40Z (root): fn image done, hbox free -> Mini back to TWO builds (slot-1 gate, slot-2 lanes).
+- 2026-10-05 ~03:00Z (root): fn mini-contract-3 certify heavy phase started -> Mini at ONE build max until fn pings.
+- 2026-10-06 (root): fn span-borrow certify ended; hbox free -> Mini back to TWO builds (other fn lanes may still announce phases; honor the latest ping).

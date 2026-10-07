@@ -1,0 +1,28 @@
+# KEEPER-NIGHT morning digest (10-04 21:20 to 10-05 07:30)
+- **main = next = green = d94a8817.** Four batches landed, one full gate each; the logs are listed in the MERGE-QUEUE LOG.
+  - n1 3bd8c903: fairy-ship, plus a hyp-ledger baseline ratchet.
+  - n2 5d0b452d: W42 snapshot gate and the LIVE LAW BYPASS fix.
+  - n3 47487ee4: ob-ltuo LT0..3b, rollup-1, rollup-2, ob-roadmap call, protocol-night rooms/pd53/rotpub.
+  - n4 d94a8817: ob-ltuo-s4, ob-lt2-parser, ob8 send, and W04-SPK-V4-LAND (third attempt; it bounced in n3 against seats).
+- **Fix-forwards (merge-keeper commits):**
+  - NativeAcceptedFixture went false in n3 and again in n4, because Store and wire shapes moved. Both times I regenerated it with its own procedure; the acceptance run passed 17/17 rows.
+  - The Mathlib snapshot pins were re-emitted in n3 and n4, since the W42 instrument postdates those lanes. I audited every changed or removed theorem row; the details are in commits 47487ee4 and d94a8817.
+- **Spot-check, the 13 theorems removed in n3:**
+  - Moved, not lost: ObjectiveActivityCell's decode_canonical, decodeRaw_encode, decode_encode, payloadAt_cellOf, payloadAt_stateOfOption, state_ext and cellValid_coordinate (38a3efbd) are re-proved under the same names in Kernel/ProtectedCell. bodyOf_image (e3ed37bb) was a duplicate of the copy still in ObjectiveActivity. resume_binds_checkpoint (403bbc76) is renamed delivery_fields_bind_checkpoint.
+  - Deleted with their definitions: recordBody_ended, recordOfBody_vacant and slotOfBody_vacant (e3ed37bb). Retired cells are now refused by name instead.
+  - **LOOK AT THIS ONE:** second_delivery_refused (403bbc76), described as "over-named, only an awaitId collision inhabits the premise". It has no replacement theorem.
+  - n4 removed no theorems. 23 statements were restated over the ob8/W04 shapes, with the same conclusions.
+- **LIVE LAW BYPASS is closed for the clock** (cv 01a1087d-8a58).
+  - What changed: the genesis clock law is now `ClockLaw.clockPredicate`. PayObservation, PayEnrol and PayEnrolV2 judge their clock write with `ReceivingLaw.judgeWrite` on `Laws.physical`, and a refused write returns `Reject.law` naming the clause.
+  - How I checked it: a mutant clock law made J-PAY-3 refuse `lawDenied`. With the judgement also removed, the same turn commits 24/24, which reproduces the bypass.
+  - Pay journeys pass. JPAY4's one red row predates this change and is filed as a cv task. K-CLOCK fails the same 2 rows on main.
+  - RE-GENESIS is needed for the clock policy.
+- **DECIDE: moving the pay families onto Receiving.Family is not done.** Two blockers come first: an envelope-claim to CheckedSignature bridge, and PayEnrol's pay law and births (birthParent). The design is in cv 01a109bd-8682.
+- **W42 is fixed** (cv 01a1089a-1168): the whole ObjectiveProofs closure is now pinned, and a planted `(_vacuous : False)` turns the gate red on every run. Three unused-premise theorems are filed as cv 01a109c1-2828.
+- **For Ember:**
+  - hbox tank's special vdev (nvme0n1p3, 13.6G, single and unmirrored) is 100% full, so metadata falls through to the HDD mirror. tank is 87% used, and Lean ran at about 2 modules/min there.
+  - ROOT approved a single gate clone on rpool at /home/hbox/kn-gate, about 12G; kept warm while ROOT resumes the keeper for the next ranges; delete its .lake/build after the final landing (it is the keeper's).
+  - hbox build-slot-1 is reserved for the merge gate.
+  - persvati is at 119G, under its floor. Mini has written nothing there since 00:12. Ranked du of claude-lanes (100G total): persvati-base 18.4G (5 src.prev), activity-native-gc 10.6G, agreement 7.4G, elaborator 6.7G, schema-v2 6.7G, protocol-night 6.0G, rollup-2 5.3G, native-exercise 4.8G, ob-roadmap 4.8G.
+- **Bases:** the hbox tank warm-base is FROZEN at d94a8817 (--verify compiled 0 modules). persvati-base stays at 5d0b452d.
+- **Not landed:** W05-REWRITER-CODECS and fairy-green, both HELD. The queue was empty at 04:52; anything added after that is in the LOG.
