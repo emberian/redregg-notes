@@ -28,6 +28,7 @@ cxo-b3 retire t2-x verified, merged
 - `--budget N|12M` defaults to 12M (validated before any lane is made). That is the hub's cumulative count, including cached context.
 - `--umbrella default` (or `"T1 T2"`): the worker's submit is refused until `request_build(umbrella)` came back exit=0 **on the exact tree it submits**. The default umbrella is `Minidregg Host.Main:leanArts ObjectiveProofs`. Use it for every worker whose files overlap another's.
 - An `--allow` glob covered by a protect glob is refused (use `--no-default-protect`). The guard ignores `.tsv/.csv/.json/.jsonl/.lock` files (regenerated pins and ledgers).
+- E2-5 guards: workers start with `approvalPolicy=untrusted` (`CXO_APPROVAL`), so every sandbox command asks the hub; long ones (`lake build`, `cargo test`, journeys, gate scripts; `CXO_LONG_RX`) are declined with a steer naming request_build/request_cargo/request_journey (event `EXEC_REFUSED`). A running command over `CXO_EXEC_CAP_S` (20) raises `LONG_EXEC`. More than `CXO_NARRATE_N` (4) reports in `CXO_NARRATE_MIN` (10) with no file change or job result raises `NARRATING` and tells the worker to end its turn. `status` shows `req/job` and `decl`.
 - `--protect` adds protected globs; `--no-push` skips the push; `--force` skips the pace gate.
 
 **Events from `wait`:**

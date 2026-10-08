@@ -31,6 +31,15 @@ STALL_S, PIGGY_S = 900, 600
 DEFAULT_PROTECT = ["Assurance/NativeAcceptedFixture*", "AxiomCensus*.lean", "TokenCensus*", "Theory/AxiomPin.lean",
                    "scripts/gates/*", "scripts/pipeline/*", ".github/*", "lakefile*", "lean-toolchain", "lake-manifest.json"]
 GIT_ID = ["-c", "commit.gpgsign=false", "-c", "user.name=ember arlynx", "-c", "user.email=cmrx64@gmail.com"]
+# E2-5: long work inside the sandbox is disguised polling (every note/idle turn re-sends the whole context). Refuse it via the
+# exec-approval path (approvalPolicy "untrusted": every non-trivial command asks) and point at the hub-side tickets.
+APPROVAL = os.environ.get("CXO_APPROVAL", "untrusted")
+EXEC_CAP_S = int(os.environ.get("CXO_EXEC_CAP_S", "20"))   # an in-sandbox command running longer than this is flagged + steered
+LONG_RX = re.compile(os.environ.get("CXO_LONG_RX", r"\blake\s+build\b|\bswarm-build\b|\bcargo\s+(build|test|run|check|clippy|bench)\b|"
+                     r"journeys?/|objective-native-acceptance|check-objective-proofs|merge-gate-checks|check-scripts-elab|hyp-ledger|"
+                     r"\bsleep\s+\d{2,}|\bwhile\s+(true|:|sleep)"))
+CARGO_RX = re.compile(r"\bcargo\b")
+NARRATE_N, NARRATE_M = int(os.environ.get("CXO_NARRATE_N", "4")), int(os.environ.get("CXO_NARRATE_MIN", "10"))
 WAIT_TEXT = "END YOUR TURN NOW with no further actions. The result arrives as a new message. Never poll."
 
 DEV_INSTR = """You are a Codex worker for a coordinating deputy, reached only through these tools:
@@ -76,7 +85,7 @@ ADDED_RULES = [("sorry", r"\bsorry\b"), ("admit", r"\badmit\b"), ("axiom", r"^\s
 REMOVED_RULES = [("del-theorem", r"^\s*(@\[[^\]]*\]\s*)?(private\s+|protected\s+)?(theorem|lemma|example)\b"),
                  ("del-assert", r"#assert_|\bassert(_eq|_ne)?!?\s*\(|#guard\b|#\[test\]|\bdef test_")]
 WCOLS = {"build_cmd": "text", "umbrella": "text", "green_tree": "text", "unc": "int default 0", "reqs": "int default 0",
-         "polls": "int default 0", "pending": "int default 0", "nopush": "int default 0"}
+         "polls": "int default 0", "pending": "int default 0", "nopush": "int default 0", "declined": "int default 0"}
 
 
 DATA_FILE_RX = re.compile(r"\.(tsv|csv|json|jsonl|lock)$")  # pins, ledgers, emitted data: regenerated rows are not source edits
@@ -91,6 +100,17 @@ def parse_n(x):
 def allow_vs_protect(allow, protect):
     """allow globs that a protect glob covers (the guard would revert the worker's edit): [(allow, protect)]"""
     return [(g, p) for g in allow for p in protect if g == p or fnmatch.fnmatch(g, p) or fnmatch.fnmatch(p, g)]
+
+
+def exec_hint(cmd):
+    """None if the command may run in the sandbox, else the refusal hint."""
+    inner = re.sub(r"^\s*(/\S*/)?(ba|z)?sh\s+-\w+\s+['\"]?", "", cmd or "")
+    if not cmd or re.match(r"\s*(cat|grep|rg|sed|head|tail|ls|git|wc|find|nl|awk|diff|echo)\b", inner) or not LONG_RX.search(cmd):
+        return None
+    tool = "request_cargo" if CARGO_RX.search(cmd) else "request_build" if re.search(r"\blake\b|swarm-build", cmd) else "request_journey"
+    return ("REFUSED by the hub: this command is long-running and must not run in your sandbox (each minute of waiting costs a full "
+            "model request). Use %s(...) instead: it runs hub-side, returns a ticket, and the result arrives as a new message. "
+            "Then END YOUR TURN; do not narrate or poll." % tool)
 
 
 def now(): return time.time()
@@ -137,6 +157,8 @@ class Hub:
                 self.db.execute("alter table workers add column %s %s" % (c, t))
         self.rid = itertools.count(1)
         self.pending = {}       # rpc id -> future
+        self.execs = {}         # thread -> {item id: (command, t0)} in-sandbox commands now running
+        self.cad = {}           # thread -> {"reports": [ts...], "art": ts, "flagged": bool} (E2-5 cadence guard)
         self.turn_flags = {}    # thread -> {"submit_tried": bool, "warned": set()}
         self.job_sem = asyncio.Semaphore(MAX_JOBS)
         self.rate = None
@@ -163,6 +185,10 @@ class Hub:
         self.db.execute("insert into events(ts,deputy,worker,kind,text) values(?,?,?,?,?)",
                         (now(), deputy or (w["deputy"] if w else "-"), ("%s/g%d" % (w["name"], w["gen"])) if w else "-", kind, text))
         self.ev_signal.set()
+
+    def artifact(self, w):
+        c = self.cad.setdefault(w["thread"], {"reports": [], "art": 0, "flagged": False})
+        c.update(reports=[], art=now(), flagged=False)
 
     def wlog(self, w, line):
         with open(os.path.join(HOME, "logs", "%s.g%d.log" % (w["name"], w["gen"])), "a") as f:
@@ -253,13 +279,18 @@ class Hub:
             if t == "agentMessage":
                 self.wlog(w, "say " + (it.get("text") or "")[:300])
             elif t == "commandExecution":
+                self.execs.get(w["thread"], {}).pop(it.get("id"), None)
                 self.wlog(w, "run [%s] %s" % (it.get("exitCode"), it.get("command")))
             elif t == "fileChange":
+                self.artifact(w)
                 self.wlog(w, "edit " + " ".join(os.path.relpath(c.get("path", "?"), w["wt"]) for c in it.get("changes", [])))
             elif t == "dynamicToolCall":
                 self.wlog(w, "tool %s %s" % (it.get("tool"), json.dumps(it.get("arguments"))[:250]))
         elif meth == "item/started":
             self.upd(w, last_item=now())
+            it = p.get("item", {})
+            if it.get("type") == "commandExecution":
+                self.execs.setdefault(w["thread"], {})[it.get("id")] = (it.get("command") or "", now())
         elif meth == "turn/diff/updated":
             self.check_protected_live(w, p.get("diff", ""))
         elif meth == "thread/tokenUsage/updated":
@@ -309,6 +340,26 @@ class Hub:
 
     async def on_request(self, m):
         meth, p, rid = m["method"], m.get("params") or {}, m["id"]
+        if meth == "item/commandExecution/requestApproval":
+            w = self.by_thread(p.get("threadId", ""))
+            cmd = p.get("command") or ""
+            hint = exec_hint(cmd)
+            dec = "accept"
+            if not w or w["state"] in ("RETIRED", "DEAD"):
+                dec = "decline"
+            elif hint:
+                dec = "decline"
+                self.upd(w, declined=(w["declined"] or 0) + 1)
+                self.event(w, "EXEC_REFUSED", "long in-sandbox command refused: %s" % cmd[:140])
+                self.wlog(w, "refused " + cmd)
+                if w["turn"]:
+                    asyncio.ensure_future(self.rpc("turn/steer", {"threadId": w["thread"], "expectedTurnId": w["turn"],
+                                                                  "input": [{"type": "text", "text": "DEPUTY: " + hint}]}))
+            self.send({"jsonrpc": "2.0", "id": rid, "result": {"decision": dec}})
+            return
+        if meth == "item/fileChange/requestApproval":  # edits are judged at submit by the guard, not here
+            self.send({"jsonrpc": "2.0", "id": rid, "result": {"decision": "accept"}})
+            return
         if meth != "item/tool/call":
             dec = "denied" if meth in ("applyPatchApproval", "execCommandApproval") else "decline"
             self.send({"jsonrpc": "2.0", "id": rid, "result": {"decision": dec}})
@@ -351,7 +402,18 @@ class Hub:
     async def tool_report(self, w, a):
         self.upd(w, last_report=now(), reports=w["reports"] + 1)
         ms = self.take_msgs(w)
-        return ("DEPUTY: " + "\nDEPUTY: ".join(ms)) if ms else "ack", True
+        c = self.cad.setdefault(w["thread"], {"reports": [], "art": 0, "flagged": False})
+        c["reports"] = [t for t in c["reports"] if t > now() - NARRATE_M * 60] + [now()]
+        txt = ("DEPUTY: " + "\nDEPUTY: ".join(ms)) if ms else "ack"
+        if len(c["reports"]) > NARRATE_N:
+            if not c["flagged"]:
+                c["flagged"] = True
+                self.event(w, "NARRATING", "%d reports in %dm with no new artifact (jobs=%s req=%s); told to end its turn and wait" % (
+                    len(c["reports"]), NARRATE_M, w["pending"], w["reqs"]))
+            txt += ("\nHUB: you are narrating. %d reports in %d min and no new file change or job result; each report is a full-context "
+                    "model request. END YOUR TURN NOW and wait for the job result (request_build/request_cargo/request_journey)." % (
+                        len(c["reports"]), NARRATE_M))
+        return txt, True
 
     async def tool_ask_deputy(self, w, a):
         q, d = a.get("question", ""), a.get("default", "")
@@ -397,6 +459,7 @@ class Hub:
             need = json.loads(cw["umbrella"] or "[]")
             if need and set(need) <= set(row[0].split()) and row[1]:
                 self.upd(cw, green_tree=row[1])
+        self.artifact(cw)
         self.upd(cw, pending=max(0, cw["pending"] - 1))
         if cw["pending"] == 0 and cw["state"] == "WAITING_JOB":
             self.upd(cw, state="WORKING")
@@ -498,7 +561,7 @@ class Hub:
 
     async def new_thread(self, name, gen, deputy, model, effort, wt, base, allow, protect, prompt, budget, extra, fork_from=None):
         r = await self.rpc("thread/fork", fork_from) if fork_from else await self.rpc("thread/start", {
-            "cwd": wt, "model": model, "sandbox": "workspace-write", "approvalPolicy": "never", "dynamicTools": TOOLS,
+            "cwd": wt, "model": model, "sandbox": "workspace-write", "approvalPolicy": APPROVAL, "dynamicTools": TOOLS,
             "developerInstructions": DEV_INSTR, "multiAgentMode": "explicitRequestOnly"})
         if "error" in r:
             return None, "thread start failed: " + r["error"].get("message", "")
@@ -677,15 +740,18 @@ class Hub:
                 pass
 
     async def c_status(self, a):
+        def rpj(h, w):  # model requests per hub job: the disguised-polling meter (E2-5)
+            n = h.db.execute("select count(*) from jobs where name=? and gen=?", (w["name"], w["gen"])).fetchone()[0]
+            return "%.0f" % ((w["reqs"] or 0) / n) if n else "-"
         out = []
         for name in self.live_names():
             w = self.cur(name)
             if (a.get("deputy") and w["deputy"] != a["deputy"]) or (w["state"] in ("RETIRED", "DEAD") and not a.get("all")):
                 continue
-            out.append("%s g%d %s %s %s turn=%s rep=%d/%s item=%s tok=%.1fM unc=%.2fM req=%d polls=%d jobs=%d budget=%dM%s" % (
+            out.append("%s g%d %s %s %s turn=%s rep=%d/%s item=%s tok=%.1fM unc=%.2fM req=%d polls=%d jobs=%d budget=%dM req/job=%s decl=%d%s" % (
                 w["name"], w["gen"], w["deputy"], w["state"], w["model"], "on" if w["turn"] else "off", w["reports"], ago(w["last_report"]),
                 ago(w["last_item"]), w["tokens"] / 1e6, (w["unc"] or 0) / 1e6, w["reqs"] or 0, w["polls"] or 0, w["pending"] or 0,
-                w["budget"] // 10**6, (" sha=" + w["sha"][:10]) if w["sha"] else ""))
+                w["budget"] // 10**6, rpj(self, w), w["declined"] or 0, (" sha=" + w["sha"][:10]) if w["sha"] else ""))
         for t in self.db.execute("select name,state,green,last from trains").fetchall():
             out.append("train %s %s green=%s last=%s" % (t[0], t[1], (t[2] or "-")[:10], t[3] or "-"))
         return "\n".join(out) or "(no workers)"
@@ -842,6 +908,13 @@ class Hub:
                     self.event(w, "BUDGET", "token budget %dM exceeded (%.1fM, uncached %.2fM); interrupted. `cxo budget %s N` then "
                                "send, or renew/retire" % (w["budget"] // 10**6, w["tokens"] / 1e6, (w["unc"] or 0) / 1e6, w["name"]))
                     continue
+                for iid, (cmd, t0) in list(self.execs.get(w["thread"], {}).items()):
+                    if now() - t0 > EXEC_CAP_S:  # approved (short-looking) but still running: tell it, once
+                        self.execs[w["thread"]].pop(iid, None)
+                        self.event(w, "LONG_EXEC", "in-sandbox command running %ds: %s" % (now() - t0, cmd[:140]))
+                        await self.rpc("turn/steer", {"threadId": w["thread"], "expectedTurnId": w["turn"], "input": [{"type": "text",
+                            "text": "DEPUTY: that command has run over %ds in your sandbox. Do not wait on it with notes; for anything long use "
+                                    "request_build / request_cargo / request_journey and END YOUR TURN." % EXEC_CAP_S}]})
                 if w["last_item"] and now() - w["last_item"] > STALL_S and not w["stalled"]:
                     self.upd(w, stalled=1)
                     self.event(w, "STALL", "no activity for %dm in an active turn" % ((now() - w["last_item"]) // 60))
@@ -1148,6 +1221,43 @@ def selftest_local():
             msg, queued = await h.tool_request_cargo(w, {"spec": spec})
             step("request_cargo %r" % spec, queued == ok, msg[:90])
         step("request_cargo sets CARGO_TARGET_DIR beside the lane", jobs and "CARGO_TARGET_DIR=/lanes/b/rust-target" in jobs[0][1], jobs[:1])
+        # E2-5: long in-sandbox work is refused with a hint; narration is flagged
+        sent, steers = [], []
+        h.send = lambda o: sent.append(o)
+        async def rpc2(m, p):
+            steers.append((m, p)); return {}
+        h.rpc = rpc2
+        h.db.execute("insert into workers(name,gen,deputy,model,effort,thread,wt,base,state,turn,tokens,budget,created,allow,protect,"
+                     "last_item,reqs) values('e',1,'d','m','low','te','/x','0','WORKING','tu',0,99000000,0,'[]','[]',0,60)")
+        for i, (cmd, want) in enumerate((("/bin/zsh -lc 'lake build Minidregg'", "request_build"), ("cargo test -p x --test y", "request_cargo"),
+                                         ("bash scripts/pipeline/merge-gate-checks.sh", "request_journey"), ("ls journeys/", None),
+                                         ("/bin/zsh -lc 'grep -rn hyp-ledger scripts'", None), ("lake env lean Foo.lean", None))):
+            n0 = len(sent)
+            await h.on_request({"id": 100 + i, "method": "item/commandExecution/requestApproval", "params": {"threadId": "te", "command": cmd}})
+            await real_sleep(0.01)
+            dec = sent[n0]["result"]["decision"]
+            hinted = steers and steers[-1][0] == "turn/steer" and want and want in steers[-1][1]["input"][0]["text"]
+            step("exec approval %r" % cmd[:34], dec == ("decline" if want else "accept") and (not want or hinted), (dec, want))
+        step("EXEC_REFUSED events + declined counter", h.cur("e")["declined"] == 3 and
+             h.db.execute("select count(*) from events where kind='EXEC_REFUSED'").fetchone()[0] == 3)
+        await h.on_request({"id": 200, "method": "item/fileChange/requestApproval", "params": {"threadId": "te"}})
+        step("fileChange approval accepted", sent[-1]["result"]["decision"] == "accept")
+        h.execs["te"] = {"i1": ("sleep 5", now() - 60)}
+        h.upd(h.cur("e"), state="WORKING")
+        real_sleep2 = asyncio.sleep
+        async def fast2(t): await real_sleep2(0.01)
+        g["asyncio"].sleep = fast2
+        mt = asyncio.ensure_future(h.monitor()); await real_sleep2(0.2); mt.cancel()
+        g["asyncio"].sleep = real_sleep2
+        step("running exec over cap -> LONG_EXEC + steer", h.db.execute("select count(*) from events where kind='LONG_EXEC'").fetchone()[0] == 1)
+        w = h.cur("e"); outs = []
+        for _ in range(6):
+            outs.append((await h.tool_report(w, {"phase": "x", "note": "still running"}))[0])
+        step("cadence: >4 reports, no artifact -> NARRATING", "END YOUR TURN" in outs[-1] and "narrating" not in outs[0] and
+             h.db.execute("select count(*) from events where kind='NARRATING'").fetchone()[0] == 1, outs[-1][:80])
+        h.artifact(w)
+        step("artifact resets the cadence", "narrating" not in (await h.tool_report(w, {}))[0])
+        step("status shows req/job and decl", "req/job=" in await h.c_status({}) and "decl=3" in await h.c_status({}))
         # train
         sh(root, "init", "-q", "--bare", "remote.git")
         seed = os.path.join(root, "seed")
