@@ -215,6 +215,7 @@ class Hub:
         self.pool = {k: asyncio.Semaphore(n) for k, n in self.pool_n.items()}
         self.pool_run = {k: 0 for k in self.pool_n}
         self.job_rc = {}
+        self.kill_grace = 10.0
         self.rate = None
         self.paused = False
         self.ev_signal = asyncio.Event()
@@ -500,6 +501,9 @@ class Hub:
         await self._finish_job(w, tk, kind, what, log, on_done)
 
     async def _run_job_body(self, w, tk, kind, what, cmd, log, cwd):
+        if self.db.execute("select status from jobs where ticket=?", (tk,)).fetchone()[0] == "CANCELLED":
+            self.job_rc[tk] = -15
+            return
         self.db.execute("update jobs set status='running' where ticket=?", (tk,))
         with open(log, "w") as f:
             f.write("$ %s\n" % cmd); f.flush()
@@ -515,6 +519,13 @@ class Hub:
 
     async def _finish_job(self, w, tk, kind, what, log, on_done):
         rc = self.job_rc.pop(tk)
+        if self.db.execute("select status from jobs where ticket=?", (tk,)).fetchone()[0] == "CANCELLED":
+            cw = self.cur(w["name"]) if w else None
+            if cw and cw["gen"] == w["gen"]:
+                self.upd(cw, pending=max(0, cw["pending"] - 1))
+                if cw["pending"] == 0 and cw["state"] == "WAITING_JOB":
+                    self.upd(cw, state="WORKING")
+            return
         self.db.execute("update jobs set status='done', exit=?, t1=? where ticket=? and status='running'", (rc, now(), tk))
         with open(log, errors="replace") as f:
             tail = "".join(f.readlines()[-30:])
@@ -1041,14 +1052,37 @@ class Hub:
         return "train %s: %s merged at %s; umbrella ticket=%s (event TRAIN_GREEN/TRAIN_RED follows)" % (name, what, head[:10], tk)
 
     # ---- hub restart: jobs that were running died with the old hub
+    async def kill_groups(self, pgids, grace=None):
+        """TERM each process group, wait up to `grace` s for it to vanish, then KILL. Jobs are session leaders (pgid == pid)."""
+        grace = self.kill_grace if grace is None else grace
+        live = []
+        for p in pgids:
+            try:
+                os.killpg(p, signal.SIGTERM); live.append(p)
+            except OSError:
+                pass
+        end = now() + grace
+        while live and now() < end:
+            await asyncio.sleep(0.1)
+            live = [p for p in live if self._alive(p)]
+        for p in live:
+            try:
+                os.killpg(p, signal.SIGKILL)
+            except OSError:
+                pass
+
+    @staticmethod
+    def _alive(pgid):
+        try:
+            os.killpg(pgid, 0); return True
+        except OSError:
+            return False
+
     async def recover_jobs(self):
         rows = self.db.execute("select ticket,name,gen,kind,what,pid from jobs where status in ('running','queued')").fetchall()
+        await self.kill_groups([r[5] for r in rows if r[5]])  # the dead hub's children: kill BEFORE reporting, or they run orphaned
+        by_worker = {}
         for tk, name, gen, kind, what, pid in rows:
-            if pid:  # a survivor would finish with nobody listening: stop its process group
-                try:
-                    os.killpg(pid, signal.SIGTERM)
-                except OSError:
-                    pass
             self.db.execute("update jobs set status='INTERRUPTED', t1=? where ticket=?", (now(), tk))
             if kind == "train":
                 tn = name[len("train-"):]
@@ -1057,13 +1091,43 @@ class Hub:
                 self.event({"deputy": t[0] if t else "-", "name": name, "gen": 0}, "JOB_INTERRUPTED",
                            "%s train build %s killed by hub restart; train marked RED: `cxo merge %s --recheck`" % (tk, what, tn))
                 continue
-            w = self.db.execute("select * from workers where name=? and gen=?", (name, gen))
-            w = self._row(w)
+            w = self._row(self.db.execute("select * from workers where name=? and gen=?", (name, gen)))
             if not w or w["state"] in ("RETIRED", "DEAD"):
                 continue
-            self.event(w, "JOB_INTERRUPTED", "%s %s %s killed by hub restart; worker told to re-request" % (tk, kind, what[:100]))
-            await self.deliver(w, "HUB: your %s job %s (%s) was INTERRUPTED by a hub restart and produced no result. Request it again "
-                                  "(request_%s), then END YOUR TURN." % (kind, tk, what[:160], kind))
+            self.event(w, "JOB_INTERRUPTED", "%s %s %s killed by hub restart; worker told to re-request one" % (tk, kind, what[:100]))
+            by_worker.setdefault((name, gen), (w, []))[1].append((tk, kind, what))
+        for w, jobs in by_worker.values():  # one message per worker, one re-request at a time (no storm)
+            lst = "; ".join("%s %s (%s)" % (tk, kind, what[:100]) for tk, kind, what in jobs)
+            await self.deliver(w, "HUB: a hub restart INTERRUPTED %d of your jobs (processes killed, no result): %s. Re-request ONLY the "
+                                  "single most important one (request_%s), END YOUR TURN, and request the others one at a time "
+                                  "after each result." % (len(jobs), lst, jobs[0][1]))
+
+    async def c_cancel(self, a):
+        r = self.db.execute("select ticket,name,gen,kind,what,status,pid from jobs where ticket=?", (a.get("ticket", ""),)).fetchone()
+        if not r:
+            return "ERR no job %s" % a.get("ticket")
+        tk, name, gen, kind, what, st, pid = r
+        if st not in ("running", "queued"):
+            return "ERR job %s is %s" % (tk, st)
+        if kind == "train":
+            return "ERR %s is a train build: `cxo merge TRAIN --abort` (or --recheck)" % tk
+        self.db.execute("update jobs set status='CANCELLED', t1=? where ticket=?", (now(), tk))
+        if pid:
+            await self.kill_groups([pid])
+        w = self._row(self.db.execute("select * from workers where name=? and gen=?", (name, gen)))
+        if w and w["state"] not in ("RETIRED", "DEAD"):
+            self.event(w, "JOB_CANCELLED", "%s %s %s cancelled by deputy" % (tk, kind, what[:100]))
+            await self.deliver(w, "HUB: your %s job %s (%s) was CANCELLED by the deputy; it produced no result. Do not re-request "
+                                  "it unless told to." % (kind, tk, what[:160]))
+        return "cancelled %s (%s %s)" % (tk, kind, what[:60])
+
+    def stop_jobs(self):
+        """hub shutdown: kill the live jobs' process groups; rows stay 'running' so the next start reports them."""
+        for (p,) in self.db.execute("select pid from jobs where status='running' and pid is not null").fetchall():
+            try:
+                os.killpg(p, signal.SIGKILL)
+            except OSError:
+                pass
 
     # ---- monitor
     async def monitor(self):
@@ -1119,6 +1183,9 @@ class Hub:
         srv = await asyncio.start_unix_server(self.client, path=SOCK, limit=1 << 24)
         os.chmod(SOCK, 0o600)
         asyncio.ensure_future(self.monitor())
+        def term():
+            self.stop_jobs(); os._exit(0)
+        asyncio.get_running_loop().add_signal_handler(signal.SIGTERM, term)
         async with srv:
             await srv.serve_forever()
 
@@ -1191,6 +1258,7 @@ USAGE = """cxo — Codex hub. One terse line per item; ERR... on failure (exit 1
   spawn NAME -d DEP (--mklane [--from main|next|REF|SHA] | --repo PATH [--base REF] | --wt PATH) [-m MODEL] [-e EFFORT]
         [--allow GLOB]... [--protect GLOB]... [--no-default-protect] [--budget N|12M] [--umbrella default|"T1 T2"]
         [--build-cmd 'CMD {targets}'] [--no-push] [--force]   < brief.md
+  cancel TICKET              (kill a running/queued job's process group; worker is told; status CANCELLED)
   rebase NAME REF            (hub-side `git rebase REF` in the lane; refuses a dirty tree; conflicts abort + list files)
   unprotect NAME GLOB...     (deputy-approved one-shot edit of a protected path; event UNPROTECTED)
   send NAME [--now] TEXT...   answer NAME ASKID TEXT...   allow NAME GLOB...   budget NAME N|12M
@@ -1562,9 +1630,33 @@ def selftest_local():
         sts = dict(h.db.execute("select ticket,status from jobs where name='j'").fetchall())
         step("hub start: running/queued -> INTERRUPTED, done kept", sts == {"b1": "INTERRUPTED", "b2": "INTERRUPTED", "b3": "done"}, sts)
         await h.recover_jobs()
-        step("hub start: INTERRUPTED is terminal (second restart reports nothing)", len(told) == 2, len(told))
-        step("hub start: worker told to re-request, event raised", len(told) == 2 and "INTERRUPTED" in told[0][1] and "request_build" in told[0][1]
-             and h.db.execute("select count(*) from events where kind='JOB_INTERRUPTED'").fetchone()[0] == 2, told[:1])
+        # orphans: a long job (+ a TERM-ignoring child) from a dead hub is gone after recovery
+        saved = list(told)
+        h.kill_grace = 1.0
+        orph = subprocess.Popen(["bash", "-c", "(trap '' TERM; sleep 60) & sleep 60"], start_new_session=True)
+        await real_sleep(0.3)
+        h.db.execute("insert into jobs(ticket,name,gen,kind,what,status,log,t0,pid) values('orph','j',1,'journey','long','running','/l',0,?)", (orph.pid,))
+        t1 = now()
+        await h.recover_jobs()
+        step("hub start: orphaned job group (even TERM-ignoring) is killed", not Hub._alive(orph.pid) and orph.poll() is not None
+             and h.db.execute("select status from jobs where ticket='orph'").fetchone()[0] == "INTERRUPTED", now() - t1)
+        orph.wait()
+        # cancel: kills a sleeping job, marks CANCELLED, tells the worker, delivers no RESULT
+        told.clear()
+        h.db.execute("insert into jobs(ticket,name,gen,kind,what,status,log,t0) values('cx','j',1,'journey','zzz','queued',?,0)", (os.path.join(root, "cx.log"),))
+        fut = asyncio.ensure_future(h.run_job(h.cur("j"), "cx", "journey", "zzz", "sleep 60", os.path.join(root, "cx.log"), cwd=root))
+        await real_sleep(0.5)
+        pid = h.db.execute("select pid from jobs where ticket='cx'").fetchone()[0]
+        r = await h.c_cancel({"ticket": "cx"})
+        await asyncio.wait_for(fut, 15)
+        step("cancel: sleeping job killed, CANCELLED, worker told, no RESULT", pid and not Hub._alive(pid) and r.startswith("cancelled")
+             and h.db.execute("select status from jobs where ticket='cx'").fetchone()[0] == "CANCELLED"
+             and len(told) == 1 and "CANCELLED" in told[0][1] and not any("RESULT" in t for _, t in told), (r, told))
+        step("cancel: finished job refused", (await h.c_cancel({"ticket": "b3"})).startswith("ERR"))
+        told[:] = saved
+        step("hub start: INTERRUPTED is terminal (second restart reports nothing)", len(told) == 1, len(told))
+        step("hub start: worker told to re-request, event raised", len(told) == 1 and "ONLY" in told[0][1] and "INTERRUPTED" in told[0][1] and "request_build" in told[0][1]
+             and h.db.execute("select count(*) from events where kind='JOB_INTERRUPTED' and text like '%Foo%'").fetchone()[0] == 2, told[:1])
     asyncio.run(hub_tests())
     print("%s %d/%d (scratch %s)" % ("LOCAL SELFTEST PASS" if all(res) else "LOCAL SELFTEST FAIL", sum(res), len(res), root))
     return 0 if all(res) else 1
@@ -1622,6 +1714,8 @@ def main():
         a["name"] = pos[0]; a["ref"] = pos[1] if len(pos) > 1 else ""
     elif cmd == "budget":
         a["name"] = pos[0]; a["n"] = pos[1]
+    elif cmd == "cancel":
+        a["ticket"] = pos[0]
     elif cmd in ("interrupt", "log", "train"):
         a["name"] = pos[0]
     elif cmd == "merge":

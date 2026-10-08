@@ -21,6 +21,7 @@ cxo-b3 status -d t2      # STATE tok(total) unc(uncached) req(model requests) po
 cxo-b3 log t2-x -n 30    # say / run [exit] / edit / tool / turn end
 cxo-b3 retire t2-x verified, merged
 cxo-b3 rebase t2-x REF       # hub-side `git rebase REF` in the lane (sandbox .git is read-only); refuses a dirty tree, aborts + lists files on conflict; updates base, event REBASED
+cxo-b3 cancel TICKET        # kill a job's process group (TERM, KILL after 10 s); CANCELLED, worker told
 cxo-b3 unprotect t2-x 'GLOB' # one-shot deputy approval to touch a protected path at the next submit (event UNPROTECTED)
 ```
 
@@ -124,3 +125,4 @@ Merge one range, wait for green, then merge the next. Experiment 1 found three c
 - `request_build` / `request_cargo` take `allow_dirty`: the job gets `CXO_ALLOW_DIRTY=1` (the build script's dirty-tree refusal stays the default; honouring the env is the script's business) and the result, BUILD/CARGO event and delivered RESULT carry `DIRTY-TREE head= tree= diff_sha1=` (clean trees say `clean-tree`).
 - On `hub start`, jobs left `running`/`queued` become `INTERRUPTED` (event `JOB_INTERRUPTED`); the worker is told to re-request; a train job marks the train RED (`merge --recheck`).
 - Exec-approval refusal is judged per shell segment; readers (sed, cat, chmod, `bash -n`, ...) are never refused, and a journey path is refused only when executed. `CXO_LONG_RX` is read at hub start only.
+- Hub restart/stop kills the recorded job process groups (TERM, KILL after 10 s) before reporting JOB_INTERRUPTED; one notice per worker, re-request one job at a time. A job that escapes its session (own setsid) is not reachable.
