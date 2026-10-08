@@ -1,0 +1,4 @@
+#!/bin/sh
+# Mac-side wrapper: run cxo on burst3-a (where the hub, Codex and the worktrees live). stdin passes through (spawn reads the brief from it).
+q=""; for a in "$@"; do q="$q '$(printf %s "$a" | sed "s/'/'\\\\''/g")'"; done
+exec ssh -F "$HOME/.ssh/burst3-20261008.conf" burst3-a "~/cxo/cxo$q"
