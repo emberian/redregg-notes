@@ -24,12 +24,12 @@ SLOTS_CMD = os.environ.get("CXO_SLOTS_CMD", "slots --json")
 
 
 def build_pool_size():
-    """builds: CXO_MAX_BUILDS, else the box's lane-slot count from `slots --json` (list length, or total/slots/n), else 6."""
+    """builds: CXO_MAX_BUILDS, else the box's lane-slot count from `slots --json` (list length, or lane_slots/total/slots/n), else 6."""
     if os.environ.get("CXO_MAX_BUILDS"):
         return int(os.environ["CXO_MAX_BUILDS"])
     try:
         o = json.loads(subprocess.run(shlex.split(SLOTS_CMD), capture_output=True, text=True, timeout=10).stdout)
-        n = len(o) if isinstance(o, list) else next((o[k] if isinstance(o[k], int) else len(o[k]) for k in ("total", "slots", "n") if k in o), 0)
+        n = len(o) if isinstance(o, list) else next((o[k] if isinstance(o[k], int) else len(o[k]) for k in ("lane_slots", "total", "slots", "n") if k in o), 0)
         if n > 0:
             return n
     except Exception:
