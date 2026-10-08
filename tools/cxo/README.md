@@ -1,100 +1,115 @@
 # cxo — the Codex hub (read this in 2 minutes)
 
-`cxo` lets a Claude deputy run Codex workers without shelling out to `codex exec`.
-- One resident hub on **burst3-a** owns a private `codex app-server` (codex 0.160.0, `~/cxo/codex/bin/codex`).
-- It also owns the worker registry, events, build tickets and the rate-limit gate.
-- Workers talk back through tools the hub defines: `report`, `ask_deputy`, `request_build`, `build_status`, `submit`.
-- Design and evidence: `redregg/work/CODEX-ORCHESTRATION-DESIGN-20261008.md`.
-
-**From the Mac use `tools/cxo/cxo-b3 …`.** It is ssh to burst3-a, and stdin passes through. On the box, use `~/cxo/cxo …`.
-Every command prints terse lines, and failures start with `ERR`.
+`cxo` runs Codex workers for a Claude deputy.
+- One resident hub on **burst3-a** owns a private `codex app-server` (0.160.0).
+- It owns the worker registry, events, jobs (build, journey, cargo, train), the submit guards and the pace gate.
+- Workers reach the hub only through its tools: `report`, `ask_deputy`, `request_build`, `request_journey`, `request_cargo`, `build_status`, `submit`.
+- From the Mac use `tools/cxo/cxo-b3 …` (ssh; stdin passes through). On the box, use `~/cxo/cxo …`.
+- Output is terse; failures start with `ERR`.
+- Background reading: the design is in `work/CODEX-ORCHESTRATION-DESIGN-20261008.md` and the first real run in `work/CXO-EXPERIMENT-1.md`.
 
 ## The deputy loop
 ```sh
-cxo-b3 limits                                   # used% of the weekly window, pace ok?
-cxo-b3 spawn kern-store-a -d kern --mklane --from next -m gpt-5.6-sol \
-       --allow 'Kernel/Store*' --allow 'scripts/store/*' < brief.md
-cxo-b3 wait -d kern -t 540                      # foreground; returns events, or (no events)
-cxo-b3 answer kern-store-a a17 "use the v4 frame"   # reply to an ASK
-cxo-b3 send kern-store-a "also cover the empty case"        # delivered at its next report
-cxo-b3 send kern-store-a --now "STOP touching Host/"        # steer the live turn
-cxo-b3 status -d kern                           # name gen deputy STATE model turn rep=count/age item=age tok sha
-cxo-b3 log kern-store-a -n 30                   # condensed: say / run [exit] / edit / tool / turn end
-cxo-b3 retire kern-store-a verified and queued
+cxo-b3 limits                                    # weekly used%, pace
+cxo-b3 spawn t2-x -d t2 --mklane -m gpt-5.6-sol --allow 'Kernel/Foo*' [--umbrella default] < brief.md
+cxo-b3 wait -d t2 -t 540                         # foreground; events or (no events)
+cxo-b3 allow t2-x 'Host/Bar*.lean'               # widen scope of a live worker (ASK/NOTE answers)
+cxo-b3 answer t2-x a17 "yes, fix the primitive, no twin"
+cxo-b3 send t2-x "…"  |  send t2-x --now "STOP …"   # next report  |  steer the live turn
+cxo-b3 budget t2-x 20M                           # raise/lower; send never resets it
+cxo-b3 status -d t2      # STATE tok(total) unc(uncached) req(model requests) polls jobs budget sha
+cxo-b3 log t2-x -n 30    # say / run [exit] / edit / tool / turn end
+cxo-b3 retire t2-x verified, merged
 ```
 
-**Spawn modes:**
-- `--mklane [--from main|next]` makes a warm lane at `/srv/lanes/NAME/src`. This is the normal mode for Mini.
-- `--repo PATH [--base REF]` makes a git worktree at `~/.cxo/wt/NAME` on branch `cx/NAME`.
-- `--wt PATH` uses an existing tree.
-
-**Other spawn flags:**
-- `-m` sets the model. The default is `gpt-5.6-sol`; use `gpt-6-astra` for Astra.
-- `-e` sets the effort (default `high`).
-- `--budget` sets a token budget (default 3M). Past the budget the hub interrupts the turn and raises `BUDGET`.
-- `--protect GLOB` adds to the default protected set: NativeAcceptedFixture*, AxiomCensus*, TokenCensus*, Theory/AxiomPin, scripts/gates, scripts/pipeline, .github, lakefile*, lean-toolchain, lake-manifest.json.
-- `--no-default-protect` drops that default set.
-- `--force` skips the pace gate.
+**Spawn options:**
+- `--mklane [--from next]` makes a warm lane at `/srv/lanes/NAME/src`. Alternatives are `--repo PATH` and `--wt PATH`.
+- `-m` model: `gpt-5.6-sol` is the default; `gpt-6-astra` for Astra.
+- `--budget` defaults to 12M. That is the hub's cumulative count, including cached context.
+- `--umbrella default` (or `"T1 T2"`): the worker's submit is refused until `request_build(umbrella)` came back exit=0 **on the exact tree it submits**. The default umbrella is `Minidregg Host.Main:leanArts ObjectiveProofs`. Use it for every worker whose files overlap another's.
+- `--protect` adds protected globs; `--no-push` skips the push; `--force` skips the pace gate.
 
 **Events from `wait`:**
 
-| event | what to do |
+| event | meaning |
 |---|---|
-| `SUBMIT` | the range, files, claims and the push to `lane/NAME` are in the event; verify it (below) |
-| `SUBMIT_REFUSED` | the guard findings are in the event. The worker usually fixes them itself; you may `send` |
-| `ASK aID NAME Q… default…` | `answer`; the worker has ended its turn and waits |
-| `NOTE` | a non-blocking question; the worker went on with its default |
-| `GUARD` | a protected file was edited mid-turn; the hub already steered it |
-| `STALL` | 15 min with no activity in a live turn |
-| `NO_SUBMIT` | it ended two turns without submitting |
-| `BUDGET`, `ERROR`, `TURN_FAILED` | look at `log`, then `send`, `renew` or `retire` |
-| `BUILD` | a worker's build finished |
-| `RESUMED` | the hub restarted; the worker is idle, so `send` it "continue" |
+| `SUBMIT` | range, files, `pushed=lane/NAME`, umbrella=green, waivers, claims |
+| `SUBMIT_REFUSED` | guard findings |
+| `ASK aN` | the worker ended its turn and is waiting: `answer` it |
+| `NOTE` | the worker proceeded with its default |
+| `BUILD` / `JOURNEY` / `CARGO` | a job finished; the worker already got the result |
+| `GUARD` | protected edit, already steered |
+| `STALL` | 15 min idle in a live turn |
+| `NO_SUBMIT` | two turns ended with no submit |
+| `POLLING` | the worker ignored the no-poll rule |
+| `BUDGET` | interrupted at budget: `budget N`, then `send` |
+| `ERROR` / `TURN_FAILED` / `RESUMED` | look at `log` |
+| `TRAIN_GREEN` / `TRAIN_RED` | the umbrella result after a train merge |
 
-## Rules the hub enforces (so you don't have to)
-- **Names, not ids.**
-  - `send` or `answer` to a RETIRED or DEAD name is **refused**.
-  - A retired name cannot be respawned. Pick a new name, or use `renew`.
-  - Tool calls from a retired generation get "stop now".
-- **Workers never commit.** `submit` stages the whole tree and runs the guards. It then commits as ember arlynx, unsigned, with a `Cx-Worker:` trailer, and pushes `lane/NAME` to `/srv/git/minidregg.git`.
-- **The guards refuse:**
-  - edits outside `--allow` and any protected path;
-  - an empty diff;
-  - added `sorry`, `admit`, `axiom`, `native_decide`, `maxHeartbeats 0`, `|| true`, `| tail` in scripts, skip/ignore markers, or `pkill -f`;
-  - removed `theorem`/`lemma`/`example`, `#assert_*`, `#guard`, `assert…(`, or tests.
-  - A worker can waive a deletion finding (`rule:path reason`) but never a scope or protected one. The waiver shows in the commit and in the `SUBMIT` event, so **read it.**
-- **Builds go only through `request_build`.** That is `lake-slot TARGETS` in the lane under `swarm-build`. The exit code comes from the process, never from a log tail. At most 2 run at once (`CXO_MAX_BUILDS`).
-- **Pace gate on `spawn`:** it is refused if `ordinaryUsageAllowed` is false, or if used% is above 85 % of (linear pace + one day). It never touches the reset credit; that is Ember's.
+## Jobs: the worker asks, ends its turn, and the result is delivered (no polling)
+Each `request_*` returns a ticket and tells the worker to **end its turn**. The job runs outside the Codex sandbox, under the box env. Its exit code comes from the process. The result (exit, log path, last 30 lines) arrives as a new turn, or as a steer if the worker is mid-turn.
+- `request_build(targets)`: `lake-slot TARGETS` in the lane.
+- `request_journey(script, args)`: runs a script from the lane, so sockets work. `{bin}` and `{manifest}` in the args expand to the prebuilt **base** artifact set, fetched once per lane (`fetch-artifacts green`, linked); the set is READY for cfdaf64d. A worker that changed Host must `request_build` it and pass its own path.
+- `request_cargo(spec)`: `swarm-build cargo …` with network, and `CARGO_TARGET_DIR` set to `lane/rust-target`. A `test` must name `-p` and a filter or `--test`.
+- Concurrency is `CXO_MAX_JOBS` (3); each Lake build also takes a box slot.
 
-## Your job after SUBMIT (the hub's guards are not verification)
-1. Fetch `lane/NAME` from `/srv/git/minidregg.git` into **your own** clone. Never read the worker's tree.
-2. Read the diff against the brief. Read every changed theorem *statement*.
-3. Run the narrowest refuting check, then plant a fault and see it go red. Assert that the mutation actually happened.
-4. Queue the range for the keeper (VERIFY-ONCE), then `retire` the worker or `send` it the rework.
+## Integration: build the umbrella after EACH merge
+```sh
+cxo-b3 train t2 -d t2 --from next     # train lane /srv/lanes/train-t2/src
+cxo-b3 merge t2 t2-x                  # fetch lane/t2-x from the shared remote, merge --no-ff, build the umbrella
+# -> TRAIN_GREEN (pushes lane/train-t2) | TRAIN_RED (the train stays at the red merge; further merges refused)
+cxo-b3 spawn t2-mergefix -d t2 --wt /srv/lanes/train-t2/src --umbrella default < fix.md   # paste the error
+cxo-b3 merge t2 --recheck             # after the fix commits on the train
+cxo-b3 merge t2 --abort               # or drop the red merge (reset to the last green)
+```
+Merge one range, wait for green, then merge the next. Experiment 1 found three cross-lane reds at once, because all three ranges had been merged before the first umbrella build. The keeper's full gate still runs on what you queue.
 
-## Steering ladder
-`send` (piggyback) → `send --now` (steer) → `interrupt` + `send` → `renew NAME --fork [--before-turn ID] "correction"` →
-`renew NAME "note"`. The last one is a fresh thread from the worker's own WORKLOG.md, keeping the same tree and brief.
-Renew at about 60 % context, after two compactions, or after twice-ignored steers. Never renew from a paraphrase.
+## What the hub enforces
+- **Names, not ids.** Messages to a retired name are refused, and so is respawning one.
+- **Workers never commit.** `submit` stages the tree without `WORKLOG.md` and `.minidregg-native-snapshot` (both also go into `info/exclude` at spawn), then runs the guards:
+  - edits outside `--allow`, edits to protected paths, an empty diff;
+  - added `sorry`, `admit`, `axiom`, `native_decide`, `maxHeartbeats 0`, `|| true`, `| tail` in scripts, skip or ignore markers, `pkill -f`;
+  - deleted theorems, asserts or tests. These can be waived as `rule:path reason`, and **you must read the waiver.**
+- If the guards pass, the hub commits (ember arlynx, unsigned, `Cx-Worker:` trailer) and pushes `lane/NAME` to `/srv/git/minidregg.git`.
+- **The pace gate on `spawn`** refuses when `ordinaryUsageAllowed` is false or when used% is above 85 % of (linear + one day). It never spends the reset credit; that is Ember's.
+
+## Your job after SUBMIT (guards are not verification)
+1. Fetch `lane/NAME` into your own clone, or `merge` it into your train.
+2. Read the diff and every changed theorem *statement*.
+3. Run the narrowest refuting check, plant a fault and see it go red, and assert the mutation happened.
+4. Queue the range for the keeper, then `retire` the worker.
+
+## Cost
+- **Measured, experiment 1:** 65M hub tokens moved the weekly window by 23 points, about **2.8M hub tokens per weekly point**. That is approximate: the meter has integer granularity and other Codex use shares the window.
+- Polling dominated: t1-retry used 34M, mostly `build_status` at 45 s, each poll re-sending about 150K of context.
+- **Now each job costs one extra model request** (one delivered result) instead of one request per poll. The self-test spent 0.3M tokens on 16 requests, with 0 polls and 0 requests during the 45 s build.
+- **Estimate per item without polling:** 4–12M tokens (collector 4.1M, mergefix 4.3–10M, Astra meter 12M), which is **about 1.5–4 weekly points**. That is roughly 25–60 items per window if nothing else uses Codex. Budget spawns accordingly, and read `unc` (uncached) next to `tok`.
 
 ## Ops
-- Hub: `~/cxo/cxo hub start|stop|run`, state in `~/.cxo/`, which holds:
-  - `registry.sqlite`, `events` (in the registry), `logs/`, `builds/`, `briefs/`;
-  - `hub.log` and `app-server.stderr`.
-- Env is in `~/cxo/env.sh`: CXO_CODEX, CXO_BUILD_CMD, CXO_PUSH_REMOTE.
-- Self-test: `~/cxo/cxo selftest [-m MODEL]`. It runs spawn → report → planted scope violation refused → deputy send → clean resubmit → commit holds only the allowed file → retire → send to the retired name refused → respawn refused.
-  - **burst3-a 10-08 03:00Z: PASS 9/9, 37 s, about 143K tokens.** The Mac also passed 9/9.
-- **Credential:**
-  - `~/.cxo/codex-home/auth.json` on burst3-a is a copy of the Mac's ChatGPT Codex login, copied 10-08 02:58Z: a bounded operational credential (mode 600, in a 700 directory).
-  - **Teardown: `rm -rf ~/.cxo/codex-home` before the box is deleted.**
-  - If either copy refreshes its token, the other may be logged out. The fix is `codex login` on the Mac.
-- `~/.cxo/codex-home/config.toml` is minimal: no MCP servers, no global AGENTS.md or skills. Worker context starts lean.
+- State lives in `~/.cxo`: `registry.sqlite`, `logs/`, `jobs/`, `briefs/`, `hub.log`, `app-server.stderr`.
+- Env lives in `~/cxo/env.sh`: CXO_CODEX, CXO_BUILD_CMD (lake-slot) and CXO_PUSH_REMOTE.
+- Self-test: `~/cxo/cxo selftest`. It never pushes, and it covers:
+  - report;
+  - the scope refusal;
+  - `allow`;
+  - umbrella-gated submit;
+  - a build delivered with **zero polls** while the worker sits idle;
+  - the commit excluding WORKLOG;
+  - `request_journey` opening a unix socket outside the sandbox;
+  - retire, and refusals on the retired name.
+  - **burst3-a, 10-08 05:58Z: PASS 16/16, 134 s, 0.3M tokens.**
+- **Credential:** `~/.cxo/codex-home/auth.json` is a copy of the Mac's Codex login, a bounded operational credential.
+  - **Teardown: `rm -rf ~/.cxo/codex-home`.**
+  - If either copy refreshes its token, the other may be logged out; run `codex login` on the Mac.
 
-## Untested paths (first use = watch it)
-`--mklane` spawn, the push to the shared remote, `request_build` on a real lane, `renew --fork`, hub-restart resume, `BUDGET`.
+## Not yet exercised live
+- `request_cargo`, `renew --fork`, the `BUDGET` interrupt, and a TRAIN_RED on a real conflict.
+- `train`/`merge` were exercised on a probe train on 10-08 (create, `--recheck`, merge fetch, TRAIN_GREEN with push, refusal while building, refusal of a bad ref) and then removed.
+- A real-lane `request_journey` with `{bin}`. The fetch was verified by hand on `/srv/lanes` and gave 15 binaries.
+- The umbrella refusal message itself. The self-test worker built before submitting, so it never hit the refusal; the green-tree match was exercised.
 
 ## Known Codex behaviours (measured)
-- `turn/steer` refuses a stale turn id.
-- Tool calls block the turn until the hub answers.
-- **Codex's `thread/goal` auto-continues turns and self-marks the goal "complete"**, so cxo does not use goals.
-- **A long-held tool call makes the model spin**, writing "still waiting…" (60K → 619K tokens in 9 min). That is why `ask_deputy` returns at once and the worker ends its turn.
+- Steer refuses a stale turn id.
+- **A tool call held open makes the model spin**, burning tokens, so every wait ends the turn.
+- **Thread goals auto-continue and self-complete**, so cxo does not use them.
+- Workers follow steers at once (experiment 1: 7 of 7).
