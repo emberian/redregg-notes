@@ -697,8 +697,11 @@ class Hub:
             pr = subprocess.run(["git", "push", "-q", "-f", PUSH_REMOTE, "HEAD:refs/heads/" + ref], cwd=w["wt"], capture_output=True, text=True)
             pushed = " pushed=" + ref if pr.returncode == 0 else " PUSH-FAILED(%s)" % pr.stderr.strip()[-200:]
         files = git(w["wt"], "diff", "--name-only", w["base"], sha).split()
-        self.upd(w, state="SUBMITTED", sha=sha)
-        self.event(w, "SUBMIT", "%s..%s files=%d%s%s%s claims: %s" % (w["base"][:10], sha[:10], len(files), pushed,
+        old_base = w["base"]
+        # the accepted range is behind us: the next submit is judged against it, not the original lane base
+        self.upd(w, state="SUBMITTED", sha=sha, base=sha)
+        self.event(w, "SUBMIT_BASE_ADVANCED", "guard base %s -> %s" % (old_base[:10], sha[:10]))
+        self.event(w, "SUBMIT", "%s..%s files=%d%s%s%s claims: %s" % (old_base[:10], sha[:10], len(files), pushed,
                    " umbrella=green" if need else "", (" WAIVED: " + "; ".join(waived)) if waived else "",
                    " | ".join(a.get("claims", []))[:400]))
         return "submitted %s. End your turn now." % sha[:10], True
@@ -891,9 +894,6 @@ class Hub:
         wt, ref = w["wt"], a.get("ref") or ""
         if not ref:
             return "ERR rebase NAME REF"
-        if subprocess.run(["git", "status", "--porcelain", *stage_pathspec()], cwd=wt, capture_output=True, text=True).stdout.strip():
-            return ("ERR %s's worktree is dirty. Tell the worker to finish and `report` (a stash-free state: submit, or revert), then rebase. "
-                    "Never git stash." % w["name"])
         sha = git(wt, "rev-parse", "--verify", "-q", ref + "^{commit}").strip()
         if not sha:  # not local: try the shared remote
             for rem in [r for r in ("shared", PUSH_REMOTE or "origin") if r]:
@@ -903,13 +903,36 @@ class Hub:
                     break
         if not sha:
             return "ERR cannot resolve %s in the lane or the shared remote" % ref
-        old_head = git(wt, "rev-parse", "HEAD").strip()
+        # a dirty tree is carried (no stash): refuse only if it touches files the rebase changes
+        st = git(wt, "status", "--porcelain", "-uall", *stage_pathspec())
+        dirty = {x[3:].split(" -> ")[-1].strip('"') for x in st.split("\n") if x.strip()}
+        wip = False
+        if dirty:
+            mb = git(wt, "merge-base", "HEAD", sha).strip() or w["base"]
+            clash = sorted(dirty & set(git(wt, "diff", "--name-only", mb, sha).split()))
+            if clash:
+                return ("ERR %s's worktree is dirty in files the rebase changes: %s. Have the worker finish and `report` (or revert those), "
+                        "then rebase. Never git stash." % (w["name"], " ".join(clash)))
+            git(wt, "add", "-A", *stage_pathspec())
+            c = subprocess.run(["git"] + GIT_ID + ["commit", "-q", "--no-verify", "-m", "cxo-wip: carried across rebase"], cwd=wt,
+                               capture_output=True, text=True)
+            if c.returncode:
+                git(wt, "reset", "-q")
+                return "ERR could not carry the dirty tree: " + c.stderr.strip()[-200:]
+            wip = True
+
+        def uncarry():
+            if wip:
+                subprocess.run(["git", "reset", "-q", "--mixed", "HEAD~1"], cwd=wt, capture_output=True)
+        old_head = git(wt, "rev-parse", "HEAD~1" if wip else "HEAD").strip()
         r = subprocess.run(["git"] + GIT_ID + ["rebase", sha], cwd=wt, capture_output=True, text=True)
         if r.returncode:
             files = git(wt, "diff", "--name-only", "--diff-filter=U").split()
             subprocess.run(["git", "rebase", "--abort"], cwd=wt, capture_output=True)
+            uncarry()
             self.event(w, "REBASE_CONFLICT", "onto %s: %s" % (sha[:10], " ".join(files)))
             return "ERR rebase conflicts onto %s, aborted (lane unchanged). conflicting: %s" % (sha[:10], " ".join(files) or r.stderr.strip()[-200:])
+        uncarry()
         new_head = git(wt, "rev-parse", "HEAD").strip()
         old_base = w["base"]
         # the submitted sha (if any) moved with the rebase; the old green tree no longer describes the lane
@@ -1611,10 +1634,10 @@ def selftest_local():
         sh(rr, "checkout", "-q", "-b", "lane", b0); open(os.path.join(rr, "f.txt"), "w").write("1\nLANE\n3\n"); sh(rr, "commit", "-qam", "lane work")
         h.db.execute("insert into workers(name,gen,deputy,model,effort,thread,wt,base,state,created,allow,protect,sha,green_tree) "
                      "values('r',1,'d','m','low','tr',?,?,'WORKING',0,'[]','[]','x','gt')", (rr, b0))
-        open(os.path.join(rr, "dirty.txt"), "w").write("d\n")
+        open(os.path.join(rr, "h.txt"), "w").write("mine\n")  # up-ok adds h.txt: the dirty tree intersects the rebase
         r = await h.c_rebase({"name": "r", "ref": "up-ok"})
-        step("rebase: dirty worktree refused, no stash advice", r.startswith("ERR") and "dirty" in r and "Never git stash" in r, r)
-        os.unlink(os.path.join(rr, "dirty.txt"))
+        step("rebase: dirty tree intersecting the rebase refused, no stash advice", r.startswith("ERR") and "h.txt" in r and "Never git stash" in r, r)
+        os.unlink(os.path.join(rr, "h.txt"))
         r = await h.c_rebase({"name": "r", "ref": "up-bad"})
         step("rebase: conflict aborted, files listed, lane intact", r.startswith("ERR") and "f.txt" in r and not sh(rr, "status", "--porcelain").strip()
              and not os.path.isdir(os.path.join(rr, ".git/rebase-merge")) and h.cur("r")["base"] == b0, r)
@@ -1624,6 +1647,30 @@ def selftest_local():
              and sh(rr, "merge-base", "--is-ancestor", up_ok, "HEAD") == "" and h.db.execute("select 1 from events where kind='REBASED'").fetchone(), r)
         r = await h.c_rebase({"name": "r", "ref": "no-such-ref"})
         step("rebase: unresolvable ref refused", r.startswith("ERR"), r)
+        # dirty rebase on disjoint files: carried, no stash, files and untracked intact
+        sh(rr, "checkout", "-q", "-b", "up2", up_ok); open(os.path.join(rr, "k.txt"), "w").write("k\n"); sh(rr, "add", "-A"); sh(rr, "commit", "-q", "-m", "up3")
+        up2 = sh(rr, "rev-parse", "HEAD").strip(); sh(rr, "checkout", "-q", "lane")
+        open(os.path.join(rr, "g.txt"), "w").write("g edited\n"); open(os.path.join(rr, "new.txt"), "w").write("n\n")
+        r = await h.c_rebase({"name": "r", "ref": "up2"})
+        step("rebase: dirty tree on disjoint files carried across", h.cur("r")["base"] == up2 and open(os.path.join(rr, "g.txt")).read() == "g edited\n"
+             and os.path.exists(os.path.join(rr, "new.txt")) and os.path.exists(os.path.join(rr, "k.txt")) and "cxo-wip" not in sh(rr, "log", "--format=%s")
+             and "g.txt" in sh(rr, "status", "--porcelain") and not sh(rr, "stash", "list").strip(), r)
+        # second submit judged against the first submit, not the original base
+        sr = os.path.join(root, "ss"); os.makedirs(os.path.join(sr, "A")); sh(root, "init", "-q", "ss")
+        for fn in ("A/one.lean", "A/two.lean"):
+            open(os.path.join(sr, fn), "w").write("theorem t : True := trivial\n")
+        sh(sr, "add", "-A"); sh(sr, "commit", "-q", "-m", "b"); sb = sh(sr, "rev-parse", "HEAD").strip()
+        h.db.execute("insert into workers(name,gen,deputy,model,effort,thread,wt,base,state,created,allow,protect) "
+                     "values('s',1,'d','m','low','ts',?,?,'WORKING',0,'[\"A/*\"]','[\"scripts/*\"]')", (sr, sb))
+        open(os.path.join(sr, "A/one.lean"), "w").write("theorem u : True := trivial\n")
+        open(os.path.join(sr, "A/two.lean"), "w").write("-- two\ntheorem t : True := trivial\n")
+        r1, _ = await h.tool_submit(h.cur("s"), {"title": "first", "body": "", "claims": [], "waivers": ["del-theorem:A/one.lean replaced by u"]})
+        ws = h.cur("s"); first = ws["sha"]
+        open(os.path.join(sr, "A/two.lean"), "w").write("-- two\\n-- again\ntheorem t : True := trivial\n")
+        r2, _ = await h.tool_submit(h.cur("s"), {"title": "second", "body": "", "claims": [], "waivers": []})
+        step("submit: base advances to the accepted sha, SUBMIT_BASE_ADVANCED", ws["base"] == first and r1.startswith("submitted")
+             and h.db.execute("select count(*) from events where kind='SUBMIT_BASE_ADVANCED'").fetchone()[0] >= 1, r1)
+        step("submit: second range judged from the first (one file, passes)", r2.startswith("submitted") and h.cur("s")["base"] != first, r2)
         # unprotect: protected edit refused, approved once, then protected again
         w = {"wt": wr, "base": base, "allow": "[]", "protect": json.dumps(["scripts/gates/*"]), "unprot": None}
         open(os.path.join(wr, "L/A.lean"), "w").write("theorem foo : True := trivial\n")
