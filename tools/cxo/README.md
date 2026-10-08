@@ -23,10 +23,11 @@ cxo-b3 retire t2-x verified, merged
 ```
 
 **Spawn options:**
-- `--mklane [--from next]` makes a warm lane at `/srv/lanes/NAME/src`. Alternatives are `--repo PATH` and `--wt PATH`.
+- `--mklane [--from main|next|REF|SHA]` makes a warm lane at `/srv/lanes/NAME/src`, then re-points it at that ref on the shared remote (the warm base can lag it; the spawn reply shows the move). Alternatives are `--repo PATH` and `--wt PATH`.
 - `-m` model: `gpt-6.1-sol` is the default (latest Sol; 5.6-sol and 6-sol also available); `gpt-6-astra` for Astra.
-- `--budget` defaults to 12M. That is the hub's cumulative count, including cached context.
+- `--budget N|12M` defaults to 12M (validated before any lane is made). That is the hub's cumulative count, including cached context.
 - `--umbrella default` (or `"T1 T2"`): the worker's submit is refused until `request_build(umbrella)` came back exit=0 **on the exact tree it submits**. The default umbrella is `Minidregg Host.Main:leanArts ObjectiveProofs`. Use it for every worker whose files overlap another's.
+- An `--allow` glob covered by a protect glob is refused (use `--no-default-protect`). The guard ignores `.tsv/.csv/.json/.jsonl/.lock` files (regenerated pins and ledgers).
 - `--protect` adds protected globs; `--no-push` skips the push; `--force` skips the pace gate.
 
 **Events from `wait`:**
@@ -88,6 +89,8 @@ Merge one range, wait for green, then merge the next. Experiment 1 found three c
 ## Ops
 - State lives in `~/.cxo`: `registry.sqlite`, `logs/`, `jobs/`, `briefs/`, `hub.log`, `app-server.stderr`.
 - Env lives in `~/cxo/env.sh`: CXO_CODEX, CXO_BUILD_CMD (lake-slot) and CXO_PUSH_REMOTE.
+- `cxo selftest-local`: no Codex, no box; guard rules, budget interrupt, request_cargo validation, train GREEN/RED/textual-conflict on real git.
+- Codex update on the box: `cxo-update-codex.sh` (hub stopped).
 - Self-test: `~/cxo/cxo selftest`. It never pushes, and it covers:
   - report;
   - the scope refusal;

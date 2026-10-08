@@ -79,6 +79,20 @@ WCOLS = {"build_cmd": "text", "umbrella": "text", "green_tree": "text", "unc": "
          "polls": "int default 0", "pending": "int default 0", "nopush": "int default 0"}
 
 
+DATA_FILE_RX = re.compile(r"\.(tsv|csv|json|jsonl|lock)$")  # pins, ledgers, emitted data: regenerated rows are not source edits
+
+
+def parse_n(x):
+    """token count: 15000000 | 15M | 1.5m"""
+    x = str(x).strip()
+    return int(float(x[:-1]) * 10**6) if x[-1:] in "Mm" else int(x)
+
+
+def allow_vs_protect(allow, protect):
+    """allow globs that a protect glob covers (the guard would revert the worker's edit): [(allow, protect)]"""
+    return [(g, p) for g in allow for p in protect if g == p or fnmatch.fnmatch(g, p) or fnmatch.fnmatch(p, g)]
+
+
 def now(): return time.time()
 def ago(t): return "-" if not t else "%dm" % ((now() - t) // 60)
 def git(cwd, *args, env=None):
@@ -512,6 +526,32 @@ class Hub:
                 return "ahead of pace: used %d%% at %.0f%% of window" % (pr["usedPercent"], 100 * f)
         return None
 
+    async def mk_lane(self, lane, frm):
+        """mk-lane, then re-point the lane's main at the SHARED remote's ref (E2-1: the warm base can lag the remote).
+        frm: None|main|next -> that branch on the shared remote when it has it; any other ref/SHA is fetched from it."""
+        base_kw = frm in (None, "main", "next")
+        pr = await asyncio.create_subprocess_exec(*([MKLANE] + (["--from", frm] if frm in ("main", "next") else []) + [lane]),
+                                                  stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        o = (await pr.communicate())[0].decode(errors="replace")
+        wt = os.path.join(LANES, lane, "src")
+        if pr.returncode or not os.path.isdir(wt):
+            return None, "ERR mk-lane exit %s: %s" % (pr.returncode, o.strip()[-300:]), ""
+        note = ""
+        if "shared" in git(wt, "remote").split():
+            ref = (frm or "main") if base_kw else frm
+            r = subprocess.run(["git", "-C", wt, "fetch", "-q", "shared", ref], capture_output=True, text=True)
+            if r.returncode == 0:
+                sha = git(wt, "rev-parse", "FETCH_HEAD").strip()
+                old = git(wt, "rev-parse", "HEAD").strip()
+                if sha and sha != old:
+                    git(wt, "checkout", "-q", "-B", "main", sha)
+                    note = " (warm base %s -> shared/%s %s)" % (old[:8], ref, sha[:8])
+            elif not base_kw:
+                return None, "ERR --from %s: not fetchable from the shared remote: %s" % (frm, r.stderr.strip()[-200:]), ""
+        elif not base_kw:
+            return None, "ERR --from %s needs the shared remote, which this lane lacks" % frm, ""
+        return wt, None, note
+
     async def c_spawn(self, a):
         name = a["name"]
         if not re.match(r"^[a-z0-9][a-z0-9._-]*$", name):
@@ -525,13 +565,21 @@ class Hub:
         brief = a.get("brief", "").strip()
         if not brief:
             return "ERR empty brief (pipe it on stdin)"
+        try:  # validate everything BEFORE mk-lane so a bad flag leaves no orphan lane (E2-2)
+            budget = parse_n(a["budget"]) if a.get("budget") else DEFAULT_BUDGET
+        except ValueError:
+            return "ERR bad --budget %r (N or 12M)" % a["budget"]
+        allow = a.get("allow") or []
+        protect = ([] if a.get("no_default_protect") else DEFAULT_PROTECT) + (a.get("protect") or [])
+        clash = allow_vs_protect(allow, protect)
+        if clash:  # E2-3
+            return "ERR --allow is covered by a protect glob (the guard would revert the edit): %s; use --no-default-protect and list the protects you want" % \
+                ", ".join("%s~%s" % c for c in clash)
+        note = ""
         if a.get("mklane"):
-            pr = await asyncio.create_subprocess_exec(*([MKLANE] + (["--from", a["from"]] if a.get("from") else []) + [name]),
-                                                      stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-            o = (await pr.communicate())[0].decode(errors="replace")
-            wt = os.path.join(LANES, name, "src")
-            if pr.returncode or not os.path.isdir(wt):
-                return "ERR mk-lane exit %s: %s" % (pr.returncode, o.strip()[-300:])
+            wt, err, note = await self.mk_lane(name, a.get("from"))
+            if err:
+                return err
             base = git(wt, "rev-parse", "HEAD").strip()
         elif a.get("wt"):
             wt = os.path.abspath(a["wt"]); base = git(wt, "rev-parse", "HEAD").strip()
@@ -548,8 +596,6 @@ class Hub:
             f.write("\n# cxo\n" + "\n".join("/" + x for x in IGNORE) + "\n")
         with open(os.path.join(HOME, "briefs", name + ".md"), "w") as f:
             f.write(brief)
-        allow = a.get("allow") or []
-        protect = ([] if a.get("no_default_protect") else DEFAULT_PROTECT) + (a.get("protect") or [])
         umb = None
         if a.get("umbrella"):
             umb = json.dumps(UMBRELLA if a["umbrella"] == "default" else a["umbrella"].split())
@@ -557,9 +603,9 @@ class Hub:
             wt, base[:10], ", ".join(allow) or "(any not protected)", ", ".join(protect),
             ("BEFORE SUBMIT: request_build(%s) must come back exit=0 on the exact tree you submit.\n" % umb) if umb else "")
         w, err = await self.new_thread(name, 1, a["deputy"], a.get("model") or DEFAULT_MODEL, a.get("effort") or "high", wt, base,
-                                       allow, protect, prompt, int(a.get("budget") or DEFAULT_BUDGET),
+                                       allow, protect, prompt, budget,
                                        {"build_cmd": a.get("build_cmd"), "umbrella": umb, "nopush": a.get("no_push")})
-        return "ERR " + err if err else "spawned %s g1 %s thread=%s wt=%s" % (name, w["model"], w["thread"][:8], wt)
+        return "ERR " + err if err else "spawned %s g1 %s thread=%s wt=%s%s" % (name, w["model"], w["thread"][:8], wt, note)
 
     def live(self, name):
         w = self.cur(name)
@@ -593,6 +639,9 @@ class Hub:
         w, err = self.live(a["name"])
         if err:
             return err
+        clash = allow_vs_protect(a.get("globs", []), json.loads(w["protect"]))
+        if clash:
+            return "ERR allow covered by protect (guard would revert): " + ", ".join("%s~%s" % c for c in clash)
         allow = json.loads(w["allow"]) + [g for g in a.get("globs", []) if g not in json.loads(w["allow"])]
         self.upd(w, allow=json.dumps(allow))
         self.db.execute("update workers set allow=? where name=?", (json.dumps(allow), w["name"]))
@@ -602,7 +651,10 @@ class Hub:
         w, err = self.live(a["name"])
         if err:
             return err
-        n = int(float(a["n"].rstrip("Mm")) * 10**6) if a["n"][-1:] in "Mm" else int(a["n"])
+        try:
+            n = parse_n(a["n"])
+        except ValueError:
+            return "ERR bad budget %r (N or 12M)" % a["n"]
         self.upd(w, budget=n)
         return "%s budget=%dM (used %dM)%s" % (w["name"], n // 10**6, w["tokens"] // 10**6,
                                                 "; it is idle: send it 'continue'" if w["state"] == "BUDGET" and n > w["tokens"] else "")
@@ -654,11 +706,12 @@ class Hub:
         r = await self.rpc("turn/interrupt", {"threadId": w["thread"], "turnId": w["turn"]})
         return "ERR " + r["error"]["message"] if "error" in r else "interrupted %s" % w["name"]
 
-    async def retire_w(self, w, why):
+    async def retire_w(self, w, why, archive=True):
         if w["turn"]:
             await self.rpc("turn/interrupt", {"threadId": w["thread"], "turnId": w["turn"]})
         self.upd(w, state="RETIRED", retired=now(), turn=None)
-        await self.rpc("thread/archive", {"threadId": w["thread"]})
+        if archive:
+            await self.rpc("thread/archive", {"threadId": w["thread"]})
         self.event(w, "RETIRED", why)
 
     async def c_retire(self, a):
@@ -676,7 +729,9 @@ class Hub:
         with open(os.path.join(HOME, "briefs", w["name"] + ".md")) as f:
             brief = f.read()
         extra = a.get("text", "").strip()
-        await self.retire_w(w, "renewed to g%d" % (w["gen"] + 1))
+        prev = {k: w[k] for k in ("state", "turn", "retired")}
+        # a fork needs the source thread un-archived: archive it only after the fork exists
+        await self.retire_w(w, "renewed to g%d" % (w["gen"] + 1), archive=not a.get("fork"))
         g, fp = w["gen"] + 1, None
         if a.get("fork"):
             fp = {"threadId": w["thread"]}
@@ -690,6 +745,12 @@ class Hub:
         nw, err = await self.new_thread(w["name"], g, w["deputy"], a.get("model") or w["model"], w["effort"], w["wt"], w["base"],
                                         json.loads(w["allow"]), json.loads(w["protect"]), prompt, w["budget"],
                                         {"build_cmd": w["build_cmd"], "umbrella": w["umbrella"], "nopush": w["nopush"]}, fork_from=fp)
+        if err and fp:  # failed fork: put the source generation back instead of stranding the name
+            self.db.execute("delete from workers where name=? and gen=?", (w["name"], g))
+            self.upd(w, state="WORKING" if prev["state"] in ("RETIRED", "DEAD") else prev["state"], retired=prev["retired"])
+            return "ERR fork failed (g%d restored, turn interrupted): %s" % (w["gen"], err)
+        if fp:
+            await self.rpc("thread/archive", {"threadId": w["thread"]})
         return "ERR " + err if err else "renewed %s g%d %s thread=%s" % (w["name"], g, nw["model"], nw["thread"][:8])
 
     async def c_log(self, a):
@@ -711,15 +772,12 @@ class Hub:
         if self.db.execute("select 1 from trains where name=?", (name,)).fetchone():
             return "ERR train %s exists" % name
         lane = "train-" + name
-        pr = await asyncio.create_subprocess_exec(*([MKLANE] + (["--from", a["from"]] if a.get("from") else []) + [lane]),
-                                                  stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        o = (await pr.communicate())[0].decode(errors="replace")
-        wt = os.path.join(LANES, lane, "src")
-        if pr.returncode or not os.path.isdir(wt):
-            return "ERR mk-lane exit %s: %s" % (pr.returncode, o.strip()[-300:])
+        wt, err, note = await self.mk_lane(lane, a.get("from"))
+        if err:
+            return err
         head = git(wt, "rev-parse", "HEAD").strip()
         self.db.execute("insert into trains values(?,?,?,?,?,?)", (name, a.get("deputy") or "-", wt, head, "GREEN", "created"))
-        return "train %s at %s wt=%s (base assumed green; run `cxo merge %s --recheck` to prove it)" % (name, head[:10], wt, name)
+        return "train %s at %s%s wt=%s (base assumed green; run `cxo merge %s --recheck` to prove it)" % (name, head[:10], note, wt, name)
 
     async def c_merge(self, a):
         t = self.db.execute("select name,deputy,wt,green,state from trains where name=?", (a["name"],)).fetchone()
@@ -845,11 +903,11 @@ def guard(w, waivers):
         elif line.startswith("--- "):
             cur = line[6:] if line.startswith("--- a/") else cur
         elif line.startswith("+") and cur:
-            for rule, rx in ADDED_RULES:
+            for rule, rx in ([] if DATA_FILE_RX.search(cur) else ADDED_RULES):
                 if re.search(rx, line[1:]) and not (rule == "pipe-tail" and not re.search(r"\.(sh|bash|py|toml|yml|yaml)$|^scripts/", cur)):
                     found.append("%s:%s +%s" % (rule, cur, line[1:].strip()[:80]))
         elif line.startswith("-") and cur:
-            for rule, rx in REMOVED_RULES:
+            for rule, rx in ([] if DATA_FILE_RX.search(cur) else REMOVED_RULES):
                 if re.search(rx, line[1:]):
                     found.append("%s:%s -%s" % (rule, cur, line[1:].strip()[:80]))
     waived, keep = [], []
@@ -884,13 +942,13 @@ def call(cmd, args, timeout=600):
 
 USAGE = """cxo — Codex hub. One terse line per item; ERR... on failure (exit 1).
   hub start|stop|run | ping | limits | status [-d DEP] [--all]
-  spawn NAME -d DEP (--mklane [--from main|next] | --repo PATH [--base REF] | --wt PATH) [-m MODEL] [-e EFFORT]
+  spawn NAME -d DEP (--mklane [--from main|next|REF|SHA] | --repo PATH [--base REF] | --wt PATH) [-m MODEL] [-e EFFORT]
         [--allow GLOB]... [--protect GLOB]... [--no-default-protect] [--budget N|12M] [--umbrella default|"T1 T2"]
         [--build-cmd 'CMD {targets}'] [--no-push] [--force]   < brief.md
   send NAME [--now] TEXT...   answer NAME ASKID TEXT...   allow NAME GLOB...   budget NAME N|12M
   wait [-d DEP] [-t SECS<=590]   interrupt NAME   retire NAME [why...]   log NAME [-n N] [--gen G]
   renew NAME [--fork [--before-turn ID]] [-m MODEL] [TEXT...]
-  train NAME -d DEP [--from main|next]     merge TRAIN REF | merge TRAIN --recheck | merge TRAIN --abort
+  train NAME -d DEP [--from main|next|REF|SHA]     merge TRAIN REF | merge TRAIN --recheck | merge TRAIN --abort
   selftest [-m MODEL]"""
 
 
@@ -1024,6 +1082,109 @@ def selftest(model):
     return 0 if all(res) else 1
 
 
+def selftest_local():
+    """No Codex, no box: guard rules, budget/allow parsing, request_cargo validation, the BUDGET interrupt (mock rpc),
+    and the train on real git (clean merge -> GREEN, semantic conflict -> TRAIN_RED, textual conflict, abort)."""
+    g = globals()
+    root = tempfile.mkdtemp(prefix="cxo-local-")
+    g["HOME"] = os.path.join(root, "home")
+    g["PUSH_REMOTE"] = os.path.join(root, "remote.git")
+    g["BOX_ENV"] = "/nonexistent"
+    g["BUILD_CMD"] = "if test -e RED; then echo planted RED; exit 3; fi  # {targets}"
+    res = []
+
+    def step(label, ok, detail=""):
+        res.append(bool(ok))
+        print("%s %-44s %s" % ("PASS" if ok else "FAIL", label, str(detail).replace("\n", " | ")[:200]))
+
+    def sh(cwd, *c):
+        return subprocess.run(["git"] + GIT_ID + list(c), cwd=cwd, capture_output=True, text=True, check=True).stdout
+    # -- pure helpers
+    step("parse_n 15M / 1.5m / 7", (parse_n("15M"), parse_n("1.5m"), parse_n("7")) == (15000000, 1500000, 7))
+    step("allow~protect: TokenCensus.lean covered", allow_vs_protect(["TokenCensus.lean"], DEFAULT_PROTECT) != [])
+    step("allow~protect: Kernel/Foo* clean", allow_vs_protect(["Kernel/Foo*"], DEFAULT_PROTECT) == [])
+    # -- guard
+    wr = os.path.join(root, "gw")
+    os.makedirs(os.path.join(wr, "scripts/gates/objective-manifest")); os.makedirs(os.path.join(wr, "L"))
+    sh(root, "init", "-q", "gw")
+    open(os.path.join(wr, "scripts/gates/objective-manifest/p.tsv"), "w").write("-theorem\tFoo\th1\n")
+    open(os.path.join(wr, "L/A.lean"), "w").write("theorem foo : True := trivial\n")
+    sh(wr, "add", "-A"); sh(wr, "commit", "-q", "-m", "b"); base = sh(wr, "rev-parse", "HEAD").strip()
+    open(os.path.join(wr, "scripts/gates/objective-manifest/p.tsv"), "w").write("-theorem\tFoo\th2\n")
+    w = {"wt": wr, "base": base, "allow": "[]", "protect": "[]"}
+    f, _ = guard(w, [])
+    step("guard: regenerated pin TSV not flagged (E2-4)", f == [], f)
+    open(os.path.join(wr, "L/A.lean"), "w").write("-- gone\n")
+    f, _ = guard(w, [])
+    step("guard: Lean theorem deletion still flagged", any(x.startswith("del-theorem:L/A.lean") for x in f), f)
+    # -- hub-level
+    async def hub_tests():
+        h = Hub()
+        # budget interrupt
+        calls = []
+
+        async def rpc(m, p):
+            calls.append(m); return {}
+        h.rpc = rpc
+        h.db.execute("insert into workers(name,gen,deputy,model,effort,thread,wt,base,state,turn,tokens,budget,created,allow,protect,"
+                     "last_item) values('b',1,'d','m','low','th','/x','0','WORKING','tu',5000000,1000000,0,'[]','[]',0)")
+        real_sleep = asyncio.sleep
+        async def fast(t): await real_sleep(0.01)
+        g["asyncio"].sleep = fast
+        mt = asyncio.ensure_future(h.monitor()); await real_sleep(0.2); mt.cancel()
+        g["asyncio"].sleep = real_sleep
+        step("budget interrupt: turn/interrupt + BUDGET", "turn/interrupt" in calls and h.cur("b")["state"] == "BUDGET"
+             and h.db.execute("select 1 from events where kind='BUDGET'").fetchone(), calls)
+        r = await h.c_send({"name": "b", "text": "hi"})
+        step("send refused while over budget", r.startswith("ERR") and "budget" in r, r)
+        r = await h.c_budget({"name": "b", "n": "9M"})
+        step("budget raise", "budget=9M" in r, r)
+        # request_cargo
+        jobs = []
+        h.new_job = lambda w, kind, what, cmd, tree=None: jobs.append((kind, cmd)) or "c1"
+        w = {"name": "b", "gen": 1, "wt": "/lanes/b/src"}
+        for spec, ok in (("test -p mini-client", False), ("test -p mini-client --test frames", True), ("test -p x frames_roundtrip", True),
+                         ("build -p x; rm -rf /", False), ("publish", False), ("check -p mini-client", True)):
+            msg, queued = await h.tool_request_cargo(w, {"spec": spec})
+            step("request_cargo %r" % spec, queued == ok, msg[:90])
+        step("request_cargo sets CARGO_TARGET_DIR beside the lane", jobs and "CARGO_TARGET_DIR=/lanes/b/rust-target" in jobs[0][1], jobs[:1])
+        # train
+        sh(root, "init", "-q", "--bare", "remote.git")
+        seed = os.path.join(root, "seed")
+        sh(root, "clone", "-q", g["PUSH_REMOTE"], "seed")
+        open(os.path.join(seed, "x.txt"), "w").write("a\nb\nc\n"); sh(seed, "add", "-A"); sh(seed, "commit", "-q", "-m", "base")
+        sh(seed, "push", "-q", "origin", "HEAD:refs/heads/main")
+        def lane(n, fn, text):
+            sh(seed, "checkout", "-q", "-B", n, "origin/main"); open(os.path.join(seed, fn), "w").write(text)
+            sh(seed, "add", "-A"); sh(seed, "commit", "-q", "-m", n); sh(seed, "push", "-q", "-f", "origin", "%s:refs/heads/lane/%s" % (n, n))
+        lane("ok", "y.txt", "y\n"); lane("red", "RED", "x\n"); lane("c1", "x.txt", "a\nB1\nc\n"); lane("c2", "x.txt", "a\nB2\nc\n")
+        twt = os.path.join(root, "train")
+        sh(root, "clone", "-q", g["PUSH_REMOTE"], "train"); sh(twt, "checkout", "-q", "main")
+        head = sh(twt, "rev-parse", "HEAD").strip()
+        h.db.execute("insert into trains values('t','d',?,?,'GREEN','created')", (twt, head))
+        async def ev(kind):
+            for _ in range(300):
+                r = h.db.execute("select text from events where kind=? order by id desc limit 1", (kind,)).fetchone()
+                if r and r[0] not in seen:
+                    seen.add(r[0]); return r[0]
+                await real_sleep(0.05)
+        seen = set()
+        r = await h.c_merge({"name": "t", "ref": "ok"}); e = await ev("TRAIN_GREEN")
+        step("train: clean merge -> TRAIN_GREEN", e and "umbrella green" in e, r + " / " + str(e))
+        r = await h.c_merge({"name": "t", "ref": "red"}); e = await ev("TRAIN_RED")
+        step("train: semantic break -> TRAIN_RED", e and "RED" in e and "planted RED" in e, e)
+        r = await h.c_merge({"name": "t", "ref": "c1"})
+        step("train: merges refused while RED", r.startswith("ERR") and "RED" in r, r)
+        r = await h.c_merge({"name": "t", "abort": True})
+        step("train: abort resets to green", head not in r and "reset" in r and not os.path.exists(os.path.join(twt, "RED")), r)
+        r = await h.c_merge({"name": "t", "ref": "c1"}); await ev("TRAIN_GREEN")
+        r = await h.c_merge({"name": "t", "ref": "c2"})
+        step("train: textual conflict refused, tree clean", r.startswith("ERR textual") and not sh(twt, "status", "--porcelain").strip(), r)
+    asyncio.run(hub_tests())
+    print("%s %d/%d (scratch %s)" % ("LOCAL SELFTEST PASS" if all(res) else "LOCAL SELFTEST FAIL", sum(res), len(res), root))
+    return 0 if all(res) else 1
+
+
 def main():
     argv = sys.argv[1:]
     if not argv or argv[0] in ("-h", "--help", "help"):
@@ -1058,6 +1219,8 @@ def main():
                 print("ERR %r" % e); return 1
             return 0
     a, pos = parse(rest)
+    if cmd == "selftest-local":
+        return selftest_local()
     if cmd == "selftest":
         return selftest(a.get("model") or DEFAULT_MODEL)
     if cmd == "spawn":
