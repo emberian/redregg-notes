@@ -3,7 +3,7 @@
 the worker registry, events, jobs (builds, journeys, cargo, train checks), submit guards and the
 rate-limit gate. Deputies use the CLI. Design: redregg/work/CODEX-ORCHESTRATION-DESIGN-20261008.md;
 usage: README.md beside this file; experiment record: redregg/work/CXO-EXPERIMENT-1.md."""
-import asyncio, json, os, sys, time, sqlite3, re, fnmatch, subprocess, shlex, signal, itertools, tempfile
+import hashlib, asyncio, json, os, sys, time, sqlite3, re, fnmatch, subprocess, shlex, signal, itertools, tempfile
 
 HOME = os.path.expanduser(os.environ.get("CXO_HOME", "~/.cxo"))
 SOCK = os.environ.get("CXO_SOCK") or os.path.join(HOME, "hub.sock")
@@ -36,7 +36,7 @@ GIT_ID = ["-c", "commit.gpgsign=false", "-c", "user.name=ember arlynx", "-c", "u
 APPROVAL = os.environ.get("CXO_APPROVAL", "untrusted")
 EXEC_CAP_S = int(os.environ.get("CXO_EXEC_CAP_S", "20"))   # an in-sandbox command running longer than this is flagged + steered
 LONG_RX = re.compile(os.environ.get("CXO_LONG_RX", r"\blake\s+build\b|\bswarm-build\b|\bcargo\s+(build|test|run|check|clippy|bench)\b|"
-                     r"journeys?/|objective-native-acceptance|check-objective-proofs|merge-gate-checks|check-scripts-elab|hyp-ledger|"
+                     r"^\s*(?:(?:bash|sh|zsh|python3?)\s+(?!-[nm]\b)|\./)?\S*journeys?(?:\.d)?/\S+\.(?:sh|py)\b|objective-native-acceptance|check-objective-proofs|merge-gate-checks|check-scripts-elab|hyp-ledger|"
                      r"\bsleep\s+\d{2,}|\bwhile\s+(true|:|sleep)"))
 CARGO_RX = re.compile(r"\bcargo\b")
 NARRATE_N, NARRATE_M = int(os.environ.get("CXO_NARRATE_N", "4")), int(os.environ.get("CXO_NARRATE_MIN", "10"))
@@ -68,12 +68,12 @@ TOOLS = [
     _fn("ask_deputy", "Ask your deputy. Returns at once. must_wait=true: end your turn right after; the answer arrives as a new message.",
         {"question": S, "default": S, "must_wait": B}, ["question", "default", "must_wait"]),
     _fn("request_build", "Queue a Lake build of the targets in your lane (build slot, outside the sandbox). Returns a ticket; then END YOUR TURN.",
-        {"targets": ARR}, ["targets"]),
+        {"targets": ARR, "allow_dirty": B}, ["targets"]),
     _fn("request_journey", "Run a journey/acceptance script from your lane outside the sandbox. In args, {bin} and {manifest} expand to the "
         "prebuilt base artifact set (unchanged Rust/Host binaries); for a Host you changed, request_build it first and pass its path. "
         "Returns a ticket; then END YOUR TURN.", {"script": S, "args": ARR}, ["script", "args"]),
     _fn("request_cargo", "Run a FILTERED cargo command outside the sandbox, e.g. 'test -p mini-client --test frames' or "
-        "'build -p minidregg-host --bin x'. Tests need -p and a filter or --test. Returns a ticket; then END YOUR TURN.", {"spec": S}, ["spec"]),
+        "'build -p minidregg-host --bin x'. Tests need -p and a filter or --test. Returns a ticket; then END YOUR TURN.", {"spec": S, "allow_dirty": B}, ["spec"]),
     _fn("build_status", "Non-blocking status of a ticket. Do not call it in a loop; results are delivered to you.", {"ticket": S}, ["ticket"]),
     _fn("submit", "Finish: the hub commits your working tree and checks scope and weakening guards. waivers: 'rule:path reason' "
         "strings for deliberate deletions.", {"title": S, "body": S, "claims": ARR, "waivers": ARR}, ["title", "body", "claims", "waivers"]),
@@ -85,7 +85,9 @@ ADDED_RULES = [("sorry", r"\bsorry\b"), ("admit", r"\badmit\b"), ("axiom", r"^\s
 REMOVED_RULES = [("del-theorem", r"^\s*(@\[[^\]]*\]\s*)?(private\s+|protected\s+)?(theorem|lemma|example)\b"),
                  ("del-assert", r"#assert_|\bassert(_eq|_ne)?!?\s*\(|#guard\b|#\[test\]|\bdef test_")]
 WCOLS = {"build_cmd": "text", "umbrella": "text", "green_tree": "text", "unc": "int default 0", "reqs": "int default 0",
-         "polls": "int default 0", "pending": "int default 0", "nopush": "int default 0", "declined": "int default 0"}
+         "polls": "int default 0", "pending": "int default 0", "nopush": "int default 0", "declined": "int default 0",
+         "unprot": "text"}  # unprot: json [[glob, added_to_allow]] one-shot protected-path approvals (cxo unprotect)
+JCOLS = {"pid": "int", "note": "text"}  # pid: the job's process group (hub restart recovery); note: dirty-tree diff hash
 
 
 DATA_FILE_RX = re.compile(r"\.(tsv|csv|json|jsonl|lock)$")  # pins, ledgers, emitted data: regenerated rows are not source edits
@@ -102,11 +104,19 @@ def allow_vs_protect(allow, protect):
     return [(g, p) for g in allow for p in protect if g == p or fnmatch.fnmatch(g, p) or fnmatch.fnmatch(p, g)]
 
 
+READERS = r"\s*(cat|grep|rg|sed|head|tail|less|more|ls|git|wc|find|nl|awk|diff|echo|chmod|stat|cd|test|file|realpath|dirname|basename|" \
+          r"bash\s+-n|sh\s+-n|python3?\s+-m\s+py_compile)\b"
+
+
 def exec_hint(cmd):
-    """None if the command may run in the sandbox, else the refusal hint."""
-    inner = re.sub(r"^\s*(/\S*/)?(ba|z)?sh\s+-\w+\s+['\"]?", "", cmd or "")
-    if not cmd or re.match(r"\s*(cat|grep|rg|sed|head|tail|ls|git|wc|find|nl|awk|diff|echo)\b", inner) or not LONG_RX.search(cmd):
+    """None if the command may run in the sandbox, else the refusal hint. Judged per shell segment (; && || |): a reader or
+    inspector segment (sed, chmod, bash -n, ...) never counts, even when it names a journey script or `lake build` in text."""
+    inner = re.sub(r"^\s*(/\S*/)?(ba|z)?sh\s+-\w*c\s+['\"]?", "", cmd or "")
+    segs = [x for x in re.split(r"&&|\|\||;|\||\n", inner) if x.strip()]
+    hit = [x for x in segs if not re.match(READERS, x) and LONG_RX.search(x)]
+    if not cmd or not hit:
         return None
+    cmd = hit[0]
     tool = "request_cargo" if CARGO_RX.search(cmd) else "request_build" if re.search(r"\blake\b|swarm-build", cmd) else "request_journey"
     return ("REFUSED by the hub: this command is long-running and must not run in your sandbox (each minute of waiting costs a full "
             "model request). Use %s(...) instead: it runs hub-side, returns a ticket, and the result arrives as a new message. "
@@ -135,6 +145,23 @@ def tree_id(wt):
         os.unlink(idx)
 
 
+def dirty_info(wt):
+    """(dirty, note): is the lane tree dirty (excluding IGNORE), and a note tying a job to the exact tree: HEAD, the tree id and the
+    sha1 of the full diff against HEAD (untracked files included, via a temp index)."""
+    fd, idx = tempfile.mkstemp(prefix="cxo-idx-"); os.close(fd)
+    env = dict(os.environ, GIT_INDEX_FILE=idx)
+    try:
+        git(wt, "read-tree", "HEAD", env=env)
+        git(wt, "add", "-A", *stage_pathspec(), env=env)
+        tree = git(wt, "write-tree", env=env).strip()
+        diff = subprocess.run(["git", "diff", "--cached", "HEAD"], cwd=wt, capture_output=True, env=env).stdout
+    finally:
+        os.unlink(idx)
+    head = git(wt, "rev-parse", "HEAD").strip()
+    dirty = bool(diff)
+    return dirty, "%s head=%s tree=%s diff_sha1=%s" % ("DIRTY-TREE" if dirty else "clean-tree", head[:12], tree[:12], hashlib.sha1(diff).hexdigest())
+
+
 # ---------------------------------------------------------------- hub
 class Hub:
     def __init__(self):
@@ -155,6 +182,10 @@ class Hub:
         for c, t in WCOLS.items():
             if c not in have:
                 self.db.execute("alter table workers add column %s %s" % (c, t))
+        have = {r[1] for r in self.db.execute("pragma table_info(jobs)")}
+        for c, t in JCOLS.items():
+            if c not in have:
+                self.db.execute("alter table jobs add column %s %s" % (c, t))
         self.rid = itertools.count(1)
         self.pending = {}       # rpc id -> future
         self.execs = {}         # thread -> {item id: (command, t0)} in-sandbox commands now running
@@ -330,7 +361,8 @@ class Hub:
         if flags is None:
             return
         paths = set(re.findall(r"^diff --git a/(\S+) b/", diff, re.M))
-        hit = [x for x in paths if any(fnmatch.fnmatch(x, g) for g in json.loads(w["protect"])) and x not in flags["warned"]]
+        hit = [x for x in paths if any(fnmatch.fnmatch(x, g) for g in json.loads(w["protect"])) and x not in flags["warned"]
+               and not any(fnmatch.fnmatch(x, g) for g, _ in json.loads(w["unprot"] or "[]"))]
         if hit and w["turn"]:
             flags["warned"].update(hit)
             msg = "STOP: you edited protected path(s) %s. Revert them now; protected files are not yours to change." % ", ".join(hit)
@@ -425,10 +457,11 @@ class Hub:
         self.event(w, "NOTE", "%s Q(non-blocking): %s | default: %s" % (aid, q, d))
         return "noted; proceed with your default and record it in WORKLOG.md", True
 
-    def new_job(self, w, kind, what, cmd, tree=None):
+    def new_job(self, w, kind, what, cmd, tree=None, note=None):
         tk = "%s%d" % (kind[0], int(now() * 1000) % 1000000000)
         log = os.path.join(HOME, "jobs", tk + ".log")
-        self.db.execute("insert into jobs values(?,?,?,?,?,?,?,?,?,?,?)", (tk, w["name"], w["gen"], kind, what, "queued", None, log, now(), None, tree))
+        self.db.execute("insert into jobs(ticket,name,gen,kind,what,status,exit,log,t0,t1,tree,note) values(?,?,?,?,?,?,?,?,?,?,?,?)",
+                        (tk, w["name"], w["gen"], kind, what, "queued", None, log, now(), None, tree, note))
         self.upd(w, pending=w["pending"] + 1, state="WAITING_JOB")
         asyncio.ensure_future(self.run_job(w, tk, kind, what, cmd, log))
         return tk
@@ -440,12 +473,13 @@ class Hub:
                 f.write("$ %s\n" % cmd); f.flush()
                 pr = await asyncio.create_subprocess_exec("bash", "-c", cmd, cwd=cwd or w["wt"], stdout=f, stderr=subprocess.STDOUT,
                                                           stdin=subprocess.DEVNULL, start_new_session=True)
+                self.db.execute("update jobs set pid=? where ticket=?", (pr.pid, tk))
                 try:
                     rc = await asyncio.wait_for(pr.wait(), JOB_TIMEOUT)
                 except asyncio.TimeoutError:
                     os.killpg(pr.pid, signal.SIGTERM); rc = await pr.wait()
                     f.write("\ncxo: killed after %ds\n" % JOB_TIMEOUT)
-        self.db.execute("update jobs set status='done', exit=?, t1=? where ticket=?", (rc, now(), tk))
+        self.db.execute("update jobs set status='done', exit=?, t1=? where ticket=? and status='running'", (rc, now(), tk))
         with open(log, errors="replace") as f:
             tail = "".join(f.readlines()[-30:])
         if on_done:
@@ -463,15 +497,25 @@ class Hub:
         self.upd(cw, pending=max(0, cw["pending"] - 1))
         if cw["pending"] == 0 and cw["state"] == "WAITING_JOB":
             self.upd(cw, state="WORKING")
-        self.event(cw, kind.upper(), "%s exit=%d %s" % (tk, rc, what[:120]))
-        await self.deliver(cw, "RESULT %s %s exit=%d (%s)\nlog: %s\n%s" % (tk, kind, rc, what[:200], log, tail))
+        note = (self.db.execute("select note from jobs where ticket=?", (tk,)).fetchone() or [None])[0]
+        self.event(cw, kind.upper(), "%s exit=%d %s%s" % (tk, rc, what[:120], (" [%s]" % note) if note else ""))
+        await self.deliver(cw, "RESULT %s %s exit=%d (%s)\nlog: %s\n%s%s" % (tk, kind, rc, what[:200], log,
+                           ("tree: %s\n" % note) if note else "", tail))
+
+    def dirty_job(self, w, a):
+        """--allow-dirty: (env prefix, note). The build script's dirty-tree refusal stays the default; the opt-in sets CXO_ALLOW_DIRTY=1
+        for it and records the tree's diff hash so the deputy can tie the result to the exact tree."""
+        if not a.get("allow_dirty"):
+            return "", None
+        return "export CXO_ALLOW_DIRTY=1; ", dirty_info(w["wt"])[1]
 
     async def tool_request_build(self, w, a):
         targets = [t for t in a.get("targets", []) if re.match(r"^[A-Za-z0-9_.+:/@-]+$", t)]
         if not targets:
             return "no valid targets", False
-        cmd = (". %s 2>/dev/null; " % BOX_ENV) + (w["build_cmd"] or BUILD_CMD).format(targets=" ".join(shlex.quote(t) for t in targets))
-        tk = self.new_job(w, "build", " ".join(targets), cmd, tree=tree_id(w["wt"]))
+        ad, note = self.dirty_job(w, a)
+        cmd = (". %s 2>/dev/null; " % BOX_ENV) + ad + (w["build_cmd"] or BUILD_CMD).format(targets=" ".join(shlex.quote(t) for t in targets))
+        tk = self.new_job(w, "build", " ".join(targets), cmd, tree=tree_id(w["wt"]), note=note)
         return "ticket=%s queued (%s). %s" % (tk, " ".join(targets), WAIT_TEXT), True
 
     async def tool_request_journey(self, w, a):
@@ -500,14 +544,17 @@ class Hub:
                                        and toks[toks.index(t) - 1] not in ("-p", "--package", "--features", "-j")])):
             return "cargo test needs -p PACKAGE and a filter or --test NAME (never an unfiltered suite)", False
         tgt = os.path.join(os.path.dirname(w["wt"].rstrip("/")), "rust-target")
-        cmd = ". %s 2>/dev/null; export CARGO_TARGET_DIR=%s; %s" % (BOX_ENV, shlex.quote(tgt), CARGO_CMD.format(spec=spec))
-        tk = self.new_job(w, "cargo", spec, cmd)
+        ad, note = self.dirty_job(w, a)
+        cmd = ". %s 2>/dev/null; %sexport CARGO_TARGET_DIR=%s; %s" % (BOX_ENV, ad, shlex.quote(tgt), CARGO_CMD.format(spec=spec))
+        tk = self.new_job(w, "cargo", spec, cmd, note=note)
         return "ticket=%s queued (cargo %s). %s" % (tk, spec, WAIT_TEXT), True
 
     async def tool_build_status(self, w, a):
         row = self.db.execute("select status,exit,log from jobs where ticket=?", (a.get("ticket", ""),)).fetchone()
         if not row:
             return "unknown ticket", False
+        if row[0] == "INTERRUPTED":
+            return "status=INTERRUPTED (hub restart killed it). Request it again, then END YOUR TURN.", True
         if row[0] != "done":
             self.upd(w, polls=w["polls"] + 1)
             if w["polls"] in (2, 5):
@@ -538,6 +585,10 @@ class Hub:
         if r.returncode:
             return "commit failed: " + r.stderr[-400:], False
         sha = git(w["wt"], "rev-parse", "HEAD").strip()
+        un = json.loads(w["unprot"] or "[]")
+        if un:  # one-shot: spent by this submit
+            allow = [g for g in json.loads(w["allow"]) if g not in [x for x, added in un if added]]
+            self.upd(w, unprot="[]", allow=json.dumps(allow))
         pushed = ""
         if PUSH_REMOTE and not w["nopush"]:
             ref = PUSH_PREFIX + w["name"]
@@ -709,6 +760,62 @@ class Hub:
         self.upd(w, allow=json.dumps(allow))
         self.db.execute("update workers set allow=? where name=?", (json.dumps(allow), w["name"]))
         return "%s allow: %s" % (w["name"], " ".join(allow))
+
+    async def c_unprotect(self, a):
+        """deputy-approved edit to a protected path (e.g. a fixture re-emit): the next submit may include it, once."""
+        w, err = self.live(a["name"])
+        if err:
+            return err
+        globs = a.get("globs") or []
+        if not globs:
+            return "ERR unprotect NAME GLOB..."
+        un, allow = json.loads(w["unprot"] or "[]"), json.loads(w["allow"])
+        for g in globs:
+            added = bool(allow) and g not in allow
+            if added:
+                allow.append(g)
+            un.append([g, added])
+        self.upd(w, unprot=json.dumps(un), allow=json.dumps(allow))
+        self.event(w, "UNPROTECTED", "deputy approved one submit touching protected %s" % " ".join(globs))
+        self.db.execute("insert into msgs(name,gen,ts,text) values(?,?,?,?)", (w["name"], w["gen"], now(),
+                        "you may now edit %s (deputy-approved, for your next submit only)" % " ".join(globs)))
+        return "%s: next submit may touch %s (one-shot; also added to allow where scoped)" % (w["name"], " ".join(globs))
+
+    async def c_rebase(self, a):
+        """rebase a live worker's lane onto REF, hub-side (the sandbox's .git is read-only)."""
+        w, err = self.live(a["name"])
+        if err:
+            return err
+        wt, ref = w["wt"], a.get("ref") or ""
+        if not ref:
+            return "ERR rebase NAME REF"
+        if subprocess.run(["git", "status", "--porcelain", *stage_pathspec()], cwd=wt, capture_output=True, text=True).stdout.strip():
+            return ("ERR %s's worktree is dirty. Tell the worker to finish and `report` (a stash-free state: submit, or revert), then rebase. "
+                    "Never git stash." % w["name"])
+        sha = git(wt, "rev-parse", "--verify", "-q", ref + "^{commit}").strip()
+        if not sha:  # not local: try the shared remote
+            for rem in [r for r in ("shared", PUSH_REMOTE or "origin") if r]:
+                r = subprocess.run(["git", "fetch", "-q", rem, ref], cwd=wt, capture_output=True, text=True)
+                if r.returncode == 0:
+                    sha = git(wt, "rev-parse", "FETCH_HEAD").strip()
+                    break
+        if not sha:
+            return "ERR cannot resolve %s in the lane or the shared remote" % ref
+        old_head = git(wt, "rev-parse", "HEAD").strip()
+        r = subprocess.run(["git"] + GIT_ID + ["rebase", sha], cwd=wt, capture_output=True, text=True)
+        if r.returncode:
+            files = git(wt, "diff", "--name-only", "--diff-filter=U").split()
+            subprocess.run(["git", "rebase", "--abort"], cwd=wt, capture_output=True)
+            self.event(w, "REBASE_CONFLICT", "onto %s: %s" % (sha[:10], " ".join(files)))
+            return "ERR rebase conflicts onto %s, aborted (lane unchanged). conflicting: %s" % (sha[:10], " ".join(files) or r.stderr.strip()[-200:])
+        new_head = git(wt, "rev-parse", "HEAD").strip()
+        old_base = w["base"]
+        # the submitted sha (if any) moved with the rebase; the old green tree no longer describes the lane
+        self.upd(w, base=sha, green_tree=None, sha=new_head if w["sha"] else w["sha"])
+        self.event(w, "REBASED", "%s onto %s (base %s -> %s, head %s -> %s)" % (ref, sha[:10], old_base[:10], sha[:10], old_head[:10], new_head[:10]))
+        self.db.execute("insert into msgs(name,gen,ts,text) values(?,?,?,?)", (w["name"], w["gen"], now(),
+                        "your lane was rebased onto %s by the hub; re-read files that changed upstream and re-request any build" % sha[:10]))
+        return "%s rebased onto %s (base %s -> %s)" % (w["name"], sha[:10], old_base[:10], sha[:10])
 
     async def c_budget(self, a):
         w, err = self.live(a["name"])
@@ -890,9 +997,35 @@ class Hub:
                 self.db.execute("update trains set state='RED' where name=?", (name,))
                 self.event(ev, "TRAIN_RED", "%s %s umbrella RED at %s (green stays %s) log=%s :: %s" % (
                     name, what, head[:10], green[:10], log, tail.strip().replace("\n", " | ")[-500:]), deputy=dep)
-        self.db.execute("insert into jobs values(?,?,?,?,?,?,?,?,?,?,?)", (tk, "train-" + name, 0, "train", what, "queued", None, log, now(), None, head))
+        self.db.execute("insert into jobs(ticket,name,gen,kind,what,status,exit,log,t0,t1,tree) values(?,?,?,?,?,?,?,?,?,?,?)",
+                        (tk, "train-" + name, 0, "train", what, "queued", None, log, now(), None, head))
         asyncio.ensure_future(self.run_job(None, tk, "train", what, cmd, log, cwd=wt, on_done=done))
         return "train %s: %s merged at %s; umbrella ticket=%s (event TRAIN_GREEN/TRAIN_RED follows)" % (name, what, head[:10], tk)
+
+    # ---- hub restart: jobs that were running died with the old hub
+    async def recover_jobs(self):
+        rows = self.db.execute("select ticket,name,gen,kind,what,pid from jobs where status in ('running','queued')").fetchall()
+        for tk, name, gen, kind, what, pid in rows:
+            if pid:  # a survivor would finish with nobody listening: stop its process group
+                try:
+                    os.killpg(pid, signal.SIGTERM)
+                except OSError:
+                    pass
+            self.db.execute("update jobs set status='INTERRUPTED', t1=? where ticket=?", (now(), tk))
+            if kind == "train":
+                tn = name[len("train-"):]
+                t = self.db.execute("select deputy from trains where name=?", (tn,)).fetchone()
+                self.db.execute("update trains set state='RED', last='interrupted by hub restart' where name=?", (tn,))
+                self.event({"deputy": t[0] if t else "-", "name": name, "gen": 0}, "JOB_INTERRUPTED",
+                           "%s train build %s killed by hub restart; train marked RED: `cxo merge %s --recheck`" % (tk, what, tn))
+                continue
+            w = self.db.execute("select * from workers where name=? and gen=?", (name, gen))
+            w = self._row(w)
+            if not w or w["state"] in ("RETIRED", "DEAD"):
+                continue
+            self.event(w, "JOB_INTERRUPTED", "%s %s %s killed by hub restart; worker told to re-request" % (tk, kind, what[:100]))
+            await self.deliver(w, "HUB: your %s job %s (%s) was INTERRUPTED by a hub restart and produced no result. Request it again "
+                                  "(request_%s), then END YOUR TURN." % (kind, tk, what[:160], kind))
 
     # ---- monitor
     async def monitor(self):
@@ -942,6 +1075,7 @@ class Hub:
     async def run(self):
         self.codex_ver = subprocess.run([CODEX, "--version"], capture_output=True, text=True).stdout.strip()
         await self.start_codex()
+        await self.recover_jobs()
         if os.path.exists(SOCK):
             os.unlink(SOCK)
         srv = await asyncio.start_unix_server(self.client, path=SOCK, limit=1 << 24)
@@ -963,9 +1097,10 @@ def guard(w, waivers):
     if not files:
         return ["empty: no changes against base %s" % base[:10]], []
     allow, prot = json.loads(w["allow"]), json.loads(w["protect"])
+    once = [g for g, _ in json.loads(w.get("unprot") or "[]")]
     found = []
     for f in files:
-        if any(fnmatch.fnmatch(f, g) for g in prot):
+        if any(fnmatch.fnmatch(f, g) for g in prot) and not any(fnmatch.fnmatch(f, g) for g in once):
             found.append("protected:%s" % f)
         elif allow and not any(fnmatch.fnmatch(f, g) for g in allow):
             found.append("scope:%s (outside ALLOWED %s)" % (f, ",".join(allow)))
@@ -1018,6 +1153,8 @@ USAGE = """cxo — Codex hub. One terse line per item; ERR... on failure (exit 1
   spawn NAME -d DEP (--mklane [--from main|next|REF|SHA] | --repo PATH [--base REF] | --wt PATH) [-m MODEL] [-e EFFORT]
         [--allow GLOB]... [--protect GLOB]... [--no-default-protect] [--budget N|12M] [--umbrella default|"T1 T2"]
         [--build-cmd 'CMD {targets}'] [--no-push] [--force]   < brief.md
+  rebase NAME REF            (hub-side `git rebase REF` in the lane; refuses a dirty tree; conflicts abort + list files)
+  unprotect NAME GLOB...     (deputy-approved one-shot edit of a protected path; event UNPROTECTED)
   send NAME [--now] TEXT...   answer NAME ASKID TEXT...   allow NAME GLOB...   budget NAME N|12M
   wait [-d DEP] [-t SECS<=590]   interrupt NAME   retire NAME [why...]   log NAME [-n N] [--gen G]
   renew NAME [--fork [--before-turn ID]] [-m MODEL] [TEXT...]
@@ -1214,7 +1351,7 @@ def selftest_local():
         step("budget raise", "budget=9M" in r, r)
         # request_cargo
         jobs = []
-        h.new_job = lambda w, kind, what, cmd, tree=None: jobs.append((kind, cmd)) or "c1"
+        h.new_job = lambda w, kind, what, cmd, tree=None, note=None: jobs.append((kind, cmd, note)) or "c1"
         w = {"name": "b", "gen": 1, "wt": "/lanes/b/src"}
         for spec, ok in (("test -p mini-client", False), ("test -p mini-client --test frames", True), ("test -p x frames_roundtrip", True),
                          ("build -p x; rm -rf /", False), ("publish", False), ("check -p mini-client", True)):
@@ -1229,7 +1366,12 @@ def selftest_local():
         h.rpc = rpc2
         h.db.execute("insert into workers(name,gen,deputy,model,effort,thread,wt,base,state,turn,tokens,budget,created,allow,protect,"
                      "last_item,reqs) values('e',1,'d','m','low','te','/x','0','WORKING','tu',0,99000000,0,'[]','[]',0,60)")
-        for i, (cmd, want) in enumerate((("/bin/zsh -lc 'lake build Minidregg'", "request_build"), ("cargo test -p x --test y", "request_cargo"),
+        for i, (cmd, want) in enumerate((("/bin/zsh -lc 'lake build Minidregg'", "request_build"),
+                                         ("sed -n 1,5p native/resource-client/journey.d/m4.sh", None),
+                                         ("/bin/zsh -lc 'cd x && chmod +x edge/mini/journey/run.sh'", None),
+                                         ("bash -n native/resource-client/journey.d/m4.sh", None),
+                                         ("bash native/resource-client/journey.d/m4.sh --fast", "request_journey"),
+                                         ("/bin/zsh -lc 'cd w && python3 edge/mini/journey/go.py x'", "request_journey"), ("cargo test -p x --test y", "request_cargo"),
                                          ("bash scripts/pipeline/merge-gate-checks.sh", "request_journey"), ("ls journeys/", None),
                                          ("/bin/zsh -lc 'grep -rn hyp-ledger scripts'", None), ("lake env lean Foo.lean", None))):
             n0 = len(sent)
@@ -1238,8 +1380,8 @@ def selftest_local():
             dec = sent[n0]["result"]["decision"]
             hinted = steers and steers[-1][0] == "turn/steer" and want and want in steers[-1][1]["input"][0]["text"]
             step("exec approval %r" % cmd[:34], dec == ("decline" if want else "accept") and (not want or hinted), (dec, want))
-        step("EXEC_REFUSED events + declined counter", h.cur("e")["declined"] == 3 and
-             h.db.execute("select count(*) from events where kind='EXEC_REFUSED'").fetchone()[0] == 3)
+        step("EXEC_REFUSED events + declined counter", h.cur("e")["declined"] == 5 and
+             h.db.execute("select count(*) from events where kind='EXEC_REFUSED'").fetchone()[0] == 5)
         await h.on_request({"id": 200, "method": "item/fileChange/requestApproval", "params": {"threadId": "te"}})
         step("fileChange approval accepted", sent[-1]["result"]["decision"] == "accept")
         h.execs["te"] = {"i1": ("sleep 5", now() - 60)}
@@ -1257,7 +1399,7 @@ def selftest_local():
              h.db.execute("select count(*) from events where kind='NARRATING'").fetchone()[0] == 1, outs[-1][:80])
         h.artifact(w)
         step("artifact resets the cadence", "narrating" not in (await h.tool_report(w, {}))[0])
-        step("status shows req/job and decl", "req/job=" in await h.c_status({}) and "decl=3" in await h.c_status({}))
+        step("status shows req/job and decl", "req/job=" in await h.c_status({}) and "decl=5" in await h.c_status({}))
         # train
         sh(root, "init", "-q", "--bare", "remote.git")
         seed = os.path.join(root, "seed")
@@ -1290,6 +1432,77 @@ def selftest_local():
         r = await h.c_merge({"name": "t", "ref": "c1"}); await ev("TRAIN_GREEN")
         r = await h.c_merge({"name": "t", "ref": "c2"})
         step("train: textual conflict refused, tree clean", r.startswith("ERR textual") and not sh(twt, "status", "--porcelain").strip(), r)
+        # ---- CXO-FIX-2: rebase / unprotect / allow-dirty / interrupted jobs
+        rr = os.path.join(root, "rb")
+        sh(root, "init", "-q", "-b", "main", "rb")
+        for fn, t in (("f.txt", "1\n2\n3\n"), ("g.txt", "g\n")):
+            open(os.path.join(rr, fn), "w").write(t)
+        sh(rr, "add", "-A"); sh(rr, "commit", "-q", "-m", "base"); b0 = sh(rr, "rev-parse", "HEAD").strip()
+        sh(rr, "checkout", "-q", "-b", "up-ok"); open(os.path.join(rr, "h.txt"), "w").write("h\n"); sh(rr, "add", "-A"); sh(rr, "commit", "-q", "-m", "up")
+        up_ok = sh(rr, "rev-parse", "HEAD").strip()
+        sh(rr, "checkout", "-q", "-b", "up-bad", b0); open(os.path.join(rr, "f.txt"), "w").write("1\nUP\n3\n"); sh(rr, "commit", "-qam", "up2")
+        sh(rr, "checkout", "-q", "-b", "lane", b0); open(os.path.join(rr, "f.txt"), "w").write("1\nLANE\n3\n"); sh(rr, "commit", "-qam", "lane work")
+        h.db.execute("insert into workers(name,gen,deputy,model,effort,thread,wt,base,state,created,allow,protect,sha,green_tree) "
+                     "values('r',1,'d','m','low','tr',?,?,'WORKING',0,'[]','[]','x','gt')", (rr, b0))
+        open(os.path.join(rr, "dirty.txt"), "w").write("d\n")
+        r = await h.c_rebase({"name": "r", "ref": "up-ok"})
+        step("rebase: dirty worktree refused, no stash advice", r.startswith("ERR") and "dirty" in r and "Never git stash" in r, r)
+        os.unlink(os.path.join(rr, "dirty.txt"))
+        r = await h.c_rebase({"name": "r", "ref": "up-bad"})
+        step("rebase: conflict aborted, files listed, lane intact", r.startswith("ERR") and "f.txt" in r and not sh(rr, "status", "--porcelain").strip()
+             and not os.path.isdir(os.path.join(rr, ".git/rebase-merge")) and h.cur("r")["base"] == b0, r)
+        r = await h.c_rebase({"name": "r", "ref": "up-ok"})
+        w = h.cur("r")
+        step("rebase: clean -> base moved, REBASED event, green reset", w["base"] == up_ok and w["green_tree"] is None
+             and sh(rr, "merge-base", "--is-ancestor", up_ok, "HEAD") == "" and h.db.execute("select 1 from events where kind='REBASED'").fetchone(), r)
+        r = await h.c_rebase({"name": "r", "ref": "no-such-ref"})
+        step("rebase: unresolvable ref refused", r.startswith("ERR"), r)
+        # unprotect: protected edit refused, approved once, then protected again
+        w = {"wt": wr, "base": base, "allow": "[]", "protect": json.dumps(["scripts/gates/*"]), "unprot": None}
+        open(os.path.join(wr, "L/A.lean"), "w").write("theorem foo : True := trivial\n")
+        open(os.path.join(wr, "scripts/gates/objective-manifest/p.tsv"), "w").write("-theorem\tFoo\th3\n")
+        f, _ = guard(w, [])
+        step("unprotect: protected edit flagged before approval", any(x.startswith("protected:scripts/gates") for x in f), f)
+        h.db.execute("insert into workers(name,gen,deputy,model,effort,thread,wt,base,state,created,allow,protect) "
+                     "values('u',1,'d','m','low','tu2','/x','0','WORKING',0,'[\"L/*\"]','[\"scripts/gates/*\"]')")
+        r = await h.c_unprotect({"name": "u", "globs": ["scripts/gates/objective-manifest/*"]})
+        wu = h.cur("u")
+        f, _ = guard(dict(w, unprot=wu["unprot"], allow=wu["allow"]), [])
+        step("unprotect: approved path passes the guard + UNPROTECTED event", f == [] and h.db.execute(
+             "select 1 from events where kind='UNPROTECTED'").fetchone(), (r, f))
+        wu["wt"], wu["base"] = wr, base
+        un = json.loads(wu["unprot"])
+        h.upd(wu, unprot="[]", allow=json.dumps([g for g in json.loads(wu["allow"]) if g not in [x for x, ad in un if ad]]))
+        f, _ = guard(dict(w, unprot=h.cur("u")["unprot"], allow=h.cur("u")["allow"]), [])
+        step("unprotect: spent once (consumed state refuses again)", any(x.startswith(("protected:", "scope:")) for x in f), f)
+        # allow-dirty: hash recorded only on opt-in, env set only on opt-in
+        dr = os.path.join(root, "dr"); sh(root, "init", "-q", "dr"); open(os.path.join(dr, "a"), "w").write("1\n"); sh(dr, "add", "-A"); sh(dr, "commit", "-q", "-m", "c")
+        wd = {"name": "b", "gen": 1, "wt": dr, "build_cmd": None}
+        jobs.clear()
+        await h.tool_request_build(wd, {"targets": ["T"]})
+        step("allow-dirty: default build leaves env + note unset", "CXO_ALLOW_DIRTY" not in jobs[0][1] and jobs[0][2] is None, jobs[0])
+        open(os.path.join(dr, "a"), "w").write("2\n")
+        await h.tool_request_build(wd, {"targets": ["T"], "allow_dirty": True})
+        n1 = jobs[1][2]
+        open(os.path.join(dr, "a"), "w").write("3\n")
+        await h.tool_request_build(wd, {"targets": ["T"], "allow_dirty": True})
+        step("allow-dirty: DIRTY-TREE diff hash recorded, differs per tree", "CXO_ALLOW_DIRTY=1" in jobs[1][1] and "DIRTY-TREE" in n1
+             and "diff_sha1=" in n1 and n1 != jobs[2][2], n1)
+        await h.tool_request_cargo(wd, {"spec": "check -p x", "allow_dirty": True})
+        step("allow-dirty: request_cargo too", "CXO_ALLOW_DIRTY=1" in jobs[3][1] and jobs[3][2], jobs[3][1][:60])
+        # interrupted jobs on hub start
+        told = []
+        async def deliver(w, text): told.append((w["name"], text)); return "turn started"
+        h.deliver = deliver
+        h.db.execute("insert into workers(name,gen,deputy,model,effort,thread,wt,base,state,created,allow,protect) "
+                     "values('j',1,'d','m','low','tj','/x','0','WORKING',0,'[]','[]')")
+        for tk, st in (("b1", "running"), ("b2", "queued"), ("b3", "done")):
+            h.db.execute("insert into jobs(ticket,name,gen,kind,what,status,log,t0,pid) values(?,?,?,?,?,?,?,?,?)", (tk, "j", 1, "build", "Foo", st, "/l", 0, 999999))
+        await h.recover_jobs()
+        sts = dict(h.db.execute("select ticket,status from jobs where name='j'").fetchall())
+        step("hub start: running/queued -> INTERRUPTED, done kept", sts == {"b1": "INTERRUPTED", "b2": "INTERRUPTED", "b3": "done"}, sts)
+        step("hub start: worker told to re-request, event raised", len(told) == 2 and "INTERRUPTED" in told[0][1] and "request_build" in told[0][1]
+             and h.db.execute("select count(*) from events where kind='JOB_INTERRUPTED'").fetchone()[0] == 2, told[:1])
     asyncio.run(hub_tests())
     print("%s %d/%d (scratch %s)" % ("LOCAL SELFTEST PASS" if all(res) else "LOCAL SELFTEST FAIL", sum(res), len(res), root))
     return 0 if all(res) else 1
@@ -1341,8 +1554,10 @@ def main():
         a["name"] = pos[0]; a["ask"] = pos[1]; a["text"] = " ".join(pos[2:])
     elif cmd == "retire":
         a["name"] = pos[0]; a["why"] = " ".join(pos[1:])
-    elif cmd == "allow":
+    elif cmd in ("allow", "unprotect"):
         a["name"] = pos[0]; a["globs"] = pos[1:]
+    elif cmd == "rebase":
+        a["name"] = pos[0]; a["ref"] = pos[1] if len(pos) > 1 else ""
     elif cmd == "budget":
         a["name"] = pos[0]; a["n"] = pos[1]
     elif cmd in ("interrupt", "log", "train"):

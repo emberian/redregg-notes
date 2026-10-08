@@ -20,6 +20,8 @@ cxo-b3 budget t2-x 20M                           # raise/lower; send never reset
 cxo-b3 status -d t2      # STATE tok(total) unc(uncached) req(model requests) polls jobs budget sha
 cxo-b3 log t2-x -n 30    # say / run [exit] / edit / tool / turn end
 cxo-b3 retire t2-x verified, merged
+cxo-b3 rebase t2-x REF       # hub-side `git rebase REF` in the lane (sandbox .git is read-only); refuses a dirty tree, aborts + lists files on conflict; updates base, event REBASED
+cxo-b3 unprotect t2-x 'GLOB' # one-shot deputy approval to touch a protected path at the next submit (event UNPROTECTED)
 ```
 
 **Spawn options:**
@@ -117,3 +119,8 @@ Merge one range, wait for green, then merge the next. Experiment 1 found three c
 - **A tool call held open makes the model spin**, burning tokens, so every wait ends the turn.
 - **Thread goals auto-continue and self-complete**, so cxo does not use them.
 - Workers follow steers at once (experiment 1: 7 of 7).
+
+## Added 10-08 (CXO-FIX-2)
+- `request_build` / `request_cargo` take `allow_dirty`: the job gets `CXO_ALLOW_DIRTY=1` (the build script's dirty-tree refusal stays the default; honouring the env is the script's business) and the result, BUILD/CARGO event and delivered RESULT carry `DIRTY-TREE head= tree= diff_sha1=` (clean trees say `clean-tree`).
+- On `hub start`, jobs left `running`/`queued` become `INTERRUPTED` (event `JOB_INTERRUPTED`); the worker is told to re-request; a train job marks the train RED (`merge --recheck`).
+- Exec-approval refusal is judged per shell segment; readers (sed, cat, chmod, `bash -n`, ...) are never refused, and a journey path is refused only when executed. `CXO_LONG_RX` is read at hub start only.
