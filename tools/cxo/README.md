@@ -91,6 +91,7 @@ Merge one range, wait for green, then merge the next. Experiment 1 found three c
 - **Estimate per item without polling:** 4–12M tokens (collector 4.1M, mergefix 4.3–10M, Astra meter 12M), which is **about 1.5–4 weekly points**. That is roughly 25–60 items per window if nothing else uses Codex. Budget spawns accordingly, and read `unc` (uncached) next to `tok`.
 
 ## Ops
+- `~/.cxo/hub.log` is the hub's rotating log (5 MB x 5; events, jobs, command errors, tracebacks); the daemon's raw stdout/stderr go to `hub.stderr`.
 - State lives in `~/.cxo`: `registry.sqlite`, `logs/`, `jobs/`, `briefs/`, `hub.log`, `app-server.stderr`.
 - Env lives in `~/cxo/env.sh`: CXO_CODEX, CXO_BUILD_CMD (lake-slot) and CXO_PUSH_REMOTE.
 - `cxo selftest-local`: no Codex, no box; guard rules, budget interrupt, request_cargo validation, train GREEN/RED/textual-conflict on real git.

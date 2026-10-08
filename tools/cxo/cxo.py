@@ -3,7 +3,7 @@
 the worker registry, events, jobs (builds, journeys, cargo, train checks), submit guards and the
 rate-limit gate. Deputies use the CLI. Design: redregg/work/CODEX-ORCHESTRATION-DESIGN-20261008.md;
 usage: README.md beside this file; experiment record: redregg/work/CXO-EXPERIMENT-1.md."""
-import hashlib, asyncio, json, os, sys, time, sqlite3, re, fnmatch, subprocess, shlex, signal, itertools, tempfile
+import logging, logging.handlers, hashlib, asyncio, json, os, sys, time, sqlite3, re, fnmatch, subprocess, shlex, signal, itertools, tempfile
 
 HOME = os.path.expanduser(os.environ.get("CXO_HOME", "~/.cxo"))
 SOCK = os.environ.get("CXO_SOCK") or os.path.join(HOME, "hub.sock")
@@ -21,6 +21,24 @@ FETCH_ARTIFACTS = os.environ.get("CXO_FETCH_ARTIFACTS", "/srv/pipeline/scripts/f
 ARTIFACT_TIP = os.environ.get("CXO_ARTIFACT_TIP", "green")
 UMBRELLA = os.environ.get("CXO_UMBRELLA", "Minidregg Host.Main:leanArts ObjectiveProofs").split()
 SLOTS_CMD = os.environ.get("CXO_SLOTS_CMD", "slots --json")
+
+
+LOG = logging.getLogger("cxo")
+
+
+def setup_logging():
+    """hub.log: the hub's own rotating log (events, jobs, errors, tracebacks). The old hub never wrote to it: nothing in the code
+    logged, and `hub start` only pointed the daemon's stdout at it, so a healthy hub left it at 0 bytes."""
+    root = logging.getLogger()
+    for h in list(root.handlers):
+        if getattr(h, "_cxo", False):
+            root.removeHandler(h); h.close()
+    h = logging.handlers.RotatingFileHandler(os.path.join(HOME, "hub.log"), maxBytes=int(os.environ.get("CXO_LOG_BYTES", 5 << 20)),
+                                             backupCount=5)
+    h._cxo = True
+    h.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(message)s"))
+    root.addHandler(h); root.setLevel(logging.INFO)
+    return h
 
 
 def build_pool_size():
@@ -295,6 +313,7 @@ class Hub:
         self.db.execute("insert into events(ts,deputy,worker,kind,text) values(?,?,?,?,?)",
                         (now(), deputy or (w["deputy"] if w else "-"), ("%s/g%d" % (w["name"], w["gen"])) if w else "-", kind, text))
         self.ev_signal.set()
+        LOG.info("EVENT %s %s %s", kind, ("%s/g%d" % (w["name"], w["gen"])) if w else "-", str(text)[:300].replace("\n", " "))
 
     def artifact(self, w):
         c = self.cad.setdefault(w["thread"], {"reports": [], "art": 0, "flagged": False})
@@ -560,6 +579,7 @@ class Hub:
             self.job_rc[tk] = -15
             return
         self.db.execute("update jobs set status='running' where ticket=?", (tk,))
+        LOG.info("JOB start %s %s %s", tk, kind, what[:120])
         with open(log, "w") as f:
             f.write("$ %s\n" % cmd); f.flush()
             pr = await asyncio.create_subprocess_exec("bash", "-c", cmd, cwd=cwd or w["wt"], stdout=f, stderr=subprocess.STDOUT,
@@ -571,6 +591,7 @@ class Hub:
                 os.killpg(pr.pid, signal.SIGTERM); rc = await pr.wait()
                 f.write("\ncxo: killed after %ds\n" % JOB_TIMEOUT)
         self.job_rc[tk] = rc
+        LOG.info("JOB end %s %s exit=%s", tk, kind, rc)
 
     async def _finish_job(self, w, tk, kind, what, log, on_done):
         rc = self.job_rc.pop(tk)
@@ -1247,15 +1268,18 @@ class Hub:
             fn = getattr(self, "c_" + req["cmd"], None)
             out = await fn(req.get("args") or {}) if fn else "ERR unknown command"
         except Exception as e:
+            LOG.exception("command failed")
             out = "ERR %r" % e
         writer.write((json.dumps({"out": out}) + "\n").encode())
         await writer.drain()
         writer.close()
 
     async def run(self):
+        LOG.info("hub starting pid=%d home=%s pools=%s", os.getpid(), HOME, self.pool_n)
         self.codex_ver = subprocess.run([CODEX, "--version"], capture_output=True, text=True).stdout.strip()
         await self.start_codex()
         await self.recover_jobs()
+        LOG.info("hub ready codex=%s", self.codex_ver)
         if os.path.exists(SOCK):
             os.unlink(SOCK)
         srv = await asyncio.start_unix_server(self.client, path=SOCK, limit=1 << 24)
@@ -1704,6 +1728,14 @@ def selftest_local():
              and "diff_sha1=" in n1 and n1 != jobs[2][2], n1)
         await h.tool_request_cargo(wd, {"spec": "check -p x", "allow_dirty": True})
         step("allow-dirty: request_cargo too", "CXO_ALLOW_DIRTY=1" in jobs[3][1] and jobs[3][2], jobs[3][1][:60])
+        # hub.log: rotating, receives events and job lines
+        hd = setup_logging()
+        h.event(None, "LOGCHECK", "hub.log must receive this")
+        hd.flush()
+        lg = open(os.path.join(HOME, "hub.log")).read()
+        step("hub.log: rotating handler writes events (was 0 bytes all day)", isinstance(hd, logging.handlers.RotatingFileHandler)
+             and "EVENT LOGCHECK" in lg and hd.backupCount > 0, lg[-80:])
+        logging.getLogger().removeHandler(hd); hd.close()
         # pools: journeys saturated must not delay a build; each kind has its own width
         h.pool_n = {"build": 1, "journey": 1, "cargo": 1, "train": 1}
         h.pool = {k: asyncio.Semaphore(1) for k in h.pool_n}; h.pool_run = {k: 0 for k in h.pool_n}
@@ -1779,7 +1811,13 @@ def main():
         sub = rest[0] if rest else "run"
         pidf = os.path.join(HOME, "hub.pid")
         if sub == "run":
-            asyncio.run(_hub_main()); return 0
+            os.makedirs(HOME, exist_ok=True)
+            setup_logging()
+            try:
+                asyncio.run(_hub_main())
+            except BaseException:
+                LOG.exception("hub died"); raise
+            return 0
         if sub == "start":
             os.makedirs(HOME, exist_ok=True)
             try:
@@ -1787,7 +1825,7 @@ def main():
             except Exception:
                 if os.path.exists(SOCK):
                     os.unlink(SOCK)
-            p = subprocess.Popen([sys.executable, os.path.abspath(__file__), "hub", "run"], stdout=open(os.path.join(HOME, "hub.log"), "a"),
+            p = subprocess.Popen([sys.executable, os.path.abspath(__file__), "hub", "run"], stdout=open(os.path.join(HOME, "hub.stderr"), "a"),
                                  stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL, start_new_session=True)
             open(pidf, "w").write(str(p.pid))
             for _ in range(60):
@@ -1796,7 +1834,7 @@ def main():
                     print(call("ping", {}, 10)); return 0
                 except Exception:
                     pass
-            print("ERR hub did not come up; see %s/hub.log" % HOME); return 1
+            print("ERR hub did not come up; see %s/hub.log and hub.stderr" % HOME); return 1
         if sub == "stop":
             try:
                 os.kill(int(open(pidf).read()), signal.SIGTERM); print("stopped")
