@@ -11,7 +11,7 @@
 ## The deputy loop
 ```sh
 cxo-b3 limits                                    # weekly used%, pace
-cxo-b3 spawn t2-x -d t2 --mklane -m gpt-5.6-sol --allow 'Kernel/Foo*' [--umbrella default] < brief.md
+cxo-b3 spawn t2-x -d t2 --mklane -m gpt-6.1-sol --allow 'Kernel/Foo*' [--umbrella default] < brief.md
 cxo-b3 wait -d t2 -t 540                         # foreground; events or (no events)
 cxo-b3 allow t2-x 'Host/Bar*.lean'               # widen scope of a live worker (ASK/NOTE answers)
 cxo-b3 answer t2-x a17 "yes, fix the primitive, no twin"
@@ -24,7 +24,7 @@ cxo-b3 retire t2-x verified, merged
 
 **Spawn options:**
 - `--mklane [--from next]` makes a warm lane at `/srv/lanes/NAME/src`. Alternatives are `--repo PATH` and `--wt PATH`.
-- `-m` model: `gpt-5.6-sol` is the default; `gpt-6-astra` for Astra.
+- `-m` model: `gpt-6.1-sol` is the default (latest Sol; 5.6-sol and 6-sol also available); `gpt-6-astra` for Astra.
 - `--budget` defaults to 12M. That is the hub's cumulative count, including cached context.
 - `--umbrella default` (or `"T1 T2"`): the worker's submit is refused until `request_build(umbrella)` came back exit=0 **on the exact tree it submits**. The default umbrella is `Minidregg Host.Main:leanArts ObjectiveProofs`. Use it for every worker whose files overlap another's.
 - `--protect` adds protected globs; `--no-push` skips the push; `--force` skips the pace gate.

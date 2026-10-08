@@ -12,7 +12,7 @@ if len(SOCK) > 100:  # AF_UNIX path limit
     SOCK = "/tmp/cxo-%d-%s.sock" % (os.getuid(), hashlib.sha1(HOME.encode()).hexdigest()[:10])
 CODEX = os.environ.get("CXO_CODEX", "codex")
 CODEX_HOME = os.environ.get("CXO_CODEX_HOME", os.path.join(HOME, "codex-home"))
-DEFAULT_MODEL = os.environ.get("CXO_DEFAULT_MODEL", "gpt-5.6-sol")
+DEFAULT_MODEL = os.environ.get("CXO_DEFAULT_MODEL", "gpt-6.1-sol")
 DEFAULT_BUDGET = int(os.environ.get("CXO_DEFAULT_BUDGET", "12000000"))
 BUILD_CMD = os.environ.get("CXO_BUILD_CMD", "swarm-build lake build {targets}")
 CARGO_CMD = os.environ.get("CXO_CARGO_CMD", "swarm-build cargo {spec}")
