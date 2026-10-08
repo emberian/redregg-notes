@@ -55,7 +55,7 @@ Each `request_*` returns a ticket and tells the worker to **end its turn**. The 
 - `request_build(targets)`: `lake-slot TARGETS` in the lane.
 - `request_journey(script, args)`: runs a script from the lane, so sockets work. `{bin}` and `{manifest}` in the args expand to the prebuilt **base** artifact set, fetched once per lane (`fetch-artifacts green`, linked); the set is READY for cfdaf64d. A worker that changed Host must `request_build` it and pass its own path.
 - `request_cargo(spec)`: `swarm-build cargo …` with network, and `CARGO_TARGET_DIR` set to `lane/rust-target`. A `test` must name `-p` and a filter or `--test`.
-- Concurrency is `CXO_MAX_JOBS` (3); each Lake build also takes a box slot.
+- Concurrency is per kind: build = `CXO_MAX_BUILDS` (else the lane-slot count from `slots --json`, else 6), journey `CXO_MAX_JOURNEYS` (3), cargo `CXO_MAX_CARGO` (2), train `CXO_MAX_TRAIN` (1). `status` shows `pools`. CXO_MAX_JOBS is gone.
 
 ## Integration: build the umbrella after EACH merge
 ```sh

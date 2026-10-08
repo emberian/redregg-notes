@@ -20,7 +20,27 @@ BOX_ENV = os.environ.get("CXO_BOX_ENV", "/srv/pipeline/box.env")
 FETCH_ARTIFACTS = os.environ.get("CXO_FETCH_ARTIFACTS", "/srv/pipeline/scripts/fetch-artifacts")
 ARTIFACT_TIP = os.environ.get("CXO_ARTIFACT_TIP", "green")
 UMBRELLA = os.environ.get("CXO_UMBRELLA", "Minidregg Host.Main:leanArts ObjectiveProofs").split()
-MAX_JOBS = int(os.environ.get("CXO_MAX_JOBS", "3"))
+SLOTS_CMD = os.environ.get("CXO_SLOTS_CMD", "slots --json")
+
+
+def build_pool_size():
+    """builds: CXO_MAX_BUILDS, else the box's lane-slot count from `slots --json` (list length, or total/slots/n), else 6."""
+    if os.environ.get("CXO_MAX_BUILDS"):
+        return int(os.environ["CXO_MAX_BUILDS"])
+    try:
+        o = json.loads(subprocess.run(shlex.split(SLOTS_CMD), capture_output=True, text=True, timeout=10).stdout)
+        n = len(o) if isinstance(o, list) else next((o[k] if isinstance(o[k], int) else len(o[k]) for k in ("total", "slots", "n") if k in o), 0)
+        if n > 0:
+            return n
+    except Exception:
+        pass
+    return 6
+
+
+def pool_sizes():
+    """one pool per job kind: a long journey must never hold a build slot (CXO_MAX_JOBS no longer exists)."""
+    return {"build": build_pool_size(), "journey": int(os.environ.get("CXO_MAX_JOURNEYS", "3")),
+            "cargo": int(os.environ.get("CXO_MAX_CARGO", "2")), "train": int(os.environ.get("CXO_MAX_TRAIN", "1"))}
 JOB_TIMEOUT = int(os.environ.get("CXO_JOB_TIMEOUT", "5400"))
 PUSH_REMOTE = os.environ.get("CXO_PUSH_REMOTE", "")  # e.g. /srv/git/minidregg.git; empty = no push
 PUSH_PREFIX = os.environ.get("CXO_PUSH_PREFIX", "lane/")  # the shared remote's pre-receive accepts lane/<name> only
@@ -191,7 +211,10 @@ class Hub:
         self.execs = {}         # thread -> {item id: (command, t0)} in-sandbox commands now running
         self.cad = {}           # thread -> {"reports": [ts...], "art": ts, "flagged": bool} (E2-5 cadence guard)
         self.turn_flags = {}    # thread -> {"submit_tried": bool, "warned": set()}
-        self.job_sem = asyncio.Semaphore(MAX_JOBS)
+        self.pool_n = pool_sizes()
+        self.pool = {k: asyncio.Semaphore(n) for k, n in self.pool_n.items()}
+        self.pool_run = {k: 0 for k in self.pool_n}
+        self.job_rc = {}
         self.rate = None
         self.paused = False
         self.ev_signal = asyncio.Event()
@@ -467,18 +490,31 @@ class Hub:
         return tk
 
     async def run_job(self, w, tk, kind, what, cmd, log, cwd=None, on_done=None):
-        async with self.job_sem:
-            self.db.execute("update jobs set status='running' where ticket=?", (tk,))
-            with open(log, "w") as f:
-                f.write("$ %s\n" % cmd); f.flush()
-                pr = await asyncio.create_subprocess_exec("bash", "-c", cmd, cwd=cwd or w["wt"], stdout=f, stderr=subprocess.STDOUT,
-                                                          stdin=subprocess.DEVNULL, start_new_session=True)
-                self.db.execute("update jobs set pid=? where ticket=?", (pr.pid, tk))
-                try:
-                    rc = await asyncio.wait_for(pr.wait(), JOB_TIMEOUT)
-                except asyncio.TimeoutError:
-                    os.killpg(pr.pid, signal.SIGTERM); rc = await pr.wait()
-                    f.write("\ncxo: killed after %ds\n" % JOB_TIMEOUT)
+        async with self.pool[kind if kind in self.pool else "build"]:
+            pk = kind if kind in self.pool else "build"
+            self.pool_run[pk] += 1
+            try:
+                await self._run_job_body(w, tk, kind, what, cmd, log, cwd)
+            finally:
+                self.pool_run[pk] -= 1
+        await self._finish_job(w, tk, kind, what, log, on_done)
+
+    async def _run_job_body(self, w, tk, kind, what, cmd, log, cwd):
+        self.db.execute("update jobs set status='running' where ticket=?", (tk,))
+        with open(log, "w") as f:
+            f.write("$ %s\n" % cmd); f.flush()
+            pr = await asyncio.create_subprocess_exec("bash", "-c", cmd, cwd=cwd or w["wt"], stdout=f, stderr=subprocess.STDOUT,
+                                                      stdin=subprocess.DEVNULL, start_new_session=True)
+            self.db.execute("update jobs set pid=? where ticket=?", (pr.pid, tk))
+            try:
+                rc = await asyncio.wait_for(pr.wait(), JOB_TIMEOUT)
+            except asyncio.TimeoutError:
+                os.killpg(pr.pid, signal.SIGTERM); rc = await pr.wait()
+                f.write("\ncxo: killed after %ds\n" % JOB_TIMEOUT)
+        self.job_rc[tk] = rc
+
+    async def _finish_job(self, w, tk, kind, what, log, on_done):
+        rc = self.job_rc.pop(tk)
         self.db.execute("update jobs set status='done', exit=?, t1=? where ticket=? and status='running'", (rc, now(), tk))
         with open(log, errors="replace") as f:
             tail = "".join(f.readlines()[-30:])
@@ -859,6 +895,8 @@ class Hub:
                 w["name"], w["gen"], w["deputy"], w["state"], w["model"], "on" if w["turn"] else "off", w["reports"], ago(w["last_report"]),
                 ago(w["last_item"]), w["tokens"] / 1e6, (w["unc"] or 0) / 1e6, w["reqs"] or 0, w["polls"] or 0, w["pending"] or 0,
                 w["budget"] // 10**6, rpj(self, w), w["declined"] or 0, (" sha=" + w["sha"][:10]) if w["sha"] else ""))
+        q = dict(self.db.execute("select kind,count(*) from jobs where status='queued' group by kind").fetchall())
+        out.append("pools " + " ".join("%s %d/%d%s" % (k, self.pool_run[k], n, (" +%dq" % q[k]) if q.get(k) else "") for k, n in self.pool_n.items()))
         for t in self.db.execute("select name,state,green,last from trains").fetchall():
             out.append("train %s %s green=%s last=%s" % (t[0], t[1], (t[2] or "-")[:10], t[3] or "-"))
         return "\n".join(out) or "(no workers)"
@@ -1490,6 +1528,28 @@ def selftest_local():
              and "diff_sha1=" in n1 and n1 != jobs[2][2], n1)
         await h.tool_request_cargo(wd, {"spec": "check -p x", "allow_dirty": True})
         step("allow-dirty: request_cargo too", "CXO_ALLOW_DIRTY=1" in jobs[3][1] and jobs[3][2], jobs[3][1][:60])
+        # pools: journeys saturated must not delay a build; each kind has its own width
+        h.pool_n = {"build": 1, "journey": 1, "cargo": 1, "train": 1}
+        h.pool = {k: asyncio.Semaphore(1) for k in h.pool_n}; h.pool_run = {k: 0 for k in h.pool_n}
+        h.db.execute("insert into workers(name,gen,deputy,model,effort,thread,wt,base,state,created,allow,protect) "
+                     "values('p',1,'d','m','low','tp','%s','0','WORKING',0,'[]','[]')" % root)
+        wp = h.cur("p")
+        async def noop(w, text): return "ok"
+        h.deliver = noop
+        t0 = now()
+        for i, (kd, cm) in enumerate((("journey", "sleep 1.5"), ("journey", "sleep 1.5"), ("build", "true"))):
+            h.db.execute("insert into jobs(ticket,name,gen,kind,what,status,log,t0) values(?,?,?,?,?,?,?,?)",
+                         ("p%d" % i, "p", 1, kd, "x", "queued", os.path.join(root, "pj.log"), 0))
+        for i, (kd, cm) in enumerate((("journey", "sleep 1.5"), ("journey", "sleep 1.5"), ("build", "true"))):
+            asyncio.ensure_future(h.run_job(wp, "p%d" % i, kd, "x", cm, os.path.join(root, "pj%d.log" % i), cwd=root))
+        await real_sleep(0.5)
+        st = await h.c_status({})
+        bdone = h.db.execute("select status from jobs where kind='build' and name='p'").fetchone()[0]
+        step("pools: build finishes while journeys hold their pool", bdone == "done" and h.pool_run["journey"] == 1, (bdone, h.pool_run))
+        step("pools: status shows occupancy + queue", "pools build 0/1 journey 1/1 +1q" in st, [l for l in st.split("\n") if l.startswith("pools")])
+        await real_sleep(3.5)
+        step("pools: journeys serialised by their own pool, all done", h.db.execute(
+             "select count(*) from jobs where name='p' and status='done'").fetchone()[0] == 3 and now() - t0 > 3)
         # interrupted jobs on hub start
         told = []
         async def deliver(w, text): told.append((w["name"], text)); return "turn started"
@@ -1501,6 +1561,8 @@ def selftest_local():
         await h.recover_jobs()
         sts = dict(h.db.execute("select ticket,status from jobs where name='j'").fetchall())
         step("hub start: running/queued -> INTERRUPTED, done kept", sts == {"b1": "INTERRUPTED", "b2": "INTERRUPTED", "b3": "done"}, sts)
+        await h.recover_jobs()
+        step("hub start: INTERRUPTED is terminal (second restart reports nothing)", len(told) == 2, len(told))
         step("hub start: worker told to re-request, event raised", len(told) == 2 and "INTERRUPTED" in told[0][1] and "request_build" in told[0][1]
              and h.db.execute("select count(*) from events where kind='JOB_INTERRUPTED'").fetchone()[0] == 2, told[:1])
     asyncio.run(hub_tests())
