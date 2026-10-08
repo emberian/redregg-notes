@@ -56,7 +56,7 @@ GIT_ID = ["-c", "commit.gpgsign=false", "-c", "user.name=ember arlynx", "-c", "u
 APPROVAL = os.environ.get("CXO_APPROVAL", "untrusted")
 EXEC_CAP_S = int(os.environ.get("CXO_EXEC_CAP_S", "20"))   # an in-sandbox command running longer than this is flagged + steered
 LONG_RX = re.compile(os.environ.get("CXO_LONG_RX", r"\blake\s+build\b|\bswarm-build\b|\bcargo\s+(build|test|run|check|clippy|bench)\b|"
-                     r"^\s*(?:(?:bash|sh|zsh|python3?)\s+(?!-[nm]\b)|\./)?\S*journeys?(?:\.d)?/\S+\.(?:sh|py)\b|objective-native-acceptance|check-objective-proofs|merge-gate-checks|check-scripts-elab|hyp-ledger|"
+                     r"\S*journeys?(?:\.d)?/\S+\.(?:sh|py)\b|objective-native-acceptance|check-objective-proofs|merge-gate-checks|check-scripts-elab|hyp-ledger|"
                      r"\bsleep\s+\d{2,}|\bwhile\s+(true|:|sleep)"))
 CARGO_RX = re.compile(r"\bcargo\b")
 NARRATE_N, NARRATE_M = int(os.environ.get("CXO_NARRATE_N", "4")), int(os.environ.get("CXO_NARRATE_MIN", "10"))
@@ -124,19 +124,74 @@ def allow_vs_protect(allow, protect):
     return [(g, p) for g in allow for p in protect if g == p or fnmatch.fnmatch(g, p) or fnmatch.fnmatch(p, g)]
 
 
-READERS = r"\s*(cat|grep|rg|sed|head|tail|less|more|ls|git|wc|find|nl|awk|diff|echo|chmod|stat|cd|test|file|realpath|dirname|basename|" \
-          r"bash\s+-n|sh\s+-n|python3?\s+-m\s+py_compile)\b"
+READERS = r"(cat|grep|rg|sed|head|tail|less|more|ls|git|wc|find|nl|awk|diff|echo|chmod|stat|cd|test|file|realpath|dirname|basename|" \
+          r"printf|tee|xargs)$"
+SHELLS = ("bash", "sh", "zsh")
+PREFIX_WORDS = ("time", "nohup", "env", "exec", "command", "nice")
+
+
+def _segments(cmd, depth=0):
+    """quote-aware split of a shell line into command segments (token lists); `sh -c 'script'` is expanded in place."""
+    lex = shlex.shlex(cmd.replace("\n", " ; "), posix=True, punctuation_chars=True)
+    lex.whitespace_split = True
+    out, cur = [], []
+    for t in lex:
+        if t and set(t) <= set(";&|()\n"):
+            out.append(cur); cur = []
+        else:
+            cur.append(t)
+    out.append(cur)
+    res = []
+    for seg in out:
+        while seg and re.match(r"^\w+=", seg[0]):  # FOO=1 cmd
+            seg = seg[1:]
+        if depth < 3 and len(seg) >= 3 and os.path.basename(seg[0]) in SHELLS and re.match(r"^-\w*c$", seg[1]):
+            res += _segments(seg[2], depth + 1)
+        elif seg:
+            res.append(seg)
+    return res
+
+
+def _exec_words(seg):
+    """the words in EXECUTION position: the first word, after time/env/..., and the script after an interpreter (not `bash -n`)."""
+    while seg and os.path.basename(seg[0]) in PREFIX_WORDS:
+        seg = seg[1:]
+    if not seg:
+        return None
+    first = os.path.basename(seg[0])
+    if re.match(READERS, first):
+        return None
+    if first in SHELLS + ("python", "python3"):
+        rest = seg[1:]
+        if rest and rest[0] in ("-n", "-m", "-c") and not (first in SHELLS and rest[0] == "-c"):
+            return None  # bash -n / python3 -m py_compile: syntax checks, not runs
+        rest = [x for x in rest if not x.startswith("-")]
+        return rest[:1] and rest[0:1] + seg[seg.index(rest[0]) + 1:][:6]
+    return seg
 
 
 def exec_hint(cmd):
-    """None if the command may run in the sandbox, else the refusal hint. Judged per shell segment (; && || |): a reader or
-    inspector segment (sed, chmod, bash -n, ...) never counts, even when it names a journey script or `lake build` in text."""
-    inner = re.sub(r"^\s*(/\S*/)?(ba|z)?sh\s+-\w*c\s+['\"]?", "", cmd or "")
-    segs = [x for x in re.split(r"&&|\|\||;|\||\n", inner) if x.strip()]
-    hit = [x for x in segs if not re.match(READERS, x) and LONG_RX.search(x)]
-    if not cmd or not hit:
+    """None if the command may run in the sandbox, else the refusal hint. A long-command name counts only in EXECUTION position
+    (first word of a segment, or the script handed to bash/sh/python3), never as an argument to rg/grep/cat/sed/chmod/bash -n."""
+    if not cmd:
         return None
-    cmd = hit[0]
+    try:
+        segs = _segments(cmd)
+    except ValueError:
+        segs = [cmd.split()]
+    hit = None
+    for seg in segs:
+        ew = _exec_words(seg)
+        if not ew:
+            continue
+        full = " ".join(ew)
+        base = " ".join([os.path.basename(ew[0])] + list(ew[1:]))
+        if LONG_RX.match(full) or LONG_RX.match(base):
+            hit = full
+            break
+    if not hit:
+        return None
+    cmd = hit
     tool = "request_cargo" if CARGO_RX.search(cmd) else "request_build" if re.search(r"\blake\b|swarm-build", cmd) else "request_journey"
     return ("REFUSED by the hub: this command is long-running and must not run in your sandbox (each minute of waiting costs a full "
             "model request). Use %s(...) instead: it runs hub-side, returns a ticket, and the result arrives as a new message. "
@@ -1473,6 +1528,12 @@ def selftest_local():
         h.db.execute("insert into workers(name,gen,deputy,model,effort,thread,wt,base,state,turn,tokens,budget,created,allow,protect,"
                      "last_item,reqs) values('e',1,'d','m','low','te','/x','0','WORKING','tu',0,99000000,0,'[]','[]',0,60)")
         for i, (cmd, want) in enumerate((("/bin/zsh -lc 'lake build Minidregg'", "request_build"),
+                                         ("rg -n x scripts/pipeline/merge-gate-checks.sh", None),
+                                         ("rg -n 'a|merge-gate-checks|b' scripts/ && cat scripts/pipeline/check-objective-proofs.sh", None),
+                                         ("/bin/zsh -lc \"grep -n hyp-ledger scripts/x.sh | head\"", None),
+                                         ("bash -n scripts/pipeline/merge-gate-checks.sh", None),
+                                         ("FOO=1 bash scripts/pipeline/check-objective-proofs.sh", "request_journey"),
+                                         ("bash scripts/pipeline/merge-gate-checks.sh", "request_journey"),
                                          ("sed -n 1,5p native/resource-client/journey.d/m4.sh", None),
                                          ("/bin/zsh -lc 'cd x && chmod +x edge/mini/journey/run.sh'", None),
                                          ("bash -n native/resource-client/journey.d/m4.sh", None),
@@ -1486,8 +1547,8 @@ def selftest_local():
             dec = sent[n0]["result"]["decision"]
             hinted = steers and steers[-1][0] == "turn/steer" and want and want in steers[-1][1]["input"][0]["text"]
             step("exec approval %r" % cmd[:34], dec == ("decline" if want else "accept") and (not want or hinted), (dec, want))
-        step("EXEC_REFUSED events + declined counter", h.cur("e")["declined"] == 5 and
-             h.db.execute("select count(*) from events where kind='EXEC_REFUSED'").fetchone()[0] == 5)
+        step("EXEC_REFUSED events + declined counter", h.cur("e")["declined"] == 7 and
+             h.db.execute("select count(*) from events where kind='EXEC_REFUSED'").fetchone()[0] == 7)
         await h.on_request({"id": 200, "method": "item/fileChange/requestApproval", "params": {"threadId": "te"}})
         step("fileChange approval accepted", sent[-1]["result"]["decision"] == "accept")
         h.execs["te"] = {"i1": ("sleep 5", now() - 60)}
@@ -1505,7 +1566,7 @@ def selftest_local():
              h.db.execute("select count(*) from events where kind='NARRATING'").fetchone()[0] == 1, outs[-1][:80])
         h.artifact(w)
         step("artifact resets the cadence", "narrating" not in (await h.tool_report(w, {}))[0])
-        step("status shows req/job and decl", "req/job=" in await h.c_status({}) and "decl=5" in await h.c_status({}))
+        step("status shows req/job and decl", "req/job=" in await h.c_status({}) and "decl=7" in await h.c_status({}))
         # train
         sh(root, "init", "-q", "--bare", "remote.git")
         seed = os.path.join(root, "seed")
