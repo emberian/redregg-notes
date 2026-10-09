@@ -1,0 +1,55 @@
+P5-READ-TARGET-LEG status (worker of DEPUTY-PLATFORM). Lane burst2-b /srv/lanes/plat-read-target-leg @ 84a6dac8 (mk-lane --verify: 0 modules compiled).
+
+2026-10-07 ~04:50Z  DESIGN POINT. Report sent to deputy; coordination message sent to DEPUTY-KERNEL. No edits yet.
+
+Premise correction (READ):
+- The ReadLeg itself runs the source's ordinary law with verb=observe: ResourceObservationAdmission.authorizeChecked, on the observation step where old = new.
+- The request slots are identical to the CheckedLeg's (payloadVerb .read = observeVerb; requestSlots carry no effectsDigest).
+- So a verb-keyed law refuses both, and removing the CheckedLeg cannot fix that case.
+- What removing the read target's CheckedLeg actually removes is the second run of the law on the JOINT projection (jointSlots of all participants, command/bytes, objective/run/compute slots), plus the target.capability evidence and K-FIELDS.
+- The regression must therefore use a joint-view law.
+- Dropping the law from the ReadLeg too would weaken the ROA read gates (read_before_tick_refused). That is on the pause list and not done.
+
+Plan:
+- Target.observeOnly (.read/.kindRead).
+- requiresObservation now also covers any observe-only target.
+- readRequest(observe-only) = the leg request, so the ReadLeg signature carries the same binding.
+- An observe-only target's portal = the ROA portal.
+- `checked` is gated by incidenceWritten.
+- Evidence comes from the ReadLeg.
+- An observe-only target's target envelope must be [], refused `readTargetEnvelope`.
+- An observe-only target's capability must equal its observeCapability (kindRead precedent).
+- One shared gate in the four Application*Policy copies and GrainResourceBirthAdmission.
+- The signing plan has no target slot for observe-only targets.
+
+Open questions to deputy: regression surface (journey runner absent on burst boxes); go/no-go on the premise correction.
+
+~05:00Z  Design APPROVED by the deputy. DEPUTY-KERNEL set the landing order: kn2 queued ranges land first, P5 lands next, and kn2-token-sound/store-open rebase onto P5.
+  It also asked for a per-inhabitant guarantee theorem; this is AcceptedInvocation.incidence_authorized.
+- Lane on burst2-b: /srv/lanes/plat-read-target-leg, rebased onto next 41ca9444.
+  All four burst2-b slots were oversubscribed (40 min waiting), so Lean builds moved to burst2-a /srv/lanes/plat-read-target-leg (slots 3/4/2 per BOX-BLOCK; same branch, carried by bundle).
+- Regression surface: the j12t-kernel.sh jwall rows on the real Host.
+  - MAIN: lane plat-read-target-leg-main on burst2-b, at main c1df1f08 with its prebuilt minidregg-host and client-consent, plus cargo mini/verifier/store; journey J0-J5 + K12T. Expected: the jwall rows refuse policyRejected.
+  - LANE: same journey with the lane's binaries.
+- Grain birth: Source.grainCommand_targets (rfl) fixes its two targets as AgentGrain scalar writes. No read target can occur there, so it is not changed (READ).
+- Done in-lane (not yet built):
+  - ResourceTransaction: observeOnly, requiresObservation, read-capability check, readTargetEnvelope.
+  - DeclaredResourceController: legPortal/portals/readPortal/closedPortal, gated checked, incidenceAuthorization, collectLegs, ordinaryIncidences.
+  - The theorems read_target_authorized_by_readLeg_only, incidence_authorized and the refusal-by-name theorems.
+  - The four Application*Policy copies and JointPromiseAuthorization gated by the same collectLegs.
+  - NativeHost plan/assemble and NativePlanHeight via signedTargetCount/placeTargetEnvelopes.
+  - PreparedInvocationDiagnostics now uses ordinaryIncidences.
+
+~06:05Z  The range was GREEN on next 41ca9444 (lane/plat-read-target-leg-v1 on burst2-a; evidence in redregg/work/platform/bundles/p5-evidence/{main,lane}):
+- K12T: lane 28/28; main c1df1f08 26/28, with the 2 jwall rows red.
+Approved additions:
+- Command.first is now the first WRITTEN target.
+- readOnlyCommand.
+Then next was rewritten to e92cbf10: 41ca9444 is no longer an ancestor, and the gates moved to per-module manifests plus a ledger.
+- Rebased the code commit cleanly to fa256a21; the old gates commit was dropped.
+- Rebuilding; then proofs --draft, a ledger, --pin, and a journey rerun.
+
+~06:20Z  GREEN on next e92cbf10. Range e92cbf10..fa256a21 (one commit); bundle and shared remote pushed.
+- Lane journey: K12T 28/28. Main c1df1f08: 26/28, red only on the jwall rows.
+- The objective gate is red overall: 4201 upstream drift rows plus mine. Ledger proposal: p5-evidence/lane-e92cbf10/p5-ledger-proposal.tsv.
+- NOT queued; waiting for the deputy's review. Queue draft: platform/P5-queue-draft.txt.

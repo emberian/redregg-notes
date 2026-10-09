@@ -1,0 +1,8 @@
+lane: kn2-fixture-authority-p5 (fix-forward: NativeAcceptedFixtureProjection against P5's AcceptedInvocation shape; DEPUTY-KERNEL)
+source: burst2-a:/srv/git/minidregg.git lane/kn2-fixture-authority-p5 ; bundle hbox:/tank/dregg-build/claude-lanes/bundles/kn2-fixture-authority-p5.bundle ; lane burst2-b kn2-fx-p5
+branch: lane/kn2-fixture-authority-p5
+range: e6b4e891..7006df35 (1 commit, 1 file)
+what: receiptSubjects reads each incidence's receipt through P5's AcceptedInvocation.receipt (the ordinary leg's receipt, or an observe-only read target's ReadLeg's) instead of `(accepted.checked i).receipt`, which no longer typechecks since 375668e7 gated `checked` on incidenceWritten. Every projection field keeps its meaning; objective-first has no observe-only target, so the authority values are unchanged (no Authority-Change commit).
+evidence: COMPILED on next e6b4e891: lake-slot Assurance.NativeAcceptedFixtureProjection Assurance.NativeAcceptedFixtureAuthority rc=0; `lake env lean scripts/native-accepted-fixture/replay.lean` rc=0, so the keeper's generate.sh is unblocked. Plants (a)/(c)/compute+1 NOT re-run on next: they need fixture data that loads (next's data is the pre-v5 Store, exactly what this unblocks); their earlier red evidence on main + the machinery stands, and the worker re-runs them on the regenerated data. Reviewed by DEPUTY-KERNEL (diff read: a 4-line accessor swap).
+breaks: nothing.
+notes: UNBLOCKS the keeper's NativeAcceptedFixture regeneration at the gated tip.

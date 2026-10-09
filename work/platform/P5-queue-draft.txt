@@ -1,0 +1,36 @@
+lane: plat-read-target-leg
+source: burst2-a:/srv/lanes/plat-read-target-leg/src ; shared remote burst2-a:/srv/git/minidregg.git lane/plat-read-target-leg ; bundle /Users/ember/dev/redregg/work/platform/bundles/plat-read-target-leg.bundle
+branch: lane/plat-read-target-leg
+range: e92cbf10..fa256a21
+what: Ember's ruling (cv 01a0f611-ea93): an observe-only read target (.read/.kindRead) is authorized ONLY by its ReadLeg (observe capability, signed for this exact command, judged by the source's current observe policy on the unchanged cell). Its ordinary CheckedLeg is gone: no second law run on the joint view, no target.capability evidence, no K-FIELDS. A source law can no longer condition a READ on the other legs of the same transaction (the joint view).
+  - Command.first is the first WRITTEN target. Before this, the authority leg judged the first target's law, so a read-first command had its read judged on the joint view.
+  - A command with no written target is refused readOnlyCommand (a new refusal).
+  - A .read target must name its observe capability as its capability.
+  - The four App*Policy admissions and JointPromiseAuthorization use the same gate (collectLegs).
+  - The signing plan emits no target slot for a read target.
+  - Theorems: read_target_authorized_by_readLeg_only and incidence_authorized, plus refusal-by-name poles.
+evidence:
+  - EXECUTED: lane build Minidregg Host Assurance Verify ObjectiveProofs minidregg-host minidregg-client-consent is green except Assurance.NativeAcceptedFixture (see notes). Log: platform/bundles/p5-evidence/lane-e92cbf10/all4.log.
+  - EXECUTED: journey J0-J5 + K12T on the lane Host: K12T 28/28 (lane-e92cbf10/lane-transclusion-rows.tsv).
+  - Red on main (EXECUTED): the same rows on the main c1df1f08 Host give K12T 26/28 (p5-evidence/main/main-transclusion-rows.tsv):
+    - jwall-transclude refused law-denied, naming joint/index/0/resource/bytes/0;
+    - the lone read was refused law-denied, not readOnlyCommand.
+  - Planted poles as #assert_axioms theorems:
+    - readTargetEnvelope (admitAuthority_refuses_read_target_envelope);
+    - wrongEnvelopeCount (admitAuthority_refuses_read_without_observation);
+    - readOnlyCommand (prepareFrom_refuses_lone_read; also on the Host, row jwall-lone-read-readOnlyCommand);
+    - observationRequired (PreparedTarget.read_names_observe_capability);
+    - no observe grant: row jwall-unauthorized-read-refused, no-grant.
+breaks: the envelope arity and signed message for read targets change:
+  - The target envelope of a read target must be empty, else readTargetEnvelope.
+  - A read's observe signature is over its leg request.
+  - A command holding a read requires observation, else wrongEnvelopeCount.
+  - An all-read command refuses readOnlyCommand.
+  - No codec epoch: the codecs are unchanged and old shapes refuse by name.
+  - Re-emit: the objective manifests. Ledger proposal in p5-evidence/lane-e92cbf10/p5-ledger-proposal.tsv:
+    - 137 rows whose changes come only from this range;
+    - 47 direct restatements;
+    - 345 rows mixed with next e92cbf10's own unpinned drift (4201 rows of the --draft are upstream-only).
+notes:
+  - Landing order per DEPUTY-KERNEL: this range lands before kn2-token-sound / KN2-STORE-OPEN stage (i), which rebase onto it.
+  - Assurance.NativeAcceptedFixture is RED INDEPENDENT OF THIS RANGE. EXECUTED: on the rebased tree its seed frame does not decode ("no image"), before any admission runs. This range touches no seed/record codec.

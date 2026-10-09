@@ -1,0 +1,8 @@
+lane: kn2-simplex-qual
+source: burst2-a:/srv/git/minidregg.git
+branch: lane/kn2-simplex-qual
+range: eba8d5eb..a3d57b49 (one commit)
+what: scripts-elab item 5. check-scripts-elab.sh builds the library roots in SCRIPTS_ELAB_ROOTS (default SimplexQualification) before elaborating; a root that doesn't build is RED by name. report-simplex-qualification.lean's tsv line is removed (it elaborates).
+evidence: burst2-a lane kdk-replay on eba8d5eb, private cache: `lake build SimplexQualification` COLD 5 s (3302 jobs, nearly all replayed after the umbrella), WARM 1 s. lane-check report-simplex-qualification.lean rc 0 (it emits its QUALIFICATION_CLAIM lines).
+breaks: none; no theorem removed. The gate row gains a ~5 s build.
+notes: by DEPUTY-KERNEL. It may conflict on scripts-elab.tsv with plat-provider-check (566cd07b), which removed another line; take both removals.

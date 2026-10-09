@@ -1,0 +1,45 @@
+P7-ROW-F STATUS (worker P7-ROW-F for DEPUTY-PLATFORM; GPT-6 row F, send). Updated 2026-10-07 ~10:30Z.
+
+LANE: burst2-b:/srv/lanes/p7-row-f/src, branch lane/p7-row-f, pushed to burst2-a:/srv/git/minidregg.git lane/p7-row-f.
+BASE: lane/obbc-c3fix e8ba7239 (OB-WAVE-BC's C3 fix range on next; next was rewritten onto main 10e4f3ab).
+COMMIT: a10b62ae kernel(send, GPT-6 row F)!: a send names a deliverable method, decided at the send before any escrow; notDeliverable
+
+STEP 1 (DONE, awaiting OB-ENG review abfb6abb71f0a4311):
+- ObjectiveCall: Deliverable/deliverable (loadMethod as the delivery will run it, Plan within `call`), Mail.send .object decides it first,
+  new CallRefusal.notDeliverable; forward-time check for pipelined sends via the same Mail.send (refund on refusal).
+- Theorems: Mail.send_object_deliverable, postMail_deliverable, Invocation.sends_deliverable. runMessage refusal kept as backstop.
+- Journey: objective-send-native-journey.py S8-interface, S9-resolved; world/send/Sends.obend bounce/relay/relayVia; plant relay-deposit.
+EVIDENCE (burst2-b:/srv/lanes/p7-row-f/logs):
+- build-host.log: Kernel.ObjectiveSend/CheckpointInvariant/ActivityReceiver + minidregg-host + consent green (EXECUTED).
+- send-e8ba7239, call-e8ba7239: S1-S9 PASS 73 rows, C1-C8 PASS 43 rows (EXECUTED).
+- plant-theorem-red.log: check removed -> Mail.send_object_deliverable red (EXECUTED).
+- send-plant-code2: planted Host+consent (plant lane /srv/lanes/p7-plant, never committed) -> S8, S9 red: old behaviour (EXECUTED).
+- send-plant-relay-deposit: PLANT-RESULT red S8-interface (EXECUTED).
+BASELINE: at next a4db78a7 (pre-C3-fix) S1-S7 were red `extractUncovered 200000 0` (send-main.out) -- an upstream defect, fixed by
+  OB-WAVE-BC in 4d84e615/e8ba7239 (verified green by me, logs send/call-c3fix, -e8ba7239).
+
+NOT YET: objective-proofs ledger rows for the 3 new theorems (scripts/check-objective-proofs.sh proofs --draft); queue file.
+
+STEP 2 (PROPOSED to OB-ENG, waiting on the authority fork): stop {slot} (refund pipelined, retire-on-decision; message still delivered)
+  vs cancel {slot} (withdraw if queued: Inbox.Step.withdraw, refund, Decision.cancelled, slot codec v3), both yielded by the SENDER
+  object's frame. Then the bounded prepaid allowance, stable operation ids, FIFO by entry into the resolved queue.
+
+BOX PROCEDURE: see P7-CONTINUATION.md. Journeys: /srv/lanes/p7-row-f/run-send.sh TAG [PLANT], run-call.sh TAG, BIN=jbin2 (art2 = READY
+  33fea1fe rust + lane host/consent).
+
+UPDATE ~10:00Z: step 1 QUEUED (queue/p7-row-f.txt, keeper messaged). Step 2 WIP: lane/p7-row-f-step2 463ffe55 (shared remote + hbox bundle
+p7-row-f-step2.bundle). The groundwork is AnswerSlot v3 and Inbox.withdraw, and the closure builds green. NOT queued and not landable alone. The remaining plan is in
+P7-CONTINUATION.md "STEP 2 implementation state". The worker stopped at ~350K tokens for a fresh successor (the lane's .lake is warm at 463ffe55).
+Plant lane /srv/lanes/p7-plant: build products removed, src kept (never commit it).
+
+UPDATE ~12:00Z (P7b-ROW-F, successor): STEP 2 QUEUED: queue/p7-row-f-step2.txt, adbbdfb1..ad766d3f (lane/p7-row-f-step2, bundle hbox
+p7-row-f-step2.bundle + p7-row-f-step2-logs.tgz). OB-ENG APPROVED (+ converse Mail.control_cancel_withdraws added at its request).
+EXECUTED: full lake build Kernel Host ObjectiveProofs green (logs/build2-final2.log); send S1-S13 118/118, call 57/57 (logs/*-final*);
+world plants cancel-late/cancel-early/stop-cancels/sender-controls each red on exactly S10/S11/S12/S13; planted kernel Host red S10-S13.
+Plant tree /srv/lanes/p7-plant/src2 (NEVER commit). Not done in step 2: bounded prepaid allowance, stable operation ids (later row F steps).
+
+UPDATE ~11:30Z (P7c-ROW-F): STEP 3 QUEUED, queue/p7-row-f-step3.txt, b57ef817..4407d9f9.
+- EXECUTED: full build green (7530 jobs); send S1-S18 153/153; call 57/57.
+- Plants: bounce-twice, roomy-allowance, fan-four, short-chain and cancel-bare are each red on exactly S14..S18.
+- Theorem plant: escrow_conserves goes red.
+- OB-ENG APPROVED. Breaks: INBOX v2, ANSWER-SLOT v4, COMMAND v9 (re-genesis).

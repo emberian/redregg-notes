@@ -1,0 +1,2 @@
+minidregg-host: durable store refused: this Store was born in another epoch (history accumulator: Store history/mmr-v1;spent/trie-v1;checkpoint/v2, this Host history/mmr-v1;spent/trie-v1;checkpoint/v3); re-genesis the world
+exit 1

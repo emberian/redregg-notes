@@ -4,10 +4,10 @@ FOREMAN ADDENDUM for Sonnet/Opus workers (FOREMAN = agent a27b385ccfd998741) - b
 2. Boxes (ssh as ember@IP from the Mac): burst-gate 67.213.124.13, burst-lane1 162.43.189.7 (f4: 24 thr, 93G),
    burst-e2e 152.236.4.24 (8 vCPU, 31G, sudo). Before every build: `tail -4 ~/load.log` (UTC, load 1/5/15, avail,
    running lean). byzburn* tmux sessions are nice-19 background burn: they yield; count them as soft load. Do not
-   stop them. Builds go in a slot: flock -n /srv/build-slot-1 CMD || flock /srv/build-slot-2 CMD, SWARM_MEM_MAX=32G,
+   stop them. Builds go in a slot: /srv/pipeline/scripts/slot.sh CMD (NEVER a hand-typed flock chain; 10-07 COORD-AUDIT), SWARM_MEM_MAX=24G,
    LEAN_NUM_THREADS=4, in tmux (session name = your item id), logs teed to files; poll the log in the FOREGROUND
    (sleep via short loops of `tail`), never background-and-wait-for-a-notification (that strands you).
-   Single-file checks: `lake env lean <file>` or /srv/pipeline/scripts/lane-check (no slot).
+   Single-file checks: /srv/pipeline/scripts/lean-ask check <file> or lane-check (never bare `lake env lean` after a fetch/rebase: stale oleans).
    Need binaries without a Lean change: /srv/pipeline/scripts/fetch-artifacts <tip> <dest> (tips in /srv/artifacts/TIPS).
 3. Lane: ssh <box> '/srv/warm-base/mk-lane.sh <item-id>' (add --from next when your row's base is next).
    main = GitHub emberian/minidregg main; fetch it inside the lane: git fetch https://github.com/emberian/minidregg.git main.
@@ -38,13 +38,13 @@ FOREMAN ADDENDUM for Sonnet/Opus workers (FOREMAN = agent a27b385ccfd998741) - b
 11. Size: aim to finish in 1-3 h. If the row is bigger, land the first coherent piece, queue it, and propose the
     rest as rows. If you discover a blocker, it is the first item of your work, not a reason to stop.
     No sorry, no axioms, no weakened statements, no #guard where a theorem belongs, no shims; delete the old thing.
-12. AMENDMENT 20:30Z (ROOT, supersedes the 19:55Z slot-3 note): there is NO slot-3. Builds use ONLY /srv/build-slot-1
+12. AMENDMENT 20:30Z (ROOT; SLOT NAMES HERE ARE HISTORICAL, 10-05 boxes -- on burst2 use slot.sh, see item 2): there was NO slot-3. Builds used ONLY /srv/build-slot-1
     or /srv/build-slot-2, at most SWARM_MEM_MAX=24G. If both are taken: wait (author meanwhile) or move the build to
     burst-lane1. /srv/build-slot-mk on burst-gate is the MERGE KEEPER's alone. Target is TOTAL load 18-22 per f4;
     landings beat lane throughput. Single-file `lake env lean` checks stay slot-free but keep them few.
 13. AMENDMENT 21:00Z (foreman): a Rust-only `cargo test`/`cargo build` of one crate (no Lean compile or link; sccache warm)
     may run OUTSIDE slot-1/2 under `swarm-build` with SWARM_MEM_MAX=12G, one at a time per worker, and only while
-    `tail -1 ~/load.log` shows load-1 < 24. Anything that builds or links Lean (native host, consent pair) takes slot-1/2.
+    `tail -1 ~/load.log` shows load-1 < 24. Anything that builds or links Lean (native host, consent pair) takes a slot via slot.sh.
     Never pkill/killall: kill only PIDs you started.
 14. PRIORITY 21:00Z: Objective Bend completion rows OB1-OB8 (OB-COMPLETION-20261005.md) are P0. If a slot is contended,
     a P0 lane's build goes first; lower rows author meanwhile.

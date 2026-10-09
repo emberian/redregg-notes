@@ -1,0 +1,8 @@
+lane: kn2-replay-conflict
+source: burst2-a:/srv/git/minidregg.git
+branch: lane/kn2-replay-conflict
+range: 54f9f731..36ecf284 (one commit)
+what: Fix-forward for the b23 ledger gap: a changed ingress at a recorded transaction id is refused, now NAMED again. New: ServedBasis.Ground.replayOf_conflict. replay_changed_ingress_refused for PolicyInstallReceiver, CapabilityDelegationReceiver, CapabilityRevocationReceiver and CapabilityRenounce, stated over Ground.recorded (light and full). NativeHost.ReplayStep/replayStep is the single verdict-to-next-step map that the four light submits now match on: replayStep_conflict, replayStep_fresh_iff (only .fresh admits), and {install,delegate,revoke,renounce}_changed_ingress_stops. Outcomes are unchanged.
+evidence: burst2-a lane kn2-rc: umbrella + DurableStoreAudit + every [[lean_exe]] root, 13484 jobs EXIT 0 (logs/rc-umb2.log). EXECUTED plants: replayStep mapping .conflict -> .fresh turns 13 errors red, including the four stops theorems (rc-plant-fresh.log); exactRecord ignoring the event turns replay_changed_ingress_refused red (rc-plant-event.log). #assert_axioms on all.
+breaks: none in behaviour; the four submits are refactored through replayStep. The objective-proofs ledger gains rows; the commit message carries `successor: Minidregg.Kernel.PolicyInstallReceiver.replay_changed_ingress_refused` for the b23 removal.
+notes: Touches Kernel/NativeHost.lean (the submit match only); FYI to PLATFORM.

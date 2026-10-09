@@ -12,8 +12,9 @@ PIPELINE REGIME (2026-10-05, Ember: "pipeline, forward, optimistically... not fu
 4. JOURNEYS RUN CONTINUOUSLY. burst-e2e runs the journey set (J0-J8, JROT/JRLANE/JROTL, native acceptance, activity
    acceptance, seats, private rooms e2e) against every new `next` artifact set, and posts red rows to MERGE-QUEUE.md with the
    owning lane. Lanes stop running whole journey suites themselves; they run the rows their change touches.
-5. INNER LOOP = SINGLE FILE. Lanes iterate with `lake env lean <file>` on a warm clone (seconds on the f4s); a lane builds
-   its affected closure once, when it is about to queue.
+5. INNER LOOP = SINGLE FILE. Lanes iterate with `lean-ask check <file>` (0.4 s) or lane-check on a warm clone; NEVER bare
+   `lake env lean` after a fetch/rebase (it reads stale import oleans: false green and false red; PIPELINE-INFRA 10-05). A lane
+   builds its affected closure once, when it is about to queue, in a slot (slot.sh / build-anywhere). [amended 10-07 COORD-AUDIT]
 6. REVIEW IN PARALLEL, NOT IN SERIES. Consultants (finished veterans) review queued ranges in their domain while the gate
    runs; a review finding becomes a fix-forward commit, not a hold.
 7. NEVER IDLE ON A BUILD. Run long builds in tmux and author the next item meanwhile; check the build by reading its log.

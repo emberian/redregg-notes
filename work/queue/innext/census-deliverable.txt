@@ -1,0 +1,8 @@
+lane: census-deliverable
+source: burst2-a:/srv/git/minidregg.git lane/census-deliverable (tree burst2-b:/srv/lanes/census-deliverable)
+branch: lane/census-deliverable
+range: 0d61ff3c..b0caa889
+what: TokenCensus fix-forward. Adds the row for Minidregg.Kernel.ObjectiveCall.Deliverable.mk (from row F b3c1f575, not row-a2; evidence, L2, 5 proof / 4 data fields) and replaces the stale CapabilityRevocationController.Prepared.mk row with PreparedOn.mk (from 0d61ff3c revoke light; evidence, L2, 3 proof / 4 data fields). One file: TokenCensus/Table.lean.
+evidence: lake build TokenCensus on 0d61ff3c + this commit (lake-slot, burst2-b): "402 private constructors, all listed, none minted abroad; 401 planted forgeries detected; 402 constructors used at home"; Build completed successfully (9780 jobs). Log: burst2-b:/srv/lanes/census-deliverable/tokencensus-pass.log. Before the commit the same build failed on exactly these two rows (logs-tokencensus.log).
+breaks: nothing.
+notes: Classification follows the neighbouring rows (Method.mk, Invocation.mk). DEPUTY-KERNEL owns the census and may refine the reviews.

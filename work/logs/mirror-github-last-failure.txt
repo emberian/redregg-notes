@@ -1,0 +1,9 @@
+#  git push -v https://github.com/emberian/minidregg.git +2ef7a7a0fb2de081a346552f14f7f0888fef5e39:refs/heads/next
+Pushing to https://github.com/emberian/minidregg.git
+POST git-receive-pack (153615 bytes)
+remote: Internal Server Error        
+remote: Request ID CDBB:1832AF:9F74BC:CFB538:6AC67A7A        
+remote: Time 2026-10-07T16:59:39Z
+To https://github.com/emberian/minidregg.git
+ ! [remote rejected]   2ef7a7a0fb2de081a346552f14f7f0888fef5e39 -> next (Internal Server Error)
+error: failed to push some refs to 'https://github.com/emberian/minidregg.git'

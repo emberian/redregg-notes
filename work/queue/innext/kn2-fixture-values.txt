@@ -1,0 +1,8 @@
+lane: kn2-fixture-values (fixture authority pins what written cells HOLD, not only which; DEPUTY-KERNEL follow-up to kn2-fixture-authority)
+source: burst2-a:/srv/git/minidregg.git lane/kn2-fixture-values ; bundle hbox bundles/
+branch: lane/kn2-fixture-values
+range: 7006df35..14372138 (1 commit; on top of kn2-fixture-authority-p5). Carries the Authority-Change trailer.
+what: NativeAcceptedFixtureAuthority gains first.pay.computeSteps = 100001 (the subject's compute row = the request's capacity proofWork = price(tariff, ENVELOPE)) and the created atom (requestedSchema 4242, requestedByte 7, inlineObject payload [7], located by the id the signed arguments request); the projection reads them from the record. Values derived from the driver's build_request arguments and tariff, each line cites its source.
+evidence: main + machinery: every new value held on the first run. PLANT compute+1 with data regenerated from the mutated tree: first_accepted GREEN (bytes absorbed), first_projection RED. On next: projection, authority and replay.lean build; plants (a)/(c)/compute+1 to be re-run on the keeper's regenerated data. fixture-authority gate row OK over the Authority-Change commit. Reviewed by DEPUTY-KERNEL.
+breaks: nothing beyond tighter fixture semantics.
+notes: LANDS AFTER kn2-fixture-authority-p5.

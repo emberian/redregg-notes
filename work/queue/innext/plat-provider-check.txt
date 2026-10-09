@@ -1,0 +1,12 @@
+lane: plat-provider-check (scripts/provider-services/Check.lean, handed over by DEPUTY-KERNEL; DEPUTY-PLATFORM aed11e1555308dbcb)
+source: burst2-b:/srv/lanes/plat-quote-probe/src ; shared remote burst2-a:/srv/git/minidregg.git lane/plat-provider-check ; bundle hbox:/tank/dregg-build/claude-lanes/bundles/plat-provider-check.bundle
+branch: lane/plat-provider-check
+range: fcddf9dc..947dbc40 (1 commit, ON TOP OF kn2-scripts-elab-1 fcddf9dc). LANDS AFTER kn2-scripts-elab-1.
+what: Ports Check.lean to 97644f8f's provider API:
+  - the tariff is v2, by route;
+  - quotes go through ProviderUsage.quotePayload with v3 metadata (route);
+  - checks: a configured pool quote passes; a user quote charges exactly its per-op fee; an unconfigured provider, an unknown route and a wrong model each refuse.
+  Its scripts-elab.tsv line is removed. The check runs at elaboration (#eval), so the gate now executes it.
+evidence: EXECUTED with `lake env lean scripts/provider-services/Check.lean`: PASS "provider A/B signed-call selection, tariffs, full author pins". PLANT: user perOp 3 turns it red at "an own-key (user) call is charged other than its per-op fee".
+breaks: none (script only).
+notes: It touches scripts-elab.tsv, as plat-scripts-elab does (different lines). Whichever lands second rebases trivially.

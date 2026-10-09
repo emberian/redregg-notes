@@ -1,0 +1,8 @@
+lane: kn2-token-fix (fix-forward on kn2-token-sound: L1 witnesses are proof FIELDS; the census refuses renamed-projection L1 theorems; DEPUTY-KERNEL)
+source: burst2-a:/srv/git/minidregg.git lane/kn2-token-fix ; bundle hbox bundles/kn2-token-fix.bundle ; logs kn2-token-fix-logs.tgz
+branch: lane/kn2-token-fix
+range: 0d61ff3c..2357e89f (1 commit). LANDS AFTER kn2-token-sound.
+what: Theory.Receiving Accepted.sound DELETED (it was `accepted.admits` renamed); Admitted.lawful reads the proof field; the Receiver.Accepted census row names the field `admits` as its L1 witness. TokenCensus check 3: accepts a projection only when it is a PROOF field of the row's own structure; refuses a data field; refuses an L1 theorem whose body under its binders is a projection (projection fn or Expr.proj); refuses an L1 theorem not mentioning the structure. DEFECT FIXED: ConstantInfo.value? is none for a theorem while its module elaborates, so the renamed-projection check saw nothing (the first plant run proved it); the census now reads thmInfo/defnInfo values directly.
+evidence: COMPILED main + kn2-token-sound + this fix (validation lane): lake build TokenCensus "388 private constructors, all listed, none minted abroad; 387 planted forgeries detected"; no existing L1 row is a bare projection. PLANTS (plant-census-l1.log): theorem `fun x => x.ok` RED "is a renamed projection"; data field as witness RED "is a data field"; proof field as witness OK (control). (Three "planted forgery NOT detected" lines in that log are an artifact of same-module scratch types, not a census miss.) Reviewed by DEPUTY-KERNEL.
+breaks: L1 rows must name a proof field or a non-projection theorem; Accepted.sound gone (callers updated).
+notes: none.

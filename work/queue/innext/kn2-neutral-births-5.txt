@@ -1,0 +1,8 @@
+lane: kn2-neutral-births-5
+source: burst2-a:/srv/git/minidregg.git; logs burst2-a:/srv/lanes/kn2-nb-a/logs
+branch: lane/kn2-neutral-births
+range: 677a8e36..32b58fe4 (one commit; scripts only, no Lean library change; rebase onto current next)
+what: cv 01a1163e-62a7 cluster (5), the reserve method: executed evidence that the reserve receiver (the ordinary ResourceBirthReceiver, governed by AcceptedBirth.named) refuses unnamed neutral births. New scripts/kn2/neutral-birth-reserve.lean: two owners (7 and 8, real Ed25519 keys), twoOwnerPlan with reserve grants, source signatures plus per-owner consent, NativeHostReserveBirth.assemble, ResourceBirthReceiver.receiveLoaded on a booted Store.
+evidence: control commits (4 birth writes, all named); a substituted newborn post is refused neutralBirthUnjudged 100. Plant (plant-neutral-birth-reserve.sh, aux creates left out of the factory step) -> "admission: Reject.neutralBirthUnjudged <aux cell>"; after restore the control commits. Ratchet PASS (60), with the probe listed as a full-loaded PROBE. Logs probe-reserve.log, plant-reserve.log, plants-reserve.out.
+breaks: none.
+notes: CLOSES cv 01a1163e-62a7 once landed (clusters 1+3 ad393729, 2 1fee4e44, 4 677a8e36, 5 32b58fe4). Open elsewhere: cv 01a11791-5c66 (probes to the light open, with the birth port).

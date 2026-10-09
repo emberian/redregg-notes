@@ -1,0 +1,34 @@
+lane: p7-row-f-opids
+source: burst2-a:/srv/lanes/plat-p7-opids/src ; shared remote burst2-a:/srv/git/minidregg.git lane/p7-row-f-opids ; bundle hbox:/tank/dregg-build/claude-lanes/bundles/p7-row-f-opids.bundle (logs: bundles/p7-row-f-opids-logs.tgz)
+branch: lane/p7-row-f-opids
+range: fed1e74e..4de329aa (1 commit, on next fed1e74e, which holds row F step 3 as 6b2db1f9)
+what: GPT-6 row F, STABLE OPERATION IDS (cv 01a11617-43fd). A retried send no longer mints a second message.
+  Design (DEPUTY-PLATFORM approved, no second field):
+  - An invocation's Command.nonce IS its op id. It is already signed, and `marker` claims (subject, nonce) in the spent map.
+  - Host JSON names it $.turn.opId (required; a top-level $.nonce on an invoke is refused by name).
+  - mini `activity submit` takes it from the caller's turn and refuses an invoke without one. The caller mints it once per operation and reuses it on retry.
+  Replay:
+  - ObjectiveActivityReceiver.replay returns Replayed.exact | Replayed.retry, each carrying the RECORDED receipt.
+  - A re-signed invocation under a recorded txid is a retry. It is answered only after verifyRetry: admission's own CredentialSignatureAdmission.verifyNative under the subject's current key, over the plan's header (planOutcome, shared with signingHeader), on retrySnapshot (only the retried op's own marker unconsumed).
+  - Otherwise the retry is refused by name and never answered with the receipt. Nothing commits either way.
+  - The txid excludes postage, allowance, envelope and account, so a retry that changes them gets the original receipt.
+  - Same op id with another call: refused `replayedMarker`.
+  - NativeHost lookup answers `absent` for a retry.
+  Kernel hunks APPROVED by DEPUTY-OB-ENG (ae08d68a5af5a4612), including its required change (verify the retry's signature before answering).
+evidence: All EXECUTED on burst2-a:/srv/lanes/plat-p7-opids/logs, also in the logs tgz.
+  - lake build Kernel Host ObjectiveProofs minidregg-host minidregg-client-consent: green, 7532 jobs (full-opids2.log, at 8580c694; 4de329aa differs only in the journey script). mini built from the lane (cargo-opids.log).
+  - Send S1-S21: 165 rows, failed [] (send-op2*). Call: 57/57 (call-op*).
+  - World plant fresh-op (the client mints a new op id per attempt), asserted applied: PLANT-RESULT red exactly S19 (two messages, paid twice) (send-op2-fresh-op*).
+  - Host plants, built from a planted tree, never committed, restored after each build (plant-*-build.log):
+    - no-claim (marker neither checked nor claimed; consent planted too): red exactly S20 (send-hp2-no-claim*).
+    - retry-unverified (a retry answered without verifyRetry): red exactly S21 (send-hp-retry-unverified*).
+    - replay-exact (the old byte-exact replay): red S19 and S21; the forged retry then answers `conflict` instead of the named `signature` (send-hp2-replay-exact*).
+  - Theorems, each #assert_axioms: prepare_spent_refused, replay_invoke_recorded, replay_exact, retry_unverified_refused, command_v9_refuses (step 3's frame pole, named).
+breaks:
+  - No codec change: COMMAND stays v10 and the bytes are identical. Nothing re-genesises.
+  - An invoke turn JSON without "opId", or an invoke command with a top-level "nonce", is refused by name. mini refuses an invoke turn without opId. Clients mint the op id once per operation and keep it across retries.
+  - A re-signed retry of a recorded invocation answers `replayed` with the original receipt once its signature verifies (was: conflict), else `rejected signature`.
+  - ObjectiveActivityReceiver.replay's result type changed (Replayed); NativeHost.activityLookupLoaded is adapted. planOutcome is factored out of signingHeader.
+notes: objective-proofs: keeper re-emits (01:20 amendment).
+  - Known limit (INFERRED): a retry's plan shows no `report`, since re-deciding the op at its own post-state does not run it again. The receipt is the answer, and the message ids derive from its transaction.
+  - Row F stops here tonight (root). Remaining: deeper pipelining with recorded dependencies; a named never-expiring-slot theorem. See P7-CONTINUATION.md.

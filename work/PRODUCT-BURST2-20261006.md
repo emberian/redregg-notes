@@ -34,3 +34,9 @@ Charter: DEPUTIES-20261006.md (DEPUTY-PRODUCT). Box: burst2-b (BURST2-BRIEF-2026
 - 02:00Z P5 4ef4e808..7dcdf64a reviewed (statements OK, fault red) but NOT queued: umbrella red on NativeAcceptedFixture, surfaces drift, K12N unrun -> sent back to fix in lane. Follow-ups cv 01a11409-6ddb (split/join/move), 01a11409-6df6.
 - 02:05Z SEAT-RETENTION queued 4ef4e808..f2b243cb (frame v3, holder_respects_deadline c4be7c92). P1 told to rebase onto it, take frame v4.
 - 02:15Z P1 rebased: SeatStore 1b8b2807 (v4) -> OB-ENG review; steered escrow away from donation (no kernel guarantee) toward wanting a work-receipt asset.
+- 02:42Z P3 found stranded (chain SLOT-OR-FAIL 01:17Z, no wake) -> restarted with blocking flock + foreground polling. P1 chain4 / P5 host2 building.
+- 03:40Z P5 QUEUED 84a6dac8..b21d5aaf (umbrella green, K12N 9/9, planted red).
+- 03:55Z P3 QUEUED 4ef4e808..917582e5 (bundle). helm double-commit filed as cv task. P5 lane cleaned. Root: no new workers; drift down.
+- 04:05Z P1-SEATSTORE QUEUED f2b243cb..1b8b2807 (seat acc 90/90). Bounty run6 in flight.
+- 04:15Z P1-BOUNTY-NATIVE QUEUED 1b8b2807..796da939 (190/190, plants red). All workers done.
+- 04:20Z keeper: queue is now work/queue/<lane>.txt; all 5 ranges taken onto next 41ca9444.

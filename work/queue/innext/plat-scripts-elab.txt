@@ -1,0 +1,18 @@
+lane: plat-scripts-elab (scripts-elab exceptions owned by DEPUTY-PLATFORM aed11e1555308dbcb)
+source: burst2-b:/srv/lanes/plat-quote-probe/src ; shared remote burst2-a:/srv/git/minidregg.git lane/plat-scripts-elab ; bundle hbox:/tank/dregg-build/claude-lanes/bundles/plat-scripts-elab.bundle (logs: plat-scripts-elab-logs.tgz)
+branch: lane/plat-scripts-elab
+range: 28232766..e38f3465 (1 commit, on next 28232766)
+what: All 19 DEPUTY-PLATFORM lines in scripts/gates/scripts-elab.tsv are removed.
+  FIXED, each run with `lake env lean --run` against art/bin of 428f7a17:
+  - probe-canonical-cell-registry: needs a MAC key file and no system cell, as Kn2StoreBench does. Its samples were unlawful under K-FIELD-CLOSURE (they held undeclared fields); they now declare their fields. A new tooth checks that an undeclared field refuses.
+  - probe-policy-source-cell.
+  - probe-native-host-genesis.
+  DELETED, 17 files: the fn-era answerLine probes, the dated env/evidence probes, and the hand-built-internals probes (exact-readback, participant-key-enrollment, gateway_direct_submit .lean+.sh). The fn-b3 and fn-e1e2 READMEs now say they were deleted.
+  Also updated: full-loaded-callers.txt (6 entries removed, ratchet PASS at 58), kn2-census.tsv (5 rows), KN2-PORT-PARTITION.txt (3 lines).
+evidence: EXECUTED:
+  - registry: pure checks PASS and native SQLite bootstrap/reopen PASS. Before the sample fix it was red "every source kind satisfies loaded/final cell law (cell 20)".
+  - policy-source: native reopen PASS (3 checks).
+  - genesis: PASS.
+  - scripts/check-scripts-elab.sh in the lane: "49 elaborated, 12 listed exceptions". The only REDs are scripts that import Assurance.NativeAcceptedFixture, whose olean is missing here because the fixture is red on next until you regenerate it (logs/scripts-elab.log).
+breaks: none (scripts only). Lands independent of plat-quote-probe.
+notes: If the regenerated fixture tip changes the Store transport again, the two raw-Store probes are the ones to look at.

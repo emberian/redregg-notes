@@ -1,4 +1,9 @@
+# SUPERSEDED 2026-10-09 by work/PROTOCOL-20261009.md (generation 1). Kept as history; do not brief from it.
+
 LANE PROTOCOL — Mini swarm under the Claude root (breadstuffs-89), 2026-10-04
+[10-07 COORD-AUDIT: the hbox/persvati CLONE, BUILD and QUEUE sections below are HISTORICAL. On the burst2 boxes the binding
+ text is BURST2-BRIEF-20261006.txt + DEPUTIES-20261006.md amendments: lanes via /srv/warm-base/mk-lane.sh, builds via
+ /srv/pipeline/scripts/slot.sh or build-anywhere, inner loop lean-ask/lane-check, queue = work/queue/<lane>.txt + a message.]
 Every lane reads this whole file before its first command. Ember's decisions (E1–E8)
 are in designs/SWARMPLAN-DRAFT-20261003.txt Part V plus Ember's words of 10-03 ~23:30:
 go on the cut; proven elaborator preferred, dynamic semantics first if it balloons

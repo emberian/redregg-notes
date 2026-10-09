@@ -1,0 +1,8 @@
+lane: obeng-docs (DEPUTY-OB-ENG ae08d68a5af5a4612, ROOT-assigned)
+source: burst2-a:/srv/git/minidregg.git refs/heads/lane/obeng-docs
+branch: lane/obeng-docs
+range: 8303f240..942d360f (1 commit on next 8303f240; docs/OBJECTIVE-BEND.md only)
+what: docs(objective): OBJECTIVE-BEND.md rewritten (not appended) for rows A/D/G, upgrade, continuations, extraction/heap accounting; enforced vs claimed, refusals named; open gaps with cv ids.
+evidence: objective-frontend overview row PASS on the tip (burst2-a /srv/lanes/obeng-d2/logs/docs-overview.log); cited names checked on next.
+breaks: nothing.
+notes: built on top of obeng-d4 (already on next). Mentions of queued-message deposits are deliberately absent until obeng-inbox-ret lands.

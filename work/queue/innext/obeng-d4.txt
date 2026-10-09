@@ -1,0 +1,8 @@
+lane: obeng-d4 (DEPUTY-OB-ENG ae08d68a5af5a4612, GPT-6 row D close-out)
+source: burst2-a:/srv/git/minidregg.git refs/heads/lane/obeng-d4
+branch: lane/obeng-d4
+range: b57ef817..44453439 (1 commit on next b57ef817; docs only)
+what: docs(objective): the instance_accepted obligation is dropped (it protects no check: discharge is decided by name in ObjectiveBendContract.checkBounds, and admission relies on the whole-program check); the stale OBJECTIVE-BEND.md "What is not" paragraph is rewritten to the D3 state; MODULAR-TYPING §6 updated. cv 01a115d6-7ee9 closed with that reason.
+evidence: docs only; no ```obend listing added or changed (the overview row checks those); no Lean changed. Not re-run.
+breaks: nothing.
+notes: none

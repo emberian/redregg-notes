@@ -1,0 +1,8 @@
+lane: obeng-fixpoint50 (DEPUTY-OB-ENG abfb6abb71f0a4311; cv 01a114fd-b96a)
+source: burst2-a:/srv/git/minidregg.git refs/heads/lane/obeng-fixpoint50
+branch: lane/obeng-fixpoint50
+range: adbbdfb1..882eac7e (1 commit on next adbbdfb1; touches only native/resource-client/objective-activity-native-acceptance.py)
+what: journey(activity): DEPOSIT-FIXPOINT executed. New row fixpoint-quote-submit-rounds: 50 rounds of quote (Host's own underfunded refusal) -> submit exactly the quote; requires 50 rounds, 0 underfunded, ONE distinct quote.
+evidence: EXECUTED on adbbdfb1 published binaries (/srv/artifacts/adbbdfb1.../bin): 309 rows, 0 failed; 50/50 installed, quotes=[8501] (burst2-a /srv/lanes/obeng-d2/logs/fixpoint50.out). Adds ~100 turns (~2 min) to the activity row.
+breaks: nothing.
+notes: none

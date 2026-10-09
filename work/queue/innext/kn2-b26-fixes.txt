@@ -1,0 +1,8 @@
+lane: kn2-b26-fixes
+source: burst2-a:/srv/git/minidregg.git
+branch: lane/kn2-b26-fixes
+range: 01b3f0b2..e4bab65d (one commit)
+what: b26 fix-forwards. (1) hyp-ledger: Theory.AuthTrie.Collision gets teeth: CollisionTeeth.constant_collides (satisfying) and CollisionTeeth.spelled_no_collision (refuting, via an injective spelled digest), with #assert_axioms. (2) scripts-elab: the library roots default to `SimplexQualification Compiler.QualificationReport Verify`, so report-simplex-qualification.lean's import is built.
+evidence: burst2-a lane kdk-replay on 01b3f0b2: lane-check Theory/AuthTrie.lean clean; lake build Compiler.QualificationReport rc 0; lane-check report-simplex-qualification.lean rc 0; scripts/check-hypothesis-ledger.sh "hypothesis-ledger: PASS", AuthTrie.Collision OPEN | GREEN.
+breaks: none; no theorem removed.
+notes: by DEPUTY-KERNEL.

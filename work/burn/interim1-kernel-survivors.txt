@@ -1,0 +1,26 @@
+BURN-MUTATE interim 1 (~200/520 mutants run). Each line is a mutant whose module build AND umbrella+ObjectiveProofs build stayed GREEN (no theorem broke). Journeys not yet run for them (many may be killed by journeys; final list will carry journey verdicts). Full data: /Users/ember/dev/redregg/work/burn/{RESULTS.tsv,SURVIVORS.md} (refreshing).
+
+Kernel/NativeHostContext.lean
+  m0509 L213 fallthrough-if(cond:=False): if own = some .joint then pure () else  ==>  if False then pure () else
+  m0510 L220 negate-if: if own = some .activity then pure () else  ==>  if ¬(own = some .activity) then pure () else
+  m0511 L220 fallthrough-if(cond:=False): if own = some .activity then pure () else  ==>  if False then pure () else
+Kernel/PayEnrolReceiver.lean
+  m0445 L875 negate-if: if command.expectedAuthorityRoot = snapshot.cell.root then  ==>  if ¬(command.expectedAuthorityRoot = snapshot.cell.root) then
+Kernel/SeatStore.lean
+  m0448 L192 negate-if: if payload.role = role then some payload.body else none  ==>  if ¬(payload.role = role) then some payload.body else none
+  m0449 L192 fallthrough-if(cond:=False): if payload.role = role then some payload.body else none  ==>  if False then some payload.body else none
+  m0454 L416 negate-if: if !config.covers envelope then throw (.uncovered envelope)  ==>  if ¬(!config.covers envelope) then throw (.uncovered envelope)
+  m0460 L459 disjunct-||-left:=false: base.filter (fun account => !loaded.contains account || next.any fun seat => seat.account   ==>  base.filter (fun account => false || next.any fun seat => seat.account == account) ++
+  m0463 L464 negate-if: if bytes = snapshot.canonicalBytes cell then none else some (postAt snapshot cell bytes)  ==>  if ¬(bytes = snapshot.canonicalBytes cell) then none else some (postAt snapshot cell bytes
+  m0465 L487 negate-if: if loaded.seats.any (fun body => body.seat.account == seat.account) then none  ==>  if ¬(loaded.seats.any (fun body => body.seat.account == seat.account)) then none
+  m0466 L487 fallthrough-if(cond:=False): if loaded.seats.any (fun body => body.seat.account == seat.account) then none  ==>  if False then none
+  m0468 L493 fallthrough-if(cond:=False): if next.registry.spent.contains body.invitation.id then some { body with spent := true } e  ==>  if False then some { body with spent := true } else none
+  m0473 L788 negate-if: | some body => if body.inst.id = inst then .ok (some body) else .error (.cellUndecodable (  ==>  | some body => if ¬(body.inst.id = inst) then .ok (some body) else .error (.cellUndecodabl
+  m0475 L794 negate-if: if present snapshot (invitationCell domain id) then  ==>  if ¬(present snapshot (invitationCell domain id)) then
+  m0486 L880 fallthrough-if(cond:=False): if artifact.outputCodec ≠ contractCodecId then throw (.notAContract "the artifact is not a  ==>  if False then throw (.notAContract "the artifact is not a contract package")
+  m0487 L883 negate-if: if present snapshot cell then throw .packageExists  ==>  if ¬(present snapshot cell) then throw .packageExists
+  m0492 L884 offbyone(≤-><): if stored.payer = config.asset ∨ stored.payer = config.collector ∨ reservedBase ≤ stored.p  ==>  if stored.payer = config.asset ∨ stored.payer = config.collector ∨ reservedBase < stored.p
+  m0493 L896 negate-if: if !present snapshot (packageCell domain pin) then throw .packageMissing  ==>  if ¬(!present snapshot (packageCell domain pin)) then throw .packageMissing
+  m0495 L921 negate-if: if body.retired then throw (.instanceMissing inst)  ==>  if ¬(body.retired) then throw (.instanceMissing inst)
+  m0498 L922 fallthrough-if(cond:=False): if reservedBase ≤ account ∨ account = config.collector ∨ account = config.asset then throw  ==>  if False then throw (.payerInvalid account)
+  m0502 L922 offbyone(≤-><): if reservedBase ≤ account ∨ account = config.collector ∨ account = config.asset then throw  ==>  if reservedBase < account ∨ account = config.collector ∨ account = config.asset then throw

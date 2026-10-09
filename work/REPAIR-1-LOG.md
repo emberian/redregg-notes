@@ -1,0 +1,24 @@
+# REPAIR-1 LOG
+- 2026-10-09T02:53:24Z start; base FROZEN tip=1c7e46da; mk-lane repair1 on burst3-a
+- lane /srv/lanes/repair1/src at 1c7e46da. Draft 3ad3a35d is based on 5896a594 (old); its params.sh treats genesisNow=0 as placeholder and run.sh init auto-fills -> violates the plant (0 must be refused). Not taking that design.
+- design: example params carry clock.genesisNow=null, maxStepSeconds=null (unfilled); deploy/candidate/params.sh {fill-genesis PARAMS | fill-source GENESIS_SOURCE} fills null/absent with now/300, refuses explicit invalid (0, "x") and refuses an already-filled genesisNow unless GENESIS_NOW pins the same value. init still refuses unfilled/0.
+- JPAY2/3/4 hand-write the bootstrap source (genesis.json) in python, no clockGenesisNow -> need fill-source. Other hand-written sources (jpay-e*, jpay-v2, grain-runtime, inference-scheduler, acceptance.sh...) lack it too.
+- wrote deploy/candidate/params.sh (fill-genesis/fill-source) + deploy/candidate/test-params.sh; example now null/null. test-params PASS incl. run.sh init (lane run.sh, tip manifest) refusing unfilled (clockStepBoundInvalid) and genesisNow=0 (clockGenesisNowInvalid), no state created. Plant: mutant helper treating 0 as unfilled -> test-params RED "helper-0 accepted".
+- next: wire drivers (welcome/continuity/carry/fresh, newparticipant, ssh-e2e, m7, jhostupgrade?, jpay2/3/4 + other hand-written sources), package.py, INTERFACES, gates.
+- 2026-10-09T03:03:50Z drivers wired (30 files). shadow set /srv/lanes/repair1/art/<tip> = tip binaries (symlinks) + this tree's run.sh/lib.sh/genesis.sh/params.sh/example, SHA256SUMS recomputed for example+params.sh. welcomecontinuity PASS (32 subrows).
+- 2026-10-09T03:10:08Z jpay first run: JPAY2 PASS; JPAY3 21/24 (fixture chain epoch 1759249000 predates a wall-clock genesis -> pinned GENESIS_NOW=CHAIN_EPOCH via helper; standalone 24/24); JPAY4 25/25 but runner lost rows.tsv (shortdir path) -> journey-rows maps rt.origin -> STEP_DIR/rt.
+- 2026-10-09T03:14:25Z jpay rerun: JPAY1-4 PASS, JPAY6 UNCONFIGURED (TEST_PROVIDER absent; unchanged).
+- 2026-10-09T03:15:21Z sshe2e: first shadow run surfaced the REAL error (trap fix works; shadow manifest paths) -> rewrote shadow manifest -> PASS 25s. NOTE sshe2e/m7 read the SET's example: against the unrebuilt 1c7e46da set they refuse by name (example genesisNow=0) until the set is rebuilt from this commit.
+- 2026-10-09T03:17:28Z COMMITTED cd7155a1 (33 files, +223/-34), pushed lane/repair1. cv task 01a11ea9-d1c0. Next: m6grain = add spkVolumeHelper role to package.py + row_m6grain drives two-world-journey.sh full (sudo installer, user units); needs mini-spk-volume-helper built (not in set).
+- m6grain NOT FIXED (stopping at context cap). Diagnosis for the successor:
+  * after 5d23a239 grain-journey.sh needs GRAINS_ROOT + BROKER_SOCKET of a store-scoped world; those only exist after
+    scripts/spk-platform/two-world-journey.sh's root setup (sudo deploy/spk-host/install-user-world install <helper> ... per store,
+    broker config v2, user unit mini-spk-broker@<store>.service). The right row = row_m6grain drives `two-world-journey.sh full $BIN $BIN $RUN/g $SPK`
+    (uid 1001, linger, sudo -n all OK on burst3-a; SPK at /srv/lanes/prod-spk/cache/sntfy-bc424d...spk via fetch-test-spk.sh).
+  * BLOCKER-as-first-item: the candidate does not ship mini-spk-volume-helper (native/spk-host/src/bin/mini-spk-volume-helper.rs):
+    add role "spkVolumeHelper": "mini-spk-volume-helper" to deploy/candidate/package.py ROLES + RUST_ROLES ("spkVolumeHelper","spk-host"); set rebuild.
+  * verify: build it filtered in a lane (cargo build --release -p minidregg-spk-host --bin mini-spk-volume-helper), shadow set as in /srv/lanes/repair1/art, run the row alone.
+- untested by a row here: row_journey (newparticipant now fills via helper), m7 (UNCONFIGURED: no M7_REFERENCE), the acceptance/workroom/fn/grain-runtime/inference/jpay-e*/v2/6 drivers (syntax-checked only; they were missing clockGenesisNow before).
+- REPAIR-1b 2026-10-09T03:50Z: smoke defect (source-relative params.sh, missing in smoke's resource-client-only copy) fixed in ONE lib native/resource-client/journey.d/lib/genesis-params.sh (resolve_params_sh: CANDIDATE's dir params.sh; refuse if candidate ships none; source fallback only w/o candidate; logs which). journey.sh exports CANDIDATE; ssh-e2e pins CANDIDATE=$ART; 22 call sites source the lib. test-params PASS; rows jpay(1-4 PASS, 6 UNCONF), welcomecontinuity 32/32, sshe2e PASS. Committed 09984242 (24 files +90/-30), pushed lane/repair1. Note: welcomecontinuity's PASS detail is now the resolve line (driver writes nothing else to stderr). Next: gate + publish.
+- REPAIR-1b 2026-10-09T04:04:50Z: gate repair1b TOTAL red=0 HEAD=09984242; publishing to next
+- REPAIR-1b 2026-10-09T04:11:16Z: publish READY /srv/artifacts/09984242 (smoke J0+J1 PASS); waiting on standing journey run

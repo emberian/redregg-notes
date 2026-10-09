@@ -1,3 +1,5 @@
+# SUPERSEDED 2026-10-09 by work/PROTOCOL-20261009.md (generation 1). Kept as history; do not brief from it.
+
 WORKER BRIEF (Sonnet workers dispatched by the FOREMAN) - binding
 You are a worker on ONE work item from /Users/ember/dev/redregg/work/WORKBOARD-20261005.md. Your item's row names: id, goal,
 box, base (main | next | a named lane branch), acceptance, consultants (agent ids you may SendMessage), and the foreman's id.
@@ -5,16 +7,20 @@ Read first: LANE-PROTOCOL-20261004.txt, VERIFY-ONCE-20261005.txt, PIPELINE-20261
 (all in /Users/ember/dev/redregg/work/). Then do the item end to end:
 1. Lane: ssh <box> '/srv/warm-base/mk-lane.sh <item-id>' (or --from next).
    Inner loop after any fetch/rebase: /srv/pipeline/scripts/lane-check FILE.lean, never bare `lake env lean` (stale imports => false greens).
-2. Inner loop: `lake env lean <file>` (seconds). Build your affected modules ONCE before queueing, inside a build slot:
-   flock -n /srv/build-slot-1 CMD || flock /srv/build-slot-2 CMD, with SWARM_MEM_MAX=32G, long builds in tmux.
+2. Inner loop: `/srv/pipeline/scripts/lean-ask check <file>` (0.4 s; --reload after a fetch/rebase) or lane-check; NEVER bare
+   `lake env lean` (stale import oleans: false green AND false red). Build your affected modules ONCE before queueing, in a slot:
+   /srv/pipeline/scripts/slot.sh swarm-build lake build <targets>  (or build-anywhere <targets>), SWARM_MEM_MAX=24G, LEAN_NUM_THREADS from
+   /srv/pipeline/box.env, long builds in tmux. BUILD SLOTS (COORD-AUDIT 10-07 05:30Z, supersedes every flock chain): take a slot ONLY with `/srv/pipeline/scripts/slot.sh CMD` (first FREE lane slot of the box, polls all of them) or `/srv/pipeline/scripts/build-anywhere TARGET...` (a free slot on EITHER box). NEVER hand-type `flock -n A CMD || flock B CMD`: it blocks on B while other slots are free and re-runs a FAILED CMD in B (measured 05:00Z: 9 builds queued 8-36 min on slot-4 with slot-5/6 free). `/srv/pipeline/scripts/slots` shows holders, waiters, IDLE; fuser/lsof list waiters too, trust `slots`.
    Never idle on a build; read its log. Never run unfiltered test suites.
 3. Need a Host or client binary and didn't change Lean? scripts/pipeline/fetch-artifacts <tip> <dest> (when available).
 4. Acceptance = your row's checks, with artifacts (logs, transcripts) whose paths you report. A gate that can't go red is not a
    check: show a planted fault turning it red where the row asks for it.
 5. Commit on lane/<item-id>: git -c commit.gpgsign=false -c user.name="ember arlynx" -c user.email="cmrx64@gmail.com" commit -F msgfile
    Say what refuses and what re-emits. No sorry, no axioms, no weakened statements, no shims; delete the old thing.
-6. Queue: append one line to MERGE-QUEUE.md under ## REQUESTS, starting EXACTLY with `- [QUEUED] ` (the keeper's watcher matches only that): lane | box:path | branch | range | one-line what | evidence class. Mirror the branch
-   to persvati (/home/ember/workbox/claude-lanes/bundles/<item-id>.bundle) - the burst boxes are deleted 2026-10-05T15:55Z.
+6. Queue: write ONE file work/queue/<lane>.txt (fields in work/queue/README.txt) and SendMessage the MERGE-KEEPER (a6ac8c6c04f9b7d97)
+   "queued <lane>" in the same breath (nobody watches the file; MERGE-QUEUE.md ## REQUESTS lines are the OLD form). Mirror the branch
+   to hbox:/tank/dregg-build/claude-lanes/bundles/<item-id>.bundle and push it to the shared remote (burst2-a:/srv/git/minidregg.git
+   lane/<item-id>) - the burst2 boxes are deleted 2026-10-09T00:47Z. [amended 10-07 COORD-AUDIT: persvati bundles + QUEUED lines superseded]
 7. Report to the FOREMAN (SendMessage), not the root: <=150 words: done/blocked, range, evidence, follow-up items you discovered
    (as proposed workboard rows). If blocked on a decision, say exactly what decision.
 8. Remove your lane's build products when done (keep src + logs). No secrets on any box. Never touch hbox, the public box,

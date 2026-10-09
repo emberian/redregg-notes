@@ -1,0 +1,8 @@
+lane: kn2-scripts-elab-1
+source: burst2-a:/srv/git/minidregg.git
+branch: lane/kn2-scripts-elab-1
+range: 8c9e511c..fcddf9dc (one commit; stacks on kn2-fixture-replay 8c9e511c)
+what: scripts-elab item 7. probe-stack-safe-codecs.lean drops the field DeclaredResourceController.Command.expectedAuthorityRoot (gone since 80313fa5) and elaborates; its tsv line is removed. provider-services/Check.lean drops the same field but stays red for provider-API reasons (ProviderMeteringSettings tariff shape; ProviderUsage.quotePayloadV2 removed by 97644f8f). It stays listed `stale`, with the owner moved to DEPUTY-PLATFORM and the reason updated.
+evidence: burst2-a lane kdk-replay, lane-check: probe-stack-safe-codecs rc 0; Check.lean rc 1 (the provider errors above).
+breaks: none; no theorem removed.
+notes: by DEPUTY-KERNEL. Item 4 (NativeTranscripts) waits on the b25 fixture regen: it imports Assurance.NativeAcceptedFixture, whose compiled pins are red until then.

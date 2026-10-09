@@ -1,0 +1,8 @@
+lane: kn2-neutral-births-ratchet
+source: burst2-a:/srv/git/minidregg.git
+branch: lane/kn2-neutral-births-ratchet
+range: 428f7a17..e087ba06 (one commit; scripts/ports/full-loaded-callers.txt only)
+what: Fix-forward for the b25 full-loaded-ratchet red caused by kn2-neutral-births-1 (ad393729). Removes the stale entries Kernel/ApplicationAgentLifetimeGrantSource.lean and Kernel/ApplicationShareIssueSource.lean. Lists scripts/kn2/neutral-birth.lean as a PROBE with a '#' reason: the executed plant drives the birth receiver, which is still full-shaped; it moves with the birth light-ground port.
+evidence: scripts/ports/check-full-loaded-callers.sh -> "full-loaded ratchet: PASS (64 callers, list matches)". txt-only, so no build is affected.
+breaks: none.
+notes: Clears b25's ratchet row.

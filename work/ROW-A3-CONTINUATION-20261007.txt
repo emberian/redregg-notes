@@ -1,0 +1,198 @@
+CURRENT QUEST (from DEPUTY-OB-ENG ae08d68a5af5a4612, 2026-10-07 ~13:15Z): cv 01a115c9-d9b7, PRICE the domain judgment.
+ A turn touching domains pays for |members| guarded reads + one joint-law evaluation per touched domain, accounted
+ through the same Config.covers / Tariff path as every other resource, with a named refusal when the declared envelope
+ does not cover it; decided at finish before posting; theorem: the charge covers the judgment's work; a planted Host
+ that judges for free must turn a journey row red. Then (only if room) leave/change, cv 01a115c9-d990.
+ Branch: local lane/row-a3c from 6dcf3dee (nothing committed yet). An Explore agent is mapping Capacity/covers/Tariff.
+ The foreman is adding `domain` to scripts/pipeline/journey-rows; the driver takes only --bin/--root/--plant.
+
+ROW-A3 continuation. UPDATED 2026-10-07 ~13:10Z: A3 COMPLETE. Queued: row-a3 (113bd02c), row-a3b-1 (55abcd6e),
+row-a3b-2 (6dcf3dee), stacked in that order. Evidence logs: hbox:/tank/dregg-build/claude-lanes/bundles/row-a3b-logs.tgz.
+Waiting on the foreman for the next quest. (Earlier notes below are history.)
+
+ROW-A3 continuation. UPDATED 2026-10-07 ~12:20Z by the renewed worker (renewal 3).
+CURRENT STATE (wins over everything below):
+- Foreman DEPUTY-OB-ENG is now ae08d68a5af5a4612. Keeper a6ac8c6c04f9b7d97.
+- Range 1 = row-a3 (b57ef817..113bd02c) QUEUED (queue/row-a3.txt), approved by the foreman; not yet on next.
+- Range 2 = branch lane/row-a3b on burst2-a shared git, stacked on 113bd02c:
+  55abcd6e step 1: Pred.sumEq (+ every match site; circuit refuses, cv 01a11633-cf8e; shell grammar cv 01a11633-cfaa)
+           + journey D4-bank. Evidence: honest 45/45, domain-blind plant red D1,D3,D4 (logs/journey1-*.log).
+  75a8a970 step 2: judgeDomains counts held state payloads (retire = write), keepsDomains (domainsDropped),
+           postedDomains judged on finalDomain + indexed (domainUnindexed); Kernel/ObjectiveDomainInvariant.lean
+           domain_holds_forever (uniform via finish; approved by foreman: "the stronger theorem"); journey D5-keep;
+           host plants joined-drops.py, keep-blind.py. Lean teeth (a3teeth2.sh): keep-blind, written-ignores-held,
+           index-blind all red.
+- Builds (burst2-b, logs/build6.log): row-a3 honest @75a8a970, row-a3-p2 joined-drops, row-a3-p3 joined-drops+keep-blind,
+  row-a3-plant: proofs ledger draft @55abcd6e (logs/proofs-draft-step1.log) THEN domain-blind build @75a8a970.
+- TODO: queue step 1 (row-a3b-1: 113bd02c..55abcd6e) with the ledger lines; run the step-2 journey on all 4 Hosts
+  (honest: all PASS; domain-blind: D1,D3,D4 red (D5 too? -> its mint commits: expect D1,D3,D4,D5 — adjust PLANTS if so);
+  joined-drops: D5; joined-drops,keep-blind: D5); queue step 2; tell foreman.
+- sync4.sh REFUSES while a row-a3 build runs (a sync mid-build once raced; verified clean with lake build --no-build).
+
+(older text follows; superseded where it disagrees)
+
+ROW-A3 continuation. UPDATED 2026-10-07 ~11:25Z (worker at ~310K context; HANDING OFF before range 2).
+CURRENT STATE (wins over everything below):
+- Range 1 QUEUED and APPROVED by the foreman (now ae08d68a5af5a4612): row-a3 = b57ef817..113bd02c
+  (queue/row-a3.txt; evidence: journey 34/34, planted red D1+D3, Lean teeth x3; logs on burst2-b
+  /srv/lanes/row-a3/logs and hbox bundles/row-a3-logs.tgz). Design-doc deviation note appended to
+  work/A3-INVARIANT-DOMAINS-DESIGN.md ("As built").
+- RANGE 2 (start from next once row-a3 lands, else stack on lane/row-a3 113bd02c), foreman-approved order:
+  (a) domain_holds_forever over CheckpointInvariant.Reachable: every stored domain's law holds on its
+      members' current states in every reachable world. Needs, classified over the WHOLE AdmittedTurn sum
+      with no wildcard: every object-record post keeps `domains` (UpgradeInvariant's objects_after_one /
+      per-turn upgradable proofs show each record post's shape; extend them or add a parallel census);
+      only registerDomain posts a `domain` payload (extend the *_quiet lemmas with a third conjunct, like
+      HoldsInbox/DecidesDelivery); inert/foreign steps touch no protected cell.
+  (b) FOREMAN ITEM: writtenObjects counts only posts carrying a STATE PAYLOAD. If any turn can RETIRE or
+      blank a member's state cell (retiredImage / no payload), that change escapes the judgment. Either
+      prove no turn does (the whole-sum classification in (a) settles it) or count a retire as a write.
+  (c) Pred.sumEq atom in Pred/Core (state its eval in the docstring; 26 files match Pred constructors via
+      `leSlotsOff`, incl. Pred/Satisfiable + SatisfiableTotal = floor entailment, Host/Json predicate
+      reader/printer, LawLeaf, Compiler/PredCompile*); extend G1b's compile_sound if the `law` fragment
+      exposes it. Whole-tree rebuild: batch with the other low-level edits.
+  (d) Bank tooth both ways: domain {reserve, bank, payee,...} law reserve = sum balances (Calls.obend
+      objects, `total` field; reserve never written); honest bank.withdraw (bank -30, payee +30) installs;
+      a mint (payee.deposit alone) refused domainLawDenied; planted Host (sumEq evaluates true) commits it.
+- Tooling: scratchpad/rowa2/{sync3.sh,a3journey.sh,a3teeth.sh}; box scripts /srv/lanes/row-a3/{a3journey.sh,
+  a3teeth.sh}; plant lane /srv/lanes/row-a3-plant. lane-build refuses existing artifacts/native-out/
+  consent-out/cycle/bin: move aside. Never plant files in a tree that is building.
+
+(older text follows; superseded where it disagrees)
+
+ROW-A3 continuation. UPDATED 2026-10-07 ~11:00Z by the renewed worker (context ~270K).
+CURRENT STATE (wins over everything below):
+- A2 LANDED on GitHub next. Range 1 of A3 (slot-equality slice) = lane/row-a3 on burst2-a shared git:
+  f9b4e167 (ObjectRecord.domains, OBJECT-RECORD v4) + 113bd02c (ObjectiveDomain, registerDomain, turn-end
+  judgment via ActivitySeatEnd.finish, COMMAND v9, Host JSON, journey D1-D3, host plant domain-blind,
+  theorems judgeDomains_sound / finish_domains / finalIntent_guards / Registration.upgradable),
+  base = GitHub next b57ef817. Lane STATUS: burst2-b:/srv/lanes/row-a3/STATUS.txt (decisions + reasons).
+- Evidence so far (at 6f41b5ef = same kernel before the rebase): honest Host journey 33/33 rows PASS;
+  planted Host PLANT-RESULT red D1-joint,D3-stale. Lean teeth (logs/plant-*.log): judge-ignores-law,
+  invoke-drops-guards, reads-pre-states, each red. Rebuild at 113bd02c running (logs/build4.log, both
+  lanes); then rerun /srv/lanes/row-a3/a3journey.sh and /srv/lanes/row-a3/a3teeth.sh (box), then
+  proofs ledger draft, queue/row-a3.txt, message keeper + foreman.
+- NEXT RANGE (ROOT order): Pred.sumEq atom in Pred/Core (26 files match Pred constructors incl.
+  Pred/Satisfiable + SatisfiableTotal: the floor entailment decision must handle it), bank tooth
+  reserve = sum of balances both ways (honest withdraw commits; mint refused; planted Host commits),
+  and domain_holds_forever over Reachable (needs: every turn's object-record posts keep `domains`;
+  only registerDomain posts a `domain` payload; classify over the whole turn sum, no wildcard).
+- cv tasks filed: 01a115c9-d990 (leave/change domain), 01a115c9-d9b7 (price domain judgment).
+- Box `sleep` returns at once (no polling): block on logs with `timeout N tail -n 0 -f LOG | grep -m1 -E "^BUILD-EXIT [0-9]"`.
+- Rebase/commit: 1Password refuses; use `git -c commit.gpgsign=false rebase --no-gpg-sign ...`.
+
+(older text follows; superseded where it disagrees)
+
+ROW-A3 continuation (written by ROW-A2/A3 worker, Opus, at ~345K context, 2026-10-07 ~10:15Z)
+Foreman: DEPUTY-OB-ENG abfb6abb71f0a4311. Keeper: a6ac8c6c04f9b7d97. Report to the foreman on events.
+Design: work/A3-INVARIANT-DOMAINS-DESIGN.md. Foreman's binding points (10-07):
+  (a) judge at turn END on the final post-state, in conjunction with the frame laws: a domain only ADDS refusals;
+  (b) registerDomain needs EVERY member's consent under its upgrade policy; the law must hold on current states;
+  (c) domain_holds_forever over CheckpointInvariant.Reachable, every AdmittedTurn constructor classified, no wildcard;
+  (d) named refusal `domainLawDenied`; tooth = DAO bank reserve = sum of balances, BOTH ways (a planted Host commits).
+ROOT: function first. The first deliverable is a journey row where a joint invariant over two member objects
+refuses a turn that each member's own law accepts.
+
+=== WHERE THINGS ARE ===
+- A2 (grants v2) is queued and in queue/innext/row-a2.txt; the keeper is landing it. A3 STACKS ON A2 (both bump the
+  activity COMMAND frame: A2 v7->v8, A3 v8->v9). When A2 is on GitHub next, rebase A3 onto next.
+- Local edit clone (Mac): /private/tmp/claude-501/-Users-ember-dev-breadstuffs/ce776c01-2f59-4f57-8177-23008d71bf57/scratchpad/rowa2/minidregg
+  branch lane/row-a3 = cf7889b9 (A2, rebased on next 8ebbdf9b) + 03e3ecb0 (A3 step 1). Remote ref gh/next.
+  Pushed: burst2-a:/srv/git/minidregg.git lane/row-a3.
+- Box lane: burst2-b:/srv/lanes/row-a3. src HEAD is next 8ebbdf9b, and its working tree holds A2 + step 1 (synced).
+  Before building, run `git fetch burst2-a:/srv/git/minidregg.git lane/row-a3 && git reset --mixed FETCH_HEAD`.
+  Sync helper: scratchpad/rowa2/sync3.sh (rsyncs files changed vs gh/next into the box lane; hardlink-safe).
+- Inner loop: ssh burst2-b; cd src; . /srv/pipeline/box.env; /srv/pipeline/scripts/lean-ask check FILE --reload.
+
+=== DONE ===
+Step 1 (03e3ecb0): ObjectRecord.domains : List Digest (last field), OBJECT-RECORD v3->v4, create starts [].
+Every { record with .. } successor carries it. Checked clean: ObjectRecord, ObjectLawEnforced, ObjectiveActivity,
+ObjectiveActivityUpgrade, ObjectiveResumeContract, ObjectiveCheckpointInvariant, ObjectiveUpgradeInvariant,
+Host/ObjectiveActivityJson.
+
+=== DECISIONS (mine, with reasons; the foreman may override) ===
+D1 WHERE TO JUDGE: ActivitySeatEnd.finalize (Kernel/ActivitySeatEnd.lean:174) is the single choke point. Every
+   Step.turn passes it (CheckpointInvariant Step.turn has `final : finalize .. = .ok (posts, extra)`), and so do
+   Receiver.prepare (Prepared.final) and signingHeader. Judge domains THERE, over the FINAL posts:
+   for each post at a stateCell, find the written object's record (the record post in the same turn if there is
+   one, e.g. migrate/adopt, else readObject from the snapshot); collect record.domains; for each domain read its
+   domain cell; build the joint OLD view (snapshot member states) and NEW view (the member's state post if written,
+   else the snapshot state); judge the law; refuse `domainLawDenied domain leaf`. Add guards for every domain cell,
+   member object cell and member state cell READ to `extra`.
+   Reason: one mechanism covers all 7 state-writing turns (create seed, birth, deliver, invoke, deliverMessage,
+   migrate, rebirth; abortDrained writes no state). Per-turn hooks would be 7 places to forget. Per-frame laws are
+   untouched, so domains only add refusals (point a).
+   !! The mapping found that ActivitySeatEnd.AdmittedTurn.finalIntent IGNORES `posts`/`extra` for every turn except
+   birth, deliver, abandon, abortDrained and rebirth (the fallthrough `| turn => turn.intent sealing`). So the
+   domain guards must be appended in finalIntent for ALL turns (and finalIntent_writes, CheckpointInvariant:873,
+   adjusted). Otherwise an invoke's domain guards would never reach the intent, and a concurrent member write would
+   slip past the joint law.
+D2 JOINT VIEW: member i (index in domain.members) has its stateSlots renamed `member/<i>/state/...`; the request
+   slots once (Facts of the turn: subject/height; target = the domain id). Old = pre-turn snapshot, new = final posts.
+   Reuse ObjectRecord.stateSlots / views (ObjectRecord.lean:392/453) with a prefix map. Judge with
+   LawLeaf.of law before after (as judgeLaw, ObjectRecord.lean:478).
+D3 LAW ATOMS: Pred (Pred/Core.lean:170) has eqSlots/leSlots/leSlotsOff but NO addition. Function-first row: use
+   eqSlots (paired members: new[member/0/state/total] = new[member/1/state/total]); each member's own law is
+   permit-all, and a turn that moves only one of them is refused. The DAO tooth (reserve = sum of balances) needs a new
+   atom, e.g. `sumEq (terms : List Slot) (total : Slot)`, which touches Pred/Core evalWith, LawLeaf.predStream, the
+   Host predicate reader/printer and LawLeaf.of. Pred/Core is a LOW-LEVEL file (whole-tree rebuild), so batch it
+   with the other low-level edits before the Host build. Domain laws are first-party fragment only: refuse
+   witnessed/hashEq/ran in a domain law at registration (Pred.Sat-decidable, like upgrade floors).
+D4 DOMAIN CELL: new ObjectiveActivityCell.Role `.domain` (tag 6; move Role.ofTag's catch-all). Touch: Role.tag/ofTag,
+   payerRoute (ObjectiveActivity.lean:4559, exhaustive + RetentionCensus), Host cellJson (~400-428),
+   CheckpointInvariant role case-splits (bodyOf_other / quiet_image). The reserved space is protected automatically
+   (ordinaryGate refuses protectedWrite). Key = the domain id. Domain record = {id, members : List Nat (distinct,
+   <= domainCap), law : Pred, upgrade : UpgradePolicy}, with a framed codec "DREGG/OBJECTIVE/DOMAIN/v1".
+D5 registerDomain TURN: Turn.registerDomain (domain : Nat) (members : List (Nat x CapabilityId)) (law) (upgrade)
+   (payer) (payerCapability). The signer must hold a capability on EVERY member (as invoke's objectCapability), and
+   each member's upgrade policy must admit it: governed -> its authority Pred on the request facts; frozen ->
+   refused `memberFrozen` (joining adds a law to the object, which frozen forbids). The law must hold on the members'
+   CURRENT states (old = new = current). Posts: the domain cell + each member's record with domains ++ [id].
+   Guards: every member's object and state cell. Refusals: domainExists, memberNotObject, memberFrozen,
+   memberDenied, domainLawDenied (at registration), domainTooLarge, notDistinct. AdmittedTurn gains a constructor ->
+   EVERY match on AdmittedTurn must get an arm (posts, intent, ending, finalIntent, Step.preserves, live_counts,
+   retention, and the ObjectiveUpgradeInvariant classifications). Grep `| rebirth ` arms to find them all.
+   COMMAND v8 -> v9. Host JSON kind "registerDomain".
+   Leaving/changing a domain: OUT OF SCOPE for this range (say so in the queue entry): domains are permanent once
+   joined. That is safe, since it only refuses more.
+D6 COST: a turn touching domains pays |members| guarded reads + 1 Pred eval per touched domain. Bound with
+   Config.domainCap (members) and domainsPerObject; charge through covers/tariff like C3 (row C).
+   Function first: bounds as refusals now, pricing after the journey is green (labelled as such).
+
+=== WORK PLAN (function first) ===
+ 2a  Pred.sumEq atom (if doing the DAO tooth in the same Host build): low-level, do it FIRST, batched.
+ 2b  Kernel/ObjectiveDomain.lean (new): Domain record + codec, readDomain, jointViews, judgeDomains over final posts
+     -> Except Refusal (List ReadGuard). Role .domain.
+ 2c  registerDomain turn: ObjectiveActivityReceiver Turn + Command wire (v9), decideTurn arm, AdmittedTurn ctor + all arms.
+ 2d  finalize: run judgeDomains after the seat join; finalIntent appends the extra guards for every turn.
+ 2e  Host JSON (turn parse/print, cellJson for .domain and record.domains), refusal text = repr (NativeHost:2196).
+ 2f  Journey native/resource-client/objective-domain-native-journey.py (or rows in the call journey), on activity_world:
+     D1 two permit-all counters a,b; registerDomain {a,b} law eqSlots(member/0/state/total, member/1/state/total)
+        seeded equal; invoke a.deposit(1) alone -> refused domainLawDenied (each own law admits it);
+        relay that deposits on both in one call tree -> installs (turn-end, not per frame);
+     D2 registration refused when the law fails on current states / a member's policy refuses / frozen member;
+     D3 DAO bank: reserve = sumEq(accounts): honest transfer commits; a planted call tree moving a balance without
+        the reserve -> domainLawDenied; HOST plant (judgeDomains returns ok) commits it -> log both.
+     Build host+consent (BOTH; see tooling notes), run on a bin dir from /srv/artifacts/next/bin + the lane's two.
+ 2g  Theorems: domain_law_enforced (on finalize: .ok -> every touched domain's law holds on (pre, post));
+     domain_conjunction (finalize's verdict = the seat join's ∧ judgeDomains); domain_holds_forever over Reachable
+     (genesis without domains; Step.turn: registerDomain establishes it, every other turn either writes no member
+     state or passed judgeDomains; inert/foreign cannot write protected cells). Teeth: plant judgeDomains := ok ->
+     the theorems go red (lean-ask log); a Host plant for the journey.
+
+=== TOOLING NOTES (paid for) ===
+- A Host-side change needs BOTH minidregg-host and minidregg-client-consent rebuilt. An old consent companion refuses
+  every new-COMMAND command with "local consent refused before signing: noncanonical activity command".
+  Command: (in the lane src, after `. /srv/pipeline/box.env`) LANE_DIR=/srv/lanes/<lane> /srv/pipeline/scripts/slot.sh
+  swarm-build bash -c "deploy/candidate/lane-build.sh host --umbrella --umbrella-target Host.Main && deploy/candidate/lane-build.sh consent"
+  (~6-7 min). lane-build refuses to overwrite artifacts/, native-out/, consent-out/ and cycle/: move them aside first.
+  It refuses uncommitted tracked changes: commit first.
+- A Host plant must also strip the theorems it breaks, or the Host does not link: see scripts/plants/args-blind-grant.py
+  (make a second lane with mk-lane, checkout the tip, apply the plant, commit it there, build).
+- lean-ask exit 3 -> add --reload. Don't rsync files that didn't change (mtimes make lean-ask see stale imports).
+- Unsigned commits: git -c commit.gpgsign=false (1Password refuses).
+- objective-proofs manifest: the keeper re-pins. Draft A3-only ledger lines with reasons:
+  slot.sh swarm-build scripts/check-objective-proofs.sh proofs --draft, then filter by `via` (see
+  /srv/lanes/row-a2/logs/proofs-ledger-a2.txt for the filter's output shape).
+- Queue: write work/queue/row-a3.txt whole (fields per queue/README.txt), then SendMessage the keeper "queued row-a3"
+  and the foreman.

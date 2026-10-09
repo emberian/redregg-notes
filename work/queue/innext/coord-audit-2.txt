@@ -1,0 +1,23 @@
+lane: coord-audit-2
+source: burst2-a:/srv/git/minidregg.git lane/coord-audit-2 (bundle hbox:/tank/dregg-build/claude-lanes/bundles/coord-audit-2.bundle, thin on 8fcdfdcf)
+branch: lane/coord-audit-2
+range: 8fcdfdcf..a29a6c7b   (ONE commit, on top of lane/burst2-saturate 8fcdfdcf, which is on next e92cbf10)
+what: ROOT's quest (Ember 05:40Z): scripts/burst/ = one reproducible, idempotent entry point for a burst box: burst-up (stage, root,
+  user, keys, hbox, base, check), burst-check (ok/DIFF rows), burst-down (collect + relay to hbox, never deletes), burst-container
+  (fresh Ubuntu in nspawn as a stand-in box), units/ (persistent sccache/slots/publisher/journeys), swarm-build (one source),
+  hbox-pull.sh, cold-build.sh + make-warm-base.sh (from the hand provisioning dir). Plus ROOT 06:15Z: per-build cap 48G at every
+  source (swarm-build, lake-slot, lane-check, lean-ask, mk-lane; gate 64G); C5 gate-TAG.aborted; relay-base seeds a fresh box
+  (full copy, carries the green log, removes a stale probe, `local` source, PIPELINE_SSH); install-sccache PIPELINE_SCCACHE_PORT +
+  persistent-unit-first; user.sh refreshes warm-base/mk-lane.sh.
+evidence: EXECUTED. Fresh Ubuntu (debootstrap noble, nspawn on burst2-b, ssh like a box): root 64 s, user 69 s, base relayed on-disk
+  + replay probe 0 modules 68 s, burst-check 0 DIFF (62 rows); behaviour script on it vs hand-built burst2-b: mk-lane 24/25 s, replay
+  2/1 s, lane-check 136/138 s, lean-ask 145/150 s then 0 s, build-anywhere 4/4 s; full second run of every phase: 0 DIFF; burst-down
+  relayed 166 MB / 46 files to hbox:/tank/dregg-build/claude-lanes/bundles/burst-test-down (counts verified). burst-up --phase check on
+  the hand-built boxes: a 8 DIFF, b 11 DIFF (transient units, tmux services, provenance, slot-5/6 mode, briefs). Logs in the
+  COORD-AUDIT session scratchpad burst-up-logs/ and work/COORD-AUDIT-20261007.md §4. 48G swarm-build + lake-slot/lane-check/lean-ask/
+  mk-lane installed on both live boxes 06:15Z (`swarm-build true` prints cap=48G). Container removed after the proof.
+breaks: nothing persisted. Operational: swarm-build default cap 24G -> 48G on both boxes (gate scripts 64G); first log line of
+  every build names scope + cap. The live transient pipeline-sccache/pipeline-slots and tmux publisher/journeys were NOT switched to
+  the persistent units (burst-up --phase user would; SATURATE cleared it between publications; left for a quiet moment).
+notes: lands after burst2-saturate 8fcdfdcf. Hygiene seen on next: __pycache__/resolve.cpython-314.pyc is TRACKED (predates this
+  branch). Keeper's C5 marker is in run-gate-burst.sh; the keeper's live mk-tools copies were NOT touched this time.

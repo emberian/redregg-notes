@@ -1,0 +1,8 @@
+lane: obeng-opid
+source: burst2-a:/srv/git/minidregg.git lane/obeng-opid (also burst2-b:/srv/lanes/row-a3/src lane/obeng-opid)
+branch: lane/obeng-opid
+range: 7a3b6a21..67993a9d
+what: FIX-FORWARD for post-landing journey reds on next (b86c7f1a/74a4a12d): (1) domain D1-D5: the domain driver's invokes carried no turn.opId (mandatory since OPIDS). Fixed in the shared helper: activity_world World.submit mints op_id() into an invoke body that has none, in the caller's dict (a resubmitted body reuses it). Upgrade driver has no invoke. (2) send S19-paid-once / S20-one-message expected 2*PRICE without the queued message's storage deposit; they now read the message's deposit and require 2*PRICE+d paid, PRICE+d escrowed.
+evidence: Python only. Run with next's binaries (/srv/artifacts/next -> 0b92ac08 bin): domain 50/50 (burst2-b /srv/lanes/row-a3/logs/opid-dom.log), send 166/166 (logs/opid-send.log; s19 paid 6132 = 2*3001+130).
+breaks: nothing (no Lean, no frame, nothing re-emits).
+notes: independent of row-a3c (A3 pricing, coming separately; it carries the same driver fixes and will rebase over this).

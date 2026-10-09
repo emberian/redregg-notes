@@ -1,0 +1,8 @@
+lane: kn2-ratchet-fix (fix-forward: full-Loaded callers ratchet green on next; DEPUTY-KERNEL item 4)
+source: burst2-a:/srv/git/minidregg.git lane/kn2-ratchet-fix
+branch: lane/kn2-ratchet-fix
+range: 33fea1fe..e7e613cf (1 commit)
+what: Compiler/DurableServed.lean was named as a new full-shape caller only because a DOC COMMENT named DurableReceiverIO.loadChained (the ratchet is a plain grep); the comment now reads "the ratchet-listed full materialization". DurableServed does not call the full shape.
+evidence: scripts/ports/check-full-loaded-callers.sh PASS (78 callers, list matches) on 33fea1fe + e7e613cf. Doc-comment-only change; no build impact.
+breaks: nothing.
+notes: Keeper may now add the ratchet as a gate row. Known limit: the check is a text grep (comments can trip it; it cannot see an indirect call through an alias), recorded here so nobody reads it as a call-graph proof.

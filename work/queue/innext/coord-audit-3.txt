@@ -1,0 +1,15 @@
+lane: coord-audit-3
+source: burst2-a:/srv/git/minidregg.git lane/coord-audit-2 (bundle hbox:/tank/dregg-build/claude-lanes/bundles/coord-audit-2.bundle, thin on 8fcdfdcf, holds both commits)
+branch: lane/coord-audit-2
+range: a29a6c7b..bde48d89   (ONE commit, on top of coord-audit-2 a29a6c7b, already in next)
+what: the merge keeper's 06:41Z incident fix (its ask). advance-base-burst.sh installs the GATED TREE's scripts/pipeline/mk-lane.sh
+  ($GL/src/...), relay-base.sh the copy that travelled with the tree ($W/src.new/...), make-warm-base.sh /srv/mini's, burst-up's
+  user phase the base tree's own -- never a tools-dir copy -- and each REFUSES (exit 9) before touching the base when that file is
+  missing or lacks MK_LANE_PROBE. burst-check gains the row mk-lane:probe-aware and compares the base's mk-lane.sh against ITS
+  tree's copy. Comments name the incident.
+evidence: bash -n on every file; the refusal arm is a grep + exit before any mv (read it: advance-base-burst.sh "mk=$GL/src/...",
+  relay-base.sh POST "mk=$W/src.new/..."). NOT executed live (the keeper owns advances); the keeper's next advance is the test, and
+  the refusal is what would have fired at 06:41Z instead of leaving NOT-READY.
+breaks: none. The keeper's live mk-tools copies were NOT touched (the keeper installs from the landed range when it chooses).
+notes: lands after coord-audit-2 (same branch, next commit). Incident recorded as COORD-AUDIT-20261007.md B9 (mine: a `cp -n`
+  left the stale mk-tools/mk-lane.sh in place; swapping live tool copies without the owner's go).

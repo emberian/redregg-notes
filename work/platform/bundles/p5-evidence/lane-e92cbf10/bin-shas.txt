@@ -1,0 +1,5 @@
+d669046999cae7ad7061d3e013987b6fb309c756754cfda8fe66815865ab8260  /srv/lanes/plat-read-target-leg/bin/mini
+f71ddae162421f8f5429c8393cf86b6eff6eb97f71b71813b134d8ce5bc93a5d  /srv/lanes/plat-read-target-leg/bin/minidregg-client-consent
+c0958c23b483e125cd27a743eba8650995e3e4e42b4186f06460d1e57ca744c8  /srv/lanes/plat-read-target-leg/bin/minidregg-credential-signature-verifier
+b7ae51194897365e4ebe304102038fdfaf2544f2afe27832a520eadd3bef74c6  /srv/lanes/plat-read-target-leg/bin/minidregg-host
+238be216658ecb1cec3b755ea1d32ad754dcb6ce083e69c5215633b92cbead3b  /srv/lanes/plat-read-target-leg/bin/minidregg-link-sqlite-store

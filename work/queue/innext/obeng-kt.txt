@@ -1,0 +1,8 @@
+lane: obeng-kt
+source: burst2-a:/srv/git/minidregg.git lane/obeng-kt
+branch: lane/obeng-kt
+range: b7c55148..92578dff
+what: ROOT finding: nothing enforced that only the finish/checkInert routes hand out the object kernel's facet (Config.kernelTransport). New environment census scripts/KernelTransportCensus.lean (elaborating it is the check, so scripts-elab enforces it) + scripts/check-kernel-transport.sh (self-test plants, then the census). Allowed: kernelTransport <- activitySubmitLoaded, seatSubmitLoaded, NativeHostReplay.Derived.transport; ControlFacet.objectKernel <- Config.sourceGate, Config.kernelTransport; ControlFacet.ofNat <- nobody. Stale rows refused.
+evidence: census GREEN on main 65181dbd warm base (burst2-b /srv/warm-base); self-test in burst2-b /srv/lanes/row-a3: plants route/byhand/decode/stale red, then GREEN.
+breaks: nothing.
+notes: KEEPER: please add a gate row in /srv/pipeline/scripts/merge-gate-checks.sh: run kernel-transport bash scripts/check-kernel-transport.sh (needs Kernel.NativeHost + Kernel.NativeHostReplay built; runs in ~30 s).

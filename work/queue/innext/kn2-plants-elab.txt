@@ -1,0 +1,8 @@
+lane: kn2-plants-elab
+source: burst2-a:/srv/git/minidregg.git
+branch: lane/kn2-plants-elab
+range: f4ad59d5..85b101e5 (one commit)
+what: scripts/kn2/planted-token-forges.lean elaborates again. FORGE-C's `by constructor` forgery supplies StoreIdentity's new origin field. The forges are meant to elaborate; layer-2 detection is TokenCensus (rows StoreIdentity.mk and Head.mk, restrict Head.genesis, and its own per-row planted forgery). Its scripts-elab.tsv line is removed.
+evidence: burst2-a lane kdk-replay, lane-check rc 0.
+breaks: none; no theorem removed.
+notes: by DEPUTY-KERNEL. A trivial tsv merge with kn2-neutral-births-2 (which removes two other lines): keep all removals. planted-api-faults.lean stays listed: KN2-TRIE ports it with per-fault expected-error matching, because the current harness accepts ANY error near a fault line.

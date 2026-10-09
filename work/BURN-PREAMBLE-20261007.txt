@@ -1,0 +1,42 @@
+BURN WORKER PREAMBLE (2026-10-07, root ce776c01). Read this whole file, then your task.
+
+PURPOSE: Ember wants the two rented burst boxes kept BUSY continuously ("burden them").
+Your job is compute-heavy and token-light. Script the work, start long runs, and keep
+every slot you're entitled to full. Read results; don't watch them.
+
+BOXES (ssh -F ~/.ssh/burst2-20261006.conf <host>):
+- burst2-a: 16 threads, 187G
+- burst2-b: 32 threads, 187G
+- Shared git remote: burst2-a:/srv/git/minidregg.git (GitHub mirror: emberian/minidregg).
+- green = main = cfdaf64d. Warm bases on both boxes are frozen there.
+
+TOOLS (in /srv/pipeline/scripts on both boxes; read a script's header before you use it):
+- mk-lane.sh / clone-warm: make a lane from the warm base. Never cp -al by hand.
+- slot.sh, lake-slot, build-anywhere, slots: take build slots ONLY through these.
+  No hand-typed flock chains.
+- lean-ask: ~0.4 s single-file checks.
+- lake-cache-audit: the cache guard.
+- Build memory cap is 48G per build by default.
+- Use a PRIVATE Lake cache for anything that writes nonstandard outputs: PIPELINE_LAKE_CACHE=<your dir>.
+
+RULES:
+- Never `git stash`. Never run unfiltered `cargo test -p` (filter, always).
+- Never touch hbox, persvati, fn's nodes, /tank/fn or any public box.
+- Never delete outside your own lane directories (/srv/lanes/<your-prefix>-*).
+- Mutations and experiments happen in YOUR lanes only. Never push to main/next.
+  If you produce a fix worth landing, commit it on lane/<name>, push the lane branch
+  to the shared remote, and tell the owning deputy (below). Don't queue it yourself.
+- FOREGROUND-wait on builds (`until` loops with a bounded timeout), never "wait for a
+  notification". Background-waited subagents strand.
+- Verdicts come from artifacts (exit codes and logs you wrote with tee), never from a
+  `| tail` status.
+- Write STATUS.txt in your lane at every milestone. Before ~350K context, write
+  CONTINUATION.txt and stop.
+
+CURRENT IDS (send results and findings here, via SendMessage):
+- ROOT: "main"
+- DEPUTY-KERNEL ac28b7ecdcc777d66 (Kernel/Store/pay/birth/trie)
+- DEPUTY-OB-ENG a7ce8f0f4cba1d908 (activity/object/call/send/domain/upgrade/front end)
+- DEPUTY-PLATFORM aed11e1555308dbcb (Host/drivers/clients/fn)
+- MERGE-KEEPER a41926dfb4ce97d3d
+Any other deputy or keeper id is RETIRED: never message it.

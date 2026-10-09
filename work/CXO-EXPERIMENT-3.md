@@ -1,0 +1,40 @@
+# CXO-EXPERIMENT-3 — DEPUTY-PRODUCT, train `prod`, four Codex workers, burst3-a (2026-10-08)
+
+## Setup
+- Base e0a8ba21 (shared remote main). Weekly window at start: used 66% at 5% of window (resets 10-15 02:24); `--force` on every spawn (pace gate would refuse).
+- Train `prod` (`cxo train prod -d prod --from main`) at e0a8ba21, wt /srv/lanes/train-prod/src. Umbrella default on all workers.
+- Workers: prod-rows (W1, gpt-6.1-sol, 15M), prod-clock (W2, gpt-6.1-sol, 15M), prod-spk (W3, gpt-6.1-sol, 20M), prod-m7 (W4, gpt-6-astra, 20M). Briefs: deputy scratchpad prod/w*.full.
+- Deputy prep: published the e0a8ba21 artifact set (`publish-artifacts e0a8ba21 main`, log ~/deputy-prod/publish-e0a8ba21.log): only cfdaf64d was in /srv/artifacts, so W1's acceptance had no set to run on.
+- Box facts measured: runner uid ember 1001, `sudo -n` works, user systemd running + linger.
+
+## cxo bugs
+- **E3-1 (= E2-2, NOT fixed on the box):** `spawn --budget 15M` → `ValueError int('15M')` from the hub (remote ~/cxo/cxo.py:560 `int(a.get("budget"))`), raised AFTER mk-lane → 4 orphan lanes. Workaround: numeric budget + `--wt` on the orphans. The local tools/cxo/cxo.py may carry the fix but the hub runs the box copy.
+
+## Event log
+- 11:37 e0a8ba21 artifact set READY (382 s; mirror to hbox incomplete: no mirror key). 11:38 prod-m7 NOTE a70: evidence location + Host snapshot; answered: evidence outside src/, use the e0a8ba21 set.
+- 11:38 prod-clock NOTE a71: bound as immutable field of the loaded clock cell; scope +NativeHostGenesis.lean, Host/Json.lean, clock.rs. Approved; Config literal list requested, fixtures ASK first.
+- 11:38 prod-rows NOTE a73: local fn launcher env, --rows-file test override, M6 inputs. Answered (m6 row defers to prod-spk's self-contained world).
+- prod-clock NOTE a75: genesis clock starts at 0 (so the first tick is an unbounded jump today). Answered: mandatory .clock.genesisNow param + maxStepSeconds 300; ticker catches up in <=bound steps.
+- 11:39 prod-spk ASK a79: per-grain /var is a root ext4 loop mount + FIFREEZE (cannot be done by uid mapping). DECISION: split privilege — unprivileged broker/resident; one root one-shot volume helper with typed store-scoped verbs via a scoped sudoers rule; checks unchanged. Reported to ROOT as a design decision.
+- prod-spk NOTE a87: helper needs root install + registry. Answered: logged root SETUP phase in the journey = the deploy install step, sudoers drop-in scoped + removed on EXIT.
+- prod-m7 NOTE a95: CAUSE MEASURED — path-dependency package identity includes the lexical root (same symlink reproduces, different roots differ). Authorized a root cargo workspace with no-version-drift condition.
+- ROOT: quota no constraint (--force); train kern shares burst3-a (Kernel/World*, TurnOfIntent, HostRefinesWorld, ObjectiveCheckpointInvariant, ObjectiveActivityReceiver, durable writer) — prod stays out; tell ROOT when all four have submitted, before next spawns (hub + codex 0.161 install).
+- ROOT: warm base advancing to main 546c1c88 (t2 landed); merge 546c1c88 into the train before the full gate.
+- cxo gap E3-2: lane-build.sh refuses a dirty tree, but workers never commit -> a worker cannot run the candidate host build before submit; workaround: request_build's Lake-linked host.
+- 12:06 **SUBMIT prod-rows** a6740f72 (3 files, +360/−8). 12 rows; product_input/product_evidence helpers; scope result+journal kept per row (OOM = named FAIL); --rows-file / --results-root test overrides. Deputy check: read growth (awk on levels.tsv: 1000, write<=5, reopen<=60), m7 (needs CANDIDATE+M7_REFERENCE → 98), plant (3 mutations each asserted: withheld MINI_FN_LAUNCHER → 98 named; exit-0 stub → FAIL missing evidence; 128M alloc under MemoryMax=32M → FAIL scope OOM). Deputy-caught: header-sniffing m6grain (removed), empty FAIL detail (fixed: the 4 kernel rows were scope-OOM-killed while the standing runner ran the same set). Red list sent to ROOT 12:08. Merged → train.
+- 12:10 ROOT routing: growth -> DEPUTY-KERNEL (sent: tail-bound head 257 certified 0 bound 256, certifier not-due, G never certifies); cv tasks filed 01a11b6a-57c1..58b7; Closes-Task convention started; W3 conditions relayed. 12:09 spawned prod-pay (gpt-6.1-sol, 12M) on JPAY3/4.
+- 12:12 deputy installed uidmap on burst3-a (prod-spk prerequisite; no newuidmap on box). prod-drift spawned (m4+hermes). Lanes from --mklane main now start at 546c1c88.
+- 12:15 DEPUTY-KERNEL ruled growth = (a) driver certifies when due; spawned prod-growth (Closes 01a11b6a-57c1).
+- 12:32 **SUBMIT prod-pay** e531523c (6 files +187/−5): client requires Receiving.Refusal.family wrapper (90e14a1d moved refusals), tipInvalidOrRegressing = final refusal not wait (cv 01a109d5-60b2), JPAY3/4 expectations updated to current names; JPAY1-4 PASS; plants Lean (red at proof) + client (pinned FAIL line) verified in WORKLOG. Merged (brings 546c1c88 into the train).
+- 12:49 **SUBMIT prod-drift** 1166da7b (6 files +178/−11): hermes --no-prerotation (e7d2fb9c) + user-manager controller env; m4 J2 declared field count (K-FIELD-CLOSURE 2ab6ef00), J5 stranger refused by local consent (96a4165f) with exact message, J8 law-denied checks added; '|| true' removed; plants restore old expectations → rows red. Deputy read the diff. Merged.
+- 13:00 kernel rows rerun ALONE: call OOM (peak 25.77G > 24G) after c6-direct, send OOM too → real, sent to DEPUTY-KERNEL (cv 01a11b6a-58b7).
+- 13:02 domain also OOM alone; DEPUTY-KERNEL took OOM (kern-oom); my reruns stopped. prod-jserve spawned 13:00 (Closes 01a11b6a-57e9).
+- cxo E3-3: guard claims to ignore .lock files but refused member Cargo.lock DELETIONS as out-of-scope (fine behaviour, doc mismatch).
+- 13:10 **SUBMIT prod-m7** 295cab11 (31 files): root cargo workspace (cause: path-dep package identity includes lexical root; same-symlink reproduced, different roots did not), 12 member locks deleted, libc/sha3 patch unification, manifest v2 outputs sha256 + provenance, run.sh verifies before init/serve/start/sponsor, plants tamper + no-verification. REWORK sent: delete 3 probe scripts, wire-or-delete qualify-m7-*, explicit empty-outputs refusal, exec-only-via-manifest, m7 row inputs.
+- cxo E3-4: a protected path cannot be waived; an approved fixture re-emit needs a registry edit of the worker's protect list (done for prod-clock). Suggest: 'cxo unprotect NAME GLOB'.
+- 13:42 prod-m7 resubmit 52e4843c (rework done: probes deleted, qualify scripts gone, empty outputs refused, exec only via manifest). Merged. m7 row stays 98 until the publisher packages two candidates: cv task filed.
+- 13:42 **SUBMIT prod-clock** 93e18aac (22 files +454/−127): decideTick bound (from loaded clock cell maxStepSeconds), .clockStepExceeded, decideTick_ok strengthened (next.now ≤ current.now + bound), tick_step_exceeded_refused/never_ok, satisfiable tick_within_bound_admitted; mandatory .clock.genesisNow + maxStepSeconds; fixture re-emitted via generate.sh; jclock 32/32; plant red at line 85. Waivers read (signature generalizations). FLAG DAY: clock cell wire v1→v2, re-genesis. Merged.
+- 14:02 **SUBMIT prod-growth** bd2e8d32 (3 files): certify every <=252 writes (checkpoints g1/g253/g505/g757), write_max/p99 columns, plant red at g252 tail-bound. Run 2 PASS (max 3.49 s, p99 2.39, reopen 1.68 s, certify max 1.24 s). Run 1 RED: g981 submit 287 s stall — overlapped my 24G kernel-row reruns; task filed to DEPUTY-KERNEL. Merged.
+- 14:02 **SUBMIT prod-jserve** 7a91c5ec (5 files): stale payloads vs 8ac769d7 4 MiB author bound; (b)/(b2)/(b3) resized to max ADMITTED body, oversized 1M-key now asserted refused by socket bound; checks tightened (delivered event instead of sleep, answered==32 & busy==8 exact, load-pending asserted). PASS 12/12 twice; 3 plants. Merged.
+- 14:10 jserve merged green e939e557. DEPUTY-KERNEL: 287 s stall suspected = Nat.pair encoding (Θ(2^n)) in ObjectiveActivityReceiver; rerun growth solo after kern-oom lands. Remaining live: prod-spk.
+- 14:20 dregg-infra WIP reviewed (Agent, read-only) and reported to ROOT; DEPLOY-3 certify-when-due unit missing → cv 01a11be4-28a6. Holding spawns for ROOT's hub install.

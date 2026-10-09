@@ -1,0 +1,21 @@
+lane: g1b-law-2
+source: burst2-a:/srv/git/minidregg.git lane/g1b-law ; bundle hbox:/tank/dregg-build/claude-lanes/bundles/g1b-law-2.bundle (logs: bundles/g1b-law-logs.tgz)
+branch: lane/g1b-law
+range: 5f2b951f..d2d254aa   (base = next 5f2b951f; 2 commits, G1b steps 2+3 — land TOGETHER: step 2 alone would accept a `law` nothing enforces)
+what: Top-level `law NAME: EXPR` in .obend is an ENFORCED admission law. 079e951f: parser + fragment (Compiler/ObjectiveBendLaw,
+  refuses "law outside the enforced fragment: ..."), Module.laws/Lowering.laws (entry module only), SourceArtifact v2 carries
+  `laws` (identity commits them), replayAccept refuses tampered laws, Host publication lists them. d2d254aa: OBJECT-RECORD v3 /
+  Pending carry packageLaws set by create/ADOPT from the pinned package cell (packageLawsAt), never the request; effectiveLaw =
+  all [pin, package laws, creator law]; seed law = all [package laws, creator law]; create/ADOPT refuse `lawField f` against the
+  v2 stateType (root's deviation (b) closed). Theorems: compile_sound, packageLaw_sound, package_law_enforced(_seed),
+  Creation/Adoption.package_laws, Birth/Delivery.package_law_enforced, package_law_not_removable, capped_tally_teeth.
+evidence: `lake-slot Minidregg Host ObjectiveProofs` 9763 jobs: everything built except Assurance.NativeAcceptedFixture (artifact/
+  record epoch) — logs/b3.log, built on the identical Lean tree over next c8e98ee0-era base (5f2b951f adds only pipeline/pins).
+  check-objective-examples.sh --refresh rc=0, no diff (logs/examples-refresh.log). check-objective-frontend.sh: 11/12 then the
+  tutorial row green after fixing a ch6 span G1 left stale (logs/frontend.log, logs/frontend-rows/), incl. new row `package-law`
+  and PublicationReplay row 5. Plants: logs/plant-leC-as-eq.log, logs/plant-packageLaw-empty.log. #assert_axioms everywhere, no
+  sorry, no #guard; parser facts native_decide + #assert_compiled.
+breaks: SOURCE-ARTIFACT v1->v2 (frame byte + identity/schema domains): every package re-publishes, every pin changes. OBJECT-RECORD
+  v2->v3. Re-genesis. Front-end identity changes (a7a650a3...). New refusals: lawField; replay "offered laws differ ...".
+notes: fixture/pin red only from the artifact+record epoch: NativeAcceptedFixture, Host closure pin, build surfaces, objective-proofs
+  statement snapshot (new module Kernel.ObjectLawEnforced in ObjectiveProofs; seed_teeth leaf path [] -> [1]).

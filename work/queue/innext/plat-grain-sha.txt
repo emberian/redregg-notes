@@ -1,0 +1,7 @@
+lane: plat-grain-sha (scripts/grain-birth/native-acceptance.sh red on next; reported by DEPUTY-KERNEL; DEPUTY-PLATFORM aed11e1555308dbcb)
+source: burst2-b:/srv/lanes/plat-quote-probe/src ; shared remote burst2-a:/srv/git/minidregg.git lane/plat-grain-sha ; bundle hbox:/tank/dregg-build/claude-lanes/bundles/plat-grain-sha.bundle
+branch: lane/plat-grain-sha
+range: f4ad59d5..0bd577a6 (1 commit, on next f4ad59d5)
+what: Reviewed SOURCE_SHA bump for scripts/workroom/provision.sh, 9abee2b9 -> b6281928. 8b35fd17's only change to that file drops expectedPreRoot from five delegation drafts. The overlay's three anchors each still match exactly once, and none of its hunks overlap that change. EVIDENCE is now resolved with realpath: a relative path made mini refuse relative consent paths.
+evidence: EXECUTED with art/bin of 428f7a17: "grain-backed resource birth native acceptance PASS", for both an absolute and a relative evidence dir (burst2-b:/srv/lanes/plat-quote-probe/logs/grain-accept*.log).
+breaks: none.

@@ -1,0 +1,10 @@
+lane: plat-journey-keys
+source: burst2-b:/srv/lanes/plat-journey-keys/src branch lane/plat-journey-keys (also pushed to burst2-a:/srv/git/minidregg.git); bundle hbox:/tank/dregg-build/claude-lanes/bundles/plat-journey-keys.bundle (+ work/platform/bundles/)
+branch: lane/plat-journey-keys
+range: e6b4e891..af1ac197 (ONE commit on main e6b4e891; harness-only, picks cleanly onto next)
+what: journeys: the hooks' copies into session folders are owner-private. `install -D` creates missing parents 0755 regardless of umask (measured, coreutils 9.4, umask 077), so $H/sponsor/keys etc. were world-readable and the client correctly refused them ("session folder keys must be an owner-private directory", shell/session_fs.rs private_folder). One helper native/resource-client/journey-private.sh `install_private MODE SRC DST` (mkdir -p -m 700 parent, then install) sourced by the 12 hooks that copy; all 30 `install -D` sites replaced. The client check is untouched.
+evidence: EXECUTED on published main e6b4e891 binaries (fetch-artifacts), logs in bundles/plat-journey-keys-logs.tgz (burst2-b /srv/lanes/plat-journey-keys/logs):
+  - fixed hooks: J0-J5 PASS; J12 139/139; K10C 184/184; JPRIV1 229/229 (fix.err, fix2.err).
+  - RED CONTROL: same binaries, unpatched hooks (worktree at e6b4e891): J12 FAIL row 3 "session folder keys must be an owner-private directory" (ctl.err). K10C and JPRIV1 failed the same way in DEPUTY-KERNEL's run (burst2-a /srv/lanes/kn2-so2/logs/i-journey3.err).
+breaks: nothing; harness only; nothing re-emits.
+notes: Owner DEPUTY-PLATFORM (journeys). Reported by DEPUTY-KERNEL (a05080ba6a9b148a8). JPRIV1 row 134 was the same cause, not the revoke path.

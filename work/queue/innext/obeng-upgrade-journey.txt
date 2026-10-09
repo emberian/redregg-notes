@@ -1,0 +1,10 @@
+lane: obeng-upgrade-journey (DEPUTY-OB-ENG ae08d68a5af5a4612, ROOT-assigned)
+source: burst2-a:/srv/git/minidregg.git refs/heads/lane/obeng-upgrade-journey
+branch: lane/obeng-upgrade-journey
+range: 7f39f99a..5f178a3f (2 commits on next 7f39f99a)
+what:
+- 45656ddc = the obeng-docs rewrite (942d360f) cherry-picked onto next. SUPERSEDES queue/obeng-docs.txt: land this range instead, or skip 45656ddc if obeng-docs already landed.
+- 5f178a3f journeys(objective): NEW objective-upgrade-native-journey.py (U1-U5: adopt, drain with upgradeConflict, abortDrained, migrate, rebirth); scripts/plants/drain-blind.py (Host plant); journey-rows gains `domain` and `upgrade` rows; object-record view shows live/rebirths/phase; activity_world quotes abortDrained's heap; OBJECTIVE-BEND.md limits paragraph closed + inbox-retention paragraph.
+evidence: EXECUTED with Hosts built from this lane: upgrade 38/38, domain 45/45; plants drain-blind (planted Host) red U2-U5, stranger-authority red U1-U5 (burst2-a /srv/lanes/obeng-d2/logs/up-*.out; plant Host /srv/lanes/obeng-plant, plant-b2.log). objective-frontend overview PASS on the final doc (logs/up-overview.log).
+breaks: nothing re-genesis; Host JSON view gains fields (additive). The runner now runs two more rows (domain ~45 rows, upgrade ~38 rows).
+notes: closes cv 01a1141b-d4f6 and 01a11664-eef3.

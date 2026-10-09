@@ -1,0 +1,26 @@
+lane: coord-audit
+source: burst2-a:/srv/git/minidregg.git lane/coord-audit (bundle hbox:/tank/dregg-build/claude-lanes/bundles/coord-audit.bundle, thin on 9031f1d9)
+branch: lane/coord-audit
+range: 9031f1d9..2e1f4f03   (ONE commit, ON TOP OF lane/burst2-saturate c1df1f08..9031f1d9: land that range first, or take both together)
+what: coordination-toolchain audit fixes (work/COORD-AUDIT-20261007.md). scripts/pipeline: slots gains --free (live free lane
+  slots, exit 1 when none) and a box.env fallback (a non-login ssh / timer / peer gate no longer reports 0/0); NEW build-anywhere
+  (free slot here, else push the lane to the shared remote and peer-build it in a free slot on the sibling box, log streamed back)
+  + peer-build; box-peer-gate admits `slots [--free|--json]` and `peer-build LANE SHA T...`; mk-lane.sh = the ONE copy (atomic
+  mkdir claim, box.env paths, --from next refuses by name without a next base, LANE-ORIGIN teaches slot.sh/lean-ask,
+  MK_LANE_PROBE for the advance's verify probe); advance-base-burst.sh + relay-base.sh keep NOT-READY through swap AND verify
+  (a failed replay is exit 8 with the reason, never a FROZEN base), refuse on NOT-READY / existing src.prev, stdin-fed remote
+  scripts; slot-mk.sh bounded 3 h wait; run-gate-burst.sh no mk-tools path; merge-gate-checks.sh LAKE_WRAP defaults to the gate
+  slot under swarm-build + every check under timeout (2 h, TIMEOUT = red); scripts/local-gates.sh per-gate timeout (3 h);
+  regen-pins.sh pipefail.
+evidence: EXECUTED on the boxes (installed copies = this commit's files): slots table/--free/--json on both; `ssh burst2-a slots
+  --free` through the gate from b; mk-lane concurrent-claim race -> one OK one REFUSED rc 65; timeout kills the whole tree
+  (0 survivors); build-anywhere forced cross-box: lane on b with its only slot held -> peer-coord-audit-t made on a (45 s) ->
+  `lake build Kernel.Job` replayed in a's free slot-2, rc 0, 58 s wall (log /srv/lanes/coord-audit-t/logs/peer-build-20261007T051853Z.log
+  before the test lane was removed; transcript in COORD-AUDIT-20261007.md §2). bash -n / py_compile on every file. NOT executed:
+  an advance/relay (would move a base) -- the keeper's next advance is the test; the probe path is the same mk-lane --verify.
+breaks: nothing persisted. Operational: /srv/warm-base/mk-lane.sh is now the repo's copy on both boxes; the keeper's
+  /srv/lanes/mk-tools/{merge-gate-checks,run-gate-burst,advance-base-burst,slot-mk}.sh were refreshed by rename (a running gate
+  keeps its old inode); /usr/local/bin/swarm-build names scopes swarm-<lane>-<pid> (first log line changes).
+notes: lands after burst2-saturate; SATURATE asked to fast-forward its branch to this so its `install` (rsync --delete) stops
+  removing build-anywhere/peer-build/the gate hunk from the boxes. Open for the keeper: a real `next` base per box or drop
+  `--from next` (COORD-AUDIT B6); gate-TAG.aborted on a gate that dies mid-way (C5).

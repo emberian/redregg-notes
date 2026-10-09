@@ -1,0 +1,8 @@
+lane: obeng-g4 (DEPUTY-OB-ENG abfb6abb71f0a4311, GPT-6 row G invoker half; cv 01a114bd-f0c3)
+source: burst2-a:/srv/git/minidregg.git refs/heads/lane/obeng-g4
+branch: lane/obeng-g4
+range: adbbdfb1..7dc7a372 (1 commit on next adbbdfb1)
+what: seats!: Turn.invoke gains discloseInvoker; call record gains `invoker` (hidden unless disclosed) via invocationCall; theorems callData_invoker_blind + pole callData_invoker_shown; seat COMMAND v3->v4; Host/SeatJson discloseInvoker; Broker/DrexBatch/BountyEscrow Call retyped.
+evidence: lake-slot seat closure+Host.Main+minidregg-host+consent 7365 jobs rc=0; world cohorts bounty 19/drex 9 PASS; EXECUTED seats acceptance 91/91 and bounty acceptance 190/190 with this lane's host+consent (burst2-a /srv/lanes/obeng-d2/logs/g4-*). Plant (invoker always shown) -> callData_invoker_blind red (g4-plant-invoker.log). Caveat: the final commit factors the call into `invocationCall` AFTER the build/journeys (same value; lean-ask clean at the tip; not rebuilt).
+breaks: seat COMMAND v4 (v3 refuses); call record type changed => seat contracts re-typed/re-published, worlds with seat contracts re-genesis; NativeAcceptedFixture seat-invoke rows regenerate (keeper).
+notes: possible conflict with obeng-d3 in docs/OBJECTIVE-BEND.md? (no: d3 touches MODULAR-TYPING.md only).

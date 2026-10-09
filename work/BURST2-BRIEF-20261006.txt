@@ -6,18 +6,15 @@ Hosts (ssh as user ember with the Mac's key; if the alias does not resolve, use 
 Both are in LON2 (London): NYC had stock for only one, so both moved. Expect transatlantic ssh latency.
 Warm base on each: /srv/warm-base (FROZEN at GitHub main 4ef4e808; cold build ~12.7 min, 9737 jobs). Frozen tip is also /srv/warm-base/FROZEN.
 Make a lane:  ssh burst2-b '/srv/warm-base/mk-lane.sh <lane>'  ->  /srv/lanes/<lane>   (add --verify: must show 0 modules compiled; mk-lane re-checks FROZEN/tip AFTER the copy and refuses if the base moved)
-Build:        LEAN_NUM_THREADS=4 SWARM_MEM_MAX=24G swarm-build lake build <targets>
-              swarm-build default cap is 24G per build; all builds on a box share swarm.slice, capped at 112G (box cap). A FULL umbrella cold build needs more:
-              use SWARM_MEM_MAX=64G inside a held slot (the cold build here ran at 64G).
-SLOTS (flock files, 4 per box at 24G, 4 x 24G = 96G < 112G slice). Take one before any Lean build or cargo of the native host:
-    flock -n /srv/build-slot-2 <cmd> || flock -n /srv/build-slot-3 <cmd> || flock /srv/build-slot-4 <cmd>      (burst2-a lanes)
-    flock -n /srv/build-slot-1 <cmd> || flock -n /srv/build-slot-2 <cmd> || ...slot-3, slot-4                    (burst2-b lanes)
-  burst2-a: /srv/build-slot-1 AND /srv/build-slot-mk (also created, for the merge keeper's 32G+ gate builds) are RESERVED for the merge gate; lanes NEVER take them.
-            Lanes on burst2-a have slots 2-4. There is no other slot: do not invent slots. See /srv/SLOTS.txt.
-  Caveat: the repo's scripts/pipeline/lib.sh + slot.sh only know TWO slots (1, then 2). On burst2-a, ember's ~/.profile exports PIPELINE_SLOT_1=/srv/build-slot-2 PIPELINE_SLOT_2=/srv/build-slot-3
-            so lane-check never touches the gate's slot (use a login shell / `source ~/.profile` in non-interactive ssh). The merge keeper must set PIPELINE_SLOT_1=/srv/build-slot-1 explicitly.
-            Do not call scripts/pipeline/slot.sh directly on burst2-a: it hard-codes slot-1.
-  Single-module `lake env lean` checks need no slot, BUT see lane-check below.
+Build:        /srv/pipeline/scripts/slot.sh swarm-build lake build <targets>   (or lake-slot <targets>; per-build cap 48G by default since 10-07 06:15Z -- 24G
+              SIGTERMed closure builds at Assurance.CommittedTerminalRealizer, 16 OOM kills in 6 h; the box-wide swarm.slice 158-160G is the real guard; no hand override needed. LEAN_NUM_THREADS from /srv/pipeline/box.env: 5 on a, 6 on b)
+              swarm-build default cap is 48G per build (was 24G); all builds on a box share swarm.slice, capped at 158-160G (box cap). A FULL umbrella cold build: SWARM_MEM_MAX=64G.
+SLOTS (flock files; the box's list is /srv/pipeline/box.env PIPELINE_SLOTS, read by every pipeline script WITHOUT a login shell).
+  [rewritten 10-07 05:30Z COORD-AUDIT; the old flock chains and PIPELINE_SLOT_1/2 caveat are gone] BUILD SLOTS (COORD-AUDIT 10-07 05:30Z, supersedes every flock chain): take a slot ONLY with `/srv/pipeline/scripts/slot.sh CMD` (first FREE lane slot of the box, polls all of them) or `/srv/pipeline/scripts/build-anywhere TARGET...` (a free slot on EITHER box). NEVER hand-type `flock -n A CMD || flock B CMD`: it blocks on B while other slots are free and re-runs a FAILED CMD in B (measured 05:00Z: 9 builds queued 8-36 min on slot-4 with slot-5/6 free). `/srv/pipeline/scripts/slots` shows holders, waiters, IDLE; fuser/lsof list waiters too, trust `slots`.
+  burst2-a: lanes = build-slot-2/3/4; build-slot-1 and build-slot-mk are the MERGE GATE's (slot.sh never offers them). burst2-b: lanes = build-slot-1..6.
+  Small rebuilds (<= 50 stale modules: lean-ask --reload, lane-check) route themselves to build-slot-small-1/2 at 2 threads and never queue behind a full build.
+  The merge keeper takes its slot with /srv/pipeline/scripts/slot-mk.sh (bounded 3 h wait, then a loud 75). See /srv/SLOTS.txt.
+  Single-module checks need no slot, BUT see lane-check / lean-ask below.
 Rebase onto current GitHub main inside your lane (git fetch https://github.com/emberian/minidregg.git main). The base advances via the merge keeper.
 INNER LOOP: after any fetch/rebase use /srv/pipeline/scripts/lane-check FILE.lean (installed on both from scripts/pipeline/, identical to the repo's copy; the whole
   scripts/pipeline/ directory is at /srv/pipeline/scripts since lane-check sources lib.sh). Bare `lake env lean FILE` reads STALE imported oleans after a rebase and gives false
@@ -44,3 +41,35 @@ imported module). Then add --reload: it rebuilds the stale imports in a build sl
 from stale oleans, so it replaces lane-check as the inner loop. Measured: proof edit -> feedback 3.6-7 s (lane-check) -> 0.35-0.4 s;
 an edit high in a file costs the re-elaboration of everything below it. Still build your affected closure ONCE before queueing.
 `lean-ask stop` ends the session; `lean-ask --help` for the rest.
+
+AMENDMENT 10-07 ~05:05Z (BURST2-SATURATE): box infrastructure. Binding; it supersedes the SLOTS paragraph and the "NOT installed" line above.
+Both boxes are configured by /srv/pipeline/box.env, which ~/.profile sources (use a login shell, or `. /srv/pipeline/box.env`). It sets the slots, LEAN_NUM_THREADS, sccache, SPK and the lake shim. Read /srv/SLOTS.txt.
+  burst2-b: lane slots /srv/build-slot-1..6, LEAN_NUM_THREADS=6. burst2-a: lane slots 2,3,4 at 5 threads; slot-mk and slot-1 are the GATE's.
+  Both: small-check slots /srv/build-slot-small-1,2 (2 threads) take rebuilds of <= 50 stale modules. swarm.slice is now 160G (it was 112G).
+  NEVER `flock /srv/build-slot-N cmd`. A named slot queues behind its holder while other slots are free: at 04:50Z, 8 lanes had waited 4-16 min on slots 1/3/4 with 2,5,6 free.
+    Use:  /srv/pipeline/scripts/lake-slot TARGET...      (lake build in a small slot or ANY free lane slot)
+          /srv/pipeline/scripts/slot.sh CMD...           (any free lane slot, for anything else)
+          /srv/pipeline/scripts/slots                    (holders, BUILDING/IDLE, waiters, the peer's free slots)
+  A slot held IDLE (<2% of one CPU across its process tree) for 15 min is RECLAIMED: its command is killed, and a note goes to /srv/lanes/<lane>/SLOT-RECLAIMED.txt.
+  lean-ask --reload and lane-check route small rebuilds to the small slots on their own. Batch your edits in lean-ask, and take a lane slot only for the final closure build.
+ARTIFACTS: /srv/artifacts/<tip>/ on burst2-a, mirrored to burst2-b. Each set has SHA256SUMS, PROVENANCE, every role (minidregg-host, minidregg-client-consent, mini, mini-keys, store, verifier, spk-host/hostd/broker/browser-proxy, grain-*, pay-watcher, ...), and the tip's lean env. A set is READY only after a smoke test passes: every binary runs, the consent companion answers, and journey J0+J1 pass. READY now: c1df1f08 (main=green).
+  If you did not change Lean, do NOT build a Host. Run:  /srv/pipeline/scripts/fetch-artifacts main DEST --link   (or a tip sha) -> DEST/manifest.json
+  The publisher (tmux `artifacts` on burst2-a) builds every line the merge keeper appends to /srv/artifacts/TIPS:
+  `<sha40> <main|next|green> <gated tree path>`. It resumes from the failed step and retries 3x.
+  Measured c1df1f08: host 207 s, consent 63 s, rust 134 s, smoke 6 s.
+JOURNEYS: the continuous runner (tmux `journeys` on burst2-b) runs the journey rows in parallel on scratch worlds for every new set. Tables are in /srv/journeys/<tip>/table.txt and red rows in red.txt.
+SCCACHE: one shared server per box, already in box.env. The registry cache is primed for every candidate crate (cargo --offline works), and the publisher re-primes it at each tip.
+TOOLS installed on both boxes: bc ripgrep bubblewrap bsdextrautils(column) xxd jq sqlite3 python3-nacl. SPK=/srv/pipeline/spk/sntfy.spk (sha256 bc424d5f...) is the package fixture-v4.sh expects.
+SHARED GIT REMOTE: burst2-a:/srv/git/minidregg.git. main/next/green are synced from GitHub every 5 min. Push your work there as lane/<name>:
+    on burst2-a:  git push /srv/git/minidregg.git HEAD:lane/<name>      on burst2-b:  git push burst2-a:/srv/git/minidregg.git HEAD:lane/<name>
+  Only lane/* pushes are accepted. hbox mirrors the remote every 10 min to hbox:/tank/dregg-build/claude-lanes/bundles/burst2-minidregg.git, so the remote counts as off-box.
+BOX-TO-BOX: each box reaches the other through a restricted key, aliases burst2-a / burst2-b. It allows git fetch, read-only rsync of /srv (paths relative to /srv), and git push to /srv/git only.
+    git fetch burst2-a:/srv/lanes/<lane>/src <branch>      rsync -a burst2-b:/lanes/<lane>/logs/ ./x/
+LAKE ARTIFACT CACHE (needs a tree whose lakefile.toml has `restoreAllArtifacts = true`; that is lane/burst2-saturate, QUEUED): a module any lane on the box already compiled from identical inputs is fetched, not compiled.
+  Measured: a sibling's `lake build Kernel` after the same Theory/Receiving edit took 2 s against 293 s.
+  Trees without that line keep a private cache, by design (scripts/pipeline/lake-shim/lake).
+Code: lane/burst2-saturate on the shared remote (f58bc691, 9031f1d9 on c1df1f08); bundle hbox bundles/burst2-saturate.bundle.
+AMENDMENT 10-07 05:35Z (BURST2-SATURATE): scripts/build-native-host.sh (via lane-build.sh host) used to write hidden-visibility objects into Lake's own .lake/build/ir/*.c.o.export.
+  Any later `lake build <exe>` in that tree then failed with undefined lp_* symbols.
+  The fix is b359088c on lane/burst2-saturate: the builder now writes *.c.o.native, and the binary bytes are unchanged.
+  Until you rebase onto it, do not run `lake build <exe>` in a tree where you ran lane-build host. If you must, first delete .lake/build/ir/**/*.c.o.export there.

@@ -1,0 +1,133 @@
+MERGE-KEEPER STATUS + ROUTINE (burst 2) -- written 2026-10-07 20:20Z by MERGE-KEEPER-3 (a7d2124b6a09fa293) for a FRESH keeper.
+Read this, then the last ~30 lines of MERGE-QUEUE.md ## LOG. Nothing else is required.
+
+=== HARD STOP (ROOT, 10-08 ~01:05Z): burst boxes being TORN DOWN ===
+  Nothing was gating at the stop. main = green = cfdaf64d (GitHub mirror holds it; shared remote on burst2-a is going away).
+  On next but NOT in main: 8f7ba8fc + 24e840db (kn2-trie-b1, lane/kn2-trie-b1 tip 9f35b372 on GitHub? -- only next 68f78d23
+  was mirrored) + pins 68f78d23. GitHub next = 68f78d23 holds them. Ungated: fixture not regenerated (it refuses at
+  index/trie-v2 until regen). Everything below that names burst2-a/burst2-b paths is MOOT once the boxes are gone.
+
+=== WIND-DOWN (ROOT, 10-08 ~01:00Z) ===
+  Stopped by ROOT for usage walls. No gate running. green = main = cfdaf64d (TOTAL red=0, evidence key 367973a30ae1),
+  both bases FROZEN cfdaf64d (verify 0, poison 0).
+  next = 68f78d23 = b31 UNGATED: kn2-trie-b1 (8f7ba8fc 24e840db, FLAG DAY index/trie-v2, re-genesis) + pins 68f78d23.
+  Gate tree burst2-a:/srv/lanes/mk-gate-b31 (src at 68f78d23, nothing built yet beyond the base). TIPS registered 68f78d23;
+  artifact-watch may have built /srv/artifacts/68f78d23d4bfc1b51c6b029146c8ba99c1e29479 meanwhile.
+  RESUME: when READY: bash /srv/lanes/mk-tools/fixture-from-artifacts.sh /srv/lanes/mk-gate-b31 68f78d23d4bfc1b51c6b029146c8ba99c1e29479
+  (expect ACCEPTED record=same, refused objectiveSource, 10/3), commit with semantic diff, regen-pins, publish next, then
+  PER-BATCH c..g. Owner for ledger reasons = DEPUTY-KERNEL ac28b7ecdcc777d66 (trie-b1 commit carries 4 successor lines).
+  Keeper id at wind-down: a41926dfb4ce97d3d. Workers address the keeper BY ID ("MERGE-KEEPER" does not resolve).
+
+=== STATE (update the line when it moves) ===
+  green = main = next = cfdaf64d (b28-b30 + both ledgers; TOTAL red=0; evidence key 367973a30ae1). No owed items.
+  b31 = next = 68f78d23 (kn2-trie-b1, FLAG DAY index/trie-v2). Gate tree burst2-a:/srv/lanes/mk-gate-b31 (at 68f78d23, TIPS registered 00:53Z 10-08). Fixture regen when /srv/artifacts/68f78d23.../READY, then pins, then gate.
+  Pick tree: burst2-a:/srv/lanes/mk-pick (git only, = next = cfdaf64d). Bases: burst2-a FROZEN cfdaf64d (verify 0, poison 0); burst2-b FROZEN cfdaf64d (verify 0, poison 0).
+  scripts-elab exceptions left: 3 covered (HypothesisLedger, ObjectiveManifest, ObjectiveManifestMathlib) + planted-api-faults
+  (KERNEL; KN2-TRIE successor ports it with per-fault expected errors).
+
+=== WHO ===
+  KEEPER = MERGE-KEEPER a41926dfb4ce97d3d (fresh, from 20:53Z; a7d2124b retired 20:45Z). Handoff sent to KERNEL, PLATFORM, OB-ENG, KN2-NEUTRAL-BIRTHS a0793682471128e24, KN2-TRIE-C a640a84085ac8ab63 (authority-undeclared PASS delivered). NOT sent to a1c9ff861 (retired).
+  DEPUTY-KERNEL ac28b7ecdcc777d66 | DEPUTY-PLATFORM aed11e1555308dbcb (a4b57de3 RETIRED) | DEPUTY-OB-ENG a7ce8f0f4cba1d908
+  BURST2-SATURATE af2e867c2857e6818 (pipeline/artifacts/cache) | ROOT = SendMessage "main".
+  RETIRED: keepers a6ac8c6c04f9b7d97 and a7d2124b6a09fa293 (me), row-e-d7 lane a1c9ff861bdc6702c, KN2-TRIE a1ff4ff3d11ba792c: never message them (messages wake them; a6ac8c6c woke once and picked a range).
+  Report to ROOT only on: green moved, a red you cannot route, a decision.
+
+=== REFS: THE SHARED REMOTE IS AUTHORITATIVE ===
+  burst2-a:/srv/git/minidregg.git holds main/next/green. Move them ONLY with
+     /srv/pipeline/scripts/shared-remote publish main|next|green <sha> <src repo on burst2-a>
+  (next may rewrite; main/green fast-forward only, refused otherwise). Its 5-min `sync` timer only fast-forwards from GitHub.
+  GitHub is a MIRROR: after every publish run, FROM THE MAC:
+     bash /Users/ember/dev/redregg/work/latitude-burst2-20261006/mirror-github.sh     (backs off 2->15 min on GitHub 500s)
+  The boxes have no GitHub credentials. In zsh, write "${T}:refs/heads/x" (bare $T:refs is a :r modifier!).
+  ssh: always `ssh -F ~/.ssh/burst2-20261006.conf burst2-a|burst2-b`.
+
+=== PER-RANGE (on each "queued <lane>" message or new work/queue/<lane>.txt) ===
+  1. Read the queue file (branch name there; messages sometimes give the wrong one -- check
+     `git -C /srv/git/minidregg.git for-each-ref refs/heads/lane/` and grep the tip sha).
+  2. In /srv/lanes/mk-pick: git fetch -q /srv/git/minidregg.git <branch>; bash /srv/lanes/mk-tools/pick.sh <commits oldest first>.
+     pick.sh STOPs on real conflicts. scripts/gates/scripts-elab.tsv conflicts are routine: keep only the lines BOTH sides keep
+     (each side's removals win). Semantic conflict / missing ROOT condition -> eject: move the queue file to queue/ejected/
+     with the reason appended, message the owner.
+  3. bash /srv/lanes/mk-tools/regen-pins.sh "<batch>: <lane>"  (surfaces + host closure; ALWAYS after any fixture commit too).
+  4. shared-remote publish next HEAD /srv/lanes/mk-pick; mirror-github.sh; mv queue/<lane>.txt queue/innext/; one LOG line;
+     one-line ack to the owner.
+
+=== PER-BATCH GATE ===
+  a. Tree: after a green, advance-base-burst.sh <green sha> <gated lane dir> (swaps that tree into the base), then
+     /srv/warm-base/mk-lane.sh mk-gate-bNN; in it: git fetch next; checkout -B main FETCH_HEAD; append
+     "<sha> next /srv/lanes/mk-gate-bNN/src" to /srv/artifacts/TIPS (ONLY for the tip you actually gate: the watcher builds
+     artifacts for the newest `next` line; a stale line costs ~11 min).
+  b. If the batch moves fixture bytes (any flag day), WAIT for /srv/artifacts/<sha>/READY, then
+     bash /srv/lanes/mk-tools/fixture-from-artifacts.sh /srv/lanes/mk-gate-bNN <sha>    (ALLOW_DESCENDANT=1 if HEAD moved by
+     non-Host commits). It must print ACCEPTED record=same, REFUSED ...objectiveSource, 10 triples, 3 records (the
+     authority's projection; generate.sh fails otherwise). Commit with a SEMANTIC DIFF message, then regen-pins.
+  c. cp scripts/pipeline/merge-gate-checks.sh /srv/lanes/mk-tools/; tmux new-session -d -s gate-bNN
+     "bash /srv/lanes/mk-tools/run-gate-burst.sh /srv/lanes/mk-gate-bNN <main sha> bNN"; wait (background until-loop on
+     logs/gate-bNN.done); read logs/gate-bNN.summary.
+  d. objective-proofs red = ledger: scripts/check-objective-proofs.sh proofs --draft <main>..HEAD; removed rows grouped by
+     commit (awk on build-logs/objective/draft-ledger.txt col 4/5). ROOT RULE: the keeper NEVER writes reasons for others'
+     removals. Send each owner its list (work/logs/bNN-removals-for-<OWNER>.tsv); they reply `<name>\t<reason>`,
+     reason = successor: <Full.Name>[, ...] [-- note] | derivable: ... | obsolete: ...  (the gate refuses anything else and
+     checks successor existence; private names resolve by full name). ~2 h deadline, then a red against the owner.
+     UNATTRIBUTED rows: ask the likely owner to confirm. Apply verbatim, append to scripts/gates/objective-contract-changes.txt,
+     proofs --pin, proofs (must say "no changes; 0 unadmitted"), commit with counts, regen-pins.
+  e. main fast-forwards to the newest tip that is green except for fix-forward reds (ledger, fixture-dependent rows, an
+     owner's in-flight red): publish main, record the reds as fix-forward against owners. green = publish green only at
+     TOTAL red=0 (after the ledger); print evidence-key (bash /srv/lanes/mk-tools/evidence-key .), log it.
+  f. After green: advance-base-burst.sh on burst2-a; relay-b2.sh <sha> from the Mac for burst2-b, then re-probe
+     (`/srv/warm-base/mk-lane.sh --verify mk-verify2-<sha8>`; first probe often compiles into the Lake cache) and scan:
+     grep -rlaE '\binitialize_(Host|Kernel|Theory|Compiler|Assurance|Effects|Pred|Selvage|Verify)_|\bl_Minidregg_'
+     /srv/warm-base/src/.lake/build/ir | wc -l   must be 0.
+  g. Rebase next onto the ledger/green commit: in mk-pick, git rebase --onto <green> <old base> main; publish next.
+
+=== ROOT RULES (10-07) ===
+  - Removal reasons as above (gate-enforced since a7078394; never author them for others).
+  - row-a3c x kn2-row-e-2: done (row-e-2 landed with both arms).
+  - scripts-elab exception list only SHRINKS; env scripts get values or leave; unbuilt modules go into a target or die.
+  - Fixtures/journeys/pins are fix-forward; never hold main for them.
+  - exe-roots on burst2-a (burst2-b's cache was poisoned; SATURATE's guard 4892ce21 is in; both bases scanned clean).
+  - Never git stash; never unfiltered cargo test -p; never pkill -f over ssh (it matched my own shell);
+    never delete trees you did not create (mk-gate-b5, mk-fxb7 on burst2-a are POISONED: never build from them).
+
+=== KEEPER SLIPS TODAY (so you don't repeat them) ===
+  test `publish main` that was a real fast-forward (main on an ungated tip ~30 s); TIPS registration of a stale tip (16 min of
+  artifacts); no regen-pins after a fixture commit (build-surfaces drift red); zsh glob-no-match aborting a whole mv line.
+
+(older status, a6ac8c6c, below)
+MERGE-KEEPER STATUS (burst 2; written 2026-10-07 ~11:35Z by the Opus keeper a6ac8c6c04f9b7d97)
+
+STATE
+  GitHub green = b86c7f1a (b20; bases there). main = next = 21fe3aa4 (b21, exe-roots red -> kn2-exe-roots-fix). Gate tree: /srv/lanes/mk-gate-b21. DEPUTY-KERNEL = ac28b7ecdcc777d66; DEPUTY-OB-ENG = a7ce8f0f4cba1d908. NOTE: advance-base-burst needs the LATEST logs/gate-*-umbrella.log green: after a fixture regen rebuild, save that rebuild log as gate-<tag>c-umbrella.log ending in "UMBRELLA rc=0".
+  bad460dd's only red: build-surfaces drift on Assurance/NativeAcceptedFixtureData.lean (regen-pins not run
+  after the fixture commit); b16 carries the regen. RULE: after EVERY fixture commit run mk-tools/regen-pins.sh.
+  Bases: burst2-a /srv/warm-base FROZEN f339586e; burst2-b FROZEN f339586e (relayed).
+
+TREES (burst2-a)
+  /srv/lanes/mk-gate-b14/src  = THE gate tree, advanced in place batch to batch (ff to next, umbrella, checks).
+  /srv/lanes/mk-pick          = git-only pick tree for the NEXT batch (no .lake); rebase onto main after each
+                                landing: git rebase --onto <newmain> <oldtip> main.
+  /srv/lanes/mk-tools         = gate tools (merge-gate-checks.sh is copied from the tree each batch).
+  Older trees mk-gate-b6, mk-gate-b10, .spent-* are mine (this keeper's) and removable.
+
+PER-BATCH ROUTINE (train; push every green-ish gate at once, fix-forward after)
+  1. queue/<lane>.txt + message -> fetch from burst2-a:/srv/git/minidregg.git (else bundle), pick.sh in mk-pick
+     (STOPs on conflicts in non-generated files and on absent commits); semantic conflicts -> eject to owner
+     (queue/ejected/ with reason) by message.
+  2. regen-pins.sh; push GitHub next (force); register tip in /srv/artifacts/TIPS ("<sha> next <tree>").
+  3. ff gate tree; umbrella in slot-mk (tmux gate-bN); merge-gate-checks.sh FROM=main TO=HEAD.
+  4. Fixture red after Store/command byte changes: when /srv/artifacts/<tip>/READY, run
+     mk-tools/fixture-from-artifacts.sh <gate dir> <tip> (never build a host in the gate tree), commit with the
+     semantic summary (generate.sh's projection check = the authority), THEN regen-pins.
+  5. objective-proofs red: `scripts/check-objective-proofs.sh proofs --draft FROM..HEAD`; read
+     build-logs/objective/draft-review.txt (removed + restated theorems, trace each to its commit message);
+     place UNATTRIBUTED lines by hand (sed the TODO reason); append draft-ledger.txt to
+     scripts/gates/objective-contract-changes.txt; proofs --pin; proofs (must say no changes); commit.
+  6. Push main; when TOTAL red=0, tag green; advance-base-burst.sh <tip> <gate dir> (burst2-a), then
+     scratchpad relay-b2.sh <tip> (also copied to work/latitude-burst2-20261006/relay-b2.sh) for burst2-b.
+  Commit messages with apostrophes: write to a file and scp (ssh '...' quoting breaks).
+
+OPEN
+  p7-row-f-step3: rebased by its lane as e919c5fe on 103c5b35, NOT yet re-queued (successor will build+journey).
+    When it lands on next: message DEPUTY-OB-ENG ae08d68a5af5a4612 (waits on it for inbox retention).
+  Deputies: KERNEL a05080ba6a9b148a8, OB-ENG ae08d68a5af5a4612, PLATFORM aed11e1555308dbcb (was a4b57de3, retired), OB-WAVE-BC aa87fd6aeda2ed2ce.
+  Journeys run by BURST2-SATURATE's runner on burst2-b against published sets (not by me).

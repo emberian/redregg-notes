@@ -1,0 +1,8 @@
+lane: kn2-fixture-replay
+source: burst2-a:/srv/git/minidregg.git
+branch: lane/kn2-fixture-replay
+range: 28232766..8c9e511c (one commit)
+what: Unblocks the b25 fixture regeneration. scripts/native-accepted-fixture/replay.lean called prepareFrom (deleted in b21). It now loads the prefix's directory and deployment authority (refused by name, exit 4, if either doesn't load), builds ServedBasis.Ground.full over them, and calls the same controller `prepare` that the node's submitInvokeLight calls on its light ground; then PhysicalShape and admit with the production oracle, unchanged. ResourceTransaction.prepare_light_full is the light/full agreement. Its scripts-elab.tsv line is removed in the same commit.
+evidence: burst2-a lane kdk-replay: lane-check elaborates replay.lean on 81934304 (258 imports rebuilt, private lake cache), rc 0. The only commit between 81934304 and 28232766 is the scripts-elab gate. EXECUTION = the keeper's generate.sh on the READY 428f7a17 artifacts; the fixture authority checks the projection.
+breaks: none; no theorem removed.
+notes: Written by DEPUTY-KERNEL itself (every worker was mid-range).

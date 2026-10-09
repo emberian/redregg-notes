@@ -1,0 +1,12 @@
+true
+jq: error: Could not open file /run/user/1001/p4.TGBJb9/r/steps/JP2/laptop/.mini/box/workspace/workspace.json: No such file or directory
+true
+true
+grep: /run/user/1001/p4.TGBJb9/r/steps/JP2/log/40.err: No such file or directory
+grep: /run/user/1001/p4.TGBJb9/r/steps/JP2/log/42.err: No such file or directory
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+FileNotFoundError: [Errno 2] No such file or directory: '/run/user/1001/p4.TGBJb9/r/steps/JP2/log/44.out'
+jq: error: Could not open file /run/user/1001/p4.TGBJb9/r/steps/JP2/decoded-tampered.json: No such file or directory
+jq: error: Could not open file /run/user/1001/p4.TGBJb9/r/steps/JP2/decoded-exact.json: No such file or directory
+true

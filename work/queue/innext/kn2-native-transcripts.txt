@@ -1,0 +1,8 @@
+lane: kn2-native-transcripts
+source: burst2-a:/srv/git/minidregg.git
+branch: lane/kn2-native-transcripts
+range: 7874cbcc..63b88be3 (two commits)
+what: (1) 1d642550: the native-transcripts census (red on main: Transcript.mk inside non-Transcript constants Receiving.Family.replayReceiver, lookupLoaded, ReceivingLawFixture.oracle) is green. New named CredentialSignatureIO.Transcript.empty (+ Transcript.empty_answers_nothing, #assert_axioms) used by both sites; NativeTranscripts.lean's scripts-elab line is removed (the row now runs the census). (2) 63b88be3: the b26 fix-forwards: scripts/kn2/index-tamper.lean listed as a full-loaded PROBE (kn2-trie-a); check-scripts-elab.sh's library roots default to `SimplexQualification Verify`, so neutral-birth.lean's import Verify.ResourceReserveBirthFixture is built.
+evidence: burst2-a lane kdk-replay on 7874cbcc (regenerated fixture), private cache: lane-check scripts/NativeTranscripts.lean rc 0 ("TRANSCRIPTS 2 triples 10"); `lake build Verify` cold 5 s, warm 1 s; lane-check scripts/kn2/neutral-birth.lean rc 0; full-loaded ratchet PASS (61).
+breaks: none in behaviour; no theorem removed. The scripts-elab row gains the Verify build (~5 s).
+notes: by DEPUTY-KERNEL. Clears b26's full-loaded-ratchet and scripts-elab (neutral-birth) reds.

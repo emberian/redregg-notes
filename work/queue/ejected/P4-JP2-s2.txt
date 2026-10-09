@@ -1,0 +1,42 @@
+lane: P4-JP2-s2 (P4-PLAN-SCOPED-REPLAY range 3, stage 2 = delegate; DEPUTY-PLATFORM reviewed PASS)
+source: burst2-b ember@67.213.117.179:/srv/lanes/plat-P4-PLAN-SCOPED-REPLAY/src ; bundle (Mac) /Users/ember/dev/redregg/work/platform/bundles/P4-JP2-s2.bundle (prereq 28f3b84d; the deputy mirrors it)
+branch: lane/P4-JP2-s2
+range: 91ed396d..198a74ed (1 commit), STACKED on P4 r1+r2 (91ed396d = P4-JP2 range 2 tip, already in next 41ca9444)
+what:
+  - Delegation signs its parent by id, not the whole authority-cell root:
+    - DelegateDeclaration and AttenuateDeclaration drop expectedPreRoot;
+    - DescentEvidence drops preRootExact (one shape);
+    - every other old root conjunct is a refuse-only admission gate.
+  - Thin consent signs delegations (checkDelegateThin; no served view; the child lineage is kernel-owned), with
+    delegateValues_exact, delegate_display_is_commit, delegate_gate_refuse_only and delegate_swapped_draft_refused.
+  - Delegation command frame v2: v1 refuses by name.
+  - StoreEpoch gains a 4th component, commands = "commands/v2". A pre-commands (3-component) label refuses naming
+    only the command codecs (seedEpoch_preCommands_refused; storeEpoch_commands pins it to the frame byte).
+  - The Rust thin path sends delegate-source with no views. 23 delegate-source producers re-emitted without
+    expectedPreRoot.
+  - THIN journey rows D1 (honest) and DF (planted fault).
+evidence:
+  - EXECUTED on burst2-b: closure build (Minidregg umbrella, Assurance.DeployedCredentialLifecycle,
+    Assurance.CredentialFoundationMigrationAudit, minidregg-host, both consent exes): 13379/13380 built, the only red
+    Assurance.NativeAcceptedFixture (logs/s2-lean.log); cargo build OK; client_consent::tests 8 pass (s2-test.log).
+  - Journey J0 J1 J2 J3 J4 THIN PASS (s2-run.out). THIN d1-* PASS.
+  - PLANTED df: the proxy log "slots-from: spliced … planD.plan" is asserted, then refused headerMismatch, nothing
+    signed (run-s2/steps/THIN/jthin-consent/rows.tsv, proxy.log).
+  - Old-epoch Store opened by this Host: refused "command codecs: Store commands/v1, this Host commands/v2"
+    (s2-epoch/open-old.txt).
+  - JP2 still red at row 19 (birth = stage 3, not in this range).
+  - Copies are in /Users/ember/dev/redregg/work/platform/bundles/evidence-jp2/s2/.
+breaks:
+  - Store seed label now has 4 components => EVERY Store/world re-genesises (older Stores refuse at open, naming
+    command codecs).
+  - Delegation command bytes v1 refuse by name.
+  - delegate-source JSON carrying expectedPreRoot refuses by name.
+  - AttenuateDeclaration/DelegateDeclaration/DescentEvidence shapes; thin frame-232 reply display is now per-draft
+    (Shown).
+notes:
+  - Red only from commands/v2 StoreEpoch (Assurance.NativeAcceptedFixture; keeper regenerates by procedure).
+  - CONFLICT NOTE: DEPUTY-KERNEL's store-open bump (kn2-store-open-2a) also edits StoreEpoch; the second to land
+    rebases and keeps both components.
+  - Stages 3 (birth) and 4 (JP2) are NOT in this range; they wait for the root.
+
+EJECTED 2026-10-07 01:25 EDT by MERGE-KEEPER: conflicts with kn2-store-open-2a (in next) in Compiler/DurableCheckpointCodec.lean: both add a 4th StoreEpoch component (accumulator "history/mmr-v1;spent/trie-v1" vs commands "commands/v2"), parse/label/differing/refusal theorems. Per its own CONFLICT NOTE the second lander keeps both: rebase onto GitHub next (5 components, both refusals named) and re-queue.

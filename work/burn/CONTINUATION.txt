@@ -1,0 +1,6 @@
+BURN-MUTATE continuation (2026-10-07)
+Files: mut-gen.py (520 mutants -> all.jsonl), mut-worker.sh (phase1: module build + umbrella/ObjectiveProofs), mut-journey.sh (phase2: lake-slot minidregg-host in lane, swap into symlinked copy of /srv/artifacts/cfdaf64d set, run journey rows via bash -c ". journey-rows; row_X"), mut-collect.sh (writes RESULTS.tsv/SURVIVORS.md here), p2.sh (starts phase-2 on given lanes; claims via jout/.claim-ID).
+State: burst2-b /srv/lanes/mut-sweep/{out,jout}; burst2-a same. Lanes mut-w0..w5 (b), mut-w6..8 (a), mut-t1 (b, control).
+Phase1: b shards 0-5 done; a shards 6-8 partly done (workers may still run; restart with /tmp/startw.sh style: mut-worker.sh skips finished ids).
+Phase2: ~148 build-green survivors on b; mut-w1 launched on them (control: unmutated host passes domain+upgrade rows; ~11 min per host build). Resume: on each box `cd /srv/lanes/mut-sweep; bash p2.sh mut-wN ...` then rerun mut-collect.sh locally.
+Row mapping per file is in mut-journey.sh rowsfor(). Deputies asked for final list with journey verdicts. Priority ids: m0223/4, m0128-31, m0100/1, m0188, m0210/1, m0386, m0402, m0009.

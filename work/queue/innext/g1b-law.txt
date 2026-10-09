@@ -1,0 +1,18 @@
+lane: g1b-law
+source: burst2-a:/srv/git/minidregg.git lane/g1b-law ; bundle hbox:/tank/dregg-build/claude-lanes/bundles/g1b-law-1.bundle
+branch: lane/g1b-law
+range: 0fc4e15f..d6fdc537   (base = next 0fc4e15f; one commit, G1b step 1)
+what: Kernel/ObjectLaw.lean (new): the enforced `law` fragment's meaning and compilation. LawExpr (eqC/leC/inC, eqR/leR/leROff,
+  monotone/writeOnce, not/and/or/implies over new.FIELD and request.subject/caller/height/turn), LawExpr.denote facts old new
+  read off the declared-state DATA (first scalar field of that name; request refs from Facts; not via Pred), compile : LawExpr -> Pred,
+  and compile_sound: views facts old new = some (o, n) -> fieldsPlain e -> eval (compile e) o n = e.denote facts old new
+  (via stateSlots_get_field / new_view_reads / old_view_reads_field). Inhabitant + both poles: tally_views_inhabited,
+  tally_meaning_decides (decide +kernel). ObjectRecord.plainName restated over toList (same meaning; String.all does not reduce
+  in the kernel, so no record-shaped state could be decided and no proof could read its characters).
+  NOTE: the follow-up (steps 2+3, coming as ONE range) moves LawExpr into Compiler/ObjectiveBendLaw.lean so the artifact can carry it.
+evidence: lean-ask clean on Kernel/ObjectLaw.lean + Kernel/ObjectRecord.lean at this tip (burst2-a /srv/lanes/g1b-law);
+  closure `lake build Kernel.ObjectLaw Kernel.ObjectiveActivity Kernel.ObjectiveCall Kernel.ObjectiveSend Kernel.ObjectiveActivityReceiver
+  Kernel.ObjectiveActivityCell Host.ObjectiveActivityJson` 3486 jobs rc=0 on the same commit over the previous next 41ca9444 (logs/b1.log).
+  Plant: compile leC as eq -> compile_sound red (logs/plant-leC-as-eq.log). All theorems #assert_axioms; no sorry, no #guard.
+breaks: nothing re-emits; no wire/record change; OBJECT-RECORD v1 bytes unchanged. No re-genesis.
+notes: independent of upgrade-turns (ObjectRecord hunk is the 2-line plainName body). Lands before g1b-law-2.

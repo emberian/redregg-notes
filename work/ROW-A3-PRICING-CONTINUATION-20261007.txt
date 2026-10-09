@@ -1,0 +1,45 @@
+ROW-A3 PRICING continuation (cv 01a115c9-d9b7), written by the retiring ROW-A3 worker, 2026-10-07 ~13:40Z.
+Foreman: DEPUTY-OB-ENG a7ce8f0f4cba1d908 (was ae08d68a5af5a4612). Keeper: a6ac8c6c04f9b7d97.
+Design (APPROVED): work/A3-INVARIANT-DOMAINS-DESIGN.md, section "Pricing the domain judgment".
+Foreman notes: use Host/CapacityJson (one codec; no copies exist); state in commits which escrows carry
+domainWork and that 19-lane envelopes REFUSE (they do: no default). Queue as its own range, message the keeper
+and the foreman (base..tip, lane, what was measured, the planted red).
+
+STACK: row-a3 (113bd02c) -> row-a3b-1 (55abcd6e) -> row-a3b-2 (6dcf3dee) are QUEUED. Pricing builds on 6dcf3dee:
+  branch lane/row-a3c on burst2-a:/srv/git/minidregg.git; WIP commit 4ae9d5ea (Capacity.domainWork, Tariff v3,
+  workOf_domainWork, CapacityJson lane, construction sites). lean-ask clean through Host/Main.
+  Pre-existing red, not ours: Assurance/ObjectiveZkStepTariff.lean lacks `extractTicks` (C3 era).
+Box: burst2-b:/srv/lanes/row-a3 (src currently holds 4ae9d5ea's files synced over HEAD 6dcf3dee:
+  `git fetch burst2-a:/srv/git/minidregg.git lane/row-a3c && git reset --mixed FETCH_HEAD` first).
+  Plant twins: row-a3-plant (domain-blind @6dcf3dee), row-a3-p2 (joined-drops), row-a3-p3 (joined-drops+keep-blind).
+  Scripts in /srv/lanes/row-a3: a3build-seq.sh LANES... (host+consent, retries exit 75), a3consent.sh LANE,
+  a3plantjourney.sh LANE PLANTS NAME, a3teeth.sh / a3teeth2.sh (Lean plants), a3journey.sh.
+  Local edit clone (Mac): scratchpad/rowa2/minidregg; scratchpad/rowa2/sync4.sh syncs into row-a3 (refuses mid-build).
+
+LEFT TO DO (in order, function first):
+1. Kernel/ObjectiveDomain: make judgeDomains return its units with its guards: judging domain d costs
+   |members d| + 1; indexing a posted domain costs |members d|. (Re-prove judgeDomains_parts/_sound with the pair.)
+2. AdmittedTurn.domainAllowance (Kernel/ObjectiveAdmittedTurn or ActivitySeatEnd), EVERY constructor, no wildcard:
+   invoke/birth/rebirth/adopt: request envelope.domainWork; deliver/exhaust/abortDrained: the turn's envelope
+   (escrow + extra; Delivery.envelope exists ~ObjectiveActivity:2525); deliverMessage: delivered.message.envelope
+   (paid as postage by the sending invoke); migrate: next.envelope.domainWork when migrateFee charges it
+   (migration isSome) else 0; registerDomain: its new envelope (step 4); create/publish/resolve/topUp/abandon: 0.
+3. ActivitySeatEnd.finish: after judgeDomains, refuse `.kernel (.domainUncovered units allowance)` (new Refusal)
+   when units > allowance. Theorems: finish ok -> units <= domainAllowance turn; with Tariff.workOf_domainWork and
+   the existing declared-charge theorems (submitter_charge_declared, exhaustion_charges_declared, ...): the payer
+   paid tariff.domainWork * allowance >= tariff.domainWork * units.
+   Re-check Step.domainsHold / judged_preserves (finish still ends with judgeDomains) and finish_domains.
+4. registerDomain: RegisterRequest gains envelope : Capacity + account + accountCapability; Registration posts a
+   Book fee batch (.fee account collector asset (workOf envelope)) like adoptBatch (Upgrade:337); Receiver Turn
+   wire -> COMMAND v9 -> v10; Host JSON "registerDomain" gains envelope/account/accountCapability; covers check.
+5. Clients: every capacity JSON must carry "domainWork" (activity_world.cap(), objective-*-native-acceptance.py
+   field lists, any Rust envelope builder: grep '"incidences"' in native/). Journeys must declare enough domainWork
+   where domains are touched (domain journey: cap(TICKS) + domainWork).
+6. Journey D6 in objective-domain-native-journey.py: a bank transfer with an envelope declaring domainWork 0 ->
+   refused domainUncovered; the same with enough -> installs; fee difference visible in the payer's balance.
+   Host plant scripts/plants/judge-free.py: judgeDomains reports 0 units (strip the theorem it falsifies) -> D6 red
+   (the 0-domainWork transfer commits). Lean tooth: plant units := 0 -> the coverage theorem red.
+7. Build honest + plant Hosts (a3build-seq.sh), run journeys, proofs ledger draft, queue row-a3c, message keeper+foreman.
+
+CV TASKS OPEN FROM A3: 01a115c9-d990 (domain leave/change), 01a115c9-d9b7 (THIS pricing), 01a11633-cf8e (sumEq
+circuit lowering), 01a11633-cfaa (shell grammar for sumEq).

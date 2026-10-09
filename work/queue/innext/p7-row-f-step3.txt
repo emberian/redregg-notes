@@ -1,0 +1,41 @@
+lane: p7-row-f-step3
+source: burst2-a:/srv/lanes/plat-p7-opids/src (re-verified there) ; shared remote burst2-a:/srv/git/minidregg.git lane/p7-row-f-step3 ; bundle hbox:/tank/dregg-build/claude-lanes/bundles/p7-row-f-step3.bundle (logs: bundles/p7-row-f-step3-logs.tgz)
+branch: lane/p7-row-f-step3
+range: 103c5b35..e919c5fe (1 commit, on next 103c5b35). RE-QUEUED: 4407d9f9 was ejected over a COMMAND v9 clash with row-a3 487b54fb (registerDomain); rebased as e919c5fe with COMMAND v10 carrying both, v9 refusing
+what: GPT-6 row F step 3, the bounded prepaid continuation allowance.
+  Sending side:
+  - A send may carry `allowance` (send {to, method, args, allowance?}, absent = 0). It is escrowed with the postage in the queue's purse.
+  - The invoker signs a cap: InvokeRequest.allowance (COMMAND v10, Host JSON "allowance") bounds the sum over its sends, else `allowanceExceeded`.
+  - notDeliverable relaxes ONLY for a message that continues (Inbox.Message.continues: depth < Inbox.continuationDepth=3 and allowance >= postage). deliveredPlans message is then [call, send].
+  - A sending method at the depth bound is refused `continuationDepth 3` at the send.
+  Delivery side:
+  - ObjectiveSend.continueMessage posts the delivered call tree's sends out of the allowance only, paid from the popped purse: depth bound, fan-out Inbox.fanOut=4 (`fanOut 4`), cost (`allowanceExceeded need held`), then Mail.send's own checks.
+  - A refusal decides the slot broken, commits no write and refunds the allowance in full. The postage paid the attempt.
+  - The unspent remainder (allowance - spent) is refunded exactly.
+  - Forward, stop and cancel refunds are postage + allowance.
+  Theorems:
+  - ONE escrow_conservation over the committed batch's Operation.posting amounts (plus escrow retained in the same purse). It has three conjuncts: send credit = escrow; delivery = popped escrow + pipelined escrow, with spent <= allowance; cancel refunds = escrow + pipelined escrow.
+  - MessageDelivery.onward_bounded and chain_total: at most fanOut onward messages, only below depth, each one hop deeper; a chain holds at most sum F^k messages.
+  Kernel hunks APPROVED by DEPUTY-OB-ENG (ae08d68a5af5a4612).
+evidence: RE-VERIFIED AT e919c5fe, all EXECUTED on burst2-a:/srv/lanes/plat-p7-opids/logs (logs tgz: hbox bundles/p7-row-f-step3-logs.tgz, bundle p7-row-f-step3.bundle = 103c5b35..e919c5fe):
+  - lake build Kernel Host ObjectiveProofs minidregg-host minidregg-client-consent: green, 7532 jobs (full-s3.log).
+  - Send S1-S18: 153 rows, failed [] (send-s3*). Call: 57/57 (call-s3*).
+  - Plants bounce-twice, roomy-allowance, fan-four, short-chain and cancel-bare: PLANT-RESULT red on exactly S14, S15, S16, S17, S18, each asserted applied (send-s3-<plant>*).
+  - The v9 pole is named as ObjectiveActivityReceiver.command_v9_refuses, which checks green against e919c5fe and lands with the OPIDS step stacked on this one.
+Earlier evidence at 4407d9f9 (burst2-b:/srv/lanes/p7-row-f/logs):
+  - lake build Kernel Host ObjectiveProofs minidregg-host minidregg-client-consent: green post-rebase, 7530 jobs (step3-full-rebased.log).
+  - Send journey S1-S18: 153 rows, failed [] (send-final3*).
+  - Call journey: 57/57 (call-final3*).
+  - World plants, each asserted applied: bounce-twice, roomy-allowance, fan-four, short-chain and cancel-bare give PLANT-RESULT red on exactly S14, S15, S16, S17 and S18 (send-fpl-*; also pre-rebase, send-pl-*).
+  - Theorem plants: refunding the whole allowance after spending turns exactly escrow_conserves and escrow_conservation red (plant-theorem-refund.log). Dropping the allowance check breaks continueMessage_cases and everything downstream of it (plant-theorem-allowance.log).
+breaks:
+  - INBOX frame v1 -> v2 (Message gains allowance, depth); v1 refuses by name (Inbox.v1_refuses).
+  - ANSWER-SLOT v3 -> v4 (its queued messages are v2); v3 refuses (AnswerSlot.v3_refuses).
+  - ACTIVITY COMMAND v9 -> v10 (invoke carries allowance; v10 also carries row-a3's registerDomain); v9 and older refuse to decode.
+  - So RE-GENESIS any world holding inboxes or slots, and re-sign invoke commands.
+  - CallRefusal gains continuationDepth, fanOut and allowanceExceeded (constructor indices shift).
+  - Outgoing, SendPlan and InvokeRequest gain allowance. MessageDelivery.outcomeExact is replaced by runExact + continued (consumers use MessageDelivery.ran / posts_of_run).
+  - The statement changes are listed in the commit message. The objective-proofs manifests need a re-emit (ledger rows not drafted by me).
+notes: objective-proofs: keeper re-emits (01:20 amendment). Lands after step 2 (c0da309a, already in next). The NativeAcceptedFixture pins may move (inbox/slot/command frames) and need the keeper's fixture regen. DEPUTY-OB-ENG starts inbox retention (-1351/-1390) on top once this is in next; tell it when it lands.
+
+RESOLVED (was EJECTED 11:30Z, record in ejected/): conflicts on next with row-a3 (113bd02c) in Kernel/ObjectiveActivityReceiver.lean: both bump activity COMMAND v8 -> v9 (registerDomain vs invoke allowance), and invoke arity differs in `authorized`. Rebase onto GitHub next; take v10 with both changes.

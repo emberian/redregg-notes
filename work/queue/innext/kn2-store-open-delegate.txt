@@ -1,0 +1,8 @@
+lane: kn2-store-open-delegate (Store stage (i)(b): delegate on the light route; DEPUTY-KERNEL item 4)
+source: burst2-a:/srv/git/minidregg.git lane/kn2-store-open-delegate
+branch: lane/kn2-store-open-delegate
+range: e4902421..4927d5a2 (1 commit; rebased). LANDS AFTER kn2-store-open-invoke.
+what: delegate on the revoke/invoke pattern: one dispatch on the light route, full receive deleted, agreement over the declared keys, undeclared keys refused by name.
+evidence: built and journeys as part of the renounce tip below (kn2-dlg logs/ren-umb3.log EXIT 0; J0-J8, JPRIV1, JROT, JAUDIT PASS); authority-undeclared plant (delegate tx/marker refused by name) EXECUTED (kn2-dlg logs/fin-authority-undeclared.log). Reviewed by DEPUTY-KERNEL.
+breaks: delegation controller/receiver signatures; no re-genesis.
+notes: renounce stacked on this.

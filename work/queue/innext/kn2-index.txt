@@ -1,0 +1,8 @@
+lane: kn2-index
+source: burst2-a:/srv/git/minidregg.git
+branch: lane/kn2-index
+range: 54f9f731..c165d548 (one commit)
+what: Theory layer for the unified authenticated trie. New Theory/AuthTrieRange.lean (imported from Theory.lean): tree_injective (same tree from WF entries -> same key/values, or a Collision), reveal_sound (an accepted prefix reveal answers exactly the members under the prefix, or a Collision; needs fixed path length L), climb_digest_sound, mem_strip, mem_select and select_wf, plus decided poles (honest reveal accepted; omitted member, forged value, added non-member, member forged under an empty subtree and withheld leaf all refused). Theory/AuthTrie.lean header: the false claims of verify_complete/insertRoot_eq are removed and the gap is stated (cv 01a11741-1af8 stays open).
+evidence: lake-slot Minidregg Theory Host.Main Compiler.DurableStoreAudit + every [[lean_exe]] root, 13486 jobs EXIT 0 (burst2-a /srv/lanes/kn2-rc/logs/ix-umb1.log). #assert_axioms on all. DEPUTY-KERNEL read tree_injective and reveal_sound.
+breaks: none (no consumers; no format change). The objective-proofs ledger gains rows.
+notes: Foundation for the flag-day unified trie (spent + tx + keyed index, cv 01a11742-712b), which follows as its own range.

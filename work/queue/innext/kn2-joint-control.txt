@@ -1,0 +1,8 @@
+lane: kn2-joint-control
+source: burst2-a:/srv/git/minidregg.git
+branch: lane/kn2-joint-control
+range: 73896c73..4e938439 (one commit)
+what: JointControlBootstrapBundle.admit predicts the post-birth prefix with DurableCheckpoint.prepare + Loaded.extend (the step a receive takes) instead of a genesis loadImage replay over image.append intent on every bundle. predictedExact keeps its statement (predicted.durable.image = opened.durable.image.append intent). admit still takes Opened (its only caller is the ratchet-listed replay walk); its birth admission moves with the birth port.
+evidence: burst2-a lane kn2-joint: lake-slot umbrella + DurableStoreAudit + every [[lean_exe]] root, 13484 jobs EXIT 0 (logs/j-umb1.log). EXECUTED plant: a prediction that skips the record turns predictedExact red (logs/j-plant-skip.log). Ratchet 67 -> 66.
+breaks: none in shape; full-loaded-callers list shrinks by one. Nothing re-emits.
+notes: kn2-carried (4e938439..5d20fd5e) stacks on this and follows once PLATFORM clears its Host hunks.

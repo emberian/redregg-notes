@@ -1,0 +1,8 @@
+lane: kn2-d7-authority
+source: burst2-a:/srv/git/minidregg.git
+branch: lane/kn2-d7-authority
+range: c180ed50..7bc31485 (one commit)
+what: Authority-Change for b28: the fixture authority's first-claim price moves 100001 -> 321290 (first.pay.computeSteps, first.charge.proofWork), derived from the tariff. Acceptance tariff base 1, sourceTicks 1, replayBytes 61, coreBytes 16; capacity = ENVELOPE (sourceTicks 100000) + world/NativeReceipt.obend's front-end quote (replayBytes 1741 = its byte count, coreBytes 7193 from publication.json). 1 + 100000 + 61*1741 + 16*7193 = 321290. Trailer: `Authority-Change: GPT-6 row E D7 ...`.
+evidence: arithmetic checked; publication.json frontEnd read on burst2-a (/srv/lanes/kn2-row-e-d7/j/native/publication/out/publication.json: replayBytes 1741, coreBytes 7193); wc -c world/NativeReceipt.obend = 1741. lane-check of the authority module is clean.
+breaks: none beyond the authority values. It unblocks generate.sh for b28.
+notes: by DEPUTY-KERNEL (authority owner).

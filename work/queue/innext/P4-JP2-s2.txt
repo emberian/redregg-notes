@@ -1,0 +1,42 @@
+lane: P4-JP2-s2 (P4-PLAN-SCOPED-REPLAY range 3, stage 2 = delegate; DEPUTY-PLATFORM reviewed PASS; re-queued after ejection, rebased)
+source: burst2-a:/srv/git/minidregg.git lane/P4-JP2-s2 (pushed) ; burst2-b ember@67.213.117.179:/srv/lanes/plat-P4-PLAN-SCOPED-REPLAY/src ; bundle (Mac) /Users/ember/dev/redregg/work/platform/bundles/P4-JP2-s2.bundle (prereq 5f2b951f)
+branch: lane/P4-JP2-s2
+range: 5f2b951f..81bc2eb5 (1 commit; base = GitHub next 5f2b951f, which contains P4 r1+r2, kn2-store-open-2a and KN2 (ii))
+what:
+  - Delegation signs its parent by id, not the whole authority-cell root:
+    - DelegateDeclaration and AttenuateDeclaration drop expectedPreRoot;
+    - DescentEvidence drops preRootExact (one shape);
+    - the other old root conjuncts are refuse-only admission gates.
+  - Thin consent signs delegations (checkDelegateThin; no view; lineage kernel-owned), with delegateValues_exact,
+    delegate_display_is_commit, delegate_gate_refuse_only and delegate_swapped_draft_refused.
+  - Delegation command frame v2: v1 refuses by name.
+  - StoreEpoch gains a 5th component, commands = "commands/v2", and the label is now parsed BY NAME:
+    - parts are name/version: state-key, schema-refs, log-tag, history, spent, checkpoint, commands;
+    - an absent component reads "none", and a missing or differing one refuses naming only itself;
+    - poles: seedEpoch_noCommands/commandsV1/noAccumulator_refused; storeEpoch_commands pins the frame byte.
+  - Rust thin delegate path. 23 delegate-source producers re-emitted. THIN rows D1 and DF.
+evidence:
+  - EXECUTED on burst2-b at 81bc2eb5 (before the message-only amend): the closure (Minidregg umbrella,
+    Assurance.DeployedCredentialLifecycle, Assurance.CredentialFoundationMigrationAudit, minidregg-host, both consent
+    exes) built except Assurance.NativeAcceptedFixture alone (s2r-lean.log). cargo resource-client builds;
+    client_consent::tests 8 pass (s2r-test.log).
+  - J0 J1 J2 J3 J4 THIN PASS (s2r-run.out); THIN d1-* PASS.
+  - PLANTED df: proxy "slots-from: spliced … planD.plan" asserted, then refused headerMismatch, nothing signed
+    (run-s2r/steps/THIN/jthin-consent/rows.tsv).
+  - Epoch, executed on this tip's own Store, each plant asserted before the open (s2r-epoch/*/plant.txt, open.txt):
+    - control: opens;
+    - commands/v1: refused "command codecs: Store commands/v1, this Host commands/v2" only;
+    - checkpoint/v2: refused "history accumulator: … checkpoint/v2, this Host … checkpoint/v3" only.
+  - JP2 first red row 19 (birth = stage 3; not in this range).
+  - Copies: /Users/ember/dev/redregg/work/platform/bundles/evidence-jp2/s2r/.
+breaks:
+  - Seed label gains commands/v2 => EVERY Store/world re-genesises (older Stores refuse naming command codecs).
+  - Delegation command bytes v1 refuse by name.
+  - delegate-source JSON with expectedPreRoot refuses by name.
+  - StoreEpoch shape (5 fields), labelBeforeAccumulator deleted (by-name parse).
+  - Attenuate/Delegate/DescentEvidence shapes; thin frame-232 display per draft (Shown).
+notes:
+  - Stacked on P4 r1+r2 (already in next). Red only from the commands/v2 StoreEpoch bump: Assurance.NativeAcceptedFixture;
+    the keeper regenerates it by procedure.
+  - The conflict with kn2 is resolved: both components are kept; KN2-STORE-OPEN reviewed the by-name parse, and their
+    history-tamper older-epoch plant still holds.

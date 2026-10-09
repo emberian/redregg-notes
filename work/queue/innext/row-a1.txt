@@ -1,0 +1,13 @@
+lane: row-a1
+source: burst2-a:/srv/git/minidregg.git lane/row-a
+branch: lane/row-a
+range: 424a5d94..c5ccff1e   (base = next 424a5d94; 1 commit)
+what: GPT-6 row A, A1. ObjectiveCall.active_frame_view_stability: a call subtree (`exec` of `.enter`) leaves the state of
+  every object on the stack it was entered from unchanged, and appends only writes with before = viewed. So no descendant
+  changes a frame's own object's state between its entry and its frameReturn; that is the property the re-entry guard
+  buys. Also ObjectiveSend.runMessage_writes_from_view, the same for a delivered message's call tree.
+evidence: burst2-a:/srv/lanes/row-a/logs/build2.log: lake-slot `Kernel Host ObjectiveProofs` 3829 jobs EXIT 0 at c5ccff1e.
+  Tooth: logs/plant-reentry.log. With the re-entry guard removed from exec (the DAO mutant), exec_invariant,
+  active_frame_view_stability, invocation_writes_from_view and reentry_refused go red (11 errors); restored after.
+breaks: none (theorems only). Re-emits: objective statement/axiom snapshots (keeper re-pins).
+notes: independent of other lanes.

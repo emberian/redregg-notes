@@ -1,0 +1,8 @@
+lane: kn2-carried
+source: burst2-a:/srv/git/minidregg.git
+branch: lane/kn2-carried
+range: 4e938439..5d20fd5e (one commit; stacks on kn2-joint-control)
+what: CarriedApplicationProvenance.selectIssue (request path: carried dispatch, enrollment authoring, the carried suffix walk) reads the issue record at index+1 through a Reader on the source Store (new AuditedSource.reader, the source's own key and log start), verified against the source head, instead of genesis-replaying the source Store to that prefix. The receipt root is the verified entry's root. New theorem CarriedIssue.receipt_root_verified. A missing issue is a named error; a Reader IO failure throws.
+evidence: burst2-a lane kn2-joint: umbrella + all [[lean_exe]] roots EXIT 0 (logs/c-umb2.log). EXECUTED plant: taking the root from the entry's chain instead of its root turns receipt_root_verified red (logs/c-plant-root.log). history-tamper PASS (logs/c-tamper.log). Ratchet 66 -> 65. NOT RUN: there is no carried end-to-end probe, because no carry fixture exists.
+breaks: selectIssue and CarriedDispatchProvenance.select are IO; the dispatch and session-enrollment authoring prepare/assemble are ExceptT String IO; Host/Main ops 36 and 82 call them with .run. The objective-manifest rows for CarriedIssue fields, selectIssue/select and the authoring defs change (the commit message names them; the keeper's ledger needs them). Nothing re-emits.
+notes: Host hunks cleared by DEPUTY-PLATFORM a4b57de. Follow-up cv 01a1172f-3ca5-73f0-ab32-69522274b827 (operator visibility behind the uniform 'undisclosed' refusal). Deferred: light carry cv 01a1172e-43a0.

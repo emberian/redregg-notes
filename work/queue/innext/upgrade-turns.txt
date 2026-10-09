@@ -1,0 +1,30 @@
+lane: upgrade-turns
+source: burst2-a:/srv/git/minidregg.git lane/upgrade-turns ; bundle hbox:/tank/dregg-build/claude-lanes/bundles/upgrade-turns.bundle (prereq c1df1f08)
+branch: lane/upgrade-turns
+range: c1df1f08..8b4aff5c   (base = burst2-a mk-gate-b4 main c1df1f08; whole range, 5 commits)
+what: The governed object upgrade (brief UPGRADE-BRIEF-20261005 §2).
+  36384658: OBJECT-RECORD v2 (declared state type, live counters per class, upgrade phase) and the turns ADOPT / MIGRATE /
+  abortDrained / REBIRTH with the drained-write judgment.
+  10887703: the §2 theorems and §4 teeth on the admitting functions.
+  bc5f1f83: the native route plus JSON and TallyV2.obend.
+  af6ac150: key-checked state/object reads, signed births, and the drained judgment on call trees (drainConflict).
+  8b4aff5c: new module Kernel/ObjectiveUpgradeInvariant (in ObjectiveProofs). It proves live_counts and
+  migrate_cannot_fail over every Reachable world, with no premise on the state; the old theorem 6 is renamed
+  migrate_admitted_of_migratable.
+  Rebase resolutions:
+  - deliver decides runsPin/awaitingRebirth before settle and keeps kn2's heapUncovered where it was; the order is in
+    36384658.
+  - Send: the existing runMessage_writes_pinned is renamed pin -> activePin (duplicate dropped).
+  - runMigration runs under segmentLimits.
+evidence: burst2-b:/srv/lanes/upgrade-turns-b4/logs/build1.log: `lake build Kernel Host ObjectiveProofs` 3821 jobs EXIT 0 on
+  the c1df1f08 tree (identical tree to 8b4aff5c). Plant: judgeDrained removed from the delivery path turns
+  Delivery.upgradable -> AdmittedTurn/Step/reachable_upgradable/live_counts/migrate_cannot_fail red
+  (logs/plant-delivery-drained.log there; the original-base plant and restore logs are in
+  hbox:.../bundles/upgrade-turns-2-logs.tgz). All theorems are under #assert_axioms; no sorry.
+breaks: Activity COMMAND v5 -> v6 and OBJECT-RECORD v1 -> v2 (frames refuse the old version); re-genesis.
+  New refusals: draining, awaitingRebirth, upgradeConflict, drainConflict, samePin, rebirthsPending, liveActivities,
+  notDraining, migration*. Re-emits: objective statement/axiom snapshots, Host closure pin, build surfaces (keeper
+  re-pins).
+notes: A clean rebase onto next 9e821ae9 exists: lane/upgrade-turns-next = c2c6510a (same shared repo; no conflicts;
+  not built: burst2-b slots were full). Open question for the foreman: abortDrained has no heapCovered check
+  (kn2-forcing added one to deliver/exhaust).

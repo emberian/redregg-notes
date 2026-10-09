@@ -1,0 +1,53 @@
+ROW A continuation (from UPGRADE-TURNS-2, 2026-10-07; written near its context ceiling, about 330K)
+Base: next 424a5d94 (upgrade-turns landed there). A1 is queued as row-a1 = 424a5d94..c5ccff1e (burst2-a:/srv/git/minidregg.git lane/row-a).
+Lane tree: burst2-a:/srv/lanes/row-a (logs/). Build: /srv/pipeline/scripts/lake-slot TARGETS (after `. /srv/pipeline/box.env`);
+inner loop: /srv/pipeline/scripts/lean-ask check FILE (exit 3 -> --reload).
+
+GROUND TRUTH (Kernel/ObjectiveCall.lean at 424a5d94):
+  structure Grant where object : Nat; method : String; uses : Nat            (~line 343)
+  spendGrant object method : List Grant -> Spend (.ungranted | .spent grants | .exhausted)   (~356)
+  exec .enter (~515): root frame (stack = []) gets authority.signer; a nested frame spends a grant naming (target.value,
+    method). Ungranted -> subject none; exhausted -> .grantSpent. Ctx has subject, height, caller (callerOf authority stack).
+  Journal.grants carries the remaining grants; InvokeRequest.grants is encoded by grantStream (o, m, u) inside the
+    COMMAND (Kernel/ObjectiveCall ~811-820). Host JSON: Host/ObjectiveActivityJson (grep grants).
+  exec_invariant (~1116) is the induction everything else uses. A new journal field must be threaded through it.
+
+A2 DESIGN SKETCH (mine, not reviewed):
+  Grant v2 = { object, method, code : Digest (the target's activePin; a frame whose target runs another package is not
+    granted), args : ArgsBound, caller : Option Nat (the frame's direct caller must be this object; tree-position
+    restriction), uses : Nat }.
+  ArgsBound = .exact (digest of the canonical Data encoding of the args)
+            | .bounded (recipient : Option (String x Data)) (cap : Option (String x Nat)).
+    Under .bounded, a named field must equal the recipient value, and the cumulative sum of a named Nat field across the
+    grant's uses must be <= cap. The grant keeps `spent : Nat` for that sum. That is a bounded constraint, not a widening:
+    no wildcard.
+  Matching: spendGrant takes (object, method, code, args, caller). A grant that names (object, method) but mismatches on
+    code/args/caller/cap is NOT spent and the frame gets subject none. Do not refuse (refusing would let a grant act as an
+    oracle). Open question: refuse by name instead? Pick one and say why.
+  Theorem to aim for: record each delegated frame (subject = some) in Journal.delegations (grant index, frame args digest);
+    "every frame receiving delegated authority has a matching unconsumed authorization": for each grant index i, the
+    count of delegations with i is <= the initial uses_i, each delegation's (target, method, code, args, caller) matches
+    grant i, and the bounded sums are <= cap. Delegation (request/subject) stays separate from consent (law): the frame's
+    law still judges every write.
+  Breaks: grants wire -> COMMAND version bump (activity COMMAND is v6 after upgrade-turns: check; invoke's own codec
+    frame too). Host JSON fields, native client, objective-call-native-journey (C6 authority, C7 facet) must re-emit.
+  Tooth: a planted spendGrant that ignores args/code -> the theorem goes red, and a journey case (a grant for amount 10
+    used for 20) commits under the plant.
+A3: design FIRST to /Users/ember/dev/redregg/work/A3-INVARIANT-DOMAINS-DESIGN.md, then message the foreman. Not started.
+Open item for the foreman: abortDrained has no heapCovered check (kn2-forcing put one in deliver/exhaust).
+Note: exec's .run uses config.limits for runCounted, not segmentLimits. It is kn2-forcing's call whether frames
+  should use segmentLimits.
+
+FOREMAN DECISIONS (DEPUTY-OB-ENG, 2026-10-07):
+- A grant that names (object, method) but mismatches on code/args/caller/cap is REFUSED BY NAME (`grantMismatch (object method)
+  (field : code|args|caller|cap)`), the whole call tree co-failing (call = atomic co-failure). Reasons: (1) doctrine: a refusal is
+  named, never a silent downgrade; running the frame subjectless would make a mismatch look like a law refusal (or succeed
+  where the callee's law ignores the subject), which is the "refusal renders as the expected verdict" class; (2) the oracle
+  concern is weak: the grant is authored by the signer and the mismatching args come from the caller's own program, so the
+  refusal tells the submitter nothing it did not choose; (3) consistent with `.grantSpent` for an exhausted grant.
+  A frame whose (object, method) matches NO grant stays as today: subject none (ungranted is not an error: delegation is opt-in).
+- `abortDrained` gets the same `heapCovered` check as deliver/exhaust (it resumes a segment): do it in the A2 lane, tiny.
+- exec `.run` under config.limits: a call frame starts from a fresh machine state (heap 0), so config.limits = segmentLimits
+  config initial; state that as a lemma rather than changing behaviour, or switch to segmentLimits if a frame can start
+  from a non-empty heap (check).
+- A2 implementation goes to the next free Opus veteran in my team (G1B-LAW when its row-G item lands); A3 design: foreman.

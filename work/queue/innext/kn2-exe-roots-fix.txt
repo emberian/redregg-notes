@@ -1,0 +1,8 @@
+lane: kn2-exe-roots-fix
+source: burst2-a:/srv/git/minidregg.git
+branch: lane/kn2-exe-roots-fix
+range: 0b92ac08..c02229c1
+what: Fix-forward for the exe-roots gate red on b21. The generic-simplex source path reads its history through a Store Reader: JointOrderedSourceReceiver.Applied carries the Store identity and its Reader (new Result `uncertain` = appended but the Reader is unreadable -> reload, not a refusal); GenericSimplexParticipant reloads with the loaded Store's Reader (an unavailable Reader is named); JointSourcePrefixValidation reads a proposed prefix through scratchReader (the scratch commitment is self-derived and authenticates nothing; authority = the re-admission walk over recordsExact + the pinned anchor, as before; scratch failure -> retry); Verify/NativeJointSourceFixture uses the loaded Reader.
+evidence: COMPILED: the gate's exe-roots command on burst2-a lane kn2-exefix -> Build completed successfully (7440 jobs), logs/exe-roots-3.log; red at the same two errors without the fix (kn2-inst2 logs/exe-roots.log). The generic-simplex harness was NOT executed. DEPUTY-KERNEL read the prefix-validation hunk.
+breaks: JointOrderedSourceReceiver.Applied gains store/reader fields; Result gains `uncertain`. Nothing re-emits.
+notes: Clears the only red at main (exe-roots). Install (lane/kn2-store-open-install 063397ed) is not queued yet; it follows separately.

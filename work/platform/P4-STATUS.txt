@@ -1,21 +1,113 @@
-P4-PLAN-SCOPED-REPLAY STATUS  (updated 2026-10-06)
+P4-PLAN-SCOPED-REPLAY STATUS  (updated 2026-10-07 ~02:55Z)
 Phase A: DONE. Design: /Users/ember/dev/redregg/work/platform/PLAN-SCOPED-REPLAY-DESIGN.md
-Deputy rulings received: F1 b (gate_refuse_only over the ACTUAL gate list), F2 no openings, F3 delete expectedTargetRoot,
-  F4 reader-monad port, F5 interval guard (commit must state it binds less than an exact balance; the consented debit is exact),
-  F6 worker picks in Phase B and records why, F7 delete op 155 / W06b not landed, F8 = cv 01a113e6.
-Phase B: NOT dispatched (no boxes until BURST2-BRIEF-20261006.txt). Order: (0) P7 repro on main, (1) signed R + executor + P5/P6,
-  (2) scoped view + frame + P2-P4, (3) re-genesis notes.
+          (superseded in part. F4 withdrawn: the planner decodes the whole authority cell. The correction about
+          what is signed is recorded in the commit cb9559ac.)
+Rulings: F1 b, F2 no openings, F3/(1a) DROPPED (expectedTargetRoot is the single signed pre-state binding;
+         planOf zeroes preStateRoot and height), F4 withdrawn, F5 interval guard (now the cv task),
+         F6 = blinding is KernelOwned and not displayed, F7 op 155 deleted (W06b not landed),
+         F8 = cv 01a113e6, money hole = cv 01a11445-4136.
 
-(0) P7, desk check by reading main 4ef4e808 (NOT yet a run; the scratch-world repro needs a box):
-  READ Kernel/ResourceTransaction.lean:731-739: the post-state of a `world actions` target is
-    WorldKindCell.preparePatch pre.logical actions. It reads only the target's own pre.logical, which carries the
-    instance's own descriptor (WorldKindInstance.prepare uses value.descriptor; prepared_preserves_descriptor).
-  READ Compiler/WorldKindLawDependencies.lean:27-49: the kind-definition cell contributes `additional : List PolicyRef`
-    (law predicates, which are gates) and a physical-root readGuard. A comment there says it reads the definition for
-    existence/identity only.
-  READ Kernel/WorldKindMethods.lean:1-3: executable methods are "not activated by the frozen native runtime profile".
-  => INFERRED: a kind-definition change between consent and admission can flip accept to refuse (law gate) but cannot
-     change the committed effect. P7 as I framed it is most likely NOT a defect. The scratch-world run must still decide it.
-  Remaining effect inputs not covered by the signature: ambient.height via blinding (READ :678-767). That is the F6 question,
-  and it is logical-content-neutral if blinding is only commitment randomness (to verify in Phase B).
-Next: wait for box details; meanwhile author Theory/ScopedRead.lean in the clone (no builds).
+Phase B, landed in lane (NOT queued; awaiting deputy review):
+  box burst2-b, /srv/lanes/plat-P4-PLAN-SCOPED-REPLAY/src, base 28f3b84d
+  lane/P4-PLAN-SCOPED-REPLAY:
+    0b70fa9a  journey(P7KR): kind-definition revision between consent and admission -> SAME-EFFECT (no defect)
+    cb9559ac  consent(thin)!: thin consent, thin_display_is_commit, frames 230-232, 1b named stale target
+  lane/P4-PLAN-SCOPED-REPLAY-wip: the above + Theory/ScopedRead.lean (unused; kept for browser task cv 01a113e6)
+  bundle (both branches): /Users/ember/dev/redregg/work/platform/bundles/P4-PLAN-SCOPED-REPLAY.bundle
+  evidence: /Users/ember/dev/redregg/work/platform/bundles/evidence/
+    final.out (J0 J1 J2 J3 J4 P7KR BD THIN all PASS); run-final/steps/THIN/jthin-consent/rows.tsv
+    mutant-build-red.log (mutation breaks mismatch_refused + thin_display_is_commit); b7-test.log (cargo 8 pass)
+  EXECUTED: lake build of Kernel umbrella + minidregg-host + both consent exes; cargo build resource-client;
+            host-closure gate OK.
+Next: deputy review; then queue only on "queue". Store epoch: this range bumps NOTHING (no codec/epoch change).
+
+== RANGE 2 (P4-JP2, successor worker; 2026-10-07 ~03:05Z) -- BLOCKED ON A DEPUTY RULING, nothing queued ==
+Branch lane/P4-JP2 = cb9559ac..4d311aba (one commit, harness only). Bundle: bundles/P4-JP2.bundle.
+Evidence: bundles/evidence-jp2/ (jp2base/jp2a/jp2b/jp2diag .out + run-*/steps/JP2/{steps.tsv,log}).
+
+(a) What refuses (EXECUTED):
+  jp2base (hook as on main, with or without MINI_THIN_CONSENT): row 10 possession refuses
+    "local author/inspect/signatures/assembly requires MINI_LOCAL_HOST". JP2 has been red since 96a4165f/f7a2af33
+    added the local-custody requirement (git log -S). Rows 42-55 (proxy/tampered) cascade, because there is no call.bin.
+  jp2b (committed harness: the laptop has its own consent provider as MINI_LOCAL_HOST+MINI_CONSENT_HOST, a
+    storeless laptop config, MINI_THIN_CONSENT=1): row 11 possession refuses
+    "unsupported ordinary source-agreement grammar". The consent provider's codec (SourceAgreementJson) lacks
+    the participant-key-enrollment kinds that the Host's inspectHost has.
+  jp2a (laptop MINI_LOCAL_HOST = a Host image): "checkpoint MAC key unavailable". The Host `stdio` loop opens
+    the Store at start (Host/Main.lean, the "stdio" arm, NativeHostSession.start).
+  jp2diag (DIAGNOSTIC ONLY: the laptop's config could reach the box Store): rows 11-18 enrollment pass, and the new
+    no-Store row 2 goes red, which shows the guard row works. Row 19 `create notes` (birth) refuses:
+    "thin consent has no served target views; nothing signed".
+
+(b) Families (READ):
+  invoke scalar (first-write): supported. Observation (read): supported (231). Possession (226): pure in
+    command+config, but serve() admits the Store first (else-branch). Fix: move 226 to the no-admission branch.
+  BIRTH: does NOT qualify. planWrites (ResourceBirthController:305) writes the shared Book (bookBefore->bookAfter
+    over the whole logical Book), the authority cell (grants.post, from prepareGrantBatch over the whole
+    authority cell), and allocation ids from allocate? over the directory. Unsigned, unservable inputs:
+    the Book pre-state, the authority cell pre-state, and the directory. STOPPED.
+  DELEGATE: does NOT qualify as is. Writes exactly 2 authority addresses (DelegateDeclaration.patch_writeFootprint),
+    value delegatedCapability child parent request = <child, (parent.head, delegated request) :: parent.ancestry>.
+    child and request are signed. parent.head and parent.ancestry are bound only by the signed whole-authority-cell
+    expectedPreRoot, which needs the whole authority cell served (it cannot be). STOPPED.
+  publish/export: local, no signing (publish_delegation).
+
+QUESTION FOR THE DEPUTY (a design decision, not mine):
+  Q1 birth: Rule one of the following.
+    (i) A thin-birth display: the new cells' payloads from the signed finalized descriptor, plus the member's
+        debit as a delta (descriptor.funding/fee and the pinned tariff), plus the granted capabilities. Admission
+        gets a theorem that the committed Book/authority writes are exactly those deltas, with every other address
+        framed. This is F5's delta/interval design (cv 01a11445-4136) extended to the authority cell.
+    (ii) Birth stays full-peer. Then a remote friend cannot `create`, and JP2's create row cannot pass without
+        changing JP2 (for example, the sponsor provisions the object).
+  Q2 delegate: Rule one of the following.
+    (a) Serve the delegator's own StoredCapability under its observe projection, bound by a field-level opening
+        below the authority root. No such opening exists (design 1.1), and F2 says no openings.
+    (b) Make the lineage (parent.head and ancestry) KernelOwned. Display child and request only, as F6 did for
+        blinding.
+    (c) Delegate stays full-peer.
+  Also: delegate signs the whole authority-cell root (expectedPreRoot), so ANY authority write refuses a pending
+    delegation. That is the M8 contention.
+
+Plumbing needed whatever the rulings are (not done, because it would not move JP2 past row 19):
+  P-a  ONE storeless pure-codec loop (ops 7-11) shared by the Host and the consent provider. Today there are two
+       dialects: Host.Json's inspectHost/authorHost (rich, but only behind a Store-opening stdio) and the consent
+       provider's SourceAgreementJson (storeless, but narrow). That is a twin.
+  P-b  Frame 226 (possession) moves to the no-admission branch.
+  P-c  (INFERRED) The offer's config carries box-local paths (signatureBinary, storageRoot, checkpointKey). The
+       friend's `join --welcome --verifier` reads that config through withPinnedSignature. On a real separate
+       laptop the signatureBinary path would not exist. A one-machine JP2 hides this.
+Not done: (c) PASS, the planted fault, the slot build. There were no Lean or Rust edits, so nothing needed building.
+
+== RANGE 2 after the deputy rulings (Q1 (i) deltas, Q2 (b) lineage kernel-owned; order 1-4) ==
+STAGE 1 GREEN (EXECUTED), 91ed396d on lane/P4-JP2 (bundle refreshed): one storeless pure-codec loop
+  (minidregg-host CONFIG codec, `pureCodec`). The consent provider's codec twin is deleted; possession (226) runs
+  without admission; the offer-config box paths were verified to be read by no laptop process (READ, no change).
+  J0-J4 THIN PASS. JP2 rows 11-18 now pass on a storeless laptop; the frontier is row 19 (birth).
+  No epoch: no codec bytes changed. Evidence: bundles/evidence-jp2/s1/.
+STAGES 2-4 NOT STARTED: this worker stopped at ~280K tokens because stage 2 (dropping DelegateDeclaration.expectedPreRoot
+  out of the shared DescentEvidence, plus a codec epoch) does not fit in the remaining budget. Pointers are in
+  P4-CONTINUATION.md.
+
+== RANGE 3 (P4-S2, stage 2 = delegate; branch lane/P4-JP2-s2 on 91ed396d) -- 2026-10-07 ==
+Deputy order (mid-run): finish stage 2 to a queueable point only, then update the continuation and stop.
+Design decisions and reasons:
+- ONE shape. DescentEvidence drops preRootExact, so attenuate and delegate both drop expectedPreRoot. IssueEvidence is
+  NOT in DescentEvidence (READ), so it keeps its own root. Changing it would be a separate decision.
+- Not a weakening. The written value is delegatedCapability child parent request. The child is signed. The parent is the
+  record at the signed id in the actual pre-state (parentExact). Every other old root conjunct is a refuse-only gate:
+  Prepared fields, plus Accepted.parent_authorized.
+- Thin delegate needs no view. Lineage is kernel-owned. A served view is refused viewUnexpected.
+- Codec: delegation command frame v1 -> v2. v1 is refused by name (undecodable / retired_v1_refused). A JSON
+  expectedPreRoot is refused by name.
+- Store epoch (deputy ruling, option A):
+  - StoreEpoch gains a fourth component, commands = "commands/v2".
+  - A three-component label parses as commands/v1 and is refused naming ONLY the command codecs
+    (seedEpoch_preCommands_refused: native_decide + #assert_compiled, because String.splitOn is not kernel-reducible).
+  - ConsentAnchor.storeEpoch_commands pins the component and the frame byte together.
+- Planted fault DF (THIN journey): the Host splices in a delegate slot over another parent. Refused headerMismatch
+  before signing. The plant is asserted from the proxy log first.
+Expected red: Assurance.NativeAcceptedFixture (its recorded Store is the old epoch). Regenerate it by
+scripts/native-accepted-fixture/generate.sh.
+QUEUED 2026-10-07 after deputy review PASS: queue/P4-JP2-s2.txt (91ed396d..198a74ed, stacked). Keeper messaged. Stages 3-4 not started; they wait for the root.
+RE-QUEUED after ejection: 5f2b951f..81bc2eb5 (rebased on next with kn2 (ii); StoreEpoch by-name, 5 components; evidence bundles/evidence-jp2/s2r).

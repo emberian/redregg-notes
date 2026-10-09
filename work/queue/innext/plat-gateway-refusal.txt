@@ -1,0 +1,14 @@
+lane: plat-gateway-refusal (cv 01a1177f-1ba6 GATEWAY-DIRECT-REFUSAL; DEPUTY-PLATFORM aed11e1555308dbcb)
+source: burst2-b:/srv/lanes/plat-quote-probe/src ; shared remote burst2-a:/srv/git/minidregg.git lane/plat-gateway-refusal ; bundle hbox:/tank/dregg-build/claude-lanes/bundles/plat-gateway-refusal.bundle (logs: plat-gateway-refusal-logs.tgz)
+branch: lane/plat-gateway-refusal
+range: 15d5b656..09b186c9 (2 commits, on next 15d5b656; the second puts plan-ungated behind --test-harness)
+what: New journey step JGATE (journey.d/jgateway.sh, runs after J4). The pipeline's journey row now runs it too: JGATE is added to its extra list in scripts/pipeline/journey-rows.
+  - Setup: an ordinary subject B holds a valid grant on the gateway's content target. A installs the subject-locked gateway law, and the Host reads it back as exactly "subject == A".
+  - B is refused at three points. At the served gate it is refused law-denied. A call B signed before the law is refused at authentication (wrongMessage). A call B signs for the current state, planned past the served gates, is refused by the RECEIVER with Reject.policyRejected.
+  - The target is unchanged.
+  - Host gains a new operator-local verb, `plan-ungated --test-harness INTENT OUT` (the flag is required). It calls NativeHost.prepareLoaded after re-reading the target roots. It adds no admission path; it exists so a test can reach the receiver.
+evidence: EXECUTED J0-J4 + JGATE with the eba8d5eb binaries plus this lane's host: JGATE 12/12.
+  PLANT JGATE_PLANT=widen: the plant-applied row PASSes (the Host's law reads "any [ subject == 7, subject == B ]"). Exactly the gate-refusal, receiver-refusal and unchanged-target rows go red (9/12).
+  Logs: run/jg-none, run/jg-widen.
+breaks: none.
+notes: The Host closure pin may move (Host/Main changed). The host-closure/build-surfaces re-pin is yours, as usual.

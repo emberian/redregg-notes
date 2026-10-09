@@ -1,0 +1,30 @@
+lane: p7-row-f
+source: burst2-a:/srv/git/minidregg.git lane/p7-row-f (also burst2-b:/srv/lanes/p7-row-f/src); bundle hbox:/tank/dregg-build/claude-lanes/bundles/p7-row-f.bundle (logs: p7-row-f-logs.tgz)
+branch: lane/p7-row-f
+range: e8ba7239..a10b62ae   (one commit, a10b62ae; base e8ba7239 = OB-WAVE-BC's lane/obbc-c3fix tip, so this lands AFTER that range)
+what: GPT-6 row F, step 1: a send names a deliverable method, decided at the send before any escrow. ObjectiveCall gains Deliverable/deliverable
+  (the target method loads exactly as its delivery's root frame will: loadMethod on the record's activePin with the object's view and the decoded args;
+  Plan within `call`) and CallRefusal.notDeliverable. Mail.send(.object) decides it first, so a refused send pushes, opens and credits nothing and the
+  invocation's fee is never posted (refusals notAnObject/stateMissing/argumentType/notCallable/notDeliverable). Pipelined sends are decided at the
+  RESOLVED object when ObjectiveSend.forward queues them through the same Mail.send; refused ones are refunded. runMessage's run-time refusal stays
+  as the backstop (nested call into a sending method; upgrade between send and delivery). The send deliberately does not guard the target's state
+  cell (the view only types the application; a guard would make every send conflict with its target's writes) -- approved by DEPUTY-OB-ENG.
+  Journey: objective-send-native-journey.py S8-interface, S9-resolved (+ world/send/Sends.obend bounce/relay/relayVia; plant relay-deposit);
+  journey-rows comment updated.
+evidence: reviews: DEPUTY-OB-ENG (abfb6abb71f0a4311) APPROVED; DEPUTY-PLATFORM (a4b57de3eee5c4307) PASSED.
+  EXECUTED on e8ba7239+a10b62ae (burst2-b:/srv/lanes/p7-row-f/logs): build-host.log (Kernel.ObjectiveSend, ObjectiveCheckpointInvariant,
+  ObjectiveActivityReceiver, minidregg-host, minidregg-client-consent green); send-e8ba7239: S1-S9 PASS 73 rows; call-e8ba7239: C1-C8 PASS 43 rows
+  (fresh worlds; Rust from READY 33fea1fe, no .rs diff).
+  PLANTS: plant-theorem-red.log (Mail.send without `deliverable` -> Mail.send_object_deliverable red); send-plant-code2 (planted Host+consent from a
+  plant-only lane -> S8 red: send to bounce admitted+queued; S9 red: bounce forwarded, not refunded); send-plant-relay-deposit (PLANT-RESULT red S8).
+breaks: a send to a method whose Plan admits `send`, to an object with no declared state, to an unknown method, or with ill-typed arguments now
+  REFUSES the sending invocation (it used to queue, escrow, and break at delivery). CallRefusal gains a constructor (rendered as text; no wire codec).
+  Nothing re-emits; no re-genesis.
+notes: objective-proofs ledger (keeper pins per batch, 01:20 amendment): NEW theorems, no existing theorem statement changed by hand:
+  Minidregg.Kernel.ObjectiveCall.Mail.send_object_deliverable, .postMail_deliverable, .Invocation.sends_deliverable (+ new defs Deliverable,
+  deliverable, deliveredPlans, CallRefusal.notDeliverable). Draft (proofs --draft at this tip) rows attributable to this commit:
+  burst2-b:/srv/lanes/p7-row-f/logs/p7-ledger-draft.tsv -- 525 `redefined` (closures via Mail.send/deliverable) and 15 `restated`
+  (auto-generated CallRefusal.*.elim whose ctor indices shift with the new constructor, and Invocation.mk); full draft logs/objective-proofs.log
+  (7210 redefined/253 restated/35 removed overall, mostly upstream drift).
+  Pre-existing baseline: at next a4db78a7 (without the c3fix range) send S1-S7 were red `extractUncovered 200000 0` (logs/send-main.out).
+  Step 2 (stop {slot} vs cancel {slot}, sender-object authority, approved by OB-ENG) follows as a separate range.

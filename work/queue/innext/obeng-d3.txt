@@ -1,0 +1,12 @@
+lane: obeng-d3 (DEPUTY-OB-ENG abfb6abb71f0a4311, GPT-6 row D, second range)
+source: burst2-a:/srv/git/minidregg.git refs/heads/lane/obeng-d3 (lane burst2-a:/srv/lanes/obeng-d2/src, branch lane/obeng-d2)
+branch: lane/obeng-d3
+range: adbbdfb1..f2ed9951 (4 commits on next adbbdfb1)
+what:
+- a3c30990 objective(frontend)!: Super is a second rigid bounded variable in a template; NEW refusal super-rigid (super used as its bound row). LTUO S5a-SuperRigid: c1df1f08 front end finished=5, now refused.
+- cff2cc2b objective(frontend)!: chain instances of open declarations are EMITTED as ATerm.instantiate σ template (one cached templateLayer = the knot field = what checkTemplates checks); per-instance re-elaboration deleted. The front-end square holds at the term level by construction; theorem instance_accepted filed (cv 01a115d6-7ee9).
+- 474bb618 tests: PackageLaw config declares maxExtractTicks - FIX FORWARD for a red ON NEXT adbbdfb1 (package-law gate row: C3 fix 6e569f13 x g1b-law-2 crossed).
+- f2ed9951 docs: MODULAR-TYPING §6.
+evidence: front-end gate on the rebased tip (burst2-a /srv/lanes/obeng-d2/logs/frontend-4.log): 11/12 ok incl. ltuo-probes 30 rows (29 at target, W08 pending LT6), preview, examples, tutorial, overview, publication, activity-replay, identity; package-law red there = the next red fixed by 474bb618, rerun PASS after it. Plant: Super left unsubstituted in instances -> W09b, W10, D4b red (logs/plant-instance-sigma.log).
+breaks: front-end identity changes; cores with open chains change (instance annotations) => published packages re-publish, worlds re-genesis; an open declaration using super as its bound row refuses (super-rigid; none in tree).
+notes: none

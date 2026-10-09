@@ -1,0 +1,8 @@
+lane: kn2-store-open-install
+source: burst2-a:/srv/git/minidregg.git
+branch: lane/kn2-store-open-install
+range: fa7ff142..063397ed (one commit; fa7ff142 = the landed invoke/delegate/renounce stack tip; rebase onto next 7a3b6a21)
+what: A policy installation is planned, admitted and committed on the light ground; its full dispatch is deleted; the marker is read only through the ground's answer (undeclared -> undeclaredMarker, spent -> markerSpent, refused before any state read). Replay over Ground.replayOf (undeclared tx -> .undeclared).
+evidence: burst2-a lane kn2-inst2. Umbrella + exes (Minidregg Host.Main NHR DryRun consent sessions DurableStoreAudit TokenCensus NativeAcceptedFixture Kn2StoreBench minidregg-host minidregg-client-consent) green, logs/umb1.log. exe-roots green with kn2-exe-roots-fix applied (logs/exe-roots-withfix.log); without it, red only on that fix's two errors. EXECUTED plant authority-undeclared on 063397ed rc 0 (each install row refused by name, with controls), logs/authority-undeclared.log. Ratchet check-full-loaded-callers PASS 67 (from 68). J0-J8 + JPRIV1 PASS with this host/consent swapped into next b86c7f1a's artifacts, logs/journey.out. Theorems (#assert_axioms; DEPUTY-KERNEL read): PolicyInstallController.prepareChecked_agrees/_unanswered/_spent; PolicyInstallReceiver.prepare_undeclaredMarker, replay_undeclared, replay_only_original.
+breaks: PolicyInstallController/Receiver prepare shapes (marker answer, ground-indexed); full install dispatch removed. No Host/OB-ENG hunks. Nothing re-emits.
+notes: Neutral-births cluster (4) will stack on this.

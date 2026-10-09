@@ -1,0 +1,8 @@
+lane: kn2-coproc-census
+source: burst2-a:/srv/git/minidregg.git
+branch: lane/kn2-coproc-census
+range: e0cd5f55..395fcbc4 (one commit; TokenCensus/Table.lean only)
+what: Clears the b28 token-census red. Adds the census row for kn2-coproc's private constructor Minidregg.Compiler.NativeCoprocess.Reader.mk: encapsulation | L2 (2 data fields: pipe handle and bytes read; IO plumbing that no admission rests on).
+evidence: burst2-a lane kn2-census: `lake build TokenCensus` at 395fcbc4 rc=0 (9780 jobs): "401 private constructors, all listed, none minted abroad; 400 planted forgeries detected" (logs/token-census.log).
+breaks: none.
+notes: authored by KN2-TRIE-C, queued by DEPUTY-KERNEL.

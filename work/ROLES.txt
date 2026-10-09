@@ -1,0 +1,4 @@
+ROOT	main (this session)
+SINS-LEDGER	a8e21495322a8b693	scout: software sins ledger from code → work/SINS-LEDGER-20261009.md
+REPAIR-1	retired (216K)	cd7155a1 on lane/repair1; gate red=0; publish SMOKE RED (helper path source-relative)
+REPAIR-1b	(spawned)	fix helper resolution via $CANDIDATE; land cd7155a1+ through gate → publish → standing run
