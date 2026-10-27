@@ -1,0 +1,20 @@
+testground: a market demo and tour step — two offers hold their legs in two books; a fuse pays both legs in one Turn, and a stranger's take is refused notFuser
+
+The testground now shows the market (DESIGN-CTX §2.5b): a book of `Std.offerEscrow`
+offers, the contextual design's second consumer of `Req.caller` and LANG-82's legs.
+The scene is the journey rows' own calls (§LE) as nd argv, in its own file
+(testground/scenes-market.js, loaded by one line in demos.js): alice and bob each
+create a book, issue a coin and post matching offers (give 5 for 7, price 9 inside
+both boxes); carol, holding a real invoke-take invitation, signs a take herself and
+is refused `notFuser` — a member's call has no caller, and a take answers only the
+book whose fuse judged the deal (LE9, LANG-100); bob's fuse naming a thin offer
+(give 1 where 7 is asked) is refused `unfairLegs` (LE7, LANG-82); his fuse on the
+matching pair pays his 7 to alice and her 5 to bob in one Turn, both books' offers
+gone, the balances read before and after (LE1). The third member carol joins the
+founders at the page's and the harnesses' genesis, so her take is signed in the same
+World as the books.
+
+The escrow package text is the journey's own (`offerEscrowPackage`), printed by the
+kernel (`tg_text` name `offerEscrow` beside the plain `offer`), never copied into the
+page; the kernel grows by that one import (wasm 4,679,053 bytes). gate.sh runs the
+scene (axes-run.mjs's list); the tour gains one step after the claim.

@@ -30,7 +30,7 @@ mkdir -p /srv
 apt-get update -q
 apt-get install -y -q build-essential git curl python3 python3-venv cmake pkg-config libssl-dev \
   unzip zstd jq rsync earlyoom clang lld htop tmux libpam-systemd dbus-user-session \
-  file sqlite3 age time
+  file sqlite3 age time psmisc lsof
 systemctl enable --now earlyoom
 
 # --- user ember ---
@@ -58,19 +58,33 @@ if [ "$role" = metal ]; then
 # --- swarm-build (hbox contract: SWARM_MEM_MAX per build, shared swarm.slice cap) ---
 cat > /usr/local/bin/swarm-build <<'SB'
 #!/usr/bin/env bash
-# swarm-build — run a build under an ENFORCED memory cap (burst2-20261006 boxes).
-# Same name and contract as hbox: per-build cap SWARM_MEM_MAX (default 24G) and a
-# shared swarm.slice cap (~/.config/systemd/user/swarm.slice.d/50-memcap.conf) that
-# bounds the SUM of all concurrent swarm-builds. No taskset: the box is ours.
-#   usage: swarm-build lake build Foo   |   SWARM_MEM_MAX=16G swarm-build lake build Foo
+# swarm-build — run a build under an ENFORCED memory cap (burst2-20261006 boxes), in a NAMED scope.
+# Same name and contract as hbox: per-build cap SWARM_MEM_MAX (default 48G: a full Assurance/Host closure
+# build at 6 threads dies at 24G, 16 OOM-killed scopes in 6 h on 10-07; the box-wide slice is the real guard) and a shared
+# swarm.slice cap (~/.config/systemd/user/swarm.slice.d/50-memcap.conf) that bounds the SUM of all
+# concurrent swarm-builds. No taskset: the box is ours.
+# WHO IS BUILDING WHAT: every run is the scope swarm-<tag>-<pid> (tag = SWARM_BUILD_TAG, else the
+# lane name from the cwd /srv/lanes/<lane>/src), with the command as its Description, so
+#   systemctl --user list-units 'swarm-*'            every live build: lane, pid, command
+#   systemctl --user status swarm-<tag>-<pid>.scope  its memory, CPU time and process tree
+# replace guessing from `ps`. The first line of every build log names the scope and its cap.
+#   usage: swarm-build lake build Foo   |   SWARM_MEM_MAX=16G swarm-build lake build Foo   (small checks: less)
 set -euo pipefail
 if [ -n "${SWARM_BUILD_INNER:-}" ]; then
   echo 0 > /proc/self/oom_score_adj 2>/dev/null || true
   exec nice -n 10 "$@"
 fi
 export SWARM_BUILD_INNER=1
-exec systemd-run --user --scope --slice=swarm.slice --quiet \
-  -p MemoryMax="${SWARM_MEM_MAX:-24G}" -p MemorySwapMax=0 \
+tag=${SWARM_BUILD_TAG:-}
+if [ -z "$tag" ]; then
+  case "$PWD" in */src) tag=$(basename "$(dirname "$PWD")") ;; *) tag=$(basename "$PWD") ;; esac
+fi
+tag=$(printf '%s' "$tag" | tr -c 'A-Za-z0-9_.-' '-' | cut -c1-48)
+unit="swarm-${tag}-$$"
+echo "swarm-build: $unit cap=${SWARM_MEM_MAX:-48G} :: $*" >&2
+exec systemd-run --user --scope --slice=swarm.slice --quiet --unit="$unit" \
+  -p MemoryMax="${SWARM_MEM_MAX:-48G}" -p MemorySwapMax=0 \
+  -p "Description=$(printf '%s ' "$@" | cut -c1-240)" \
   -- "$0" "$@"
 SB
 chmod 755 /usr/local/bin/swarm-build

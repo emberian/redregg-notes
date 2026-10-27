@@ -1,0 +1,31 @@
+/run/user/1001/p4.lLiI5S/r/world/sponsor/sources/create-tc-poll.authoring/g0001/intent.bin
+{
+  "acceptedCount": "17",
+  "confirmation": "installed",
+  "eventId": "115197201895813458793811364291249737953349402000947780911769090621698493484897",
+  "transactionId": "93316548578878011667665687276190135976474613953633203488325411308536002606748",
+  "type": "confirmed",
+  "worldRoot": "22672608584521608732215082520112887825160243564588156081913051539959028511914"
+}
+{
+  "authority": "hint-only",
+  "controlCapability": "16098099674034979902",
+  "kind": "object",
+  "name": "tc-poll",
+  "observeCapability": "13543913146494170367",
+  "operationCapability": "13543913146494170367",
+  "provenance": {
+    "birthReceipt": {
+      "acceptedCount": "17",
+      "confirmation": "installed",
+      "eventId": "115197201895813458793811364291249737953349402000947780911769090621698493484897",
+      "transactionId": "93316548578878011667665687276190135976474613953633203488325411308536002606748",
+      "type": "confirmed",
+      "worldRoot": "22672608584521608732215082520112887825160243564588156081913051539959028511914"
+    },
+    "reservationDigest": "e95763e445cee1e22828702fe56a221fd51d2f71dad861f1c74135ea162f1820",
+    "reservationRecord": "/run/user/1001/p4.lLiI5S/r/world/namespace/request-e95763e445cee1e22828702fe56a221fd51d2f71dad861f1c74135ea162f1820.json"
+  },
+  "target": "13101473367446075310",
+  "type": "minidregg-participant-reference-v1"
+}

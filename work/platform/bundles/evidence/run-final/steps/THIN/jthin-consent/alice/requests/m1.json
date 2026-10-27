@@ -1,0 +1,1 @@
+{"action":"invoke","targets":[{"name":"tc-one","payload":{"actions":[{"field":"votes","key":"7","type":"set","value":"1"}],"type":"worldNamed"}}],"type":"minidregg-workspace-proposal-v1"}

@@ -1,0 +1,10 @@
+lang: the hole check refuses a context or a supports list past listMax, by name — a checked
+package with holes now prints without the two list premises
+
+HoleROM.check gains one clause per list (holeContextTooLong n, holeSupportsTooLong n), before the
+guard; check_context_le and check_supports_le read them back, and package_prints_contextual is
+restated without them: the body's text is the one premise left (LANG-111, LANG-109's premise
+price). Journey rows: a 258-entry context refused by name, a 257-entry one checks, 258 supports
+refused. Spec 3.6 and the appendix tables carry the bounds.
+
+Co-Authored-By: Claude Code <noreply@anthropic.com>

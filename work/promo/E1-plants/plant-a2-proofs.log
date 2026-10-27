@@ -1,0 +1,32 @@
+✔ [54/55] Built Lang.Proofs.Load (1.1s)
+✖ [55/55] Building Lang.Proofs.LiveHoles (908ms)
+trace: .> LEAN_PATH=/tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean /home/hbox/.elan/toolchains/leanprover--lean4---v4.30.0/bin/lean /tank/dregg-build/nanodregg/wt/promo/Lang/Proofs/LiveHoles.lean -o /tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean/Lang/Proofs/LiveHoles.olean -i /tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean/Lang/Proofs/LiveHoles.ilean -c /tank/dregg-build/nanodregg/wt/promo/.lake/build/ir/Lang/Proofs/LiveHoles.c --setup /tank/dregg-build/nanodregg/wt/promo/.lake/build/ir/Lang/Proofs/LiveHoles.setup.json --json
+error: Lang/Proofs/LiveHoles.lean:85:4: unsolved goals
+case h_2.refl
+D : Type
+digestOf : ByteArray → Option D
+look : Pinned D
+rv : RowView D
+self : D
+h : HoleROM
+s : HoleSelection
+hs : selectHole digestOf look rv self h = Except.ok s
+c : HoleCode
+w✝¹ : Nat
+w✝ : ByteArray
+left✝² : holeRow rv self h.selectionRel h.selectionKey = Except.ok (some (RowLeaf.row w✝¹ w✝ s.version))
+left✝¹ : Wire.decodeData Ty.nat w✝ = Except.ok (Data.nat s.index)
+hc : h.code[s.index]? = some c
+left✝ : s.original = c.body
+hall : c.supports.all (supportLive digestOf look rv self) = true
+id : ByteArray
+hid : SupportPin.cell id ∈ c.supports
+g : D
+hd : digestOf id = some g
+x✝¹ : Except (Refusal D) (Option Cell)
+x✝ : ∀ (val : Cell), look g = Except.ok (some val) → False
+⊢ ∃ g_1 cell, some g = some g_1 ∧ look g_1 = Except.ok (some cell)
+error: Lean exited with code 1
+Some required targets logged failures:
+- Lang.Proofs.LiveHoles
+error: build failed

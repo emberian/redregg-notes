@@ -1,0 +1,22 @@
+whole build exit 1
+      5 error
+error: Lang/Proofs/PeerRead.lean:106:8: unsolved goals
+error: Lang/Proofs/PeerRead.lean:99:25: This simp argument is unused:
+error: Lang/Proofs/PeerRead.lean:133:8: unsolved goals
+error: Lean exited with code 1
+error: Lang/Proofs/Invoke.lean:516:10: unsolved goals
+error: Lang/Proofs/Invoke.lean:504:27: This simp argument is unused:
+error: Lean exited with code 1
+error: build failed
+- Lang.Proofs.PeerRead
+- Lang.Proofs.Invoke
+journey exit 1
+805c805
+< ok   LF4 B installs P' = offerPackage [price] [buyer, seller] 63 (admitted), creates W of P' (admitted) and posts W's offer 0 seller [8,12] (admitted); LF1's call with pair {a X, b W}: refused program Nanodregg.Kernel.Receive.Refusal.program "peer: another package"
+---
+> FAIL LF4 B installs P' = offerPackage [price] [buyer, seller] 63 (admitted), creates W of P' (admitted) and posts W's offer 0 seller [8,12] (admitted); LF1's call with pair {a X, b W}: refused program Nanodregg.Kernel.Receive.Refusal.program "peer: notParty"
+811c811
+< lang-journey: GREEN
+---
+> lang-journey: RED (1)
+restored identical

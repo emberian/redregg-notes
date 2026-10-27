@@ -1,0 +1,859 @@
+# E1 support probe + REOR D.1 refuter row, nano f8d04ac (hbox wt/promo), real Receive.submit via Lang.Journey p8Rows (lang-journey), MEASURED 2026-10-22T19:33:51Z
+# probe source: the patch below (temporary, reverted); journey verdict GREEN (probe lines note true)
+## PROBE LINES
+ok   PROBE-a ghost cell 6840227782638526189: kernel entry false, live false
+ok   PROBE-a account (asset, ghostOwner 54324593208393710): admitted
+ok   PROBE-a post fact (cell 6840227782638526189, pin 841540765299359966) through Receive.submit: admitted; kernel entry after false
+ok   PROBE-a propose candidate ghostOwner with s0 = (ghost, ghostPin): admitted; row status (some verified)
+ok   PROBE-a select the ghost-supported candidate: admitted; selected (some (some [238, 255, 192, 0, 238, 255, 192, 0]))
+ok   PROBE-a commit (one unit to ghostOwner) against the ghost support: admitted; counted left (some 0); accepted (some true); selected (some (some [238, 255, 192, 0, 238, 255, 192, 0]))
+ok   PROBE-b after revoke only: g0 6334235985002307112 entry tomb true; fact row for g0 still true
+ok   PROBE-b revoke only, then commit candidate 0 pinning g0 at its TOMBSTONE: admitted; counted left (some 0); selected (some (some [41, 169, 16, 184, 102, 96, 236, 151]))
+ok   PROBE-b revoke, then unpost g0's fact (a second call): admitted
+ok   PROBE-b after revoke + unpost (two calls), commit pinning g0 at its tombstone: refused program Nanodregg.Kernel.Receive.Refusal.program "commit: refused support0 withdrawn"
+## PATCH
+diff --git a/Lang/Journey.lean b/Lang/Journey.lean
+index e0989ff..1511566 100644
+--- a/Lang/Journey.lean
++++ b/Lang/Journey.lean
+@@ -2291,6 +2291,23 @@ def p8Rows (r0 : Run) (a b : Sim.Member) (src : String := p8Text) : Run := Id.ru
+   let (r', vcode, _) := go prog r (chooseCode r 0)
+   r := note r' s!"P8 live contextual amount selected: {vcode}" (vcode == "admitted")
+   let ready := r
++  -- PROBE (a) cv 01a1649d: a posted support naming a digest the kernel never had, at a pin
++  let ghost : D := 0x5eed5eed5eed5eed
++  let ghostPin : D := 0x0badc0de0badc0de
++  let ghostOwner : D := 0x00c0ffee00c0ffee
++  r := note r s!"PROBE-a ghost cell {ghost}: kernel entry {(r.st.host.entry Sim.env ghost).isSome}, live {(r.st.host.live Sim.env ghost).isSome}" true
++  let (pa, vA1, _) := go prog r (Sim.signed r.st a a.key (Sim.S.pinsFor r.st.host [a.id]) (.account asset ghostOwner))
++  r := note r s!"PROBE-a account (asset, ghostOwner {ghostOwner}): {vA1}" true
++  let (pa, vA2, _) := go prog pa (invoke pa "post" (hole_postArg (Sim.dc.bytes ghost) (Sim.dc.bytes ghostPin)))
++  r := note r s!"PROBE-a post fact (cell {ghost}, pin {ghostPin}) through Receive.submit: {vA2}; kernel entry after {(pa.st.host.entry Sim.env ghost).isSome}" true
++  let (pa, vA3, _) := go prog pa (invoke pa "propose" (hole_proposeArg (Sim.dc.bytes ghostOwner) (hole_supportData (Sim.dc.bytes ghost) (Sim.dc.bytes ghostPin)) hole_noSupport 1) (pinF pa.st.host ghost))
++  r := note r s!"PROBE-a propose candidate ghostOwner with s0 = (ghost, ghostPin): {vA3}; row status {hole_statusOf pa.st.host obj dc (Sim.dc.bytes ghostOwner)}" true
++  let (ps, vA4, _) := go prog pa (invoke pa "select" (argBytes (.record [("cand", .digest)]) (.record [("cand", .digest (Sim.dc.bytes ghostOwner))])) (pinC pa.st.host ghostOwner ++ pinF pa.st.host ghost))
++  r := note r s!"PROBE-a select the ghost-supported candidate: {vA4}; selected {hole_selectedOf Sim.env ps.st.host obj}" true
++  let (pc, vA5, _) := go prog pa (invoke pa "commit" (p8Arg asset ghostOwner cap)
++      (pinC pa.st.host ghostOwner ++ pinF pa.st.host ghost)
++      (Sim.S.pinsFor pa.st.host [asset, accountId X ghostOwner asset, cap]))
++  r := note r s!"PROBE-a commit (one unit to ghostOwner) against the ghost support: {vA5}; counted left {p8Left pc.st.host cap}; accepted {hole_acceptedOf Sim.env pc.st.host obj}; selected {hole_selectedOf Sim.env pc.st.host obj}" true
+   let plan := commit r 1 b.id
+   -- An unrelated birth changes height and cells, but none of the signed dependencies.
+   let (r', vu, _) := go prog r (Sim.signed r.st a a.key (Sim.S.pinsFor r.st.host [a.id]) (.issue 2))
+@@ -2302,6 +2319,18 @@ def p8Rows (r0 : Run) (a b : Sim.Member) (src : String := p8Text) : Run := Id.ru
+   let (r', vr, _) := go prog r (Sim.signed r.st a a.key (Sim.S.pinsFor r.st.host [a.id, providers[0]!])
+     (.revoke providers[0]!))
+   r := note r' s!"P8.2 withdraw provider 0: {vr}" (vr == "admitted")
++  -- PROBE (b) REOR D.1 / plan 8.3: revoke only; then revoke + unpost (two calls); one call?
++  let g0 := providers[0]!
++  r := note r s!"PROBE-b after revoke only: g0 {g0} entry tomb {match r'.st.host.entry Sim.env g0 with | some .tomb => true | _ => false}; fact row for g0 still {(storyRow r'.st.host obj 2 df (.record [("cell", .digest (Sim.dc.bytes g0))])).isSome}" true
++  let tombCommit (w : Run) := invoke w "commit" (p8Arg asset a.id cap)
++      (pinC w.st.host a.id ++ pinF w.st.host g0)
++      (Sim.S.pinsFor w.st.host [asset, accountId X a.id asset, cap, g0])
++  let (pt, vB1, _) := go prog r' (tombCommit r')
++  r := note r s!"PROBE-b revoke only, then commit candidate 0 pinning g0 at its TOMBSTONE: {vB1}; counted left {p8Left pt.st.host cap}; selected {hole_selectedOf Sim.env pt.st.host obj}" true
++  let (pu, vB2, _) := go prog r' (invoke r' "unpost" (argBytes (.record [("cell", .digest)]) (.record [("cell", .digest (Sim.dc.bytes g0))])) (pinF r'.st.host g0))
++  r := note r s!"PROBE-b revoke, then unpost g0's fact (a second call): {vB2}" true
++  let (_, vB3, _) := go prog pu (tombCommit pu)
++  r := note r s!"PROBE-b after revoke + unpost (two calls), commit pinning g0 at its tombstone: {vB3}" true
+   let (_, stale, _) := go prog r oldPlan
+   r := note r s!"P8.2 withdrawn instantiation: {stale}; live authority {p8Live r.st.host supports}"
+     (stale.startsWith "rejected stale" && p8Live r.st.host supports == [false, true] &&
+## WHOLE JOURNEY OUTPUT
+ok   LB0 the surface source (1774 chars) lowers to the shipped core (35012 chars) byte for byte: true; plant (limits 64 1024) -> (limits 65 1024) caught: true
+ok   LB0d the Bell's doc (175 bytes) prints as one line and reads back: true; it states the window and the tie: true; one past docMax refused badDoc: true
+ok   LA0 activity with its own facts relation reads and checks: ok
+ok   L0 read Owned from text: same bytes as the AST
+ok   L0c print Owned, read the text: same bytes
+ok   L0c a method label with a space has no text
+ok   L0c bytes that are not quote-free UTF-8 print as #hex and read back
+ok   L0d an allowlist of 256 ids prints and reads back (the same package bytes)
+ok   L0d a list of 258 elements reads
+ok   L0d a list of 259 elements: tooLong
+ok   L0d a form nested 1026 deep reads
+ok   L0d a form nested 1027 deep: tooDeep
+ok   L0e refuse a binder named true: reservedBinder
+ok   L0e refuse a binder named a numeral: reservedBinder
+ok   L0e refuse a binder named #hex: reservedBinder
+ok   L0e refuse a binder named false: reservedBinder
+ok   L0e refuse a binder named a numeral in a case arm: reservedBinder
+ok   L0e refuse a binder named a head word: reservedBinder
+ok   L0e refuse a binder named a primitive: reservedBinder
+ok   L0e a binder named x5 reads as a variable
+ok   L0f a package 1024 deep as a tree reads, checks, encodes, prints, reads back: same bytes
+ok   L0f one level deeper: tooDeep
+ok   L0f a label with a space has no bytes
+ok   L0b read a seed at Owned's state type
+ok   L0b read a seed whose owner is a member id, as ob prints it (#HEX)
+ok   L0b refuse a seed with a missing field: notOfType
+ok   L0b refuse a seed with a wrong type: notOfType
+ok   L0b refuse a seed with a past natLimit: notOfType
+ok   L0b refuse a seed with a string at a digest: notOfType
+ok   L0b refuse a seed with a digest past digestBytesMax: notOfType
+ok   L0b refuse a seed with a odd count of hex digits: notOfType
+ok   L0b refuse a seed with a uppercase hex digit: notOfType
+ok   L0b refuse a seed with a hex at a nat: notOfType
+ok   L1 install Owned: admitted
+ok   L6 install ill-typed: refused program Nanodregg.Kernel.Receive.Refusal.program "illTyped declared @top"
+ok   LV1 install Owned's LANG-59 bytes (1788 bytes): refused program Nanodregg.Kernel.Receive.Refusal.program "decode Nanodregg.Codec.Refusal.rejected 0 \"lang/package-version/4\""
+ok   LV2 install Owned's bytes at version 3: refused program Nanodregg.Kernel.Receive.Refusal.program "decode Nanodregg.Codec.Refusal.rejected 0 \"lang/package-version/4\""
+ok   LV3 decode refuses both lang/package-version/4; Owned's bytes begin with version 4 and decode
+ok   LI1 install Mid importing Owned: admitted
+ok   LI2 install Top importing Mid, pinning only Mid: refused unpinned Nanodregg.Kernel.Receive.Refusal.unpinned 8569991740220786786
+ok   LI3 install Top pinning Mid and Owned: admitted
+ok   L2 create object: admitted
+ok   L3 A set 50: admitted, total = (some 50)
+ok   L4 A set 101: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 8569991740220786786 "bounded: over 100", total = (some 50)
+ok   L5a A grants B invoke 0: admitted
+ok   L5 B (granted) set 7: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 8569991740220786786 "ownerOnly: not the owner"
+ok   L8a install Tally: admitted
+ok   L8b A creates Tally seeded approvals = 7: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 7582821212432740602 "fresh: seeded"
+ok   L8c A creates Tally seeded approvals = 0: admitted
+ok   L8d A invokes Tally.a 7: admitted
+ok   L8e A invokes Tally.b 7: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 7582821212432740602 "fresh: method b is closed"
+ok   L9a install Frozen: admitted
+ok   L9b A creates a data object under Frozen: admitted
+ok   L9c A writes under Frozen: admitted
+ok   L9d A removes Frozen: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 11998896786914833786 "frozen: laws are frozen"
+ok   L10a install OnlyTo [Frozen]: admitted
+ok   L10b A creates a data object under OnlyTo: admitted
+ok   L10c A replaces OnlyTo by [Tally]: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 16244771752431933921 "onlyTo: not the agreed laws"
+ok   L10d A replaces OnlyTo by [Frozen]: admitted
+ok   L11a install BirthOnly: admitted
+ok   L11b A creates a data object under BirthOnly: admitted
+ok   L11o A creates a lawless data object: admitted
+ok   L11c A adds BirthOnly to an existing object: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 1454489307162696888 "birthOnly: only at birth"
+ok   L11d A keeps BirthOnly and adds Frozen: admitted
+ok   LT0 CappedTally read from text: 4761 chars, 37 lines; 3334 package bytes; printed 4378 chars
+ok   LT0s CappedTally in the surface: 668 chars (Mini 1269 without comments) lowers to the same core byte for byte: true; Lang.Read alone refuses it: true; plant (cap 1000) -> (cap 999) caught: true
+ok   LE a misspelt field on line (some 6): the checker's refusal names line (some 6)
+ok   LT0b a tally keyed by bytes: refused program Nanodregg.Kernel.Receive.Refusal.program "relKey answers"
+ok   LT1 A installs CappedTally: admitted
+ok   LT2 A starts a tally, decider B, closing at 220: admitted; the head is born with it: sum (some 0)
+ok   LT3 A grants B invoke reply: admitted
+ok   LT4 B replies 600: admitted, total (some 600); required steps / ticks 40 / 63
+ok   LT5 B replies 500: rejected relationCapped, total (some 600)
+ok   LT6 A replies 10: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 1170500119242580952 "decider: not the decider"
+ok   LT6b B files an answer as A: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 1170500119242580952 "mine: not yours"
+ok   LT7a B replies 10: admitted
+ok   LT7b B replies 20, signed over the same view as 10: admitted; total (some 630) (Mini's 630)
+ok   LT7c the other order (20 then 10): admitted, admitted; the same rows root and cells root
+ok   LT7d B replies again at key n=3: rejected keyTaken
+ok   LT8a A starts a tally closing 50 heights on: admitted
+ok   LT8b A grants B invoke reply: admitted
+ok   LT8c B replies with a window 101 heights long: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 1170500119242580952 "decider: closed"
+ok   LL0 a layer over CappedTally: 111 chars; 1768 package bytes; imports the tally; methods [reply, close] (the tally's reply keeps index 0); laws [decider]
+ok   LL0b a layer that overrides the tally's law: overridesLaw decider line 5
+ok   LL1 A installs the layer: admitted
+ok   LL2 A creates a tally under the layer, its own decider: admitted
+ok   LL3 A replies 5 through the layer (the tally's own reply): admitted, total (some 5)
+ok   LL4 A closes it (the layer's own method): admitted
+ok   LL5 A replies after closing: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 1864754519582095141 "decider: closed" (the tally's law, inherited, judges the layer's object)
+ok   LS0 CoAuthor read from its surface text: 2701 chars, 40 lines; core 47649 chars; 38501 package bytes (historical, the hand ports' cores, their code since replaced: over relations 37287 chars / 30028 bytes; over lists 63865 / 52965)
+ok   LS1 A installs CoAuthor: admitted
+ok   LS2 A starts a story closing at 44: admitted; its four relations are born empty
+ok   LS2b A writes the story's closing height directly: refused hasMethods Nanodregg.Kernel.Receive.Refusal.hasMethods 11266528457180269654
+ok   LS3 A grants B propose, edit, vote, seal: admitted
+ok   LS4 A proposes "a light on the rock" at slot 0: admitted; required steps / ticks 102 / 152; its turn logs 639 bytes
+ok   LS4b A proposes at slot 9: refused program Nanodregg.Kernel.Receive.Refusal.program "propose: refused slot 0..7"
+ok   LS4c A proposes an empty passage: refused program Nanodregg.Kernel.Receive.Refusal.program "propose: refused text 1..2000"
+ok   LS5 B proposes "a ship in the fog" at slot 1: admitted
+ok   LS5b A proposes again, at slot 2: rejected keyTaken (Mini's alreadyProposed)
+ok   LS6 B votes for slot 1: admitted; required steps / ticks 111 / 159; its turn logs 770 bytes
+ok   LS6b B votes again, for slot 0: rejected keyTaken (Mini's alreadyVoted)
+ok   LS6c A votes for the empty slot 5: refused program Nanodregg.Kernel.Receive.Refusal.program "vote: refused unknown"
+ok   LS7 A edits B's passage: refused program Nanodregg.Kernel.Receive.Refusal.program "edit: refused notAuthor"
+ok   LS7b B rewrites its passage: admitted
+ok   LS8 A seals while the round is open: refused program Nanodregg.Kernel.Receive.Refusal.program "seal: refused early"
+ok   LS9 A seals after the window: admitted; chapter 1 is B's rewritten passage with 1 vote: true; required steps / ticks 270 / 339; its turn logs 676 bytes
+ok   LS10a A proposes in round two: admitted
+ok   LS10b B proposes in round two, signed over the same view as A: admitted
+ok   LS10c the other order (B then A): admitted, admitted; the same rows root and cells root
+ok   LS11a A votes for B's round-two passage: admitted
+ok   LS11b B edits it, signed over the same view as the vote: rejected stale
+ok   LS12 A, through a layer, gives its own proposal to B: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 5299832691815166923 "authored: author"; the author stays A: true
+ok   LS12i A, through a layer, files a proposal under B's name: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 5299832691815166923 "authored: author"; no row: true
+ok   LS12' the same steal and forgery on a CoAuthor whose `authored` admits any author: admitted, admitted; the authors are now B: true, true (planted true)
+ok   LB1 A installs the Bell from its surface source (1774 chars, 27569 package bytes; methods [answer, close, open, retire, ring], laws [bell], relations [pending, rings]): admitted
+ok   LB2 A creates the bell, B its resident: admitted; its two relations are born empty
+ok   LB3 A grants B answer and ring: admitted
+ok   LB4 A rings "is anyone home?" at notBefore 52: admitted; required steps / ticks 109 / 175
+ok   LB5a A rings at notBefore 53: admitted
+ok   LB5b B rings, signed over the same view as A: admitted
+ok   LB5c the other order (B then A): admitted, admitted; the same rows root and cells root
+ok   LB5d A rings again at notBefore 53: rejected keyTaken
+ok   LB6 the resident's read of pending lists 3 rings, lowest first: notBefore [52, 53, 53]
+ok   LB7 B answers the lowest ring "yes, I am here": admitted; required steps / ticks 99 / 149; the queue now starts at notBefore (some 53)
+ok   LB7u B answers A's ring at 53 without its rows pinned: refused rowUnpinned Nanodregg.Kernel.Receive.Refusal.rowUnpinned 6718915637252189380 1 0x0000000000000035080000007b78e242754162ba
+ok   LB7v B answers the answered ring with only its rings row pinned: refused rowUnpinned Nanodregg.Kernel.Receive.Refusal.rowUnpinned 6718915637252189380 0 0x0000000000000034080000007b78e242754162ba
+ok   LB8 B answers the answered ring again: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 6376467612133446480 "rung: answered"
+ok   LB8a B answers A's ring at 53: admitted
+ok   LB8b B answers it again over the same view: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 6376467612133446480 "rung: answered"; the answer stays "first" (the guard reads the row as it is, so it refuses before the kernel finds the pin stale)
+ok   LB8t B answers its own ring sending back another ring text: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 6376467612133446480 "rung: text"
+ok   LB9 A (the owner, who may invoke every method) answers B's ring: refused program Nanodregg.Kernel.Receive.Refusal.program "answer: refused notResident"
+ok   LB9b B answers with an empty text: refused program Nanodregg.Kernel.Receive.Refusal.program "answer: refused text 1..2000"
+ok   LB10 A retires the answered ring at 52: admitted
+ok   LB10b A retires B's ring, still pending: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 6376467612133446480 "rung: unanswered"
+ok   LB11 pending holds (some 64); A rings once more: rejected relationFull
+ok   LB12 A closes the bell: admitted
+ok   LB12b A rings a closed bell: refused program Nanodregg.Kernel.Receive.Refusal.program "ring: refused closed"
+ok   LB13 A installs a layer over the Bell (answer without the resident check, drop, rewrite, say, seize) and a bell of it, B its resident
+ok   LB13c A answers a ring through the layer, not being the resident: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 16351711723625239871 "rung: notResident"
+ok   LB13e B, the resident, answers a ring and then rewrites the answer through the layer (no pending row): refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 16351711723625239871 "rung: answered"
+ok   LB13f A drops its own unanswered ring through the layer: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 16351711723625239871 "rung: unanswered"
+ok   LB13g B says a ring already answered through the layer: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 16351711723625239871 "rung: answered"
+ok   LB13' the same four on a Bell whose `rung` admits every edit and `queued` any retracter: [admitted, admitted, admitted, admitted] (planted true)
+ok   LB13d A seizes the layered bell, making itself the resident: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 16351711723625239871 "bell: resident"
+ok   LH-prefix select-chooser: notChooser
+ok   LH-prefix select-accepted: accepted
+ok   LH-prefix select-point: unknown
+ok   LH-prefix select-row: unknown
+ok   LH-prefix select-key: unknown
+ok   LH-prefix propose-window: closed
+ok   LH-prefix fill-window: closed
+ok   LH-prefix accept-acceptor: notAcceptor
+ok   LH-prefix accept-accepted: accepted
+ok   LH-prefix accept-selected: unselected
+ok   LH-prefix fact-insert-owner: notYours
+ok   LH-prefix fact-upsert-unknown: unknown
+ok   LH-prefix fact-upsert-owner: notYours
+ok   LH-prefix fact-upsert-transfer: notYours
+ok   LH-prefix fact-retract-owner: notYours
+ok   LH-prefix fact-retract-unknown: unknown
+ok   LH-prefix candidate-upsert-unknown: unknown
+ok   LH-prefix candidate-value: value
+ok   LH-prefix candidate-author: by
+ok   LH-prefix candidate-support0: s0
+ok   LH-prefix candidate-support1: s1
+ok   LH-prefix candidate-status: status
+ok   LH-prefix candidate-pruner: notChooser
+ok   LH-prefix candidate-insert-author: notYours
+ok   LH-prefix shape-acceptor: acceptor
+ok   LH-prefix shape-cap: cap
+ok   LH-prefix shape-chooser: chooser
+ok   LH-prefix shape-closes: closes
+ok   LH0 installing helper ROM (59750 bytes): admitted
+ok   LH0 installing helper ROM (65142 bytes): admitted
+ok   LH0 installing helper ROM (12528 bytes): admitted
+ok   LH0 generated hole reads (37925 chars): methods [accept, fill, post, propose, prune, rejudge, repin, resume_fill, retire, select, unpost], laws [shape], relations [candidates, facts, fills, pending]
+ok   LH1 A installs the hole (29524 package bytes): admitted
+ok   LH2 A creates the hole (cap 10, chooser A, acceptor B): admitted; all 4 relations born empty
+ok   LH3 A grants B accept, post, repin, unpost: admitted
+ok   LH4a B posts fact f1 at pin p1: admitted
+ok   LH4b B posts fact f2 at pin p2: admitted
+ok   LH4c A posts f1 again (B's token): rejected keyTaken
+ok   LH5a A proposes c1 (value 5, facts f1@p1 f2@p2): admitted; status (some verified)
+ok   LH5b A proposes c2 (value 7, fact f2@p2): admitted; status (some verified)
+ok   LH5c A proposes c3 (value 50, past the cap): admitted; retained with its reason: (some (conflict "clause"))
+ok   LH5d A proposes c3 again (its key is taken): rejected keyTaken
+ok   LH5f (scratch) fill a supported candidate atomically: admitted
+ok   LH5g fill a clause-conflicting candidate: refused program Nanodregg.Kernel.Receive.Refusal.program "fill: refused conflict"
+ok   LH5h select a clause-conflicting candidate: refused program Nanodregg.Kernel.Receive.Refusal.program "select: refused conflict"
+ok   LH5j rejudge records conflict: admitted
+ok   LH6 B re-pins fact f1 (p1 -> p1'): admitted; the support c1 recorded has MOVED
+ok   LH7 A selects c1: refused program Nanodregg.Kernel.Receive.Refusal.program "select: refused support0 moved"; required steps / ticks select: refused support0 moved
+ok   LH7f fill over a moved support: refused program Nanodregg.Kernel.Receive.Refusal.program "fill: refused support0 moved"
+ok   LH7j rejudge records suspension: admitted
+ok   LH7b the same select signed over the view before the re-pin: refused program Nanodregg.Kernel.Receive.Refusal.program "select: refused support0 moved" (the method reads the row as it is; the kernel's stale stands behind it)
+ok   LH7c (scratch) B withdraws f1 (admitted); A selects c1: refused program Nanodregg.Kernel.Receive.Refusal.program "select: refused support0 withdrawn"
+ok   LH8 A selects c2 (fact f2@p2 unchanged): admitted; selected (some (some f393349132e18cba)); required steps / ticks 644 / 928
+ok   LH8b B selects c2: refused grantRight Nanodregg.Kernel.Receive.Refusal.grantRight 4793194721597355597
+ok   LH8p A prunes c2 by posted f1: admitted
+ok   LH8q selecting the live-blocked candidate: refused program Nanodregg.Kernel.Receive.Refusal.program "select: refused pruned"
+ok   hole:omitted-blocker-pin-admits live blocker fact omitted from select pins: refused program Nanodregg.Kernel.Receive.Refusal.program "select: refused pruned"
+ok   hole:omitted-blocker-pin-admits live blocker fact omitted from accept pins: refused program Nanodregg.Kernel.Receive.Refusal.program "accept: refused pruned"
+ok   hole:omitted-blocker-pin-admits live blocker fact omitted from rejudge pins: refused program Nanodregg.Kernel.Receive.Refusal.program "rejudge: refused pruned"; status (some (pruned "policy"))
+ok   LH8r B withdraws the pruning token: admitted
+ok   LH8s rejudge releases c2 and retains its reason: admitted; (some verified)
+ok   LH9 B accepts the selected c2: admitted; accepted (some true)
+ok   LH9b A selects again after acceptance: refused program Nanodregg.Kernel.Receive.Refusal.program "select: refused accepted"
+ok   LH10 B withdraws f2 after acceptance: admitted; selected stays c2: true; accepted: (some true)
+ok   LH11 A prunes c1: refused program Nanodregg.Kernel.Receive.Refusal.program "prune: refused accepted"; candidates: c1 (some verified), c2 (some verified), c3 (some (conflict "clause"))
+ok   LH11b B prunes c2: refused grantRight Nanodregg.Kernel.Receive.Refusal.grantRight 4793194721597355597
+ok   LH12 acceptance dispatched captured value 7; withdrawal did not rewrite it
+ok   LH12b acceptor acknowledges the dispatched filling: admitted
+ok   LH12c the dispatch cannot be acknowledged twice: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 15121170367390461562 "fills_waiting: answered"
+ok   LH13 retire the answered dispatch: admitted
+ok   LQ1 A installs a package whose law is the surface's (quorum value 2 #a #b) (609 chars): admitted
+ok   LQ2b A creates it with an approval already counted: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 11477211021390275960 "shared: approvals at birth"
+ok   LQ2 A creates the shared setting: admitted
+ok   LQ3 A grants B every method: admitted
+ok   LQ4 A proposes value 5: admitted
+ok   LQ5 A applies with no approvals: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 11477211021390275960 "shared: no quorum"
+ok   LQ6 A sets B's approval bit: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 11477211021390275960 "shared: not an approval"
+ok   LQ7 A approves (bit 1): admitted
+ok   LQ7b A approves twice: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 11477211021390275960 "shared: not an approval"
+ok   LQ8 A applies with one approval of two: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 11477211021390275960 "shared: no quorum"
+ok   LQ9 B approves (bit 2): admitted
+ok   LQ9b B, with the quorum, writes 77 where 5 was proposed: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 11477211021390275960 "shared: not the proposal"
+ok   LQ10 B applies with both approvals: admitted; value (some 5), approvals (some 0)
+ok   LQ11 A creates a data object under the shared law: admitted
+ok   LQ11b A removes the law with no quorum: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 11477211021390275960 "shared: no quorum"
+ok   LW1 A installs a package whose law is the surface's (windowed value 64 2) (307 chars): admitted
+ok   LW2b A creates it claiming the next epoch: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 15345217262328166865 "rate: epoch is not the call's window"
+ok   LW2 A creates it in epoch 2: admitted
+ok   LW3 A sets 1 in epoch 2: admitted; count (some 1)
+ok   LW4 A sets 2: admitted; count (some 2)
+ok   LW5 A sets 3, a third change in epoch 2: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 15345217262328166865 "rate: rate limit 2"
+ok   LW6 A sets 2 again (no change, no count): admitted; count (some 2)
+ok   LW7 A signs a window spanning two epochs: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 15345217262328166865 "rate: window spans epochs"
+ok   LW8 A sets 3 in epoch 3: admitted; count (some 1)
+ok   LR0 A installs Gate (a refusing method and law): admitted
+ok   LR1 A creates a Gate at 0: admitted
+ok   LR2 put with a five-byte note: refused program Nanodregg.Kernel.Receive.Refusal.program "put: refused note 0..4"
+ok   LR3 put 500: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 4758388163894363198 "small: refused over 100"
+ok   LR4 put 7 with a four-byte note (at the bound): admitted; slot (some [0, 0, 0, 0, 0, 0, 0, 7])
+ok   LC0 install Relay: admitted
+ok   LD5a install Caller: admitted
+ok   LD5b A creates a Caller: admitted
+ok   LD5c A invokes it, calling A as an object: refused wrongKind Nanodregg.Kernel.Receive.Refusal.wrongKind 13430369010661357691 2
+ok   LD1 install a Relay whose call names its callee by a bytes literal: refused program Nanodregg.Kernel.Receive.Refusal.program "illTyped payload @go.body.body.body.body.calls.some.c0.some"
+ok   LD2 install an allowlist naming a 3-byte id: refused program Nanodregg.Kernel.Receive.Refusal.program "notDigest"
+ok   LD3 A creates a Relay whose next is not a digest: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 1336380874668541928 "state field next: not a digest"
+ok   LD4a A creates a last Relay: admitted
+ok   LD4b A invokes it with a via that is not a digest: refused program Nanodregg.Kernel.Receive.Refusal.program "arguments: not a digest"
+ok   LC1 A creates Relay o5: admitted
+ok   LC1 A creates Relay o4: admitted
+ok   LC1 A creates Relay o3: admitted
+ok   LC1 A creates Relay o2: admitted
+ok   LC1 A creates Relay o1: admitted
+ok   LC1 A creates Relay o0: admitted
+ok   LC2 A grants o_k invoke 0 on o_k+1: admitted
+ok   LC2 A grants o_k invoke 0 on o_k+1: admitted
+ok   LC2 A grants o_k invoke 0 on o_k+1: admitted
+ok   LC2 A grants o_k invoke 0 on o_k+1: admitted
+ok   LC2 A grants o_k invoke 0 on o_k+1: admitted
+ok   LC3 A invokes o1, calls 4 deep: admitted; o5 hits (some 1), o5 sees itself as self true
+ok   LC4 A invokes o0, calls 5 deep: refused callTooDeep Nanodregg.Kernel.Receive.Refusal.callTooDeep
+ok   LC6 install a method with 9 call slots: refused program Nanodregg.Kernel.Receive.Refusal.program "badMethod go"
+ok   L7 follower reaches the Host's World (211 turns)
+ok   L7 auditor reaches the Host's World
+ok   L0 read Owned from text: same bytes as the AST
+ok   L0c print Owned, read the text: same bytes
+ok   L0c a method label with a space has no text
+ok   L0c bytes that are not quote-free UTF-8 print as #hex and read back
+ok   L0d an allowlist of 256 ids prints and reads back (the same package bytes)
+ok   L0d a list of 258 elements reads
+ok   L0d a list of 259 elements: tooLong
+ok   L0d a form nested 1026 deep reads
+ok   L0d a form nested 1027 deep: tooDeep
+ok   L0e refuse a binder named true: reservedBinder
+ok   L0e refuse a binder named a numeral: reservedBinder
+ok   L0e refuse a binder named #hex: reservedBinder
+ok   L0e refuse a binder named false: reservedBinder
+ok   L0e refuse a binder named a numeral in a case arm: reservedBinder
+ok   L0e refuse a binder named a head word: reservedBinder
+ok   L0e refuse a binder named a primitive: reservedBinder
+ok   L0e a binder named x5 reads as a variable
+ok   L0f a package 1024 deep as a tree reads, checks, encodes, prints, reads back: same bytes
+ok   L0f one level deeper: tooDeep
+ok   L0f a label with a space has no bytes
+ok   L0b read a seed at Owned's state type
+ok   L0b read a seed whose owner is a member id, as ob prints it (#HEX)
+ok   L0b refuse a seed with a missing field: notOfType
+ok   L0b refuse a seed with a wrong type: notOfType
+ok   L0b refuse a seed with a past natLimit: notOfType
+ok   L0b refuse a seed with a string at a digest: notOfType
+ok   L0b refuse a seed with a digest past digestBytesMax: notOfType
+ok   L0b refuse a seed with a odd count of hex digits: notOfType
+ok   L0b refuse a seed with a uppercase hex digit: notOfType
+ok   L0b refuse a seed with a hex at a nat: notOfType
+ok   L1 install Owned: admitted
+ok   L6 install ill-typed: refused program Nanodregg.Kernel.Receive.Refusal.program "illTyped declared @top"
+ok   LV1 install Owned's LANG-59 bytes (1788 bytes): refused program Nanodregg.Kernel.Receive.Refusal.program "decode Nanodregg.Codec.Refusal.rejected 0 \"lang/package-version/4\""
+ok   LV2 install Owned's bytes at version 3: refused program Nanodregg.Kernel.Receive.Refusal.program "decode Nanodregg.Codec.Refusal.rejected 0 \"lang/package-version/4\""
+ok   LV3 decode refuses both lang/package-version/4; Owned's bytes begin with version 4 and decode
+ok   LI1 install Mid importing Owned: admitted
+ok   LI2 install Top importing Mid, pinning only Mid: refused unpinned Nanodregg.Kernel.Receive.Refusal.unpinned 8569991740220786786
+ok   LI3 install Top pinning Mid and Owned: admitted
+ok   L2 create object: admitted
+ok   L3 A set 50: admitted, total = (some 50)
+ok   PLANT skip-judge: L4 A set 101 must now be admitted: admitted
+ok   L5a A grants B invoke 0: admitted
+ok   L8a install Tally: admitted
+ok   L8c A creates Tally seeded approvals = 0: admitted
+ok   L8d A invokes Tally.a 7: admitted
+ok   L9a install Frozen: admitted
+ok   L9b A creates a data object under Frozen: admitted
+ok   L9c A writes under Frozen: admitted
+ok   L10a install OnlyTo [Frozen]: admitted
+ok   L10b A creates a data object under OnlyTo: admitted
+ok   L10d A replaces OnlyTo by [Frozen]: admitted
+ok   L11a install BirthOnly: admitted
+ok   L11b A creates a data object under BirthOnly: admitted
+ok   L11o A creates a lawless data object: admitted
+ok   LT0 CappedTally read from text: 4761 chars, 37 lines; 3334 package bytes; printed 4378 chars
+ok   LT0s CappedTally in the surface: 668 chars (Mini 1269 without comments) lowers to the same core byte for byte: true; Lang.Read alone refuses it: true; plant (cap 1000) -> (cap 999) caught: true
+ok   LE a misspelt field on line (some 6): the checker's refusal names line (some 6)
+ok   LT0b a tally keyed by bytes: refused program Nanodregg.Kernel.Receive.Refusal.program "relKey answers"
+ok   LT1 A installs CappedTally: admitted
+ok   LT2 A starts a tally, decider B, closing at 227: admitted; the head is born with it: sum (some 0)
+ok   LT3 A grants B invoke reply: admitted
+ok   LT4 B replies 600: admitted, total (some 600); required steps / ticks 40 / 63
+ok   LT5 B replies 500: rejected relationCapped, total (some 600)
+ok   PLANT skip-judge: LT6 A replies 10 must now be admitted: admitted
+ok   LS0 CoAuthor read from its surface text: 2701 chars, 40 lines; core 47649 chars; 38501 package bytes (historical, the hand ports' cores, their code since replaced: over relations 37287 chars / 30028 bytes; over lists 63865 / 52965)
+ok   LS1 A installs CoAuthor: admitted
+ok   LS2 A starts a story closing at 44: admitted; its four relations are born empty
+ok   LS2b A writes the story's closing height directly: refused hasMethods Nanodregg.Kernel.Receive.Refusal.hasMethods 11266528457180269654
+ok   LS3 A grants B propose, edit, vote, seal: admitted
+ok   LS4 A proposes "a light on the rock" at slot 0: admitted; required steps / ticks 102 / 152; its turn logs 639 bytes
+ok   LS4b A proposes at slot 9: refused program Nanodregg.Kernel.Receive.Refusal.program "propose: refused slot 0..7"
+ok   LS4c A proposes an empty passage: refused program Nanodregg.Kernel.Receive.Refusal.program "propose: refused text 1..2000"
+ok   LS5 B proposes "a ship in the fog" at slot 1: admitted
+ok   LS5b A proposes again, at slot 2: rejected keyTaken (Mini's alreadyProposed)
+ok   LS6 B votes for slot 1: admitted; required steps / ticks 111 / 159; its turn logs 770 bytes
+ok   LS6b B votes again, for slot 0: rejected keyTaken (Mini's alreadyVoted)
+ok   LS6c A votes for the empty slot 5: refused program Nanodregg.Kernel.Receive.Refusal.program "vote: refused unknown"
+ok   LS7 A edits B's passage: refused program Nanodregg.Kernel.Receive.Refusal.program "edit: refused notAuthor"
+ok   LS7b B rewrites its passage: admitted
+ok   LS8 A seals while the round is open: refused program Nanodregg.Kernel.Receive.Refusal.program "seal: refused early"
+ok   LS9 A seals after the window: admitted; chapter 1 is B's rewritten passage with 1 vote: true; required steps / ticks 270 / 339; its turn logs 676 bytes
+ok   LS10a A proposes in round two: admitted
+ok   LS10b B proposes in round two, signed over the same view as A: admitted
+ok   LS10c the other order (B then A): admitted, admitted; the same rows root and cells root
+ok   LS11a A votes for B's round-two passage: admitted
+ok   LS11b B edits it, signed over the same view as the vote: rejected stale
+ok   LS12 A, through a layer, gives its own proposal to B: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 5299832691815166923 "authored: author"; the author stays A: true
+ok   LS12i A, through a layer, files a proposal under B's name: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 5299832691815166923 "authored: author"; no row: true
+ok   LS12' the same steal and forgery on a CoAuthor whose `authored` admits any author: admitted, admitted; the authors are now B: true, true (planted true)
+ok   LB1 A installs the Bell from its surface source (1774 chars, 27569 package bytes; methods [answer, close, open, retire, ring], laws [bell], relations [pending, rings]): admitted
+ok   LB2 A creates the bell, B its resident: admitted; its two relations are born empty
+ok   LB3 A grants B answer and ring: admitted
+ok   LB4 A rings "is anyone home?" at notBefore 52: admitted; required steps / ticks 109 / 175
+ok   LB5a A rings at notBefore 53: admitted
+ok   LB5b B rings, signed over the same view as A: admitted
+ok   LB5c the other order (B then A): admitted, admitted; the same rows root and cells root
+ok   LB5d A rings again at notBefore 53: rejected keyTaken
+ok   LB6 the resident's read of pending lists 3 rings, lowest first: notBefore [52, 53, 53]
+ok   LB7 B answers the lowest ring "yes, I am here": admitted; required steps / ticks 99 / 149; the queue now starts at notBefore (some 53)
+ok   LB7u B answers A's ring at 53 without its rows pinned: refused rowUnpinned Nanodregg.Kernel.Receive.Refusal.rowUnpinned 6718915637252189380 1 0x0000000000000035080000007b78e242754162ba
+ok   LB7v B answers the answered ring with only its rings row pinned: refused rowUnpinned Nanodregg.Kernel.Receive.Refusal.rowUnpinned 6718915637252189380 0 0x0000000000000034080000007b78e242754162ba
+ok   LB8 B answers the answered ring again: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 6376467612133446480 "rung: answered"
+ok   LB8a B answers A's ring at 53: admitted
+ok   LB8b B answers it again over the same view: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 6376467612133446480 "rung: answered"; the answer stays "first" (the guard reads the row as it is, so it refuses before the kernel finds the pin stale)
+ok   LB8t B answers its own ring sending back another ring text: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 6376467612133446480 "rung: text"
+ok   LB9 A (the owner, who may invoke every method) answers B's ring: refused program Nanodregg.Kernel.Receive.Refusal.program "answer: refused notResident"
+ok   LB9b B answers with an empty text: refused program Nanodregg.Kernel.Receive.Refusal.program "answer: refused text 1..2000"
+ok   LB10 A retires the answered ring at 52: admitted
+ok   LB10b A retires B's ring, still pending: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 6376467612133446480 "rung: unanswered"
+ok   LB11 pending holds (some 64); A rings once more: rejected relationFull
+ok   LB12 A closes the bell: admitted
+ok   LB12b A rings a closed bell: refused program Nanodregg.Kernel.Receive.Refusal.program "ring: refused closed"
+ok   LB13 A installs a layer over the Bell (answer without the resident check, drop, rewrite, say, seize) and a bell of it, B its resident
+ok   LB13c A answers a ring through the layer, not being the resident: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 16351711723625239871 "rung: notResident"
+ok   LB13e B, the resident, answers a ring and then rewrites the answer through the layer (no pending row): refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 16351711723625239871 "rung: answered"
+ok   LB13f A drops its own unanswered ring through the layer: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 16351711723625239871 "rung: unanswered"
+ok   LB13g B says a ring already answered through the layer: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 16351711723625239871 "rung: answered"
+ok   LB13' the same four on a Bell whose `rung` admits every edit and `queued` any retracter: [admitted, admitted, admitted, admitted] (planted true)
+ok   PLANT skip-judge: LB13d the seizure must now be admitted: admitted
+ok   LC0 install Relay: admitted
+ok   LD4a A creates a last Relay: admitted
+ok   LD4b A invokes it with a via that is not a digest: refused program Nanodregg.Kernel.Receive.Refusal.program "arguments: not a digest"
+ok   LC1 A creates Relay o5: admitted
+ok   LC1 A creates Relay o4: admitted
+ok   LC1 A creates Relay o3: admitted
+ok   LC1 A creates Relay o2: admitted
+ok   LC1 A creates Relay o1: admitted
+ok   LC1 A creates Relay o0: admitted
+ok   LC2 A grants o_k invoke 0 on o_k+1: admitted
+ok   LC2 A grants o_k invoke 0 on o_k+1: admitted
+ok   LC2 A grants o_k invoke 0 on o_k+1: admitted
+ok   LC2 A grants o_k invoke 0 on o_k+1: admitted
+ok   LC2 A grants o_k invoke 0 on o_k+1: admitted
+ok   LC3 A invokes o1, calls 4 deep: admitted; o5 hits (some 1), o5 sees itself as self true
+ok   LC4 A invokes o0, calls 5 deep: refused callTooDeep Nanodregg.Kernel.Receive.Refusal.callTooDeep
+ok   LC6 install a method with 9 call slots: refused program Nanodregg.Kernel.Receive.Refusal.program "badMethod go"
+ok   L7 follower reaches the Host's World (140 turns)
+ok   L7 auditor reaches the Host's World
+ok   L0 read Owned from text: same bytes as the AST
+ok   L0c print Owned, read the text: same bytes
+ok   L0c a method label with a space has no text
+ok   L0c bytes that are not quote-free UTF-8 print as #hex and read back
+ok   L0d an allowlist of 256 ids prints and reads back (the same package bytes)
+ok   L0d a list of 258 elements reads
+ok   L0d a list of 259 elements: tooLong
+ok   L0d a form nested 1026 deep reads
+ok   L0d a form nested 1027 deep: tooDeep
+ok   L0e refuse a binder named true: reservedBinder
+ok   L0e refuse a binder named a numeral: reservedBinder
+ok   L0e refuse a binder named #hex: reservedBinder
+ok   L0e refuse a binder named false: reservedBinder
+ok   L0e refuse a binder named a numeral in a case arm: reservedBinder
+ok   L0e refuse a binder named a head word: reservedBinder
+ok   L0e refuse a binder named a primitive: reservedBinder
+ok   L0e a binder named x5 reads as a variable
+ok   L0f a package 1024 deep as a tree reads, checks, encodes, prints, reads back: same bytes
+ok   L0f one level deeper: tooDeep
+ok   L0f a label with a space has no bytes
+ok   L0b read a seed at Owned's state type
+ok   L0b read a seed whose owner is a member id, as ob prints it (#HEX)
+ok   L0b refuse a seed with a missing field: notOfType
+ok   L0b refuse a seed with a wrong type: notOfType
+ok   L0b refuse a seed with a past natLimit: notOfType
+ok   L0b refuse a seed with a string at a digest: notOfType
+ok   L0b refuse a seed with a digest past digestBytesMax: notOfType
+ok   L0b refuse a seed with a odd count of hex digits: notOfType
+ok   L0b refuse a seed with a uppercase hex digit: notOfType
+ok   L0b refuse a seed with a hex at a nat: notOfType
+ok   L1 install Owned: admitted
+ok   L6 install ill-typed: refused program Nanodregg.Kernel.Receive.Refusal.program "illTyped declared @top"
+ok   LV1 install Owned's LANG-59 bytes (1788 bytes): refused program Nanodregg.Kernel.Receive.Refusal.program "decode Nanodregg.Codec.Refusal.rejected 0 \"lang/package-version/4\""
+ok   LV2 install Owned's bytes at version 3: refused program Nanodregg.Kernel.Receive.Refusal.program "decode Nanodregg.Codec.Refusal.rejected 0 \"lang/package-version/4\""
+ok   LV3 decode refuses both lang/package-version/4; Owned's bytes begin with version 4 and decode
+ok   LI1 install Mid importing Owned: admitted
+ok   LI2 install Top importing Mid, pinning only Mid: refused unpinned Nanodregg.Kernel.Receive.Refusal.unpinned 8569991740220786786
+ok   LI3 install Top pinning Mid and Owned: admitted
+ok   L2 create object: admitted
+ok   L3 A set 50: admitted, total = (some 50)
+ok   L4 A set 101: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 8569991740220786786 "bounded: over 100", total = (some 50)
+ok   L5a A grants B invoke 0: admitted
+ok   L5 B (granted) set 7: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 8569991740220786786 "ownerOnly: not the owner"
+ok   L8a install Tally: admitted
+ok   PLANT erase-occasion: L8b the seeded birth must now be admitted: admitted
+ok   L8c A creates Tally seeded approvals = 0: admitted
+ok   L8d A invokes Tally.a 7: admitted
+ok   PLANT erase-occasion: L8e Tally.b must now be admitted: admitted
+ok   L9a install Frozen: admitted
+ok   L9b A creates a data object under Frozen: admitted
+ok   L9c A writes under Frozen: admitted
+ok   PLANT erase-occasion: L9d removing Frozen must now be admitted: admitted
+ok   L10a install OnlyTo [Frozen]: admitted
+ok   L10b A creates a data object under OnlyTo: admitted
+ok   PLANT erase-occasion: L10c OnlyTo must now pass the wrong replacement to the incoming laws: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 7582821212432740602 "state field approvals missing"
+ok   L11a install BirthOnly: admitted
+ok   L11b A creates a data object under BirthOnly: admitted
+ok   L11o A creates a lawless data object: admitted
+ok   PLANT erase-occasion: L11c adding BirthOnly must now be admitted: admitted
+ok   LC0 install Relay: admitted
+ok   LD3 A creates a Relay whose next is not a digest: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 1336380874668541928 "state field next: not a digest"
+ok   LD4a A creates a last Relay: admitted
+ok   LD4b A invokes it with a via that is not a digest: refused program Nanodregg.Kernel.Receive.Refusal.program "arguments: not a digest"
+ok   LC1 A creates Relay o5: admitted
+ok   LC1 A creates Relay o4: admitted
+ok   LC1 A creates Relay o3: admitted
+ok   LC1 A creates Relay o2: admitted
+ok   LC1 A creates Relay o1: admitted
+ok   LC1 A creates Relay o0: admitted
+ok   LC2 A grants o_k invoke 0 on o_k+1: admitted
+ok   LC2 A grants o_k invoke 0 on o_k+1: admitted
+ok   LC2 A grants o_k invoke 0 on o_k+1: admitted
+ok   LC2 A grants o_k invoke 0 on o_k+1: admitted
+ok   LC2 A grants o_k invoke 0 on o_k+1: admitted
+ok   LC3 A invokes o1, calls 4 deep: admitted; o5 hits (some 1), o5 sees itself as self true
+ok   LC4 A invokes o0, calls 5 deep: refused callTooDeep Nanodregg.Kernel.Receive.Refusal.callTooDeep
+ok   LC6 install a method with 9 call slots: refused program Nanodregg.Kernel.Receive.Refusal.program "badMethod go"
+ok   L7 follower reaches the Host's World (36 turns)
+ok   L7 auditor reaches the Host's World
+ok   L0 read Owned from text: same bytes as the AST
+ok   L0c print Owned, read the text: same bytes
+ok   L0c a method label with a space has no text
+ok   L0c bytes that are not quote-free UTF-8 print as #hex and read back
+ok   L0d an allowlist of 256 ids prints and reads back (the same package bytes)
+ok   L0d a list of 258 elements reads
+ok   L0d a list of 259 elements: tooLong
+ok   L0d a form nested 1026 deep reads
+ok   L0d a form nested 1027 deep: tooDeep
+ok   L0e refuse a binder named true: reservedBinder
+ok   L0e refuse a binder named a numeral: reservedBinder
+ok   L0e refuse a binder named #hex: reservedBinder
+ok   L0e refuse a binder named false: reservedBinder
+ok   L0e refuse a binder named a numeral in a case arm: reservedBinder
+ok   L0e refuse a binder named a head word: reservedBinder
+ok   L0e refuse a binder named a primitive: reservedBinder
+ok   L0e a binder named x5 reads as a variable
+ok   L0f a package 1024 deep as a tree reads, checks, encodes, prints, reads back: same bytes
+ok   L0f one level deeper: tooDeep
+ok   L0f a label with a space has no bytes
+ok   L0b read a seed at Owned's state type
+ok   L0b read a seed whose owner is a member id, as ob prints it (#HEX)
+ok   L0b refuse a seed with a missing field: notOfType
+ok   L0b refuse a seed with a wrong type: notOfType
+ok   L0b refuse a seed with a past natLimit: notOfType
+ok   L0b refuse a seed with a string at a digest: notOfType
+ok   L0b refuse a seed with a digest past digestBytesMax: notOfType
+ok   L0b refuse a seed with a odd count of hex digits: notOfType
+ok   L0b refuse a seed with a uppercase hex digit: notOfType
+ok   L0b refuse a seed with a hex at a nat: notOfType
+ok   L1 install Owned: admitted
+ok   L6 install ill-typed: refused program Nanodregg.Kernel.Receive.Refusal.program "illTyped declared @top"
+ok   LV1 install Owned's LANG-59 bytes (1788 bytes): refused program Nanodregg.Kernel.Receive.Refusal.program "decode Nanodregg.Codec.Refusal.rejected 0 \"lang/package-version/4\""
+ok   LV2 install Owned's bytes at version 3: refused program Nanodregg.Kernel.Receive.Refusal.program "decode Nanodregg.Codec.Refusal.rejected 0 \"lang/package-version/4\""
+ok   LV3 decode refuses both lang/package-version/4; Owned's bytes begin with version 4 and decode
+ok   LI1 install Mid importing Owned: admitted
+ok   LI2 install Top importing Mid, pinning only Mid: refused unpinned Nanodregg.Kernel.Receive.Refusal.unpinned 8569991740220786786
+ok   LI3 install Top pinning Mid and Owned: admitted
+ok   L2 create object: admitted
+ok   L3 A set 50: admitted, total = (some 50)
+ok   L4 A set 101: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 8569991740220786786 "bounded: over 100", total = (some 50)
+ok   L5a A grants B invoke 0: admitted
+ok   L5 B (granted) set 7: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 8569991740220786786 "ownerOnly: not the owner"
+ok   L8a install Tally: admitted
+ok   L8c A creates Tally seeded approvals = 0: admitted
+ok   L8d A invokes Tally.a 7: admitted
+ok   PLANT erase-payload: L8e Tally.b must now be admitted: admitted
+ok   L9a install Frozen: admitted
+ok   L9b A creates a data object under Frozen: admitted
+ok   L9c A writes under Frozen: admitted
+ok   L10a install OnlyTo [Frozen]: admitted
+ok   L10b A creates a data object under OnlyTo: admitted
+ok   L10c A replaces OnlyTo by [Tally]: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 16244771752431933921 "onlyTo: not the agreed laws"
+ok   PLANT erase-payload: L10d the agreed replacement must now be refused: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 16244771752431933921 "onlyTo: not the agreed laws"
+ok   L11a install BirthOnly: admitted
+ok   L11b A creates a data object under BirthOnly: admitted
+ok   L11o A creates a lawless data object: admitted
+ok   L11c A adds BirthOnly to an existing object: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 1454489307162696888 "birthOnly: only at birth"
+ok   LC0 install Relay: admitted
+ok   LD3 A creates a Relay whose next is not a digest: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 1336380874668541928 "state field next: not a digest"
+ok   LD4a A creates a last Relay: admitted
+ok   LD4b A invokes it with a via that is not a digest: refused program Nanodregg.Kernel.Receive.Refusal.program "arguments: not a digest"
+ok   LC1 A creates Relay o5: admitted
+ok   LC1 A creates Relay o4: admitted
+ok   LC1 A creates Relay o3: admitted
+ok   LC1 A creates Relay o2: admitted
+ok   LC1 A creates Relay o1: admitted
+ok   LC1 A creates Relay o0: admitted
+ok   LC2 A grants o_k invoke 0 on o_k+1: admitted
+ok   LC2 A grants o_k invoke 0 on o_k+1: admitted
+ok   LC2 A grants o_k invoke 0 on o_k+1: admitted
+ok   LC2 A grants o_k invoke 0 on o_k+1: admitted
+ok   LC2 A grants o_k invoke 0 on o_k+1: admitted
+ok   LC3 A invokes o1, calls 4 deep: admitted; o5 hits (some 1), o5 sees itself as self true
+ok   LC4 A invokes o0, calls 5 deep: refused callTooDeep Nanodregg.Kernel.Receive.Refusal.callTooDeep
+ok   LC6 install a method with 9 call slots: refused program Nanodregg.Kernel.Receive.Refusal.program "badMethod go"
+ok   L7 follower reaches the Host's World (33 turns)
+ok   L7 auditor reaches the Host's World
+ok   L0 read Owned from text: same bytes as the AST
+ok   L0c print Owned, read the text: same bytes
+ok   L0c a method label with a space has no text
+ok   L0c bytes that are not quote-free UTF-8 print as #hex and read back
+ok   L0d an allowlist of 256 ids prints and reads back (the same package bytes)
+ok   L0d a list of 258 elements reads
+ok   L0d a list of 259 elements: tooLong
+ok   L0d a form nested 1026 deep reads
+ok   L0d a form nested 1027 deep: tooDeep
+ok   L0e refuse a binder named true: reservedBinder
+ok   L0e refuse a binder named a numeral: reservedBinder
+ok   L0e refuse a binder named #hex: reservedBinder
+ok   L0e refuse a binder named false: reservedBinder
+ok   L0e refuse a binder named a numeral in a case arm: reservedBinder
+ok   L0e refuse a binder named a head word: reservedBinder
+ok   L0e refuse a binder named a primitive: reservedBinder
+ok   L0e a binder named x5 reads as a variable
+ok   L0f a package 1024 deep as a tree reads, checks, encodes, prints, reads back: same bytes
+ok   L0f one level deeper: tooDeep
+ok   L0f a label with a space has no bytes
+ok   L0b read a seed at Owned's state type
+ok   L0b read a seed whose owner is a member id, as ob prints it (#HEX)
+ok   L0b refuse a seed with a missing field: notOfType
+ok   L0b refuse a seed with a wrong type: notOfType
+ok   L0b refuse a seed with a past natLimit: notOfType
+ok   L0b refuse a seed with a string at a digest: notOfType
+ok   L0b refuse a seed with a digest past digestBytesMax: notOfType
+ok   L0b refuse a seed with a odd count of hex digits: notOfType
+ok   L0b refuse a seed with a uppercase hex digit: notOfType
+ok   L0b refuse a seed with a hex at a nat: notOfType
+ok   L1 install Owned: admitted
+ok   L6 install ill-typed: refused program Nanodregg.Kernel.Receive.Refusal.program "illTyped declared @top"
+ok   LV1 install Owned's LANG-59 bytes (1788 bytes): refused program Nanodregg.Kernel.Receive.Refusal.program "decode Nanodregg.Codec.Refusal.rejected 0 \"lang/package-version/4\""
+ok   LV2 install Owned's bytes at version 3: refused program Nanodregg.Kernel.Receive.Refusal.program "decode Nanodregg.Codec.Refusal.rejected 0 \"lang/package-version/4\""
+ok   LV3 decode refuses both lang/package-version/4; Owned's bytes begin with version 4 and decode
+ok   LI1 install Mid importing Owned: admitted
+ok   LI2 install Top importing Mid, pinning only Mid: refused unpinned Nanodregg.Kernel.Receive.Refusal.unpinned 8569991740220786786
+ok   LI3 install Top pinning Mid and Owned: admitted
+ok   L2 create object: admitted
+ok   L3 A set 50: admitted, total = (some 50)
+ok   L4 A set 101: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 8569991740220786786 "bounded: over 100", total = (some 50)
+ok   L5a A grants B invoke 0: admitted
+ok   L5 B (granted) set 7: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 8569991740220786786 "ownerOnly: not the owner"
+ok   L8a install Tally: admitted
+ok   L8c A creates Tally seeded approvals = 0: admitted
+ok   L8d A invokes Tally.a 7: admitted
+ok   L9a install Frozen: admitted
+ok   L9b A creates a data object under Frozen: admitted
+ok   L9c A writes under Frozen: admitted
+ok   L10a install OnlyTo [Frozen]: admitted
+ok   L10b A creates a data object under OnlyTo: admitted
+ok   L10c A replaces OnlyTo by [Tally]: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 16244771752431933921 "onlyTo: not the agreed laws"
+ok   L10d A replaces OnlyTo by [Frozen]: admitted
+ok   L11a install BirthOnly: admitted
+ok   L11b A creates a data object under BirthOnly: admitted
+ok   L11o A creates a lawless data object: admitted
+ok   L11c A adds BirthOnly to an existing object: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 1454489307162696888 "birthOnly: only at birth"
+ok   LC0 install Relay: admitted
+ok   LD3 A creates a Relay whose next is not a digest: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 1336380874668541928 "state field next: not a digest"
+ok   LD4a A creates a last Relay: admitted
+ok   LD4b A invokes it with a via that is not a digest: refused program Nanodregg.Kernel.Receive.Refusal.program "arguments: not a digest"
+ok   LC1 A creates Relay o5: admitted
+ok   LC1 A creates Relay o4: admitted
+ok   LC1 A creates Relay o3: admitted
+ok   LC1 A creates Relay o2: admitted
+ok   LC1 A creates Relay o1: admitted
+ok   LC1 A creates Relay o0: admitted
+ok   LC2 A grants o_k invoke 0 on o_k+1: admitted
+ok   LC2 A grants o_k invoke 0 on o_k+1: admitted
+ok   LC2 A grants o_k invoke 0 on o_k+1: admitted
+ok   LC2 A grants o_k invoke 0 on o_k+1: admitted
+ok   LC2 A grants o_k invoke 0 on o_k+1: admitted
+ok   PLANT drop-calls: LC3 the chain's end must now be untouched: admitted, o5 hits (some 0)
+ok   PLANT drop-calls: LC4 five deep must now be admitted: admitted
+ok   LC6 install a method with 9 call slots: refused program Nanodregg.Kernel.Receive.Refusal.program "badMethod go"
+ok   L7 follower reaches the Host's World (34 turns)
+ok   L7 auditor reaches the Host's World
+ok   L0 read Owned from text: same bytes as the AST
+ok   L0c print Owned, read the text: same bytes
+ok   L0c a method label with a space has no text
+ok   L0c bytes that are not quote-free UTF-8 print as #hex and read back
+ok   L0d an allowlist of 256 ids prints and reads back (the same package bytes)
+ok   L0d a list of 258 elements reads
+ok   L0d a list of 259 elements: tooLong
+ok   L0d a form nested 1026 deep reads
+ok   L0d a form nested 1027 deep: tooDeep
+ok   L0e refuse a binder named true: reservedBinder
+ok   L0e refuse a binder named a numeral: reservedBinder
+ok   L0e refuse a binder named #hex: reservedBinder
+ok   L0e refuse a binder named false: reservedBinder
+ok   L0e refuse a binder named a numeral in a case arm: reservedBinder
+ok   L0e refuse a binder named a head word: reservedBinder
+ok   L0e refuse a binder named a primitive: reservedBinder
+ok   L0e a binder named x5 reads as a variable
+ok   L0f a package 1024 deep as a tree reads, checks, encodes, prints, reads back: same bytes
+ok   L0f one level deeper: tooDeep
+ok   L0f a label with a space has no bytes
+ok   L0b read a seed at Owned's state type
+ok   L0b read a seed whose owner is a member id, as ob prints it (#HEX)
+ok   L0b refuse a seed with a missing field: notOfType
+ok   L0b refuse a seed with a wrong type: notOfType
+ok   L0b refuse a seed with a past natLimit: notOfType
+ok   L0b refuse a seed with a string at a digest: notOfType
+ok   L0b refuse a seed with a digest past digestBytesMax: notOfType
+ok   L0b refuse a seed with a odd count of hex digits: notOfType
+ok   L0b refuse a seed with a uppercase hex digit: notOfType
+ok   L0b refuse a seed with a hex at a nat: notOfType
+ok   L1 install Owned: admitted
+ok   L6 install ill-typed: refused program Nanodregg.Kernel.Receive.Refusal.program "illTyped declared @top"
+ok   LV1 install Owned's LANG-59 bytes (1788 bytes): refused program Nanodregg.Kernel.Receive.Refusal.program "decode Nanodregg.Codec.Refusal.rejected 0 \"lang/package-version/4\""
+ok   LV2 install Owned's bytes at version 3: refused program Nanodregg.Kernel.Receive.Refusal.program "decode Nanodregg.Codec.Refusal.rejected 0 \"lang/package-version/4\""
+ok   LV3 decode refuses both lang/package-version/4; Owned's bytes begin with version 4 and decode
+ok   LI1 install Mid importing Owned: admitted
+ok   PLANT raw-install: LI2 Top pinning only Mid must now be admitted: admitted
+ok   L2 create object: admitted
+ok   L3 A set 50: admitted, total = (some 50)
+ok   L4 A set 101: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 8569991740220786786 "bounded: over 100", total = (some 50)
+ok   L5a A grants B invoke 0: admitted
+ok   L5 B (granted) set 7: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 8569991740220786786 "ownerOnly: not the owner"
+ok   L8a install Tally: admitted
+ok   L8c A creates Tally seeded approvals = 0: admitted
+ok   L8d A invokes Tally.a 7: admitted
+ok   L9a install Frozen: admitted
+ok   L9b A creates a data object under Frozen: admitted
+ok   L9c A writes under Frozen: admitted
+ok   L10a install OnlyTo [Frozen]: admitted
+ok   L10b A creates a data object under OnlyTo: admitted
+ok   L10c A replaces OnlyTo by [Tally]: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 16244771752431933921 "onlyTo: not the agreed laws"
+ok   L10d A replaces OnlyTo by [Frozen]: admitted
+ok   L11a install BirthOnly: admitted
+ok   L11b A creates a data object under BirthOnly: admitted
+ok   L11o A creates a lawless data object: admitted
+ok   L11c A adds BirthOnly to an existing object: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 1454489307162696888 "birthOnly: only at birth"
+ok   LC0 install Relay: admitted
+ok   LD3 A creates a Relay whose next is not a digest: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 1336380874668541928 "state field next: not a digest"
+ok   LD4a A creates a last Relay: admitted
+ok   LD4b A invokes it with a via that is not a digest: refused program Nanodregg.Kernel.Receive.Refusal.program "arguments: not a digest"
+ok   LC1 A creates Relay o5: admitted
+ok   LC1 A creates Relay o4: admitted
+ok   LC1 A creates Relay o3: admitted
+ok   LC1 A creates Relay o2: admitted
+ok   LC1 A creates Relay o1: admitted
+ok   LC1 A creates Relay o0: admitted
+ok   LC2 A grants o_k invoke 0 on o_k+1: admitted
+ok   LC2 A grants o_k invoke 0 on o_k+1: admitted
+ok   LC2 A grants o_k invoke 0 on o_k+1: admitted
+ok   LC2 A grants o_k invoke 0 on o_k+1: admitted
+ok   LC2 A grants o_k invoke 0 on o_k+1: admitted
+ok   LC3 A invokes o1, calls 4 deep: admitted; o5 hits (some 1), o5 sees itself as self true
+ok   LC4 A invokes o0, calls 5 deep: refused callTooDeep Nanodregg.Kernel.Receive.Refusal.callTooDeep
+ok   LC6 install a method with 9 call slots: refused program Nanodregg.Kernel.Receive.Refusal.program "badMethod go"
+ok   L7 follower reaches the Host's World (33 turns)
+ok   L7 auditor reaches the Host's World
+ok   LC0 install Relay: admitted
+ok   PLANT bytes-ids: LD1 a call naming its callee by bytes must now install: admitted
+ok   LC0 install Relay: admitted
+ok   PLANT skip-lits: LD2 an allowlist of a non-digest id must now install: admitted
+ok   LC0 install Relay: admitted
+ok   PLANT total-digest: LD3 a seed whose next is not a digest must now be admitted: admitted
+ok   LD4a A creates a last Relay: admitted
+ok   PLANT total-digest: LD4b arguments whose via is not a digest must now be admitted: admitted
+ok   LC0 install Relay: admitted
+ok   LD5a install Caller: admitted
+ok   LD5b A creates a Caller: admitted
+ok   PLANT unlawful-codec: LD5c a call naming the signer must now be refused by callsOf: refused program Nanodregg.Kernel.Receive.Refusal.program "calls: c0 obj: not a digest"
+ok   LS0 CoAuthor read from its surface text: 2701 chars, 40 lines; core 47649 chars; 38501 package bytes (historical, the hand ports' cores, their code since replaced: over relations 37287 chars / 30028 bytes; over lists 63865 / 52965)
+ok   LS1 A installs CoAuthor: admitted
+ok   LS2 A starts a story closing at 13: admitted; its four relations are born empty
+ok   LS2b A writes the story's closing height directly: refused hasMethods Nanodregg.Kernel.Receive.Refusal.hasMethods 16510791318099723022
+ok   LS3 A grants B propose, edit, vote, seal: admitted
+ok   LS4 A proposes "a light on the rock" at slot 0: admitted; required steps / ticks 102 / 152; its turn logs 639 bytes
+ok   LS4b A proposes at slot 9: refused program Nanodregg.Kernel.Receive.Refusal.program "propose: refused slot 0..7"
+ok   LS4c A proposes an empty passage: refused program Nanodregg.Kernel.Receive.Refusal.program "propose: refused text 1..2000"
+ok   LS5 B proposes "a ship in the fog" at slot 1: admitted
+ok   LS5b A proposes again, at slot 2: rejected keyTaken (Mini's alreadyProposed)
+ok   LS6 B votes for slot 1: admitted; required steps / ticks 111 / 159; its turn logs 770 bytes
+ok   LS6b B votes again, for slot 0: rejected keyTaken (Mini's alreadyVoted)
+ok   LS6c A votes for the empty slot 5: refused program Nanodregg.Kernel.Receive.Refusal.program "vote: refused unknown"
+ok   LS7 A edits B's passage: refused program Nanodregg.Kernel.Receive.Refusal.program "edit: refused notAuthor"
+ok   LS7b B rewrites its passage: admitted
+ok   LS8 A seals while the round is open: refused program Nanodregg.Kernel.Receive.Refusal.program "seal: refused early"
+ok   PLANT drop-range-row: LS9 the seal is still admitted (admitted) but chapter 1 is A's passage, the winner never seen
+ok   LT0 CappedTally read from text: 4761 chars, 37 lines; 3334 package bytes; printed 4378 chars
+ok   LT0s CappedTally in the surface: 668 chars (Mini 1269 without comments) lowers to the same core byte for byte: true; Lang.Read alone refuses it: true; plant (cap 1000) -> (cap 999) caught: true
+ok   LE a misspelt field on line (some 6): the checker's refusal names line (some 6)
+ok   LT0b a tally keyed by bytes: refused program Nanodregg.Kernel.Receive.Refusal.program "relKey answers"
+ok   LT1 A installs CappedTally: admitted
+ok   LT2 A starts a tally, decider B, closing at 201: admitted; the head is born with it: sum (some 0)
+ok   LT3 A grants B invoke reply: admitted
+ok   PLANT foreign-row: LT4 B's reply with its row filed under B's own id: refused rowParent Nanodregg.Kernel.Receive.Refusal.rowParent 5548868848873153179
+ok   P8 install checked helper (64051 bytes): admitted
+ok   P8 install checked helper (62441 bytes): admitted
+ok   P8 install checked helper (23325 bytes): admitted
+ok   P8 install checked open artifact (55839 bytes): admitted
+ok   P8 requester cell: admitted
+ok   P8 B's value cell: admitted
+ok   P8 provider account 10947230788521863465: admitted
+ok   P8 provider account 17866259514217131160: admitted
+ok   P8 B authorizes requester for ONE unit: admitted
+ok   P8 provider authority 10947230788521863465: admitted
+ok   P8 provider authority 17866259514217131160: admitted
+ok   P8 post versioned provider support: admitted
+ok   P8 retain candidate 10947230788521863465: admitted
+ok   P8 post versioned provider support: admitted
+ok   P8 retain candidate 17866259514217131160: admitted
+ok   P8 live contextual amount selected: admitted
+ok   PROBE-a ghost cell 6840227782638526189: kernel entry false, live false
+ok   PROBE-a account (asset, ghostOwner 54324593208393710): admitted
+ok   PROBE-a post fact (cell 6840227782638526189, pin 841540765299359966) through Receive.submit: admitted; kernel entry after false
+ok   PROBE-a propose candidate ghostOwner with s0 = (ghost, ghostPin): admitted; row status (some verified)
+ok   PROBE-a select the ghost-supported candidate: admitted; selected (some (some [238, 255, 192, 0, 238, 255, 192, 0]))
+ok   PROBE-a commit (one unit to ghostOwner) against the ghost support: admitted; counted left (some 0); accepted (some true); selected (some (some [238, 255, 192, 0, 238, 255, 192, 0]))
+ok   P8.1 unrelated update: admitted
+ok   P8.1 old signed plan after unrelated update: admitted
+ok   P8.2 withdraw provider 0: admitted
+ok   PROBE-b after revoke only: g0 6334235985002307112 entry tomb true; fact row for g0 still true
+ok   PROBE-b revoke only, then commit candidate 0 pinning g0 at its TOMBSTONE: admitted; counted left (some 0); selected (some (some [41, 169, 16, 184, 102, 96, 236, 151]))
+ok   PROBE-b revoke, then unpost g0's fact (a second call): admitted
+ok   PROBE-b after revoke + unpost (two calls), commit pinning g0 at its tombstone: refused program Nanodregg.Kernel.Receive.Refusal.program "commit: refused support0 withdrawn"
+ok   P8.2 withdrawn instantiation: rejected stale; live authority [false, true]
+ok   P8.2 mismatched live authority pin: rejected stale
+ok   P8.3 second provider selects contextual ROM candidate: admitted
+ok   P8 cancel recorded; submit cancelled plan: rejected refusedFinal
+ok   P8 deadline: rejected outsideWindow
+ok   P8 contract deadline: refused program Nanodregg.Kernel.Receive.Refusal.program "commit: refused closed"
+ok   P8 support correspondence moved (admitted): refused program Nanodregg.Kernel.Receive.Refusal.program "commit: refused support0 moved"
+ok   P8.4 RE-EXECUTE atomic checked commitment: admitted; counted left (some 0)
+ok   P8.4 replay: rejected replayed
+ok   P8.4 freshly re-executed committed artifact: refused program Nanodregg.Kernel.Receive.Refusal.program "commit: refused accepted"
+ok   P8.4 competing use of the same counted right: transferSpent
+ok   P8 receipt binds checked call and atomic transition
+ok   P8 recovered suffix: left (some 0); retry rejected replayed
+ok   P8 initial authority was live for both candidates
+lang-journey: GREEN

@@ -1,0 +1,1 @@
+ok   P8.2 re-pinned tombstone: admitted; PROBE live0 false accepted (some true) selected-is-a true left (some 0)

@@ -1,0 +1,35 @@
+✔ [96/100] Built Lang.Contextual.Protocol (950ms)
+✔ [97/100] Built Lang.Proofs.Contextual.ProtocolTyping (430ms)
+✔ [98/100] Built Lang.Contextual.NanoBridge (349ms)
+✖ [99/100] Building Lang.Proofs.Contextual.Protocol (1.1s)
+trace: .> LEAN_PATH=/tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean /home/hbox/.elan/toolchains/leanprover--lean4---v4.30.0/bin/lean /tank/dregg-build/nanodregg/wt/promo/Lang/Proofs/Contextual/Protocol.lean -o /tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean/Lang/Proofs/Contextual/Protocol.olean -i /tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean/Lang/Proofs/Contextual/Protocol.ilean -c /tank/dregg-build/nanodregg/wt/promo/.lake/build/ir/Lang/Proofs/Contextual/Protocol.c --setup /tank/dregg-build/nanodregg/wt/promo/.lake/build/ir/Lang/Proofs/Contextual/Protocol.setup.json --json
+error: Lang/Proofs/Contextual/Protocol.lean:121:63: unsolved goals
+Ix : Type
+S : Sig Ix
+Hole A : Ix → Type
+Role : Type
+me : Role
+Tok Fact Ob : Type
+inst✝ : DecidableEq Role
+Ω : Ctx S Hole A Role Tok Fact Ob
+σ : Subst S Hole A
+i : Ix
+h : Hole i
+I : Iface S Hole A Role Tok Fact Ob i
+hI : Ω i h = some I
+hp : I.chooser ≠ me
+⊢ (match σ i h with
+    | some f => f
+    | none => Prot.hole h) =
+    Prot.hole h
+error: Lang/Proofs/Contextual/Protocol.lean:861:65: unsolved goals
+σ : Subst sig HoleN Res
+b : Bool
+⊢ (match σ Phase.revealed () with
+    | some (Prot.ret c) => c == b
+    | x => false) =
+    false
+error: Lean exited with code 1
+Some required targets logged failures:
+- Lang.Proofs.Contextual.Protocol
+error: build failed

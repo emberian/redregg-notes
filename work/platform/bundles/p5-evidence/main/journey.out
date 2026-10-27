@@ -1,0 +1,25 @@
+
+step  status      wall_s  what / detail / deciding artifact
+J0   PASS        19.111  clean start: private single-authority service, one sponsor
+                          service up and a signed read answered in 19.076s
+                          -> /run/user/1001/p5m/world/handoff.json
+J1   PASS        16.710  enroll an independently generated newcomer key
+                          subject 16646513873167416813, record 1; key absent from genesis/config; lookup = same receipt
+                          -> /run/user/1001/p5m/world/attempts/newcomer/submit.json
+J2   PASS         4.673  sponsor creates a resource under a permissive law
+                          object 17058397647917410788 under all[], record 2
+                          -> /run/user/1001/p5m/world/sponsor/attempts/create-shared/outcome.json
+J3   PASS        12.514  sponsor delegates observe+mutate (no control) to newcomer
+                          child 10680145295102561443 verbs observe,mutate, record 3
+                          -> /run/user/1001/p5m/world/sponsor/attempts/grant-newcomer/outcome.json
+J4   PASS        24.634  newcomer signed read, writes field to 1, reads back 1
+                          read 4.530s, write 9.176s, readback field 2 = 1, record 4
+                          -> /run/user/1001/p5m/world/newcomer-workspace/attempts/first-action/outcome.json
+J5   PASS        72.125  a key with no grant: read and write refused
+                          8/8 refused: 4 by the Host (enrolled no-grant read x2, propose, crafted submit), 2 by local consent before signing (unenrolled read, submit), and the same unenrolled read and write sent by a hostile client past that gate: the Host refuses both (this key is not enrolled on this Host); image unchanged; third = record 5
+                          -> /run/user/1001/p5m/steps/J5/refusals.tsv
+K12T  FAIL       437.074  range transclusion: disclosure at transclusion time, snapshot pinned, live follows, a late joiner sees the placeholder
+                          hook exit 1: 2 of 28 transclusion rows differ from expectation (see /run/user/1001/p5m/steps/K12T/transclusion-rows.tsv)
+
+FRONTIER: K12T   (accepted records: 5; load average start/end: 5.33 11.29 17.82 / 20.68 15.75 16.60 on 32 CPUs; result: /run/user/1001/p5m/journey-result.json)
+EXIT 1

@@ -1,0 +1,5 @@
+before 52625 after 51739
+vanished 886 of which outside the declared modules 0
+declared-module constants 887 all vanished: False
+new 0 type-digest changed 0 value-hash changed 0 module changed 1
+   Nanodregg.Lang.Contextual.Iface.decl.eq_1

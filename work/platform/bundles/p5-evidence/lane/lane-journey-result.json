@@ -1,0 +1,80 @@
+{
+  "type": "mini-journey-result-v1",
+  "runRoot": "/run/user/1001/p5l",
+  "script": "/srv/lanes/plat-read-target-leg/src/native/resource-client/journey.sh",
+  "inputsSha256": [
+    "a5d0d5036fb4ecba22a5134a48ed041212bb362aba5bc48a9d67666b004b9893  /srv/lanes/plat-read-target-leg/src/native/resource-client/journey.sh",
+    "a1a27e1f0bc03b3c49d8527fadc1f1c78dfabb608088462d9fd0cbfe07d7ef54  /srv/lanes/plat-read-target-leg/bin/minidregg-host",
+    "43dda334c119357abc47d321e38461a5f5689f53daaf581997fa101988e69792  /srv/lanes/plat-read-target-leg/bin/mini",
+    "238be216658ecb1cec3b755ea1d32ad754dcb6ce083e69c5215633b92cbead3b  /srv/lanes/plat-read-target-leg/bin/minidregg-link-sqlite-store",
+    "c0958c23b483e125cd27a743eba8650995e3e4e42b4186f06460d1e57ca744c8  /srv/lanes/plat-read-target-leg/bin/minidregg-credential-signature-verifier"
+  ],
+  "acceptedRecords": 5,
+  "wallSeconds": "542.586",
+  "machine": {
+    "host": "burst2-a",
+    "cpus": "16",
+    "loadAverageAtStart": "7.76 8.83 10.51",
+    "loadAverageNow": "9.39 7.99 9.09"
+  },
+  "frontier": "END",
+  "reachedEnd": true,
+  "steps": [
+    {
+      "id": "J0",
+      "title": "clean start: private single-authority service, one sponsor",
+      "status": "PASS",
+      "wallSeconds": "17.715",
+      "artifact": "/run/user/1001/p5l/world/handoff.json",
+      "detail": "service up and a signed read answered in 17.691s"
+    },
+    {
+      "id": "J1",
+      "title": "enroll an independently generated newcomer key",
+      "status": "PASS",
+      "wallSeconds": "14.195",
+      "artifact": "/run/user/1001/p5l/world/attempts/newcomer/submit.json",
+      "detail": "subject 11474594955279643985, record 1; key absent from genesis/config; lookup = same receipt"
+    },
+    {
+      "id": "J2",
+      "title": "sponsor creates a resource under a permissive law",
+      "status": "PASS",
+      "wallSeconds": "4.360",
+      "artifact": "/run/user/1001/p5l/world/sponsor/attempts/create-shared/outcome.json",
+      "detail": "object 17984725589838119881 under all[], record 2"
+    },
+    {
+      "id": "J3",
+      "title": "sponsor delegates observe+mutate (no control) to newcomer",
+      "status": "PASS",
+      "wallSeconds": "11.571",
+      "artifact": "/run/user/1001/p5l/world/sponsor/attempts/grant-newcomer/outcome.json",
+      "detail": "child 11811271977672078107 verbs observe,mutate, record 3"
+    },
+    {
+      "id": "J4",
+      "title": "newcomer signed read, writes field to 1, reads back 1",
+      "status": "PASS",
+      "wallSeconds": "21.590",
+      "artifact": "/run/user/1001/p5l/world/newcomer-workspace/attempts/first-action/outcome.json",
+      "detail": "read 3.810s, write 7.694s, readback field 2 = 1, record 4"
+    },
+    {
+      "id": "J5",
+      "title": "a key with no grant: read and write refused",
+      "status": "PASS",
+      "wallSeconds": "60.393",
+      "artifact": "/run/user/1001/p5l/steps/J5/refusals.tsv",
+      "detail": "8/8 refused: 4 by the Host (enrolled no-grant read x2, propose, crafted submit), 2 by local consent before signing (unenrolled read, submit), and the same unenrolled read and write sent by a hostile client past that gate: the Host refuses both (this key is not enrolled on this Host); image unchanged; third = record 5"
+    },
+    {
+      "id": "K12T",
+      "title": "range transclusion: disclosure at transclusion time, snapshot pinned, live follows, a late joiner sees the placeholder",
+      "status": "PASS",
+      "wallSeconds": "393.015",
+      "artifact": "/run/user/1001/p5l/steps/K12T/transclusion-rows.tsv",
+      "detail": "28/28 transclusion rows as expected: disclosure checked at transclusion time, snapshot pinned (read at its height), live follows the range, endpoint death by policy, no bytes in the host"
+    }
+  ]
+}

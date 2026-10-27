@@ -1,0 +1,54 @@
+✔ [703/719] Built Hosting.Resident.Run (687ms)
+✔ [704/719] Built Hosting.Resident.Main (433ms)
+✔ [705/719] Built Hosting.Resident.Run:c.o (512ms)
+✔ [706/719] Built Hosting.Resident.Volume (300ms)
+✔ [707/719] Built Hosting.Resident.Trace (396ms)
+✔ [709/719] Built Hosting.Proofs.Resident (1.4s)
+✔ [710/719] Built Lang.Contextual.NanoBridge (481ms)
+✔ [711/719] Built resident:exe (1.5s)
+✔ [712/719] Built Hosting.Proofs.ResidentVolume (809ms)
+✔ [713/719] Built Hosting.Proofs.ResidentRun (2.5s)
+✔ [714/719] Built Hosting.Proofs.BellConform (916ms)
+✔ [715/719] Built Lang.Proofs.Contextual.Protocol (1.4s)
+✔ [716/719] Built Lang.Proofs.Contextual.Negotiation (687ms)
+✖ [718/719] Building Hosting.Proofs.Socket (10s)
+trace: .> LEAN_PATH=/tank/dregg-build/nanodregg/wt/e2/.lake/build/lib/lean /home/hbox/.elan/toolchains/leanprover--lean4---v4.30.0/bin/lean /tank/dregg-build/nanodregg/wt/e2/Hosting/Proofs/Socket.lean -o /tank/dregg-build/nanodregg/wt/e2/.lake/build/lib/lean/Hosting/Proofs/Socket.olean -i /tank/dregg-build/nanodregg/wt/e2/.lake/build/lib/lean/Hosting/Proofs/Socket.ilean -c /tank/dregg-build/nanodregg/wt/e2/.lake/build/ir/Hosting/Proofs/Socket.c --setup /tank/dregg-build/nanodregg/wt/e2/.lake/build/ir/Hosting/Proofs/Socket.setup.json --json
+error: Hosting/Proofs/Socket.lean:484:10: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  Resident.answerArg r t
+in the target expression
+  (match Resident.answerArg r r.text with
+    | some a => Resident.invokeArgv w.conf sh a
+    | none => []) =
+    Resident.invokeArgv w.conf sh txt
+
+D : Type
+inst✝¹ : Ord D
+inst✝ : DecidableEq D
+X : Ctx D
+dc : Codec.Stream D
+B : Thin.Base (World D)
+me : Self D
+w : Resident.Where
+m : Resident.Mem
+es : List Resident.Ev
+a : Resident.Tick
+hX : ∀ (b : ByteArray) (c : Call D), X.decodeCall b = some c → X.callBytes c = b
+h : ResidentRun.Runs (Resident.tickP w m) es a
+hs : StdioLeg X dc B me w.conf (Resident.core es)
+sh : Resident.Shape
+r : Resident.Ring
+t : ByteArray
+rr : Resident.Reply
+hi : Resident.Ev.cmd (Resident.Cmd.invoke sh r t) (Except.ok rr) ∈ Resident.core es
+hok : rr.exit = CommandExit.ok.code
+txt : String
+htxt : Resident.answerArg r t = some txt
+⊢ (match Resident.answerArg r r.text with
+    | some a => Resident.invokeArgv w.conf sh a
+    | none => []) =
+    Resident.invokeArgv w.conf sh txt
+error: Lean exited with code 1
+Some required targets logged failures:
+- Hosting.Proofs.Socket
+error: build failed
+lake exit 1

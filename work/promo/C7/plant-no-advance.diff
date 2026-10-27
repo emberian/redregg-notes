@@ -1,0 +1,13 @@
+diff --git a/Kernel/World.lean b/Kernel/World.lean
+index 4f0715b..ebd3bde 100644
+--- a/Kernel/World.lean
++++ b/Kernel/World.lean
+@@ -1004,7 +1004,7 @@ def touchCheck (E : Env D) (w : World D) (x : Touch D) : Except (Reject D) (Opti
+   | .write ops, some (.live cell ver) => do
+       req (decide (ver + 1 < Bounds.counterLimit)) (.overBound .version)
+       let post ← postWrite x.cell cell ops
+-      pure (some ⟨x.cell, .live post (ver + 1), cell.weight + (ops.map Op.weight).sum - post.weight,
++      pure (some ⟨x.cell, .live post ver, cell.weight + (ops.map Op.weight).sum - post.weight,
+         flowsOf (some cell) (some post)⟩)
+   | .write _, _ => .error (.missingCell x.cell)
+   | .retire, some (.live cell _) => do

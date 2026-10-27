@@ -1,0 +1,874 @@
+diff -ruN Lang/Contextual/Certificate.lean Lang/Contextual/Certificate.lean
+--- Lang/Contextual/Certificate.lean	2026-10-21 20:58:06.994165632 -0400
++++ Lang/Contextual/Certificate.lean	1969-12-31 19:00:00.000000000 -0500
+@@ -1,119 +0,0 @@
+-/-
+-Explicit logic certificates for proof-engineering tooling. This is a data/reader interface,
+-not nano admission and not a new proof checker. An adapter supplies the actual environment
+-lookup and exact declaration payloads. The generic laws do not prove an adapter's extraction
+-of references complete; that obligation belongs at the Lean.Environment boundary.
+--/
+-import Std
+-
+-namespace Nanodregg.Lang.Contextual.Certificate
+-
+-/-- Checker and environment identity are part of the certificate, not producer annotations.
+-Revision and imports must be artifact identities supplied by the checker invocation. -/
+-structure Checker where
+-  logic : String
+-  toolchain : String
+-  revision : String
+-  imports : List String
+-  deriving DecidableEq, Repr
+-
+-/-- The body remains exact, rather than a pretty-printed declaration or a short digest. -/
+-structure Entry (Name Body : Type) where
+-  name : Name
+-  body : Body
+-  deriving DecidableEq, Repr
+-
+-/-- Projection from the destination environment. The adapter must include type/value constants,
+-projection structures, and inductive/recursor shape dependencies in dependencies. -/
+-structure Reader (Name Expr Body : Type) where
+-  lookup : Name → Option Body
+-  typeOf : Body → Expr
+-  references : Expr → List Name
+-  dependencies : Body → List Name
+-  isAxiom : Body → Bool
+-  isTheorem : Body → Bool
+-  checker : Checker
+-
+-/-- The target is a closed declaration: its full telescope and universes belong to its exact
+-body/type. A separately instantiated claim needs its own checked target declaration. -/
+-structure Certificate (Name Expr Body : Type) where
+-  target : Name
+-  statement : Expr
+-  context : List (Entry Name Body)
+-  assumptions : List Name
+-  checker : Checker
+-  deriving DecidableEq, Repr
+-
+-inductive Refusal
+-  | checkerMismatch
+-  | missingTarget
+-  | notTheorem
+-  | statementMismatch
+-  | contextMismatch
+-  | incompleteContext
+-  | assumptionsMismatch
+-  | fuelExhausted
+-  deriving DecidableEq, Repr
+-
+-variable {Name Expr Body : Type}
+-
+-def names (c : Certificate Name Expr Body) : List Name := c.context.map Entry.name
+-
+-def assumptions (r : Reader Name Expr Body) (ctx : List (Entry Name Body)) : List Name :=
+-  (ctx.filter fun e => r.isAxiom e.body).map Entry.name
+-
+-/-- All declaration reads include its type even if the adapter lists only body dependencies. -/
+-def reads (r : Reader Name Expr Body) (body : Body) : List Name :=
+-  r.references (r.typeOf body) ++ r.dependencies body
+-
+-/-- Checking never trusts a success bit or an axiom list supplied by a producer. It compares
+-all exact bodies with the destination lookup and requires a closed declaration footprint.
+-Acceptance means faithful reading of that environment, not a foreign-logic interpretation. -/
+-def accept [DecidableEq Name] [DecidableEq Expr] [DecidableEq Body]
+-    (r : Reader Name Expr Body) (c : Certificate Name Expr Body) : Except Refusal Unit :=
+-  if c.checker ≠ r.checker then .error .checkerMismatch else
+-  match r.lookup c.target with
+-  | none => .error .missingTarget
+-  | some target =>
+-    if r.isTheorem target ≠ true then .error .notTheorem else
+-    if c.statement ≠ r.typeOf target then .error .statementMismatch else
+-    if (c.context.any fun e => decide (e.name = c.target ∧ e.body = target)) ≠ true then
+-      .error .contextMismatch else
+-    if (c.context.all fun e => decide (r.lookup e.name = some e.body)) ≠ true then
+-      .error .contextMismatch else
+-    if ((r.references c.statement ++ c.context.flatMap (fun e => reads r e.body)).all
+-        fun n => decide (n ∈ names c)) ≠ true then .error .incompleteContext else
+-    if c.assumptions ≠ assumptions r c.context then .error .assumptionsMismatch else
+-    .ok ()
+-
+-/-- Bounded closure extraction. Exhaustion is explicit; an incomplete prefix is never returned
+-as a certificate. Already visited names do not expand again, including mutual recursion. -/
+-def gather [DecidableEq Name] (r : Reader Name Expr Body) :
+-    Nat → List Name → List (Entry Name Body) → Except Refusal (List (Entry Name Body))
+-  | _, [], seen => .ok seen
+-  | 0, _ :: _, _ => .error .fuelExhausted
+-  | fuel + 1, n :: pending, seen =>
+-    if seen.any (fun e => decide (e.name = n)) then gather r fuel pending seen
+-    else match r.lookup n with
+-      | none => .error .missingTarget
+-      | some body => gather r fuel
+-          (reads r body ++ pending)
+-          (seen ++ [⟨n, body⟩])
+-
+-/-- Produces the whole object, then runs the same destination checker that consumers use.
+-The reader's source kernel is responsible for the declaration's proof validity. -/
+-def read [DecidableEq Name] [DecidableEq Expr] [DecidableEq Body]
+-    (r : Reader Name Expr Body) (fuel : Nat) (target : Name) :
+-    Except Refusal (Certificate Name Expr Body) :=
+-  match r.lookup target with
+-  | none => .error .missingTarget
+-  | some body =>
+-    match gather r fuel [target] [] with
+-    | .error e => .error e
+-    | .ok ctx =>
+-      let c := Certificate.mk target (r.typeOf body) ctx (assumptions r ctx) r.checker
+-      match accept r c with
+-      | .error e => .error e
+-      | .ok () => .ok c
+-
+-end Nanodregg.Lang.Contextual.Certificate
+diff -ruN Lang/Journey/Certificate.lean Lang/Journey/Certificate.lean
+--- Lang/Journey/Certificate.lean	2026-10-21 20:58:06.997165677 -0400
++++ Lang/Journey/Certificate.lean	1969-12-31 19:00:00.000000000 -0500
+@@ -1,86 +0,0 @@
+-/- Executed tests of the certificate reader, using a finite environment with a cycle.
+-These are synthetic checks of the generic reader, not the requested nano theorem vector. -/
+-import Lang.Contextual.Certificate
+-
+-namespace Nanodregg.Lang.Contextual.Certificate.Tests
+-
+-structure Body where
+-  type : List Nat
+-  dependencies : List Nat
+-  ax : Bool
+-  thm : Bool
+-  revision : Nat
+-  deriving DecidableEq, Repr
+-
+-def checker : Checker := ⟨"test-logic", "test-toolchain", "test-revision", ["test-theory"]⟩
+-
+-def body (n : Nat) : Body :=
+-  match n with
+-  | 0 => ⟨[1], [2], false, true, 0⟩
+-  | 1 => ⟨[], [], false, false, 0⟩
+-  | 2 => ⟨[], [3], false, false, 0⟩
+-  | 3 => ⟨[], [2], true, false, 0⟩
+-  | _ => ⟨[], [], false, false, 0⟩
+-
+-def reader : Reader Nat (List Nat) Body :=
+-  ⟨fun n => if n < 5 then some (body n) else none,
+-   Body.type, id, Body.dependencies, Body.ax, Body.thm, checker⟩
+-
+-private instance {E A : Type} [DecidableEq E] [DecidableEq A] : DecidableEq (Except E A) :=
+-  fun x y => match x, y with
+-  | .ok a, .ok b => if h : a = b then isTrue (h ▸ rfl) else isFalse (fun h' => h (Except.ok.inj h'))
+-  | .error a, .error b => if h : a = b then isTrue (h ▸ rfl) else isFalse (fun h' => h (Except.error.inj h'))
+-  | .ok _, .error _ => isFalse (by intro h; cases h)
+-  | .error _, .ok _ => isFalse (by intro h; cases h)
+-
+-def outcome {A : Type} : Except Refusal A → Except Refusal Unit
+-  | .ok _ => .ok ()
+-  | .error e => .error e
+-
+-def tests : Except Refusal (List (String × Except Refusal Unit × Except Refusal Unit)) := do
+-  let c ← read reader 100 0
+-  let absent := { c with context := c.context.filter (fun e => e.name != 3), assumptions := [] }
+-  let changed := { c with context := c.context.map fun e =>
+-    if e.name = 2 then { e with body := { e.body with revision := 1 } } else e }
+-  let extended := { c with context := c.context ++ [⟨4, body 4⟩] }
+-  return [
+-    ("positive/cycle", accept reader c, .ok ()),
+-    ("different-context/same-statement",
+-      if extended.statement = c.statement ∧ extended ≠ c then accept reader extended
+-      else .error .contextMismatch, .ok ()),
+-    ("checker", accept reader { c with checker := { checker with logic := "other-logic" } },
+-      .error .checkerMismatch),
+-    ("missing-target", accept reader { c with target := 9 }, .error .missingTarget),
+-    ("not-theorem", accept reader ⟨1, [], [⟨1, body 1⟩], [], checker⟩, .error .notTheorem),
+-    ("statement", accept reader { c with statement := [] }, .error .statementMismatch),
+-    ("target-context", accept reader
+-      { c with context := c.context.filter (fun e => e.name != 0) }, .error .contextMismatch),
+-    ("definition", accept reader changed, .error .contextMismatch),
+-    ("statement-constant", accept reader
+-      { c with context := c.context.filter (fun e => e.name != 1) }, .error .incompleteContext),
+-    ("transitive-constant", accept reader absent, .error .incompleteContext),
+-    ("assumptions", accept reader { c with assumptions := [] }, .error .assumptionsMismatch),
+-    ("fuel", outcome (read reader 0 0), .error .fuelExhausted),
+-    ("missing-read", outcome (read reader 100 9), .error .missingTarget),
+-    ("non-theorem-read", outcome (read reader 100 1), .error .notTheorem),
+-    ("missing-dependency-read", outcome (read
+-      { reader with lookup := fun n => if n = 3 then none else reader.lookup n } 100 0),
+-      .error .missingTarget)]
+-
+-def run (args : List String) : IO UInt32 := do
+-  let rows ← match tests with
+-    | .error e => IO.println s!"FAIL certificate: setup {repr e}"; return 1
+-    | .ok rows => pure rows
+-  let rows := if args.contains "--harness-control" then
+-    rows ++ [("harness-control", .ok (), .error .contextMismatch)] else rows
+-  let mut failed := false
+-  for (name, actual, expected) in rows do
+-    if actual = expected then IO.println s!"PASS certificate: {name}"
+-    else
+-      IO.println s!"FAIL certificate: {name}; expected {repr expected}; actual {repr actual}"
+-      failed := true
+-  if failed then return 1
+-  IO.println "certificate-tests: GREEN"
+-  return 0
+-
+-end Nanodregg.Lang.Contextual.Certificate.Tests
+diff -ruN Lang/Journey/CertificateMain.lean Lang/Journey/CertificateMain.lean
+--- Lang/Journey/CertificateMain.lean	2026-10-21 20:58:06.997165677 -0400
++++ Lang/Journey/CertificateMain.lean	1969-12-31 19:00:00.000000000 -0500
+@@ -1,4 +0,0 @@
+-import Lang.Journey.Certificate
+-
+-def main (args : List String) : IO UInt32 :=
+-  Nanodregg.Lang.Contextual.Certificate.Tests.run args
+diff -ruN Lang/Proofs/Contextual/Certificate.lean Lang/Proofs/Contextual/Certificate.lean
+--- Lang/Proofs/Contextual/Certificate.lean	2026-10-21 20:58:06.999165706 -0400
++++ Lang/Proofs/Contextual/Certificate.lean	1969-12-31 19:00:00.000000000 -0500
+@@ -1,150 +0,0 @@
+-/- Environment-relative certificate reading. The reader adapter remains an explicit boundary. -/
+-import Lang.Contextual.Certificate
+-
+-namespace Nanodregg.Lang.Contextual.Certificate
+-
+-variable {Name Expr Body : Type} [DecidableEq Name] [DecidableEq Expr] [DecidableEq Body]
+-
+-/-- A footprint is closed under the reader's actual references, not just names the producer
+-chose to mention. Exact bodies, theory identity and admitted assumptions are retained. -/
+-structure Faithful (r : Reader Name Expr Body) (c : Certificate Name Expr Body) : Prop where
+-  checker : c.checker = r.checker
+-  target : ∃ body, r.lookup c.target = some body ∧ r.isTheorem body = true ∧
+-    c.statement = r.typeOf body ∧ (⟨c.target, body⟩ : Entry Name Body) ∈ c.context
+-  bodies : ∀ e ∈ c.context, r.lookup e.name = some e.body
+-  statement : ∀ n ∈ r.references c.statement, n ∈ names c
+-  closed : ∀ e ∈ c.context, ∀ n ∈ reads r e.body, n ∈ names c
+-  assumptions : c.assumptions = assumptions r c.context
+-
+-private theorem any_target {ctx : List (Entry Name Body)} {n : Name} {b : Body}
+-    (h : (ctx.any fun e => decide (e.name = n ∧ e.body = b)) = true) :
+-    (⟨n, b⟩ : Entry Name Body) ∈ ctx := by
+-  have h' := List.any_eq_true.mp h
+-  simp only [decide_eq_true_eq] at h'
+-  obtain ⟨e, he, hn, hb⟩ := h'
+-  cases e
+-  simp_all
+-
+-/-- The actual accepting branch establishes a complete environment-relative reading. -/
+-theorem accept_faithful {r : Reader Name Expr Body} {c : Certificate Name Expr Body}
+-    (h : accept r c = .ok ()) : Faithful r c := by
+-  unfold accept at h
+-  split at h
+-  · cases h
+-  · rename_i hc
+-    cases ht : r.lookup c.target with
+-    | none => simp only [ht] at h; cases h
+-    | some body =>
+-      simp only [ht] at h
+-      split at h
+-      · cases h
+-      · rename_i hk
+-        split at h
+-        · cases h
+-        · rename_i hs
+-          split at h
+-          · cases h
+-          · rename_i hm
+-            split at h
+-            · cases h
+-            · rename_i hb
+-              split at h
+-              · cases h
+-              · rename_i hr
+-                split at h
+-                · cases h
+-                · rename_i ha
+-                  simp only [ne_eq, Decidable.not_not] at hc hk hs hm hb hr ha
+-                  have hr' := List.all_eq_true.mp hr
+-                  simp only [decide_eq_true_eq] at hr'
+-                  refine ⟨hc, ⟨body, ht, hk, hs, any_target hm⟩, ?_, ?_, ?_, ha⟩
+-                  · simpa only [List.all_eq_true, decide_eq_true_eq] using hb
+-                  · intro n hn
+-                    exact hr' n (List.mem_append_left _ hn)
+-                  · intro e he n hn
+-                    exact hr' n (List.mem_append_right _ (List.mem_flatMap.mpr ⟨e, he, hn⟩))
+-
+-/-- Successful bounded extraction satisfies the same reading contract as imported certificates.
+-The substantive closure property below is shared by both producers and consumers. -/
+-theorem read_faithful {r : Reader Name Expr Body} {c : Certificate Name Expr Body}
+-    {fuel : Nat} {target : Name} (h : read r fuel target = .ok c) : Faithful r c := by
+-  cases ht : r.lookup target with
+-  | none => simp [read, ht] at h
+-  | some body =>
+-    cases hg : gather r fuel [target] [] with
+-    | error e => simp [read, ht, hg] at h
+-    | ok ctx =>
+-      cases ha : accept r (Certificate.mk target (r.typeOf body) ctx (assumptions r ctx) r.checker) with
+-      | error e => simp [read, ht, hg, ha] at h
+-      | ok u =>
+-        cases u
+-        have hc : Certificate.mk target (r.typeOf body) ctx (assumptions r ctx) r.checker = c := by
+-          simpa [read, ht, hg, ha] using h
+-        subst c
+-        exact accept_faithful ha
+-
+-/-- Any number of dependency expansions, starting at the statement or its proof declaration.
+-This includes cycles; no acyclicity or maximum unfolding depth is assumed in the theorem. -/
+-inductive Reaches (r : Reader Name Expr Body) (c : Certificate Name Expr Body) : Name → Prop
+-  | target : Reaches r c c.target
+-  | statement {n : Name} : n ∈ r.references c.statement → Reaches r c n
+-  | step {n next : Name} {body : Body} : Reaches r c n →
+-      r.lookup n = some body → next ∈ reads r body → Reaches r c next
+-
+-/-- All constants reachable through the checked reader have an exact destination definition in
+-this certificate, even when the missing name would only appear after multiple unfoldings. -/
+-theorem accepted_reachable_definition {r : Reader Name Expr Body}
+-    {c : Certificate Name Expr Body} (h : accept r c = .ok ()) {n : Name}
+-    (reach : Reaches r c n) :
+-    ∃ body, (⟨n, body⟩ : Entry Name Body) ∈ c.context ∧ r.lookup n = some body := by
+-  have hf := accept_faithful h
+-  have named : ∀ n ∈ names c, ∃ body,
+-      (⟨n, body⟩ : Entry Name Body) ∈ c.context ∧ r.lookup n = some body := by
+-    intro n hn
+-    obtain ⟨e, he, hn⟩ := List.mem_map.mp hn
+-    subst n
+-    exact ⟨e.body, he, hf.bodies e he⟩
+-  induction reach with
+-  | target =>
+-    obtain ⟨body, ht, _, _, hm⟩ := hf.target
+-    exact ⟨body, hm, ht⟩
+-  | statement hr => exact named _ (hf.statement _ hr)
+-  | step hr hl hd ih =>
+-    obtain ⟨body, hm, hb⟩ := ih
+-    have heq := Option.some.inj (hb.symm.trans hl)
+-    subst body
+-    exact named _ (hf.closed _ hm _ hd)
+-
+-/-- Removing a transitive dependency prevents acceptance; the path is read in the destination
+-reader, so deleting it from the producer's declared context cannot delete this obligation. -/
+-theorem missing_reachable_refused {r : Reader Name Expr Body}
+-    {c : Certificate Name Expr Body} {n : Name} (hr : Reaches r c n)
+-    (hm : n ∉ names c) : accept r c ≠ .ok () := by
+-  intro h
+-  obtain ⟨body, he, _⟩ := accepted_reachable_definition h hr
+-  exact hm (List.mem_map.mpr ⟨⟨n, body⟩, he, rfl⟩)
+-
+-/-- A changed environment definition is not accepted merely because the target has the same
+-name and statement. Every declared payload is checked against the destination. -/
+-theorem changed_definition_refused {r : Reader Name Expr Body}
+-    {c : Certificate Name Expr Body} {e : Entry Name Body} (he : e ∈ c.context)
+-    (changed : r.lookup e.name ≠ some e.body) : accept r c ≠ .ok () := by
+-  intro h
+-  exact changed ((accept_faithful h).bodies e he)
+-
+-omit [DecidableEq Name] [DecidableEq Expr] [DecidableEq Body]
+-
+-/-- Same statement, different theory context: different certificate identities. No quotient by
+-statement or producer name silently erases the logic under which a claim was obtained. -/
+-theorem contexts_distinguish {a b : Certificate Name Expr Body}
+-    (different : a.context ≠ b.context) : a ≠ b := by
+-  intro h
+-  exact different (congrArg Certificate.context h)
+-
+-/-- Checker identity is also intrinsic to certificate identity. -/
+-theorem checkers_distinguish {a b : Certificate Name Expr Body}
+-    (different : a.checker ≠ b.checker) : a ≠ b := by
+-  intro h
+-  exact different (congrArg Certificate.checker h)
+-
+-end Nanodregg.Lang.Contextual.Certificate
+diff -ruN Census/CertificateData.lean Census/CertificateData.lean
+--- Census/CertificateData.lean	2026-10-21 20:58:06.965165201 -0400
++++ Census/CertificateData.lean	2026-10-22 02:56:43.675885855 -0400
+@@ -2,7 +2,7 @@
+ shared-node DAG: expanding proof sharing with Repr can require gigabytes. The exact trust
+ boundary is stated in Census.Proofs.Certificate and decisions/lang.md. -/
+ import Lean
+-import Lang.Contextual.Certificate
++import Census.CertificateReader
+ 
+ namespace Census.Certificate
+ 
+@@ -107,12 +107,12 @@
+ 
+ /-- Compiler identity is Lean's own githash; context content supplies theory identity.
+ Imports are the actual direct imports of the environment, not producer-supplied labels. -/
+-def checker (env : Environment) : Nanodregg.Lang.Contextual.Certificate.Checker :=
++def checker (env : Environment) : Census.CertificateReader.Checker :=
+   ⟨"Lean kernel / Census.Certificate v1", Lean.versionString, Lean.githash,
+     env.header.imports.toList.map (fun i => i.module.toString)⟩
+ 
+ /-- Like collectAxioms, use the checked kernel environment, not pending elaborator data. -/
+-def reader (env : Environment) : Nanodregg.Lang.Contextual.Certificate.Reader Name Expression Declaration where
++def reader (env : Environment) : Census.CertificateReader.Reader Name Expression Declaration where
+   lookup := fun n => (env.checked.get.find? n).map declaration
+   typeOf := Declaration.type
+   references := Expression.constants
+@@ -123,7 +123,7 @@
+ 
+ def namesJson (ns : List Name) : Json := toJson (ns.map Name.toString)
+ 
+-def certificateJson (c : Nanodregg.Lang.Contextual.Certificate.Certificate Name Expression Declaration)
++def certificateJson (c : Census.CertificateReader.Certificate Name Expression Declaration)
+     (kernelAxioms : List Name) (prettyStatement : String) : Json :=
+   Json.mkObj [
+     ("target", toJson c.target.toString),
+diff -ruN Census/Certificate.lean Census/Certificate.lean
+--- Census/Certificate.lean	2026-10-21 20:58:06.965165201 -0400
++++ Census/Certificate.lean	2026-10-22 02:56:43.675885855 -0400
+@@ -13,7 +13,7 @@
+   | `(#certificate_census $path:str $target:ident) => do
+     let env ← getEnv
+     let target := target.getId
+-    let c ← match Nanodregg.Lang.Contextual.Certificate.read (reader env) 200000 target with
++    let c ← match Census.CertificateReader.read (reader env) 200000 target with
+       | .ok c => pure c
+       | .error e => throwError "CERTIFICATE RED: {reprStr e}"
+     let axs := (← liftCoreM (collectAxioms target)).toList
+diff -ruN Census/CertificateReader.lean Census/CertificateReader.lean
+--- Census/CertificateReader.lean	1969-12-31 19:00:00.000000000 -0500
++++ Census/CertificateReader.lean	2026-10-22 02:56:43.674885840 -0400
+@@ -0,0 +1,119 @@
++/-
++Explicit logic certificates for proof-engineering tooling. This is a data/reader interface,
++not nano admission and not a new proof checker. An adapter supplies the actual environment
++lookup and exact declaration payloads. The generic laws do not prove an adapter's extraction
++of references complete; that obligation belongs at the Lean.Environment boundary.
++-/
++import Std
++
++namespace Census.CertificateReader
++
++/-- Checker and environment identity are part of the certificate, not producer annotations.
++Revision and imports must be artifact identities supplied by the checker invocation. -/
++structure Checker where
++  logic : String
++  toolchain : String
++  revision : String
++  imports : List String
++  deriving DecidableEq, Repr
++
++/-- The body remains exact, rather than a pretty-printed declaration or a short digest. -/
++structure Entry (Name Body : Type) where
++  name : Name
++  body : Body
++  deriving DecidableEq, Repr
++
++/-- Projection from the destination environment. The adapter must include type/value constants,
++projection structures, and inductive/recursor shape dependencies in dependencies. -/
++structure Reader (Name Expr Body : Type) where
++  lookup : Name → Option Body
++  typeOf : Body → Expr
++  references : Expr → List Name
++  dependencies : Body → List Name
++  isAxiom : Body → Bool
++  isTheorem : Body → Bool
++  checker : Checker
++
++/-- The target is a closed declaration: its full telescope and universes belong to its exact
++body/type. A separately instantiated claim needs its own checked target declaration. -/
++structure Certificate (Name Expr Body : Type) where
++  target : Name
++  statement : Expr
++  context : List (Entry Name Body)
++  assumptions : List Name
++  checker : Checker
++  deriving DecidableEq, Repr
++
++inductive Refusal
++  | checkerMismatch
++  | missingTarget
++  | notTheorem
++  | statementMismatch
++  | contextMismatch
++  | incompleteContext
++  | assumptionsMismatch
++  | fuelExhausted
++  deriving DecidableEq, Repr
++
++variable {Name Expr Body : Type}
++
++def names (c : Certificate Name Expr Body) : List Name := c.context.map Entry.name
++
++def assumptions (r : Reader Name Expr Body) (ctx : List (Entry Name Body)) : List Name :=
++  (ctx.filter fun e => r.isAxiom e.body).map Entry.name
++
++/-- All declaration reads include its type even if the adapter lists only body dependencies. -/
++def reads (r : Reader Name Expr Body) (body : Body) : List Name :=
++  r.references (r.typeOf body) ++ r.dependencies body
++
++/-- Checking never trusts a success bit or an axiom list supplied by a producer. It compares
++all exact bodies with the destination lookup and requires a closed declaration footprint.
++Acceptance means faithful reading of that environment, not a foreign-logic interpretation. -/
++def accept [DecidableEq Name] [DecidableEq Expr] [DecidableEq Body]
++    (r : Reader Name Expr Body) (c : Certificate Name Expr Body) : Except Refusal Unit :=
++  if c.checker ≠ r.checker then .error .checkerMismatch else
++  match r.lookup c.target with
++  | none => .error .missingTarget
++  | some target =>
++    if r.isTheorem target ≠ true then .error .notTheorem else
++    if c.statement ≠ r.typeOf target then .error .statementMismatch else
++    if (c.context.any fun e => decide (e.name = c.target ∧ e.body = target)) ≠ true then
++      .error .contextMismatch else
++    if (c.context.all fun e => decide (r.lookup e.name = some e.body)) ≠ true then
++      .error .contextMismatch else
++    if ((r.references c.statement ++ c.context.flatMap (fun e => reads r e.body)).all
++        fun n => decide (n ∈ names c)) ≠ true then .error .incompleteContext else
++    if c.assumptions ≠ assumptions r c.context then .error .assumptionsMismatch else
++    .ok ()
++
++/-- Bounded closure extraction. Exhaustion is explicit; an incomplete prefix is never returned
++as a certificate. Already visited names do not expand again, including mutual recursion. -/
++def gather [DecidableEq Name] (r : Reader Name Expr Body) :
++    Nat → List Name → List (Entry Name Body) → Except Refusal (List (Entry Name Body))
++  | _, [], seen => .ok seen
++  | 0, _ :: _, _ => .error .fuelExhausted
++  | fuel + 1, n :: pending, seen =>
++    if seen.any (fun e => decide (e.name = n)) then gather r fuel pending seen
++    else match r.lookup n with
++      | none => .error .missingTarget
++      | some body => gather r fuel
++          (reads r body ++ pending)
++          (seen ++ [⟨n, body⟩])
++
++/-- Produces the whole object, then runs the same destination checker that consumers use.
++The reader's source kernel is responsible for the declaration's proof validity. -/
++def read [DecidableEq Name] [DecidableEq Expr] [DecidableEq Body]
++    (r : Reader Name Expr Body) (fuel : Nat) (target : Name) :
++    Except Refusal (Certificate Name Expr Body) :=
++  match r.lookup target with
++  | none => .error .missingTarget
++  | some body =>
++    match gather r fuel [target] [] with
++    | .error e => .error e
++    | .ok ctx =>
++      let c := Certificate.mk target (r.typeOf body) ctx (assumptions r ctx) r.checker
++      match accept r c with
++      | .error e => .error e
++      | .ok () => .ok c
++
++end Census.CertificateReader
+diff -ruN Census/CertificateReaderMain.lean Census/CertificateReaderMain.lean
+--- Census/CertificateReaderMain.lean	1969-12-31 19:00:00.000000000 -0500
++++ Census/CertificateReaderMain.lean	2026-10-22 02:56:43.675885855 -0400
+@@ -0,0 +1,4 @@
++import Census.CertificateReaderTests
++
++def main (args : List String) : IO UInt32 :=
++  Census.CertificateReader.Tests.run args
+diff -ruN Census/CertificateReaderTests.lean Census/CertificateReaderTests.lean
+--- Census/CertificateReaderTests.lean	1969-12-31 19:00:00.000000000 -0500
++++ Census/CertificateReaderTests.lean	2026-10-22 02:56:43.675885855 -0400
+@@ -0,0 +1,86 @@
++/- Executed tests of the certificate reader, using a finite environment with a cycle.
++These are synthetic checks of the generic reader, not the requested nano theorem vector. -/
++import Census.CertificateReader
++
++namespace Census.CertificateReader.Tests
++
++structure Body where
++  type : List Nat
++  dependencies : List Nat
++  ax : Bool
++  thm : Bool
++  revision : Nat
++  deriving DecidableEq, Repr
++
++def checker : Checker := ⟨"test-logic", "test-toolchain", "test-revision", ["test-theory"]⟩
++
++def body (n : Nat) : Body :=
++  match n with
++  | 0 => ⟨[1], [2], false, true, 0⟩
++  | 1 => ⟨[], [], false, false, 0⟩
++  | 2 => ⟨[], [3], false, false, 0⟩
++  | 3 => ⟨[], [2], true, false, 0⟩
++  | _ => ⟨[], [], false, false, 0⟩
++
++def reader : Reader Nat (List Nat) Body :=
++  ⟨fun n => if n < 5 then some (body n) else none,
++   Body.type, id, Body.dependencies, Body.ax, Body.thm, checker⟩
++
++private instance {E A : Type} [DecidableEq E] [DecidableEq A] : DecidableEq (Except E A) :=
++  fun x y => match x, y with
++  | .ok a, .ok b => if h : a = b then isTrue (h ▸ rfl) else isFalse (fun h' => h (Except.ok.inj h'))
++  | .error a, .error b => if h : a = b then isTrue (h ▸ rfl) else isFalse (fun h' => h (Except.error.inj h'))
++  | .ok _, .error _ => isFalse (by intro h; cases h)
++  | .error _, .ok _ => isFalse (by intro h; cases h)
++
++def outcome {A : Type} : Except Refusal A → Except Refusal Unit
++  | .ok _ => .ok ()
++  | .error e => .error e
++
++def tests : Except Refusal (List (String × Except Refusal Unit × Except Refusal Unit)) := do
++  let c ← read reader 100 0
++  let absent := { c with context := c.context.filter (fun e => e.name != 3), assumptions := [] }
++  let changed := { c with context := c.context.map fun e =>
++    if e.name = 2 then { e with body := { e.body with revision := 1 } } else e }
++  let extended := { c with context := c.context ++ [⟨4, body 4⟩] }
++  return [
++    ("positive/cycle", accept reader c, .ok ()),
++    ("different-context/same-statement",
++      if extended.statement = c.statement ∧ extended ≠ c then accept reader extended
++      else .error .contextMismatch, .ok ()),
++    ("checker", accept reader { c with checker := { checker with logic := "other-logic" } },
++      .error .checkerMismatch),
++    ("missing-target", accept reader { c with target := 9 }, .error .missingTarget),
++    ("not-theorem", accept reader ⟨1, [], [⟨1, body 1⟩], [], checker⟩, .error .notTheorem),
++    ("statement", accept reader { c with statement := [] }, .error .statementMismatch),
++    ("target-context", accept reader
++      { c with context := c.context.filter (fun e => e.name != 0) }, .error .contextMismatch),
++    ("definition", accept reader changed, .error .contextMismatch),
++    ("statement-constant", accept reader
++      { c with context := c.context.filter (fun e => e.name != 1) }, .error .incompleteContext),
++    ("transitive-constant", accept reader absent, .error .incompleteContext),
++    ("assumptions", accept reader { c with assumptions := [] }, .error .assumptionsMismatch),
++    ("fuel", outcome (read reader 0 0), .error .fuelExhausted),
++    ("missing-read", outcome (read reader 100 9), .error .missingTarget),
++    ("non-theorem-read", outcome (read reader 100 1), .error .notTheorem),
++    ("missing-dependency-read", outcome (read
++      { reader with lookup := fun n => if n = 3 then none else reader.lookup n } 100 0),
++      .error .missingTarget)]
++
++def run (args : List String) : IO UInt32 := do
++  let rows ← match tests with
++    | .error e => IO.println s!"FAIL certificate: setup {repr e}"; return 1
++    | .ok rows => pure rows
++  let rows := if args.contains "--harness-control" then
++    rows ++ [("harness-control", .ok (), .error .contextMismatch)] else rows
++  let mut failed := false
++  for (name, actual, expected) in rows do
++    if actual = expected then IO.println s!"PASS certificate: {name}"
++    else
++      IO.println s!"FAIL certificate: {name}; expected {repr expected}; actual {repr actual}"
++      failed := true
++  if failed then return 1
++  IO.println "certificate-tests: GREEN"
++  return 0
++
++end Census.CertificateReader.Tests
+diff -ruN Census/Proofs/Certificate.lean Census/Proofs/Certificate.lean
+--- Census/Proofs/Certificate.lean	2026-10-21 20:58:06.966165216 -0400
++++ Census/Proofs/Certificate.lean	2026-10-22 02:56:43.675885855 -0400
+@@ -3,7 +3,7 @@
+ Lean.collectAxioms (including its imported cache), compiler execution, and JSON/IO read-off.
+ No injectivity of Repr, foreign logic interpretation, or checker authentication is asserted. -/
+ import Census.CertificateData
+-import Lang.Proofs.Contextual.Certificate
++import Census.Proofs.CertificateReader
+ 
+ namespace Census.Certificate
+ 
+@@ -12,12 +12,12 @@
+ /-- A returned context entry is the projection of an actual checked kernel declaration.
+ This does not claim that equality of serialized payloads implies ConstantInfo equality. -/
+ theorem read_environment {env : Environment}
+-    {c : Nanodregg.Lang.Contextual.Certificate.Certificate Name Expression Declaration} {fuel : Nat} {target : Name}
+-    (h : Nanodregg.Lang.Contextual.Certificate.read (reader env) fuel target = .ok c) :
++    {c : Census.CertificateReader.Certificate Name Expression Declaration} {fuel : Nat} {target : Name}
++    (h : Census.CertificateReader.read (reader env) fuel target = .ok c) :
+     ∀ e ∈ c.context, ∃ ci, env.checked.get.find? e.name = some ci ∧
+       declaration ci = e.body := by
+   intro e he
+-  have hb := (Nanodregg.Lang.Contextual.Certificate.read_faithful h).bodies e he
++  have hb := (Census.CertificateReader.read_faithful h).bodies e he
+   change Option.map declaration (env.checked.get.find? e.name) = some e.body at hb
+   cases hc : env.checked.get.find? e.name with
+   | none => simp [hc] at hb
+@@ -27,12 +27,12 @@
+ 
+ /-- The same exact environment projection is present along every finite dependency path. -/
+ theorem accepted_environment_reachable {env : Environment}
+-    {c : Nanodregg.Lang.Contextual.Certificate.Certificate Name Expression Declaration} {n : Name}
+-    (h : Nanodregg.Lang.Contextual.Certificate.accept (reader env) c = .ok ())
+-    (reach : Nanodregg.Lang.Contextual.Certificate.Reaches (reader env) c n) :
++    {c : Census.CertificateReader.Certificate Name Expression Declaration} {n : Name}
++    (h : Census.CertificateReader.accept (reader env) c = .ok ())
++    (reach : Census.CertificateReader.Reaches (reader env) c n) :
+     ∃ ci, env.checked.get.find? n = some ci ∧
+-      (⟨n, declaration ci⟩ : Nanodregg.Lang.Contextual.Certificate.Entry Name Declaration) ∈ c.context := by
+-  obtain ⟨body, hm, hb⟩ := Nanodregg.Lang.Contextual.Certificate.accepted_reachable_definition h reach
++      (⟨n, declaration ci⟩ : Census.CertificateReader.Entry Name Declaration) ∈ c.context := by
++  obtain ⟨body, hm, hb⟩ := Census.CertificateReader.accepted_reachable_definition h reach
+   change Option.map declaration (env.checked.get.find? n) = some body at hb
+   cases hc : env.checked.get.find? n with
+   | none => simp [hc] at hb
+diff -ruN Census/Proofs/CertificateReader.lean Census/Proofs/CertificateReader.lean
+--- Census/Proofs/CertificateReader.lean	1969-12-31 19:00:00.000000000 -0500
++++ Census/Proofs/CertificateReader.lean	2026-10-22 02:56:43.675885855 -0400
+@@ -0,0 +1,150 @@
++/- Environment-relative certificate reading. The reader adapter remains an explicit boundary. -/
++import Census.CertificateReader
++
++namespace Census.CertificateReader
++
++variable {Name Expr Body : Type} [DecidableEq Name] [DecidableEq Expr] [DecidableEq Body]
++
++/-- A footprint is closed under the reader's actual references, not just names the producer
++chose to mention. Exact bodies, theory identity and admitted assumptions are retained. -/
++structure Faithful (r : Reader Name Expr Body) (c : Certificate Name Expr Body) : Prop where
++  checker : c.checker = r.checker
++  target : ∃ body, r.lookup c.target = some body ∧ r.isTheorem body = true ∧
++    c.statement = r.typeOf body ∧ (⟨c.target, body⟩ : Entry Name Body) ∈ c.context
++  bodies : ∀ e ∈ c.context, r.lookup e.name = some e.body
++  statement : ∀ n ∈ r.references c.statement, n ∈ names c
++  closed : ∀ e ∈ c.context, ∀ n ∈ reads r e.body, n ∈ names c
++  assumptions : c.assumptions = assumptions r c.context
++
++private theorem any_target {ctx : List (Entry Name Body)} {n : Name} {b : Body}
++    (h : (ctx.any fun e => decide (e.name = n ∧ e.body = b)) = true) :
++    (⟨n, b⟩ : Entry Name Body) ∈ ctx := by
++  have h' := List.any_eq_true.mp h
++  simp only [decide_eq_true_eq] at h'
++  obtain ⟨e, he, hn, hb⟩ := h'
++  cases e
++  simp_all
++
++/-- The actual accepting branch establishes a complete environment-relative reading. -/
++theorem accept_faithful {r : Reader Name Expr Body} {c : Certificate Name Expr Body}
++    (h : accept r c = .ok ()) : Faithful r c := by
++  unfold accept at h
++  split at h
++  · cases h
++  · rename_i hc
++    cases ht : r.lookup c.target with
++    | none => simp only [ht] at h; cases h
++    | some body =>
++      simp only [ht] at h
++      split at h
++      · cases h
++      · rename_i hk
++        split at h
++        · cases h
++        · rename_i hs
++          split at h
++          · cases h
++          · rename_i hm
++            split at h
++            · cases h
++            · rename_i hb
++              split at h
++              · cases h
++              · rename_i hr
++                split at h
++                · cases h
++                · rename_i ha
++                  simp only [ne_eq, Decidable.not_not] at hc hk hs hm hb hr ha
++                  have hr' := List.all_eq_true.mp hr
++                  simp only [decide_eq_true_eq] at hr'
++                  refine ⟨hc, ⟨body, ht, hk, hs, any_target hm⟩, ?_, ?_, ?_, ha⟩
++                  · simpa only [List.all_eq_true, decide_eq_true_eq] using hb
++                  · intro n hn
++                    exact hr' n (List.mem_append_left _ hn)
++                  · intro e he n hn
++                    exact hr' n (List.mem_append_right _ (List.mem_flatMap.mpr ⟨e, he, hn⟩))
++
++/-- Successful bounded extraction satisfies the same reading contract as imported certificates.
++The substantive closure property below is shared by both producers and consumers. -/
++theorem read_faithful {r : Reader Name Expr Body} {c : Certificate Name Expr Body}
++    {fuel : Nat} {target : Name} (h : read r fuel target = .ok c) : Faithful r c := by
++  cases ht : r.lookup target with
++  | none => simp [read, ht] at h
++  | some body =>
++    cases hg : gather r fuel [target] [] with
++    | error e => simp [read, ht, hg] at h
++    | ok ctx =>
++      cases ha : accept r (Certificate.mk target (r.typeOf body) ctx (assumptions r ctx) r.checker) with
++      | error e => simp [read, ht, hg, ha] at h
++      | ok u =>
++        cases u
++        have hc : Certificate.mk target (r.typeOf body) ctx (assumptions r ctx) r.checker = c := by
++          simpa [read, ht, hg, ha] using h
++        subst c
++        exact accept_faithful ha
++
++/-- Any number of dependency expansions, starting at the statement or its proof declaration.
++This includes cycles; no acyclicity or maximum unfolding depth is assumed in the theorem. -/
++inductive Reaches (r : Reader Name Expr Body) (c : Certificate Name Expr Body) : Name → Prop
++  | target : Reaches r c c.target
++  | statement {n : Name} : n ∈ r.references c.statement → Reaches r c n
++  | step {n next : Name} {body : Body} : Reaches r c n →
++      r.lookup n = some body → next ∈ reads r body → Reaches r c next
++
++/-- All constants reachable through the checked reader have an exact destination definition in
++this certificate, even when the missing name would only appear after multiple unfoldings. -/
++theorem accepted_reachable_definition {r : Reader Name Expr Body}
++    {c : Certificate Name Expr Body} (h : accept r c = .ok ()) {n : Name}
++    (reach : Reaches r c n) :
++    ∃ body, (⟨n, body⟩ : Entry Name Body) ∈ c.context ∧ r.lookup n = some body := by
++  have hf := accept_faithful h
++  have named : ∀ n ∈ names c, ∃ body,
++      (⟨n, body⟩ : Entry Name Body) ∈ c.context ∧ r.lookup n = some body := by
++    intro n hn
++    obtain ⟨e, he, hn⟩ := List.mem_map.mp hn
++    subst n
++    exact ⟨e.body, he, hf.bodies e he⟩
++  induction reach with
++  | target =>
++    obtain ⟨body, ht, _, _, hm⟩ := hf.target
++    exact ⟨body, hm, ht⟩
++  | statement hr => exact named _ (hf.statement _ hr)
++  | step hr hl hd ih =>
++    obtain ⟨body, hm, hb⟩ := ih
++    have heq := Option.some.inj (hb.symm.trans hl)
++    subst body
++    exact named _ (hf.closed _ hm _ hd)
++
++/-- Removing a transitive dependency prevents acceptance; the path is read in the destination
++reader, so deleting it from the producer's declared context cannot delete this obligation. -/
++theorem missing_reachable_refused {r : Reader Name Expr Body}
++    {c : Certificate Name Expr Body} {n : Name} (hr : Reaches r c n)
++    (hm : n ∉ names c) : accept r c ≠ .ok () := by
++  intro h
++  obtain ⟨body, he, _⟩ := accepted_reachable_definition h hr
++  exact hm (List.mem_map.mpr ⟨⟨n, body⟩, he, rfl⟩)
++
++/-- A changed environment definition is not accepted merely because the target has the same
++name and statement. Every declared payload is checked against the destination. -/
++theorem changed_definition_refused {r : Reader Name Expr Body}
++    {c : Certificate Name Expr Body} {e : Entry Name Body} (he : e ∈ c.context)
++    (changed : r.lookup e.name ≠ some e.body) : accept r c ≠ .ok () := by
++  intro h
++  exact changed ((accept_faithful h).bodies e he)
++
++omit [DecidableEq Name] [DecidableEq Expr] [DecidableEq Body]
++
++/-- Same statement, different theory context: different certificate identities. No quotient by
++statement or producer name silently erases the logic under which a claim was obtained. -/
++theorem contexts_distinguish {a b : Certificate Name Expr Body}
++    (different : a.context ≠ b.context) : a ≠ b := by
++  intro h
++  exact different (congrArg Certificate.context h)
++
++/-- Checker identity is also intrinsic to certificate identity. -/
++theorem checkers_distinguish {a b : Certificate Name Expr Body}
++    (different : a.checker ≠ b.checker) : a ≠ b := by
++  intro h
++  exact different (congrArg Certificate.checker h)
++
++end Census.CertificateReader
+--- lakefile.lean	2026-10-21 20:58:07.079166894 -0400
++++ lakefile.lean	2026-10-22 02:56:43.675885855 -0400
+@@ -186,6 +186,6 @@
+ @[default_target] lean_exe «host-sock-probe» where
+   root := `Host.Sim.SockMain
+ 
+--- LANG: environment-relative certificate reader tests.
++-- CENSUS: environment-relative certificate reader tests.
+ @[default_target] lean_exe «certificate-tests» where
+-  root := `Lang.Journey.CertificateMain
++  root := `Census.CertificateReaderMain
+--- devtools/certificate_plants.py	2026-10-21 20:58:07.027166122 -0400
++++ devtools/certificate_plants.py	2026-10-22 02:56:43.675885855 -0400
+@@ -13,7 +13,7 @@
+ root = Path(__file__).resolve().parents[1]
+ logs = Path("/tank/dregg-build/nanodregg/logs")
+ (logs / "CX-P6-plants.pid").write_text(str(os.getpid()) + "\n")
+-source = root / "Lang/Contextual/Certificate.lean"
++source = root / "Census/CertificateReader.lean"
+ original = source.read_text()
+ exe = root / ".lake/build/bin/certificate-tests"
+ 
+@@ -66,6 +66,6 @@
+         raise RuntimeError("missing target plant did not expose an accepted absent declaration")
+ finally:
+     source.write_text(original)
+-    run("plants-restored-build", ["lake", "build", "Lang.Proofs.Contextual.Certificate", "certificate-tests"], 0)
++    run("plants-restored-build", ["lake", "build", "Census.Proofs.CertificateReader", "certificate-tests"], 0)
+     run("plants-restored", [str(exe)], 0)
+ print("certificate-plants: GREEN", flush=True)

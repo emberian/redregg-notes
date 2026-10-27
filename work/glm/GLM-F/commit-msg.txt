@@ -1,0 +1,20 @@
+lang: a method's effect clause in the authoring text can name the interface it produces (LANG-103's surface form)
+
+A generator written in surface text can now say what shape its output has. A method's effect
+clause reads (effect (moves N) [(produces I)]): I is the interface of the packages the run
+installs or makes, written as the surface writes a package's interface, a record of method and
+law names and types, and the lowering reads it with the surface's own type reader, so named
+types and Req and Verdict resolve as in any surface type. The checks are LANG-103's, unchanged:
+install refuses badProduces a clause whose method cannot install, and a run whose package has
+another interface is refused by name where they first differ, produces LABEL: lacks M, type M or
+extra M, nothing born. A surface text that could only be written as core text before can now be
+authored: the grammar texts the testground shows state the form, and the specification's
+chapter 2 gives it beside the abstract grade.
+
+Journey GN25 is GN23's surface twin: a generator whose generate declares the interface of the
+bound-500 package plus a reset it lacks, written in surface text with each type printed by the
+one printer, is lowered, installed and created, and generate is refused produces generate:
+lacks reset, nothing born. Its first draft lowered to bytes identical to GN23's Lean-built
+package and the install was refused idTaken, which is the lowering being exact.
+
+Co-Authored-By: Claude Code <noreply@anthropic.com>

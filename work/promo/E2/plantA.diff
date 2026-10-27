@@ -1,0 +1,13 @@
+diff --git a/Hosting/Resident/Bell.lean b/Hosting/Resident/Bell.lean
+index 940d1be..77cbf09 100644
+--- a/Hosting/Resident/Bell.lean
++++ b/Hosting/Resident/Bell.lean
+@@ -158,7 +158,7 @@ earlier ask) that is still pending is answered with its text, wherever it stands
+ none, the lowest pending ring is asked about; nothing pending is idle. -/
+ def decideTick (pending : List Ring) (kept : Option (Ring × ByteArray)) : Act :=
+   match kept with
+-  | some (r, t) => if r ∈ pending then .answer r t else
++  | some (r, _t) => if r ∈ pending then .ask r else
+       match pending with
+       | [] => .idle
+       | q :: _ => .ask q

@@ -1,0 +1,63 @@
+Minidregg.Compiler.DurableCheckpointCodec.Body.spentRoot	successor: Minidregg.Compiler.DurableCheckpointCodec.Body.indexRoot
+Minidregg.Compiler.DurableHistory.Carried.spentRoot	successor: Minidregg.Compiler.DurableHistory.Carried.indexRoot
+Minidregg.Compiler.DurableHistory.Head.spentRoot	successor: Minidregg.Compiler.DurableHistory.Head.indexRoot
+Minidregg.Compiler.DurableHistoryStore.spentAnswer	successor: Minidregg.Compiler.DurableHistoryStore.indexAnswer
+Minidregg.Compiler.DurableReceiverIO.Loaded.headSpentRoot	successor: Minidregg.Compiler.DurableReceiverIO.Loaded.headIndexRoot
+Minidregg.Compiler.DurableReceiverIO.PreparedAppend.spentAfter	successor: Minidregg.Compiler.DurableReceiverIO.PreparedAppend.indexAfter
+Minidregg.Compiler.DurableReceiverIO.spentRows	successor: Minidregg.Compiler.DurableReceiverIO.indexRows
+Minidregg.Compiler.DurableReceiverIO.withSpentRows	successor: Minidregg.Compiler.DurableReceiverIO.withIndexRows
+Minidregg.Compiler.DurableSpent.Answer	successor: Minidregg.Compiler.DurableIndex.Answer
+Minidregg.Compiler.DurableSpent.Answer.mk	successor: Minidregg.Compiler.DurableIndex.Answer
+Minidregg.Compiler.DurableSpent.Answer.opens	successor: Minidregg.Compiler.DurableIndex.Answer
+Minidregg.Compiler.DurableSpent.Answer.value	successor: Minidregg.Compiler.DurableIndex.Answer
+Minidregg.Compiler.DurableSpent.Opening	successor: Minidregg.Compiler.DurableIndex.Opening
+Minidregg.Compiler.DurableSpent.Opening.mk	successor: Minidregg.Compiler.DurableIndex.Opening
+Minidregg.Compiler.DurableSpent.Opening.siblings	successor: Minidregg.Compiler.DurableIndex.Opening
+Minidregg.Compiler.DurableSpent.Opening.terminal	successor: Minidregg.Compiler.DurableIndex.Opening
+Minidregg.Compiler.DurableSpent.Opens	successor: Minidregg.Compiler.DurableIndex.Opens
+Minidregg.Compiler.DurableSpent.Row	successor: Minidregg.Compiler.DurableIndex.Row
+Minidregg.Compiler.DurableSpent.Row.branch	successor: Minidregg.Compiler.DurableIndex.Row
+Minidregg.Compiler.DurableSpent.Row.branch.elim	obsolete: the auto-generated eliminator of a constructor of DurableSpent.Row, deleted with it by 35030f7d (store!(index)); the type's successor is Minidregg.Compiler.DurableIndex.Row
+Minidregg.Compiler.DurableSpent.Row.digest	successor: Minidregg.Compiler.DurableIndex.Row
+Minidregg.Compiler.DurableSpent.Row.leaf	successor: Minidregg.Compiler.DurableIndex.Row
+Minidregg.Compiler.DurableSpent.Row.leaf.elim	obsolete: the auto-generated eliminator of a constructor of DurableSpent.Row, deleted with it by 35030f7d (store!(index)); the type's successor is Minidregg.Compiler.DurableIndex.Row
+Minidregg.Compiler.DurableSpent.Terminal	successor: Minidregg.Compiler.DurableIndex.Terminal
+Minidregg.Compiler.DurableSpent.Terminal.digest	successor: Minidregg.Compiler.DurableIndex.Terminal
+Minidregg.Compiler.DurableSpent.Terminal.empty	successor: Minidregg.Compiler.DurableIndex.Terminal
+Minidregg.Compiler.DurableSpent.Terminal.empty.elim	obsolete: the auto-generated eliminator of a constructor of DurableSpent.Terminal, deleted with it by 35030f7d (store!(index)); the type's successor is Minidregg.Compiler.DurableIndex.Terminal
+Minidregg.Compiler.DurableSpent.Terminal.leaf	successor: Minidregg.Compiler.DurableIndex.Terminal
+Minidregg.Compiler.DurableSpent.Terminal.leaf.elim	obsolete: the auto-generated eliminator of a constructor of DurableSpent.Terminal, deleted with it by 35030f7d (store!(index)); the type's successor is Minidregg.Compiler.DurableIndex.Terminal
+Minidregg.Compiler.DurableSpent.accumulatorSpace	successor: Minidregg.Compiler.DurableIndex.accumulatorSpace
+Minidregg.Compiler.DurableSpent.branchDigest	successor: Minidregg.Compiler.DurableIndex.dig, Minidregg.Compiler.DurableIndex.nodeCustomization
+Minidregg.Compiler.DurableSpent.climb	successor: Minidregg.Theory.AuthTrie.climb
+Minidregg.Compiler.DurableSpent.emptyDigest	successor: Minidregg.Compiler.DurableIndex.emptyDigest
+Minidregg.Compiler.DurableSpent.empty_absent	successor: Minidregg.Compiler.DurableIndex.empty_absent
+Minidregg.Compiler.DurableSpent.empty_present_refused	successor: Minidregg.Compiler.DurableIndex.empty_present_refused
+Minidregg.Compiler.DurableSpent.hashNode	successor: Minidregg.Compiler.DurableIndex.dig, Minidregg.Compiler.DurableIndex.nodeCustomization
+Minidregg.Compiler.DurableSpent.insert	successor: Minidregg.Compiler.DurableIndex.set
+Minidregg.Compiler.DurableSpent.insertAll	successor: Minidregg.Compiler.DurableIndex.IndexRows.apply
+Minidregg.Compiler.DurableSpent.insertAncestors	successor: Minidregg.Compiler.DurableIndex.set
+Minidregg.Compiler.DurableSpent.insertSubtree	successor: Minidregg.Compiler.DurableIndex.set
+Minidregg.Compiler.DurableSpent.insertSubtree.up	successor: Minidregg.Compiler.DurableIndex.set
+Minidregg.Compiler.DurableSpent.key	successor: Minidregg.Compiler.DurableIndex.primaryOf, Minidregg.Compiler.DurableIndex.keyCustomization
+Minidregg.Compiler.DurableSpent.keyBits	successor: Minidregg.Compiler.DurableIndex.bitsOf
+Minidregg.Compiler.DurableSpent.keyCustomization	successor: Minidregg.Compiler.DurableIndex.primaryOf, Minidregg.Compiler.DurableIndex.keyCustomization
+Minidregg.Compiler.DurableSpent.leafDigest	successor: Minidregg.Compiler.DurableIndex.dig, Minidregg.Compiler.DurableIndex.nodeCustomization
+Minidregg.Compiler.DurableSpent.lookupRows	successor: Minidregg.Compiler.DurableIndex.lookupRows
+Minidregg.Compiler.DurableSpent.nodeCustomization	successor: Minidregg.Compiler.DurableIndex.dig, Minidregg.Compiler.DurableIndex.nodeCustomization
+Minidregg.Compiler.DurableSpent.nullifierKey	successor: Minidregg.Compiler.DurableIndex.nullifierKey
+Minidregg.Compiler.DurableSpent.openingOf	successor: Minidregg.Compiler.DurableIndex.openingOf
+Minidregg.Compiler.DurableSpent.overlay	successor: Minidregg.Compiler.DurableIndex.overlay
+Minidregg.Compiler.DurableSpent.prefixes	successor: Minidregg.Compiler.DurableIndex.readPrefixes
+Minidregg.Compiler.DurableSpent.recordKeys	successor: Minidregg.Compiler.DurableIndex.IndexRows.keys
+Minidregg.Compiler.DurableSpent.rowKey	successor: Minidregg.Compiler.DurableIndex.rowKey
+Minidregg.Compiler.DurableSpent.rowStream	successor: Minidregg.Compiler.DurableIndex.rowStream
+Minidregg.Compiler.DurableSpent.spentSpace	successor: Minidregg.Compiler.DurableIndex.indexSpace
+Minidregg.Compiler.DurableSpent.transactionKey	successor: Minidregg.Compiler.DurableIndex.transactionKey
+Minidregg.Compiler.DurableSpent.verify	successor: Minidregg.Compiler.DurableIndex.verify -- AuthTrie.verify at the deployed digest, sound by Minidregg.Compiler.DurableIndex.lookup_sound
+Minidregg.Compiler.DurableSpent.walk	successor: Minidregg.Compiler.DurableIndex.walk
+Minidregg.Kernel.ApplicationAgentLifetimeGrantAdmission.Accepted.births_named	derivable: it is the proof field Minidregg.Kernel.ApplicationAgentLifetimeGrantAdmission.Accepted.named
+Minidregg.Kernel.ApplicationShareIssueAdmission.Accepted.births_named	derivable: it is the proof field Minidregg.Kernel.ApplicationShareIssueAdmission.Accepted.named
+Minidregg.Kernel.ObjectiveActivityReceiver.prepare_spent_refused	successor: Minidregg.Kernel.ObjectiveActivityReceiver.gate_spent_refused -- the spent marker is refused by the gate, before verifying or deciding
+private Minidregg.Compiler.DurableServed.Start.spentRoot @Compiler.DurableServed	successor: Minidregg.Compiler.DurableServed.Start.indexRoot -- private structure field renamed with the spent->index root (Compiler/DurableServed.lean:636)
+private Minidregg.Compiler.DurableServed.checkSpent @Compiler.DurableServed	successor: Minidregg.Compiler.DurableServed.checkIndex -- private; the same deep/shallow check of every carried root, now over DurableIndex rows (Compiler/DurableServed.lean:610)

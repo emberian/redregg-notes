@@ -1,0 +1,5 @@
+2026-10-21 BLOCKER: Cached-olean `lake env lean` census run on the Mac produced no TSV or output within a 180 s cap; stopped that scratch process. No build was started. Using the checked-in historical v2 TSV only as labeled dry-run input.
+
+## WORKLOG
+2026-10-21: Bread checkout read-only at 22fad151e9f118e3aa001a823e075918ffa139e8. Read worker rules, source memo, FloorCensus, four audits, historical study and cv task. Memo is `/Users/ember/dev/redregg/work/BREAD-PREMISE-PILOT-20261021.md`; script/output/run log under `/Users/ember/dev/redregg/work/CX-BREAD-PREMISE-scratch/`. Historical 14-line claim is lexical and includes already repaired forms/comments. Current FloorCensus TSV did not finish in 180 s; no PID/job remains, no landing or hbox work.
+2026-10-21 DONE: `/Users/ember/dev/redregg/work/BREAD-PREMISE-PILOT-20261021.md` (372 lines); dry-run script `/Users/ember/dev/redregg/work/CX-BREAD-PREMISE-scratch/premise_pilot.py`; JSON and exact 14-row summary alongside. No landing, no hbox use, no bread tracked-file edits. The census's 180 s cached-import timeout and historical-v2 fallback are recorded in the memo.

@@ -1,0 +1,2 @@
+
+ROOT (real 10-27): NEW METHOD, effective now: read /Users/ember/dev/redregg/work/METHOD-20261027.md. Reason across your whole change first; write all edits; ONE build; fix everything from its log; build again; a build per statement is forbidden. Single-file checks (`scripts/nd-build lake env lean FILE`) while iterating. Do NOT cp -a a .lake (disk at 93%): if you have no build yet, write the code and wait for scripts/nd-check (within the hour). Rebase once at the end. Land small, soon. Spawn nothing.

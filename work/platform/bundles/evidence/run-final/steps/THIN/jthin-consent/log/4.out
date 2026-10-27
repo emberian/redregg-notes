@@ -1,0 +1,10 @@
+{
+  "authority": "requires-current-admission",
+  "delegation": null,
+  "effect": "none",
+  "intentPath": "/run/user/1001/p4.lLiI5S/r/world/sponsor/proposals/t1/intent.json",
+  "intentSha256": "8d320357205796aa280721634eb89a419ca54f295eae8ddf7aa4882cc0c60d8b",
+  "proposalId": "t1",
+  "renounce": null,
+  "type": "minidregg-workspace-proposal-result-v1"
+}

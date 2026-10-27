@@ -1,0 +1,13 @@
+diff --git a/Lang/Program.lean b/Lang/Program.lean
+index 5ffdbeb..5e9cff2 100644
+--- a/Lang/Program.lean
++++ b/Lang/Program.lean
+@@ -458,7 +458,7 @@ def runMeasuredWith
+       | some slots => do
+         let calls ← callsOf digestOf c
+         let es ← editsOf S.rels r.self e
+-        guardEdits bytesOf digestOf S rv pkg r es
++        let _ := guardEdits bytesOf digestOf S rv pkg r es
+         pure (slots, calls, es.map (fun x => (x.slot, x.act)), budget - left, S.pkgs)
+       | none => throw (.program s!"{S.label}: state bytes")
+     | .ok _ => throw (.program s!"{S.label}: state")

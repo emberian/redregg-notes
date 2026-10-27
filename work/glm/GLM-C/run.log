@@ -1,0 +1,21 @@
+⚠ claude.ai connectors are disabled because ANTHROPIC_API_KEY or another auth source is set and takes precedence over your claude.ai login · Unset it to load your organization's connectors
+[claude-code:unrecognized_model] {"model":"glm-5.3","query_source":"sdk"}
+Both the test run and a completion-watcher are running in the background; I'll pick up when run 1 lands its exit line. Status so far:
+
+- **Fix applied** in `~/nd-land/glm-c` (hbox worktree on origin/main 57111733): Q2's wait now requires `answers(&b).len() == 2 && answered_keys(&log()).len() == 2` — the event, 120 s liveness deadline, order stays the assert.
+- **Sibling sweep done**: Q6 / agent_real R1-R2 / resident.rs / grain.rs / members.rs all examined; deliberately unchanged (verdicts, or pipe-order-covered), reasoning captured for the report.
+- **Run 1** in flight on the loaded box (load 39 at start).
+
+Both background watchers are set. While waiting, one last re-verification of the landed diff semantics — `answered_keys` matches only `resident: answered N HEX K bytes` lines, which only `deliverP` emits, one per ok invoke, so the folded condition is exactly "both answers landed and both their lines visible." Nothing further to do until the runs report.
+
+Waiting on the slot notification now.
+
+Waiting for run 4.
+
+Waiting for LOADRUN2 (slot grant → overlapping test run → result).
+
+Waiting for LOADRUN3.
+
+Waiting for LOADRUN4 (real load build + overlapping test).
+
+Waiting on build 4's slot line.

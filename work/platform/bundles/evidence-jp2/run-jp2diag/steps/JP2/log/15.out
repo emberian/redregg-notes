@@ -1,0 +1,47 @@
+/run/user/1001/p4.QrWhKA/r/world/sponsor/sources/create-account-friend.authoring/g0001/intent.bin
+{
+  "acceptedCount": "3",
+  "confirmation": "installed",
+  "eventId": "65857159830431549195565699838740465411936641554850823250305870512388427209835",
+  "transactionId": "25739630171863458812570986529287657160208949777855202383250700495236087980367",
+  "type": "confirmed",
+  "worldRoot": "49393155875127033339856173042076749265332290320263736066934122385821993824713"
+}
+{
+  "account": {
+    "attempt": "/run/user/1001/p4.QrWhKA/r/world/sponsor/attempts/create-account-friend",
+    "birthReceipt": {
+      "acceptedCount": "3",
+      "confirmation": "installed",
+      "eventId": "65857159830431549195565699838740465411936641554850823250305870512388427209835",
+      "transactionId": "25739630171863458812570986529287657160208949777855202383250700495236087980367",
+      "type": "confirmed",
+      "worldRoot": "49393155875127033339856173042076749265332290320263736066934122385821993824713"
+    },
+    "controlCapability": "15895576732211984937",
+    "funded": "1000",
+    "ownerCapability": "10048003867736090237",
+    "target": "9326688864114170733"
+  },
+  "authority": "hint-only; the Host checks every grant at use",
+  "birthContext": "/run/user/1001/p4.QrWhKA/r/world/sponsor/provisions/friend/birth-context.json",
+  "factoryObservation": {
+    "authority": "admitted-factory-observation",
+    "capability": "13196018675461440151",
+    "factory": "10",
+    "holder": "11612647092073939916",
+    "receipt": {
+      "acceptedCount": "2",
+      "eventId": "38029556251518910625589083759012035800433312240929194321815674271670940547716",
+      "transactionId": "14862920646393431399580401880002913927106638403601752562572833142096437234380",
+      "worldRoot": "61740000316294139892971716940385710913041752327310125929319876034498434328981"
+    },
+    "type": "minidregg-participant-factory-observation-result-v1",
+    "verbs": [
+      "observe"
+    ]
+  },
+  "holder": "11612647092073939916",
+  "name": "friend",
+  "type": "minidregg-participant-provisioning-v1"
+}

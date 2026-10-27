@@ -1,0 +1,4 @@
+Nanodregg.Lang.Contextual.Certificate	Census.CertificateReader
+_private:Lang.Contextual.Certificate	_private:Census.CertificateReader
+_private:Lang.Proofs.Contextual.Certificate	_private:Census.Proofs.CertificateReader
+_private:Lang.Journey.Certificate	_private:Census.CertificateReaderTests

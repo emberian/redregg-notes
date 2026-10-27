@@ -1,0 +1,196 @@
+diff --git a/Compiler/DurableServed.lean b/Compiler/DurableServed.lean
+index fee4382b..8770d24e 100644
+--- a/Compiler/DurableServed.lean
++++ b/Compiler/DurableServed.lean
+@@ -550,6 +550,92 @@ theorem entries_step (ids : List CellId) (nodup : ids.Nodup) (before next : Data
+ 
+ end Served
+ 
++/-- A suffix changes one system slot and the cells it actually writes. The
++system leaf is the final height/chain; intermediate system leaves are not
++needed when advancing directly to the verified head. -/
++def suffixSlots (height : Nat) (chain : Digest) (records : List IntentRecord) :
++    List (WorldRoot.Key × Digest) :=
++  (.system, systemLeaf height chain) ::
++    records.flatMap fun record => record.writes.map fun write =>
++      (.cell write.cellId.value, write.exactPost)
++
++/-- The canonical executor's suffix changes exactly `suffixSlots`. This is
++the refinement used by refresh, rather than a second replay implementation. -/
++theorem replay_entries_step (ids : List CellId) (nodup : ids.Nodup)
++    (before after : DataSnapshot rootBytes) (records : List IntentRecord)
++    (replayed : replay rootBytes before records = some after)
++    (height height' : Nat) (chain chain' : Digest) (k : WorldRoot.Key) :
++    WorldRootCache.lastVal
++      (Served.entriesOf after.model.roots (extendIds ids records) height' chain') k =
++    (WorldRootCache.lastVal (suffixSlots height' chain' records) k).or
++      (WorldRootCache.lastVal (Served.entriesOf before.model.roots ids height chain) k) := by
++  cases k with
++  | system =>
++      have cells : WorldRootCache.lastVal
++          (records.flatMap fun record => record.writes.map fun write =>
++            (WorldRoot.Key.cell write.cellId.value, write.exactPost)) .system = none := by
++        clear replayed
++        induction records with
++        | nil => rfl
++        | cons record records ih =>
++            rw [List.flatMap_cons, WorldRootCache.lastVal_append, ih,
++              DurableReceiverIO.lastVal_cells_system]
++            rfl
++      simp [Served.entriesOf, suffixSlots, WorldRootCache.lastVal_cons,
++        DurableReceiverIO.lastVal_cells_system, cells]
++  | cell n =>
++      induction records generalizing ids before height chain with
++      | nil =>
++          cases Option.some.inj replayed
++          simp only [Served.entriesOf, WorldRootCache.lastVal_cons]
++          simp only [DurableReceiverIO.lastVal_cellIds (extendIds ids [])
++            (DurableCheckpoint.nodup_eraseDups _) after.model.roots n,
++            DurableReceiverIO.lastVal_cellIds ids nodup after.model.roots n]
++          simp [suffixSlots, extendIds, WorldRootCache.lastVal_cons,
++            show WorldRootCache.lastVal ([] : List (WorldRoot.Key × Digest)) (.cell n) = none from rfl]
++      | cons record records ih =>
++          unfold replay at replayed
++          cases bound : record.bind? rootBytes with
++          | none => simp [bound] at replayed
++          | some intent =>
++              simp only [bound, bind, Option.bind] at replayed
++              have recordExact := IntentRecord.bind_exact bound
++              cases executed : DurableDataIntent.execute .complete before intent with
++              | accepted next =>
++                  simp only [executed] at replayed
++                  have step := Served.entries_step ids nodup before next intent height chain chain executed (.cell n)
++                  rw [recordExact] at step
++                  have tail := ih (extendIds ids [record]) (DurableCheckpoint.nodup_eraseDups _)
++                    next replayed (height + 1) chain
++                  have member : ∀ cellId,
++                      cellId ∈ extendIds (extendIds ids [record]) records ↔
++                      cellId ∈ extendIds ids (record :: records) := by
++                    intro cellId
++                    simp [extendIds, List.mem_append, List.mem_flatMap, or_assoc]
++                  have same := DurableReceiverIO.lastVal_cellIds
++                    (extendIds (extendIds ids [record]) records) (DurableCheckpoint.nodup_eraseDups _)
++                    after.model.roots n
++                  have same' := DurableReceiverIO.lastVal_cellIds
++                    (extendIds ids (record :: records)) (DurableCheckpoint.nodup_eraseDups _)
++                    after.model.roots n
++                  have enumeration : WorldRootCache.lastVal
++                      (Served.entriesOf after.model.roots (extendIds (extendIds ids [record]) records) height' chain') (.cell n) =
++                      WorldRootCache.lastVal
++                      (Served.entriesOf after.model.roots (extendIds ids (record :: records)) height' chain') (.cell n) := by
++                    simp only [Served.entriesOf, WorldRootCache.lastVal_cons]
++                    rw [same, same']
++                    simp only [member]
++                  rw [enumeration] at tail
++                  rw [step] at tail
++                  simpa [suffixSlots, DurableReceiverIO.recordSlots,
++                    WorldRootCache.lastVal_cons, WorldRootCache.lastVal_append,
++                    List.flatMap_cons, Option.or_assoc] using tail
++              | replayed recorded => simp [executed] at replayed
++              | rejected reason => simp [executed] at replayed
++              | crashed point next => simp [executed] at replayed
++
++#assert_axioms replay_entries_step
++
+ /-! ## The light opening of the head (KN2 2b-1, step 3)
+ 
+ The open reads the seed, the latest checkpoint and the entries from it to the
+@@ -624,6 +710,11 @@ private def checkIndex (rows : List Bool → Option DurableIndex.Row) :
+ /-- What an extension starts from: a verified state (bare snapshot, its
+ enumeration, the fresh-cell bytes) at `height`, with the chain, accumulator
+ frontier and index root there, and the head tag there when it is not 0. -/
++private structure CachedRoots (ids : List CellId) (entries : List (WorldRoot.Key × Digest)) where
++  nodup : ids.Nodup
++  cache : DurableReceiverIO.RootCache
++  exact : DurableReceiverIO.RootsExact cache entries
++
+ private structure Start (rootBytes : List UInt8 → Digest) where
+   seed : Seed
+   absentBytes : List UInt8
+@@ -636,6 +727,9 @@ private structure Start (rootBytes : List UInt8 → Digest) where
+   indexRoot : Digest
+   tag : Option (List UInt8)
+   checkpoint : Nat
++  /-- A refresh already verified this predecessor's root tree. A cold open
++  has no predecessor and builds the tree once. -/
++  roots : Option (CachedRoots ids (Served.entriesOf before.model.roots ids height chain)) := none
+ 
+ /-- **The one verification of new entries**, used by the open (from its
+ checkpoint) and by a session's refresh (from its head): every entry after
+@@ -683,8 +777,16 @@ private def extendVerified (transport : DurableReceiverIO.Transport) (rootBytes
+   | some snapshot =>
+       let cellIds := extendIds start.ids records
+       let entries := Served.entriesOf snapshot.model.roots cellIds headHeight headChain
+-      let roots := DurableReceiverIO.RootCache.ofEntries entries
+-      let rootsExact := DurableReceiverIO.RootsExact.ofEntries entries
++      let rooted : (cache : DurableReceiverIO.RootCache) × DurableReceiverIO.RootsExact cache entries :=
++        match start.roots with
++        | none => ⟨DurableReceiverIO.RootCache.ofEntries entries,
++            DurableReceiverIO.RootsExact.ofEntries entries⟩
++        | some ⟨nodup, cache, exact⟩ =>
++            exact.advance (suffixSlots headHeight headChain records)
++              (replay_entries_step start.ids nodup start.before snapshot records replayed
++                start.height headHeight start.chain headChain)
++      let roots := rooted.1
++      let rootsExact := rooted.2
+       let worldRoot := if rootsExact.injective then roots.root else WorldRoot.deployedRoot entries
+       let served : Served rootBytes store :=
+         Served.ofReplay start.seed start.absentBytes start.ids start.before start.outside records snapshot
+@@ -766,7 +868,7 @@ def openHead (transport : DurableReceiverIO.Transport) (rootBytes : List UInt8 
+     return .error "checkpoint state is not admissible for this Store's seed"
+   extendVerified transport rootBytes store rfl
+     ⟨seed, base.absentBytes, base.cells.map Prod.fst, base.snapshot rootBytes [], Served.state_snapshot_outside base,
+-      baseHeight, baseChain, baseFrontier, baseSpent, baseTag, baseHeight⟩ suffix lap
++      baseHeight, baseChain, baseFrontier, baseSpent, baseTag, baseHeight, none⟩ suffix lap
+ 
+ /-- **A session's refresh**: the entries another writer appended after this
+ opening's head, verified exactly as the open verifies the entries after its
+@@ -787,7 +889,9 @@ def Opening.extend (transport : DurableReceiverIO.Transport) (rootBytes : List U
+       extendVerified transport rootBytes opening.store opening.live
+         ⟨served.seed, served.absentBytes, served.cellIds, served.state,
+           fun cellId missing => served.outsideAbsent cellId missing, height, opening.head.chain,
+-          opening.head.frontier, opening.head.indexRoot, none, opening.baseHeight⟩
++          opening.head.frontier, opening.head.indexRoot, none, opening.baseHeight,
++          some ⟨served.cellIds_nodup, opening.roots, by
++            simpa [served, Served.roots, opening.heightExact, opening.chainExact] using opening.rootsExact⟩⟩
+         stored.entries (fun _ => pure ())
+ 
+ /-! ## The light receive (KN2 2b-1, step 4)
+diff --git a/Kernel/WorldRootCache.lean b/Kernel/WorldRootCache.lean
+index 7bbcf7ad..c8d138fd 100644
+--- a/Kernel/WorldRootCache.lean
++++ b/Kernel/WorldRootCache.lean
+@@ -74,6 +74,33 @@ def set (S : Scheme K V D) (E : Nat → D) (f : Option (K × V) → Option (K ×
+       let right := if b then set S E f i bs t.children.2 else t.children.2
+       .node (S.nodeHash (left.digest S E i) (right.digest S E i)) left right
+ 
++/-- Number of internal-node hashes performed by `set`: its recursive call
++follows exactly one child and the sibling digest is read from the cache. This
++cost recurrence has no dependence on the number of occupied leaves. -/
++def setNodeHashes : Nat → List Bool → Nat
++  | 0, _ => 0
++  | _ + 1, [] => 0
++  | i + 1, _ :: bs => setNodeHashes i bs + 1
++
++theorem setNodeHashes_eq : ∀ (i : Nat) (bits : List Bool),
++    setNodeHashes i bits = min i bits.length
++  | 0, _ => by simp [setNodeHashes]
++  | _ + 1, [] => by simp [setNodeHashes]
++  | i + 1, _ :: bs => by
++      simp only [setNodeHashes, setNodeHashes_eq i bs, List.length_cons]
++      omega
++
++theorem setNodeHashes_le (i : Nat) (bits : List Bool) : setNodeHashes i bits ≤ i := by
++  rw [setNodeHashes_eq]
++  exact Nat.min_le_left _ _
++
++/-- A full index update rehashes exactly `S.depth` internal nodes, for every
++tree size. Together with `insertWrite_good` this states both the cost and the
++cached-map invariant preserved by a write. -/
++theorem insertWrite_nodeHashes (S : Scheme K V D) (key : K) :
++    setNodeHashes S.depth (S.ix key) = S.depth := by
++  rw [setNodeHashes_eq, S.ix_length key, Nat.min_self]
++
+ end Tree
+ 
+ section Cache

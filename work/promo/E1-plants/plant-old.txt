@@ -1,0 +1,1 @@
+  let readFacts := readsTy rels [("facts", ⟨3, none, true⟩)]

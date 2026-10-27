@@ -1,0 +1,7 @@
+04:09:58Z burst-up: warm base at a5483db36cf7aaf34378a15c90b68c2de538f16a already on pull:burst4-gate
+  [persvati] relay: persvati has no base: full copy incl. .lake/packages
+  [persvati] relay: pulled from burst4-gate in 190s
+  [persvati] mk-lane: REFUSED disk: /home/ember/mini-pipeline/lanes would drop below 15% free
+  [persvati] relay: VERIFY FAILED on persvati; base stays NOT-READY
+  [persvati] exit 8; full log /Users/ember/.cache/burst-up/burst4/persvati-relay.log
+04:13:11Z burst-up: RELAY (pull) FAILED to persvati

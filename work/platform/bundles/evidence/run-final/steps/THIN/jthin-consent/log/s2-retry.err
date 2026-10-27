@@ -1,0 +1,3 @@
+workspace continuity: legacy; initialize with workspace --action continuity-init --name REF
+refused: undisclosed: request refused (phase admission)
+  client: host returned refused; exact outcome evidence was retained

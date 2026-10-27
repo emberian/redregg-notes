@@ -1,0 +1,68 @@
+== burst-check burst4-a 2026-10-15T03:49:56Z
+ok    pkg:fuser              
+ok    pkg:lsof               
+ok    pkg:flock              
+ok    pkg:rsync              
+ok    pkg:zstd               
+ok    pkg:jq                 
+ok    pkg:capnp              
+ok    pkg:git                
+ok    pkg:curl               
+ok    pkg:earlyoom           
+ok    pkg:rrsync             
+ok    pkg:bwrap              
+ok    pkg:rg                 
+ok    pkg:sqlite3            
+ok    pkg:bc                 
+ok    pkg:xxd                
+ok    capnp-1.5.0            
+ok    earlyoom               
+ok    linger                 
+ok    sudo-nopasswd          
+ok    srv-mount              1.7T free
+ok    swarm-build            repo copy
+ok    swarm-build:named-scopes 
+ok    swarm.slice            158G of 187G
+ok    tool:elan              
+ok    tool:lake              
+ok    tool:lean              
+ok    tool:cargo             
+ok    tool:rustc             
+ok    tool:bun               
+ok    repo                   /srv/mini at a5483db3
+ok    repo-tip               
+ok    profile:box.env        
+ok    profile:old-slots      
+ok    box.env                
+ok    slots-exist            6 lane, 2 small, 2 gate
+ok    slots-sized            6 x 6 threads for 32
+ok    slots-no-strays        
+ok    gate-slots             /srv/build-slot-mk /srv/build-slot-1
+ok    peer                   (single box)
+ok    lake-shim              
+ok    scripts                53 files, from a5483db3
+ok    candidate-builder      
+ok    mk-lane:one-copy       = the base tree's
+ok    mk-lane:probe-aware    
+ok    lean-ask-repl          
+ok    sccache-bin            
+ok    unit:pipeline-sccache  active, enabled
+ok    unit:pipeline-slots    active, enabled
+ok    unit:artifacts         
+ok    shared-remote-timer    
+ok    shared-remote          516 refs
+ok    artifacts:TIPS         
+ok    mirror-key             (single box)
+ok    hbox-puller-authorized 
+ok    peer-key               (single box)
+ok    peer-authorized        (single box)
+ok    warm-base              FROZEN a5483db3
+ok    warm-base-tip          
+ok    slots-cmd              answers under a non-login shell
+DIFF  briefs                 no /srv/briefs
+ok    SLOTS.txt              
+ok    lake-cache:clean       lake-cache-audit: 1318 minidregg entries in /srv/lake-cache, checked 1318 (all),
+ok    warm-base:prefixed-c   
+ok    lake-shim:guard        
+== burst-check burst4-a: 1 DIFF
+03:50:03Z burst-up: check: 1 DIFF in total

@@ -1,0 +1,8 @@
+✔ [51/57] Built Lang.Program (1.4s)
+✔ [52/57] Built Lang.Proofs.Load (1.6s)
+✔ [53/57] Built Lang.Proofs.Invoke (1.4s)
+✔ [54/57] Built Lang.Proofs.Call (4.4s)
+✔ [55/57] Built Lang.Proofs.CallLive (3.3s)
+✔ [56/57] Built Lang.Proofs.LawRun (848ms)
+✔ [57/57] Built Lang.Proofs.Rel (2.2s)
+Build completed successfully (57 jobs).

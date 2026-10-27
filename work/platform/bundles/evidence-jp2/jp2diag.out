@@ -1,0 +1,31 @@
+run root /run/user/1001/p4.QrWhKA/r
+  step   hook    bytes  margin  socket (sun_path holds 107)
+  J0     world      35      72  /run/user/1001/jm.XXXXXX/world.sock
+  M3     m3         44      63  /run/user/1001/jm.XXXXXX/m3/public/mini.sock
+  M4     m4         50      57  /run/user/1001/jm.XXXXXX/m4/store/public/mini.sock
+  M5     m5         66      41  /run/user/1001/jm.XXXXXX/m5/hermes/state/mcp-0000000000000011.sock
+  M7     m7         44      63  /run/user/1001/jm.XXXXXX/m7/public/mini.sock
+  M8     m8         52      55  /run/user/1001/jm.XXXXXX/m8/fixture/public/mini.sock
+  J13    j13        51      56  /run/user/1001/jm.XXXXXX/j13/store/public/mini.sock
+  JN2    jnock2     54      53  /run/user/1001/jm.XXXXXX/jnock2/world/public/mini.sock
+  JN3    jnock3     54      53  /run/user/1001/jm.XXXXXX/jnock3/world/public/mini.sock
+  JN5    jnock5     54      53  /run/user/1001/jm.XXXXXX/jnock5/world/public/mini.sock
+  JPAY4  jpay4      58      49  /run/user/1001/jm.XXXXXX/jpay4/acceptance/public/mini.sock
+  JPAY6  jpay6      70      37  /run/user/1001/jm.XXXXXX/jpay6/runtime-state/mcp-0000000000000011.sock
+  JROTL  jrotl      37      70  /run/user/1001/jm.XXXXXX/jrotl/f.sock
+STEP J0: clean start: private single-authority service, one sponsor ...
+STEP J0 PASS 1.987s service up and a signed read answered in 1.962s
+STEP JP2: a friend's key never touches the box: enroll, use and delegate over the proxy ...
+STEP JP2 FAIL 13.727s hook exit 1: 21 of 60 rows failed; first: 2: laptop consent config: no Store, no box or build path (thin consent only)
+
+step  status      wall_s  what / detail / deciding artifact
+J0   PASS         1.987  clean start: private single-authority service, one sponsor
+                          service up and a signed read answered in 1.962s
+                          -> /run/user/1001/p4.QrWhKA/r/world/handoff.json
+JP2  FAIL        13.727  a friend's key never touches the box: enroll, use and delegate over the proxy
+                          hook exit 1: 21 of 60 rows failed; first: 2: laptop consent config: no Store, no box or build path (thin consent only)
+                          -> /run/user/1001/p4.QrWhKA/r/steps/JP2/steps.tsv
+
+FRONTIER: JP2   (accepted records: 0; load average start/end: 5.79 7.15 7.50 / 6.06 7.14 7.50 on 32 CPUs; result: /run/user/1001/p4.QrWhKA/r/journey-result.json)
+JOURNEY-EXIT 1
+COPIED

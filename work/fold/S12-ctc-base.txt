@@ -1,0 +1,16 @@
+PASS certificate: positive/cycle
+PASS certificate: different-context/same-statement
+PASS certificate: checker
+PASS certificate: missing-target
+PASS certificate: not-theorem
+PASS certificate: statement
+PASS certificate: target-context
+PASS certificate: definition
+PASS certificate: statement-constant
+PASS certificate: transitive-constant
+PASS certificate: assumptions
+PASS certificate: fuel
+PASS certificate: missing-read
+PASS certificate: non-theorem-read
+PASS certificate: missing-dependency-read
+FAIL certificate: harness-control; expected Except.error (Nanodregg.Lang.Contextual.Certificate.Refusal.contextMismatch); actual Except.ok ()

@@ -1,0 +1,30 @@
+/tank/dregg-build/nanodregg/logs/promo/c2/T2.lean:183:13: error: unsolved goals
+case some
+D : Type
+digestOf : ByteArray → Option D
+look : Pinned D
+rv : RowView D
+self : D
+h : HoleROM
+amount ver i used : Nat
+bytes : ByteArray
+c : HoleCode
+hrow : holeRow rv self h.selectionRel h.selectionKey = Except.ok (some (Kernel.RowLeaf.row amount bytes ver))
+hdec : Wire.decodeData Ty.nat bytes = Except.ok (Data.nat i)
+hc : h.code[i]? = some c
+hsup :
+  ∀ (p : SupportPin),
+    p ∈ c.supports → supportObserved digestOf look p = true ∧ supportLive digestOf look rv self p = true
+hhyp :
+  ∀ (x : Nat) (p : SupportPin),
+    h.hypotheses[x]? = some (some p) →
+      supportPinned digestOf look rv self p = Except.ok () ∧
+        (Term.usesVar x c.body = true → supportLive digestOf look rv self p = true)
+hgp : ∀ (p : SupportPin), h.guardPin = some p → supportPinned digestOf look rv self p = Except.ok ()
+hch : changedHypotheses digestOf look rv self h c = Except.ok (deadPositions digestOf look rv self h.hypotheses.zipIdx)
+p : SupportPin
+hgp' : h.guardPin = some p
+hguard :
+  run [] Bounds.stackMax Bounds.holeGuardFuel 0 (State.init h.guard [Val.bool (supportLive digestOf look rv self p)]) =
+    Outcome.value (Val.bool true) used
+⊢ supportLive digestOf look rv self p = false

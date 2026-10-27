@@ -1,0 +1,181 @@
+{
+  "birthContext": {
+    "feePayer": "11855418858877046016",
+    "funding": [],
+    "genesis": {
+      "asset": "0",
+      "authorityCellId": "12",
+      "clockTickers": [
+        {
+          "capability": "71",
+          "subject": "70"
+        },
+        {
+          "capability": "3101",
+          "subject": "31"
+        }
+      ],
+      "collector": "99",
+      "domain": "8501",
+      "enrollments": [
+        {
+          "accountId": "7",
+          "accountPredicate": {
+            "predicates": [],
+            "type": "all"
+          },
+          "controlCapabilityId": "51",
+          "factoryObserveCapabilityId": "54",
+          "initialBalance": "100000",
+          "key": {
+            "activeFrom": "0",
+            "activeUntil": "1000000",
+            "algorithm": "1",
+            "keyEpoch": "2",
+            "keyId": "7007",
+            "nextKeyDigest": null,
+            "publicKey": "1cf8b3610338d367d0a7d627e05f6b489cfeef7703e5c20ea01a2c67824776ff",
+            "subject": "7"
+          },
+          "spendCapabilityId": "41"
+        },
+        {
+          "accountId": "70",
+          "accountPredicate": {
+            "predicates": [],
+            "type": "all"
+          },
+          "controlCapabilityId": "73",
+          "factoryObserveCapabilityId": "74",
+          "initialBalance": "0",
+          "key": {
+            "activeFrom": "0",
+            "activeUntil": "1000000",
+            "algorithm": "1",
+            "keyEpoch": "2",
+            "keyId": "7070",
+            "nextKeyDigest": null,
+            "publicKey": "8b77afa8dc67f9bdf415d88cef861b99790b23a373b18fc0893749a3384c7531",
+            "subject": "70"
+          },
+          "spendCapabilityId": "72"
+        },
+        {
+          "accountId": "31",
+          "accountPredicate": {
+            "predicates": [],
+            "type": "all"
+          },
+          "controlCapabilityId": "3103",
+          "factoryObserveCapabilityId": "3104",
+          "initialBalance": "0",
+          "key": {
+            "activeFrom": "0",
+            "activeUntil": "1000000",
+            "algorithm": "1",
+            "keyEpoch": "2",
+            "keyId": "3100",
+            "nextKeyDigest": null,
+            "publicKey": "abd3d827fa6b1f8b007ddb226e1c6a1dd978b100099bc195d65422521788f25c",
+            "subject": "31"
+          },
+          "spendCapabilityId": "3102"
+        },
+        {
+          "accountId": "130",
+          "accountPredicate": {
+            "predicates": [],
+            "type": "all"
+          },
+          "controlCapabilityId": "2030",
+          "factoryObserveCapabilityId": "3030",
+          "initialBalance": "100",
+          "key": {
+            "activeFrom": "0",
+            "activeUntil": "1000000",
+            "algorithm": "1",
+            "keyEpoch": "2",
+            "keyId": "7030",
+            "nextKeyDigest": null,
+            "publicKey": "73d131d744569faf73bce1490d4b6ea957039b8f68a9f1f7c3ce1f033581da81",
+            "subject": "30"
+          },
+          "spendCapabilityId": "1030"
+        }
+      ],
+      "expectedSemantics": "57621574434371209881717419650284223750536103367801519131515545423056217876633",
+      "factoryControllerCapability": "53",
+      "factoryControllerSubject": "7",
+      "factoryId": "10",
+      "factoryPredicate": {
+        "predicates": [],
+        "type": "all"
+      },
+      "federation": "9",
+      "genesisHeight": "10",
+      "issuerEpoch": "2",
+      "meterAllowance": {
+        "feeDebit": "10000000",
+        "incidences": "10000000",
+        "leaseByteBlocks": "10000000",
+        "memoryTouches": "10000000",
+        "networkBytes": "10000000",
+        "proofWork": "10000000",
+        "sideEffectCount": "10000000",
+        "storageBytes": "10000000",
+        "turnBytes": "10000000",
+        "witnessBytes": "10000000"
+      },
+      "payObserver": {
+        "capability": "4030",
+        "controlCapability": "4031",
+        "enrolCapability": "4032",
+        "subject": "30"
+      },
+      "resourceBookId": "11",
+      "tailBound": "256",
+      "tariffBase": "3",
+      "tariffPerBirth": "2",
+      "tariffPerGrant": "1",
+      "tariffPerInitialPayloadByte": "0"
+    },
+    "grants": [
+      {
+        "capability": "15132879253850235238",
+        "kind": "object",
+        "target": "10"
+      },
+      {
+        "capability": "17545308121273763890",
+        "kind": "account",
+        "target": "11855418858877046016"
+      }
+    ],
+    "sourceCapabilities": [
+      "17545308121273763890"
+    ],
+    "template": {
+      "issuer": "5",
+      "lifetime": "10000",
+      "ownerBudget": "100000"
+    },
+    "type": "minidregg-participant-birth-context-v1"
+  },
+  "enrollment": {
+    "authority": "admitted-key-only",
+    "keyId": "13969003193887327659",
+    "keyPath": null,
+    "publicKey": "0e3fb7918854ccfd47abc8f57c7599f9475a74e1fe8b989735794c64d36d61ab",
+    "receipt": {
+      "acceptedCount": "13",
+      "eventId": "33353974909358688395297382084097265356972828967888592512746548018472205854830",
+      "transactionId": "43368794434532221452681315441510064259478901501830704902544805303017485963081",
+      "worldRoot": "58348723657911489318277588856142848317075734786783190616383019190105912458895"
+    },
+    "subject": "12722756243119881344",
+    "type": "minidregg-participant-enrollment-result-v1"
+  },
+  "ingressHex": "44524547472f5041525449434950414e542f4b45592d454e524f4c4c2f5349474e45442f7632dcff44524547472f5041525449434950414e542f4b45592d454e524f4c4c2f763107ff35ff2da4421dc21edb6bdfd1f35b5a7311fbff4c9195c1505859560a1e8e739214b1ae73f11966b63c7dc82cd59894b32d2354ff2a0fce0667904a0edb9d1adf10c9d628a082d310b0a93e06115ec8fe13ad0391ffdb5360f154173ec7ff01ff01ffe018f061ba5377b5ff20ff0e3fb7918854ccfd47abc8f57c7599f9475a74e1fe8b989735794c64d36d61abff00081c3846381c0801ff01ebe6399a5b7e6b05a0152dc904f98ae0b107c0909ff4cb855311f4b42c85e71901ff8a01ff02ff4dff04ff0607ff0102ff0a07ff02ff017a1bff02ff01ff07ff20ff1cf8b3610338d367d0a7d627e05f6b489cfeef7703e5c20ea01a2c67824776ffff91600fff000c0207ff02ff01070207ff02ff001701ff7a1bff02ff01ff1aff44524547472f415554482f5349474e45442d5245515545535402adff44524547472f415554482f504c414e0211ff5621ff71545980a814f81b66f2991595d2e9b68688c6e9d1d5b786fca8352a68ced28fff09ff03ff07ff02ff0aff0aff650690e6f212f4b131a09e4c8b87972c7fcd8bd9a6acc1c163209e5098e4d0fdff00dd6db02f8233da83ba361c6da909dd778198fc0ddc31f6563c237ca69d4053ffc407133238c7ed61186c1c4b824054b15cdf0541ae0c37953573ce4aabfd3f6cffffff0affffffdcffc407133238c7ed61186c1c4b824054b15cdf0541ae0c37953573ce4aabfd3f6cff40ffc684ce18090fd725fcf377109d87d1b0a8a3e1a9d8f2e97917a88c9d566800a3020ffaa201f5d82d972de4d6c48c4737faf999d32d3ef68ffdae81852e450b0e40ff29c6f2ff9f124b0b3fdfb5f23ad147c30541ceb8f85d19dda3239af49424a329e6017e83850d64471063f3ad2af0149f67bef75bff181d0126debb0a3c80620220ff1f3d3e6cd43d841856e71f1392d89741035f11feda8a366351032dfe64bcef9b40ff66f76a9ff805e0b405cf5ef35858b690497525e103a548fc90076581f437f99d9c69824908b0949138d7049d088c03d5f91ba6b19e88af75a95a2346abc24105",
+  "ingressSha256": "01dd3fd793dc5e0b0daa93a1fd0748652d21a6dd9f26e49ebc989325b7f964f2",
+  "type": "minidregg-participant-join-welcome-v1"
+}

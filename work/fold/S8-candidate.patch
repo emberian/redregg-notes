@@ -1,0 +1,922 @@
+diff --git a/Kernel/Proofs/InvokeWitness.lean b/Kernel/Proofs/InvokeWitness.lean
+index 81b9373..3507487 100644
+--- a/Kernel/Proofs/InvokeWitness.lean
++++ b/Kernel/Proofs/InvokeWitness.lean
+@@ -35,7 +35,7 @@ import Lang.Program
+ import Lang.Std
+ import Lang.Proofs.Wire
+ import Lang.Proofs.Receiver
+-import Lang.Proofs.Contextual.ClosedLeaf
++import Lang.Proofs.LiveClosed
+ 
+ namespace Nanodregg.Kernel.Receive
+ 
+diff --git a/Kernel/Proofs/Logic/History.lean b/Kernel/Proofs/Logic/History.lean
+index f5a2600..967d6ba 100644
+--- a/Kernel/Proofs/Logic/History.lean
++++ b/Kernel/Proofs/Logic/History.lean
+@@ -48,7 +48,7 @@ import Kernel.Proofs.Logic.Triple
+ import Lang.Proofs.Chain
+ import Lang.Proofs.Extract
+ import Lang.Proofs.Invoke
+-import Lang.Proofs.Contextual.LawReceiver
++import Lang.Proofs.LawReceiver
+ 
+ namespace Nanodregg.Kernel.Receive
+ 
+diff --git a/Lang/Proofs/Contextual/ClosedLeaf.lean b/Lang/Proofs/Contextual/ClosedLeaf.lean
+deleted file mode 100644
+index 4c10b77..0000000
+--- a/Lang/Proofs/Contextual/ClosedLeaf.lean
++++ /dev/null
+@@ -1,68 +0,0 @@
+-import Lang.Proofs.Contextual.ClosedDeployment
+-
+-namespace Nanodregg.Lang
+-open Nanodregg.Kernel Nanodregg.Kernel.Receive
+-
+-/-- A closed leaf ROM is admitted identically, including any boundary refusal. -/
+-theorem loadUsing_leaf_closed {D : Type} {bytesOf : D → ByteArray}
+-    {digestOf : ByteArray → Option D} {look : Pinned D} {pkg : D} {p : Package}
+-    (hid : digestOf (bytesOf pkg) = some pkg) (hp : readPackage look pkg = .ok p)
+-    (hi : p.imports = []) (hc : p.holes = [])
+-    (prepare : List Ty → Package → Except String Term) (fuel : Nat) :
+-    loadUsing digestOf (admitContextual digestOf prepare) look (fuel + 1)
+-      (bytesOf pkg) ⟨[], [], []⟩ =
+-    load digestOf look (fuel + 1) (bytesOf pkg) ⟨[], [], []⟩ := by
+-  unfold load
+-  rw [loadUsing.eq_def, loadUsing.eq_def]
+-  simp only [indexIn, idOf, hid, hp, hi]
+-  rw [loadAllUsing.eq_def, loadAllUsing.eq_def]
+-  exact admitContextual_closed digestOf prepare _ _ _ _ hc
+-
+-/-- Empty-signature, no-import packages have identical setups on the live path.
+-No success or closure assumption is imposed on their callers. -/
+-theorem runSetupLive_leaf_closed {D : Type} {bytesOf : D → ByteArray}
+-    {digestOf : ByteArray → Option D} {look : Pinned D} {pkg : D} {p : Package}
+-    (hid : digestOf (bytesOf pkg) = some pkg) (hp : readPackage look pkg = .ok p)
+-    (hi : p.imports = []) (hc : p.holes = [])
+-    (rv : RowView D) (state : Slots) (method : Nat) (args : ByteArray) (r : Req D) :
+-    runSetupLive bytesOf digestOf look rv pkg state method args r =
+-      runSetup bytesOf digestOf look rv pkg state method args r := by
+-  have hl := loadUsing_leaf_closed hid hp hi hc
+-    (fun Δ p => (instantiateHoles rv r.self Δ p).map (·.body)) (closureDepthMax - 1)
+-  change loadLive digestOf rv r.self look closureDepthMax (bytesOf pkg) ⟨[], [], []⟩ =
+-    load digestOf look closureDepthMax (bytesOf pkg) ⟨[], [], []⟩ at hl
+-  unfold runSetupLive runSetup runSetupWith
+-  rw [hl]
+-  cases hr : reqOk bytesOf r <;> simp only [Bool.false_eq_true, if_false, if_true, bind, Except.bind, pure, Except.pure]
+-  cases hload : load digestOf look closureDepthMax (bytesOf pkg) ⟨[], [], []⟩ with
+-  | error e => rfl
+-  | ok x =>
+-    obtain ⟨L, g⟩ := x
+-    have hz := (loadLive_of_load rv r.self hload).2
+-    simp only [hz]
+-
+-/-- The full measured result, including failures and charged ticks, is unchanged. -/
+-theorem runMeasuredLive_leaf_closed {D : Type} {bytesOf : D → ByteArray}
+-    {digestOf : ByteArray → Option D} {look : Pinned D} {pkg : D} {p : Package}
+-    (hid : digestOf (bytesOf pkg) = some pkg) (hp : readPackage look pkg = .ok p)
+-    (hi : p.imports = []) (hc : p.holes = [])
+-    (rv : RowView D) (state : Slots) (method : Nat) (args : ByteArray) (r : Req D) (budget : Nat) :
+-    runMeasuredLive bytesOf digestOf look rv pkg state method args r budget =
+-      runMeasured bytesOf digestOf look rv pkg state method args r budget := by
+-  unfold runMeasuredLive runMeasured runMeasuredWith
+-  rw [runSetupLive_leaf_closed hid hp hi hc]
+-
+-/-- A closed leaf's law is identical on contextual deployment, even when it refuses. -/
+-theorem judgeOneContextual_leaf_closed {D : Type} {bytesOf : D → ByteArray}
+-    {digestOf : ByteArray → Option D} {look : Pinned D} {pkg : D} {p : Package}
+-    (hid : digestOf (bytesOf pkg) = some pkg) (hp : readPackage look pkg = .ok p)
+-    (hi : p.imports = []) (hc : p.holes = [])
+-    (old new : Slots) (r : Req D) :
+-    judgeOneWith bytesOf digestOf (loadContextual digestOf) look pkg old new r =
+-      judgeOne bytesOf digestOf look pkg old new r := by
+-  have hl := loadUsing_leaf_closed hid hp hi hc (fun _ => unresolvedBody) (closureDepthMax - 1)
+-  change loadContextual digestOf look closureDepthMax (bytesOf pkg) ⟨[], [], []⟩ =
+-    load digestOf look closureDepthMax (bytesOf pkg) ⟨[], [], []⟩ at hl
+-  simp only [judgeOne, judgeOneWith, hl]
+-
+-end Nanodregg.Lang
+diff --git a/Lang/Proofs/Contextual/ContractTeeth.lean b/Lang/Proofs/Contextual/ContractTeeth.lean
+deleted file mode 100644
+index 258f1ab..0000000
+--- a/Lang/Proofs/Contextual/ContractTeeth.lean
++++ /dev/null
+@@ -1,87 +0,0 @@
+-/- Successor teeth for the six superseded ref-model statements. -/
+-import Lang.Proofs.Contextual.LangInstance
+-
+-namespace Nanodregg.Lang.Contextual
+-
+-private theorem identityCandidate_typed :
+-    ∀ n d M, ([⟨7, [.nat], .nat⟩] : HoleSignature).find? (fun e => e.name == n) = some d →
+-      (some (.var 0) : Option Term) = some M → HasType [] d.ctx M d.ty := by
+-  intro n d M hd hm
+-  have he := List.mem_of_find?_eq_some hd
+-  simp only [List.mem_singleton] at he
+-  subst d
+-  cases hm
+-  exact .var rfl
+-
+-theorem fillHoles_term_tooth :
+-    HasType [] [] (Term.fillRefs (fun _ => some (.var 0)) (.hole 7 [.nat 9])) .nat ∧
+-      Term.fillRefs (fun _ => some (.var 0)) (.hole 7 [.nat 9]) = .nat 9 := by
+-  refine ⟨fillHoles_typed (Ω := [⟨7, [.nat], .nat⟩]) (fun _ => some (.var 0))
+-    identityCandidate_typed (by intro n d hd hn; cases hn)
+-    (.hole (d := ⟨7, [.nat], .nat⟩) rfl (.cons (.nat (by decide)) .nil)), rfl⟩
+-
+-theorem fillHoles_fields_tooth :
+-    FieldsTy [] [] (Term.fillRefsRow (fun _ => some (.var 0))
+-      [("v", .hole 7 [.nat 9])]) [("v", .nat)] ∧
+-      Term.fillRefsRow (fun _ => some (.var 0)) [("v", .hole 7 [.nat 9])] = [("v", .nat 9)] := by
+-  refine ⟨fillHolesFields_typed (Ω := [⟨7, [.nat], .nat⟩]) (fun _ => some (.var 0))
+-    identityCandidate_typed (by intro n d hd hn; cases hn)
+-    (.cons (.hole (d := ⟨7, [.nat], .nat⟩) rfl (.cons (.nat (by decide)) .nil)) .nil), rfl⟩
+-
+-theorem fillHoles_arms_tooth :
+-    ArmsTy [] [] (Term.fillRefsRow (fun _ => some (.var 0))
+-      [("v", .hole 7 [.prim .add (.var 0) (.nat 9)])]) [("v", .nat)] .nat ∧
+-      Term.fillRefsRow (fun _ => some (.var 0)) [("v", .hole 7 [.prim .add (.var 0) (.nat 9)])] = [("v", .prim .add (.var 0) (.nat 9))] := by
+-  refine ⟨fillHolesArms_typed (Ω := [⟨7, [.nat], .nat⟩]) (fun _ => some (.var 0))
+-    identityCandidate_typed (by intro n d hd hn; cases hn)
+-    (.one (.hole (d := ⟨7, [.nat], .nat⟩) rfl (.cons (.prim (.var rfl) (.nat (by decide))) .nil))), rfl⟩
+-
+-theorem declaredHole_term_tooth :
+-    HasType [] [] (.hole 7 [.nat 9]) .nat [⟨7, [.nat], .nat⟩] ∧
+-      ¬ HasType [] [] (.hole 7 [.nat 9]) .nat := by
+-  refine ⟨.hole (d := ⟨7, [.nat], .nat⟩) rfl (.cons (.nat (by decide)) .nil), ?_⟩
+-  intro h
+-  have hd := hasType_declaresHole h 7 (by decide)
+-  simp at hd
+-
+-theorem declaredHole_fields_tooth :
+-    FieldsTy [] [] [("v", .hole 7 [.nat 9])] [("v", .nat)] [⟨7, [.nat], .nat⟩] ∧
+-      ¬ FieldsTy [] [] [("v", .hole 7 [.nat 9])] [("v", .nat)] := by
+-  refine ⟨.cons (.hole (d := ⟨7, [.nat], .nat⟩) rfl (.cons (.nat (by decide)) .nil)) .nil, ?_⟩
+-  intro h
+-  have hd := fieldsTy_declaresHole h 7 (by decide)
+-  simp at hd
+-
+-theorem declaredHole_arms_tooth :
+-    ArmsTy [] [] [("v", .hole 7 [.var 0])] [("v", .nat)] .nat [⟨7, [.nat], .nat⟩] ∧
+-      ¬ ArmsTy [] [] [("v", .hole 7 [.var 0])] [("v", .nat)] .nat := by
+-  refine ⟨.one (.hole (d := ⟨7, [.nat], .nat⟩) rfl (.cons (.var rfl) .nil)), ?_⟩
+-  intro h
+-  have hd := armsTy_declaresHole h 7 (by decide)
+-  simp at hd
+-
+-/-- The reader's old premises hold, but live filling does not eliminate imports.
+-The new statement requires the SAME library on source and target; its instance
+-at the proposed empty target fails before the filling theorem can be applied. -/
+-theorem reader_import_contract_tooth :
+-    HasType [.nat] [] (.ref 0) .nat ∧
+-    (∀ (Γ : List Lang.Ty), HasType [] Γ (.nat 0) .nat) ∧
+-    Term.fillRefs (fun _ => some (.nat 0)) (.ref 0) = .ref 0 ∧
+-    ¬ HasType [] [] (.ref 0) .nat ∧
+-    ¬ HasType [] [] (Term.fillRefs (fun _ => some (.nat 0)) (.ref 0)) .nat := by
+-  refine ⟨.ref rfl, fun _ => .nat (by decide), rfl, ?_, ?_⟩
+-  all_goals
+-    intro h
+-    cases h with
+-    | ref h => simp at h
+-
+-/-- An import remains an import under the new theorem, with the same library.
+-It is NOT reported as a contextual-hole occurrence. -/
+-theorem fillHoles_preserves_import_tooth :
+-    HasType [.nat] [] (Term.fillRefs (fun _ => some (.nat 0)) (.ref 0)) .nat ∧
+-      Term.usesRef 0 (.ref 0) = false := by
+-  refine ⟨fillHoles_typed (Ω := []) (Ω' := []) (fun _ => some (.nat 0))
+-    (by intro n d M hd; simp at hd)
+-    (by intro n d hd; simp at hd) (.ref rfl), rfl⟩
+-
+-end Nanodregg.Lang.Contextual
+diff --git a/Lang/Proofs/Contextual/DeployedCycle.lean b/Lang/Proofs/Contextual/DeployedCycle.lean
+deleted file mode 100644
+index 1ae18d0..0000000
+--- a/Lang/Proofs/Contextual/DeployedCycle.lean
++++ /dev/null
+@@ -1,31 +0,0 @@
+-/- Meanings of the cyclic-rule filling actually installed by the signed journey. -/
+-import Lang.Journey.ContextualCycle
+-import Lang.Proofs.BigStep
+-
+-namespace Nanodregg.Lang
+-open Journey
+-
+-/-- The least solution for p follows its external grounding, not its old value.
+-With no grounding, mutual p/q support cannot make either one true. -/
+-theorem deployed_cycle_p (lib : List Term) (a u : Bool) :
+-    BigStep lib [.bool a, .bool u] (.get cycleTerm "p") (.ok (.bool a)) := by
+-  apply BigStep.get BigStep.record
+-  apply Sel.field (by rfl)
+-  cases a
+-  · exact .iteF (.var rfl) (.iteF (.var rfl) .bool)
+-  · exact .iteT (.var rfl) .bool
+-
+-theorem deployed_cycle_q (lib : List Term) (a u : Bool) :
+-    BigStep lib [.bool a, .bool u] (.get cycleTerm "q") (.ok (.bool a)) := by
+-  apply BigStep.get BigStep.record
+-  apply Sel.field (by rfl)
+-  cases a
+-  · exact .iteF (.var rfl) .bool
+-  · exact .iteT (.var rfl) .bool
+-
+-/-- Withdrawing the p/q grounding leaves the independent branch's value intact. -/
+-theorem deployed_cycle_independent (lib : List Term) (a u : Bool) :
+-    BigStep lib [.bool a, .bool u] (.get cycleTerm "r") (.ok (.bool u)) := by
+-  exact .get .record (.field rfl (.var rfl))
+-
+-end Nanodregg.Lang
+diff --git a/Lang/Proofs/Contextual/LiveCost.lean b/Lang/Proofs/Contextual/LiveCost.lean
+deleted file mode 100644
+index bff3303..0000000
+--- a/Lang/Proofs/Contextual/LiveCost.lean
++++ /dev/null
+@@ -1,101 +0,0 @@
+-/- Live preparation is charged from its committed ROM, including blocked holes. -/
+-import Lang.Proofs.Contextual.LiveHoles
+-
+-namespace Nanodregg.Lang
+-
+-theorem factor_fold_nodes (xs : List Nat) (Γ : List Ty) (t : Term) :
+-    Term.nodes ((xs.foldl (fun (a : List Ty × Term) x =>
+-      (a.1.eraseIdx x, Term.renameVar (lowerIdx x) a.2)) (Γ, t)).2) = Term.nodes t := by
+-  induction xs generalizing Γ t with
+-  | nil => rfl
+-  | cons x xs ih =>
+-    rw [List.foldl_cons, ih, renameVar_nodes]
+-
+-theorem factorHole_nodes (h : HoleROM) (c : HoleCode) (removed : List Nat) :
+-    Term.nodes (factorHole h c removed).2.1 = Term.nodes c.body :=
+-  factor_fold_nodes removed.reverse h.ctx c.body
+-
+-theorem selectHole_nodes {D : Type} {rv : Kernel.Receive.RowView D} {self : D}
+-    {h : HoleROM} {s : HoleSelection} (hs : selectHole rv self h = .ok s) :
+-    Term.nodes s.body = Term.nodes s.original := by
+-  unfold selectHole at hs
+-  simp only [bind, Except.bind, pure, Except.pure] at hs
+-  repeat' split at hs
+-  all_goals first | (simp at hs; done) | skip
+-  simp only [Except.ok.injEq] at hs
+-  subst s
+-  rw [renameVar_nodes]
+-  exact factorHole_nodes _ _ _
+-
+-theorem foldMax_start {α : Type} (f : α → Nat) (xs : List α) (n : Nat) :
+-    n ≤ xs.foldl (fun n a => max n (f a)) n := by
+-  induction xs generalizing n with
+-  | nil => exact Nat.le_refl n
+-  | cons x xs ih => exact Nat.le_trans (Nat.le_max_left _ _) (ih _)
+-
+-theorem foldMax_member {α : Type} (f : α → Nat) (xs : List α) (n : Nat)
+-    (a : α) (ha : a ∈ xs) : f a ≤ xs.foldl (fun n a => max n (f a)) n := by
+-  induction xs generalizing n with
+-  | nil => simp at ha
+-  | cons x xs ih =>
+-    simp only [List.mem_cons] at ha
+-    rcases ha with rfl | ha
+-    · exact Nat.le_trans (Nat.le_max_right _ _) (foldMax_start f xs _)
+-    · exact ih _ ha
+-
+-theorem foldMax_le {α : Type} (f : α → Nat) (xs : List α) (n m : Nat)
+-    (hn : n ≤ m) (hx : ∀ a ∈ xs, f a ≤ m) :
+-    xs.foldl (fun n a => max n (f a)) n ≤ m := by
+-  induction xs generalizing n with
+-  | nil => exact hn
+-  | cons x xs ih =>
+-    exact ih _ (Nat.max_le.mpr ⟨hn, hx x (by simp)⟩)
+-      (fun a ha => hx a (by simp [ha]))
+-
+-/-- Selected code retains the ROM candidate's size through strengthening;
+-a blocked refusal has one node. Both fit the same committed maximum. -/
+-theorem resolutionMax_committed {D : Type} (rv : Kernel.Receive.RowView D) (self : D)
+-    (hs : List HoleROM) :
+-    resolutionMax (hs.map (resolveHole rv self)) ≤
+-      (hs.flatMap (fun h => h.code)).foldl (fun n c => max n (Term.nodes c.body)) 1 := by
+-  apply foldMax_le
+-  · exact foldMax_start _ _ _
+-  · intro r hr
+-    obtain ⟨h, hh, rfl⟩ := List.mem_map.mp hr
+-    cases he : selectHole rv self h with
+-    | error why =>
+-      simp only [resolveHole, he, HoleResolution.body, Term.nodes]
+-      exact foldMax_start _ _ _
+-    | ok s =>
+-      simp only [resolveHole, he, HoleResolution.body]
+-      rw [selectHole_nodes he]
+-      obtain ⟨c, _, _, _, _, hc, horig, _⟩ := selectHole_origin he
+-      rw [horig]
+-      exact foldMax_member (fun c : HoleCode => Term.nodes c.body) _ 1 c (List.mem_flatMap.mpr
+-        ⟨h, hh, List.mem_of_getElem? hc⟩)
+-
+-/-- The actual selected/blocked expansion and all signature-guard allowances
+-fit the preparation charged by the deployed loader from the original ROM. -/
+-theorem instantiateHoles_cost {D : Type} {rv : Kernel.Receive.RowView D} {self : D}
+-    {Δ : List Ty} {p : Package} {i : HoleInstance}
+-    (h : instantiateHoles rv self Δ p = .ok i) :
+-    i.cost ≤ p.preparationCost := by
+-  have hc : i.cost = if p.holes.isEmpty then 0 else
+-      Term.nodes p.body * (resolutionMax (p.holes.map (resolveHole rv self)) + 1) +
+-        256 * p.holes.length := by
+-    unfold instantiateHoles at h
+-    simp only [bind, Except.bind, pure, Except.pure] at h
+-    repeat' split at h
+-    all_goals first | (simp at h; done) | skip
+-    all_goals
+-      simp only [Except.ok.injEq] at h
+-      subst i
+-      simp_all
+-  rw [hc, Package.preparationCost]
+-  split
+-  · exact Nat.le_refl 0
+-  · have hm := resolutionMax_committed rv self p.holes
+-    have hmul := Nat.mul_le_mul_left (Term.nodes p.body) (Nat.add_le_add_right hm 1)
+-    simpa only [Nat.add_comm] using Nat.add_le_add_right hmul (256 * p.holes.length)
+-
+-end Nanodregg.Lang
+diff --git a/Lang/Proofs/Contextual/LawMeaning.lean b/Lang/Proofs/LawMeaning.lean
+similarity index 98%
+rename from Lang/Proofs/Contextual/LawMeaning.lean
+rename to Lang/Proofs/LawMeaning.lean
+index c4bbe01..e9a4c98 100644
+--- a/Lang/Proofs/Contextual/LawMeaning.lean
++++ b/Lang/Proofs/LawMeaning.lean
+@@ -1,7 +1,16 @@
++/-
++# Lang.Proofs.LawMeaning — the relational meaning of contextual law bodies
++
++The `Law*` semantics of contextual law bodies (`law_bigStep_back`, `lawTerm_fill`), consumed by `Lang.Proofs.LawReceiver`.
++-/
+ import Lang.Proofs.Extract
+-import Lang.Proofs.Contextual.ClosedDeployment
++import Lang.Proofs.LiveClosed
+ 
+ namespace Nanodregg.Lang
++
++/-! ## From `Lang.Proofs.Contextual.LawMeaning` -/
++section
++
+ open Nanodregg.Kernel Nanodregg.Kernel.Receive
+ 
+ /- Unresolved law preparation preserves reference-free meaning, including dormant holes. -/
+@@ -415,4 +424,6 @@ theorem unresolvedBody_field {p : Package} {fs : List (Label × Term)} {b : Term
+       obtain ⟨d, _, rfl⟩ := hv
+       exact ⟨d.ty, rfl⟩
+ 
++end
++
+ end Nanodregg.Lang
+diff --git a/Lang/Proofs/Contextual/LawReceiver.lean b/Lang/Proofs/LawReceiver.lean
+similarity index 95%
+rename from Lang/Proofs/Contextual/LawReceiver.lean
+rename to Lang/Proofs/LawReceiver.lean
+index c15b131..4dd64dd 100644
+--- a/Lang/Proofs/Contextual/LawReceiver.lean
++++ b/Lang/Proofs/LawReceiver.lean
+@@ -1,6 +1,16 @@
+-import Lang.Proofs.Contextual.LawMeaning
++/-
++# Lang.Proofs.LawReceiver — the contextual law receiver
++
++`judgeContextual_mem`, `judgeOneContextual_ok`, `judgeOneContextual_admits_relib`, `loadContextual_top`: consumed by
++`Kernel/Proofs/Logic/History` and `Ledger/Proofs/EscrowRun`.
++-/
++import Lang.Proofs.LawMeaning
+ 
+ namespace Nanodregg.Lang
++
++/-! ## From `Lang.Proofs.Contextual.LawReceiver` -/
++section
++
+ open Nanodregg.Kernel Nanodregg.Kernel.Receive
+ 
+ section
+@@ -174,4 +184,6 @@ theorem judgeOneContextual_admits_relib {look : Pinned D} {law : D}
+ 
+ end
+ 
++end
++
+ end Nanodregg.Lang
+diff --git a/Lang/Proofs/Contextual/ClosedDeployment.lean b/Lang/Proofs/LiveClosed.lean
+similarity index 65%
+rename from Lang/Proofs/Contextual/ClosedDeployment.lean
+rename to Lang/Proofs/LiveClosed.lean
+index 48e7c1a..2ade421 100644
+--- a/Lang/Proofs/Contextual/ClosedDeployment.lean
++++ b/Lang/Proofs/LiveClosed.lean
+@@ -1,7 +1,16 @@
+-/- Closed packages keep their exact admission and execution under live deployment. -/
+-import Lang.Proofs.Contextual.LiveHoles
++/-
++# Lang.Proofs.LiveClosed — closed packages under the live loader
++
++When a package has no holes the live loader is the closed loader (`program_run_closed`, `runMeasuredLive_closed`, …),
++and the leaf forms Kernel and Ledger witnesses consume (`judgeOneContextual_leaf_closed`, `runMeasuredLive_leaf_closed`).
++-/
++import Lang.Proofs.LiveHoles
+ 
+ namespace Nanodregg.Lang
++
++/-! ## From `Lang.Proofs.Contextual.ClosedDeployment`: Closed packages keep their exact admission and execution under live deployment. -/
++section
++
+ open Nanodregg.Kernel Nanodregg.Kernel.Receive
+ 
+ /-- The closed admission already excludes every contextual signature. -/
+@@ -185,4 +194,75 @@ theorem judgeOneContextual_closed {D : Type} (bytesOf : D → ByteArray)
+   change loadContextual digestOf look closureDepthMax (bytesOf law) ⟨[], [], []⟩ = .ok (L, g) at hl
+   simp only [judgeOne, judgeOneWith, hl, h]
+ 
++end
++
++/-! ## From `Lang.Proofs.Contextual.ClosedLeaf` -/
++section
++
++open Nanodregg.Kernel Nanodregg.Kernel.Receive
++
++/-- A closed leaf ROM is admitted identically, including any boundary refusal. -/
++theorem loadUsing_leaf_closed {D : Type} {bytesOf : D → ByteArray}
++    {digestOf : ByteArray → Option D} {look : Pinned D} {pkg : D} {p : Package}
++    (hid : digestOf (bytesOf pkg) = some pkg) (hp : readPackage look pkg = .ok p)
++    (hi : p.imports = []) (hc : p.holes = [])
++    (prepare : List Ty → Package → Except String Term) (fuel : Nat) :
++    loadUsing digestOf (admitContextual digestOf prepare) look (fuel + 1)
++      (bytesOf pkg) ⟨[], [], []⟩ =
++    load digestOf look (fuel + 1) (bytesOf pkg) ⟨[], [], []⟩ := by
++  unfold load
++  rw [loadUsing.eq_def, loadUsing.eq_def]
++  simp only [indexIn, idOf, hid, hp, hi]
++  rw [loadAllUsing.eq_def, loadAllUsing.eq_def]
++  exact admitContextual_closed digestOf prepare _ _ _ _ hc
++
++/-- Empty-signature, no-import packages have identical setups on the live path.
++No success or closure assumption is imposed on their callers. -/
++theorem runSetupLive_leaf_closed {D : Type} {bytesOf : D → ByteArray}
++    {digestOf : ByteArray → Option D} {look : Pinned D} {pkg : D} {p : Package}
++    (hid : digestOf (bytesOf pkg) = some pkg) (hp : readPackage look pkg = .ok p)
++    (hi : p.imports = []) (hc : p.holes = [])
++    (rv : RowView D) (state : Slots) (method : Nat) (args : ByteArray) (r : Req D) :
++    runSetupLive bytesOf digestOf look rv pkg state method args r =
++      runSetup bytesOf digestOf look rv pkg state method args r := by
++  have hl := loadUsing_leaf_closed hid hp hi hc
++    (fun Δ p => (instantiateHoles rv r.self Δ p).map (·.body)) (closureDepthMax - 1)
++  change loadLive digestOf rv r.self look closureDepthMax (bytesOf pkg) ⟨[], [], []⟩ =
++    load digestOf look closureDepthMax (bytesOf pkg) ⟨[], [], []⟩ at hl
++  unfold runSetupLive runSetup runSetupWith
++  rw [hl]
++  cases hr : reqOk bytesOf r <;> simp only [Bool.false_eq_true, if_false, if_true, bind, Except.bind, pure, Except.pure]
++  cases hload : load digestOf look closureDepthMax (bytesOf pkg) ⟨[], [], []⟩ with
++  | error e => rfl
++  | ok x =>
++    obtain ⟨L, g⟩ := x
++    have hz := (loadLive_of_load rv r.self hload).2
++    simp only [hz]
++
++/-- The full measured result, including failures and charged ticks, is unchanged. -/
++theorem runMeasuredLive_leaf_closed {D : Type} {bytesOf : D → ByteArray}
++    {digestOf : ByteArray → Option D} {look : Pinned D} {pkg : D} {p : Package}
++    (hid : digestOf (bytesOf pkg) = some pkg) (hp : readPackage look pkg = .ok p)
++    (hi : p.imports = []) (hc : p.holes = [])
++    (rv : RowView D) (state : Slots) (method : Nat) (args : ByteArray) (r : Req D) (budget : Nat) :
++    runMeasuredLive bytesOf digestOf look rv pkg state method args r budget =
++      runMeasured bytesOf digestOf look rv pkg state method args r budget := by
++  unfold runMeasuredLive runMeasured runMeasuredWith
++  rw [runSetupLive_leaf_closed hid hp hi hc]
++
++/-- A closed leaf's law is identical on contextual deployment, even when it refuses. -/
++theorem judgeOneContextual_leaf_closed {D : Type} {bytesOf : D → ByteArray}
++    {digestOf : ByteArray → Option D} {look : Pinned D} {pkg : D} {p : Package}
++    (hid : digestOf (bytesOf pkg) = some pkg) (hp : readPackage look pkg = .ok p)
++    (hi : p.imports = []) (hc : p.holes = [])
++    (old new : Slots) (r : Req D) :
++    judgeOneWith bytesOf digestOf (loadContextual digestOf) look pkg old new r =
++      judgeOne bytesOf digestOf look pkg old new r := by
++  have hl := loadUsing_leaf_closed hid hp hi hc (fun _ => unresolvedBody) (closureDepthMax - 1)
++  change loadContextual digestOf look closureDepthMax (bytesOf pkg) ⟨[], [], []⟩ =
++    load digestOf look closureDepthMax (bytesOf pkg) ⟨[], [], []⟩ at hl
++  simp only [judgeOne, judgeOneWith, hl]
++
++end
++
+ end Nanodregg.Lang
+diff --git a/Lang/Proofs/Contextual/LiveHoles.lean b/Lang/Proofs/LiveHoles.lean
+similarity index 71%
+rename from Lang/Proofs/Contextual/LiveHoles.lean
+rename to Lang/Proofs/LiveHoles.lean
+index 8cd3997..3a99ea9 100644
+--- a/Lang/Proofs/Contextual/LiveHoles.lean
++++ b/Lang/Proofs/LiveHoles.lean
+@@ -1,9 +1,20 @@
+-/- The live runtime's typing, allocation and authenticated-source invariants. -/
++/-
++# Lang.Proofs.LiveHoles — the live contextual runtime: typing, allocation, sources, cost
++
++The live runtime's typing, allocation and authenticated-source invariants (`selectHole_origin`, `holeRow_authenticated`,
++`instantiateHoles_typed`, `loadLive_checked`); and its preparation charge (`instantiateHoles_cost`).
++Subject: `Lang.LiveHoles`, in the Host closure. The live invoke is `Lang.Proofs.LiveInvoke`; the WASTE need of
++`runMeasuredLive` is `Lang.Proofs.LiveNeed` (it sits above `Lang.Proofs.Provenance`).
++-/
+ import Lang.Proofs.Load
+ import Lang.Proofs.HoleBudget
+ import Lang.Proofs.Run
+ 
+ namespace Nanodregg.Lang
++
++/-! ## From `Lang.Proofs.Contextual.LiveHoles`: The live runtime's typing, allocation and authenticated-source invariants. -/
++section
++
+ open Nanodregg.Kernel Nanodregg.Kernel.Receive
+ 
+ theorem checkContextual_shape {Δ : List Ty} {p : Package}
+@@ -270,4 +281,106 @@ theorem loadLive_checked {D : Type} {digestOf : ByteArray → Option D}
+   (loadUsing_inv digestOf look _ (fun hi hw ha => admitContextual_inv hi hw ha)
+     fuel idb _ Inv.empty h).1.2.2.2
+ 
++end
++
++/-! ## From `Lang.Proofs.Contextual.LiveCost`: Live preparation is charged from its committed ROM, including blocked holes. -/
++section
++
++theorem factor_fold_nodes (xs : List Nat) (Γ : List Ty) (t : Term) :
++    Term.nodes ((xs.foldl (fun (a : List Ty × Term) x =>
++      (a.1.eraseIdx x, Term.renameVar (lowerIdx x) a.2)) (Γ, t)).2) = Term.nodes t := by
++  induction xs generalizing Γ t with
++  | nil => rfl
++  | cons x xs ih =>
++    rw [List.foldl_cons, ih, renameVar_nodes]
++
++theorem factorHole_nodes (h : HoleROM) (c : HoleCode) (removed : List Nat) :
++    Term.nodes (factorHole h c removed).2.1 = Term.nodes c.body :=
++  factor_fold_nodes removed.reverse h.ctx c.body
++
++theorem selectHole_nodes {D : Type} {rv : Kernel.Receive.RowView D} {self : D}
++    {h : HoleROM} {s : HoleSelection} (hs : selectHole rv self h = .ok s) :
++    Term.nodes s.body = Term.nodes s.original := by
++  unfold selectHole at hs
++  simp only [bind, Except.bind, pure, Except.pure] at hs
++  repeat' split at hs
++  all_goals first | (simp at hs; done) | skip
++  simp only [Except.ok.injEq] at hs
++  subst s
++  rw [renameVar_nodes]
++  exact factorHole_nodes _ _ _
++
++theorem foldMax_start {α : Type} (f : α → Nat) (xs : List α) (n : Nat) :
++    n ≤ xs.foldl (fun n a => max n (f a)) n := by
++  induction xs generalizing n with
++  | nil => exact Nat.le_refl n
++  | cons x xs ih => exact Nat.le_trans (Nat.le_max_left _ _) (ih _)
++
++theorem foldMax_member {α : Type} (f : α → Nat) (xs : List α) (n : Nat)
++    (a : α) (ha : a ∈ xs) : f a ≤ xs.foldl (fun n a => max n (f a)) n := by
++  induction xs generalizing n with
++  | nil => simp at ha
++  | cons x xs ih =>
++    simp only [List.mem_cons] at ha
++    rcases ha with rfl | ha
++    · exact Nat.le_trans (Nat.le_max_right _ _) (foldMax_start f xs _)
++    · exact ih _ ha
++
++theorem foldMax_le {α : Type} (f : α → Nat) (xs : List α) (n m : Nat)
++    (hn : n ≤ m) (hx : ∀ a ∈ xs, f a ≤ m) :
++    xs.foldl (fun n a => max n (f a)) n ≤ m := by
++  induction xs generalizing n with
++  | nil => exact hn
++  | cons x xs ih =>
++    exact ih _ (Nat.max_le.mpr ⟨hn, hx x (by simp)⟩)
++      (fun a ha => hx a (by simp [ha]))
++
++/-- Selected code retains the ROM candidate's size through strengthening;
++a blocked refusal has one node. Both fit the same committed maximum. -/
++theorem resolutionMax_committed {D : Type} (rv : Kernel.Receive.RowView D) (self : D)
++    (hs : List HoleROM) :
++    resolutionMax (hs.map (resolveHole rv self)) ≤
++      (hs.flatMap (fun h => h.code)).foldl (fun n c => max n (Term.nodes c.body)) 1 := by
++  apply foldMax_le
++  · exact foldMax_start _ _ _
++  · intro r hr
++    obtain ⟨h, hh, rfl⟩ := List.mem_map.mp hr
++    cases he : selectHole rv self h with
++    | error why =>
++      simp only [resolveHole, he, HoleResolution.body, Term.nodes]
++      exact foldMax_start _ _ _
++    | ok s =>
++      simp only [resolveHole, he, HoleResolution.body]
++      rw [selectHole_nodes he]
++      obtain ⟨c, _, _, _, _, hc, horig, _⟩ := selectHole_origin he
++      rw [horig]
++      exact foldMax_member (fun c : HoleCode => Term.nodes c.body) _ 1 c (List.mem_flatMap.mpr
++        ⟨h, hh, List.mem_of_getElem? hc⟩)
++
++/-- The actual selected/blocked expansion and all signature-guard allowances
++fit the preparation charged by the deployed loader from the original ROM. -/
++theorem instantiateHoles_cost {D : Type} {rv : Kernel.Receive.RowView D} {self : D}
++    {Δ : List Ty} {p : Package} {i : HoleInstance}
++    (h : instantiateHoles rv self Δ p = .ok i) :
++    i.cost ≤ p.preparationCost := by
++  have hc : i.cost = if p.holes.isEmpty then 0 else
++      Term.nodes p.body * (resolutionMax (p.holes.map (resolveHole rv self)) + 1) +
++        256 * p.holes.length := by
++    unfold instantiateHoles at h
++    simp only [bind, Except.bind, pure, Except.pure] at h
++    repeat' split at h
++    all_goals first | (simp at h; done) | skip
++    all_goals
++      simp only [Except.ok.injEq] at h
++      subst i
++      simp_all
++  rw [hc, Package.preparationCost]
++  split
++  · exact Nat.le_refl 0
++  · have hm := resolutionMax_committed rv self p.holes
++    have hmul := Nat.mul_le_mul_left (Term.nodes p.body) (Nat.add_le_add_right hm 1)
++    simpa only [Nat.add_comm] using Nat.add_le_add_right hmul (256 * p.holes.length)
++
++end
++
+ end Nanodregg.Lang
+diff --git a/Lang/Proofs/Contextual/LiveInvoke.lean b/Lang/Proofs/LiveInvoke.lean
+similarity index 92%
+rename from Lang/Proofs/Contextual/LiveInvoke.lean
+rename to Lang/Proofs/LiveInvoke.lean
+index fe09ddf..0e840d4 100644
+--- a/Lang/Proofs/Contextual/LiveInvoke.lean
++++ b/Lang/Proofs/LiveInvoke.lean
+@@ -1,7 +1,16 @@
+-import Lang.Proofs.Contextual.LiveHoles
++/-
++# Lang.Proofs.LiveInvoke — the live invoke never sticks
++
++`method_live_run_sound`, `invoke_live_never_stuck`: consumed by `Lang.Proofs.Provenance`.
++-/
++import Lang.Proofs.LiveHoles
+ import Lang.Proofs.Invoke
+ 
+ namespace Nanodregg.Lang
++
++/-! ## From `Lang.Proofs.Contextual.LiveInvoke` -/
++section
++
+ open Nanodregg.Kernel Nanodregg.Kernel.Receive
+ 
+ theorem method_live_run_sound {D : Type} {rv : RowView D} {self : D} {digestOf : ByteArray → Option D} {look : Pinned D}
+@@ -45,5 +54,6 @@ theorem invoke_live_never_stuck {D : Type} {bytesOf : D → ByteArray} {digestOf
+   exact method_live_run_sound hload hp hm hA (toVal_typed hs) (toVal_typed (decodeData_conforms hargs))
+     (toVal_typed (reqOk_conforms hr)) (toVal_typed (readsData_conforms hrows))
+ 
++end
+ 
+ end Nanodregg.Lang
+diff --git a/Lang/Proofs/Contextual/Deployed.lean b/Lang/Proofs/LiveJourney.lean
+similarity index 69%
+rename from Lang/Proofs/Contextual/Deployed.lean
+rename to Lang/Proofs/LiveJourney.lean
+index d41373c..eec5ccd 100644
+--- a/Lang/Proofs/Contextual/Deployed.lean
++++ b/Lang/Proofs/LiveJourney.lean
+@@ -1,9 +1,20 @@
+-/- Contextual strengthening and the five reachable resolutions in deployed Lang.
+-The fixture is the ROM generator used by the signed receive journey, not ToyCalc. -/
++/-
++# Lang.Proofs.LiveJourney — the contextual ROM the signed journey installs
++
++Closed facts over `Std.contextualHole`, the ROM generator the signed receive journey installs (`generated_signature`,
++`linked_signature`, `selected_uses_context`, `used_hypothesis_suspends`), and the meanings of the cyclic-rule filling
++it installs (`deployed_cycle_*`). Leaf module.
++-/
++import Lang.Proofs.LiveHoles
+ import Lang.Journey.Contextual
+-import Lang.Proofs.Contextual.LiveHoles
++import Lang.Journey.ContextualCycle
++import Lang.Proofs.BigStep
+ 
+ namespace Nanodregg.Lang
++
++/-! ## From `Lang.Proofs.Contextual.Deployed`: Contextual strengthening and the five reachable resolutions in deployed Lang. -/
++section
++
+ namespace DeployedContextual
+ open Journey.Contextual
+ 
+@@ -86,4 +97,37 @@ theorem used_hypothesis_suspends :
+   rfl
+ 
+ end DeployedContextual
++
++end
++
++/-! ## From `Lang.Proofs.Contextual.DeployedCycle`: Meanings of the cyclic-rule filling actually installed by the signed journey. -/
++section
++
++open Journey
++
++/-- The least solution for p follows its external grounding, not its old value.
++With no grounding, mutual p/q support cannot make either one true. -/
++theorem deployed_cycle_p (lib : List Term) (a u : Bool) :
++    BigStep lib [.bool a, .bool u] (.get cycleTerm "p") (.ok (.bool a)) := by
++  apply BigStep.get BigStep.record
++  apply Sel.field (by rfl)
++  cases a
++  · exact .iteF (.var rfl) (.iteF (.var rfl) .bool)
++  · exact .iteT (.var rfl) .bool
++
++theorem deployed_cycle_q (lib : List Term) (a u : Bool) :
++    BigStep lib [.bool a, .bool u] (.get cycleTerm "q") (.ok (.bool a)) := by
++  apply BigStep.get BigStep.record
++  apply Sel.field (by rfl)
++  cases a
++  · exact .iteF (.var rfl) .bool
++  · exact .iteT (.var rfl) .bool
++
++/-- Withdrawing the p/q grounding leaves the independent branch's value intact. -/
++theorem deployed_cycle_independent (lib : List Term) (a u : Bool) :
++    BigStep lib [.bool a, .bool u] (.get cycleTerm "r") (.ok (.bool u)) := by
++  exact .get .record (.field rfl (.var rfl))
++
++end
++
+ end Nanodregg.Lang
+diff --git a/Lang/Proofs/Contextual/LiveNeed.lean b/Lang/Proofs/LiveNeed.lean
+similarity index 90%
+rename from Lang/Proofs/Contextual/LiveNeed.lean
+rename to Lang/Proofs/LiveNeed.lean
+index e20d888..2d787b4 100644
+--- a/Lang/Proofs/Contextual/LiveNeed.lean
++++ b/Lang/Proofs/LiveNeed.lean
+@@ -1,7 +1,17 @@
+-/- The live WASTE denominator and charged machine run share one authenticated setup. -/
++/-
++# Lang.Proofs.LiveNeed — the WASTE need of the live contextual run
++
++The live WASTE denominator and the charged machine run share one authenticated setup (`requiredOfLive_*`).
++It sits above `Lang.Proofs.NeedComplete`, which is above `Lang.Proofs.Provenance`, which uses `Lang.Proofs.LiveHoles`;
++so it is its own module.
++-/
+ import Lang.Proofs.NeedComplete
+ 
+ namespace Nanodregg.Lang
++
++/-! ## From `Lang.Proofs.Contextual.LiveNeed`: The live WASTE denominator and charged machine run share one authenticated setup. -/
++section
++
+ open Nanodregg.Kernel Nanodregg.Kernel.Receive
+ variable {D : Type} {bytesOf : D → ByteArray} {digestOf : ByteArray → Option D}
+ 
+@@ -77,4 +87,6 @@ theorem requiredOfLive_total {look : Pinned D} {rv : RowView D} {pkg : D}
+       needExtract_complete hf budget (by omega), pure, Except.pure]
+   exact ⟨_, hq, requiredLive_lt_ticks hm hq⟩
+ 
++end
++
+ end Nanodregg.Lang
+diff --git a/Lang/Proofs/Contextual/LawReceiverTeeth.lean b/Lang/Proofs/LiveTeeth.lean
+similarity index 53%
+rename from Lang/Proofs/Contextual/LawReceiverTeeth.lean
+rename to Lang/Proofs/LiveTeeth.lean
+index 92799b3..3d367b0 100644
+--- a/Lang/Proofs/Contextual/LawReceiverTeeth.lean
++++ b/Lang/Proofs/LiveTeeth.lean
+@@ -1,6 +1,103 @@
+-import Lang.Proofs.Contextual.LawReceiver
++/-
++# Lang.Proofs.LiveTeeth — counterexample teeth of the live checker, filling and law receiver
++
++The successor teeth of the six superseded ref-model `fillRefs` contracts (subject: the deployed checker and
++`fillRefs`), and the dormant/demanded-hole law teeth (subject: the deployed law loader). Leaf module.
++-/
++import Lang.Proofs.Fill
++import Lang.Proofs.LawReceiver
+ 
+ namespace Nanodregg.Lang
++
++/-! ## From `Lang.Proofs.Contextual.ContractTeeth`: Successor teeth for the six superseded ref-model statements. -/
++section
++
++private theorem identityCandidate_typed :
++    ∀ n d M, ([⟨7, [.nat], .nat⟩] : HoleSignature).find? (fun e => e.name == n) = some d →
++      (some (.var 0) : Option Term) = some M → HasType [] d.ctx M d.ty := by
++  intro n d M hd hm
++  have he := List.mem_of_find?_eq_some hd
++  simp only [List.mem_singleton] at he
++  subst d
++  cases hm
++  exact .var rfl
++
++theorem fillHoles_term_tooth :
++    HasType [] [] (Term.fillRefs (fun _ => some (.var 0)) (.hole 7 [.nat 9])) .nat ∧
++      Term.fillRefs (fun _ => some (.var 0)) (.hole 7 [.nat 9]) = .nat 9 := by
++  refine ⟨fillHoles_typed (Ω := [⟨7, [.nat], .nat⟩]) (fun _ => some (.var 0))
++    identityCandidate_typed (by intro n d hd hn; cases hn)
++    (.hole (d := ⟨7, [.nat], .nat⟩) rfl (.cons (.nat (by decide)) .nil)), rfl⟩
++
++theorem fillHoles_fields_tooth :
++    FieldsTy [] [] (Term.fillRefsRow (fun _ => some (.var 0))
++      [("v", .hole 7 [.nat 9])]) [("v", .nat)] ∧
++      Term.fillRefsRow (fun _ => some (.var 0)) [("v", .hole 7 [.nat 9])] = [("v", .nat 9)] := by
++  refine ⟨fillHolesFields_typed (Ω := [⟨7, [.nat], .nat⟩]) (fun _ => some (.var 0))
++    identityCandidate_typed (by intro n d hd hn; cases hn)
++    (.cons (.hole (d := ⟨7, [.nat], .nat⟩) rfl (.cons (.nat (by decide)) .nil)) .nil), rfl⟩
++
++theorem fillHoles_arms_tooth :
++    ArmsTy [] [] (Term.fillRefsRow (fun _ => some (.var 0))
++      [("v", .hole 7 [.prim .add (.var 0) (.nat 9)])]) [("v", .nat)] .nat ∧
++      Term.fillRefsRow (fun _ => some (.var 0)) [("v", .hole 7 [.prim .add (.var 0) (.nat 9)])] = [("v", .prim .add (.var 0) (.nat 9))] := by
++  refine ⟨fillHolesArms_typed (Ω := [⟨7, [.nat], .nat⟩]) (fun _ => some (.var 0))
++    identityCandidate_typed (by intro n d hd hn; cases hn)
++    (.one (.hole (d := ⟨7, [.nat], .nat⟩) rfl (.cons (.prim (.var rfl) (.nat (by decide))) .nil))), rfl⟩
++
++theorem declaredHole_term_tooth :
++    HasType [] [] (.hole 7 [.nat 9]) .nat [⟨7, [.nat], .nat⟩] ∧
++      ¬ HasType [] [] (.hole 7 [.nat 9]) .nat := by
++  refine ⟨.hole (d := ⟨7, [.nat], .nat⟩) rfl (.cons (.nat (by decide)) .nil), ?_⟩
++  intro h
++  have hd := hasType_declaresHole h 7 (by decide)
++  simp at hd
++
++theorem declaredHole_fields_tooth :
++    FieldsTy [] [] [("v", .hole 7 [.nat 9])] [("v", .nat)] [⟨7, [.nat], .nat⟩] ∧
++      ¬ FieldsTy [] [] [("v", .hole 7 [.nat 9])] [("v", .nat)] := by
++  refine ⟨.cons (.hole (d := ⟨7, [.nat], .nat⟩) rfl (.cons (.nat (by decide)) .nil)) .nil, ?_⟩
++  intro h
++  have hd := fieldsTy_declaresHole h 7 (by decide)
++  simp at hd
++
++theorem declaredHole_arms_tooth :
++    ArmsTy [] [] [("v", .hole 7 [.var 0])] [("v", .nat)] .nat [⟨7, [.nat], .nat⟩] ∧
++      ¬ ArmsTy [] [] [("v", .hole 7 [.var 0])] [("v", .nat)] .nat := by
++  refine ⟨.one (.hole (d := ⟨7, [.nat], .nat⟩) rfl (.cons (.var rfl) .nil)), ?_⟩
++  intro h
++  have hd := armsTy_declaresHole h 7 (by decide)
++  simp at hd
++
++/-- The reader's old premises hold, but live filling does not eliminate imports.
++The new statement requires the SAME library on source and target; its instance
++at the proposed empty target fails before the filling theorem can be applied. -/
++theorem reader_import_contract_tooth :
++    HasType [.nat] [] (.ref 0) .nat ∧
++    (∀ (Γ : List Lang.Ty), HasType [] Γ (.nat 0) .nat) ∧
++    Term.fillRefs (fun _ => some (.nat 0)) (.ref 0) = .ref 0 ∧
++    ¬ HasType [] [] (.ref 0) .nat ∧
++    ¬ HasType [] [] (Term.fillRefs (fun _ => some (.nat 0)) (.ref 0)) .nat := by
++  refine ⟨.ref rfl, fun _ => .nat (by decide), rfl, ?_, ?_⟩
++  all_goals
++    intro h
++    cases h with
++    | ref h => simp at h
++
++/-- An import remains an import under the new theorem, with the same library.
++It is NOT reported as a contextual-hole occurrence. -/
++theorem fillHoles_preserves_import_tooth :
++    HasType [.nat] [] (Term.fillRefs (fun _ => some (.nat 0)) (.ref 0)) .nat ∧
++      Term.usesRef 0 (.ref 0) = false := by
++  refine ⟨fillHoles_typed (Ω := []) (Ω' := []) (fun _ => some (.nat 0))
++    (by intro n d M hd; simp at hd)
++    (by intro n d hd; simp at hd) (.ref rfl), rfl⟩
++
++end
++
++/-! ## From `Lang.Proofs.Contextual.LawReceiverTeeth` -/
++section
++
+ open Nanodregg.Kernel Nanodregg.Kernel.Receive
+ 
+ private def toothLaw (demand : Bool) : Term :=
+@@ -104,4 +201,6 @@ theorem contextual_law_demanded_hole :
+   change judgeContextual toothEncode toothDecode (toothLook true) (some 7) [] [] [] toothReq = _
+   simp [judgeContextual, hj, bind, Except.bind]
+ 
++end
++
+ end Nanodregg.Lang
+diff --git a/Lang/Proofs/Provenance.lean b/Lang/Proofs/Provenance.lean
+index 552d862..35dadcb 100644
+--- a/Lang/Proofs/Provenance.lean
++++ b/Lang/Proofs/Provenance.lean
+@@ -33,8 +33,8 @@ import Lang.Proofs.CallTeeth
+ import Kernel.Proofs.Lawful
+ import Codec.Deployed
+ 
+-import Lang.Proofs.Contextual.LiveInvoke
+-import Lang.Proofs.Contextual.ClosedDeployment
++import Lang.Proofs.LiveInvoke
++import Lang.Proofs.LiveClosed
+ 
+ namespace Nanodregg.Lang
+ 
+diff --git a/Ledger/Proofs/EscrowRun.lean b/Ledger/Proofs/EscrowRun.lean
+index 9fcdcf3..7352b6b 100644
+--- a/Ledger/Proofs/EscrowRun.lean
++++ b/Ledger/Proofs/EscrowRun.lean
+@@ -56,8 +56,8 @@ constant: a deposit's grant-named transfer is not a payout).
+ import Ledger.Proofs.Escrow
+ import Lang.Proofs.Extract
+ import Lang.Proofs.Invoke
+-import Lang.Proofs.Contextual.ClosedLeaf
+-import Lang.Proofs.Contextual.LawReceiver
++import Lang.Proofs.LiveClosed
++import Lang.Proofs.LawReceiver
+ import Kernel.Proofs.RootedDeployed
+ 
+ namespace Nanodregg.Ledger.Proofs

@@ -1,0 +1,1 @@
+Minidregg.Kernel.ObjectiveCall.Mail.empty	successor: Minidregg.Kernel.ObjectiveCall.Mail.start -- the empty mail of a turn now carries the turn's front-end meter (one meter, D1); Mail.start meter = the old empty mail plus that meter

@@ -1,0 +1,244 @@
+#!/usr/bin/env bash
+# scripts/commit — land a change on main: rebase on origin/main, build what it changed, run what it touched, push.
+#
+#   scripts/commit [-m MSG | -F FILE] [PATH...]
+#
+# With a message and PATHs, the commit is this worktree's HEAD plus exactly those paths as they are in the working
+# tree (a directory means every file under it; a deleted file is deleted). With neither, the commits already on HEAD
+# that origin/main lacks are landed as they are. The message is prose: what changed and what it lets the system do.
+#
+#  1. fetch origin; replay the commit(s) onto origin/main (git merge-tree, no checkout). A conflict stops here and
+#     names the paths: resolve it in this worktree (git rebase origin/main) and run this again;
+#     The script refuses to run when its own bytes are not origin/main's scripts/commit (a worktree that has not
+#     rebased since the gate changed), unless the commit being landed is itself the change to scripts/commit and
+#     this is that version: "this tree's scripts/commit is stale: rebase onto origin/main first";
+#     A replayed commit that takes back hunks of recent landings is refused (gates/reverts.py, GATES-30): "this
+#     commit reverts N hunks of M landings", each named; a lane that means to revert says so with --reverts;
+#  2. materialize the rebased tree in the lane's build directory on the home disk (hbox: NVMe, never /tank):
+#     ~/nd-land/<worktree name>/tree, its .lake and cargo target kept between landings (seeded once from this
+#     worktree's .lake/build), so a build re-hashes only that tree;
+#  3. build what the change touched (gates/touched.py: the changed modules and their importers, their libs and the
+#     exes whose closure holds one; `cargo check` of the reached packages), under the clone's build wrapper
+#     (hbox: swarm-build, SWARM_MEM_MAX default 24G) at idle priority (ionice -c3, nice 15);
+#     The build and the rows hold one of ND_BUILD_SLOTS (default 6) box-wide build slots
+#     (~/nd-land/.locks/build-K.flock), taken in arrival order through one door lock (~/nd-land/.locks/door.flock):
+#     a landing waits for a build slot, never for a verdict, and keeps no queue state;
+#  4. run the rows the change touched (gates/touched.py rows: the Lean verdict rows whose exe it reaches, the cargo
+#     rows whose crate or driven exes it reaches), at idle priority;
+#  5. push to origin main. A push refused because main moved is re-based and pushed again; it is rebuilt and re-run
+#     only when the commits that moved main changed a path this change changed;
+#  6. refs/heads/main of this clone follows origin/main, and this worktree moves to the landed commit when its
+#     uncommitted edits allow.
+# A build killed by a signal (the memory cap, earlyoom) is NOT BUILT (exit 76), never RED: run it again with a larger
+# SWARM_MEM_MAX or fewer LEAN_NUM_THREADS.
+# Green or red, nothing else judges a landing. The whole tree, every row, the benches, the census and the tables are
+# the convergence's report (scripts/converge), which names the landing a red came from; that lane fixes it forward.
+#
+# Run detached with a PID file: nohup bash -c 'exec scripts/commit -F MSG PATH...' > LOG 2>&1 & echo $! > job.pid
+# Every lander also writes <git common dir>/nanodregg-pids/<pid> (its worktree, its stage, the commit), removed
+# when it exits, so another session on the box can see what is landing.
+# Flags of the old judge (--cross-layer, --no-build) are accepted and ignored. --reverts lands a commit that takes back
+# hunks of recent landings (step 1's check), which is otherwise refused.
+set -uo pipefail
+here=$(cd "$(dirname "$0")" && pwd)
+repo=$(git rev-parse --show-toplevel) || exit 2
+common=$(cd "$repo" && cd "$(git rev-parse --git-common-dir)" && pwd)
+export PATH=$HOME/.elan/bin:$PATH
+msgsrc="" msgfile="" paths=() reverts=""
+while [ $# -gt 0 ]; do
+  case $1 in
+    -m) msgsrc=$2; shift ;;
+    -F) msgfile=$2; shift ;;
+    --reverts) reverts=1 ;;
+    --cross-layer|--no-build) echo "scripts/commit: $1 is ignored (rule 1 has no such line)" ;;
+    --) shift; paths+=("$@"); break ;;
+    -*) echo "scripts/commit: unknown flag $1" >&2; exit 2 ;;
+    *) paths+=("$1") ;;
+  esac
+  shift
+done
+if [ ${#paths[@]} -gt 0 ] && [ -z "$msgsrc$msgfile" ]; then echo "scripts/commit: PATHs need -m or -F" >&2; exit 2; fi
+if [ ${#paths[@]} -eq 0 ] && [ -n "$msgsrc$msgfile" ]; then echo "scripts/commit: a message needs PATHs (or commit with git, then run scripts/commit alone)" >&2; exit 2; fi
+
+tmp=$(mktemp -d)
+pids=$common/nanodregg-pids; mkdir -p "$pids"
+trap 'rm -rf "$tmp" "$pids/$$"' EXIT
+stage() { printf '%s\t%s\t%s\n' "$repo" "$1" "${2:-}" > "$pids/$$"; echo "scripts/commit: $1${2:+ $2}"; }
+
+# idle CMD…: at idle I/O and low CPU priority, under the clone's build wrapper (hbox: swarm-build's cgroup)
+read -r -a wrap <<< "$(git -C "$repo" config nanodregg.buildwrap || true)"
+export SWARM_MEM_MAX=${SWARM_MEM_MAX:-24G}
+idle() {
+  local p=(nice -n 15)
+  command -v ionice > /dev/null && p=(ionice -c3 "${p[@]}")
+  "${p[@]}" "${wrap[@]}" "$@"
+}
+
+# 1. the commit, replayed onto origin/main
+stage fetching
+git -C "$repo" fetch -q origin main || { echo "scripts/commit: git fetch origin failed"; exit 1; }
+if [ ${#paths[@]} -gt 0 ]; then
+  msg=$tmp/msg
+  if [ -n "$msgfile" ]; then cat "$msgfile" > "$msg"; else printf '%s\n' "$msgsrc" > "$msg"; fi
+  grep -q '^Co-Authored-By:' "$msg" || printf '\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\n' >> "$msg"
+  prefix=$(git rev-parse --show-prefix)
+  export GIT_INDEX_FILE=$tmp/index
+  git -C "$repo" read-tree HEAD || exit 2
+  for p in "${paths[@]}"; do
+    r=$prefix${p#./}; r=${r%/}
+    if [ -e "$repo/$r" ]; then git -C "$repo" add -A -- "$r" || exit 2
+    else git -C "$repo" rm -q -r --cached --ignore-unmatch -- "$r" || exit 2; fi
+  done
+  t=$(git -C "$repo" write-tree) || exit 2
+  unset GIT_INDEX_FILE
+  [ "$t" != "$(git -C "$repo" rev-parse 'HEAD^{tree}')" ] || { echo "scripts/commit: nothing to commit in those paths"; exit 1; }
+  tip=$(git -C "$repo" commit-tree "$t" -p HEAD -F "$msg") || exit 2
+else
+  tip=$(git -C "$repo" rev-parse HEAD) || exit 2
+fi
+# replay ONTO: every commit of TIP that ONTO lacks, oldest first; prints the new tip, or the conflict and fails
+replay() {
+  local onto=$1 c out
+  for c in $(git -C "$repo" rev-list --reverse --topo-order --no-merges "$onto..$tip"); do
+    if ! out=$(git -C "$repo" merge-tree --write-tree --name-only --merge-base="$c^" "$onto" "$c"); then
+      echo "scripts/commit: CONFLICT replaying $(git -C "$repo" log -1 --format='%h %s' "$c" | cut -c1-100) onto origin/main:" >&2
+      printf '%s\n' "$out" | sed -n '2,/^$/p' | sed '/^$/d; s/^/  /' >&2
+      echo "  resolve it here (git rebase origin/main), then run scripts/commit again" >&2
+      return 1
+    fi
+    onto=$(GIT_AUTHOR_NAME=$(git -C "$repo" log -1 --format=%an "$c") GIT_AUTHOR_EMAIL=$(git -C "$repo" log -1 --format=%ae "$c") \
+           GIT_AUTHOR_DATE=$(git -C "$repo" log -1 --format=%aD "$c") \
+           git -C "$repo" commit-tree "$(head -1 <<< "$out")" -p "$onto" -m "$(git -C "$repo" log -1 --format=%B "$c")") || return 1
+    # a commit made from a stale copy of the tree carries other landings' hunks backwards, and replays cleanly
+    if [ -z "$reverts" ] && ! out=$(python3 "$repo/gates/reverts.py" "$repo" "$onto"); then
+      echo "scripts/commit: REFUSED — $(git -C "$repo" log -1 --format='%h %s' "$c" | cut -c1-100): this commit $(tail -1 <<< "$out"):" >&2
+      sed '$d; s/^REVERTS /  /' <<< "$out" | cut -c1-400 >&2
+      echo "  a stale copy of the tree? re-apply your change on origin/main; if the revert is meant, pass --reverts" >&2
+      return 1
+    fi
+  done
+  echo "$onto"
+}
+base=$(git -C "$repo" rev-parse origin/main)
+# the self-check: this script is origin/main's, or the version this landing brings
+me=$(git -C "$repo" hash-object "$0")
+if [ "$me" != "$(git -C "$repo" rev-parse -q --verify "$base:scripts/commit" || true)" ]; then
+  mb=$(git -C "$repo" merge-base "$base" "$tip")
+  theirs=$(git -C "$repo" rev-parse -q --verify "$tip:scripts/commit" || true)
+  if [ "$me" != "$theirs" ] || [ "$theirs" = "$(git -C "$repo" rev-parse -q --verify "$mb:scripts/commit" || true)" ]; then
+    echo "scripts/commit: REFUSED — this tree's scripts/commit is stale: rebase onto origin/main first (git rebase origin/main)"; exit 1
+  fi
+  echo "scripts/commit: running the scripts/commit this landing brings"
+fi
+[ -n "$(git -C "$repo" rev-list -1 --no-merges "$base..$tip")" ] || { echo "scripts/commit: origin/main already holds this"; exit 0; }
+R=$(replay "$base") || exit 1
+git -C "$repo" log --oneline "$base..$R" | sed 's/^/  landing: /' | cut -c1-140
+
+# 2-4. build what it changed, run what it touched, in the lane's build directory on the home disk
+D=${ND_LAND_DIR:-$HOME/nd-land/$(basename "$repo")}
+judge() {
+  local c=$1 plan targets crates rowsel exes
+  mkdir -p "$D"
+  GIT_INDEX_FILE=$D/tree.index git -C "$repo" --work-tree="$D/tree" read-tree --reset -u "$c" 2>/dev/null ||
+    { mkdir -p "$D/tree" && GIT_INDEX_FILE=$D/tree.index git -C "$repo" --work-tree="$D/tree" read-tree --reset -u "$c"; } || return 2
+  if [ ! -d "$D/tree/.lake/build" ] && [ -d "$repo/.lake/build" ]; then
+    stage seeding "the build directory from this worktree's .lake/build (once)"
+    mkdir -p "$D/tree/.lake" && cp -a "$repo/.lake/build" "$D/tree/.lake/" || return 2
+  fi
+  git -C "$repo" diff --name-only "$base" "$c" > "$tmp/changed"
+  git -C "$repo" show "$base:gates/runs.tsv" > "$tmp/runs.base" 2>/dev/null || : > "$tmp/runs.base"
+  plan=$(python3 "$D/tree/gates/touched.py" plan "$D/tree" --changed "$tmp/changed" --base-table "$tmp/runs.base") ||
+    { echo "scripts/commit: gates/touched.py plan failed"; return 1; }
+  targets=$(sed -n 's/^targets: //p' <<< "$plan"); crates=$(sed -n 's/^crates: //p' <<< "$plan")
+  rowsel=$(sed -n 's/^rows: //p' <<< "$plan"); exes=$(sed -n 's/^exes: //p' <<< "$plan")
+  # shellcheck disable=SC2086
+  local build=$(printf '%s\n' $targets $exes | awk 'NF && !seen[$0]++' | tr '\n' ' ')
+  if [ -n "${build// }" ]; then
+    stage building "$build"
+    # shellcheck disable=SC2086
+    idle env -C "$D/tree" LEAN_NUM_THREADS="${LEAN_NUM_THREADS:-4}" lake build $build > "$tmp/build.log" 2>&1
+    local rc=$?
+    cp "$tmp/build.log" "$D/build.log"
+    if [ $rc -ne 0 ]; then
+      if ! grep -qE '^error: [^ ]+\.lean:[0-9]+:[0-9]+:' "$tmp/build.log" &&
+         { [ $rc -ge 128 ] || grep -qE '^Terminated|^Killed|exited with code (137|143)|signal: (9|15)' "$tmp/build.log"; }; then
+        tail -3 "$tmp/build.log"
+        echo "scripts/commit: NOT BUILT — the build was killed (exit $rc; SWARM_MEM_MAX=$SWARM_MEM_MAX, LEAN_NUM_THREADS=${LEAN_NUM_THREADS:-4}): not a verdict about the change; run again with a larger budget or fewer threads (log: $D/build.log)"
+        return 76
+      fi
+      grep -E '^error|error:' "$tmp/build.log" | head -30; tail -5 "$tmp/build.log"
+      echo "scripts/commit: RED — the build of what this change touched failed (log: $D/build.log)"; return 1
+    fi
+  else echo "scripts/commit: no module changed; nothing to build"; fi
+  export CARGO_TARGET_DIR=$D/cargo-target
+  case $crates in
+    "") ;;
+    workspace) stage checking "the Rust workspace"
+      idle cargo check --quiet --locked --workspace --all-targets --manifest-path "$D/tree/Cargo.toml" > "$tmp/cargo.log" 2>&1 ||
+        { tail -30 "$tmp/cargo.log"; echo "scripts/commit: RED — cargo check"; return 1; } ;;
+    *) stage checking "$crates"; local pk=(); for x in $crates; do pk+=(-p "$x"); done
+      idle cargo check --quiet --locked "${pk[@]}" --all-targets --manifest-path "$D/tree/Cargo.toml" > "$tmp/cargo.log" 2>&1 ||
+        { tail -30 "$tmp/cargo.log"; echo "scripts/commit: RED — cargo check"; return 1; } ;;
+  esac
+  if [ -n "$rowsel" ]; then
+    stage running "$rowsel"
+    idle python3 "$D/tree/gates/touched.py" rows "$D/tree" --changed "$tmp/changed" --base-table "$tmp/runs.base" \
+      --bin "$D/tree/.lake/build/bin" || { echo "scripts/commit: RED — a row this change touched"; return 1; }
+  else echo "scripts/commit: no row touched"; fi
+  return 0
+}
+# build_slot: one of ND_BUILD_SLOTS box-wide slots on fd 8, entered through the door (fd 7) so slots go in arrival order
+L=$HOME/nd-land/.locks
+build_slot() {
+  local n=${ND_BUILD_SLOTS:-6} k said=""
+  command -v flock > /dev/null || { echo "scripts/commit: no flock(1) on this box; building without a slot"; return 0; }
+  mkdir -p "$L" || return 2
+  exec 7> "$L/door.flock"; flock 7
+  while :; do
+    for k in $(seq 1 "$n"); do
+      exec 8> "$L/build-$k.flock"
+      if flock -n 8; then exec 7>&-; stage slot "$k of $n"; return 0; fi
+    done
+    exec 8>&-
+    [ -n "$said" ] || { echo "scripts/commit: all $n build slots are busy; waiting for one"; said=1; }
+    sleep 5
+  done
+}
+judged() { build_slot || return 2; judge "$@"; local rc=$?; exec 8>&-; return $rc; }
+judged "$R"; rc=$?; [ $rc -eq 0 ] || exit $rc
+
+# 5. push; a moved main is re-based, and re-judged only when it changed a path this change changed
+mine=$(git -C "$repo" diff --name-only "$base" "$R")
+for attempt in $(seq 1 20); do
+  stage pushing "$(git -C "$repo" rev-parse --short "$R")"
+  if GIT_SSH_COMMAND=${GIT_SSH_COMMAND:-"ssh -o BatchMode=yes -o ConnectTimeout=20"} git -C "$repo" push -q origin "$R:refs/heads/main" 2> "$tmp/push"; then
+    break
+  fi
+  [ "$attempt" = 20 ] && { cat "$tmp/push"; echo "scripts/commit: push refused 20 times"; exit 1; }
+  git -C "$repo" fetch -q origin main || { cat "$tmp/push"; exit 1; }
+  nb=$(git -C "$repo" rev-parse origin/main)
+  [ "$nb" != "$base" ] || { cat "$tmp/push"; echo "scripts/commit: push refused and origin/main did not move"; exit 1; }
+  overlap=$(git -C "$repo" diff --name-only "$base" "$nb" | grep -Fxf <(printf '%s\n' "$mine") || true)
+  old=$base; base=$nb
+  R=$(replay "$base") || exit 1
+  if [ -n "$overlap" ]; then
+    echo "scripts/commit: main moved and changed $(wc -l <<< "$overlap") path(s) this change changed ($(head -3 <<< "$overlap" | tr '\n' ' ')); building and running again"
+    judged "$R"; rc=$?; [ $rc -eq 0 ] || exit $rc
+  else
+    echo "scripts/commit: main moved (${old:0:9}..${base:0:9}), touching none of this change's paths; re-based, pushing"
+  fi
+done
+echo "scripts/commit: landed $(git -C "$repo" log --oneline -1 "$R" | cut -c1-140)"
+
+# 6. this clone's main follows origin; this worktree moves to the landed commit
+git -C "$repo" fetch -q origin main
+lm=$(git -C "$repo" rev-parse -q --verify refs/heads/main || true)
+if [ -n "$lm" ] && [ "$lm" != "$(git -C "$repo" rev-parse origin/main)" ]; then
+  git -C "$repo" merge-base --is-ancestor "$lm" origin/main ||
+    echo "scripts/commit: NOTE refs/heads/main held commits origin/main lacks; it now follows origin: $(git -C "$repo" log --oneline origin/main.."$lm" | head -5 | tr '\n' ';' | cut -c1-300)"
+  git -C "$repo" update-ref refs/heads/main origin/main
+fi
+if ! git -C "$repo" checkout -q --detach "$R" 2> "$tmp/co"; then
+  echo "scripts/commit: landed; this worktree stays where it was (an uncommitted edit conflicts with the landed tree): git checkout --detach origin/main when ready"
+fi
+exit 0

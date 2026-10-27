@@ -1,0 +1,13 @@
+diff --git a/Hosting/Resident/Run.lean b/Hosting/Resident/Run.lean
+index 60e1c94..bf19d66 100644
+--- a/Hosting/Resident/Run.lean
++++ b/Hosting/Resident/Run.lean
+@@ -268,7 +268,7 @@ node, and `answerArg_some` says it cannot arise). -/
+ def Cmd.argv (c : Conf) : Cmd → List ByteArray
+   | .describe => describeArgv c
+   | .read sh | .reread sh => pendingArgv c sh
+-  | .invoke sh r t => match answerArg r t with
++  | .invoke sh r _t => match answerArg r r.text with
+     | some a => invokeArgv c sh a
+     | none => []
+ 

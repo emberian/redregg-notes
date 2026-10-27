@@ -1,0 +1,848 @@
+diff --git a/Lang/Bounds.lean b/Lang/Bounds.lean
+index 884fe30..3e5192a 100644
+--- a/Lang/Bounds.lean
++++ b/Lang/Bounds.lean
+@@ -26,6 +26,17 @@ charged `⌈n / wordBytes⌉` ticks, at least one (`Lang.primTicks`), so a run w
+ `wordBytes` primitive operand bytes per tick it is charged (`Lang.Proofs.Cost.walked_le`). -/
+ def wordBytes : Nat := 32
+ 
++/-- A contextual hole's ROM lists at most this many candidate codes (`HoleROM.check`, LANG-P7). -/
++def holeCandidatesMax : Nat := 64
++
++/-- A package declares at most this many contextual holes (`Package.checkContextual`, LANG-P7). -/
++def holeSignatureMax : Nat := 16
++
++/-- The guard allowance of one contextual hole (LANG-P7): the ticks its selection guard may run
++(`runHoleGuard`'s fuel), and so the preparation charged per declared hole (`Package.holeCharge`). One
++allowance, two uses; not `reasonMax`/`docMax`, which are other facts that happen to be 256 too. -/
++def holeGuardFuel : Nat := 256
++
+ /-- The machine's stack bound. A consensus constant, not part of a budget: two executors given
+ different tick budgets agree on every final outcome (`Lang.Proofs.Run.run_agree`) only because
+ they share this bound. -/
+diff --git a/Lang/Check.lean b/Lang/Check.lean
+index e068905..d5a7882 100644
+--- a/Lang/Check.lean
++++ b/Lang/Check.lean
+@@ -87,7 +87,7 @@ def TypeErr.text (e : TypeErr) : String :=
+ def typeErr (e : TypeError) : Except TypeErr Ty := .error ⟨[], e⟩
+ 
+ mutual
+-def inferE (Δ Γ : List Ty) : Term → (Ω : HoleSignature := []) → Except TypeErr Ty
++def inferE (Δ Γ : List Ty) : Term → (Ω : HoleSignature) → Except TypeErr Ty
+   | .var i, _ =>
+       match Γ[i]? with
+       | some T => .ok T
+@@ -178,12 +178,12 @@ def inferE (Δ Γ : List Ty) : Term → (Ω : HoleSignature := []) → Except Ty
+       match Ω.find? (fun d => d.name == n) with
+       | none => typeErr (.noHole n)
+       | some d =>
+-        match inferSubst Δ Γ σ d.ctx Ω with
++        match inferSubst Δ Γ σ d.ctx (Ω := Ω) with
+         | .ok () => .ok d.ty
+         | .error e => .error (e.at "substitution")
+ 
+ /-- The row of a list of fields, label for label (an error is under its field's label). -/
+-def inferFields (Δ Γ : List Ty) : List (Label × Term) → (Ω : HoleSignature := []) → Except TypeErr (List (Label × Ty))
++def inferFields (Δ Γ : List Ty) : List (Label × Term) → (Ω : HoleSignature) → Except TypeErr (List (Label × Ty))
+   | [], _ => .ok []
+   | (ℓ, t) :: fs, Ω =>
+       match inferE (Ω := Ω) Δ Γ t, inferFields (Ω := Ω) Δ Γ fs with
+@@ -193,7 +193,7 @@ def inferFields (Δ Γ : List Ty) : List (Label × Term) → (Ω : HoleSignature
+ 
+ /-- The common type of the arms of a case over the sum row `r`: one arm per label, in order,
+ each binding its payload; at least one arm (an error is under its arm's label). -/
+-def inferArms (Δ Γ : List Ty) : List (Label × Term) → List (Label × Ty) → (Ω : HoleSignature := []) → Except TypeErr Ty
++def inferArms (Δ Γ : List Ty) : List (Label × Term) → List (Label × Ty) → (Ω : HoleSignature) → Except TypeErr Ty
+   | [(ℓ, b)], [(ℓ', A)], Ω =>
+       if ℓ = ℓ' then
+         match inferE (Ω := Ω) Δ (A :: Γ) b with
+@@ -209,32 +209,32 @@ def inferArms (Δ Γ : List Ty) : List (Label × Term) → List (Label × Ty) 
+       else .error ⟨[], .arms⟩
+   | _, _, _ => .error ⟨[], .arms⟩
+ /-- Check the complete explicit substitution against the declared context. -/
+-def inferSubst (Δ Γ : List Ty) : List Term → List Ty → (Ω : HoleSignature := []) → Except TypeErr Unit
++def inferSubst (Δ Γ : List Ty) : List Term → List Ty → (Ω : HoleSignature) → Except TypeErr Unit
+   | [], [], _ => .ok ()
+   | t :: ts, A :: As, Ω =>
+-      match inferE Δ Γ t Ω with
++      match inferE Δ Γ t (Ω := Ω) with
+       | .error e => .error e
+       | .ok B =>
+-        if A = B then inferSubst Δ Γ ts As Ω
++        if A = B then inferSubst Δ Γ ts As (Ω := Ω)
+         else .error ⟨[], .argument A B⟩
+   | _, _, _ => .error ⟨[], .holeSubstitution⟩
+ 
+ end
+ 
+ /-- The type of `t`, if it has one: `inferE` without the reason. -/
+-def infer (Δ Γ : List Ty) (t : Term) (Ω : HoleSignature := []) : Option Ty := (inferE Δ Γ t Ω).toOption
++def infer (Δ Γ : List Ty) (t : Term) (Ω : HoleSignature) : Option Ty := (inferE Δ Γ t (Ω := Ω)).toOption
+ 
+ /-- A closed term checked against its declared type, or why not. -/
+-def checkE (Δ : List Ty) (t : Term) (T : Ty) (Ω : HoleSignature := []) : Except TypeErr Unit :=
+-  match inferE Δ [] t Ω with
++def checkE (Δ : List Ty) (t : Term) (T : Ty) (Ω : HoleSignature) : Except TypeErr Unit :=
++  match inferE Δ [] t (Ω := Ω) with
+   | .ok T' => if T' = T then .ok () else .error ⟨[], .declared T T'⟩
+   | .error e => .error e
+ 
+ /-- A closed term checked against its declared type. -/
+-def check (Δ : List Ty) (t : Term) (T : Ty) (Ω : HoleSignature := []) : Bool := (checkE Δ t T Ω).toBool
++def check (Δ : List Ty) (t : Term) (T : Ty) (Ω : HoleSignature) : Bool := (checkE Δ t T (Ω := Ω)).toBool
+ 
+ /-- The closure's bodies are closed and have the types `ref` gives them. -/
+ def checkLib (Δ : List Ty) (lib : List Term) : Bool :=
+-  lib.length == Δ.length && (lib.zip Δ).all fun p => check Δ p.1 p.2
++  lib.length == Δ.length && (lib.zip Δ).all fun p => check Δ p.1 p.2 (Ω := [])
+ 
+ end Nanodregg.Lang
+diff --git a/Lang/Contextual/LangInstance.lean b/Lang/Contextual/LangInstance.lean
+index f27f223..805af25 100644
+--- a/Lang/Contextual/LangInstance.lean
++++ b/Lang/Contextual/LangInstance.lean
+@@ -22,7 +22,7 @@ def langData : CalculusData where
+   Tm := Term
+   tmEq := Term.decEq
+   msubst := Term.fillRefs
+-  check Ψ M A := decide (Lang.infer [] Ψ M = some A)
++  check Ψ M A := decide (Lang.infer [] Ψ M (Ω := []) = some A)
+   uses M x := Term.usesVar x M
+   drop Ψ x := Ψ.eraseIdx x
+   strengthen x := Term.renameVar (lowerIdx x)
+diff --git a/Lang/HoleBudget.lean b/Lang/HoleBudget.lean
+index 17afa1f..a0cdf8d 100644
+--- a/Lang/HoleBudget.lean
++++ b/Lang/HoleBudget.lean
+@@ -77,12 +77,18 @@ def Term.fillArgNodes (σ : Nat → Option Term) : List Term → List Nat
+   | t :: ts => Term.fillNodes σ t :: Term.fillArgNodes σ ts
+ end
+ 
++/-- The two expansion bounds `fillBounded` refuses by name. -/
++inductive ExpansionBound where
++  | work
++  | size
++  deriving DecidableEq, Repr
++
+ /-- Refuse oversized expansion before constructing it. The second input bounds
+ the structural work (template nodes times the largest candidate), independently
+ of whether the resulting term happens to be small. -/
+-def Term.fillBounded (limit candidateMax : Nat) (σ : Nat → Option Term) (t : Term) : Except String Term :=
+-  if Term.nodes t * (candidateMax + 1) > limit then .error "holeWorkBound"
+-  else if Term.fillNodes σ t > limit then .error "holeSizeBound"
++def Term.fillBounded (limit candidateMax : Nat) (σ : Nat → Option Term) (t : Term) : Except ExpansionBound Term :=
++  if Term.nodes t * (candidateMax + 1) > limit then .error .work
++  else if Term.fillNodes σ t > limit then .error .size
+   else .ok (Term.fillRefs σ t)
+ 
+ end Nanodregg.Lang
+diff --git a/Lang/Journey/Contextual.lean b/Lang/Journey/Contextual.lean
+index 897cd76..1fc58a3 100644
+--- a/Lang/Journey/Contextual.lean
++++ b/Lang/Journey/Contextual.lean
+@@ -142,7 +142,7 @@ def boundaryRows : List (String × Bool) := Id.run do
+     ("omitted-context-pin", (invoke b p (view (some 0) none false) "execute" (.nat 7) .nat |> resultName) ==
+       "execute: refused holeUnpinned"),
+     ("wrong-context", (match wrong.checkContextual (b.libraries.map (·.iface)) with
+-      | .error why => why == "holeCandidateType 0 0" | .ok () => false)),
++      | .error why => decide (why = .candidateType 0 0) | .ok () => false)),
+     ("guard-blocked", (invoke b p (view (some 0) (some 1) (blocker := some 1))
+       "execute" (.nat 7) .nat |> resultName) == "execute: refused holeGuardBlocked 0"),
+     ("omitted-blocker-pin", (invoke b p (view (some 0) (some 1) (coverBlocker := false))
+diff --git a/Lang/Journey/ContextualChecks.lean b/Lang/Journey/ContextualChecks.lean
+index f06fc40..216103f 100644
+--- a/Lang/Journey/ContextualChecks.lean
++++ b/Lang/Journey/ContextualChecks.lean
+@@ -16,6 +16,10 @@ def minimalPackage : Package where
+ def named {α : Type} (r : Except String α) (why : String) : Bool :=
+   match r with | .error e => e == why | .ok _ => false
+ 
++/-- The refusal is exactly this constructor (LANG-74.9: preparation refusals are values, not strings). -/
++def refusedAs {ε α : Type} [DecidableEq ε] (r : Except ε α) (why : ε) : Bool :=
++  match r with | .error e => decide (e = why) | .ok _ => false
++
+ def gateRows : List (String × Bool) := Id.run do
+   let p := minimalPackage
+   let h := p.holes[0]!
+@@ -38,6 +42,11 @@ def gateRows : List (String × Bool) := Id.run do
+       (Print.package badPrint).isNone
+     | none => false
+   let fill := fun _ => some (Term.var 0)
++  -- LANG-74.9 plant: a hole name whose refusal text is wider than `Bounds.reasonMax` makes the blocked
++  -- hole's `.refuse` ill-typed, so the closed re-check in instantiateHoles refuses (`.instanceRecheck`).
++  let wide : Nat := 10 ^ 300
++  let wideBody : Term := .record [("value", .hole wide [.bool true, .nat 7])]
++  let wideP : Package := { p with holes := [{ h with name := wide }], body := wideBody }
+   let termHole := Term.hole 7 [.nat 9]
+   let armHole := Term.hole 7 [.prim .add (.var 0) (.nat 9)]
+   let sig : HoleSignature := [⟨7, [.nat], .nat⟩]
+@@ -46,44 +55,46 @@ def gateRows : List (String × Bool) := Id.run do
+     ("successor-fill-term", decide (Term.fillRefs fill termHole = .nat 9)),
+     ("successor-fill-fields", decide (Term.fillRefsRow fill [("v", termHole)] = [("v", .nat 9)])),
+     ("successor-fill-arms", decide (Term.fillRefsRow fill [("v", armHole)] = [("v", .prim .add (.var 0) (.nat 9))])),
+-    ("successor-declared-term", Term.usesRef 7 termHole && (inferE [] [] termHole sig).isOk && !(inferE [] [] termHole).isOk),
+-    ("successor-declared-fields", Term.usesRefRow 7 [("v", termHole)] && (inferFields [] [] [("v", termHole)] sig).isOk &&
+-      !(inferFields [] [] [("v", termHole)]).isOk),
+-    ("successor-declared-arms", Term.usesRefRow 7 [("v", armHole)] && (inferArms [] [] [("v", armHole)] [("v", .nat)] sig).isOk &&
+-      !(inferArms [] [] [("v", armHole)] [("v", .nat)]).isOk),
++    ("successor-declared-term", Term.usesRef 7 termHole && (inferE [] [] termHole (Ω := sig)).isOk && !(inferE [] [] termHole (Ω := [])).isOk),
++    ("successor-declared-fields", Term.usesRefRow 7 [("v", termHole)] && (inferFields [] [] [("v", termHole)] (Ω := sig)).isOk &&
++      !(inferFields [] [] [("v", termHole)] (Ω := [])).isOk),
++    ("successor-declared-arms", Term.usesRefRow 7 [("v", armHole)] && (inferArms [] [] [("v", armHole)] [("v", .nat)] (Ω := sig)).isOk &&
++      !(inferArms [] [] [("v", armHole)] [("v", .nat)] (Ω := [])).isOk),
+     ("reader-import-contract", decide (Term.fillRefs (fun _ => some (.nat 0)) (.ref 0) = .ref 0) &&
+-      (inferE [.nat] [] (.ref 0)).isOk && !(inferE [] [] (.ref 0)).isOk &&
++      (inferE [.nat] [] (.ref 0) (Ω := [])).isOk && !(inferE [] [] (.ref 0) (Ω := [])).isOk &&
+       !Term.usesRef 0 (.ref 0)),
+     ("closed-admission-identity", (admitContextual (fun _ => some (3 : Sim.D))
+-      (fun _ _ => .error "must-not-prepare-closed") .empty closed ⟨[], [], []⟩ []).isOk),
++      (fun _ _ => .error .provenance) -- never called: a closed package does not prepare .empty closed ⟨[], [], []⟩ []).isOk),
+ 
+     ("minimal-contextual-check", p.checkContextual [] |>.isOk),
+     ("closed-signature-refusal", match plain.checkWith [] with
+       | .error .contextualSignature => true | _ => false),
+     ("closed-import-type-refusal", match ({ plain with holes := [] }).checkWith [badTy] with
+       | .error .importType => true | _ => false),
+-    ("signature-context-type", named ((withDecl { h with ctx := [badTy, .nat] }).checkContextual []) "holeType 0"),
+-    ("signature-hypothesis-length", named ((withDecl { h with hypotheses := [] }).checkContextual []) "holeContext 0"),
+-    ("signature-candidate-bound", named ((withDecl { h with code := List.replicate 65 ⟨.var 1, []⟩ }).checkContextual [])
+-      "holeCandidates 0"),
+-    ("signature-guard-type", named ((withDecl { h with guard := .nat 0 }).checkContextual []) "holeGuardType 0"),
+-    ("candidate-result-type", named ((withDecl { h with code := [⟨.bool false, []⟩] }).checkContextual [])
+-      "holeCandidateType 0 0"),
+-    ("candidate-context-scope", named ((withDecl { h with code := [⟨.var 9, []⟩] }).checkContextual [])
+-      "holeCandidateType 0 0"),
+-    ("signature-bound", named (({ p with holes := List.replicate 17 h }).checkContextual []) "holeSignatureBound"),
+-    ("signature-name-unique", named (({ p with holes := [h, h] }).checkContextual []) "holeDuplicate"),
++    ("signature-context-type", refusedAs ((withDecl { h with ctx := [badTy, .nat] }).checkContextual []) (.type 0)),
++    ("signature-hypothesis-length", refusedAs ((withDecl { h with hypotheses := [] }).checkContextual []) (.context 0)),
++    ("signature-candidate-bound", refusedAs ((withDecl { h with code := List.replicate 65 ⟨.var 1, []⟩ }).checkContextual [])
++      (.candidates 0)),
++    ("signature-guard-type", refusedAs ((withDecl { h with guard := .nat 0 }).checkContextual []) (.guardType 0)),
++    ("candidate-result-type", refusedAs ((withDecl { h with code := [⟨.bool false, []⟩] }).checkContextual [])
++      (.candidateType 0 0)),
++    ("candidate-context-scope", refusedAs ((withDecl { h with code := [⟨.var 9, []⟩] }).checkContextual [])
++      (.candidateType 0 0)),
++    ("signature-bound", refusedAs (({ p with holes := List.replicate 17 h }).checkContextual []) .signatureBound),
++    ("signature-name-unique", refusedAs (({ p with holes := [h, h] }).checkContextual []) .duplicate),
+     ("hole-substitution-type", match ({ p with body := .record [("value", .hole 0 [.nat 3, .nat 7])] }).checkContextual [] with
+-      | .error why => why.startsWith "holeBodyType" | _ => false),
++      | .error (.bodyType _) => true | _ => false),
+     ("hole-substitution-length", match ({ p with body := .record [("value", .hole 0 [.bool true])] }).checkContextual [] with
+-      | .error why => why.startsWith "holeBodyType" | _ => false),
+-    ("selection-data-type", named (selectHole wrongData (3 : Sim.D) h) "holeSelectionType 0"),
+-    ("selection-code-index", named (selectHole (view (some 99) (some 1)) (3 : Sim.D) h) "holeSelectionIndex 0"),
+-    ("selection-support-version", named (selectHole (view (some 0) (some 1) (left := some 2)) (3 : Sim.D) h)
+-      "holeDerivationMoved 0"),
+-    ("guard-budget", named (selectHole good (3 : Sim.D) { h with guard := longGuard }) "holeGuardFault 0"),
+-    ("expansion-work-bound", named (Term.fillBounded 1 1 (fun _ => none) (.nat 1)) "holeWorkBound"),
+-    ("expansion-size-bound", named (Term.fillBounded 64 3 (fun _ => some duplicate) nested) "holeSizeBound"),
++      | .error (.bodyType _) => true | _ => false),
++    ("selection-data-type", refusedAs (selectHole wrongData (3 : Sim.D) h) (.selectionType 0)),
++    ("selection-code-index", refusedAs (selectHole (view (some 99) (some 1)) (3 : Sim.D) h) (.selectionIndex 0)),
++    ("selection-support-version", refusedAs (selectHole (view (some 0) (some 1) (left := some 2)) (3 : Sim.D) h)
++      (.derivationMoved 0)),
++    ("guard-budget", refusedAs (selectHole good (3 : Sim.D) { h with guard := longGuard }) (.guardFault 0)),
++    ("expansion-work-bound", refusedAs (Term.fillBounded 1 1 (fun _ => none) (.nat 1)) .work),
++    ("expansion-size-bound", refusedAs (Term.fillBounded 64 3 (fun _ => some duplicate) nested) .size),
++    ("recheck-arm-reachable", refusedAs (instantiateHoles (view none (some 1)) (3 : Sim.D) [] wideP) .instanceRecheck &&
++      (instantiateHoles (view none (some 1)) (3 : Sim.D) [] p).isOk),
+     ("contextual-print-mismatch", printMismatch),
+     ("contextual-print-unreadable", named (Print.contextualText p "(") "contextualPrintRead"),
+     ("rom-candidate-literals", match checkROMLits (fun _ => (none : Option Sim.D))
+diff --git a/Lang/LiveHoles.lean b/Lang/LiveHoles.lean
+index 40e51fe..8d768b9 100644
+--- a/Lang/LiveHoles.lean
++++ b/Lang/LiveHoles.lean
+@@ -8,36 +8,86 @@ import Kernel.Receive.Call
+ namespace Nanodregg.Lang
+ open Nanodregg.Kernel Nanodregg.Kernel.Receive
+ 
++/-- Why live contextual preparation refuses: one constructor per refusal (law 7). `wire` is the one printer;
++its text is what the kernel's `Refusal.program` and a blocked hole's `.refuse` carry. -/
++inductive HoleRefusal where
++  | type (hole : Nat)
++  | context (hole : Nat)
++  | candidates (hole : Nat)
++  | guardType (hole : Nat)
++  | candidateType (hole code : Nat)
++  | package (e : CheckError)
++  | signatureBound
++  | duplicate
++  | bodyType (e : TypeErr)
++  | unpinned
++  | supportMoved (hole position : Nat)
++  | guardBlocked (hole : Nat)
++  | guardFault (hole : Nat)
++  | selectionAbsent (hole : Nat)
++  | selectionType (hole : Nat)
++  | selectionIndex (hole : Nat)
++  | derivationMoved (hole : Nat)
++  | expansion (b : ExpansionBound)
++  | provenance
++  | instanceRecheck
++  | instanceType (e : TypeErr)
++  deriving DecidableEq
++
++def HoleRefusal.wire : HoleRefusal → String
++  | .type n => s!"holeType {n}"
++  | .context n => s!"holeContext {n}"
++  | .candidates n => s!"holeCandidates {n}"
++  | .guardType n => s!"holeGuardType {n}"
++  | .candidateType n i => s!"holeCandidateType {n} {i}"
++  | .package e => e.wire
++  | .signatureBound => "holeSignatureBound"
++  | .duplicate => "holeDuplicate"
++  | .bodyType e => s!"holeBodyType {e.text}"
++  | .unpinned => "holeUnpinned"
++  | .supportMoved n i => s!"holeSupportMoved {n} {i}"
++  | .guardBlocked n => s!"holeGuardBlocked {n}"
++  | .guardFault n => s!"holeGuardFault {n}"
++  | .selectionAbsent n => s!"holeSelectionAbsent {n}"
++  | .selectionType n => s!"holeSelectionType {n}"
++  | .selectionIndex n => s!"holeSelectionIndex {n}"
++  | .derivationMoved n => s!"holeDerivationMoved {n}"
++  | .expansion .work => "holeWorkBound"
++  | .expansion .size => "holeSizeBound"
++  | .provenance => "holeProvenance"
++  | .instanceRecheck => "holeInstanceType"
++  | .instanceType e => s!"holeInstanceType {e.text}"
++
+ /-- Signature validation checks every candidate at exactly its declared context,
+ including candidates not currently selected. A candidate cannot introduce another hole. -/
+-def HoleROM.check (Δ : List Ty) (h : HoleROM) : Except String Unit := do
+-  unless h.ctx.all Ty.wf && h.ty.wf do throw s!"holeType {h.name}"
+-  unless h.hypotheses.length = h.ctx.length do throw s!"holeContext {h.name}"
+-  unless h.code.length ≤ 64 do throw s!"holeCandidates {h.name}"
+-  match inferE [] [.bool] h.guard with
++def HoleROM.check (Δ : List Ty) (h : HoleROM) : Except HoleRefusal Unit := do
++  unless h.ctx.all Ty.wf && h.ty.wf do throw (.type h.name)
++  unless h.hypotheses.length = h.ctx.length do throw (.context h.name)
++  unless h.code.length ≤ Bounds.holeCandidatesMax do throw (.candidates h.name)
++  match inferE [] [.bool] h.guard (Ω := []) with
+   | .ok .bool => pure ()
+-  | _ => throw s!"holeGuardType {h.name}"
++  | _ => throw (.guardType h.name)
+   for (c, i) in h.code.zipIdx do
+-    match inferE Δ h.ctx c.body with
+-    | .ok T => unless T = h.ty do throw s!"holeCandidateType {h.name} {i}"
+-    | .error _ => throw s!"holeCandidateType {h.name} {i}"
+-
+-def Package.checkContextual (Δ : List Ty) (p : Package) : Except String Unit := do
+-  match p.checkShape with | .error e => throw e.wire | .ok () => pure ()
+-  match p.checkFields with | .error e => throw e.wire | .ok () => pure ()
+-  unless p.holes.length ≤ 16 do throw "holeSignatureBound"
+-  unless (p.holes.map (·.name)).eraseDups.length = p.holes.length do throw "holeDuplicate"
++    match inferE Δ h.ctx c.body (Ω := []) with
++    | .ok T => unless T = h.ty do throw (.candidateType h.name i)
++    | .error _ => throw (.candidateType h.name i)
++
++def Package.checkContextual (Δ : List Ty) (p : Package) : Except HoleRefusal Unit := do
++  match p.checkShape with | .error e => throw (.package e) | .ok () => pure ()
++  match p.checkFields with | .error e => throw (.package e) | .ok () => pure ()
++  unless p.holes.length ≤ Bounds.holeSignatureMax do throw .signatureBound
++  unless (p.holes.map (·.name)).eraseDups.length = p.holes.length do throw .duplicate
+   for h in p.holes do h.check Δ
+   match checkE Δ p.body p.iface (Ω := holeSignature p.holes) with
+-  | .error e => throw s!"holeBodyType {e.text}"
++  | .error e => throw (.bodyType e)
+   | .ok () => pure ()
+ 
+ /-- The row must occur in the authenticated point view; absent and unpinned differ.
+ No ambient store is read by this module. -/
+ def holeRow {D : Type} (rv : RowView D) (self : D) (rel : Nat) (key : ByteArray) :
+-    Except String (Option RowLeaf) :=
++    Except HoleRefusal (Option RowLeaf) :=
+   match (rv.points self rel).find? (fun p => decide (p.1 = key)) with
+-  | none => .error "holeUnpinned"
++  | none => .error .unpinned
+   | some (_, leaf) => .ok leaf
+ 
+ def holePinHolds {D : Type} (rv : RowView D) (self : D) (p : HolePin) : Bool :=
+@@ -63,26 +113,26 @@ structure HoleSelection where
+ /-- Positions whose support moved. Only genuinely unused variables may be
+ strengthened away; a moved support actually used by the candidate is refused. -/
+ def changedHypotheses {D : Type} (rv : RowView D) (self : D) (h : HoleROM) (c : HoleCode) :
+-    Except String (List Nat) :=
++    Except HoleRefusal (List Nat) :=
+   h.hypotheses.zipIdx.foldlM (fun removed pi =>
+     match pi.1 with
+     | none => .ok removed
+     | some pin => do
+       let _ ← holeRow rv self pin.rel pin.key
+       if holePinHolds rv self pin then .ok removed
+-      else if Term.usesVar pi.2 c.body then .error s!"holeSupportMoved {h.name} {pi.2}"
++      else if Term.usesVar pi.2 c.body then .error (.supportMoved h.name pi.2)
+       else .ok (removed ++ [pi.2])) []
+ 
+ /-- Evaluate the signature guard on the current authenticated guard pin. -/
+-def runHoleGuard {D : Type} (rv : RowView D) (self : D) (h : HoleROM) : Except String Nat := do
++def runHoleGuard {D : Type} (rv : RowView D) (self : D) (h : HoleROM) : Except HoleRefusal Nat := do
+   if let some p := h.guardPin then
+     let _ ← holeRow rv self p.rel p.key
+     pure ()
+   let present := h.guardPin.all (holePinHolds rv self)
+-  match run [] Bounds.stackMax 256 0 (State.init h.guard [.bool present]) with
++  match run [] Bounds.stackMax Bounds.holeGuardFuel 0 (State.init h.guard [.bool present]) with
+   | .value (.bool true) used => .ok used
+-  | .value (.bool false) _ => .error s!"holeGuardBlocked {h.name}"
+-  | _ => .error s!"holeGuardFault {h.name}"
++  | .value (.bool false) _ => .error (.guardBlocked h.name)
++  | _ => .error (.guardFault h.name)
+ 
+ /-- Remove unused positions from right to left so every index still names its
+ original assumption. The embedding records where each retained variable came
+@@ -96,12 +146,12 @@ def factorHole (h : HoleROM) (c : HoleCode) (removed : List Nat) :
+ /-- Selection is fresh on each invocation. Its bytes contain a code index,
+ never a filling supplied by the caller. All derivation supports and used
+ contextual assumptions must still have the ROM-pinned versions. -/
+-def selectHole {D : Type} (rv : RowView D) (self : D) (h : HoleROM) : Except String HoleSelection := do
++def selectHole {D : Type} (rv : RowView D) (self : D) (h : HoleROM) : Except HoleRefusal HoleSelection := do
+   let leaf ← holeRow rv self h.selectionRel h.selectionKey
+-  let some (.row _ bytes version) := leaf | throw s!"holeSelectionAbsent {h.name}"
+-  let .ok (.nat i) := Wire.decodeData .nat bytes | throw s!"holeSelectionType {h.name}"
+-  let some c := h.code[i]? | throw s!"holeSelectionIndex {h.name}"
+-  unless c.supports.all (holePinHolds rv self) do throw s!"holeDerivationMoved {h.name}"
++  let some (.row _ bytes version) := leaf | throw (.selectionAbsent h.name)
++  let .ok (.nat i) := Wire.decodeData .nat bytes | throw (.selectionType h.name)
++  let some c := h.code[i]? | throw (.selectionIndex h.name)
++  unless c.supports.all (holePinHolds rv self) do throw (.derivationMoved h.name)
+   let removed ← changedHypotheses rv self h c
+   let used ← runHoleGuard rv self h
+   let (ctx, filling, embedding) := factorHole h c removed
+@@ -112,7 +162,7 @@ def selectHole {D : Type} (rv : RowView D) (self : D) (h : HoleROM) : Except Str
+ is retained in typed code and fires only when the machine demands that hole. -/
+ inductive HoleResolution where
+   | selected (receipt : HoleSelection)
+-  | blocked (name : Nat) (ty : Ty) (reason : String)
++  | blocked (name : Nat) (ty : Ty) (reason : HoleRefusal)
+ 
+ def HoleResolution.name : HoleResolution → Nat
+   | .selected s => s.name
+@@ -120,7 +170,7 @@ def HoleResolution.name : HoleResolution → Nat
+ 
+ def HoleResolution.body : HoleResolution → Term
+   | .selected s => s.body
+-  | .blocked _ T why => .refuse T why.toUTF8
++  | .blocked _ T why => .refuse T why.wire.toUTF8
+ 
+ def HoleResolution.receipt : HoleResolution → Option HoleSelection
+   | .selected s => some s
+@@ -137,6 +187,15 @@ def resolutionEnv (rs : List HoleResolution) (n : Nat) : Option Term :=
+ def resolutionMax (rs : List HoleResolution) : Nat :=
+   rs.foldl (fun n r => max n (Term.nodes r.body)) 1
+ 
++/-- THE preparation charge of a contextual package, at the largest candidate size `m` it may expand: the
++expansion bound of `Term.fillBounded` plus one guard allowance (`Bounds.holeGuardFuel`) per declared hole;
++the same formula at two different `m`s, not the same number. The invocation's
++actual cost is this at the resolved candidates (`instantiateHoles`); the static charge is this at the largest
++committed candidate (`Package.preparationCost`). -/
++def Package.holeCharge (p : Package) (m : Nat) : Nat :=
++  if p.holes.isEmpty then 0
++  else Term.nodes p.body * (m + 1) + Bounds.holeGuardFuel * p.holes.length
++
+ /-- Actual syntax cost and guard steps are charged before evaluation. This is
+ preparation for one invocation, never an installed replacement package. -/
+ structure HoleInstance where
+@@ -146,19 +205,17 @@ structure HoleInstance where
+   cost : Nat
+ 
+ def instantiateHoles {D : Type} (rv : RowView D) (self : D) (Δ : List Ty) (p : Package) :
+-    Except String HoleInstance := do
++    Except HoleRefusal HoleInstance := do
+   p.checkContextual Δ
+   let rs := p.holes.map (resolveHole rv self)
+   let ss := rs.filterMap HoleResolution.receipt
+-  let body ← Term.fillBounded Wire.nodeMax (resolutionMax rs) (resolutionEnv rs) p.body
++  let body ← (Term.fillBounded Wire.nodeMax (resolutionMax rs) (resolutionEnv rs) p.body).mapError .expansion
+   unless body.digestLits.all (fun b => (p.body.digestLits ++
+-      ss.flatMap (fun s => s.original.digestLits)).any (fun a => decide (a = b))) do throw "holeProvenance"
++      ss.flatMap (fun s => s.original.digestLits)).any (fun a => decide (a = b))) do throw .provenance
+   -- The closed checker is the invocation boundary too; proof connects this
+   -- check to contextual substitution, rather than trusting a receipt.
+-  match checkE Δ body p.iface with
+-  | .error _ => throw "holeInstanceType"
+-  | .ok () =>
+-    pure ⟨body, ss, rs, if p.holes.isEmpty then 0 else
+-      Term.nodes p.body * (resolutionMax rs + 1) + 256 * rs.length⟩
++  match checkE Δ body p.iface (Ω := []) with
++  | .error _ => throw .instanceRecheck
++  | .ok () => pure ⟨body, ss, rs, p.holeCharge (resolutionMax rs)⟩
+ 
+ end Nanodregg.Lang
+diff --git a/Lang/Package.lean b/Lang/Package.lean
+index 8520c92..4b70b70 100644
+--- a/Lang/Package.lean
++++ b/Lang/Package.lean
+@@ -447,7 +447,7 @@ def Package.checkFields (p : Package) : Except CheckError Unit :=
+ /-- The install check, given the interfaces of the imports in order: the shape, then the body
+ checks at its interface (`checkE`, which names the failed rule), then the fields. -/
+ def Package.checkWith (ifaces : List Ty) (p : Package) : Except CheckError Unit :=
+-  match p.checkShape, checkE ifaces p.body p.iface with
++  match p.checkShape, checkE ifaces p.body p.iface (Ω := []) with
+   | .error e, _ => .error e
+   | .ok (), .error why => .error (.illTyped why)
+   | .ok (), .ok () =>
+diff --git a/Lang/Program.lean b/Lang/Program.lean
+index 2d974b5..c671a99 100644
+--- a/Lang/Program.lean
++++ b/Lang/Program.lean
+@@ -163,15 +163,15 @@ def checkROMLits (p : Package) : Except (Refusal D) Unit :=
+ 
+ /-- A residual hole is a typed refusal when no row view is available (install
+ and law checking). Ordinary fields still evaluate; no selected code is guessed. -/
+-def unresolvedBody (p : Package) : Except String Term :=
++def unresolvedBody (p : Package) : Except HoleRefusal Term :=
+   if p.holes.isEmpty then .ok p.body
+-  else Term.fillBounded Wire.nodeMax 1
++  else (Term.fillBounded Wire.nodeMax 1
+     (fun n => ((holeSignature p.holes).find? (fun d => d.name == n)).map
+-      (fun d => .refuse d.ty "holeUnresolved".toUTF8)) p.body
++      (fun d => .refuse d.ty "holeUnresolved".toUTF8)) p.body).mapError .expansion
+ 
+ /-- Shared live admission. The package retained in Loaded is the original ROM;
+ only the transient machine library receives an instantiated body. -/
+-def admitContextual (prepare : List Ty → Package → Except String Term)
++def admitContextual (prepare : List Ty → Package → Except HoleRefusal Term)
+     (idb : ByteArray) (p : Package) (acc : Loaded) (gis : List Nat) :
+     Except (Refusal D) (Loaded × Nat) :=
+   if p.holes.isEmpty then admitPackage digestOf idb p acc gis
+@@ -179,13 +179,13 @@ def admitContextual (prepare : List Ty → Package → Except String Term)
+   | none => .error (.program "closure")
+   | some ifs =>
+     match p.checkContextual ifs with
+-    | .error e => .error (.program e)
++    | .error e => .error (.program e.wire)
+     | .ok () =>
+       match prepare ifs p with
+-      | .error e => .error (.program e)
++      | .error e => .error (.program e.wire)
+       | .ok body =>
+-        match checkE ifs body p.iface with
+-        | .error e => .error (.program s!"holeInstanceType {e.text}")
++        match checkE ifs body p.iface (Ω := []) with
++        | .error e => .error (.program (HoleRefusal.instanceType e).wire)
+         | .ok () =>
+           match checkROMLits digestOf p, checkLits digestOf { p with body } with
+           | .ok (), .ok () =>
+@@ -210,10 +210,7 @@ def loadLive (rv : RowView D) (self : D) (look : Pinned D) (fuel : Nat)
+ /-- Conservative preparation charge derived entirely from the actual ROM syntax;
+ the selected candidate cannot exceed the maximum over its committed candidates. -/
+ def Package.preparationCost (p : Package) : Nat :=
+-  if p.holes.isEmpty then 0
+-  else Term.nodes p.body *
+-    (1 + (p.holes.flatMap (fun h => h.code)).foldl
+-      (fun n c => max n (Term.nodes c.body)) 1) + 256 * p.holes.length
++  p.holeCharge ((p.holes.flatMap (fun h => h.code)).foldl (fun n c => max n (Term.nodes c.body)) 1)
+ 
+ 
+ def checkInstall (look : Pinned D) (b : ByteArray) : Except (Refusal D) Unit := do
+@@ -236,7 +233,7 @@ def checkInstallContextual (look : Pinned D) (b : ByteArray) : Except (Refusal D
+   let (L, gis) ← loadAllContextual digestOf look (closureDepthMax - 1) p.imports ⟨[], [], []⟩
+   let some ifaces := ifacesAt L.pkgs gis | throw (.program "closure")
+   match p.checkContextual ifaces with
+-  | .error e => throw (.program e)
++  | .error e => throw (.program e.wire)
+   | .ok () => checkROMLits digestOf p
+ 
+ /-- The state slots of a record row: field `i` at `stateBase + i`; `none` if a field has no bytes at
+diff --git a/Lang/Proofs/Canon.lean b/Lang/Proofs/Canon.lean
+index 0a84eb6..a369716 100644
+--- a/Lang/Proofs/Canon.lean
++++ b/Lang/Proofs/Canon.lean
+@@ -248,7 +248,7 @@ end
+ 
+ /-- Under canonical package and local types, every type `infer` returns is canonical. -/
+ theorem infer_wf {Γ : List Ty} {t : Term} {T : Ty} (hΔ : ∀ A ∈ Δ, A.wf = true)
+-    (hΓ : ∀ A ∈ Γ, A.wf = true) (h : infer Δ Γ t = some T) : T.wf = true :=
++    (hΓ : ∀ A ∈ Γ, A.wf = true) (h : infer Δ Γ t (Ω := []) = some T) : T.wf = true :=
+   hasType_wf hΔ hΓ (infer_sound h)
+ 
+ /-- The tooth: `merge` puts a new field in its place and overrides in place (an appending or
+diff --git a/Lang/Proofs/Check.lean b/Lang/Proofs/Check.lean
+index 32d7961..f8e0b90 100644
+--- a/Lang/Proofs/Check.lean
++++ b/Lang/Proofs/Check.lean
+@@ -186,7 +186,7 @@ theorem inferArms_sound_live :
+ 
+ theorem inferSubst_sound :
+     ∀ {Γ : List Ty} {σ : List Term} {Ψ : List Ty},
+-      inferSubst Δ Γ σ Ψ Ω = .ok () → SubstTy Δ Γ σ Ψ Ω
++      inferSubst Δ Γ σ Ψ (Ω := Ω) = .ok () → SubstTy Δ Γ σ Ψ Ω
+   | _, [], [], _ => .nil
+   | _, [], _ :: _, h | _, _ :: _, [], h => by simp [inferSubst] at h
+   | Γ, t :: ts, A :: As, h => by
+@@ -242,7 +242,7 @@ theorem inferArms_complete_live :
+ 
+ theorem inferSubst_complete :
+     ∀ {Γ : List Ty} {σ : List Term} {Ψ : List Ty},
+-      SubstTy Δ Γ σ Ψ Ω → inferSubst Δ Γ σ Ψ Ω = .ok ()
++      SubstTy Δ Γ σ Ψ Ω → inferSubst Δ Γ σ Ψ (Ω := Ω) = .ok ()
+   | _, _, _, .nil => by simp [inferSubst]
+   | _, _, _, .cons ht hs => by
+       simp [inferSubst, inferE_complete_live ht, inferSubst_complete hs]
+@@ -310,52 +310,52 @@ theorem forIn_yield_ok {α ε : Type} (P : α → Prop) :
+       · exact forIn_yield_ok P l f hf h b hb
+ 
+ /- Closed theorem API: statements copied verbatim from landed main. -/
+-theorem inferE_sound : ∀ {Γ : List Ty} {t : Term} {T : Ty}, inferE Δ Γ t = .ok T → HasType Δ Γ t T :=
++theorem inferE_sound : ∀ {Γ : List Ty} {t : Term} {T : Ty}, inferE Δ Γ t (Ω := []) = .ok T → HasType Δ Γ t T :=
+   inferE_sound_live (Ω := [])
+ 
+ theorem inferFields_sound :
+     ∀ {Γ : List Ty} {fs : List (Label × Term)} {r : List (Label × Ty)},
+-      inferFields Δ Γ fs = .ok r → FieldsTy Δ Γ fs r :=
++      inferFields Δ Γ fs (Ω := []) = .ok r → FieldsTy Δ Γ fs r :=
+   inferFields_sound_live (Ω := [])
+ 
+ theorem inferArms_sound :
+     ∀ {Γ : List Ty} {arms : List (Label × Term)} {r : List (Label × Ty)} {B : Ty},
+-      inferArms Δ Γ arms r = .ok B → ArmsTy Δ Γ arms r B :=
++      inferArms Δ Γ arms r (Ω := []) = .ok B → ArmsTy Δ Γ arms r B :=
+   inferArms_sound_live (Ω := [])
+ 
+-theorem inferE_complete : ∀ {Γ : List Ty} {t : Term} {T : Ty}, HasType Δ Γ t T → inferE Δ Γ t = .ok T :=
++theorem inferE_complete : ∀ {Γ : List Ty} {t : Term} {T : Ty}, HasType Δ Γ t T → inferE Δ Γ t (Ω := []) = .ok T :=
+   inferE_complete_live (Ω := [])
+ 
+ theorem inferFields_complete :
+     ∀ {Γ : List Ty} {fs : List (Label × Term)} {r : List (Label × Ty)},
+-      FieldsTy Δ Γ fs r → inferFields Δ Γ fs = .ok r :=
++      FieldsTy Δ Γ fs r → inferFields Δ Γ fs (Ω := []) = .ok r :=
+   inferFields_complete_live (Ω := [])
+ 
+ theorem inferArms_complete :
+     ∀ {Γ : List Ty} {arms : List (Label × Term)} {r : List (Label × Ty)} {B : Ty},
+-      ArmsTy Δ Γ arms r B → inferArms Δ Γ arms r = .ok B :=
++      ArmsTy Δ Γ arms r B → inferArms Δ Γ arms r (Ω := []) = .ok B :=
+   inferArms_complete_live (Ω := [])
+ 
+-theorem inferE_iff {Γ : List Ty} {t : Term} {T : Ty} : inferE Δ Γ t = .ok T ↔ HasType Δ Γ t T :=
++theorem inferE_iff {Γ : List Ty} {t : Term} {T : Ty} : inferE Δ Γ t (Ω := []) = .ok T ↔ HasType Δ Γ t T :=
+   inferE_iff_live (Ω := [])
+ 
+-theorem infer_sound {Γ : List Ty} {t : Term} {T : Ty} (h : infer Δ Γ t = some T) : HasType Δ Γ t T :=
++theorem infer_sound {Γ : List Ty} {t : Term} {T : Ty} (h : infer Δ Γ t (Ω := []) = some T) : HasType Δ Γ t T :=
+   infer_sound_live (Ω := []) h
+ 
+-theorem infer_complete {Γ : List Ty} {t : Term} {T : Ty} (h : HasType Δ Γ t T) : infer Δ Γ t = some T :=
++theorem infer_complete {Γ : List Ty} {t : Term} {T : Ty} (h : HasType Δ Γ t T) : infer Δ Γ t (Ω := []) = some T :=
+   infer_complete_live (Ω := []) h
+ 
+-theorem infer_iff {Γ : List Ty} {t : Term} {T : Ty} : infer Δ Γ t = some T ↔ HasType Δ Γ t T :=
++theorem infer_iff {Γ : List Ty} {t : Term} {T : Ty} : infer Δ Γ t (Ω := []) = some T ↔ HasType Δ Γ t T :=
+   infer_iff_live (Ω := [])
+ 
+ theorem hasType_unique {Γ : List Ty} {t : Term} {A B : Ty}
+     (ha : HasType Δ Γ t A) (hb : HasType Δ Γ t B) : A = B :=
+   hasType_unique_live (Ω := []) ha hb
+ 
+-theorem checkE_ok_iff {t : Term} {T : Ty} : checkE Δ t T = .ok () ↔ HasType Δ [] t T :=
++theorem checkE_ok_iff {t : Term} {T : Ty} : checkE Δ t T (Ω := []) = .ok () ↔ HasType Δ [] t T :=
+   checkE_ok_iff_live (Ω := [])
+ 
+-theorem check_iff {t : Term} {T : Ty} : check Δ t T = true ↔ HasType Δ [] t T :=
++theorem check_iff {t : Term} {T : Ty} : check Δ t T (Ω := []) = true ↔ HasType Δ [] t T :=
+   check_iff_live (Ω := [])
+ 
+ end Nanodregg.Lang
+diff --git a/Lang/Proofs/LiveJourney.lean b/Lang/Proofs/LiveJourney.lean
+index eec5ccd..83e2482 100644
+--- a/Lang/Proofs/LiveJourney.lean
++++ b/Lang/Proofs/LiveJourney.lean
+@@ -53,9 +53,9 @@ embedding reconstructing the original open term. No closed witness is invented.
+ theorem strengthening_factor :
+     (selectHole (view (some 0) none) (3 : Kernel.Sim.D)
+       { declaration with selectionRel := 5, selectionKey := key }).map
+-        (fun s => (s.context, s.filling, s.body, inferE [] s.context s.filling)) =
++        (fun s => (s.context, s.filling, s.body, inferE [] s.context s.filling (Ω := []))) =
+       .ok ([.nat], .var 0, .var 1, .ok .nat) := by
+-  change Except.ok (ε := String) ([Ty.nat], Term.var 0, Term.var 1, inferE [] [.nat] (.var 0)) = _
++  change Except.ok (ε := String) ([Ty.nat], Term.var 0, Term.var 1, inferE [] [.nat] (.var 0) (Ω := [])) = _
+   rw [inferE_complete (HasType.var rfl)]
+ 
+ /-- For every supplied nat, capture-avoiding contextual instantiation returns
+diff --git a/Lang/Proofs/Print.lean b/Lang/Proofs/Print.lean
+index 0a07d26..1855cb0 100644
+--- a/Lang/Proofs/Print.lean
++++ b/Lang/Proofs/Print.lean
+@@ -1572,7 +1572,7 @@ end
+ 
+ /-- A closed term that checks reads back from its text. -/
+ theorem readTerm_checked {Δ : List Ty} {t : Term} {T : Ty} {s : String} (hΔ : ∀ A ∈ Δ, A.wf = true)
+-    (hc : inferE Δ [] t = .ok T) (h : term t = some s) : readTerm s = .ok t :=
++    (hc : inferE Δ [] t (Ω := []) = .ok T) (h : term t = some s) : readTerm s = .ok t :=
+   readTerm_term (hasType_canon hΔ (by simp) (inferE_sound hc)) h
+ 
+ theorem checkShape_wf {p : Package} (h : p.checkShape = .ok ()) : p.state.wf = true ∧ p.iface.wf = true := by
+diff --git a/Lang/Proofs/PrintWire.lean b/Lang/Proofs/PrintWire.lean
+index d2bde04..9f447b7 100644
+--- a/Lang/Proofs/PrintWire.lean
++++ b/Lang/Proofs/PrintWire.lean
+@@ -187,7 +187,7 @@ end
+ /-! ## Packages -/
+ 
+ theorem checkWith_parts {ifaces : List Ty} {p : Package} (hc : p.checkWith ifaces = .ok ()) :
+-    p.checkShape = .ok () ∧ ∃ T, inferE ifaces [] p.body = .ok T := by
++    p.checkShape = .ok () ∧ ∃ T, inferE ifaces [] p.body (Ω := []) = .ok T := by
+   unfold Package.checkWith at hc
+   split at hc
+   · cases hc
+diff --git a/Lang/Proofs/Sound.lean b/Lang/Proofs/Sound.lean
+index adc6f57..44d8b97 100644
+--- a/Lang/Proofs/Sound.lean
++++ b/Lang/Proofs/Sound.lean
+@@ -312,7 +312,7 @@ theorem checkLib_sound {lib : List Term} (h : checkLib Δ lib = true) : LibTy Δ
+ /-- End to end: a term the checker accepts, over a closure the checker accepts, run under any tick
+ budget, ends with a value of its type or a named fault that is not `stuck`. -/
+ theorem checked_never_stuck {lib : List Term} {t : Term} {T : Ty} {ticks : Nat}
+-    (hlib : checkLib Δ lib = true) (ht : check Δ t T = true) :
++    (hlib : checkLib Δ lib = true) (ht : check Δ t T (Ω := []) = true) :
+     RunOK Δ T (eval lib ticks t) :=
+   eval_sound (checkLib_sound hlib) .nil (check_iff.mp ht)
+ 
+diff --git a/Lang/Proofs/StdDataTeeth.lean b/Lang/Proofs/StdDataTeeth.lean
+index 4973799..6d21b4d 100644
+--- a/Lang/Proofs/StdDataTeeth.lean
++++ b/Lang/Proofs/StdDataTeeth.lean
+@@ -18,7 +18,7 @@ private def equalityValue (label : Label) (n : Nat) : Term := .record [
+   ("d", .inj (.sum [("left", .nat), ("right", .nat)]) label (.nat n))]
+ 
+ theorem eqData_nested_checks :
+-    infer [] [] (eqData equalityTy (equalityValue "left" 3) (equalityValue "left" 4)) = some .bool := by
++    infer [] [] (eqData equalityTy (equalityValue "left" 3) (equalityValue "left" 4)) (Ω := []) = some .bool := by
+   decide +kernel
+ 
+ theorem eqData_nested_equal :
+diff --git a/Lang/Proofs/StdFits.lean b/Lang/Proofs/StdFits.lean
+index 491aea2..90ff6d3 100644
+--- a/Lang/Proofs/StdFits.lean
++++ b/Lang/Proofs/StdFits.lean
+@@ -328,7 +328,7 @@ A state type nested at most `Read.depthMax - 2` deep leaves every capped law wit
+ carries is that shallow (`Lang.Proofs.PrintWire.state_prints`). The `_reads` forms add the install
+ check's premise (the law checks) and conclude the whole round trip, by `readTerm_checked`. -/
+ 
+-theorem reads_of_text {t : Term} {T : Ty} (ht : (term t).isSome = true) (hc : inferE [] [] t = .ok T) :
++theorem reads_of_text {t : Term} {T : Ty} (ht : (term t).isSome = true) (hc : inferE [] [] t (Ω := []) = .ok T) :
+     ∃ s, term t = some s ∧ Read.readTerm s = .ok t :=
+   ⟨(term t).get ht, (Option.some_get ht).symm, readTerm_checked (by simp) hc (Option.some_get ht).symm⟩
+ 
+@@ -338,7 +338,7 @@ theorem quorum_text {S T : Ty} {ms : List ByteArray} {k : Nat} {g : Label} {t :
+   exact term_isSome (quorumLaw_prints T ms k hS hg) (by simp only [membersMax] at hn; simp only [depthMax, Wire.depthMax]; omega)
+ 
+ theorem quorum_reads {S T U : Ty} {ms : List ByteArray} {k : Nat} {g : Label} {t : Term}
+-    (h : quorum S T ms k g = .ok t) (hS : TyPrints (depthMax - 2) S) (hg : labelOk g = true) (hc : inferE [] [] t = .ok U) :
++    (h : quorum S T ms k g = .ok t) (hS : TyPrints (depthMax - 2) S) (hg : labelOk g = true) (hc : inferE [] [] t (Ω := []) = .ok U) :
+     ∃ s, term t = some s ∧ Read.readTerm s = .ok t :=
+   reads_of_text (quorum_text h hS hg) hc
+ 
+@@ -348,7 +348,7 @@ theorem allowlist_text {S : Ty} {ids : List ByteArray} {t : Term} (h : allowlist
+   exact term_isSome (allowlistLaw_prints ids hS) (by simp only [idsMax] at hn; simp only [depthMax, Wire.depthMax]; omega)
+ 
+ theorem allowlist_reads {S U : Ty} {ids : List ByteArray} {t : Term} (h : allowlist S ids = .ok t)
+-    (hS : TyPrints (depthMax - 2) S) (hc : inferE [] [] t = .ok U) : ∃ s, term t = some s ∧ Read.readTerm s = .ok t :=
++    (hS : TyPrints (depthMax - 2) S) (hc : inferE [] [] t (Ω := []) = .ok U) : ∃ s, term t = some s ∧ Read.readTerm s = .ok t :=
+   reads_of_text (allowlist_text h hS) hc
+ 
+ theorem machine_text {S : Ty} {f : Label} {states : List Label} {initial : Label} {methods : List Label}
+@@ -361,7 +361,7 @@ theorem machine_text {S : Ty} {f : Label} {states : List Label} {initial : Label
+ theorem machine_reads {S U : Ty} {f : Label} {states : List Label} {initial : Label} {methods : List Label}
+     {edges : List (Label × Label × Label)} {t : Term} (h : machine S f states initial methods edges = .ok t)
+     (hS : TyPrints (depthMax - 2) S) (hf : labelOk f = true) (hst : ∀ x ∈ states, labelOk x = true)
+-    (hc : inferE [] [] t = .ok U) : ∃ s, term t = some s ∧ Read.readTerm s = .ok t :=
++    (hc : inferE [] [] t (Ω := []) = .ok U) : ∃ s, term t = some s ∧ Read.readTerm s = .ok t :=
+   reads_of_text (machine_text h hS hf hst) hc
+ 
+ /-! ## Teeth: the premises hold at every cap, and the caps carry the weight -/
+@@ -401,10 +401,10 @@ theorem machine_at_cap_text {t : Term} (h : machine MS "phase" ["a", "b"] "a" ["
+ 
+ /-- The `_reads` premise is met at the cap: the allowlist of `idsMax` ids checks, so its text reads
+ back to exactly the law. -/
+-theorem allowlist_at_cap_infers : (inferE [] [] (allowlistLaw QS (ids idsMax))).toOption = some (lawTy QS) := by
++theorem allowlist_at_cap_infers : (inferE [] [] (allowlistLaw QS (ids idsMax)) (Ω := [])).toOption = some (lawTy QS) := by
+   decide +kernel
+ 
+-theorem allowlist_at_cap_checks : inferE [] [] (allowlistLaw QS (ids idsMax)) = .ok (lawTy QS) := by
++theorem allowlist_at_cap_checks : inferE [] [] (allowlistLaw QS (ids idsMax)) (Ω := []) = .ok (lawTy QS) := by
+   have h := allowlist_at_cap_infers
+   revert h
+   cases inferE [] [] (allowlistLaw QS (ids idsMax)) <;> simp [Except.toOption]
+diff --git a/Lang/Proofs/Subst.lean b/Lang/Proofs/Subst.lean
+index f923696..1d2056a 100644
+--- a/Lang/Proofs/Subst.lean
++++ b/Lang/Proofs/Subst.lean
+@@ -550,7 +550,7 @@ theorem substList_nested_capture :
+ 
+ /-- Distinct replacement types make capture observable to the real checker. -/
+ theorem substList_ambient_checked :
+-    Lang.infer [] [.nat] (Term.substList [.var 0] (.lam .bool (.var 1))) =
++    Lang.infer [] [.nat] (Term.substList [.var 0] (.lam .bool (.var 1))) (Ω := []) =
+       some (.fn .bool .nat) := by
+   rw [substList_lam_capture]
+   exact Lang.infer_complete (.lam (by decide) (.var rfl))
+diff --git a/Lang/Resident.lean b/Lang/Resident.lean
+index 5cfa56b..8c6884e 100644
+--- a/Lang/Resident.lean
++++ b/Lang/Resident.lean
+@@ -142,7 +142,7 @@ def answer (src : String) : SExp → Answer
+   | .list _ [.atom _ "type", tx] =>
+     match term depthMax [] tx with
+     | .error e => readRefused e
+-    | .ok t => match inferE [] [] t with
++    | .ok t => match inferE [] [] t (Ω := []) with
+       | .ok T => match Print.ty T with
+         | some s => ok s
+         | none => unprintable
+@@ -152,7 +152,7 @@ def answer (src : String) : SExp → Answer
+     | none, _ => readRefused (.notOfType p)
+     | _, .error e => readRefused e
+     | some ticks, .ok t =>
+-      match inferE [] [] t with
++      match inferE [] [] t (Ω := []) with
+       | .error e => no s!"illTyped {e.text}"
+       | .ok T =>
+         match eval [] ticks t with
+diff --git a/Lang/StdActivity.lean b/Lang/StdActivity.lean
+index 99bc42d..2e4876a 100644
+--- a/Lang/StdActivity.lean
++++ b/Lang/StdActivity.lean
+@@ -217,7 +217,7 @@ def activity (S : Ty) (cursor log : Label) (cursorLimit logLimit : Nat)
+   if 2 * plans.length + 1 > methodsMax then throw .tooManyPlans
+   if !(plans.map (·.name)).Nodup then throw .duplicatePlan
+   if cursor = log then throw .sameRelation
+-  match checkE [] resumer (.fn S (.fn reqTy .bool)) with
++  match checkE [] resumer (.fn S (.fn reqTy .bool)) (Ω := []) with
+   | .error why => throw (.package (.illTyped why))
+   | .ok () => pure ()
+   for p in plans do
+@@ -225,7 +225,7 @@ def activity (S : Ty) (cursor log : Label) (cursorLimit logLimit : Nat)
+       (p.precondition, Ty.fn S (.fn p.captured (.fn reqTy .bool))),
+       (p.start, Ty.fn S (.fn p.captured (.fn reqTy S))),
+       (p.resume, Ty.fn S (.fn p.captured (.fn p.response (.fn reqTy S))))] do
+-      match checkE [] t T with
++      match checkE [] t T (Ω := []) with
+       | .error why => throw (.package (.illTyped why))
+       | .ok () => pure ()
+   let pkg := activityPackage S cursor log cursorLimit logLimit resumer plans
+diff --git a/Lang/StdContextualHole.lean b/Lang/StdContextualHole.lean
+index 1b31ab5..4e659d5 100644
+--- a/Lang/StdContextualHole.lean
++++ b/Lang/StdContextualHole.lean
+@@ -70,14 +70,14 @@ def contextualHole (A : Ty) (declaration : HoleROM) (σ : List Term) (clause : T
+     iface := .record (Row.sort (ts ++ additions.map fun (n, t, _) => (n, t))),
+     body := .record (Row.sort (fs ++ additions.map fun (n, _, t) => (n, t))),
+     rels, holes := [h], methods := (p.methods ++ ["choose_code", "execute"]).mergeSort }
+-  p.checkContextual (bundle.libraries.map (·.iface))
++  (p.checkContextual (bundle.libraries.map (·.iface))).mapError HoleRefusal.wire
+   pure { bundle with layout := p }
+ 
+ /-- Link live ROM to its ordinary checked helpers. No filling is staged here. -/
+ def HoleBundle.linkContextual (b : HoleBundle) (ids : List ByteArray) : Except String Package := do
+   unless ids.length = b.libraries.length do throw "holeImports"
+   let p := { b.layout with imports := ids }
+-  p.checkContextual (b.libraries.map (·.iface))
++  (p.checkContextual (b.libraries.map (·.iface))).mapError HoleRefusal.wire
+   let some bytes := Wire.encodePackage p | throw "holeRootTooLarge"
+   unless bytes.size ≤ Bounds.bytesMax do throw "holeRootTooLarge"
+   pure p

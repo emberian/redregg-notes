@@ -1,0 +1,16 @@
+step	expect	rc	result
+kind-create	0	0	PASS
+instance-create	0	0	PASS
+instance-before	0	0	PASS
+before-rev1	true	0	PASS
+vote-prepare	0	0	PASS
+vote-signed	0	0	PASS
+call-retained	true	0	PASS
+revise-kind-prepare	0	0	PASS
+revise-kind-submit	0	0	PASS
+kind-after	0	0	PASS
+kind-is-rev2	true	0	PASS
+retry	-	0	RAN
+call-unchanged	true	0	PASS
+instance-after	0	0	PASS
+p7-verdict	SAME-EFFECT|REFUSED	-	SAME-EFFECT (vote=1 rev=1 fields=1,2,3 retry-rc=0)

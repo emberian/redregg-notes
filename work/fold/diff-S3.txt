@@ -1,0 +1,5 @@
+before 53652 after 52625
+vanished 1027 of which outside the declared 14 modules 0
+declared-module constants 1028 all vanished: False
+new 0 type-digest changed 0 value-hash changed 0 module changed 1
+   Nanodregg.Lang.Contextual.Iface.mk.congr_simp

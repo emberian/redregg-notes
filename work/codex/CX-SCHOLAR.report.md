@@ -1,0 +1,28 @@
+
+## WORKLOG
+
+2026-10-20 — CX-SCHOLAR read-only research complete. Memo: /Users/ember/dev/redregg/work/HOLES-FOR-PROOF-ENGINEERING-20261020.md. Required Mac design records read whole; CARD 9 and actual cv exchange around 7c10f132 #3600 read; cv task records 01a15630-cf43 and 01a15630-cf60 checked against source. Exact reading scope and limitations are in the memo's receipt.
+
+2026-10-20 — Source anchors: nano 2b6e5e1c30f14833322ebca1c292b422ba53c183; observed subsequent LANG-69 split at b5f880bc96ea6a21bf0176d4da37efdc605b270f and used git show for the prior proof module. Mini's requested hbox ~/dev/minidregg is an old scaffold (e1bb78d); relevant source read from bare /tank/dregg-build/claude-lanes/bundles/burst5-minidregg.git main 334316df5653a846ed5d6069bbfb282bc4d5fcf6. Bread inspected at fdfef4613823c1037231b5f36255c6389030b5b5. These are source observations, not fresh build receipts or assertions of current captain tips.
+
+2026-10-20 — No worktree, source changes, builds, tests, judges, helper jobs, PID files, landings, or unlanded implementation. Only the memo and this required report were written. PRICE PREMISES: none added to landed theorems; none restated. Proposed future experiments and implementation are explicitly INFERRED, not performed.
+
+2026-10-20 — RESULT: closure repair is a usable basis for persistent proof obligations, but its landed from-scratch guarantee covers statuses over fixed retained candidates. Memo specifies the missing Lean/revision bridge, existing mini/bread instruments to reuse, Kernel experiment, three falsifying measurements, and premise/flag-day prices.
+2026-10-20 — ASK: future implementation sequencing fork, receipt-first adapter (4–7 engineer-days) versus dependent-context bridge first (10–20, higher uncertainty). Recommend receipt-first to test actual dependency/audit semantics, with the dependent bridge retained in scope. Neither implemented; CARD 9's approved Lang B is unchanged.
+DONE 2026-10-20 — /Users/ember/dev/redregg/work/HOLES-FOR-PROOF-ENGINEERING-20261020.md. Landed hashes: none (read-only scholar).
+
+2026-10-20 — RE-ENTRY (01a15af8-4f88): recovered the original brief and completion exchange from cv 01a15ad7-29d4-7193-90ce-1b8dd97ce907; read the existing 551-line memo whole and preserved it. Checked that its three cited source commits exist on hbox; nano main remains b5f880bc96ea6a21bf0176d4da37efdc605b270f. This is a handoff/integrity check, not a new source audit or build receipt.
+2026-10-20 — WORKLOG: cv 01a15af8-d91f-7d93-a68d-bfb3668378a9 carries a separate run-3 revision brief against ACTIVITIES-GPT-RAW-20261020.md. This duplicate original-brief run leaves that revision to its assigned session; no memo edits, repository changes, jobs, or landings here.
+DONE 2026-10-20 — Original brief already fulfilled: /Users/ember/dev/redregg/work/HOLES-FOR-PROOF-ENGINEERING-20261020.md (551 lines at inspection). Preserved for the separately assigned run-3 revision; this DONE does not certify that revision. Landed hashes: none.
+
+
+## WORKLOG (rev 3)
+
+2026-10-20 — REVISION 3: read ACTIVITIES-GPT-RAW-20261020.md whole before the existing memo and other records; revised the memo in place to 597 lines. Every section is marked (rev 3); paragraphs distinguish MEASURED, READ with source paths, and INFERRED, including inline tags where interpretation follows source facts. Final SHA-256: bf14d49ae1e991ee83dd9d1a0dbbad7c140d88493e72a58f73cb50df6800cbf4.
+2026-10-20 — EVIDENCE (rev 3): repository reads only via ssh on hbox. Nano b5f880bc96ea6a21bf0176d4da37efdc605b270f, mini bare main 334316df5653a846ed5d6069bbfb282bc4d5fcf6, bread fdfef4613823c1037231b5f36255c6389030b5b5. Memo records whole versus targeted reads, inherited prior readings, actual cv dialogue and task records, and source corrections to stale summaries. No proof/build replay claimed.
+2026-10-20 — SCOPE (rev 3): added raw-document interaction guards and four preservation strengths; stable worlds and grounded cycles; three repair results and first-class repair plans; polarity/alternating simulation; four logical statuses; PUMPKIN-style checked transport and pruning dependencies; actual mini partial transport and reactive dirty semantics; explicit certificate logic; negotiation experiment after the Kernel slice. Retained and sharpened fixed-candidate repair limits, dependency graphs, existing mini/bread instruments, three falsifying measurements, and premise/flag-day prices.
+2026-10-20 — STATE (rev 3): no worktree, repository edits, builds, tests, judges, helper jobs, PID files, landings, or built-unlanded work. Only the authorized local memo and appended report changed. No check weakened or acceptance widened. PRICE PREMISES: landed theorems gaining hypotheses: none; landed statements restated: none. Future adapter premises are proposed new obligations, not changes already made.
+2026-10-20 — ASK (rev 3, retained future design fork): receipt-first adapter (4–7 engineer-days for nano pilot) versus dependent-context bridge first (10–20, greater uncertainty). Recommend receipt-first with the full dependent follow-on retained; neither implemented. Estimates exclude later negotiation client, full dependent bridge, wholesale semantic repairs and full-library recovery. CARD 9's approved Lang B remains separate and unchanged.
+
+2026-10-20 — RESULT (rev 3): revised the memo against the raw documents; closure repair can underpin proof-engineering tooling, but its landed guarantee covers statuses over retained candidates and needs an explicit Lean/revision bridge.
+DONE 2026-10-20 — Revision 3: /Users/ember/dev/redregg/work/HOLES-FOR-PROOF-ENGINEERING-20261020.md (597 lines). Landed hashes: none (read-only scholar).

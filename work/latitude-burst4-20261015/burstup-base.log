@@ -1,0 +1,6 @@
+03:30:50Z burst-up: cold build of a5483db36cf7aaf34378a15c90b68c2de538f16a on burst4-a (Mathlib cache + umbrella, ~15 min on an f4)
+  [burst4-a] build_start=2026-10-15T03:31:45+00:00
+  [burst4-a] build_rc=0 build_wall=1017s build_end=2026-10-15T03:48:42+00:00
+  [burst4-a] built_lines=1318
+  [burst4-a] warm base frozen at a5483db36cf7aaf34378a15c90b68c2de538f16a (verified replay)
+  [burst4-a] 11G	/srv/warm-base/src

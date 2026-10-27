@@ -1,0 +1,8 @@
+J0	PASS	2.013	/run/user/1001/p4.lLiI5S/r/world/handoff.json	service up and a signed read answered in 1.988s
+J1	PASS	2.931	/run/user/1001/p4.lLiI5S/r/world/attempts/newcomer/submit.json	subject 14624123575744617878, record 1; key absent from genesis/config; lookup = same receipt
+J2	PASS	1.125	/run/user/1001/p4.lLiI5S/r/world/sponsor/attempts/create-shared/outcome.json	object 17167288078998946075 under all[], record 2
+J3	PASS	2.168	/run/user/1001/p4.lLiI5S/r/world/sponsor/attempts/grant-newcomer/outcome.json	child 16537632818898241708 verbs observe,mutate, record 3
+J4	PASS	2.826	/run/user/1001/p4.lLiI5S/r/world/newcomer-workspace/attempts/first-action/outcome.json	read 0.655s, write 1.341s, readback field 2 = 1, record 4
+BD	PASS	14.898	/run/user/1001/p4.lLiI5S/r/steps/BD/bind-result.tsv	pairs: S,N and N,S installed without re-plan; overlap refused:   client: host returned refused; exact outcome evidence was retained
+P7KR	PASS	8.834	/run/user/1001/p4.lLiI5S/r/steps/P7KR/jkind-revise-consent/rows.tsv	P7 verdict: SAME-EFFECT
+THIN	PASS	56.478	/run/user/1001/p4.lLiI5S/r/steps/THIN/jthin-consent/rows.tsv	JTHIN: all thin-consent rows passed

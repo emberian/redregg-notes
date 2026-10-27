@@ -1,0 +1,26 @@
+✔ [91/96] Built Hosting.Resident.Bell (628ms)
+✔ [92/96] Built Hosting.Resident.Run (787ms)
+✔ [93/96] Built Hosting.Resident.Trace (596ms)
+✖ [94/96] Building Hosting.Proofs.Resident (1.2s)
+trace: .> LEAN_PATH=/tank/dregg-build/nanodregg/wt/e2/.lake/build/lib/lean /home/hbox/.elan/toolchains/leanprover--lean4---v4.30.0/bin/lean /tank/dregg-build/nanodregg/wt/e2/Hosting/Proofs/Resident.lean -o /tank/dregg-build/nanodregg/wt/e2/.lake/build/lib/lean/Hosting/Proofs/Resident.olean -i /tank/dregg-build/nanodregg/wt/e2/.lake/build/lib/lean/Hosting/Proofs/Resident.ilean -c /tank/dregg-build/nanodregg/wt/e2/.lake/build/ir/Hosting/Proofs/Resident.c --setup /tank/dregg-build/nanodregg/wt/e2/.lake/build/ir/Hosting/Proofs/Resident.setup.json --json
+error: Hosting/Proofs/Resident.lean:72:48: unsolved goals
+p : List Ring
+r : Ring
+t : ByteArray
+h : r ∈ p
+⊢ False
+error: Hosting/Proofs/Resident.lean:90:4: unsolved goals
+case isTrue
+p✝ : List Ring
+k : Option (Ring × ByteArray)
+r q : Ring
+t : ByteArray
+p : List Ring
+h✝ : q ∈ p
+h : q = r
+⊢ p.head? = some r ∧ ∀ (q_1 : Ring) (t_1 : ByteArray), some (q, t) = some (q_1, t_1) → ¬q_1 ∈ p
+error: Hosting/Proofs/Resident.lean:108:6: `simp` made no progress
+error: Lean exited with code 1
+Some required targets logged failures:
+- Hosting.Proofs.Resident
+error: build failed

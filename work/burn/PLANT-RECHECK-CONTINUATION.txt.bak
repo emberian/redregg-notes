@@ -1,0 +1,4 @@
+CONTINUATION (BURN-CENSUS, plant recheck), 2026-10-07, wound down on ROOT order.
+Done: groups A, B, D (TSVs here). Group C (host plants scripts/plants/*.py + objective-* journey --plant) unfinished/no TSV; lanes /srv/lanes/census-pl-C* on burst2-a hold partial builds (mine, safe to remove). Group A/B/C workers may still be running or have stopped; their TSVs, if later appended, live in this directory; re-run merge (python merging A/B/C/D.tsv into ../PLANT-RECHECK.md).
+Findings to route (NOT yet sent to deputies): D: gitweb-content-export/test-ingest.sh red at tip (mock Mini shape vs ingest.sh since 16538e93); cohort-two-host run-planted-faults.sh controls red both boxes (cohort single-host path broken, wrong-slot-key/drop-cover not red-as-intended) -> DEPUTY-PLATFORM aed11e1555308dbcb. See Not OK list in PLANT-RECHECK.md for A/B.
+Also done earlier: PROOF-SHAPE-CENSUS.md/.tsv, MODULE-BUILD-TIMES.tsv; 5 ResearchWip modules fail to build at tip.

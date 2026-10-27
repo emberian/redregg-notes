@@ -1,0 +1,8 @@
+before 54249 after 53654
+vanished 595 of which outside the declared 14 modules 0
+declared-module constants 599 all vanished: False
+new 0 type-digest changed 0 value-hash changed 0 module changed 4
+   Nanodregg.Lang.Contextual.countRun.eq_1
+   Nanodregg.Lang.Contextual.Iface.mk.congr_simp
+   Nanodregg.Lang.Contextual.countRun.eq_def
+   Nanodregg.Lang.Contextual.countRun.eq_2

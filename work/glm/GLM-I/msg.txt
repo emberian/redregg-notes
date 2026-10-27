@@ -1,0 +1,26 @@
+testground: the Vault, a demo of graded effects and held rows — the journey's own package, its outcomes read off the kernel
+
+The testground had no demo of LANG-89 or LANG-90: nothing on the page showed a method's grade
+bounding what one run may move, or a relation whose rows name value the object holds. Now it has
+one. The Vault is the journey's own package (Lang/Journey/Holds.lean, the HV rows): the kernel
+reads its surface text with the journey's own reader and ships the text install takes (tg_text
+"vault"), and it answers the scene's expectations as a menu (tg_holds): each checked command's
+expected outcome, the refusal's exact words produced by the kernel's own checkers (Lang.checkMoves
+on the journey's grade, Lang.checkLegsGo on its relation label), and the balances and rows the
+journey's rows assert. The scene (testground/scenes-vault.js, loaded by one line in index.html)
+types alice's commands and writes none of its expectations: she issues the denomination, creates
+the vault, opens the accounts, funds hers with 50 and grants the vault object the right to move up
+to 100 from it; a deposit that pays its leg is admitted, with the row read back and the balances
+shown in the account windows; a withdraw of 1001 under a grade of 1000 is refused (effectExceeded)
+and nothing moves, the balances and the row unchanged beside the refusal; a deposit that inserts a
+leg of 10 and pays nothing is refused (legUnfunded) and no row appears. Every result prints inline
+beside its command. The gate runs the scene against the kernel's menu
+(testground/scenes-vault-run.mjs, gate.sh), so a grade, label or wording that changes in the kernel
+or the journey turns the scene red until it follows; a tour step plays the demo.
+
+The inspector gains the two fields it could not show: a method's grade (tg_iface, a moves column in
+Methods) and a relation's held field (a line beside each relation), both read off the member's
+follow. An account opens a window of its own (tg_cell answers an account's owner, asset, balance
+and floor through Kernel.Value.ofCell), which is how the demo's balances stay visible. publish.sh
+carries the scene file. Rebuilds the testground kernel (testground/kernel.mjs, kernel.wasm are build
+outputs); nothing on the wire changed.

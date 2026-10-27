@@ -1,0 +1,12 @@
+
+## WORKLOAD lane — 2026-10-13
+- Warm base: no warm Lean tree exists on hbox any more (warm-base/src has no .lake; mk-lane.sh fails on du of .lake/build). Fresh clone at hbox:/tank/dregg-build/claude-lanes/warm-7dea0626/src @ 7dea0626; building from scratch (Mathlib via `lake exe cache get`).
+- 00:1x hbox: `lake exe cache get` 112 s (Mathlib all cached). Started `swarm-build lake build +Host.Main:leanArts +Host.ClientConsentSession:leanArts` (3739 jobs) and, in parallel, `lane-build.sh rust` (14 roles, cargo fetch 6 s).
+- Design: workload driver = scripts/perf/workload.py on native/resource-client/activity_world.py (the Objective journeys' world), not a twin of journey.sh; phases genesis/setup/births/updates/reads/checkpoint/judgment/reopen.
+- Lean closure (+Host.Main:leanArts +Host.ClientConsentSession:leanArts, 3739 jobs) 1582 s, green. Rust roles (14, 8 jobs) 300 s, green. Now lane-build host (native link) + consent.
+- ROOT praxis note folded in: HEADLINE = births/create; box.py quiet (refuses exit 3 naming the busy cgroup unit; row → 98), settings.json with inputKey, perf stat -I instructions:u attributed per phase.
+- Host native link 899 s (first try refused: MINIDREGG_NATIVE_JOBS must be 1 or 2), consent 46 s, pack 10 s. Candidate: hbox:/tank/dregg-build/claude-lanes/warm-7dea0626/candidate (bin/ 17 roles). READY written.
+- Debug runs (N=4,M=4,K=2): fixed `at` reads (heights are ABSOLUTE = genesis height G + log height, and must be inside the object's life or the Host refuses no-grant), perf-stat rc masking (verdict now from summary.json), objects-key clash. Per-record cost today ~3.2 s (resource ~4-6.5 s + create ~1.9 s per birth; invoke ~3.3 s); fixed overhead ~45-70 s. Crossing height 64 needs 10+2N+M>64 → ~230 s: the 180 s bound and phase 5 cannot both hold today. Chose N=20 M=16 K=8 (smallest that crosses 64). hbox busy throughout (load ~10: a lean build run-u19199 ~3 cores + fn sbcl run-u18794 1 core) → runs taken with PERF_UNDER_LOAD=1.
+- Smoke runs N=20 M=16 K=8 (under load): r1 363.6 s, r2 440.8 s, every phase completed; births/create p50 2451/3278 ms; instructions births 1742G/1860G, updates 1469G/1445G (wall varies up to 50%, instructions 2-7%). Results hbox:/tank/dregg-build/claude-lanes/warm-7dea0626/perf/r{1,2}/.
+- Row: busy box → rc 98 naming units; plant JOURNEY_PLANT_PERF=budget-1s → rc 1 "workload FAIL: wall 351.2s not under the 1s bound (N=20 M=16 K=8)", 8 PASS sub-rows.
+- Committed d37eee80 on perf-workload, pushed lane/perf-workload to burst3-minidregg.git.

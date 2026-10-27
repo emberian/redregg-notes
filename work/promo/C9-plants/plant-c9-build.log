@@ -1,0 +1,7 @@
+✔ [140/148] Built Lang.Journey (7.5s)
+✔ [141/148] Built Lang.Journey.ContextualReceive (1.3s)
+✔ [143/148] Built Lang.Journey.ContextualCycle (872ms)
+✔ [145/148] Built Lang.Journey.Main (392ms)
+✔ [147/148] Built Lang.Journey:c.o (14s)
+✔ [148/148] Built «lang-journey»:exe (1.5s)
+Build completed successfully (148 jobs).

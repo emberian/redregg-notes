@@ -1,0 +1,26 @@
+
+step  status      wall_s  what / detail / deciding artifact
+J0   PASS        17.715  clean start: private single-authority service, one sponsor
+                          service up and a signed read answered in 17.691s
+                          -> /run/user/1001/p5l/world/handoff.json
+J1   PASS        14.195  enroll an independently generated newcomer key
+                          subject 11474594955279643985, record 1; key absent from genesis/config; lookup = same receipt
+                          -> /run/user/1001/p5l/world/attempts/newcomer/submit.json
+J2   PASS         4.360  sponsor creates a resource under a permissive law
+                          object 17984725589838119881 under all[], record 2
+                          -> /run/user/1001/p5l/world/sponsor/attempts/create-shared/outcome.json
+J3   PASS        11.571  sponsor delegates observe+mutate (no control) to newcomer
+                          child 11811271977672078107 verbs observe,mutate, record 3
+                          -> /run/user/1001/p5l/world/sponsor/attempts/grant-newcomer/outcome.json
+J4   PASS        21.590  newcomer signed read, writes field to 1, reads back 1
+                          read 3.810s, write 7.694s, readback field 2 = 1, record 4
+                          -> /run/user/1001/p5l/world/newcomer-workspace/attempts/first-action/outcome.json
+J5   PASS        60.393  a key with no grant: read and write refused
+                          8/8 refused: 4 by the Host (enrolled no-grant read x2, propose, crafted submit), 2 by local consent before signing (unenrolled read, submit), and the same unenrolled read and write sent by a hostile client past that gate: the Host refuses both (this key is not enrolled on this Host); image unchanged; third = record 5
+                          -> /run/user/1001/p5l/steps/J5/refusals.tsv
+K12T  PASS       393.015  range transclusion: disclosure at transclusion time, snapshot pinned, live follows, a late joiner sees the placeholder
+                          28/28 transclusion rows as expected: disclosure checked at transclusion time, snapshot pinned (read at its height), live follows the range, endpoint death by policy, no bytes in the host
+                          -> /run/user/1001/p5l/steps/K12T/transclusion-rows.tsv
+
+FRONTIER: END   (accepted records: 5; load average start/end: 7.76 8.83 10.51 / 9.39 7.99 9.09 on 16 CPUs; result: /run/user/1001/p5l/journey-result.json)
+EXIT 0

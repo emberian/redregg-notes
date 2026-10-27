@@ -1,0 +1,3 @@
+- 2026-10-27 BLOCKED: ROOT custody decision is pending: allow existing pub/sign/forge byte calls in the same-origin worker, or retain a separate direct WASM instance for custody. The contract explicitly pauses custody changes.
+- 2026-10-27 BLOCKED: Pages publication answer is pending under the contract’s outward-facing pause. Nothing was published or pushed.
+- 2026-10-27 STATUS: Worker transport and gate checks pass; the responsiveness experiment has no long tasks. Document throughput remains about 6 s on hbox. Cache integration, final UI checks, M2 measurements and landings remain. Not DONE.

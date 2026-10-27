@@ -1,0 +1,54 @@
+✔ [51/57] Built Lang.Program (1.0s)
+✔ [52/57] Built Lang.Proofs.Load (1.3s)
+✔ [53/57] Built Lang.Proofs.Invoke (1.4s)
+✔ [54/57] Built Lang.Proofs.Call (3.9s)
+✔ [55/57] Built Lang.Proofs.CallLive (3.5s)
+✔ [56/57] Built Lang.Proofs.LawRun (851ms)
+✖ [57/57] Building Lang.Proofs.Rel (2.2s)
+trace: .> LEAN_PATH=/tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean /home/hbox/.elan/toolchains/leanprover--lean4---v4.30.0/bin/lean /tank/dregg-build/nanodregg/wt/promo/Lang/Proofs/Rel.lean -o /tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean/Lang/Proofs/Rel.olean -i /tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean/Lang/Proofs/Rel.ilean -c /tank/dregg-build/nanodregg/wt/promo/.lake/build/ir/Lang/Proofs/Rel.c --setup /tank/dregg-build/nanodregg/wt/promo/.lake/build/ir/Lang/Proofs/Rel.setup.json --json
+error: Lang/Proofs/Rel.lean:946:47: Tactic `assumption` failed
+
+D : Type
+bytesOf : D → ByteArray
+digestOf : ByteArray → Option D
+setup : Pinned D → RowView D → D → Slots → Nat → ByteArray → Req D → Except (Refusal D) RunSetup
+look : Pinned D
+rv : RowView D
+pkg : D
+state : Slots
+method : Nat
+args : ByteArray
+r : Req D
+budget : Nat
+s : Slots
+calls : List (Body D)
+t n : Nat
+x✝⁵ : Except (Refusal D) RunSetup
+S : RunSetup
+hS : setup look rv pkg state method args r = Except.ok S
+h✝ : ¬S.preparation > budget
+x✝⁴ : Outcome
+v✝² : Val
+used✝ : Nat
+heq✝⁴ : run S.lib Bounds.stackMax (budget - S.preparation) 0 (State.init S.term S.env) = Outcome.value v✝² used✝
+x✝³ : Except Fault (Data × Nat)
+c✝ e✝ : Data
+ds✝ : List (Label × Data)
+left✝ : Nat
+heq✝³ :
+  { lib := S.lib }.extract S.ty (budget - S.preparation - used✝) v✝² =
+    Except.ok (Data.record [("calls", c✝), ("edits", e✝), ("state", Data.record ds✝)], left✝)
+x✝² : Option Slots
+slots✝ : Slots
+heq✝² : stateSlots S.row ds✝ 0 = some slots✝
+x✝¹ : Except (Refusal D) (List (Body D))
+v✝¹ : List (Body D)
+heq✝¹ : callsOf digestOf c✝ = Except.ok v✝¹
+x✝ : Except (Refusal D) (List (Edit D))
+v✝ : List (Edit D)
+heq✝ : editsOf S.rels r.self e✝ = Except.ok v✝
+⊢ guardEdits bytesOf digestOf S rv pkg r v✝ = Except.ok ()
+error: Lean exited with code 1
+Some required targets logged failures:
+- Lang.Proofs.Rel
+error: build failed

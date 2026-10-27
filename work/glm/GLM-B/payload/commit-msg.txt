@@ -1,0 +1,21 @@
+kernel: every verdict wire name is one verdict
+
+The reject table no longer shares a wire name with the receive-refusal
+table. A member reading a refusal record by name can now tell a rejected
+row from a refused one: previously missingCell, rangeTooLong and
+duplicateRow named two verdicts each, and a recorded rejected verdict
+answered with the same string as a recorded receive refusal.
+
+The kernel side was renamed, keeping the law-7 invariant that a wire
+name is its constructor's, arguments dropped: Reject.missingCell is now
+absentCell, Reject.rangeTooLong is rangeOverMost, and Reject.duplicateRow
+is duplicateRowSlot. The refusal names the rows and journeys assert are
+untouched. Codes keep their numbers (the renames are in place, no
+reorder); codeTable's text changes and shapeStamp with it, so a store
+stamped with the old table does not open under the new binary, which is
+the stamp doing its job.
+
+Verdict.name_injective (Kernel/Proofs/Refusals.lean) states the check:
+one wire name determines one code, the two-table form of the existing
+Refusal.name_injective and Reject.name_injective, decided over the two
+finite name tables that codeName_code ties to the constructors.

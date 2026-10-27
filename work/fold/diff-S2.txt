@@ -1,0 +1,36 @@
+before 53666 after 53652
+vanished 17 of which outside the declared 14 modules 17
+declared-module constants 0 all vanished: False
+new 3 type-digest changed 6 value-hash changed 6 module changed 0
+   Nanodregg.Lang.Journey.p8Rows.match_12
+   Nanodregg.Lang.Journey.p8Available
+   Nanodregg.Lang.Journey.p8Rows.match_19
+   Nanodregg.Lang.Journey.p8Rows._sparseCasesOn_9
+   Nanodregg.Lang.Journey.p8Registry
+   Nanodregg.Lang.Journey.p8Iface
+   Nanodregg.Lang.Journey.p8Candidate
+   Nanodregg.Lang.Journey.p8Data
+   Nanodregg.Lang.Journey.p8Rows.match_17
+   Nanodregg.Lang.Journey.p8World.match_1
+   Nanodregg.Lang.Journey.p8Rows.match_15
+   Nanodregg.Lang.Journey.p8Correspondence
+   Nanodregg.Lang.Journey.p8Iface._proof_1
+   Nanodregg.Lang.Journey.p8Rows._sparseCasesOn_12
+   Nanodregg.Lang.Journey.p8Guard
+   Nanodregg.Lang.Journey.p8Swap
+   Nanodregg.Lang.Journey.p8World
+   Nanodregg.Lang.Journey.p8Live
+   Nanodregg.Lang.Journey.p8Rows.match_11
+   Nanodregg.Lang.Journey.p8Rows.match_13
+   Nanodregg.Lang.Journey.p8Rows._sparseCasesOn_3
+   Nanodregg.Lang.Journey.p8Rows._sparseCasesOn_6
+   Nanodregg.Lang.Journey.p8Rows.match_6
+   Nanodregg.Lang.Journey.p8Rows.match_9
+   Nanodregg.Lang.Journey.p8Rows.match_3
+   Nanodregg.Lang.Journey.p8Rows.match_1
+   Nanodregg.Lang.Journey.p8Rows._sparseCasesOn_3
+   Nanodregg.Lang.Journey.p8Rows._sparseCasesOn_6
+   Nanodregg.Lang.Journey.p8Rows.match_6
+   Nanodregg.Lang.Journey.p8Rows.match_9
+   Nanodregg.Lang.Journey.p8Rows.match_3
+   Nanodregg.Lang.Journey.p8Rows

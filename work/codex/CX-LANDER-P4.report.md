@@ -1,0 +1,7 @@
+
+## WORKLOG
+
+2026-10-20 CX-LANDER-P4 — A DEMONSTRATION MINI CAN TAKE. Lander-only verification from the existing warm hbox worktree /tank/dregg-build/nanodregg/wt/CX-P4. Read the whole CX-READER-P4 report, all 18 lane rules, main CHARTER and OWNERS, and landed LANG-73. Live state superseded the brief: CX-READER-P4 had already launched scripts/commit and completed the landing. Read its whole log /tank/dregg-build/nanodregg/logs/CX-READER-P4-land1.log; PID file CX-READER-P4-land1.pid contains 2985315, now exited. No duplicate judge, rebase, source edit, build or process stop performed. Warm worktree is clean at the landed commit. Price premises: landed theorems gaining a hypothesis: none; landed theorems restated: none.
+
+2026-10-20 LANDED 06da84f9e91006410651aa0cc18f7d42f32ff011 — P4: first-class repair composition, residuals, policy selection and checked representation transport; 33 statements. Existing reader lander rebased append-only decisions onto 2b7bc39; source gates, parent gates and reached Lang build GREEN; compare-and-swap landing and push to origin confirmed in the whole log. Independently verified hbox main at this hash and the exact five-path commit (three new Lean modules, decisions/lang.md, generated SIZE.md).
+2026-10-20 DONE — 06da84f9e91006410651aa0cc18f7d42f32ff011 landed and pushed by CX-READER-P4 before this lane arrived; verified, no duplicate launch needed.

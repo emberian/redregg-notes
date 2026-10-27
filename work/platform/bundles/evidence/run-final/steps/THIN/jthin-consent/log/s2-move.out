@@ -1,0 +1,18 @@
+{
+  "authority": "requires-current-admission",
+  "delegation": null,
+  "effect": "none",
+  "intentPath": "/run/user/1001/p4.lLiI5S/r/world/sponsor/proposals/s2-move/intent.json",
+  "intentSha256": "1425aec776b33aa9d73d380b95ae636d221876fb0a164a3cb274629213d3f2e0",
+  "proposalId": "s2-move",
+  "renounce": null,
+  "type": "minidregg-workspace-proposal-result-v1"
+}
+{
+  "acceptedCount": "24",
+  "confirmation": "installed",
+  "eventId": "46128380806933407839794908047100639924979085238748983443948051971647318714827",
+  "transactionId": "68759726508542143099454290093553463824236829791997475394999219237881465170307",
+  "type": "confirmed",
+  "worldRoot": "20352676199444427239720750526161886490719038320942898581496558724675861025585"
+}

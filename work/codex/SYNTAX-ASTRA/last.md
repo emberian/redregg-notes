@@ -1,0 +1,1 @@
+2026-10-27 — DONE. Wrote [SYNTAX-IDEAS-ASTRA.md](/Users/ember/dev/redregg/work/promo/SYNTAX-IDEAS-ASTRA.md) with eight complete renderings and recommended defaults. No repository edits or landings.

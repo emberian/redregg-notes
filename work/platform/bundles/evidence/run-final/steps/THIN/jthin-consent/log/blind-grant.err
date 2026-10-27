@@ -1,0 +1,4 @@
+workspace continuity: legacy; initialize with workspace --action continuity-init --name REF
+workspace attempt: /run/user/1001/p4.lLiI5S/r/world/sponsor/attempts/tc-blind-grant
+workspace continuity: legacy; initialize with workspace --action continuity-init --name REF
+workspace continuity: legacy; initialize with workspace --action continuity-init --name REF

@@ -1,0 +1,5 @@
+Name: CX-P9. Layer: LANG (gates/OWNERS: Lang/*). You are one of FOUR concurrent Lang workers on THE CONTEXTUAL PROGRAM; read
+
+YOUR CARD: CARD P9 (WAVE 4 section of the program file): provenance for every env + reverse provenance as repairs + the ATMS label discipline (tooth FIRST: provenance_env_specialized). Read LITERATURE-CONTEXTUAL-20261020.md §4 items 1 and 3 and §1's Grädel–Tannen and de Kleer entries; the PDFs are in /Users/ember/paperbin (Grädel–Tannen, de Kleer, Green–Karvounarakis–Tannen): read the cited pages.
+
+These cards RESTATE and EXTEND landed modules (LANG-70..73 on main: b72e5a8, 1b6cd0d, 3ff2657, 06da84f; certificates and the activities bundle are landing concurrently): a restated theorem keeps its name and gains no premise unless the card says so (then name it in the decision as the literature's price); new theorems in NEW modules; appends only on landed files; cite the paper and page in each docstring. Land nothing yourself: when built GREEN with gates/check.py run and your per-theorem disjunct read in the REPORT, write READY with the worktree path, changed paths and the drafted message path, then DONE.

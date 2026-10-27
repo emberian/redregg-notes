@@ -1,0 +1,45 @@
+{
+  "grants": [
+    {
+      "capability": "12775651706407319129",
+      "kind": "object",
+      "target": "15441563663773007075"
+    }
+  ],
+  "nonce": "166502576455974167019158300442912008956",
+  "purpose": {
+    "draft": {
+      "command": {
+        "nonce": "164713643851250724463700887008782170959",
+        "subject": "14624123575744617878",
+        "targets": [
+          {
+            "capability": "12775651706407319129",
+            "expectedTargetRoot": "47102293963383475098334515062557993903975329218716266108768991429120945499056",
+            "kind": "object",
+            "observeCapability": "12775651706407319129",
+            "payload": {
+              "actions": [
+                {
+                  "key": {
+                    "field": "401",
+                    "resource": "15441563663773007075",
+                    "type": "object"
+                  },
+                  "type": "create",
+                  "value": "1"
+                }
+              ],
+              "type": "scalar"
+            },
+            "schemaVersion": "1",
+            "target": "14723357525701329169"
+          }
+        ]
+      },
+      "type": "invoke"
+    },
+    "type": "prepare"
+  },
+  "subject": "14624123575744617878"
+}

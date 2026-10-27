@@ -1,0 +1,5 @@
+2026-10-20 READY — Fixed ONE lang! bundle at hbox:/tank/dregg-build/claude-lanes/activities (tested base c58757f). Changed paths: /tank/dregg-build/nanodregg/logs/CX-P13-paths.txt; message: /tank/dregg-build/nanodregg/logs/CX-P13-message.txt; snapshot/review: logs/CX-P13-ready-sha256.txt and logs/CX-P13-review.txt. ROOT sends the independent vacuity reader, who lands.
+
+2026-10-20 VERIFIED — Omitted-blocker select/accept/rejudge refuse pruned; permanent tooth, full lang-journey, scoped proofs/runtime, filtered resident_bell (1/1), and all source gates GREEN. Five real mutations refute coverage/integration; restored source GREEN. No bound or ceiling move.
+
+DONE 2026-10-20 — Prepared and handed off for independent review/landing. Landed hashes: none; prerequisite P10 is 0a8c780. No judge launched.

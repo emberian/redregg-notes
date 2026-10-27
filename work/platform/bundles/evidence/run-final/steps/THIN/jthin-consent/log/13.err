@@ -1,0 +1,4 @@
+workspace attempt: /run/user/1001/p4.lLiI5S/r/world/sponsor/attempts/fb1
+workspace continuity: legacy; initialize with workspace --action continuity-init --name REF
+workspace read attempt: /run/user/1001/p4.lLiI5S/r/world/sponsor/attempts/a-106672989191981974655339188240819873621
+error: local consent refused before signing: thin consent refused: Minidregg.Kernel.NativeThinConsent.Refusal.headerMismatch 0

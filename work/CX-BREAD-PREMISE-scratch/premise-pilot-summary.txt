@@ -1,0 +1,18 @@
+mode=DRY_RUN_ONLY  census=floor-census-v2.tsv  coverage=14 lexical lines
+F139 globalBreak_free                             free-witness      0
+F149 indexedBreak_not_free                        negative-control  0
+F171 leafPair_binds_or_coll                       indexed-theorem   0
+F230 zipFirst_binds_or_coll                       indexed-theorem   0
+F311 foldLast_binds_or_coll                       indexed-theorem   0
+F399 resolve                                      indexed-consumer  0
+F431 Site.sound                                   structure-field   0
+R380 Poseidon2Tree.root_binds_or_collides         indexed-theorem   0
+R417 forged_set_is_honest_or_collides             indexed-theorem   0
+R519 deployed_forged_set_is_honest_or_collides    indexed-theorem   0
+G89  free-shape-example                           comment           0
+G90  indexed-shape-example                        comment           0
+G897 repair-example                               string-literal    0
+G911 quantifier-warning                           string-literal    0
+supports.elaborated_constants=UNEXPORTED  supports.axioms=UNEXPORTED
+census_consumers=NOT_EMITTED_BY_FLOOR_CENSUS
+not_an_obligation_count=true

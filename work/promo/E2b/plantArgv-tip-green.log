@@ -1,0 +1,17 @@
+28e2d88 lang: E3 + PROT-6 — a method reads its peer's rows by declaration, Std.offer, and the matcher's fuse: two takes evaluate one judge term on one forwarded deal, sealed in one Turn (LANG-75.11; P4's M1/M2 as LANG-75.12/.13)
+'Nanodregg.Protocol.Command.settled_ok' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nanodregg.Protocol.Command.step_settled_ok' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nanodregg.Hosting.Proofs.ResidentRun.tick_counts' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nanodregg.Hosting.Proofs.BellConform.bell_resident_conforms' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nanodregg.Hosting.Proofs.Resident.answerArg_reads' depends on axioms: [propext, Classical.choice, Quot.sound]
+def Nanodregg.Hosting.Resident.Cmd.argv : Nanodregg.Hosting.Resident.Conf →
+  Nanodregg.Hosting.Resident.Cmd → List ByteArray :=
+fun c x =>
+  match x with
+  | Nanodregg.Hosting.Resident.Cmd.describe => Nanodregg.Hosting.Resident.describeArgv c
+  | Nanodregg.Hosting.Resident.Cmd.read sh => Nanodregg.Hosting.Resident.pendingArgv c sh
+  | Nanodregg.Hosting.Resident.Cmd.reread sh => Nanodregg.Hosting.Resident.pendingArgv c sh
+  | Nanodregg.Hosting.Resident.Cmd.invoke sh r _t =>
+    match Nanodregg.Hosting.Resident.answerArg r r.text with
+    | some a => Nanodregg.Hosting.Resident.invokeArgv c sh a
+    | none => []

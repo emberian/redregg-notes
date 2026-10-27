@@ -1,0 +1,12 @@
+-| Lean modules | 529 | — |
+-| Lean proof-modules | 285 | — |
++| Lean modules | 518 | — |
++| Lean proof-modules | 280 | — |
+-| Lean lines (Lang) | 46067 | — |
++| Lean lines (Lang) | 44794 | — |
+-| Lean lines (deployed) | 30937 | — |
++| Lean lines (deployed) | 30375 | — |
+-| max dependents of a non-foundation module | 351 | — |
+-| theorems | 6288 | — |
++| max dependents of a non-foundation module | 349 | — |
++| theorems | 6228 | — |

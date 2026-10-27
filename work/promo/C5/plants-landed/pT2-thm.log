@@ -1,0 +1,32 @@
+✔ [54/55] Built Lang.Proofs.Load (1.4s)
+✖ [55/55] Building Lang.Proofs.LiveHoles (1.3s)
+trace: .> LEAN_PATH=/tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean /home/hbox/.elan/toolchains/leanprover--lean4---v4.30.0/bin/lean /tank/dregg-build/nanodregg/wt/promo/Lang/Proofs/LiveHoles.lean -o /tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean/Lang/Proofs/LiveHoles.olean -i /tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean/Lang/Proofs/LiveHoles.ilean -c /tank/dregg-build/nanodregg/wt/promo/.lake/build/ir/Lang/Proofs/LiveHoles.c --setup /tank/dregg-build/nanodregg/wt/promo/.lake/build/ir/Lang/Proofs/LiveHoles.setup.json --json
+error: Lang/Proofs/LiveHoles.lean:185:100: unsolved goals
+D : Type
+digestOf : ByteArray → Option D
+look : Pinned D
+rv : RowView D
+self : D
+h : HoleROM
+c : HoleCode
+x : Nat
+zs : List (Option SupportPin × Nat)
+acc r : List Nat
+pin : SupportPin
+hf :
+  (do
+      let init ← hypothesisStep digestOf look rv self h c acc (some pin, x)
+      List.foldlM (hypothesisStep digestOf look rv self h c) init zs) =
+    Except.ok r
+u : Unit
+hpin : supportPinned digestOf look rv self pin = Except.ok u
+hlive : supportLive digestOf look rv self pin = false
+huse : Term.usesVar x c.body = false
+⊢ (match pin with
+    | SupportPin.cell id => Except.ok acc
+    | x_1 => Except.ok (acc ++ [x])) =
+    Except.ok (acc ++ [x])
+error: Lean exited with code 1
+Some required targets logged failures:
+- Lang.Proofs.LiveHoles
+error: build failed

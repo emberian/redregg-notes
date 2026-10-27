@@ -1,0 +1,18 @@
+scripts/commit: your copy of 3 file(s) recorded at 28e2d88 (base = this worktree's HEAD); every attempt lands from this record, never from the working tree
+ Hosting/Proofs/Socket.lean | 534 +++++++++++++++++++++++++++++++++++++++++++++
+ SIZE.md                    |  10 +-
+ decisions/hosting.md       |  23 ++
+ gates/tcb.tsv              |   1 +
+ 4 files changed, 563 insertions(+), 5 deletions(-)
+scripts/commit: judge: fast
+  gates: ok
+  parent-gates: ok
+  build targets (reached): Hosting
+  build: ok
+  decls: ok
+  decls: ok — 1 module(s) exported, 0 parent declaration(s) in the reach, 0 map line(s), 0 declared change(s) of meaning
+  cargo: none (no workspace member changed)
+PRE-PUSH FAST GREEN tree bbcd4180157e (built: Hosting; cargo: none; the census, rows, benches, waste, generated files and clippy judge it at the next convergence)
+queue: fast; landed by compare-and-swap
+scripts/commit: main = d5275d8 hosting: the member socket — an ok answer is committed on the member's own World, under one premise about bytes (delivered_answer_committed, the stdio-leg row, HOSTING-42)
+scripts/commit: pushed d5275d8 to origin

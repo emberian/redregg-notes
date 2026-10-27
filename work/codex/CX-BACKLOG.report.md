@@ -1,0 +1,56 @@
+# CX-BACKLOG report (Opus worker; nanodregg backlog cards; method R-0069)
+
+Worktree: hbox:/tank/dregg-build/nanodregg/wt/backlog (warm .lake copied from wt/deadline at 231af0e).
+
+2026-10-23 card 1 (cv 01a16829-1872) LANDED 2c3bb09 (LANG-75.22). MEASURED: fast judge GREEN (build Kernel Host Lang Ledger lang-journey; decls ok with one RENAMES line).
+- Lang/Proofs/StdOfferEscrowFuse.lean (NEW): `EscrowLegMoved`, `escrow_fuse_admitted` (both legs out/in by exactly their amount on w', both named offer rows retracted in t and absent in w', ∀ d valueSum = `admit_value hcan ha d`).
+- Kernel/Proofs/LedgerNext.lean: `transfer_reads_back_dispatched` (a dispatched transfer's two balances read back), private `effect_written` shared with `effect_reads_back`.
+- Exposed `escrow_fuse_resolve` (was private `fuse_resolve` in StdOfferEscrow), `Nanodregg.Lang.invokeRun_pkg` (DispatchRows). StdOfferFuse untouched (FABLE-T); its private invokeRun_pkg is now a twin for card 6.
+- Plant P8d MEASURED (hbox logs/backlog/plants/C1-P8d.build.log): RED at Lang.Proofs.StdOfferEscrow by name (escrow_take_run_sound l.417, escrow_retract_moves_leg l.843); the Turn theorem is blocked behind its import, not red by its own name. INFERRED: no generator plant can red a downstream theorem by name (every one-leg mutation changes the call the run-grain theorem states exactly). Recorded in LANG-75.22's critique.
+- Not carried (needs FABLE-T's private helpers methodReads_offer/peer_pair): the coupling qx = oy and x' ≠ y'.
+
+2026-10-23 card 2 (cv 01a16821-5828) LANDED 506bf2c (KERNEL-65). MEASURED: fast judge GREEN (Kernel Protocol Host Lang Codec Hosting Ledger built; decls ok, RENAMES rowStep_retract_absent Lang→Kernel, DELETES foldRows_retract_absent).
+- Kernel/Proofs/Rows.lean: foldRows_touch_get, admit_row_touch, rowStep_{upsert,insert}_get, rowStep_retract_absent (moved), admit_{upsert,insert,retract}_row.
+- Lang/Proofs/BellCommit.lean (NEW): `Lang.Bell.answer_commits` — the World that commits a signed Bell answer holds rings[(k,nb)] = answeredVal x y (amount 0, some version) and no pending row.
+- Plant MEASURED (logs/backlog/plants/C2-upsert-drops-value.build.log): upsert stores ByteArray.empty → RED at rowStep_upsert_get (l.713) by name, and rowStep_weight.
+- Lang.admit_retract_absent kept as a one-line alias of Kernel.admit_retract_row ONLY because StdOfferFuse (FABLE-T) names it; delete with card 6.
+
+2026-10-23 PARKED at ~360K tokens (brief: park near 400K). Cards 3-7 open. Continuation: /Users/ember/dev/redregg/work/codex/CX-BACKLOG.continuation.md (card 3 design, landing gotchas, card 6 additions). Notes filed on cv 01a16821-581a and 01a16821-5835. FABLE-T.report.md absent at park time.
+
+2026-10-23 CX-BACKLOG-2 card 3 (cv 01a16821-5835) LANDED e96c9a5 (PROTOCOL-69), pushed to origin. MEASURED: fast judge GREEN (built Protocol Host Lang Hosting Bench rows + exes; decls ok, 5 RESTATES-MEANING).
+- CX-BACKLOG-2 Protocol/Proofs/FollowJournal.lean (NEW): JournalFrom, absorbStep/step_journalFrom. Hosting/Proofs/Committed.lean (NEW): reach_journalFrom, journal_committed (base held it ∨ THIS call received+admitted at a Q World ∨ second preimage: b ≠ callBytes c ∧ hash domTx b = txIdOf c, c a premise).
+- CX-BACKLOG-2 the brief's explicit two-call CollidesAmong with c' chosen is the census's red shape (READ Census/Statements.lean: a list mentioning a chosen var bounds nothing); landed the second-preimage form instead. MEASURED: scoped #statement_census over the 6 touched modules ok, 7 disjunctions.
+- CX-BACKLOG-2 machine change: step 3 refuses badCall unless decodeCall (callBytes c) = some c (the commit step reconstructs the DECODED call; the consumer knows the PLANNED one). Plant MEASURED (logs/backlog/plants/C3-no-roundtrip-check.build.log): RED at Hosting.Proofs.Socket.step_cont l.111 by name.
+- CX-BACKLOG-2 consumer: BellRow.answered_row_committed (premise form): the committing World holds rings[(k,nb)] = answeredVal and no pending row. answer_commits restated to the live-cell read (pinned read derived: program_run_reads, pinned_read_live). Composite inside answered_row_is_kept_answer NOT stated (chosen ⟨u,sig⟩ makes the hash disjunct a chosen collision).
+- CX-BACKLOG-2 open premises: canonical journal+rows at follow's base World; the base-held disjunct.
+- CX-BACKLOG-2 local builds excluded Hosting.Proofs.Reply (OOMs at 10G alone); the fast judge built it green.
+
+2026-10-23 CX-BACKLOG-2 card 4 (cv 01a16821-5842) LANDED a639421 (HOSTING-45), pushed to origin. MEASURED: fast judge GREEN (Lean targets + resident exe + cargo check/fmt of nanodregg-launcher; decls ok, 4 RESTATES-MEANING).
+- CX-BACKLOG-2 design (a fork I decided, named in HOSTING-45): `read OBJ ?` prints `core HEX` (the package cell's slot 0); the resident's Shape.read = bellCore (decode + Lang.Bell.shapeOk, else `bellShape notBell`) then the old reader. Rejected: id comparison (hash disjunct + RomContent premise on follow's base); a second describe (re-cuts tick_counts/tick_order).
+- CX-BACKLOG-2 theorem: describeText_core / packageLines_core / bellCore_ok; describe_shape and delivered_answer_committed_strong state shapeOk pk; answered_row_is_kept_answer loses its `shapeOk pk = true →` premise.
+- CX-BACKLOG-2 MEASURED resident_bell (filtered `--test resident_bell`) GREEN 80.44s with a new case: a planted Bell (answer writes ringText; same shape) → `bellShape notBell`, no ask, ring still pending.
+- CX-BACKLOG-2 plants MEASURED (logs/backlog/plants/C4-no-bell-check.*): Shape.read without bellCore → RED at SocketStrong.shape_read_ok l.387; resident_bell RED "hang: a notBell end not within 120 s". Restored.
+- CX-BACKLOG-2 INFERRED open: describe of a package near eventBytesMax may approach frameBytesMax (hex 2x); not bounded by a theorem.
+
+2026-10-23 CX-BACKLOG-2 card 5 (cv 01a16814-02d9) LANDED 9fd88d0 (LANG-75.23), pushed to origin. MEASURED: fast judge GREEN (Protocol Lang lang-journey; cargo check/fmt attach/client/launcher).
+- CX-BACKLOG-2 row RC3 in Lang/Journey/Head.lean (beside RC1/RC2; the brief said Protocol/Rows, but loopback rows hold no second World): A's Host records a missingCell refusal via Receive.judge; B's acceptor refuses its receipt notCommitted; the receipt's answer asserted `refused` before the verdict. MEASURED lang-journey GREEN.
+- CX-BACKLOG-2 theorem Protocol.Foreign.refused_receipt_notCommitted (P5): check = error "notCommitted" ∧ (A's refusalAt = the refused leaf ∨ CollidesAmong over premise-only inputs); RefusalsOk from the fold.
+- CX-BACKLOG-2 plant MEASURED (logs/backlog/plants/C5-refused-accepted.*): Foreign.check accepting refused → RED at check_committed_of l.59 and refused_receipt_notCommitted l.173; journey RC3 FAIL. Restored.
+- CX-BACKLOG-2 client/tests/foreign.rs doc now points at RC1–RC3.
+
+2026-10-23 CX-BACKLOG-2 card 7 (cv 01a1682e-7f9d) LANDED 1eae61f (HOSTING-46), pushed to origin. MEASURED: fast judge GREEN (Lang Hosting resident; cargo check/fmt launcher). The race does NOT reproduce.
+- CX-BACKLOG-2 MEASURED (hbox logs/backlog/c7-measure.log): resident_bell Q7 — ring rung while the resident is stopped, 2048 writes past its deadline, ask held at the provider, owner retires the ring mid-tick, hold released. Resident log: "asked; answer 10 bytes" / "answer refused (refused lawDenied); the ring is no longer pending"; the next ring answered; no answerRefused. resident_bell GREEN 218.44s (Q7 ≈ +135s).
+- CX-BACKLOG-2 why: deliverP re-reads `pending` after ANY refusal and ends answerRefused only if the ring is still listed; a retired ring is not, so the answer is forgotten and the tick ends `next`. CX-DEADLINE's inference missed that branch.
+- CX-BACKLOG-2 stated: ResidentRun.deliver_gone_continues; plant (logs/backlog/plants/C7-gone-stops.build.log) reds deliver_core l.184, deliver_kept l.503, deliver_gone_continues l.542.
+- CX-BACKLOG-2 also: member_sync in resident_bell (a fresh follower >page budget behind answers `behind` 51; re-run, ≤64).
+2026-10-23 CX-BACKLOG-2 card 6 NOT STARTED: FABLE-T.report.md (READ at the end of this session; it was absent at the start) shows L1 LANDED e2eecce but L2 BUILT NOT LANDED, and L2 rewrites Lang/StdOffer.lean, Lang/Proofs/StdOffer.lean and StdOfferFuse (its continuation §2). FABLE-T is still in StdOffer, so the card's condition is not met. Card 6's additions are in CX-BACKLOG.continuation.md; re-check after L2 lands.
+2026-10-23 CX-BACKLOG-2 DONE with cards 3, 4, 5, 7 (e96c9a5, a639421, 9fd88d0, 1eae61f). Validation debt for the next convergence: census/rows/benches over these four (scoped statement census on card 3's modules read ok); Hosting.Proofs.Reply never built locally (the judge built it).
+
+2026-10-23 CX-BACKLOG-3 card 6 (cv 01a16821-581a) LANDED f9657bd (LANG-75.24), pushed to origin. MEASURED: fast judge GREEN (built Kernel Protocol Host Lang Hosting Ledger; decls ok: 13 map lines, 1 declared change of meaning).
+- CX-BACKLOG-3 READ: FABLE-T.report.md (L1 e2eecce, L2 e7c2b13 landed); MethodRun's helpers are textually StdOffer's; apply4_method generalises apply4_field (activityMethod S A R body = lam R (lam S (lam A (lam reqTy body)))).
+- CX-BACKLOG-3 DELETED (exact twins): StdOffer get_data, find_suspend_of, apply4_field, means_toVal, rowMeans_toVal, private find_rowToVal_of; StdOfferFuse private invokeRun_pkg, peerOf_spec (= PeerRead.peerOf_party), private callStep_ok_; DispatchRows private callStep_ok', alias admit_retract_absent (StdOfferFuse names Kernel.admit_retract_row). Kernel InvokeTree.callStep_ok made public (RENAMES from its private name).
+- CX-BACKLOG-3 PREMISE DISCHARGED: escrow_fuse_admitted no longer takes hne : x' ≠ y' (RESTATES-MEANING). New Kernel lemmas dispatched_actor_visited (below the root a caller is in the walk) and dispatched_invoke_fresh (a dispatched invoke of a received call was not visited). The peer invoke is one level below the root, so it is not x'. peerOf_party then makes it y'. READ: samePeer compares BYTES, so it alone does not give x' ≠ y' (two byte strings can both read back to x'); revisited does.
+- CX-BACKLOG-3 plant MEASURED (hbox logs/backlog/plants/C6-no-revisited.build.log): invoke's revisited check made `req true` → RED at Kernel.Proofs.Tree invoke_ok l.46 and Kernel.Proofs.Authority l.147/151; the escrow theorem sits behind that import (not red by its own name). Restored, diff empty.
+- CX-BACKLOG-3 MEASURED local builds at 6G: Lang.Proofs.StdOfferEscrowFuse chain green; 15 downstream modules (Kernel/Ledger/Protocol/Host/Hosting importers of InvokeTree) green one at a time. `lake build Lang` as a whole was OOM-killed at 6G twice (systemd 'oom-kill', with the convergence running beside it) on modules NOT downstream of this change (INFERRED: rebuilds after the rebase onto e7c2b13); every Lang module downstream of the edit had a fresh olean. The judge built Lang green.
+- CX-BACKLOG-3 left (named in LANG-75.24's critique): DispatchRows foldCalls_rows/split_rows are rows analogues of InvokeTree's effects folds (one lemma would restate four); the private fuseOkEnv duplicate stays (closure C3). The other fuse theorems' statements are unchanged (fuse_tree already derives x' ≠ y').
+- CX-BACKLOG-3 validation debt: lang-journey was not run (proof-only change; no definition moved); census/rows at the next convergence.

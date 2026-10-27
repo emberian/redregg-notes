@@ -1,0 +1,42 @@
+hosting: the grain lifecycle — one edge list, a generated LANG package proved against it, driven through KERNEL's receivers with its plants (HOSTING-0, HOSTING-3)
+
+What. Hosting/Lifecycle.lean: Phase (installed | removed | running | stopped), Event (start | stop |
+remove, one METHOD per event, index = Right.invoke n), `edges`, `step : Phase → Event → Option
+Phase`. Hosting/Package.lean generates the grain package from it: state {entry, kind, last, owner,
+phase} with kind/last/phase sums of empty records; methods record the event in `last` and move
+`phase` to the edge's target (or leave it); law `phase` admits exactly an edge, or the born pair
+installed → installed when last = born; law `owner` pins the state's owner to the creator at birth,
+then admits only the owner as PRINCIPAL. Hosting/Text.lean prints it to Lang.Read text;
+world/grain/Lifecycle is that text (the grain row's install path).
+
+Why the owner law is load-bearing: KERNEL's invoke derives principal through the grant chain and
+never compares it to the object's owner, so without it any member stops any grain (HOSTING-4,
+asked of KERNEL).
+
+Theorems (Hosting/Proofs/): edges_deterministic, edges_irreflexive, step_table, step_iff_edge,
+no_double_start, removed_terminal, running_only_by_start, born_initial_only, target_admitted_iff,
+target_moves_iff; by the kernel evaluating LANG's machine on the package BODY applied as
+Lang.Program applies it, over every phase x tag x phase: phase_law_decides, method_writes,
+method_iff_step, owner_born, owner_live; lifecycle_checks, laws_in_force, lifecycle_method_index;
+lifecycle_text_reads (native_decide: the kernel did not finish the printer alone in 200 s; allow
+row in gates/axioms-allow.tsv). Statements read by a second agent (vacuity): the first version
+proved the closed checkTerm only and a swapped phaseLaw passed it; moved to the body.
+
+What it refuses (hosting-sim, through Receive.submit, toy parameters): a grain born running
+(phase: no born from running), a grain whose state names another owner (owner: not the creator), a
+double start (phase: no start from running), a stranger's stop (owner: not the owner), a stop
+through a start-only grant (grantRight), a start of a removed grain. Follower and auditor reach the
+Host's World.
+
+Plants: theorem — leaf's no-edge arm `ok`, and phaseLaw with old/new swapped: phase_law_decides and
+method_iff_step red. sim P1 skip-judge: "P1 skip-judge: G3 a grain born running: admitted" and G6
+double start admitted. sim P2 package without the owner law: "P2 no owner law: G7 B (no grant)
+stops: admitted".
+
+SIZE: Lean modules: +7, the new HOSTING layer (Lifecycle, Package, Text, two proof modules, sim)
+SIZE: Lean proof-modules: +2, Hosting.Proofs.Lifecycle and Hosting.Proofs.Package
+SIZE: Lean lines (deployed): the lifecycle, the generated package and its printer
+SIZE: Lean lines (tooling: Sim, Rows, Journey, Census, Emit): hosting-sim (Hosting.Sim.Journey)
+SIZE: theorems: the lifecycle and package theorems above
+SIZE: max dependents of a non-foundation module: Hosting's modules import Lang.Package / Kernel.Receive.Call
+SIZE: Lean lines (Hosting): new layer

@@ -1,0 +1,1 @@
+2026-10-21 DONE: `/Users/ember/dev/redregg/work/BREAD-PREMISE-PILOT-20261021.md` (372 lines); dry-run script and output under `/Users/ember/dev/redregg/work/CX-BREAD-PREMISE-scratch/`. No landing, no hbox use, no bread tracked-file edits. The census’s 180 s cached-import timeout and historical-v2 fallback are recorded in the memo.

@@ -1,0 +1,32 @@
+before 51138 (rows carrying a renamed-from name: 290 ) after 51135
+vanished 3 declared 0 UNDECLARED 3
+new 0 type-digest changed 0 value-hash changed 5
+module changed 555 of which from a module the step does not move 3
+   module Lang.Proofs.Contextual.ClosedDeployment -> Lang.Proofs.LiveClosed 83
+   module Lang.Proofs.Contextual.ClosedDeployment -> Lang.Proofs.LiveHoles 1
+   module Lang.Proofs.Contextual.ClosedLeaf -> Lang.Proofs.LiveClosed 13
+   module Lang.Proofs.Contextual.ContractTeeth -> Lang.Proofs.LiveTeeth 10
+   module Lang.Proofs.Contextual.Deployed -> Lang.Proofs.LiveJourney 30
+   module Lang.Proofs.Contextual.DeployedCycle -> Lang.Proofs.LiveJourney 3
+   module Lang.Proofs.Contextual.LawMeaning -> Lang.Proofs.LawMeaning 159
+   module Lang.Proofs.Contextual.LawReceiver -> Lang.Proofs.LawReceiver 57
+   module Lang.Proofs.Contextual.LawReceiverTeeth -> Lang.Proofs.LiveTeeth 44
+   module Lang.Proofs.Contextual.LiveCost -> Lang.Proofs.LiveHoles 22
+   module Lang.Proofs.Contextual.LiveHoles -> Lang.Proofs.LiveHoles 96
+   module Lang.Proofs.Contextual.LiveInvoke -> Lang.Proofs.LiveInvoke 2
+   module Lang.Proofs.Contextual.LiveNeed -> Lang.Proofs.LiveNeed 32
+   module Lang.Proofs.Need -> Lang.Proofs.CostTeeth 3
+   VANISHED Nanodregg.Lang.foldMax_member._simp_1_1 Lang.Proofs.Contextual.LiveCost
+   VANISHED _private.Lang.Proofs.LiveHoles.0.Nanodregg.Lang.selectHole.match_5.splitter._sparseCasesOn_3 Lang.Proofs.Contextual.LiveCost
+   VANISHED _private.Lang.Proofs.LiveHoles.0.Nanodregg.Lang.selectHole.match_8.splitter._sparseCasesOn_3 Lang.Proofs.Contextual.LiveCost
+   UNDECLARED Nanodregg.Lang.foldMax_member._simp_1_1 Lang.Proofs.Contextual.LiveCost
+   UNDECLARED _private.Lang.Proofs.LiveHoles.0.Nanodregg.Lang.selectHole.match_5.splitter._sparseCasesOn_3 Lang.Proofs.Contextual.LiveCost
+   UNDECLARED _private.Lang.Proofs.LiveHoles.0.Nanodregg.Lang.selectHole.match_8.splitter._sparseCasesOn_3 Lang.Proofs.Contextual.LiveCost
+   VALUE Nanodregg.Lang.Need.runBy.eq_def Lang.Proofs.Need
+   VALUE Nanodregg.Lang.foldMax_member Lang.Proofs.Contextual.LiveCost
+   VALUE _private.Lang.Proofs.LiveHoles.0.Nanodregg.Lang.selectHole.match_5.splitter Lang.Proofs.Contextual.LiveCost
+   VALUE _private.Lang.Proofs.LiveHoles.0.Nanodregg.Lang.selectHole.match_8.eq_2 Lang.Proofs.Contextual.LiveCost
+   VALUE _private.Lang.Proofs.LiveHoles.0.Nanodregg.Lang.selectHole.match_8.splitter Lang.Proofs.Contextual.LiveCost
+   MODBAD Nanodregg.Lang.Need.runBy.eq_1 Lang.Proofs.Need
+   MODBAD Nanodregg.Lang.Need.runBy.eq_2 Lang.Proofs.Need
+   MODBAD Nanodregg.Lang.Need.runBy.eq_def Lang.Proofs.Need

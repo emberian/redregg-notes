@@ -1,0 +1,86 @@
+✔ [98/100] Built Lang.Proofs.Contextual.ProtocolTyping (339ms)
+✖ [99/100] Building Lang.Proofs.Contextual.Protocol (1.2s)
+trace: .> LEAN_PATH=/tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean /home/hbox/.elan/toolchains/leanprover--lean4---v4.30.0/bin/lean /tank/dregg-build/nanodregg/wt/promo/Lang/Proofs/Contextual/Protocol.lean -o /tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean/Lang/Proofs/Contextual/Protocol.olean -i /tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean/Lang/Proofs/Contextual/Protocol.ilean -c /tank/dregg-build/nanodregg/wt/promo/.lake/build/ir/Lang/Proofs/Contextual/Protocol.c --setup /tank/dregg-build/nanodregg/wt/promo/.lake/build/ir/Lang/Proofs/Contextual/Protocol.setup.json --json
+error: Lang/Proofs/Contextual/Protocol.lean:72:2: Too many variable names provided at alternative `hole`: 8 provided, but 7 expected
+error: Lang/Proofs/Contextual/Protocol.lean:73:42: Application type mismatch: The argument
+  f
+has type
+  Tok
+but is expected to have type
+  Fact
+in the application
+  hΓ f
+error: Lang/Proofs/Contextual/Protocol.lean:73:45: Function expected at
+  hctx f
+but this term has type
+  List.count f I.need ≤ List.count f Δ✝
+
+Note: Expected a function because this term is being applied to the argument
+  hf
+error: Lang/Proofs/Contextual/Protocol.lean:73:64: Invalid field `trans`: The environment does not contain `Function.trans`, so it is not possible to project the field `trans` from an expression
+  hneed
+of type
+  ∀ (j : Ix) (a : A j), I.post j a → Q j a
+error: Lang/Proofs/Contextual/Protocol.lean:74:24: Application type mismatch: The argument
+  j
+has type
+  Ob
+but is expected to have type
+  Ix
+in the application
+  hQ j
+error: Lang/Proofs/Contextual/Protocol.lean:74:29: Function expected at
+  hpost j a
+but this term has type
+  j ∈ Φ
+
+Note: Expected a function because this term is being applied to the argument
+  ha
+error: Lang/Proofs/Contextual/Protocol.lean:85:2: Too many variable names provided at alternative `hole`: 10 provided, but 9 expected
+error: Lang/Proofs/Contextual/Protocol.lean:88:20: Function expected at
+  HasProt.hole h I hI hp hctx hneed hpost
+but this term has type
+  HasProt ?m.212 ?m.213 Ω Γ Q Φ Δ (Prot.hole h)
+
+Note: Expected a function because this term is being applied to the argument
+  howes
+error: Lang/Proofs/Contextual/Protocol.lean:93:22: Application type mismatch: The argument
+  hctx
+has type
+  SubBag I.need Δ
+but is expected to have type
+  ∀ (f : ?m.319), f ∈ ?m.324 → f ∈ ?m.325
+in the application
+  HasProt.weaken hctx
+error: Lang/Proofs/Contextual/Protocol.lean:93:33: Unknown identifier `howes`
+error: Lang/Proofs/Contextual/Protocol.lean:136:13: Application type mismatch: The argument
+  hp'
+has type
+  ∀ (f : Fact), f ∈ I.ctx → f ∈ Γ
+but is expected to have type
+  I.chooser = me
+in the application
+  hp hp'
+error: Lang/Proofs/Contextual/Protocol.lean:147:38: Application type mismatch: The argument
+  hc
+has type
+  ∀ (f : Fact), f ∈ I.ctx → f ∈ Γ
+but is expected to have type
+  I.chooser = me
+in the application
+  ⟨hI, hc⟩
+error: Lang/Proofs/Contextual/Protocol.lean:686:2: Too many variable names provided at alternative `hole`: 8 provided, but 7 expected
+error: Lang/Proofs/Contextual/Protocol.lean:687:62: Application type mismatch: The argument
+  hctx
+has type
+  SubBag I.need Δ✝
+but is expected to have type
+  SubBag (Iface.mapTok e I).need ?m.190
+in the application
+  HasProt.hole h (Iface.mapTok e I) ?m.202 hp hctx
+error: Lang/Proofs/Contextual/Protocol.lean:687:36: `simp` made no progress
+error: Lang/Proofs/Contextual/Protocol.lean:688:4: No goals to be solved
+error: Lean exited with code 1
+Some required targets logged failures:
+- Lang.Proofs.Contextual.Protocol
+error: build failed

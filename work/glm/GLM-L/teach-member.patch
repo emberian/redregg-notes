@@ -1,0 +1,19 @@
+--- a/Web/Sim/Teach.lean
++++ b/Web/Sim/Teach.lean
+@@ -145,8 +145,9 @@ def kindWord (k : Nat) : String :=
+ /-- `tg_cell I ID`: what ID names on member I's follow World, so the page opens the right window:
+ `kind WORD` (`none`: no cell has this id, a hash that is not a cell's), `retired` for a tombstone,
+-and for a grant its fields (`target`, `grantee` (or `anyone`), `issuer`, `parent`, `rights`). -/
++and for a grant its fields (`target`, `grantee` (or `anyone`), `issuer`, `parent`, `rights`), and
++for a member its key slots (`key`, `next`, `sponsor`: the current key, the digest of the precommitted
++next one, the sponsor), so a rotation is visible on the cell it changed. -/
+ @[export tg_cell] def tgCell (i : UInt32) (id : ByteArray) : IO ByteArray := do
+@@ -166,6 +167,10 @@ def tgCell (i : UInt32) (id : ByteArray) : IO ByteArray := do
+         else if c.kind = kindObject then
+           [s!"owner {slotHex c slotOwner}"] ++ ((c.slots.get slotPackage).map fun p => [s!"package {Text.toHex p}"]).getD []
++        else if c.kind = kindMember then
++          [s!"key {slotHex c slotKey}",
++           s!"next {slotHex c slotNext}",
++           s!"sponsor {slotHex c slotSponsor}"]
+         else []
+       return okText (String.join ((s!"kind {kindWord c.kind}" :: extra).map (· ++ "\n")))

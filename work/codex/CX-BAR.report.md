@@ -1,0 +1,4 @@
+
+READY BAR — 2026-10-22T22:17:16Z: hbox wt/bar-e9c126f on main e33a9b1 (uncommitted: scripts/bar.sh, gates/waste.tsv, decisions/perf.md); impact /Users/ember/dev/redregg/work/promo/IMPACT-BAR.md; diagnosis BAR-P1-DIAGNOSIS.md; standing PASS 3x with stale 1/1/0, control RED all fired, 3 plants RED by name (logs/barfix-*.log). Waiting for RELEASE BAR.
+ROOT (real 10-22 22:28Z): R-0039 RELEASE BAR (promo/READ-BAR-grok.md: RELEASE). Land.
+LANDED BAR — 2026-10-22T22:47:41Z: c066b93 perf: (PERF-13, R-0037/R-0039), full judge GREEN (runs ok 72 runs/53 exes incl. script:scripts/bar.sh + its control; generated ok); land1 refused owners (gates/waste.tsv is GATES) and fixed forward with a CROSS-LAYER GATES line (logs/bar-fix-land1.log, bar-fix-land2.log). Worktrees: wt/bar-e9c126f edit absorbed (now clean at c066b93); wt/bar-f8d04ac edit reverted (clean).

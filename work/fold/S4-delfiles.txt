@@ -1,0 +1,14 @@
+Lang/Contextual/Boundary.lean
+Lang/Proofs/Contextual/Boundary.lean
+Lang/Contextual/ModalBoundary.lean
+Lang/Proofs/Contextual/ModalBoundary.lean
+Lang/Contextual/ContextMorphisms.lean
+Lang/Proofs/Contextual/ContextMorphisms.lean
+Lang/Contextual/RepairChanges.lean
+Lang/Proofs/Contextual/RepairChanges.lean
+Lang/Contextual/TransportKinds.lean
+Lang/Proofs/Contextual/TransportKinds.lean
+Lang/Contextual/RepairObjects.lean
+Lang/Proofs/Contextual/RepairObjects.lean
+Lang/Contextual/ProvenanceRepairs.lean
+Lang/Proofs/Contextual/ProvenanceRepairs.lean

@@ -1,0 +1,18 @@
+✔ [230/257] Built Protocol.Proofs.Rows (1.4s)
+✔ [238/347] Built Protocol.Proofs.Judge (744ms)
+✔ [309/727] Built Protocol.Command.Machine (2.2s)
+✔ [648/727] Built Protocol.Command.Machine:c.o (3.0s)
+✔ [649/727] Built Protocol.Command.Wire (444ms)
+✔ [652/727] Built Protocol.Proofs.Wire (710ms)
+✔ [653/727] Built Host.Follow (1.1s)
+✔ [654/727] Built Host.Follow:c.o (4.3s)
+✔ [655/727] Built Protocol.Proofs.Page (452ms)
+✔ [656/727] Built Protocol.Rows.Loopback (5.9s)
+✔ [662/727] Built Protocol.Proofs.Command (29s)
+✔ [666/727] Built Protocol.Proofs.Incoming (14s)
+✔ [722/727] Built Protocol.Rows.Run (4.7s)
+✔ [723/727] Built Protocol.Rows.Main (268ms)
+✔ [726/727] Built Protocol.Rows.Run:c.o (13s)
+✔ [727/727] Built rows:exe (663ms)
+Build completed successfully (727 jobs).
+exit 0

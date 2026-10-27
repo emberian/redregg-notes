@@ -1,0 +1,6 @@
+p1-sponsor	0	installed	workspace continuity: legacy; initialize with workspace --action continuity-init --name REF
+p1-newcomer	0	installed	workspace continuity: legacy; initialize with workspace --action continuity-init --name REF
+p2-newcomer	0	installed	workspace continuity: legacy; initialize with workspace --action continuity-init --name REF
+p2-sponsor	0	installed	workspace continuity: legacy; initialize with workspace --action continuity-init --name REF
+p3-first	0	installed	workspace continuity: legacy; initialize with workspace --action continuity-init --name REF
+p3-second	3	refused	  client: host returned refused; exact outcome evidence was retained

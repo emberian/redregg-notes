@@ -1,0 +1,60 @@
+n	who	what	expect	exit	verdict	note
+1	operator	box: sshd on 127.0.0.1:22424; authorized_keys = sponsor mode=shell + friend mode=proxy	-	-	ok	restrict,command="/run/user/1001/p4.TGBJb9/r/steps/JP2/box/b
+2	operator	authorized_keys line 2 is restrict,command="…/mini-socket-proxy …" (no pty)	-	-	ok	
+3	friend	join --key: keygen on the laptop	0	0	ok	
+4	friend	printed public key is 64 hex and the key file is on the laptop	-	-	ok	
+5	friend	join --key printed the next key's public half too (K-PREROTATE), and it is not the key	-	-	ok	
+6	friend	join --key printed the next key's co-signature as a third line (FIX-IDENTITY)	-	-	ok	
+7	sponsor	hosted shell: enroll plan friend <public key hex> <next public key hex> <co-signature hex>	0	0	ok	
+8	sponsor	hosted shell: enroll offer friend (the offer the friend receives)	0	0	ok	
+9	sponsor	offer carries the Plan, the command, config and Host digest; no secret	-	-	ok	
+10	friend	join --remote box --sponsor-plan: Host re-decodes the offer, friend signs possession	0	1	FAIL	mini: local author/inspect/signatures/assembly requires MINI_LOCAL_HOST | mini: local author/inspect/signatures/assembly requires MINI_LOCAL_HOST
+11	sponsor	hosted shell: enroll seal friend <signature hex>	0	1	FAIL	error: home-identity enrollment requires --possession-signature | error: home-identity enrollment requires --possession-signature
+12	sponsor	hosted shell: enroll submit friend	0	1	FAIL	error: cannot read key file /run/user/1001/p4.TGBJb9/r/steps/JP2/box/homes/sponsor/enroll/friend/seal.json: No such file or directory (os er | error: cannot read key file /run/user/1001/p4.TGBJb9/r/steps/JP2/box/homes/sponsor/enroll/friend/seal.json: No such file or directory (os error 2)
+13	sponsor	admitted: subject 11823597932351110805, the friend's public key, no key path	-	-	FAIL	check failed
+14	sponsor	hosted shell: provision friend 11823597932351110805 1000 all[]	0	3	FAIL	refused: operation-rejected: provisioning preparation: Minidregg.Kernel.ParticipantFactoryProvisioning.Reject.holderNotEnrolled (phase provi |   client: enrollment Host refused op92; exact frame retained
+15	sponsor	hosted shell: enroll welcome friend	0	1	FAIL	error: cannot read key file /run/user/1001/p4.TGBJb9/r/steps/JP2/box/homes/sponsor/enroll/friend/seal.json: No such file or directory (os er | error: cannot read key file /run/user/1001/p4.TGBJb9/r/steps/JP2/box/homes/sponsor/enroll/friend/seal.json: No such file or directory (os error 2)
+16	friend	join --remote box --welcome: remote workspace on the laptop	0	1	FAIL	mini: join --welcome requires the pinned portable --verifier LOCAL-HOST | mini: join --welcome requires the pinned portable --verifier LOCAL-HOST
+17	friend	workspace pins socket ssh:box, no Host image, the Host digest, the laptop key	-	-	FAIL	check failed
+18	friend	create notes declared all[] (remote shell)	0	1	FAIL	mini: cannot inspect /run/user/1001/p4.TGBJb9/r/steps/JP2/laptop/.mini/box/workspace: No such file or directory (os error 2) | mini: cannot inspect /run/user/1001/p4.TGBJb9/r/steps/JP2/laptop/.mini/box/workspace: No such file or directory (os error 2)
+19	friend	invoke first-write notes create 2 1	0	1	FAIL	mini: cannot inspect /run/user/1001/p4.TGBJb9/r/steps/JP2/laptop/.mini/box/workspace: No such file or directory (os error 2) | mini: cannot inspect /run/user/1001/p4.TGBJb9/r/steps/JP2/laptop/.mini/box/workspace: No such file or directory (os error 2)
+20	friend	submit first-write	0	1	FAIL	mini: cannot inspect /run/user/1001/p4.TGBJb9/r/steps/JP2/laptop/.mini/box/workspace: No such file or directory (os error 2) | mini: cannot inspect /run/user/1001/p4.TGBJb9/r/steps/JP2/laptop/.mini/box/workspace: No such file or directory (os error 2)
+21	friend	write installed	-	-	FAIL	check failed
+22	friend	read notes (CLI: mini --remote box workspace --action read)	0	1	FAIL	mini: cannot inspect /run/user/1001/p4.TGBJb9/r/steps/JP2/laptop/.mini/box/workspace: No such file or directory (os error 2) | mini: cannot inspect /run/user/1001/p4.TGBJb9/r/steps/JP2/laptop/.mini/box/workspace: No such file or directory (os error 2)
+23	friend	read back field 2 = 1	-	-	FAIL	check failed
+24	friend	delegate grant-sponsor notes 7 observe 50000	0	1	FAIL	mini: cannot inspect /run/user/1001/p4.TGBJb9/r/steps/JP2/laptop/.mini/box/workspace: No such file or directory (os error 2) | mini: cannot inspect /run/user/1001/p4.TGBJb9/r/steps/JP2/laptop/.mini/box/workspace: No such file or directory (os error 2)
+25	friend	submit grant-sponsor	0	1	FAIL	mini: cannot inspect /run/user/1001/p4.TGBJb9/r/steps/JP2/laptop/.mini/box/workspace: No such file or directory (os error 2) | mini: cannot inspect /run/user/1001/p4.TGBJb9/r/steps/JP2/laptop/.mini/box/workspace: No such file or directory (os error 2)
+26	friend	publish grant-sponsor	0	1	FAIL	mini: cannot inspect /run/user/1001/p4.TGBJb9/r/steps/JP2/laptop/.mini/box/workspace: No such file or directory (os error 2) | mini: cannot inspect /run/user/1001/p4.TGBJb9/r/steps/JP2/laptop/.mini/box/workspace: No such file or directory (os error 2)
+27	friend	export grant-sponsor	0	1	FAIL	mini: cannot inspect /run/user/1001/p4.TGBJb9/r/steps/JP2/laptop/.mini/box/workspace: No such file or directory (os error 2) | mini: cannot inspect /run/user/1001/p4.TGBJb9/r/steps/JP2/laptop/.mini/box/workspace: No such file or directory (os error 2)
+28	sponsor	hosted shell: import friend-notes <reference>	0	2	FAIL	usage: import NAME REFERENCE-JSON|@FILE | import NAME KIND TARGET OBSERVE [OPERATION|- [CONTROL]] | usage: import NAME REFERENCE-JSON|@FILE | import NAME KIND TARGET OBSERVE [OPERATION|- [CONTROL]]
+29	sponsor	hosted shell: read friend-notes (the delegated grant)	0	1	FAIL	error: cannot read /run/user/1001/p4.TGBJb9/r/world/sponsor/refs/friend-notes.json: No such file or directory (os error 2) | error: cannot read /run/user/1001/p4.TGBJb9/r/world/sponsor/refs/friend-notes.json: No such file or directory (os error 2)
+30	sponsor	sponsor reads the friend's field 2 = 1 through the delegation	-	-	FAIL	check failed
+31	operator	find BOX -name '*.key' | xargs -n1 basename: checkpoint.key clock.key newcomer.key observer.key observer.key sponsor.key 	-	-	ok	
+32	operator	no friend key file on the box	-	-	ok	
+33	operator	control: hosted keys ARE listed (sponsor.key, newcomer.key)	-	-	ok	
+34	operator	seed scan of every box file: {"friendSeed":0,"sponsorSeed":1,"files":161}	-	-	ok	
+35	operator	the friend's secret seed (raw or hex) is in no box file	-	-	ok	
+36	operator	control: the sponsor's hosted seed IS found by the same scan	-	-	ok	
+37	friend	stray bytes (an HTTP request line) on the proxy pipe	nz	1	ok	mini: proxy: not a socket frame (invalid frame length); closing
+38	friend	  no reply byte came back; the proxy said why on stderr	-	-	ok	
+39	friend	ssh box 'cat /etc/passwd' (a command on a proxy key)	64	64	ok	
+40	friend	  nothing ran: no output	-	-	ok	
+41	friend	  reply to wrong-config: no-reply bytes=0	-	-	ok	
+42	friend	  proxy refused config pin before the socket	-	-	FAIL	check failed
+43	friend	  reply to operator-op: no-reply bytes=0	-	-	ok	
+44	friend	  proxy refused an operator-socket operation	-	-	FAIL	check failed
+45	friend	  reply to wrong-host-pin: no-reply bytes=0	-	-	ok	
+46	friend	  the socket refused the Host pin (254)	-	-	FAIL	check failed
+47	friend	  reply to tampered-call: no-reply bytes=0	-	-	ok	
+48	friend	  reply to exact-call: no-reply bytes=0	-	-	ok	
+49	friend	Host decodes both outcomes (two op-8 frames, one proxy session)	0	0	ok	
+50	friend	  tampered-call outcome: 	-	-	ok	
+51	friend	  the Host refused the tampered signed call	-	-	FAIL	check failed
+52	friend	  exact-call outcome: 	-	-	ok	
+53	friend	  control: the untampered call on the same raw path is confirmed, replayed (no new effect)	-	-	FAIL	check failed
+54	friend	after the refusals: read notes still answers field 2 = 1	0	1	FAIL	mini: cannot inspect /run/user/1001/p4.TGBJb9/r/steps/JP2/laptop/.mini/box/workspace: No such file or directory (os error 2) | mini: cannot inspect /run/user/1001/p4.TGBJb9/r/steps/JP2/laptop/.mini/box/workspace: No such file or directory (os error 2)
+55	friend	  field 2 = 1	-	-	FAIL	check failed
+56	friend	keygen over --remote is refused (not a participant Host command)	nz	1	ok	mini: keygen is not a participant command; --remote reaches only the public socket's participant surface (workspace, enroll, join, pay-claim
+57	sponsor	hosted shell unchanged: whoami	0	0	ok	
+58	sponsor	  sponsor session is subject 7	-	-	ok	
+59	operator	stop sshd	-	-	ok	

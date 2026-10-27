@@ -1,0 +1,56 @@
+✔ [24/70] Built Kernel.World (2.7s)
+✔ [25/70] Built Kernel.Sim.Shadow (198ms)
+✔ [26/70] Built Kernel.Proofs.Bytes (573ms)
+✔ [27/70] Built Kernel.Receive.Call (1.6s)
+✔ [28/70] Built Kernel.Proofs.Trie (2.3s)
+✔ [29/70] Built Codec.Kernel (1.5s)
+✔ [30/70] Built Kernel.Proofs.RowsOverlay (378ms)
+✔ [31/70] Built Kernel.Receive.Authority (421ms)
+✔ [32/70] Built Kernel.Proofs.TrieRetain (670ms)
+✔ [33/70] Built Kernel.Proofs.TrieMap (742ms)
+✔ [34/70] Built Codec.World (594ms)
+✔ [35/70] Built Codec.Proofs.Rows (641ms)
+✔ [36/70] Built Kernel.Receive.Ledger (412ms)
+✔ [37/70] Built Codec.Deployed (252ms)
+✔ [38/70] Built Codec.Proofs.Kernel (2.8s)
+✔ [39/70] Built Kernel.Receive.Derive (834ms)
+✔ [40/70] Built Kernel.Proofs.Lawful (308ms)
+✔ [41/70] Built Kernel.Receive.Submit (605ms)
+✔ [42/70] Built Kernel.Proofs.Admit (5.6s)
+✔ [43/70] Built Kernel.Receive.Follow (504ms)
+✔ [44/70] Built Kernel.Receive.Audit (415ms)
+✔ [45/70] Built Kernel.Proofs.RowsRange (2.0s)
+✔ [46/70] Built Kernel.Proofs.Refuse (452ms)
+✔ [47/70] Built Kernel.Proofs.Fold (752ms)
+✔ [48/70] Built Kernel.Proofs.Rows (1.1s)
+✔ [49/70] Built Kernel.Proofs.Receive (5.6s)
+✔ [50/70] Built Kernel.Proofs.Logic.HeadRead (476ms)
+✔ [51/70] Built Kernel.Proofs.Logic.Frame (805ms)
+✔ [52/70] Built Kernel.Proofs.Origin (596ms)
+✔ [53/70] Built Kernel.Proofs.Audit (2.9s)
+✔ [54/70] Built Kernel.Proofs.Authority (860ms)
+✔ [55/70] Built Kernel.Proofs.Tree (1.1s)
+✔ [56/70] Built Kernel.Proofs.Frame (518ms)
+✔ [57/70] Built Kernel.Proofs.Cells (774ms)
+✔ [58/70] Built Kernel.Proofs.RowsSep (510ms)
+✔ [59/70] Built Kernel.Proofs.Rooted (1.4s)
+✖ [60/70] Building Kernel.Proofs.CellsFit (606ms)
+trace: .> LEAN_PATH=/tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean /home/hbox/.elan/toolchains/leanprover--lean4---v4.30.0/bin/lean /tank/dregg-build/nanodregg/wt/promo/Kernel/Proofs/CellsFit.lean -o /tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean/Kernel/Proofs/CellsFit.olean -i /tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean/Kernel/Proofs/CellsFit.ilean -c /tank/dregg-build/nanodregg/wt/promo/.lake/build/ir/Kernel/Proofs/CellsFit.c --setup /tank/dregg-build/nanodregg/wt/promo/.lake/build/ir/Kernel/Proofs/CellsFit.setup.json --json
+error: Kernel/Proofs/CellsFit.lean:165:65: Application type mismatch: The argument
+  hlim
+has type
+  v + 1 < 2 ^ 64
+but is expected to have type
+  v < 2 ^ 64
+in the application
+  ⟨postWrite_fits (hw (Slot.cell x.cell) (Leaf.entry (Entry.live cell v)) (entry_get hc)).left hx.right hp, hlim⟩
+error: Lean exited with code 1
+✔ [61/70] Built Kernel.Proofs.Local (2.9s)
+✔ [62/70] Built Kernel.Proofs.Journal (2.3s)
+✔ [64/70] Built Kernel.Proofs.JournalHead (2.6s)
+✔ [65/70] Built Kernel.Proofs.Refusals (4.1s)
+✔ [66/70] Built Codec.Proofs.World (1.2s)
+✔ [67/70] Built Codec.Proofs.Deployed (714ms)
+Some required targets logged failures:
+- Kernel.Proofs.CellsFit
+error: build failed

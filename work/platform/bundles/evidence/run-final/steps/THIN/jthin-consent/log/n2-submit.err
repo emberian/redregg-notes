@@ -1,0 +1,6 @@
+workspace attempt: /run/user/1001/p4.lLiI5S/r/world/newcomer-workspace/attempts/n2
+workspace continuity: legacy; initialize with workspace --action continuity-init --name REF
+workspace read attempt: /run/user/1001/p4.lLiI5S/r/world/newcomer-workspace/attempts/a-315771062457546320764465410179260964124
+refused: undisclosed: request refused; a blind submission discloses no reason (phase observation)
+  Host refused challenge, reply byte 255
+  client: host refused challenge: refused: undisclosed: request refused; a blind submission discloses no reason (phase observation); encoded refusal: 44524547472f4e41544956452d484f53542f4f5554434f4d452f763401000b0bff6f62736572766174696f6e37ff7265717565737420726566757365643b206120626c696e64207375626d697373696f6e20646973636c6f736573206e6f20726561736f6e00

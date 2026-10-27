@@ -1,0 +1,71 @@
+planted lines: 1
+✔ [52/61] Built Protocol.Receipt (473ms)
+✔ [56/108] Built Lang.Rel (713ms)
+✔ [57/108] Built Protocol.Settle (278ms)
+✔ [102/108] Built Lang.LiveHoles (596ms)
+✔ [103/108] Built Lang.Program (1.1s)
+✔ [104/108] Built Protocol.Command.Describe (450ms)
+✔ [105/108] Built Protocol.Command.Machine (1.7s)
+✔ [106/108] Built Protocol.Command.Wire (441ms)
+✔ [107/108] Built Protocol.Proofs.Wire (560ms)
+✖ [108/108] Building Protocol.Proofs.ReceiptWire (18s)
+trace: .> LEAN_PATH=/tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean /home/hbox/.elan/toolchains/leanprover--lean4---v4.30.0/bin/lean /tank/dregg-build/nanodregg/wt/promo/Protocol/Proofs/ReceiptWire.lean -o /tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean/Protocol/Proofs/ReceiptWire.olean -i /tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean/Protocol/Proofs/ReceiptWire.ilean -c /tank/dregg-build/nanodregg/wt/promo/.lake/build/ir/Protocol/Proofs/ReceiptWire.c --setup /tank/dregg-build/nanodregg/wt/promo/.lake/build/ir/Protocol/Proofs/ReceiptWire.setup.json --json
+error: Protocol/Proofs/ReceiptWire.lean:76:22: unsolved goals
+case refused.some.some.some.some.some.some.some.some
+D : Type
+inst✝ : DecidableEq D
+E : Env D
+dc : Codec.Stream D
+hd : dc.Lawful
+txId root jroot rroot rowsroot : D
+jpath : Trie.Proof D D
+rpath : Trie.Proof (RefusalSlot D) D
+hjd : (jproof E dc).decode ((jproof E dc).bytes jpath) = Except.ok jpath
+hrd : (rproof E dc).decode ((rproof E dc).bytes rpath) = Except.ok rpath
+hh code : Nat
+m : D
+ha : hh < 2 ^ 64 ∧ code < 2 ^ 64
+hj :
+  ProofFits (journalSpec E) (fun x => True) (fun x => True)
+    { txId := txId, root := root, jroot := jroot, rroot := rroot, rowsroot := rowsroot,
+        answer := Answer.refused hh code m, jpath := jpath, rpath := rpath }.jpath
+hr :
+  ProofFits (refusalSpec E) (RefusalSlot.Fits fun x => True) (fun x => True)
+    { txId := txId, root := root, jroot := jroot, rroot := rroot, rowsroot := rowsroot,
+        answer := Answer.refused hh code m, jpath := jpath, rpath := rpath }.rpath
+val✝⁷ : Bytes Bounds.frameBytesMax
+h1 : Text.fit Bounds.frameBytesMax (dc.bytes m) = some val✝⁷
+val✝⁶ : Bytes Bounds.frameBytesMax
+h2 : Text.fit Bounds.frameBytesMax (dc.bytes txId) = some val✝⁶
+val✝⁵ : Bytes Bounds.frameBytesMax
+h3 : Text.fit Bounds.frameBytesMax (dc.bytes root) = some val✝⁵
+val✝⁴ : Bytes Bounds.frameBytesMax
+h4 : Text.fit Bounds.frameBytesMax (dc.bytes jroot) = some val✝⁴
+val✝³ : Bytes Bounds.frameBytesMax
+h5 : Text.fit Bounds.frameBytesMax (dc.bytes rroot) = some val✝³
+val✝² : Bytes Bounds.frameBytesMax
+h6 : Text.fit Bounds.frameBytesMax (dc.bytes rowsroot) = some val✝²
+val✝¹ : Bytes Bounds.frameBytesMax
+h7 : Text.fit Bounds.frameBytesMax ((jproof E dc).bytes jpath) = some val✝¹
+val✝ : Bytes Bounds.frameBytesMax
+h8 : Text.fit Bounds.frameBytesMax ((rproof E dc).bytes rpath) = some val✝
+⊢ ((Option.map (Answer.refused hh code)
+          (match dc.decode ((dc.bytes m).extract 0 31 ++ { data := #[7] }) with
+          | Except.ok a => some a
+          | Except.error a => none)).bind
+      fun y =>
+      some
+        { txId := txId, root := root, jroot := jroot, rroot := rroot, rowsroot := rowsroot, answer := y, jpath := jpath,
+          rpath := rpath }) =
+    some
+      { txId := txId, root := root, jroot := jroot, rroot := rroot, rowsroot := rowsroot,
+        answer := Answer.refused hh code m, jpath := jpath, rpath := rpath }
+error: Protocol/Proofs/ReceiptWire.lean:133:83: [Error pretty printing: maximum recursion depth has been reached
+use `set_option maxRecDepth <num>` to increase limit
+use `set_option diagnostics true` to get diagnostic information]
+error: Lean exited with code 1
+Some required targets logged failures:
+- Protocol.Proofs.ReceiptWire
+error: build failed
+=== BUILD EXIT 1
+restored

@@ -1,0 +1,87 @@
+✔ [120/125] Built Protocol.Command.Machine (1.9s)
+✔ [121/125] Built Protocol.Command.Wire (474ms)
+✔ [122/125] Built Protocol.Proofs.Wire (1.3s)
+✔ [123/125] Built Protocol.Proofs.Page (438ms)
+✔ [124/125] Built Protocol.Proofs.Incoming (20s)
+✖ [125/125] Building Protocol.Proofs.Command (32s)
+trace: .> LEAN_PATH=/tank/dregg-build/nanodregg/wt/e2/.lake/build/lib/lean /home/hbox/.elan/toolchains/leanprover--lean4---v4.30.0/bin/lean /tank/dregg-build/nanodregg/wt/e2/Protocol/Proofs/Command.lean -o /tank/dregg-build/nanodregg/wt/e2/.lake/build/lib/lean/Protocol/Proofs/Command.olean -i /tank/dregg-build/nanodregg/wt/e2/.lake/build/lib/lean/Protocol/Proofs/Command.ilean -c /tank/dregg-build/nanodregg/wt/e2/.lake/build/ir/Protocol/Proofs/Command.c --setup /tank/dregg-build/nanodregg/wt/e2/.lake/build/ir/Protocol/Proofs/Command.setup.json --json
+error: Protocol/Proofs/Command.lean:238:8: unsolved goals
+case h_1
+D : Type
+inst✝¹ : Ord D
+inst✝ : DecidableEq D
+X : Ctx D
+me : Self D
+w : World D
+out cb result o e : ByteArray
+code✝ : Nat
+hv : ownSettle X me w cb = some (Settle.Verdict.refused code✝)
+h✝ : 0 < result.size
+x✝ : Option Attempt.Action
+heq✝ : List.find? (fun x => x.code == result[0]) Attempt.Action.all = some Attempt.Action.committed
+h : out = o ∧ ByteArray.empty = e
+⊢ ∃ c hh td, X.decodeCall cb = some c ∧ settleOf X me w c = Settle.Verdict.committed hh td
+error: Protocol/Proofs/Command.lean:238:8: unsolved goals
+case h_1
+D : Type
+inst✝¹ : Ord D
+inst✝ : DecidableEq D
+X : Ctx D
+me : Self D
+w : World D
+out cb result o e : ByteArray
+hv : ownSettle X me w cb = some Settle.Verdict.expired
+h✝ : 0 < result.size
+x✝ : Option Attempt.Action
+heq✝ : List.find? (fun x => x.code == result[0]) Attempt.Action.all = some Attempt.Action.committed
+h : out = o ∧ ByteArray.empty = e
+⊢ ∃ c hh td, X.decodeCall cb = some c ∧ settleOf X me w c = Settle.Verdict.committed hh td
+error: Protocol/Proofs/Command.lean:238:8: unsolved goals
+case h_1
+D : Type
+inst✝¹ : Ord D
+inst✝ : DecidableEq D
+X : Ctx D
+me : Self D
+w : World D
+out cb result o e : ByteArray
+hv : ownSettle X me w cb = some Settle.Verdict.open
+h✝ : 0 < result.size
+x✝ : Option Attempt.Action
+heq✝ : List.find? (fun x => x.code == result[0]) Attempt.Action.all = some Attempt.Action.committed
+h : out = o ∧ ByteArray.empty = e
+⊢ ∃ c hh td, X.decodeCall cb = some c ∧ settleOf X me w c = Settle.Verdict.committed hh td
+error: Protocol/Proofs/Command.lean:238:8: unsolved goals
+case h_1
+D : Type
+inst✝¹ : Ord D
+inst✝ : DecidableEq D
+X : Ctx D
+me : Self D
+w : World D
+out cb result o e : ByteArray
+hv : ownSettle X me w cb = some Settle.Verdict.forgotten
+h✝ : 0 < result.size
+x✝ : Option Attempt.Action
+heq✝ : List.find? (fun x => x.code == result[0]) Attempt.Action.all = some Attempt.Action.committed
+h : out = o ∧ ByteArray.empty = e
+⊢ ∃ c hh td, X.decodeCall cb = some c ∧ settleOf X me w c = Settle.Verdict.committed hh td
+error: Protocol/Proofs/Command.lean:243:9: unsolved goals
+case h_1
+D : Type
+inst✝¹ : Ord D
+inst✝ : DecidableEq D
+X : Ctx D
+me : Self D
+w : World D
+out cb result o e : ByteArray
+hv : ownSettle X me w cb = none
+h✝ : 0 < result.size
+x✝ : Option Attempt.Action
+heq✝ : List.find? (fun x => x.code == result[0]) Attempt.Action.all = some Attempt.Action.committed
+h : out = o ∧ ByteArray.empty = e
+⊢ ∃ c hh td, X.decodeCall cb = some c ∧ settleOf X me w c = Settle.Verdict.committed hh td
+error: Lean exited with code 1
+Some required targets logged failures:
+- Protocol.Proofs.Command
+error: build failed

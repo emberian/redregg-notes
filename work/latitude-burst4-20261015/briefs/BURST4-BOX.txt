@@ -1,0 +1,9 @@
+burst4-a (Latitude sv_R82A0y4Rga6mM, DAL, f4-metal-medium: 16c/32t, 187 GB, NVMe). Disposable; hbox mirrors its remote.
+The hbox rules in SAFETY-BLOCK.txt apply here with these paths:
+- Lean builds: /srv/pipeline/slots/with-lean-slot swarm-build lake build ...   (6 box-wide FIFO slots, THREADS=4;
+  launch detached `setsid nohup ... & echo $! > job.pid`; a waiter's ticket is /srv/pipeline/slots/waiters/<pid>.pid)
+- Pipeline layout PIPELINE_ROOT=/srv (box.env: /srv/pipeline/box.env). Warm base /srv/warm-base (FROZEN a5483db3).
+- Shared remote: /srv/git/minidregg.git (push lane/<name> only; main/next/green move by shared-remote sync/publish).
+  hbox pulls it every 10 min into /tank/dregg-build/claude-lanes/bundles/burst4-minidregg.git.
+- fn images: /srv/fnbin/6679dae0e/fn-6679dae0e/{fn-host,fn-host.core}.
+- PID files or nothing: never pkill -f / killall / kill -u. Every wait loop sleeps and has a deadline.

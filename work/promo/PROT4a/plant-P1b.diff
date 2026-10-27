@@ -1,0 +1,13 @@
+diff --git a/Lang/Program.lean b/Lang/Program.lean
+index 5ffdbeb..c554756 100644
+--- a/Lang/Program.lean
++++ b/Lang/Program.lean
+@@ -434,7 +434,7 @@ def guardEdits (S : RunSetup) (rv : RowView D) (pkg : D) (r : Req D) (es : List
+     | some gl =>
+       match runLaw S.lib (.get (.ref S.g) gl) S.state (reqData bytesOf r) (guardIn e.data o) with
+       | .ok (.ok ()) => .ok ()
+-      | .ok (.error why) => .error (.lawDenied pkg s!"{gl}: {reasonText why}")
++      | .ok (.error _) => .ok ()
+       | .error f => .error (.lawDenied pkg s!"{gl}: {faultText f}")
+ 
+ /-- Run method `method` of package `pkg` on `state`: the new state slots and the calls the method

@@ -1,0 +1,25 @@
+lang!: receipts between Worlds — a head object of another World (Std.head: forkedHead freezes it), a (receipt) read column checked by Protocol's Receipt.check through one new Lang.program parameter, foreign_receipt_sound (E5, PROTOCOL-65, LANG-75.14)
+
+Shape changed: Lang.program takes a third argument, receipts : ReceiptCheck (no default; every
+theorem over it quantifies over it, toy contexts pass Lang.noReceipts; Host.Deployed.X passes
+Protocol.Foreign.check). RelRead gains receipt; install accepts a cell-keyed (receipt) read of a
+method whose argument has receipt : bytes and refuses any other as receiptRead. No package,
+codec, call or reply byte moves (codec-vectors byte-identical); every Store re-geneses because
+install now accepts a method type it refused, so an old log can re-fold differently.
+New: Lang/StdHead.lean (world/head/Head), Protocol/Foreign.lean, Lang/Proofs/StdHead.lean,
+Protocol/Proofs/Foreign.lean, Protocol/Proofs/ReceiptWire.lean, client/tests/foreign.rs (+ fixture
+Accept.ob / Accept).
+CROSS-LAYER: LEDGER (R-0055: binder ripple, Ledger/Proofs + Ledger/Sim/Journey)
+CROSS-LAYER: HOSTING (R-0055: binder ripple, Hosting/Proofs/Deployed, Hosting/Sim/Journey)
+CROSS-LAYER: KERNEL (R-0051: Kernel/Proofs only — fold_journal_turn + witness ripple)
+CROSS-LAYER: PROTOCOL (R-0051), HOST (R-0051: Host/Deployed.lean), CLIENT tests (R-0051)
+PLANT: roots comparison dropped in Receipt.check -> X2r (a never-accepted call's receipt, cells root forged) ADMITTED (logs/p5plants2/PL1-roots.log)
+PLANT: journal inclusion dropped -> X2 admitted (PL2-inclusion.log)
+PLANT: head law compares steps only -> X3 admitted (PL3-headlaw.log)
+PLANT: Foreign.check ignores forked -> X3b names notHead (PL4-forked.log)
+PLANT: column filled without the check -> X2 admitted (PL5-column.log)
+SIZE: Lean modules in the Host closure: Protocol.Foreign and Lang.StdHead enter the deployed program (89 -> 93)
+SIZE: Lean modules / proof-modules / lines / theorems: the E5 objects and their proofs (see PROTOCOL-65)
+SIZE: Rust lines: client/tests/foreign.rs, the two-World rows
+Rebased on 28e2d88 (PROT-6): the fuse's methodReads / rowsOf / peerNotNamed kept; receipts threaded into the
+peer part; restates file promo/E5/restates-2.txt (108 RESTATES-MEANING, against 28e2d88).

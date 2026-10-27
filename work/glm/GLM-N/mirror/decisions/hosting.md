@@ -1,0 +1,2791 @@
+# decisions/hosting.md — HOSTING (owner: BUILD-HOSTING)
+
+The layer and its first design are argued in `docs/record/ASSEMBLY-hosting.md`
+(§3, HOSTING-1 … HOSTING-11, each with both critiques). Entries here are what the builder decided
+against main, with what changed from the assembly. Format: `decisions/README.md`.
+
+## HOSTING-0 The row, attacked; and the laws (2026-10-17)
+
+**The row** (CHARTER, ASSEMBLY §4): HOSTING owns `Hosting/` (lifecycle, plan, controller and broker
+decisions, resident profile), the `hosting/` crate (`grain-launch`, later `keybroker`), `world/grain/`,
+`world/hosting/`, this file. Must never: hold a member seed in a process that parses model or
+provider bytes; keep grain phase, pid or volumes as truth outside the World; add a Body constructor
+or receiver (KERNEL's); add a reader or checker (LANG's); hold a provider key before KEY-CUSTODY is
+ruled; run anything unconfined.
+
+**Should the layer exist?** The attack (ASSEMBLY HOSTING-1's critique) is that its first deliverable
+is a Lean package and a sim, which LANG or PROTOCOL could carry. What the first build found answers
+it the other way: the lifecycle is *not* a language question (it is generated from an edge list and
+proved against `step`), and the one load-bearing fact it surfaced is about KERNEL's authority, not
+LANG (HOSTING-4 below). The layer is justified by the custody boundary that arrives with the broker
+(a second key-holding process), not by the lifecycle; if KEY-CUSTODY is ruled option B (the broker
+deleted), the remaining HOSTING is a lifecycle package, a plan function and a 200-line launcher, and
+it should fold into CLIENT (Rust) and a `world/` package directory. Status: open until KEY-CUSTODY.
+
+**Should it be two?** No: the lifecycle and the plan are consumed only together (the controller), and
+a split would put one edge list's consumers in two layers.
+
+**The laws, attacked.**
+- Law 6, "only where the compiler must be trusted, `native_decide`": the line between *must* and
+  *chooses to* is cost. `lifecycle_text_reads` is kernel-reachable in principle and took > 200 s for the
+  printer alone (11 KB of `String` appends; measured). The law should name the test: a kernel proof
+  that does not finish in the per-module budget is one the compiler must be trusted for, and the
+  allow row records the measurement. Proposed amendment, not a violation. **Dissolved (HOSTING-3,
+  10-17):** the example was a wrong statement, not a hard proof. `lifecycle_text_reads` is now LANG-29's
+  general `readPackage_checked` at the lifecycle; the one closed fact left, that the printer gives
+  `some` (`lifecycle_prints`), is `decide +kernel`, because `Option.isSome` never forces the text.
+  Both allow rows are deleted. A cost that looked like "the compiler must be trusted" was really a
+  missing general theorem, which is the case the law should keep in view.
+- Law 7, "every refusal a constructor with a name": a law's refusal is `lawDenied law reason` with the
+  reason free text. The NAME on the wire is `lawDenied`; which edge was refused lives in prose. That is
+  right for an author's law (a package cannot add constructors to KERNEL), and the rows already judge
+  law refusals by reason substring (`Want.law`). Recorded so nobody reads "by name" as covering it.
+- Law 1, "one of everything": I added a second Term→text direction (`Hosting.Text`, a printer) beside
+  LANG's reader. It is not a second reader, and the theorem ties it to the one reader; but a printer is
+  LANG's thing in spirit. Offered to LANG (HOSTING-3b).
+No law is wrong for this layer; the first two want sharper wording.
+
+**CRITIQUE.** The "should it exist" answer is conditional on a ruling I do not control, so the layer
+may be built and then dissolved. **META.** I own the layer, so I am the worst judge of its existence;
+the condition (KEY-CUSTODY B ⇒ fold) is stated so ROOT can apply it without me.
+
+## HOSTING-3 The grain lifecycle package, as built (2026-10-17)
+
+**Decision.** `Hosting/Lifecycle.lean`: `Phase = installed | removed | running | stopped`, `Event =
+start | stop | remove`, one `edges` list, `step : Phase → Event → Option Phase` read off it.
+`Hosting/Package.lean` generates the LANG package `lifecycle` from it:
+- state `{last : Last, owner : bytes, phase : Phase}`, where `Phase` and `Last = born | remove |
+  start | stop` are SUMS of empty records;
+- one method per event (`start` 0, `stop` 1, `remove` 2; `Event.index` = `Right.invoke n`): it writes
+  `last := e` and `phase := target phase e`, the edge's target or the phase unchanged;
+- law `phase`: `ok` iff `admits old.phase new.last new.phase` (an edge; or `last = born` and the
+  born pair `installed → installed`, the only pair `create`'s `old = new = seed` can be);
+- law `owner`: born ⇒ the state's owner is the call's principal (the creator); otherwise the owner
+  is unchanged and the principal is the owner.
+`world/grain/Lifecycle` is the package's text (`Hosting.Text`), regenerated by
+`hosting-sim --write-text` and gated byte for byte by the sim's G0.
+
+**Changes from ASSEMBLY HOSTING-3.** (1) Phases and tags are sums, not nat codes: a decoded state
+holds one of four values by its TYPE, so the evaluation theorems over `Phase.all` are exhaustive,
+where over codes they would cover only an in-range subset. (2) `last` records the event, so the law
+checks the triple `(old, event, new)` against the edges: no `legalPairs_iff_step` indirection and no
+self-pair ambiguity (without `last`, `stop` on an `installed` grain leaves `installed → installed`,
+the born pair, which the law would admit). (3) The owner is a STATE field, because a law sees state
+slots and the Req, never KERNEL's owner slot 1; the born arm pins it to the creator, so state owner =
+KERNEL owner by induction. (4) `step` returns `Option`, not `Except Refusal`: the refusal a member
+sees is the law's (`lawDenied phase: no start from running`), and a `badPhase` constructor nothing
+emits would be the no-op law 1 forbids. (5) `remove` ends in `removed` (terminal), since no method
+retires its own object; the controller treats it as absent.
+
+**Theorems** (`Hosting.Proofs.Lifecycle`, `Hosting.Proofs.Package`): `edges_deterministic`,
+`edges_irreflexive`, `step_table`, `step_iff_edge`, `no_double_start`, `removed_terminal`,
+`running_only_by_start`, `born_initial_only`, `target_admitted_iff`, `target_moves_iff`; and, by the
+kernel evaluating LANG's machine on the package BODY's fields applied as `Lang.Program` applies them
+(`apply3` over `Data.toVal` of decoded state), over every phase × tag × phase: `phase_law_decides`
+(the `phase` law decides `admits`, never faults), `method_writes` (method `e` writes `phase := target
+p e`, `last := e`, keeps `kind`), `method_iff_step` (the state a method writes is admitted iff `step`
+is some), `owner_born` / `owner_live` (on two distinct byte strings), `laws_in_force`,
+`lifecycle_checks` (`checkWith []`), `lifecycle_method_index`, `lifecycle_text_reads` (native_decide,
+allow row). Second-agent vacuity read (10-17): the first version proved these of the closed
+`checkTerm`/`targetTerm` only; a `phaseLaw` with `old` and `new` swapped type-checked and passed all
+of them. Moved to the body; the swap is now a plant.
+**Plants.** (theorem) `leaf`'s no-edge arm made `ok`: red. (theorem) `phaseLaw` reading `new.phase`
+as old and `old.phase` as new: `phase_law_decides` and `method_iff_step` red (both run 10-17). (sim
+P1) skip-judge: a grain born `running` and a double start are ADMITTED. (sim P2) the package without
+its `owner` law: a stranger's `stop` is ADMITTED.
+**State also carries** `entry : bytes` and `kind : app | resident` (HOSTING-2), set at birth; methods
+carry them unchanged (`method_writes` for `kind`; `entry` is bytes, pinned by the sim).
+
+**Alternatives.** Nat codes with a range law (H1's): smaller text, theorems only over in-range codes.
+One `fire` method with an event argument (H1's): forbids per-event grants. A law reading KERNEL's
+owner: not expressible (laws see state).
+**CRITIQUE.** The owner law is pinned only by the sim and its plant: the kernel cannot range over byte
+strings, so no theorem says "for every owner". The text is 10.7 KB because LANG's surface has no type
+abbreviation (the state type is spelled 13 times); a resident authoring this by hand would not. The
+evaluation theorems fix `entry`, `kind` and `owner` to particular bytes; that the phase law and the
+methods' phase never read them is visible in the terms but not stated for all bytes.
+**META.** Sums over codes is the choice that makes my theorems exhaustive, i.e. the one that makes my
+own proofs look better; the test is the plant, which flips under both encodings. Recording `last` in
+state is a field the World now carries forever for every grain (KERNEL-17: nothing pruned).
+Status: built.
+
+## HOSTING-3b A printer in Hosting (2026-10-17)
+
+**Decision.** `Hosting.Text` prints a `Package` to the s-expression text `Lang.Read` reads (bound
+variables as `x<depth>`, `none` for a free variable, an unspellable byte literal or a non-atom label);
+`lifecycle_text_reads` proves read(print lifecycle) has the package's own bytes. Kernel-reducible by
+construction (over `String.toList`; `String.all`/`toNat?` do not reduce), though the theorem itself
+needs native_decide.
+**Alternatives.** Hand-write the text (a second source of the package); ship only Lean constructors
+(members install TEXT, so no). **CRITIQUE.** A printer is general LANG tooling living in HOSTING; if LANG
+grows one, this is a twin and must be deleted. **META.** Built here because I needed it now. Offered to
+LANG-3 to own; status: DELETED (HOSTING-9) for LANG's `Lang.Print` (LANG-28).
+
+## HOSTING-4 KERNEL's `invoke` is default-open; the law is the only owner check (finding, 2026-10-17)
+
+**Measured** (hosting-sim G7, and P2): `Receive.invoke` derives `principal` (the signer, or the grant
+chain's root issuer) and never compares it to the object's owner (`ownerAuthority` is used by
+`write`/`law`, not `invoke`). So any member may invoke any method of any programmed object, and a
+grant `invoke:n` matters only to a law that compares `principal` to an owner. Without the grain's
+`owner` law, a stranger stops another member's grain (P2 admits it).
+**Decision (hosting side).** Every hosting package carries an owner law; the sim plants its deletion.
+**Asked of KERNEL** (SendMessage KERNEL-4): is default-open invoke intended (the pay/well/bounty rows
+have non-owners invoke), and if so, should it be stated where `invoke` is defined, so a package author
+knows the law is the only gate?
+**Answer (KERNEL-4, 10-17): ROOT ruled KERNEL-25** — `invoke` becomes owner-gated like `write`
+(principal = owner or a chain for `invoke m` rooted at it; a stranger is `noGrant` before any law),
+with `invoke_authorized`. Also KERNEL-24: `Unsigned.world` = the genesis nonce, refused `wrongWorld`
+(answers ASSEMBLY HOSTING-10). Both designed, not built.
+**CRITIQUE.** Default-open is a reasonable design for public objects; making invoke owner-checked
+would need a public flag. **META.** I found it by reading for hosting and may overweight it; but it is
+the minted "gating defaults to silence" class. Status: ruled (KERNEL-25); HOSTING-5 follows.
+
+## HOSTING-5 The grain package after LANG ID-1 and KERNEL-25 (2026-10-17)
+
+**Decision.** When LANG's ID-1 (`Req.occasion`: birth | write | relaw | invoke m) and KERNEL-25 land,
+the package shrinks to state `{entry : bytes, kind : Kind, phase : Phase}`:
+- `last` is DELETED: it existed only because a law could not see which method ran; `occasion =
+  invoke m` says so, and `birth` is the born case;
+- `owner` and the `owner` law are DELETED: authority is KERNEL's gate (KERNEL-25), and a state copy of
+  KERNEL's owner slot checked by a law would be a twin of it;
+- the `phase` law is LANG's Std generator (asked of LANG-3: `machine S f initial edges`, birth ⇒
+  `initial`, invoke m ⇒ `(old.f, m, new.f) ∈ edges`, write/relaw refused) and the methods its
+  `stepTo`; HOSTING keeps `edges`, `step`, and the theorems tying the body to `step`;
+- method indices follow `pkgOf`'s sorted method list (remove 0, start 1, stop 2), so `Event.index` is
+  read off `lifecycle.methods`, not written down.
+**Alternatives.** Keep the hand-generated terms (a second law generator beside Std: law 1). Keep the
+owner law as "defence in depth" (a check that can never fire once KERNEL-25 is in: the no-op the
+charter forbids).
+**CRITIQUE.** Three layers' unbuilt designs (ID-1, KERNEL-25, Std.machine) now gate one package; the
+built version (HOSTING-3) may land first and be rewritten within a day. ID-3's "exactly one
+Authority" has no constructor meaning "KERNEL's gate only" (asked of LANG-3). **META.** Deleting my own
+`last` and `owner` laws feels like progress because it is fewer lines; the test is that the plants
+survive the move: P1 stays mine, P2 becomes KERNEL's invoke_authorized plant.
+**Status (10-17): half built.** LANG landed ID-1 (fdb65c6) and Std `machine`/`stepTo`/`pkgOf`
+(2ebb99d): the package is now `Grain.lifecycle? : Except StdRefusal Package` (no default: a refused
+build is a FAIL by name in the sim, `lifecycle_built` proves it builds), state
+`{entry, kind, owner, phase}`, `last` deleted, methods sorted (remove 0, start 1, stop 2;
+`index_is_methodIndex`), law `phase` = `Std.machine` (reasons "phase does not start at installed",
+"no edge", "a machine changes only by its methods"). The `owner` law STAYS, rebuilt on `Std.lawOf`
+with occasions, until KERNEL-25 lands; then it and the `owner` field go. Theorems moved to the
+occasion-aware body: `phase_birth`, `phase_invoke`, `phase_frozen`, `method_writes`,
+`method_iff_step`, `owner_born`, `owner_invoke`, `lifecycle_methods`, `laws_in_force`,
+`lifecycle_checks`, `lifecycle_text_reads` (since HOSTING-3: `∃ p s, lifecycle? = .ok p ∧
+Print.package p = some s ∧ readPackage s = .ok p`, from `readPackage_checked`; with `lifecycle_prints`
+and `lifecycle_encodes`, all kernel-checked), `method_at_index`; and `Proofs.Deployed.invoke_slots`
+(native_decide, allow row): on the DEPLOYED path — `Lang.program`'s `run` from slots, then its
+`judge` — for both kinds × every phase × event, admitted iff `step` is some, phase slot = `target`,
+entry/kind/owner slots unchanged. Vacuity read (10-17): `method_writes` tested only `kind = app` and
+empty entry/owner (a constant-writing method passed) — now both kinds, a real entry and owner, all
+four fields; the owner theorems accepted only principal `a` — now both strings in both roles; the
+link from these Data-level evaluations to the kernel's slot path was missing — `invoke_slots`.
+Plants (run): edges reversed in `edgeLabels` ⇒ `phase_invoke`, `method_writes`, `method_iff_step`
+red, and `invoke_slots` red. world/grain/Lifecycle re-emitted (9.0 KB).
+**Status (10-17, later): BUILT.** KERNEL-25 landed (be98647): a stranger's invoke is `noGrant`
+before any law. The `owner` law, the `owner` field and the P2 plant are DELETED; the stranger plant
+lives in kernel-sim (invoke-no-grant arm). State `{entry, kind, phase}` (slots 16, 17, 18); the only
+law is `phase`. hosting-sim G7 expects `noGrant`, also under skip-judge (authority is not a law). The
+controller's look-alike is now the lawless twin (same state and methods, no law). Plant re-run:
+edges reversed ⇒ 4 theorems red. Also landed with it: `Controller.touchedIds` (the ids HOST's tail
+c722b05 hands the controller per batch), checked by G15.
+
+## HOSTING-6 The plan, as built (ASSEMBLY HOSTING-5) (2026-10-17)
+
+**Decision.** `Hosting/Plan.lean`: `plan (label : ByteArray) (g : Grain) : Except Refusal Plan`, total,
+with `Plan` = `sandbox::Policy` field for field plus `program` and `connect`. Paths are component
+lists relative to the operator's hosting root (the launcher joins the root; Lean never sees the OS).
+Layout `worlds/<l>/{store, members, grains/<id>/{pkg, vol}}`: an app reads `pkg`, runs
+`pkg/<entry>`, reads and writes `vol`; `store` and `members` are hidden. Refused by name:
+`labelUnclean`, `idUnclean`, `entryUnclean`, `residentUnsupported` (until HOSTING-6 of the assembly:
+`Policy.connect`, `nd --stdio`, the broker). No volume request exists (no `resolve`).
+**Theorems** (`Hosting.Proofs.Plan`): `plan_paths` (every allowed path lies under the grain's dir),
+`plan_not_exposed` (no allowed path is a prefix of a hidden one or inside one), `plan_components_clean`
+(every component of every allowed and hidden path is clean: what makes the list facts directory
+facts), `plan_no_store_no_workspace`, `plan_app_only`, `plan_refuses_{label,id,entry}`,
+`Refusal.name_injective`. **Vacuity read (10-17)**: the first version never checked `idHex` and no
+public theorem said a component was clean, so `idHex = "../../<other>/grains/<g>"` gave read+write on
+another world's volume with every theorem green. Fixed: `idUnclean`, `plan_components_clean`.
+**Plants** (run 10-17): `worldRoot l` added to `read` ⇒ `plan_paths` red; the `idHex` check deleted ⇒
+`plan_components_clean` and `plan_refuses_id` red.
+**CRITIQUE.** Everything here is about component strings; symlinks are the OS's. A symlinked
+`pkg/<entry>` is followed by `sandbox::command`'s canonicalisation and becomes the allowed program,
+wherever it points. CLOSED by CLIENT 6278ab8: `sandbox::command` refuses `ProgramOutside` unless the
+canonical program lies under (or is) a canonical `read`/`exec` entry; the plan's program lies under
+its `read` entry `pkg`, so a symlinked `pkg/<entry>` pointing outside is refused before launch (the
+launcher's plant repeats it). Linux caveat (CLIENT-2): bwrap mounts, it does not filter exec, so
+everything under the read-only floor (/usr) is executable inside; `exec` bounds what is VISIBLE on
+Linux, what RUNS only on macOS (sandbox-exec filters process-exec). On a case-insensitive filesystem two labels differing in case
+name one world: labels must be lowercase (not yet refused). Cross-world isolation is still the
+sandbox's deny-default plus the launcher's physical plant, not a theorem over other labels.
+**META.** I wrote `plan_paths` first because it was in H1 and easy; it was the weakest. The reader
+found the hole in one pass, which says the discipline works and my first statements are not to be
+trusted. Status: built.
+
+## HOSTING-7 The controller's decisions (ASSEMBLY HOSTING-4) (2026-10-17)
+
+**Decision.** `Hosting/Controller.lean`: `reconcile bytesOf label pkgId now live w ids :
+List Action` (each touched id once, ≤ `grainsMax` = 256 per call; the caller pages), `Action =
+{grain, verdict}`, `Verdict = launch plan | kill | refuse why`. The grain's directory is rendered
+HERE from the World id (`dirOf`, lowercase hex), and each decision is made on `w.live i`: no caller
+pairs a cell with a name. Per id: gone ⇒ kill a running child; not a lifecycle OBJECT (kind object
+and package slot = `lifecycleId`, the `romIdOf` of the ROM cell `install` makes for the package's
+bytes) ⇒ kill a running child, never launch; undecodable ⇒ kill a running child, else
+`malformedGrain` (fail closed); desired `running` with no child ⇒ `crashLoop` if ≥ `restartsMax` (5)
+exits within `restartWindowMs` (60 s, ADVISORY: the launcher reports both), else the plan or its
+refusal; desired not `running` with a child ⇒ kill.
+**Theorems** (`Hosting.Proofs.Controller`): `launch_sound`, `kill_sound`, `launch_complete`,
+`malformed_running_killed`, `crashLoop_refused`, `reconcile_names` (every action is decided on the
+World's cell at a touched id and names that id's directory), `reconcile_one_per_id` (one action per
+grain, given distinct directories), `reconcile_bounded`. **Vacuity read (10-17)**: the first
+version took `(name, cell)` pairs from the caller (pair A's cell with B's name: launch B's dir with
+A's entry, or kill B), checked the package slot but not the cell kind (a GRANT aimed at the package
+cell passed), took `pkgId` as an unchecked input, kept a running child of a malformed cell, and could
+emit two actions for a duplicated id. All five fixed as above. **Plants** (run 10-17): the
+`isGrain` test skipped ⇒ `launch_sound`, `kill_sound` red. hosting-sim G15/G16: `lifecycleId` is the
+installed package's id; launch with the exact expected plan (the id listed twice, one action);
+nothing with a running child; a started LOOK-ALIKE never launched; kill of a removed grain's child.
+**Owed.** `dirOf` injective (lowercase hex is; not yet a theorem), so `reconcile_one_per_id`'s
+premise is discharged for all ids.
+**CRITIQUE.** The controller folds the log beside `host follow` (law 5's "the follower is the only
+replayer"): a second replayer unless it IS a follower (HOST's tail API, asked). `now` and exit times
+come from the launcher, so the crash-loop bound is only as honest as the operator's own process. A
+restart of the controller forgets exits and relaunches every desired grain at once.
+**META.** Desired-vs-observed is the Kubernetes shape, which I reached for by familiarity; the test is
+that no observed fact enters the World, which holds by construction (nothing here writes a Turn).
+Status: decisions built; the exe (tail + frames to `grain-launch`) waits on HOST's tail API and
+CODEC's Action layout.
+
+## HOSTING-8 The controller ↔ launcher frames (`Hosting/Wire.lean`) (HOSTING-2, 2026-10-17)
+
+**Decision.** The boundary types move into one def module that imports only `Codec.Layout`:
+`Plan`, `Refusal` (codes 0–5), `LaunchFailure` (codes 0–7), `Verdict`, `Action`, `Report`, and two
+`Codec.Tagged` families on CODEC-21's field kinds — actions `launch 1` (grain, program : path,
+read/write/exec/hidden : paths), `kill 2` (grain), `refuse 3` (grain, why : oneOf Refusal); reports
+`started 1` (grain, atMs), `exited 2` (grain, status = the raw wait status, atMs), `failed 3` (grain,
+why : oneOf LaunchFailure, atMs). One bound, `Bounds.frameMax = 4096`, is both the frame payload
+bound (pipe framing `u32le len ‖ payload`) and every field's; `Bounds.grainsMax` moved here.
+`Hosting.clean`/`componentMax` are DELETED: `plan` and its theorems use `Codec.Path.clean` (law 1).
+`Plan.connect` is DELETED: it was always empty and `sandbox::Policy` has no such field (a resident
+plan brings it back with CLIENT's `Policy.connect`, the row that needs it).
+Conversions `actionWire? : Action → Option ActionTy` / `actionOf` (and the report pair) go through
+`Tagged.Ty`, so the bytes are `Tagged.codec`'s, never hand-built. `encodeAction` returns `none`
+when a value is past a bound; the controller treats that as an assertion (the premise is that a
+planned action fits: to be proved with the controller, `plan_wire`).
+**Theorems** (`Hosting.Proofs.Wire`): `actionCodec_lawful`, `reportCodec_lawful` (codes distinct),
+`actionOf_wire`, `reportOf_wire`, `decode_encodeAction` (the bytes handed to the launcher decode to
+the action), `decodeReport_bytes`, `reportWire_some`; per table `mem_all`, `ofCode?_code`,
+`code_injective`, `name_injective`; `launch_fields` (the field NAMED `program`/`read`/`write`/
+`exec`/`hidden` — the names the Rust reads by — carries that plan field); teeth `kill_encodes`,
+`refuse_reads_back`, and `Proofs.Plan.planned_launch_encodes` (a real `plan` output encodes into one
+frame, `decide +kernel`). `Proofs.Plan.plan_roles` (was the private `plan_ok`) states each path in
+its role: the containment theorems speak only of `allowed`, the union, and stay green if `plan`
+reads `vol` and writes `pkg`.
+**Vacuity read (10-17, second agent).** Four holes: (1) a CONSISTENT swap of two same-typed slots in
+`actionWire?` and `actionOf` kept `actionOf_wire` green while the Rust, reading by name, would get
+the write list as `read` — fixed by `launch_fields`; (2) no launch was shown to encode (the round
+trip could be vacuous for launches) — tooth `planned_launch_encodes`, the general `plan_wire` owed
+with the controller; (3) `plan`'s read/write roles were unpinned — `plan_roles`; (4) `name` is not
+tied to the constructor (a swapped pair of names stays injective) — accepted: the launcher maps by
+the emitted variant and its code, `name` is only the printed text.
+**Plants** (run 10-17): `actionOf` reading `write` into `read` ⇒ `actionOf_wire` red; `kill` given
+code 1 ⇒ `actionCodes_nodup` red; `r`/`w` swapped in BOTH `actionWire?` and `actionOf` ⇒
+`launch_fields` red, `actionOf_wire` green (the hole, now covered); `plan` with `read := [vol]`,
+`write := [pkg]` ⇒ `plan_roles` red, every `allowed` theorem green.
+**Why a `failed` report.** A launch the sandbox refuses (`ProgramOutside`, `Exposed`, …) must reach
+the controller by name, and must count toward the crash-loop bound like an exit, or a grain whose
+package was replaced by a symlink is relaunched every round. `LaunchFailure` names
+`ConfineError`'s cases; the launcher maps them by an exhaustive match, so a new sandbox case fails
+to compile there until it is named here.
+**Alternatives.** Make `Action` itself the `Tagged.Ty` (every decision proof would then carry
+subtype proofs of bounds). Carry bounds in `Plan`'s types (`PathTy`) so `actionWire?` is total:
+right in principle, and the next step if `plan_wire` turns out awkward. A free-text failure reason
+(not a name).
+**CRITIQUE.** `launch_fields` ties Lean's positions to the layout's names; that the Rust reads the
+same names is the emitter's, checked by `--check` and by the launcher's physical isolation test
+with a Lean-made plan (`vol` writable, `pkg` not), not by a theorem. `LaunchFailure` copies
+CLIENT's error list by hand; the exhaustive match keeps it from going stale, not from being wrong.
+**META.** I matched the names my predecessor promised CODEC-2, then renamed `Event` to `Report` (a
+clash with the lifecycle's `Event`): CODEC-2 is told. One bound for everything is the Layout
+family's shape, accepted because it is the codec's, not because it is tight.
+Status: built.
+
+## HOSTING-9 Labels are lowercase ASCII; directory names are injective; the printer is LANG's (HOSTING-2, 2026-10-17)
+
+**Decision.** (1) `plan` refuses `labelUnclean` unless `labelOk l`, and `idUnclean` unless `labelOk g.idHex`: one clean component whose every
+byte is `a-z`, `0-9` or `-` (`labelByte`). The label names `worlds/<l>`; on a case-insensitive or
+Unicode-normalising file system (APFS, the operator's Mac) `W1` and `w1`, or two normal forms of
+`é`, would name ONE world's directory, so a grain of one Store could be planned into another's.
+(2) `dirOf` is `Lang.Print.hex` (LANG-28, 615e452) as UTF-8 and is injective (`dirOf_injective`), so
+`reconcile_one_per_id`'s premise is discharged for any injective `bytesOf` (`reconcile_distinct`).
+(3) `Hosting/Text.lean` is DELETED (HOSTING-3b's twin): G0 and `lifecycle_text_reads` use
+`Lang.Print.package`; world/grain/Lifecycle is byte-identical. (4) The oneOf fields are named
+`grainRefusal` and `launchFailure` (CODEC-2: the emitter dedups oneOf enums by field name, and
+`refusal` collides with `wire::Refusal`; CODEC-2 makes both collisions refuse to emit).
+**Theorems.** `labelOk_clean`, `labelOk_bytes`, `labelByte_folds_to_itself` (no accepted byte is
+ASCII uppercase or ≥ 128), teeth `labelOk_refuses_upper`, `labelOk_refuses_nonascii`,
+`labelOk_accepts`, `foldByte_folds`; `labels_fold_injective` (accepted labels equal after ASCII
+folding are equal), `plan_disjoint` (two Stores' or two grains' plans allow disjoint trees);
+`plan_refuses_label/id/entry` restated over `labelOk`; `dirOf_injective`, `reconcile_distinct`,
+`reconcile_distinct_deployed`. **Vacuity read (10-17):** the FS claim was a docstring (now
+`labels_fold_injective` + `plan_disjoint`); grain ids were only `clean`, so two ids differing in
+case shared a volume on APFS (now `labelOk`); no deployed instance of `reconcile_distinct`.
+**Plants** (run): `labelByte` widened to accept from 65 ⇒ `labelByte_folds_to_itself`,
+`labelOk_refuses_upper` red; `dirOf` of the first byte only ⇒ `dirOf_injective` red.
+**Alternatives.** Fold case in the plan (lowercase the label): a second spelling of one Store that
+the operator never wrote. Allow any clean label and rely on a case-sensitive FS: true on hbox's ZFS,
+false on the Mac where lanes read.
+**Later (HOSTING-3):** `dirOf_labelOk` (Proofs.Controller): for an id of 1 to 32 bytes, `dirOf`
+is an accepted label (`labelOk_of` plus LANG's `hexChars_digit`, with a closed check that each hex
+digit encodes as one label byte). So a controller plan never refuses `idUnclean` for a World id.
+Plant (run): `dirOf` with a `.` appended turns `dirOf_labelOk` (and `dirOf_injective`) red.
+**CRITIQUE.** The FS's identification relation is modelled as ASCII folding (`foldByte`); that it is
+APFS's relation on ASCII names is a platform fact, not a theorem.
+**META.** The charset is the one I would pick for a hostname, by familiarity; it is narrower than
+needed, which is the safe direction.
+Status: built.
+
+## HOSTING-10 The controller exe: a pure round over HOST's tail (HOSTING-2, 2026-10-17)
+
+**Decision.** `hosting-controller STORE LABEL` (`Hosting/Cli.lean`, root `Hosting/Main.lean`) opens
+the Store with `Host.Tail.open` (no lock, never writes), decides every live cell id once
+(`Loop.allIds`, O(store) at start only), then per round: `Tail.next` (O(appended bytes)), drain the
+reports a dedicated reader task queued (≤ `queueMax`), run `Loop.step` on `touchedIds` of the
+round's Turns and those reports, write the actions as frames, flush; an idle round sleeps
+`Host.tailPollMs`. Rounds and report frames are bounded by `lifetime` (2^48); every end is an `Exit`
+by name (`launcherGone` = 0 is the normal end: the launcher left first).
+`Hosting/Loop.lean`'s `step` is pure, so hosting-sim G17 runs the same function the exe runs. Memory
+(`State`): the reports (`Live`), the grains this process launched with their ids (so an exit report
+returns its id to `reconcile`: a crashed child of a grain still desiring `running` is relaunched or
+refused `crashLoop`), and the launcher's clock. A report for a grain this process never launched is
+ignored. After a round the memory is pruned to grains with a running child or a qualifying cell.
+A failed launch (`LaunchFailure`) counts as an exit.
+**Laws the launcher keeps** (stated in `Loop`'s header; the launcher's tests check them): one child
+per grain; reports in order on one FIFO pipe (so no generation numbers); the controller's pipe
+closing kills every child before the launcher exits (so a restarted controller, starting from empty
+memory, meets no orphan).
+**Theorems** (`Hosting.Proofs.Loop`): `step_decides` (every id of the round with a verdict gets
+exactly that action), `step_launch_sound` (a launch is `launch_sound`'s situation on the World's own
+cell at an id of the round), `step_kill_complete` (a running child whose cell at an id of the round
+is gone, not a lifecycle object, undecodable or not desiring `running` is killed: all of
+`kill_sound`'s cases), `step_launch_complete`, `step_launch_marks` (a launched grain counts as running
+after the round and stays in memory), `remember_has`, `returning_complete`, `absorb_stranger`,
+`step_kept`, `step_one_per_grain` (+ `_deployed` on digests), `exited_not_running`,
+`failed_not_running`, and the paging lemmas.
+**Vacuity read (10-17, second agent).** Found: kill completeness covered only gone/not-a-grain
+(generalised to all four cases, over `roundIds`); a spurious `started` for a grain never launched
+would hold a disqualified child up undecided (reports of strangers now ignored, `absorb_stranger`);
+unbounded memory (`prune`, `step_kept`); no proof the exit report returns the id (`remember_has`,
+`returning_complete`); no one-action-per-grain over the whole round (`step_one_per_grain`); the
+restart/orphan and ordering assumptions were unstated (now the launcher's laws above). Accepted: the
+batch-level frame property (a cell whose state changes is in `touchedIds`) was KERNEL's
+`admit_frame` per Turn and not lifted to a batch. It is now proved here (HOSTING-3,
+`Hosting.Proofs.Frame`): `fold_frame` (an id outside a batch's `touchedIds` keeps its entry) and
+`decide_frame` (so its decision is unchanged). One gap remains outside both: `reconcile` decides at
+most `grainsMax` ids per call, so deciding only the touched ids is complete only while the caller
+pages through all of them, which `Loop.step` does (`roundIds`); `now` is advisory
+(one far-future report disables the window); a `crashLoop` grain is retried only when a Turn touches
+it.
+**Plants** (run): `afterOne` not marking a launch ⇒ `step_launch_marks` red and G17 "touched again:
+nothing" red; a failed launch not counted as an exit ⇒ `failed_not_running` red and G17's crashLoop
+line red; reports of strangers absorbed ⇒ `absorb_stranger` red and G17's stranger line red.
+**Alternatives.** A second replayer (the controller folding the log itself): law 5 forbids it; the
+tail is the open. One Lean process that also launches (no Rust): the sandbox crate is Rust (CLIENT),
+and the controller would hold the children it decides about.
+**CRITIQUE.** The IO loop is not proved to call `step` faithfully; it is read, smoke-run (empty
+Store: round 0, then `launcherGone`), and exercised end to end only by the launcher's isolation test.
+A partial batch is written when `encodeAction` fails mid-round (the run then ends by name).
+**META.** I shaped the memory after the Kubernetes controller (observed vs desired), again by
+familiarity; the reader's holes were all in the observed half, which is where that shape is weakest.
+Status: built.
+
+## HOSTING-11 grain-launch and the physical isolation test (HOSTING-2, 2026-10-17)
+
+**Decision.** The crate is `launcher/` (ROOT ruling: `hosting/` is one path with `Hosting/` on a
+case-insensitive disk; CODEC-2's emit-hosting writes `launcher/src/generated.rs`). Bin `grain-launch
+ROOT LABEL PIDS CONTROLLER [ARG...]`: starts CONTROLLER through `nanodregg_sandbox::command`
+(read `ROOT/worlds/LABEL/store`, exec the controller itself, nothing else), reads action frames from
+its stdout on a thread, and per action: launch = one `sandbox::command` over the frame's plan joined
+onto ROOT (the plan's `write` directories are created first; nothing added, dropped or reordered),
+a PID file `PIDS/<grain>.pid` per child, `started`; a `ConfineError` or a spawn error is a `failed`
+report by name (exhaustive `failure_of`); kill = the child's own handle; every 50 ms tick reaps
+children and reports `exited` (raw wait status), removing the PID file. The laws `Hosting.Loop`
+relies on hold by construction: a second launch for a grain with a live child ends the run
+(`duplicateLaunch`); reports go out in order on one pipe; when the controller's pipe closes every
+child is killed and reaped before exit. A grain name outside `[a-z0-9-]{1,64}` ends the run
+(`badGrain`: the premise `plan`'s `labelOk` guarantees, asserted where the bytes enter, since PID
+files are named by it). Bin `probe`: the test's grain.
+`hosting-drive [--plant-read-worlds] LABEL IDHEX ENTRY` (Lean, `Hosting/Drive.lean`): a stand-in
+controller with no Store that runs the deployed `plan` and `encodeAction` for one grain, so the test's
+plan is Lean's, never built in Rust.
+**The test** (`launcher/tests/isolation.rs`, Linux, `cargo test --test isolation`, run on hbox
+10-17): CONTROL first — the probe unconfined reads and writes all five targets (`ok` each, the
+neighbour write included); CONFINED through grain-launch + hosting-drive + nd-bwrap:
+`vol-write ok`, `neighbour-write denied ENOENT`, `neighbour-read denied ENOENT`, `pkg-write denied
+EROFS`, `store-read denied ENOENT`; no PID file outlives its child. Plants (each a test): a plan with
+`worlds/` in `read` ⇒ `report failed exposed`, the probe never runs; a symlinked `pkg/probe`
+pointing outside ⇒ `report failed programOutside`.
+**Mutations** (run): `policy()` swapping read and write ⇒ all three tests red; `policy()` dropping
+`hidden` ⇒ the worlds/ plant red (the main test stays green: deny-default alone hides the
+neighbour, `hidden` is the second barrier).
+**Platform fact (CLIENT-9, EXEC_FILTERED = false on Linux).** bwrap mounts, it does not filter exec:
+what the grain cannot see is ABSENT (ENOENT, not EPERM), its package is read-only (EROFS), and
+everything under the read-only /usr floor is visible and executable inside. `exec` bounds
+visibility, not what runs. The test names the errno the OS gave.
+**Alternatives.** The real controller over a real Store holding a grain (needs genesis, install,
+create, invoke through a member client: the row harness's job, PROTOCOL's grain row); a Rust-built
+plan (forbidden: law 2).
+**CRITIQUE.** The test is a standing tooth since GATES-2's 23a1f31: the `gates/runs.tsv` row
+`cargo:launcher:isolation` runs it in every standing run, and pre-push runs it when `launcher/` or
+`hosting-drive`'s import closure changes (GATES-2 planted the row). It runs only where nd-bwrap
+exists (hbox), so a Mac reader's green says nothing about it. `hosting-drive` is a second
+caller of `plan` beside the controller: it shares the definitions, not the round. Kill is SIGKILL to
+bwrap (`--die-with-parent` takes the grain); there is no graceful stop.
+**META.** I read the brief's "EPERM" literally at first; the OS says ENOENT under a mount namespace,
+and asserting EPERM would have been a test of my expectation, not of the sandbox.
+Status: built.
+
+## HOSTING-12 The provider-key broker: Lean writes the request, the window forfeits on restart (HOSTING-3, 2026-10-17)
+
+**Ruling it builds under.** KEY-CUSTODY (Ember, 10-17): the OPERATOR holds provider keys. The resident
+calls a provider only through the broker, and no key reaches the resident. HOSTING-0's "should the
+layer exist" is answered: option A keeps the broker, so HOSTING stays a layer.
+
+**Decision.** Three parts, each holding one thing.
+- `keybroker`, the second bin of `launcher/` (Rust). It holds the operator's provider-key file and
+  serves one Unix socket per resident. **Identity is the socket an ask arrived on**: keybroker puts
+  the resident's member id in front of the ask's bytes, so a resident can name neither itself nor
+  another resident. At start it checks the key file's custody: a regular file, not a symlink, owned
+  by the euid, mode exactly 0600. Each failure ends the run by name (`keyFileLink`,
+  `keyFileNotRegular`, `keyFileOwner`, `keyFileMode` (mode must be exactly 0600), `keyFileLength`, `keyFileIo`:
+  one per refusal of the sandbox crate's shared `custody::read_private`, CLIENT-3). It does not decode the ask. It sends Lean's
+  request bytes upstream with the key slot's header, and withholds any response that contains the
+  key (`keyEchoed`). It moves bytes and decides nothing. One call at a time per socket: a second
+  concurrent ask gets `busy`.
+- `hosting-broker`, a Lean exe and keybroker's child (as the controller is grain-launch's). It decodes
+  the resident's ask with the one Lean codec (`Hosting.BrokerWire`) and makes every decision in a pure
+  `Broker.decide`. **Lean writes the upstream request**: the JSON body is printed by Lean from the
+  ask's structured fields (model, maxTokens, system, messages as roles plus texts), together with the
+  request target, the extra headers and the NAME of the key header. So the resident cannot smuggle a
+  second `max_tokens` or `model` into a body that Lean read one way and the provider reads another.
+  Nothing parses provider JSON, and no Rust number enters the meter. It holds no key and no member
+  seed.
+- The **allowance** is the policy for one resident: `{windowMs, cap, maxTokens, models : {name,
+  keySlot, microPerKTok}}`. Its source is the World (stage 2: a `world/hosting/Allowance` object the
+  operator owns per resident, read through `Host.Tail` as the controller reads grains, refused
+  `allowanceAmbiguous` when two exist).
+
+**The charge is the worst case, and it is final.** A grant charges `cost model (askBytes + maxTokens)`
+to the window: the input is bounded by the bytes Lean printed, the output by the `max_tokens` Lean
+printed. Nothing is settled or refunded, so the meter has no tickets, no usage report, no overrun
+and no `frozen`. Over-charging is the safe direction.
+**The window forfeits on restart.** Spend lives in broker memory. A broker life starting at operator
+clock time `t0` opens each resident's meter at window `t0 / windowSecs` with `spent = cap`, so the
+first window of a life grants nothing that costs. Theorems are in `Hosting.Proofs.Broker`:
+- `inv_start` / `inv_decide`: every meter keeps `spent ≤ cap`.
+- `fresh_start` / `fresh_decide`: the forfeit invariant holds after any run of grants.
+- `start_window_free`: an ask in a life's start window is granted only at cost 0. (HOSTING-13 restates
+  these per entry: `inv_*` → `capped_*`, `fresh_start` → `start_capped_fresh`, and this one →
+  `start_window_refused`, no grant at all.)
+- `cost_worst`: a charge is never below the exact price.
+- `grant_allowed`: a grant is for an allowed, nonzero-priced model of the resident's own allowance,
+  with that model's key slot, within both token bounds, and its body is `requestBody`'s.
+- `body_shape` + `unstr_str`: the body is `bodySpec` exactly, so every string field reads back as
+  the ask's value, closed by its own quote, and message `i` carries text `i` with
+  `roleName` of role byte `i` (`body_tooth` pins 0 = `user`).
+- `verdictOf_wire` and codec lawfulness for the frames.
+- Teeth, all `decide +kernel`: `body_tooth` (a smuggled `","max_tokens":99999` stays inside
+  `content`), `system_tooth`, `forfeit_tooth`, `accumulate_tooth`, `refusal_teeth`, `badAsk_tooth`.
+
+So for a FIXED allowance and a non-decreasing clock, over sequential lives, only the life that
+first sees a window grants in it at a cost, and the total charged in a window is at most `cap`. A
+crash loop starves a resident and never overspends. **The premise "fixed allowance" is real**
+(VACUITY-READER-H3B's counterexample): life 1 with `windowMs = 60000` spends `cap` at t = 60000;
+life 2 with `windowMs = 1` forfeits only its own 1 ms window and spends `cap` again inside life 1's
+minute. A changed `windowMs` (or `cap`) is a new budget, and that is the operator's act. Stage 2
+reads the allowance from the World, where a change is a Turn the operator signs.
+
+**Refusals by name** (`Broker.Refusal`, one table, on the resident's wire): `noAllowance`,
+`allowanceMalformed` (a zero window, a cap past `capMax`, or a model priced 0, which would be
+unbounded free calls on the operator's key), `clockRegressed`, `badAsk` (the ask does not decode),
+`modelNotAllowed`, `tokensZero`, `tokensOver`, `messagesMalformed`, `textNotUtf8`, `overSpend`,
+`requestTooLarge` (the printed body past `bodyMax`: escaping can grow a text up to 6×); and,
+reported by keybroker, `keyMissing`, `keyEchoed`, `upstreamFailed`, `busy`, through an exhaustive Rust match, as
+`LaunchFailure` is.
+
+**Alternatives.** (1) ASSEMBLY HOSTING-7's lease Turn per resident per window. Someone has to hold a
+member seed to sign it, and the broker parses provider bytes, which the charter forbids. That means a
+third process, plus a journal entry per resident per window forever (KERNEL-17). The forfeit gives
+the same safety bound with no write. (2) The resident draws its own lease with the window tied to
+block height. Heights are not time, and the resident's own Turns advance them. Refused. (3) A
+local meter journal: a second Store format (law 1). Refused. (4) Reserve-then-settle on the
+provider's usage (H2). That needs a provider-JSON reader in the key-holding path, and Rust's word
+for the number. It is only worth having as a refund, and it comes back only if worst-case charging
+measurably starves real use. (5) Forward the resident's own JSON body. Then Lean decides on fields
+the provider may read differently (duplicate keys, a second model). Refused.
+
+**Staging.** Stage 1 is the Lean core (`Hosting/Broker.lean`, `Hosting/BrokerWire.lean`, their
+proofs, the JSON printer), then `emit` of the broker frames (CODEC), then keybroker with key custody
+and a launcher test. The test is a resident stand-in on its socket that gets each refusal by name,
+and a canary key that appears in no byte the resident receives. A 0644 key file stops keybroker by
+name. In that test the allowance comes from a Lean driver mode (the `hosting-drive` pattern), never
+from Rust. Stage 2 is the allowance package plus the World follower. Stage 3 is the resident plan
+(CLIENT `Policy.connect`, `nd --stdio`). Until stage 2 nothing deploys the broker; the test is its
+only caller.
+
+**CRITIQUE.** The window is the operator's clock. A clock set back across a restart re-opens a
+forfeited window: the operator's own money under option A, and a premise, not a theorem. "Input
+tokens ≤ input bytes" is a fact about the provider's tokenizer, true of byte-level BPE on text and
+recorded as a platform fact, not proved. A text-only ask (system plus role/text messages) cannot
+express tool use or images: Hermes will need more fields, and each one is a printer case with its
+own bound. Upstream is plain HTTP/1.1 to an operator-configured address. A real provider speaks TLS,
+so either the operator runs a local terminator or keybroker takes a TLS dependency into the
+key-holding process. That is decided at stage 2, not by default. (Decided by HOSTING-15: keybroker speaks TLS 1.3 with rustls on ring.) A restart forfeits up to a window
+of budget (availability).
+**META.** I picked worst-case-final because it deletes settle, tickets, overrun and freeze: the
+smaller design, and I like small. The test is whether real asks starve under it, which is measurable
+at stage 3. Forfeit-on-restart is mine, and I am inclined to call it equivalent to the lease. The
+theorems above are the check: if they need a premise beyond a monotone clock, the lease was right.
+**Vacuity read (10-17, VACUITY-READER-H3B).** No statement was vacuous, but three holes.
+(1) No structural theorem about the body: a system printed raw passed every theorem. Now covered by
+`body_shape` (plant `raw-system` is red). (2) Nothing tied `cost` to the worst case: rounding down
+passed. Now `cost_worst` (plant `cost-round-down` is red). (3) The cross-life claim needs a fixed
+allowance; that premise is now stated above. Also added: a model priced 0 is refused,
+`grant_allowed` uses `md.name = ask.model`, and teeth for accumulation, `badAsk` and system.
+**Plants** (run 10-17, each red at named theorems): start meter at 0 (`fresh_start`,
+`forfeit_tooth`); the `overSpend` check deleted (`inv_decide`, `decide_ok`, `accumulate_tooth`);
+`"` unescaped (`unstr_str`, `body_tooth`); key slot 0 (`grant_allowed`); system raw (`body_shape`);
+cost rounded down (`cost_worst`); price-0 accepted (`grant_allowed`, `refusal_teeth`).
+**Owed.** `requestTooLarge` has no closed instance: it needs about 22 KB of control bytes, which is
+too large for the kernel, so the launcher test carries it. No theorem says a grant's verdict
+encodes: `hosting-broker` exits `unencodable` if it does not, after `decide` accepted. That fails
+safe, because the in-memory charge dies with the process and the restart forfeits the window.
+(Closed by HOSTING-4, 10-18: `Proofs.Broker.step_encodes`, which says every verdict `step` returns
+has a frame, with `grant_cap` (a charge is below `capMax`), so `unencodable` is unreachable. Plant: a
+`bodyMax` of `frameMax - 100` is red.)
+Second pass (same reader): ACCEPT. Its one loose end, that roles were not tied to the role bytes,
+is now part of `body_shape`.
+**Stage 1, the Rust half (HOSTING-3, later 10-17).**
+`keybroker KEYS SOCKDIR PIDS UPSTREAM RESIDENTS DECIDER [ARG...]` is launcher/'s third bin. It reads
+KEYS once through `nanodregg_sandbox::custody::read_private` (CLIENT-15, 9334a97: the one custody
+read). The file is `SLOT KEY` lines; an empty file, a duplicate slot or a key holding a
+non-graphic byte is `keyFileFormat`. It binds `SOCKDIR/<r>.sock` for each resident and starts the
+decider through `sandbox::command` with exec = itself only and the key file hidden, passing `T0`
+(its clock) first: `hosting-broker T0 --drive SPEC...`. The decider's PID file is
+`PIDS/decider.pid`. The frames are `broker_generated.rs` (CODEC-24, 2d05802).
+`launcher/tests/broker.rs` is a standing row, `cargo:launcher:broker`. Its three tests:
+1. Main test. The start-window ask is `overSpend`. Then `modelNotAllowed`, `tokensZero`,
+   `tokensOver`, `requestTooLarge` (22 000 control bytes: the closed instance the kernel could not
+   reach), `badAsk`, and `busy` on a second connection. In the next window a grant reaches the fake
+   upstream and the resident gets its 200 and body; a slot with no key is `keyMissing`. CONTROL: the
+   upstream got `x-api-key: <canary>` and Lean's exact body, and no byte the resident received
+   holds the canary.
+   `r2`'s socket, with no allowance, gives `noAllowance` (identity is the socket).
+2. An upstream that echoes the key gives `keyEchoed`, and the canary is withheld.
+3. A 0644 key file ends keybroker as `keyFileMode`, with no socket opened.
+A slow run under load fails by name ("slow run (load) … re-run"), never as a wrong verdict.
+**Plants (Rust, run):** the echo check deleted turns the echo test red; a plain `fs::read` for the
+key file turns the mode test red; every socket naming one resident turns the main test red (`r2`, which has no
+allowance, would be served as `r1`). A keybroker that accepts the file and runs on is caught by a
+20 s deadline, never a hang.
+**CRITIQUE.** A key slot without a key is noticed only after the decider has charged the ask:
+`keyMissing` costs the worst case. That is safe, but it wastes budget. The fix is to give the
+decider the set of slots that have keys at start. The upstream is plain HTTP/1.0 (see above).
+Status: stage 1 built. Stage 2 (allowances from the World) and stage 3 (the resident plan) are next.
+
+## HOSTING-13 Allowances in the World: one allowance is one meter (HOSTING-4, 2026-10-18)
+
+**Decision.** HOSTING-12 stage 2, first half. The allowance leaves `--drive` for the World and its
+shape changes.
+- **One allowance = one meter**: `{resident, model, keySlot, microPerKTok, windowMs, cap,
+  maxTokens}`. A resident with two models has two allowances; its total spend per window is the sum
+  of their caps. The stage-1 shape (one allowance with a `models` list) is deleted. LANG has no list
+  type: a list in the World would be either opaque bytes behind a second decoder, or a fixed-arity
+  record of optional models. A scalar meter needs neither.
+- **The package `allowance`** (`Hosting/Allowance.lean`, text `world/hosting/Allowance`, A0 byte gate
+  in hosting-sim). State: one KERNEL slot per field, in the order cap, keySlot, maxTokens,
+  microPerKTok, model, resident, revoked, windowMs. No law. KERNEL refuses `write` on a
+  programmed object (`hasMethods`) and owner-gates `invoke` (KERNEL-25), so the two methods are the
+  only change path. `revoke` sets `revoked`; `set` replaces the five numbers and keeps model,
+  resident and revoked. So revocation is permanent (`methods_write`), and a different
+  (resident, model) is a different object. `resident` is the resident grain's World id. The broker
+  names it `Controller.dirOf id`, which is the name of its keybroker socket, so the grain's id, the
+  controller's directory and the broker's identity are one name.
+- **Read only the operator's.** `Allow.allowanceOf pkgId OPERATOR cell` is `some` only for an object of
+  this package, owned by OPERATOR, unrevoked, with every field decoding (`allowanceOf_sound`), and the object KERNEL creates from `seed r a` reads back as
+  exactly `(dirOf r, a)` for every `a` LANG can carry (`seed_reads`, through `objectCell`). Anyone
+  may create an object of the package, and those are never read (A3; plant `owner-ignored` red).
+- **Ambiguity is refused, not resolved.** Two allowances in the broker for the same resident and
+  model are `allowanceAmbiguous` (new `Broker.Refusal`, code 15; broker_generated.rs re-emitted). No
+  ask on that model is ever granted (`ambiguous_refused`). KERNEL never retires an object, so the
+  operator ends an ambiguity with `revoke` (A7, A8).
+- **(c) A changed allowance is a new budget.** `Broker.follow b now rs`: an entry with the same
+  resident and the same allowance, field for field, keeps its meter. Every other entry, new or
+  changed in ANY field (windowMs included), is opened at `max now last` with `spent = cap`
+  (`follow_kept_or_opened`, `follow_keeps`, `follow_allowances`: the entries are exactly the World's,
+  in order). `Broker.start` is a follow from nothing. The forfeit invariant is now per entry
+  (`Proofs.Broker.Fresh`, with `Entry.since` the time this life first held the allowance), and it survives
+  follows and grants (`fresh_follow`, `fresh_decide`). `start_window_refused`: no ask is granted in
+  the window of `since`, since every grant costs something (`charged_pos`). So a raised cap waits
+  for the next window, and a lowered one binds at once (`capped_follow`). A follow moves the clock
+  to `max now last` and never touches the key slots (`follow_last_keys`). H3B's counterexample (60000 → 1 ms) is still possible, but now it
+  is a signed Turn by the operator, which is the operator's act, and it forfeits the 1 ms window of
+  the change.
+- **(d) keyMissing before any charge.** keybroker passes the slots its key file holds as the decider's
+  second argument (`hosting-broker T0 SLOTS …`). `Broker.keys` holds them, and `decide` refuses
+  `keyMissing` after `allowanceMalformed` and before the token checks and the meter
+  (`grant_allowed`: a grant's slot ∈ `b.keys`). keybroker's own lookup stays as the second barrier.
+  This closes HOSTING-12's Rust-half critique.
+- `allowanceMalformed` now also refuses a key slot ≥ 2^32 (a LANG nat is below 2^64, and the wire is u32).
+
+**Alternatives.** (1) Keep a `models` list encoded as bytes in one field: a second decoder behind
+LANG's, and a state the World cannot type. Refused. (2) A fixed record of k optional models:
+arbitrary k, and per-model meters would still need splitting. Refused. (3) A combined per-resident
+cap across models: worth having only if a resident needs to trade budget between models. Then the
+cap lives in a second object, and that is two reads for one decision. Not now. (4) Resolve
+ambiguity by taking the newest or the smallest cap: the broker would be guessing an operator's
+intent. Refused. (5) A law re-checking well-formedness at write time: a twin of `decide`'s one
+check. Refused. (6) A changed cap keeps the meter's spend: a lowered cap would then sit above
+`spent` (fine), but a raised one would grant at once. That is cheaper for the operator's users and
+loses the uniform rule "every new budget forfeits its first window". Refused for uniformity. If
+operators find it starves a raise, that is measurable.
+
+**CRITIQUE.** Each follow re-matches entries by full allowance equality: O(entries²) per follow.
+Bounded by the operator's own allowance count, so it is small, but it is not O(change). The
+ambiguity refusal is only as good as the broker's view: an allowance in a Turn the broker has not
+yet tailed is invisible until the next ask's follow. The broker never grants on an allowance that
+is not in its view, so this fails closed. A malformed or undecodable operator object reads as
+nothing (`noAllowance` or `modelNotAllowed`). Today LANG types every seed and every method result
+(A2, A6), so this cannot happen, but it is a silence if LANG ever stops. The resident's sockets are
+still keybroker's RESIDENTS argument: the operator names sockets out of band, and an allowance for a
+resident with no socket is unreachable, which is harmless. Deriving sockets from the World is stage
+3's question. `--drive` still exists: the next landing (stage 2b: `hosting-broker T0 SLOTS STORE
+OPERATOR` over Host.Tail) deletes it.
+**META.** I chose one-meter-per-model largely because LANG lacks lists, and that is an accident of
+the language rather than of the problem. The test: if Hermes needs a cross-model cap, (3) comes back
+as a second object, not as a list. I forfeit on every change because a uniform rule is easier to
+prove than "forfeit only if the window shrank". The theorem `start_window_refused` with `since` is the
+check that the uniform rule says what I claim.
+**Plants (run 10-18, each red).** `follow` keeps the meter of a changed allowance (`follow_tooth`,
+`follow_allowances`, `follow_keeps`); ambiguity takes the first (`grant_allowed`, `decide_ok`,
+`refusal_teeth`); the keyMissing check deleted (`grant_allowed`, `refusal_teeth`,
+`keyMissing_tooth`); entries opened at spent 0 (`fresh_follow`, `start_capped_fresh`,
+`forfeit_tooth`, `follow_tooth`); the owner check made `|| true` (`allowanceOf_sound`, `seed_teeth`);
+`revoke` a no-op (`methods_write`); revoked objects read (`allowanceOf_sound`, `seed_teeth`). Rust:
+keybroker passes a slot it holds no key for, and the test's start-window `keyMissing` assertion
+turns red (it reads `overSpend`).
+**Vacuity read (10-18, VACUITY-READER-H4).** It found four holes, all now fixed.
+(1) No Lean tooth put `keyMissing` before the meter: moving the check after `overSpend` survived.
+There is now a start-window `keyMissing` tooth in `refusal_teeth`, and the moved check is red.
+(2) Nothing pinned `follow`'s keys: a follow that adds every allowance's slot to `keys` survived.
+Now covered by `follow_last_keys` (that plant is red). (3) `start_window_free` concluded
+`charged = 0`, which no grant can satisfy, so it was a refusal theorem dressed as a cost theorem. It
+is now `start_window_refused` (no grant), with `charged_pos`. (4) The seed read-back was checked on
+one instance only, so `maxTokens := max … 100` survived. Now it is the general `seed_reads` (that
+plant is red). Also, A9 now checks `revoked = true` and not only "not read". The reader confirmed
+that `follow` is pinned by `follow_allowances` and `follow_kept_or_opened`, that `allowanceOf_sound`
+cannot be met by a forged owner (`checkState` refuses keys below 16), and that the teeth fail on a
+fault.
+Second pass: ACCEPT, with one residue: nothing tied `seed`'s slot order to LANG's state row, so
+swapping `model` and `resident` in both `seed` and `allowanceOf` survived. Now `seed_state`
+(`Lang.readState` over `fields` gives each label its own field; the swap plant is red).
+
+## HOSTING-14 The broker follows the World; `--drive` is deleted (HOSTING-4, 2026-10-18)
+
+**Decision.** HOSTING-12 stage 2, second half. `hosting-broker T0 SLOTS STORE OPERATOR` is now the
+only form; it has one input source (law 1). It opens STORE with HOST's tail (`Host.Tail`, deployed
+parameters, read only), reads every live cell once (`Loop.allIds`), and holds the allowances
+OPERATOR owns, by World id. Before each ask it catches the tail up, re-reads the ids the new
+Turns touched (`Allow.update`), and follows them (`Broker.follow` at the ask's time). Then it decides.
+- Exact by theorem, link by link. Round 0: `start_tracks`. In a canonical World (`World.Canon`,
+  kept by every admitted Turn, KERNEL's `fold_canon`), `update` over `Loop.allIds` holds exactly
+  the readable allowances, because every live id is in `allIds` (`allIds_complete`). Each catch-up:
+  `tail_absorb_fold`, the World a tail step reaches, is `World.fold` of exactly the Turns it reports
+  (`stepTurns_fold`, `runRooted_fold` and `absorbRecords_fold` over HOST's pure `Tail.absorb`).
+  Then `absorb_tracks`: `Allow.absorb`, the named step `refresh` calls, re-reads the batch's
+  `touchedIds` (born ids included), and leaves the held bindings exactly the World's. An untouched
+  id keeps its entry (HOSTING-10's `fold_frame`).
+- Staleness is bounded and fails closed. A catch-up takes at most `drainMax` reads, each
+  O(appended bytes). Past that the broker ends `behind` rather than decide on a World it knows is
+  stale. A Turn committed after the ask's catch-up is seen at the next ask. That is the
+  ordinary lag of any reader, and the decision is the one the World held when the ask arrived.
+- keybroker: `KEYS SOCKDIR PIDS UPSTREAM STORE OPERATOR RESIDENTS DECIDER`. The decider's sandbox
+  policy reads exactly STORE, execs only itself, and has the key file hidden.
+- The test is a REAL Store (PROTOCOL-6's advice; ROOT's devtools ruling). `host genesis` from
+  custody's keys, `host serve` and `host follow` under `nd-supervise`, and the operator's own
+  `nd install` / `create --pkg` / `invoke`. Every signature is custody's Ed25519 and every check is
+  Lean's. While keybroker runs, the operator changes an allowance (the next ask is `overSpend`: a new
+  budget) and revokes one of an ambiguous pair (the next ask is granted).
+
+**Alternatives.** (1) A background thread tailing the Store while asks wait: it adds a second
+loop and shared state for no gain. Catching up at the ask is O(appended) and gives the freshest
+World. (2) A Lean fixture exe writing Stores through the rows Writer: toy parameters, so not
+the deployed format, and a twin of the real path (PROTOCOL-6). Refused. (3) Re-reading every cell
+per ask: O(store) per ask. Refused, because `update_tracks` makes the incremental read exact.
+
+**CRITIQUE.** Two premises remain, and both are statements about code rather than gaps in the
+chain. (i) The World `Tail.open` returns is canonical. A base the codec decodes is refused out of
+trie order (`kernel/trie-order`, CODEC-19), but that refusal is not yet a theorem
+`decode → Canon`. (ii) `Tail.next` returns `Tail.absorb` of the bytes it read: an IO function
+whose body is that call. `catchUp` appends each read's Turns in order, and `fold_append` makes
+the concatenation one fold. The controller (HOSTING-10) rests on the same two premises, and with
+`allIds_complete` it now has its round-0 fact as a theorem too.
+(Premise (i) DISCHARGED 10-18, HOSTING-5, cv 01a14a5f-c476: `Hosting.Proofs.Open.open_world_canon`. Any
+World the pure open `Host.openWith` returns, over the deployed codec and the tail World step (the step
+`Tail.open` passes), is `World.Canon` under the deployed environment. The chain is HOST's
+`openWith_world` and `Base.read_decode` (6b89d6f), CODEC's `refine_get_inner`, `product_get_fst` and
+`Deployed.world_get_canon` (7db0597), `stepTurns_fold`, and KERNEL's `fold_canon`. What remains is
+code, not a theorem: `Tail.open` = `openAt` = this `openWith` over the files' IO readers. There is no
+closed tooth, because an instance needs a KMAC-sealed base the kernel cannot evaluate. The premise is
+the open every broker and controller run performs, and the launcher broker test opens real Stores.
+A compiled closed witness that the premise is satisfiable is cv 01a14a8a-ffa6. Vacuity read
+VACUITY-READER-H4: ACCEPT. The premise is the step `Tail.open` passes (definitionally), `mark`/`origin`
+being universally quantified only strengthens the statement, and the env is the one `update`,
+`absorb` and `start_tracks` run at.) The test's timing: the start-window ask is guarded by the existing
+"slow run" check, and the live steps (set, then an ask) need no window arithmetic, because a
+changed allowance forfeits whatever window the follow lands in.
+**META.** Doing the catch-up at the ask instead of in a background thread is my preference for
+fewer moving parts. The test that would prove me wrong is ask latency under a busy writer, and
+`drainMax` bounds it. It is a count, not a clock.
+**Plants (run).** `update` keeps a touched id's stale binding (`mem_update`, `update_start`,
+`update_tracks` red). `refresh` skips the follow: the smoke over a real Store (hbox
+logs/hosting4-smoke.py) goes RED (`after set: grant`, `second allowance: grant`), and so does the
+launcher test (its after-set assertion). `absorb` drops born ids (VACUITY-READER-H4's surviving
+mutation): `absorb_tracks` and the test's live create (`allowanceAmbiguous`) are both red.
+**Vacuity read (10-18, VACUITY-READER-H4).** (b) stale views, (c) the live test and canary, and
+(d) the decider's policy all held. Two holes were fixed. (1) Nothing tied `update_tracks` to the ids
+`refresh` passes, so dropping born ids survived and failed OPEN. Now there is the named
+`Allow.absorb` with `absorb_tracks`, and a live create in the test. (2) "Exact" rested on two
+unproved pure facts. Both are now theorems (`tail_absorb_fold`, `allIds_complete` / `start_tracks`),
+and what remains is the CRITIQUE's two premises about code.
+
+## HOSTING-15 keybroker speaks TLS to the provider; Lean names the host, the operator names the anchors (HOSTING-5, 2026-10-18)
+
+**Rulings it builds under** (ROOT, 10-18, on HOSTING-12's critique "a real provider speaks TLS"):
+rustls =0.23.40 with the ring =0.17.14 provider; trust anchors are operator DATA; the host comes from a
+Lean model→provider table carried in the grant frame; no custom verifier; refusals by name. And
+(10-18, on OPS-7's critique) v0 trusts the full pinned bundle, with the exposure named and the
+narrowing filed (cv 01a14a7d-55c3).
+
+**Decision.**
+- **Lean names the host.** `Broker.Upstream` gains `host`. `Broker.providers` is the provider table,
+  `[("claude-", anthropic)]` with `anthropic.host = api.anthropic.com`. `providerOf model` is the
+  first row whose prefix the model starts with (a `ByteArray` prefix test, `startsWith`). `decide`
+  refuses `noProvider` right after `allowanceMalformed`, so before `keyMissing`, the token checks and
+  the meter. A grant carries its provider (`Grant.upstream`), and the `grant` frame gains `host`
+  (`.bytes`, between `charged` and `target`). Theorems: `grant_allowed` now also concludes
+  `providerOf ask.model = some g.upstream`, and `providerOf_fits` says every provider's fixed fields fit
+  the 4096 bytes `bodyMax` leaves, so `step_encodes` holds for every provider, not only for the
+  constant. Teeth: `provider_teeth` (`claude-m` → anthropic; `claude`, `xclaude-m` and `Claude-m` →
+  none; a grant's upstream is anthropic), and `refusal_teeth` gains `noProvider`, both in a costing
+  window and in the start window (so it precedes the meter).
+- **The operator names the dial address and the anchors.** keybroker is
+  `keybroker KEYS ANCHORS SOCKDIR PIDS UPSTREAM STORE OPERATOR RESIDENTS DECIDER`. UPSTREAM stays the
+  operator's `addr:port` (where the bytes go). SNI, certificate verification and the HTTP `Host:`
+  header all use the grant's `host` (whom they must reach). So a misrouted dial fails verification,
+  and an operator who points UPSTREAM at a proxy cannot make keybroker accept that proxy's certificate
+  for another name. ANCHORS is read once, at start, through CLIENT's `custody::read_public` (CLIENT-18,
+  with CLIENT-19's directory chain): a regular file, not a symlink, owned by the euid, no group or
+  other write bit, no setuid/setgid/sticky bit, size 1..=1 MiB, and every directory up to / owned by the
+  euid or root and not group- or other-writable. Each refusal ends keybroker by name before any socket
+  opens: `anchorsLink`, `anchorsNotRegular`, `anchorsOwner`, `anchorsMode`, `anchorsLength`,
+  `anchorsDir`, `anchorsMissing` (NotFound), `anchorsIo`. The file must be concatenated PEM
+  `CERTIFICATE` blocks only, each one an anchor webpki accepts (`RootCertStore::add`, strict). Any
+  other section, an undecodable block, a refused anchor, or no block at all is `anchorsMalformed`.
+  Nothing in the file is skipped, because the file is the whole trust set.
+- **Production anchors** are OPS's `deploy/tls/anchors.pem` (f77c564): 121 roots from the pinned
+  `webpki-root-certs =1.0.9` in crate order, emitted by `emit-anchors`, and checked byte for byte
+  against the crate on every commit (`gates/generated.tsv` row `cargo:emit-anchors`). The installed
+  copy is `/etc/nd/keybroker/anchors.pem` (nd, 0644, under root 0755 `/etc/nd` and nd 0700
+  `/etc/nd/keybroker`: OPS-2's RUNBOOK §2a, 60a12e5), and the test checks that keybroker accepts
+  the bundle whole. **An operator who edits the installed anchor file widens (or narrows) trust. That is
+  the operator's act: keybroker cannot tell. In the repository, the emitted-vs-crate check is what
+  detects an edit**, so a hand edit of `deploy/tls/anchors.pem` is red on the next commit. Nothing
+  checks the installed copy against the repository's, and OPS's unit install is where that check
+  belongs.
+- **The client.** rustls `ClientConfig::builder_with_provider(ring::default_provider())`, **TLS 1.3
+  only** (`tls12` is off in the build, and `with_protocol_versions(&[TLS13])`), the operator's
+  `RootCertStore`, rustls' own WebPKI server verifier (no custom verifier, none possible without the
+  `dangerous` API, which nothing calls), SNI on, no client certificate. rustls has no renegotiation.
+  The request is HTTP/1.0 as before. The response must end with the server's `close_notify`. A close
+  without it is a truncation nobody authenticated, and it is `tlsProtocol`, not a short answer.
+- **Refusals** (append-only codes): `noProvider` 16 (Lean), `tlsCertificate` 17, `tlsHostname` 18 and
+  `tlsProtocol` 19 (keybroker, by an exhaustive match on rustls' error). `InvalidCertificate(NotValidForName
+  | NotValidForNameContext)` is `tlsHostname`, and any other `InvalidCertificate` (unknown issuer,
+  expired, bad encoding, a bad signature) is `tlsCertificate`. Any other rustls error (version, alert,
+  bad record, a missing close_notify) is `tlsProtocol`. A host Lean named that `ServerName` refuses
+  (neither a DNS name nor an IP literal) is `tlsHostname`, and the table makes that unreachable.
+  (An IP literal would be verified against the certificate's IP SANs, and no row names one.) A dial or socket failure stays `upstreamFailed`.
+  No upstream text is ever relayed in a refusal. `broker_generated.rs` is re-emitted (CODEC-5 agreed
+  that this commit carries it: `lake exe emit-broker`, unedited).
+- **TCB.** rustls 0.23.40 + ring 0.17.14 (versions pinned in launcher/Cargo.toml and Cargo.lock;
+  `--locked` holds them) are in keybroker's TCB **by trust, not by proof**, beside SHA-512
+  (`decisions/codec.md`: trusted as computed by `Sha512.hash`, vectors only): "trusted, unverified;
+  swapped only for a verified provider". They are the first two rows of the tree-wide TCB table, `gates/tcb.tsv`, which this commit creates (ROOT ruling 10-18: SHARED data in the gates family; CODEC, CLIENT and GATES add their rows; GATES owns its gate). Also trusted: the CA bundle's contents (see the
+  exposure below), and the operator's clock for certificate validity (rustls takes it from the
+  system clock).
+- **Test** (`launcher/tests/broker.rs`, row `cargo:launcher:broker`). The test has its own CA (the
+  `rcgen =0.14.8` dev-dependency on ring). Its fake upstream is a rustls `ServerConfig` on 127.0.0.1
+  holding a CA-signed certificate for `api.anthropic.com`, and the operator's ANCHORS is that CA's
+  certificate. **CONTROL**: the canary run over real TLS. The grant reaches the fake upstream with
+  `Host: api.anthropic.com`, the canary in `x-api-key`, and Lean's exact body, and no byte the
+  resident receives holds the canary. The production bundle passes the anchor checks (keybroker goes on
+  to its decider). **Plants, each red by name**: a self-signed certificate for the right host gives
+  `tlsCertificate`, and a CA-signed certificate for `other.example` gives `tlsHostname`. Neither upstream
+  receives a request byte (the handshake fails before the request is written). Anchor files with mode
+  0666 give `anchorsMode`, and a missing one gives `anchorsMissing`. A file with the CA plus a PEM key,
+  or with the CA plus a corrupted certificate, gives `anchorsMalformed` (each would pass a lenient
+  reader). An upstream that speaks only TLS 1.2 gives `tlsProtocol` with no request byte. The test
+  build has `tls12` compiled in by Cargo's feature unification, from the server's dev-dependency, so
+  keybroker's version list is the line under test. An upstream that answers in full but closes
+  without `close_notify` gives `tlsProtocol`, and its answer never reaches the resident (CONTROL: the
+  request did arrive). The models are renamed `claude-*` in the teeth, the sim's Allowance journey and the test.
+  The charge in `accumulate_tooth`/`follow_tooth` is 90 (80 body bytes + 10), was 83.
+
+**Alternatives.** (1) An operator-run local TLS terminator, with keybroker kept on plain HTTP: the
+key crosses a second process and a loopback socket in the clear, and the terminator's verification
+is configuration nobody checks. Refused. (2) OpenSSL or native-tls: C in the TCB, and the system
+store. Refused by ruling. (3) The rustcrypto provider: a crate not in the cache, fetched, and no more
+verified than ring. Refused by ruling. (4) The system CA bundle (/etc/ssl): root-owned, so custody
+refuses it (`Owner(0)`, CLIENT-18 ruling), and it changes under the operator with package updates.
+Refused. (5) Anchors compiled into keybroker (`webpki-roots` as code): trust is then a build input that
+the operator cannot narrow, and narrowing is the follow-up below. Refused, but the emitted file comes
+from the same crate. (6) The host from the dial address, or from the resident's ask: the dial address is
+where the bytes go, not whom they must reach, and the ask is untrusted. Refused. (7) A per-provider
+CA or SPKI pin as the ONLY check: it breaks silently when the provider rotates its chain (ROOT's
+ruling). Not v0; it comes back as an addition, below. (8) TLS 1.2 kept for reach: more code (CBC
+suites are already absent in rustls; the TLS 1.2 key schedule and the extended master secret
+handling) for no provider we call. Refused until a provider needs it, and then it costs one feature
+flag.
+
+**CRITIQUE.** **The exposure: any of the 121 bundled CAs mis-issuing a certificate for
+`api.anthropic.com` passes verification, and keybroker sends that issuer's holder the operator's key.**
+The narrowing is filed as cv task 01a14a7d-55c3: a per-provider SPKI pin set as operator DATA beside the
+model→provider table, enforced IN ADDITION to the chain check, refused `tlsPin` by name, with a plant.
+It is not built in v0. Other points: certificate validity uses the operator's clock (a clock set far
+forward or back accepts an expired or not-yet-valid certificate). That is a premise, like the meter's
+clock. rustls' own buffers hold the key and the plaintext request without zeroizing (keybroker's
+`Zeroizing` covers only its own buffer). The test exercises the handshake and the verifier against its
+own CA only. Nothing here has talked to api.anthropic.com, so whether that endpoint answers an HTTP/1.0
+request with `close_notify` and a body under `RESPONSE_MAX` is unmeasured. The first real call, an
+ops act, is where that is checked, and a missing close_notify there would refuse every answer
+`tlsProtocol`, loudly. OCSP and CRLs are not checked (rustls' default). A revoked provider certificate
+passes until it expires. The trust set is the anchor file and only that: the tests check that the
+file is parsed strictly, but a keybroker that ADDED roots of its own (rustls' or webpki's bundled
+roots) to the store would pass every test, because the plants' certificates chain to no public root.
+The code builds the store from the file alone (`RootCertStore::empty`), and a review is what guards
+it. The one-row table makes `step`'s use of `g.upstream` indistinguishable from a
+constant `anthropic` (a plant writing the constant survives), and a second provider row makes it
+observable.
+**META.** I chose TLS 1.3 only because a smaller protocol surface is easier to defend, and I like
+small. The test that would prove me wrong is a provider the operator needs that speaks only 1.2. I
+kept HTTP/1.0 because it is what HOSTING-12 shipped, and "connection close ends the body" plus
+close_notify is the least parsing. The pull is to avoid writing a Content-Length or chunked reader
+in the key-holding process. If real responses need HTTP/1.1, that reader is new parsing and gets its
+own decision. I put `noProvider` after `allowanceMalformed` and not inside it because ROOT named it
+as its own refusal. It is a property of the allowance's model, though, so a reader may fairly ask
+why `follow` does not refuse it at read time.
+**Plants (run, 10-18; hbox logs/hosting5-plants.py, hosting5-lplants.py).** Rust: verification on
+the dial address instead of Lean's host (the main test goes red: the grant is `tlsHostname`);
+`NotValidForName` mapped to `tlsCertificate` (the TLS test goes red); a reader that skips non-certificate
+sections, a reader that skips anchors webpki refuses, and a plain `fs::read` of ANCHORS (each makes the
+custody test red: `anchorsMalformed`, `anchorsMalformed`, `anchorsMode`). After the vacuity read,
+three more: a missing close_notify accepted as the end of the answer, non-certificate TLS errors
+mapped to `upstreamFailed`, and TLS 1.2 offered beside 1.3 (each makes the TLS test red). Lean: the `noProvider` check
+deleted (`refusal_teeth`, plus `decide_ok`/`grant_allowed`/`grant_cap`, structurally); the prefix test
+ignored (`provider_teeth`); `noProvider` moved after the meter (`refusal_teeth`, `grant_allowed`).
+**Vacuity read (10-18, VACUITY-READER-H4).** No empty premise. `step_encodes` depends on
+`grant_allowed`'s new conjunct and on `providerOf_fits`. The reader found two holes, both now fixed by
+the plants above. (1) No test reached `tlsProtocol`, so accepting a missing close_notify and mapping
+protocol errors to `upstreamFailed` both survived. (2) Nothing tested "TLS 1.3 only". It also found
+two wording faults (the `provider_teeth` docstring and the IP-literal case, both corrected) and the
+added-roots residue now stated in the CRITIQUE. Second pass: ACCEPT. Its one residue is that "tls12 is never in
+keybroker's own build" is a build-graph fact no test covers. It was measured 10-18:
+`cargo tree -p nanodregg-launcher -e normal,features -i rustls` shows only `ring` and `std`. And if it
+were wrong, the version list would still refuse 1.2.
+**Flag day.** The `grant` verdict frame gains `host` and four refusal codes appear, so
+`broker_generated.rs` is re-emitted. keybroker's argv gains ANCHORS (OPS-2 renders the unit). Nothing
+persisted changes.
+
+## HOSTING-16 keybroker's exits are a Lean table (HOSTING-5, 2026-10-18, OPS-2's ask)
+
+**Decision.** `Hosting/BrokerExit.lean` holds two tables with the Host's `ExitClass`.
+`DeciderExit` covers every way `hosting-broker` ends, at codes 70-78 (0 = `keybrokerGone`, the normal end).
+`KeybrokerExit` covers every way keybroker ends on its own account, at codes 80-100 and 102-104, skipping 101, the exit of a Rust panic (`usage`, the
+seven `keyFile*` custody refusals and `keyFileFormat`, the eight `anchors*` and `anchorsMalformed`,
+`tlsConfig`, `socket`, `deciderRefused`, `pidFile`, `deciderSignaled`, and `deciderLost`, for a `wait` on the
+decider that failed: fatal, because nothing says a restart is safe). keybroker passes a decider's
+exit code through, as nd-supervise passes the Host's, so its unit sees one code space: the two tables.
+`hosting-broker`'s `Exit.code` is `Exit.kind`'s code. keybroker reads its own codes only from the
+emitted `broker_generated::keybroker_exit`, and the test reads the decider's from `decider_exit` (CODEC-6 agreed that this commit carries the Emit/Broker
+change and the re-emit). Before this, keybroker exited 1 for every refusal and the decider exited 0/2/1,
+so a unit could not stop on a custody refusal while restarting a transient end.
+- Classes. Every own keybroker end except `deciderSignaled` is `fatal` (`keybroker_fatal_iff`): each is a
+  file, an argument or the build, and a restart reads the same one. The decider restarts on
+  `lifetime` and `behind` only (`decider_restart_iff`). A fresh open reads the World whole, so a
+  broker that fell behind recovers. `store` and `io` are fatal: a Store that refuses to open or to be
+  followed is the operator's to look at, as for the Host.
+- Theorems (`Hosting.Proofs.BrokerExit`), stated over the `.all` lists the emitter and `Ops.Units`
+  read: `codes_nodup` (across both tables), `codes_disjoint` (no Host.Status and no SupervisorExit code;
+  0 only for the decider's normal end), `codes_reserved` (never 1 or 2, keybroker's never 101, the code a panicking Rust main exits with, below 256, and 0 iff `done`),
+  `restart_fatal_disjoint`, `keybroker_fatal_iff`, `decider_restart_iff`.
+- The test asserts exit codes from the emitted constants. It covers keybroker's own ends (`keyFileMode`,
+  `keyFileLink`, `keyFileFormat`, `keyFileDir`, `anchorsMode`, `anchorsLink`, `anchorsMissing`, `anchorsMalformed`,
+  and `deciderRefused` for the production-bundle control) and the decider pass-through. In that case a
+  STORE that exists but holds no Store makes the decider end `io` (78), and keybroker must exit 78.
+- Routing: `Ops.Units.preventCodes` does not read these tables yet. Rendering the keybroker unit's
+  `RestartPreventExitStatus` from `DeciderExit.codesOf .fatal ++ KeybrokerExit.codesOf .fatal` is
+  OPS-2's next step. Until then nothing deployed consumes the classes.
+
+**Alternatives.** (1) keybroker maps the decider's end to one code of its own per class: this loses
+the decider's name, which is on stderr, but the unit's exit code is what an operator's tooling reads.
+Refused. (2) Reuse Host.Status codes for the same meanings: two programs would share one name space
+and disagree on what a code means. Refused. (3) Rust decides the classes: law 2. Refused.
+
+**CRITIQUE.** `store` fatal means a transient Store read error while following stops the broker. The
+Host makes the same split (open refusals fatal, `ioServing` restart), but the decider cannot yet tell
+an open refusal from a follow refusal, because both arrive as `.store name`. Splitting them is a
+`DeciderExit` row, cheap when a run shows the need. `io` fatal is the conservative choice for the same
+reason. `deciderSignaled` restarts a deterministic crash until the unit's start limit, as
+nd-supervise's `childSignaled` does. A decider exit code that does not fit u8 cannot occur on Unix, and
+keybroker would report it as `deciderSignaled`.
+**META.** OPS asked for exactly this shape and I followed Host.Status, which is familiarity. The test
+that it is right is that `Ops.Units` renders the prevent list with no list of its own.
+A Rust panic exits 101, outside both tables, so systemd restarts it. That means a panic
+restarts (and the lints do not rule out an indexing or overflow panic).
+**Vacuity read (10-18, VACUITY-READER-H4).** Pass 1 found holes. (1) No test reached the decider
+pass-through, so mapping a decider's fatal end to a restart code survived. It is now the `io`
+case above. (2) A failed `wait` read as `deciderSignaled`, a restart. It is now `deciderLost`, fatal.
+(3) The Rust map was covered by four cases only. It now has nine. (4) "Ops.Units renders" overclaimed,
+and now says pending. Pass 2: ACCEPT. Its residue: only one decider code (io) is exercised, so a pass-through hard-coded
+to 78 would survive. Also, a Store with no key file ends `io` (HOST's `readKey` throws), not `store`. Both are
+fatal, so the class is right, but the name is not. HOST-9 is told.
+**Plants (run).** `anchorsMalformed` made restart (`keybroker_fatal_iff`); keybroker `usage` = 8, a
+Host code (`codes_disjoint`); the decider's `store` made restart (`decider_restart_iff`). In Rust, the
+test's exit-code assertions read the emitted constants, so a keybroker that exits a hand-written
+code is red. The pass-through mapped to `deciderSignaled` (the reader's surviving mutation) is red.
+**Flag day.** keybroker's and hosting-broker's exit codes change (1/2 to the table), and
+`broker_generated.rs` gains `keybroker_exit`. OPS renders the unit from the tables. Nothing persisted
+changes.
+
+## HOSTING-17 Who may connect to a resident's broker socket, and where it sits (HOSTING-6, 2026-10-18, owed to OPS)
+
+**Refuted on its first run as the two deployed uids: HOSTING-40 (R1 the nd-bwrap ACL, R3 mkdir at mode, R4 UMask 0027).**
+
+**Question** (OPS-2, from 11a9c97): keybroker binds its resident sockets 0600 under `UMask=0077` in
+`/run/nd-keybroker/sock`, so only uid `nd` can connect. Which uid do hosted residents connect as, where
+must SOCKDIR sit, and what does a connector check?
+
+**The premise that decides it: a grain must never run as the key holder's uid.** keybroker runs as `nd`
+and reads `/etc/nd/keybroker/provider.key` (nd, 0600); `host serve` runs as `nd` and writes `/srv/nd/store`.
+The sandbox separates grains by mount namespace, not by uid (HOSTING-11: bwrap in a user namespace, the
+outside credentials are the launcher's). So a grain run as `nd` that escapes its sandbox reads the
+operator's provider keys and can write the Store. Today the only way a resident reaches a 0600 nd socket
+is to BE nd. That is the widest arrangement there is, so the answer starts by narrowing it.
+
+**Decision.**
+1. **Two uids.** `nd` runs host serve and keybroker (and its decider). A new system user **`nd-hosted`**
+   (primary group `nd-hosted`, no supplementary groups, no login) runs `grain-launch`, the controller
+   and every grain. `nd` is not in group `nd-hosted`. A sandbox escape is then the hosted uid: it cannot
+   read the provider key (nd 0600) or write the Store.
+2. **One directory per resident, owned by the broker, reachable by the hosted group only.**
+   SOCKDIR = `/run/nd-broker`, made by the operator (tmpfiles.d `d /run/nd-broker 2710 nd nd-hosted -`),
+   NOT a systemd `RuntimeDirectory` (systemd deletes those at every stop; see 4). Mode 02710: nd writes,
+   the group may only traverse (no listing), others nothing, and the setgid bit makes every inode made
+   inside it group `nd-hosted` without nd being a member of that group. Resident `r`'s socket is
+   `SOCKDIR/<r>/broker.sock` with `<r>` = `Controller.dirOf` of the resident grain's World id (the name
+   HOSTING-13 already uses). keybroker makes `SOCKDIR/<r>` (02710, inherited group) and binds the socket,
+   then sets it **0660** (owner nd, group nd-hosted). There is no shared socket directory a grain can see:
+   a resident's sandbox binds exactly its own `SOCKDIR/<r>` (Policy.connect, below), so another resident's
+   socket is absent (ENOENT), as a neighbour's volume is.
+3. **keybroker checks what it serves on, by name, before any socket opens** (custody plumbing, like the
+   key file): SOCKDIR is a directory, not a symlink, owned by the euid, mode exactly 02710, and every ancestor passes CLIENT-19's StrictModes rule (owner euid or root, no
+   g/o write); an existing `SOCKDIR/<r>` must be a directory owned by the euid with SOCKDIR's group and mode
+   02710; an existing `broker.sock` must be a socket owned by the euid (the last life's, unlinked and
+   rebound); anything else at either path ends keybroker `sockDir` (a new KeybrokerExit row, fatal). After
+   bind the socket's group must equal SOCKDIR's (`sockDir` otherwise: the setgid bit was lost).
+   **On every accept**, keybroker reads the peer's credentials (`SO_PEERCRED`, which the kernel translates
+   out of the bwrap user namespace) and serves only a peer whose gid is SOCKDIR's group AND whose uid is
+   the hosted uid, keybroker's new argument PEER (operator data: the uid of `nd-hosted`; ROOT's condition,
+   10-18, so that a second user given the group is still refused). Any other peer (nd itself, root, a user
+   holding the group, a user of the right gid and another uid) gets the wire refusal **`peerRefused`** (a
+   new keybroker-reported `Broker.Refusal`, code 20) and the connection closes. Never served silently.
+   **keybroker creates nothing in `SOCKDIR/<r>` but `broker.sock`** (PROTOCOL-7's condition): the sandbox
+   binds that directory, so anything else keybroker put there would be in the resident's view. The row
+   checks that the bound directory, listed inside, is exactly `broker.sock` (one uid; at 02710 the hosted
+   uid cannot list it at all in the deployment).
+4. **Restart without relaunch.** The sandbox binds the resident's DIRECTORY, not the socket inode. A
+   restarted keybroker unlinks and rebinds `broker.sock`; a socket-file bind inside a running sandbox would
+   still name the dead inode (ECONNREFUSED until the resident is relaunched), and a directory bind sees the
+   new one. That is why SOCKDIR outlives the unit (tmpfiles, not RuntimeDirectory) and why `<r>` is a
+   directory.
+5. **What the connector checks (CLIENT's `Policy.connect`, asked of CLIENT-3).** `connect` is a list of
+   socket paths, at most `connectMax` = 2 (a named bound; a third entry is refused by name). Why two, not
+   one: no process of the resident design reaches more than two sockets. The model driver reaches its
+   broker socket and its own `nd`. The resident's `nd` (its custody) reaches the host socket and its
+   follow socket. One would force one of those through a proxy; three admits a socket nobody has named.
+   Each entry is one socket path. At resolve, before any process exists: `lstat` is a socket (`ConnectNotSocket`, a symlink
+   `ConnectLink`); no other-bits (`ConnectMode`); EITHER owner = euid and mode exactly 0600 (one uid: the
+   test, and a single-user box) OR owner ≠ euid, group = egid and mode exactly 0660 (the deployment) —
+   anything else is `ConnectMode` / `ConnectOwner`; every ancestor owned by root, the euid or the socket's
+   owner, with no g/o write (`Dir(path)`). Linux binds the entry's parent directory read-only (which, by
+   2, holds that socket and nothing else); macOS allows `network-outbound` to that one `path-literal`. A
+   socket outside the policy is unreachable from inside (ENOENT on Linux): CLIENT's plant.
+6. **Where the path comes from.** Lean's plan for `kind = resident` carries `connect = [[<dirOf id>,
+   "broker.sock"]]`, relative to the operator's broker root, as `read`/`write` are relative to the hosting
+   root (Lean never sees the OS). grain-launch gains the argument BROKER (= SOCKDIR) and joins it; the
+   launch frame gains `connect : paths` (a re-emit of `launcher/src/generated.rs`, CODEC's).
+7. **For OPS-3 to render** (both users' units, and tmpfiles for SOCKDIR). nd-keybroker.service: SOCKDIR
+   argument `/run/nd-broker`, a new PEER argument (the `nd-hosted` uid);
+   `RuntimeDirectory=nd-keybroker` only (PIDS; the `nd-keybroker/sock` entry is deleted); a tmpfiles.d
+   file for `/run/nd-broker` as in 2; `UMask=0077` stays (keybroker sets 0660 on the socket explicitly);
+   no `SupplementaryGroups`. A grain-launch unit (when OPS renders one): `User=nd-hosted`,
+   `Group=nd-hosted`, its argv gains BROKER; and an `nd-hosted` follower unit (`host follow` into the
+   hosted user's own Store) that the controller tails. RUNBOOK §2a gains the `nd-hosted` user and the
+   tmpfiles line.
+   **The hosted follower, as ROOT ruled (10-18, option B).** `host.sock` stays 0600 nd only. The hosted
+   follower (`host follow`, as `nd-hosted`, into its own Store under an `nd-hosted` 0700 chain, the Store the
+   controller tails) binds its socket under a setgid `/run/nd-follow/<id>/` (02710 nd-hosted:nd, the
+   SOCKDIR idiom with the uids swapped), and nd-supervise sets it 0660 (CLIENT-3 adds the option). The
+   existing client `nd`, running as `nd`, drives that follower and relays its log asks to `host.sock`, so
+   there is no new component. **The principle: the trusted side initiates to the less-trusted side,
+   never the reverse.** keybroker (nd) serves sockets the hosted group connects to, and that is the one
+   direction where the less-trusted side initiates. There it is the asking itself (the resident must be
+   able to ask), and it is bounded by the peer check, one socket per resident, and Lean's verdict. OPS-3
+   renders `nd-follow-drive` per hosted follower.
+
+8. **SOCKDIR is outside every grain's grant, by construction** (ROOT's condition, 10-18, from CLIENT-20's
+   measurement: on Linux a directory a grain may read, write or exec is already a connect grant to every
+   unix socket in it, sockets made there after launch included, because bwrap filters by mount, not by
+   operation; the class of `EXEC_FILTERED = false`). Three facts make it so. (i) Lean's plan names only
+   component lists relative to the hosting ROOT (`plan_paths`: every allowed path lies under the grain's
+   own directory `worlds/<l>/grains/<id>`), and `connect` entries relative to the separate broker root
+   BROKER; Lean never names an absolute path, so no plan can grant a read on `/run` or on anything above
+   or beside its grain. (ii) The Linux floor (`sandbox::FLOOR`: /usr, /lib, /lib64, /bin,
+   /etc/ld.so.cache) holds no `/run`. (iii) grain-launch refuses at start, by name, a BROKER that lies
+   under or contains ROOT (they must be disjoint trees: `/run/nd-broker` against the `nd-hosted` hosting
+   root, e.g. `/srv/nd-hosted`; in tests, two sibling `devtools::scratch` directories). CLIENT's resolver
+   adds `ConnectOverlap` (a connect directory under or containing a read/write/exec entry) and
+   `SocketInGrant` (a read/write/exec tree holding a socket at launch), and the sandbox binds exactly
+   `BROKER/<id>` and nothing above it. What no check sees: a grain may bind a socket in its own `vol`
+   after launch; only that grain sees its `vol`, so that socket reaches nobody else.
+
+**Alternatives.** (a) ROOT's starting default: the socket owned by the resident's uid, 0600, under the
+resident's own 0700 directory. The socket's owner is whoever binds it, and the binder is keybroker; for
+the inode to be the resident's, keybroker would have to BE the resident's uid (the shared-uid hole above)
+or receive listening descriptors bound by the hosting side over a control socket (SCM_RIGHTS: a control
+protocol, re-registration on every keybroker restart, and the same impersonation exposure as below).
+Kept from it: one socket per resident in its own directory, no shared directory, refusals by name for a
+wrong owner or mode. Changed: the owner is the broker and access is the hosted group at 0660. (b) Grains
+run as nd: refused (key theft on escape). (c) Abstract sockets: no file permissions at all. Refused. (d)
+systemd `.socket` units: static, and residents come from the World. Refused. (e) A socket-file bind:
+breaks on broker restart (4). (f) keybroker in group nd-hosted and an explicit chgrp: membership gives nd
+the hosted group's files for nothing; the setgid directory does it with no membership. (g) A peer UID
+argument instead of the group rule: one more operator argument for the same fact SOCKDIR's group states.
+
+**CRITIQUE.** All grains share `nd-hosted`. A grain that escapes its sandbox can connect to EVERY
+resident's socket (the group grants it; only the mount namespace withheld it) and spend any resident's
+allowances, and it can read every resident's custody files. It still cannot read a provider key or write
+the Store. Per-grain uids (subordinate uid ranges and a privileged mapper) are the fix, and they change the
+grain design, not this decision. `peerRefused` keys on the peer's gid, which a process can drop only toward
+less access, but root passes nothing and a root peer is refused, which is right. On one uid (every test on
+hbox) the owner/0600 branch runs and the cross-uid branch, `ConnectOwner` and `peerRefused`, cannot
+be produced; those are review-guarded until a two-uid box runs them (the plant for `peerRefused` uses a
+SOCKDIR whose group is a supplementary group of the test user: every ask is refused). keybroker cannot tell a SOCKDIR whose
+group is its own primary group (grains run as nd: the hole of the premise) from the one-uid test, so that
+misconfiguration is the install's to refuse (OPS: the tmpfiles line names `nd-hosted`), not keybroker's. The fix is cv task
+01a14aad-fc83 whose trigger is the first deployment that hosts grains for more than one
+principal. **The controller runs as `nd-hosted` against its OWN follower Store** (ROOT, 10-18): a `host
+follow` running as `nd-hosted`, its Store under an `nd-hosted` 0700 chain, which the controller tails (law
+5: the follower is the replayer). It never reads the writer's files or their key. HOST-9 agrees the
+follower's socket path shape. `peerRefused`'s uid half is planted on one uid by configuring PEER as
+another uid (every ask is then refused): the same comparison as a wrong-uid peer, which one uid cannot
+produce. The resident's own nd (its custody,
+the ASSEMBLY's second process) connects to host.sock across the same uid boundary; that is CLIENT-12's
+attach design, not this.
+**META.** I started from ROOT's default and kept its shape until the binder question broke it, which is
+the anchoring a default invites; the reason to leave it is a concrete hole (escape = keys), not taste. I
+reached for the group-plus-setgid idiom by familiarity with how mail spools and X sockets do it; the test is
+whether the per-uid fix (CRITIQUE) arrives and makes the group unnecessary, and then this decision is
+deleted, not kept beside it.
+**Custody.** This widens who may connect to keybroker from uid nd to the `nd-hosted` group, and narrows
+what a hosted process can read (no key, no Store write). ROOT APPROVED 10-18 with the
+conditions folded in above (the peer uid, the named residue and its cv task, the StrictModes check of
+SOCKDIR and each per-resident directory, `connectMax` = 2, the controller on its own follower Store), and
+puts it to Ember to ratify as a custody change.
+**Flag day.** keybroker gains PEER and its SOCKDIR layout changes (`<r>.sock` → `<r>/broker.sock`), KeybrokerExit gains
+`sockDir`, Broker.Refusal gains `peerRefused` (broker_generated.rs re-emitted), the launch frame gains
+`connect` (generated.rs re-emitted), grain-launch gains BROKER, the keybroker unit is re-rendered. Nothing
+persisted changes.
+**Built (HOSTING-6, 10-18).** keybroker's half: 45b1394. The resident plan: `Plan.connect` (relative to BROKER),
+`connectOf` (an app none, a resident `[[<id>, "broker.sock"]]`), `residentUnsupported` DELETED (a resident is now
+planned), the launch frame's `connect` field, `grain-launch ROOT BROKER LABEL PIDS CONTROLLER` (connect joined onto
+BROKER; `rootsOverlap` when the trees nest). Theorems `Proofs.Plan.plan_connect_own`, `plan_connect_disjoint`
+(premise `idHex ≠ idHex'`, which `dirOf_injective` discharges for two World ids), `plan_connect_clean`, the tooth
+`planned_resident_encodes`; `launch_fields` names `connect`. Physical: `launcher/tests/isolation.rs`
+`a_resident_reaches_its_own_broker_socket_and_nothing_else` (VACUITY-READER-H4's hole 1: the connect grant is the
+ONLY identity barrier between residents, since all share the hosted uid and group). Lean plans a resident through
+`hosting-drive --resident`. Over a broker root that holds two residents' listening sockets and a file, the resident
+connects to its own socket. Another resident's socket and the root's file are ENOENT. Its own directory lists exactly
+`broker.sock`, and the broker root lists only its own directory, which is bwrap's mount scaffolding. CONTROL:
+unconfined, the probe reaches both sockets and the file. Plants (run, each red): `policy` granting the whole broker
+root (the reader's surviving mutation; the sandbox refuses a directory as a connect entry); connect joined onto ROOT;
+a resident planned with no connect entry. A socket path must fit sun_path (107 bytes), and a resident's directory is 64
+hex digits, so SOCKDIR must be at most 30 bytes long. `/run/nd-broker` is 14; the test uses a short scratch root.
+**Residue (reader, hole 2).** keybroker binds the names the operator typed in RESIDENTS, and the plan names the
+directory `dirOf` of the grain's id. They agree by convention only. cv 01a14ad0-ae99 (HOSTING-18) derives keybroker's
+sockets from the World (the operator's unrevoked allowances' residents) and deletes RESIDENTS.
+
+## HOSTING-19 grain-launch's and its controller's exits are a Lean table (HOSTING-6, 2026-10-18, OPS-3's ask)
+
+**Decision.** `Hosting/LaunchExit.lean` holds two tables with the Host's `ExitClass`, the HOSTING-16 shape.
+`ControllerExit` covers every way `hosting-controller` ends (`Cli.Exit.kind`; codes 0 and 106-115):
+0 = `launcherGone`, the normal end; `lifetime` restarts; `usage`, `badLabel`, `noPackage`, `store`, `io` and
+the four launcher-defect ends (`torn`, `badLength`, `badReport`, `unencodable`) are fatal. `LaunchExit`
+covers every way grain-launch ends on its own account (116-127): `reportPipe`, `lifetime` and
+`controllerSignaled` restart. `usage`, `rootsOverlap`, `controllerRefused`, the controller-defect ends
+(`frame`, `badAction`, `badGrain`, `duplicateLaunch`), `pidFile` and `controllerLost` (a failed `wait`:
+nothing says a restart is safe) are fatal. grain-launch passes a controller's code through, as keybroker
+passes its decider's, so the unit sees one code space. A controller status of 128 or more is
+`controllerSignaled`: under bwrap that IS a signal death (the sandbox's platform fact), so every code in both
+tables is below 128. The codes are emitted into `launcher/src/generated.rs` as `launch_exit` and
+`controller_exit`; grain-launch and its test read only those. Before this, grain-launch exited 1 for every
+end but usage (2), and the controller 0/2/1.
+- Theorems (`Hosting.Proofs.LaunchExit`), over the `.all` lists: `codes_nodup` (across both tables);
+  `codes_disjoint` (no Host Status, nd-supervise, decider or keybroker code; 0 only for `launcherGone`);
+  `codes_reserved` (never 1, 2 or 101, below 128, 0 iff `done`); `restart_fatal_disjoint`;
+  `launch_restart_iff`; `controller_restart_iff`.
+- Test (`launcher/tests/isolation.rs`, row `cargo:launcher:isolation`, which now names `hosting-controller`).
+  The real controller, confined under grain-launch, ends `usage` with no arguments and `badLabel` with
+  label `W1`. grain-launch exits each one's code and prints `controllerEnded <code>`. grain-launch's own
+  `usage`, and `rootsOverlap` (the HOSTING-17 test), exit their table codes.
+**Alternatives.** (1) Fold the controller's ends into grain-launch's codes: the controller's name is lost to
+the unit. Refused, as in HOSTING-16. (2) Classes in Rust: law 2. (3) Codes 128 and up: they collide with
+bwrap's signal statuses. Refused.
+**CRITIQUE.** `store` and `io` being fatal means a transient Store read error while tailing stops hosting
+for every grain until the operator acts. The decider has the same split and the same reason (HOSTING-16):
+the controller cannot yet tell an open refusal from a follow refusal. `reportPipe` restarts, but if the
+controller ends at the same moment its own code may be the one that names the end; grain-launch reports
+whichever it saw first. The restart of a crash-looping controller is bounded only by the unit's start
+limit. Only two controller codes are exercised physically, so a pass-through hard-coded to one of them
+would fail the other (planted below), but one hard-coded to the identity on a subset would not.
+**Vacuity read (10-18, VACUITY-READER-H4).** The tables and theorems held. Two holes. (1) A controller that
+ended while a report was due could surface as `reportPipe` (123, a restart): that path killed the controller and
+dropped its status, so a fatal `store` (109) could loop the unit. Fixed: a failed report now waits for the
+controller up to `REPORT_PIPE_WAIT_TICKS` (40 × 50 ms), passes its status through if it has ended (or
+`controllerLost` if `wait` fails), and is `reportPipe` only if the controller is still alive after the
+bound. The test adds `hosting-drive --exit-after-launch`, which ends with 109 right after a launch, and
+grain-launch must exit 109. That test is a regression check of the pass-through, NOT a plant of the fix.
+The race it closes (a report written between the controller closing its stdin and the reader queuing
+EOF) is narrow, and with the wait removed the same test stayed green three runs out of three, because the
+EOF path won. The fix is review-guarded. (2) The `c < 128` guard (a bwrap'd signal death to
+`controllerSignaled`) is unexercised: no test kills a confined controller, which has no PID file of its
+own. Both residues are stated here.
+**CODEC-7's condition**: `toUInt8` wraps silently, so the emitted byte is the Lean code only below 256.
+`codes_reserved` (every code below 128) and `codes_nodup` are those theorems.
+**META.** This is HOSTING-16's shape, chosen because OPS-3 asked for it by reference: familiarity, with the
+check that `Ops.Units` renders the prevent list from `codesOf` with no list of its own.
+**Plants (run, hbox logs/hosting6-lep.py, each red).** `lifetime` made fatal (`controller_restart_iff`); a
+code of 64 (`codes_disjoint`); a code of 128 (`codes_reserved`); the pass-through fixed to 106 (the test's
+`badLabel` exit code).
+**Flag day.** grain-launch's and hosting-controller's exit codes change (1/2 become the table), and
+`generated.rs` gains `launch_exit` and `controller_exit`. Nothing persisted changes, and no unit renders
+grain-launch yet (OPS-3 renders it from these tables).
+
+## HOSTING-20 A resident reaches the World through its own member socket, served by nd (HOSTING-7, 2026-10-18, ROOT ruling; for CLIENT-3's `nd --stdio`)
+
+**Decision (ROOT approved; the fourth point of Ember's HOSTING-17 ratification bundle).** A resident's
+World access goes through `nd --stdio`. That process runs as `nd`, the trusted side, never inside a
+grain. Its workspace is the resident's MEMBER workspace `<hosting root>/worlds/<l>/members/<dirOf id>`,
+which every plan already hides (`Plan.plan`: `hidden := [storeDir l, membersDir l]`), so the resident's
+seed never enters a sandbox. It is the child of `nd-supervise --group <nd-hosted gid> --peer <nd-hosted
+uid>`, run as nd. nd-supervise serves `/run/nd-member/<dirOf id>/nd.sock`, 0660 in a setgid 02710
+nd:nd-hosted directory (the SOCKDIR idiom of HOSTING-17 §2), and closes `peerRefused` on any peer whose
+uid and gid are not PEER's. That socket is the resident plan's SECOND connect entry (connectMax 2,
+HOSTING-17 §5: "the model driver reaches its broker socket and its own nd"). `nd --stdio` is itself
+confined, like every nd-supervise child: write = the member workspace, connect = [host.sock, the follow
+socket] (CLIENT-3).
+- **The direction principle, stated precisely (ROOT).** The less-trusted side may initiate ONLY to
+  per-resident, peer-checked, narrow-surface services owned by nd: the broker socket, and now the member
+  socket. Never to the writer (host.sock stays nd-only, ruling (B)), and never to anything shared between
+  residents.
+- **Placement: a typed MEMBER root beside BROKER.** grain-launch takes `ROOT BROKER MEMBER …`, the plan's
+  connect entries are typed by root so a plan cannot confuse the two, and grain-launch refuses
+  `rootsOverlap` for every pair of the three. `/run/nd-member` is outside every grain mount for the same
+  three reasons as §8: plans are ROOT-relative component lists, the Linux floor holds no `/run`, and
+  grain-launch refuses a MEMBER root that overlaps ROOT or BROKER. It is a root separate from
+  `/run/nd-broker` because keybroker's directory must list exactly `broker.sock` (PROTOCOL-7's R5b).
+- **The command surface IS the custody condition**, each refused by name with a plant (CLIENT-3,
+  CLIENT-23). `argv[0] ∈ STDIO_VERBS`, emitted by PROTOCOL-7 from Lean (the World verbs minus rotate,
+  adopt and init), else `notOnSurface VERB`. Custody in stdio mode refuses precommit and signNext
+  (`noRotation`). A request is argv words only, and the workspace, holding, sockets and environment are
+  fixed at start. No argument is a path that nd reads: `install TEXT` takes the package text inline as
+  one argv word, and nothing in nd or follow reads a file named in argv (CLIENT-3 checked main). That holds
+  by construction, and a canary plant keeps it so: an argv word naming a canary file is passed as text, and
+  the canary's bytes never appear in the reply.
+**Alternatives.** (1) The resident holds its own seed in its volume and its own nd reaches host.sock and a
+follow socket (HOSTING-17 §5's first sketch). Refused: the seed would sit inside the sandbox, and the
+resident would initiate to the writer, against ruling (B). (2) Put nd.sock beside broker.sock in
+`/run/nd-broker/<r>/`. Refused: two servers write one directory, and keybroker's listing condition (exactly
+`broker.sock`) would have to admit a second name. (3) An untyped second connect entry under BROKER: a plan
+could name a member socket as a broker socket. Refused for the typed root.
+**CRITIQUE.** This is a second resident-initiated socket, so a second surface where the less-trusted side
+speaks first. It is bounded by the peer check, one socket per resident, the verb surface and confinement.
+But `STDIO_VERBS` is a list, and a World verb added later is on the surface unless PROTOCOL leaves it out.
+The surface is only as narrow as the list's review. nd --stdio signs as the resident's member, so a
+compromised resident can do anything that member's grants allow. That is the grant model working, not a
+leak, but it means a resident's authority is exactly its member's grants and must be granted narrowly.
+**META-CRITIQUE.** The "no path arguments" condition was first argued from an `install <path` form that
+does not exist (corrected by CLIENT-3 and ROOT). The condition stands, but its first justification was a
+claim about nd made without reading nd: the brief was the least-checked source. The record now carries the
+measured fact.
+**Owed (HOSTING).** After `nd --stdio` lands: the MEMBER root in `Hosting/Plan.lean` (typed connect
+entries, the theorems restated per root), grain-launch's third root and pairwise `rootsOverlap`, the
+re-emit of the launch frame, and the resident row's second socket.
+**Built: HOSTING-25** (typed `broker`/`member` plan fields, grain-launch MEMBER, `foreignPath`, the row's
+member socket).
+
+## HOSTING-21 The resident row, and keybroker's socket admits exactly PEER (HOSTING-7, 2026-10-18)
+
+**Decision.** `launcher/tests/resident.rs` is row `cargo:launcher:resident`, PROTOCOL-7's agreed need
+(R1-R6, R5b, the refusals at resolve, plants (a)-(e); hbox logs/protocol7-resident-need.md). It runs the
+deployed path end to end. A real Store: `host genesis`, `host serve`, and the operator's `host follow`
+Store placed at `<hosting root>/worlds/w/store`, the Store the controller tails. The operator's `nd
+install`s Lifecycle and Allowance, `create`s a resident grain, gives it an allowance and `invoke`s start,
+then `sync`s (the operator's nd drives the follower, ruling (B)). keybroker runs from the emitted unit's
+argv. grain-launch runs from ITS emitted unit's argv (`nd-grain-launch@.service`: every rendered word
+mapped, unmapped or unused values red) over the real `hosting-controller`. The resident is the probe,
+sequenced by files the test writes into its volume, never by time. Verdicts (measured): ask1 `ok answer
+200`; key file `denied ENOENT`; the other resident's socket `denied ENOENT`; SOCKDIR lists only `<dirOf>`
+(bwrap's scaffolding); the bound directory lists exactly `broker.sock`; keybroker is stopped and restarted
+mid-row, and ask2 is `ok answer 200` with no relaunch; the canary is in both upstream requests and absent
+from the resident's received bytes (which are not empty); the operator's stop ends the child.
+`refusals_at_resolve_by_name`: a regular file `connectNotSocket`, a symlink `connectLink`, a 0666 socket and
+a 0660 socket of this uid `connectMode`, a group-writable directory `connectDir`; CONTROL: the right socket
+launches.
+- **R1 reads Lean's plan, never computes it.** grain-launch prints `grain-launch: <g> connect <path>` for
+  each connect entry of each launch, as it joined it onto BROKER. The row asserts that list is exactly
+  `[BROKER/<dirOf>/broker.sock]`.
+- **keybroker's socket admits exactly PEER.** When PEER is keybroker's own uid it binds the socket 0600
+  (its owner alone); otherwise it binds 0660 to SOCKDIR's group, as before. These are exactly the two
+  shapes `Policy.connect` accepts (HOSTING-17 §5: euid+0600, or another uid with our group at 0660), so a
+  one-uid box is the deployment's shape minus the group, not a test mode. This is what lets the row run
+  on a one-uid box: before it, keybroker's 0660 socket of the same uid was refused `connectMode` at
+  resolve. It narrows nothing in the deployment: OPS's render refuses `hostedIsKeyHolder`, so PEER is
+  never nd there, and the socket stays 0660. ROOT: fine, land it with the row.
+- Shared helpers move to `launcher/tests/common/mod.rs` (World, PKI, fake provider, keybroker from the
+  unit's argv). broker.rs's socket-directory control now expects 0600 serving its own uid and 0660 serving
+  another.
+**Declared UNRUN (one uid on hbox).** Policy.connect's other-uid branch (`ConnectOwner`, and the 0660 group
+socket it would accept), and keybroker's `peerRefused` for a real second uid. The broker test's PEER plant
+runs the same comparison.
+**CRITIQUE.** The restart step stops keybroker by its own handle (the pid the test wrote to its PID file),
+not by the unit, so it does not cover systemd's restart path (OPS-3's live harness does). SOCKDIR's
+listing is `ok <dirOf>`, not ENOENT as the need first said: bwrap makes the bound directory's parents as
+scaffolding (isolation.rs measured it). The row accepts that listing or a refusal, never the other
+resident. The row's ask uses one fixed model, so it shows the path is open, not the broker's verdicts
+(broker.rs owns those). The follower advances only when the operator's nd syncs it. In deployment that is
+OPS's nd-follow driver, and a lagging driver delays every launch (liveness, not safety).
+**META-CRITIQUE.** The first run hung silently. The follower lagged the writer by the last turn, because
+nothing drove it, and the controller rightly launched nothing. Separately, a missing `members` directory
+failed every launch `pathMissing` and was crash-looped. Both are deployment facts the row now states (the
+members directory must exist; the follower must be driven), found only by running the real path. A row
+built on the decider's writer Store, as broker.rs's is, would have hidden the first.
+**Vacuity read (10-18, VACUITY-READER-H4): ACCEPT, no surviving mutation.** R1's printed list is the very
+`Policy` handed to `command`; R3's grant proves the socket named `g` (only `g` has an allowance); R4/R5
+probe host paths that exist; broker.rs asserts 0600 and 0660 by literal, not through the helper's mirror of
+keybroker's rule; the refactor's asserts are a superset of the old ones.
+**Plants (run, hbox logs/hosting7-rplants.py, each red at its named step).** (a) the sandbox binds SOCKDIR
+instead of SOCKDIR/<r>: red at R5 (the other resident's socket connects). (b) Lean's `connectOf` gives a
+resident no socket: red at R1. (c) the connect mode check skipped: red at `connectMode` (the 0666 socket
+launches). (d) the sandbox binds the socket FILE: red at the restart (ask2 not granted). (e) keybroker
+writes a second file beside the socket: red at R5b. (f) keybroker always 0660: red at its bind (the
+helper waits for the mode that admits exactly PEER), across the broker test and the row.
+**Flag day.** keybroker's socket is 0600 when PEER is its own uid. grain-launch prints its connect paths.
+The probe gains `ask` and `wait` and appends as it goes. New row `cargo:launcher:resident`. Nothing
+persisted changes, and the deployed units are unchanged.
+
+## HOSTING-22 The grain row's physical half (HOSTING-7, 2026-10-18, PROTOCOL-7's need)
+
+**Decision.** `launcher/tests/grain.rs` is row `cargo:launcher:grain` (`hosting-controller,host`). It restates
+m6grain's sandbox half, and the Lean `grain` row's docstring names it (PROTOCOL-7 adds the reference).
+It runs on the resident row's harness: a real Store, the operator's follower Store which the controller
+tails, and grain-launch from its emitted unit argv over the real `hosting-controller`. The operator
+installs Lifecycle and creates an APP grain. The grantee is a real second member: `nd --init` in its own
+workspace, `nd init <operator>` (its join token), the operator's `enroll` and `grant world … observe`,
+then its own follower Store, made by `host genesis` with the World's nonce, which must print what the
+first genesis printed, and followed by `host follow` as that member. The operator grants it `invoke:1`
+on the grain.
+Steps:
+- start: the owner's `invoke 1` and `sync`. The grain is launched once. Inside, it writes its volume and
+  is denied its Store's key, which exists on the host, so the plan is in force.
+- grantee stop: `invoke 2 --via <invoke:1>` from the grantee's nd is refused `grantRight` by name.
+  After the operator's `sync` the follower Store equals the writer's (the controller has nothing
+  unseen), the grain's pid (from its PID file) is alive, and no exit was reported.
+- owner stop: `invoke 2` and `sync`. grain-launch reports `exited 9`, the controller's kill. The pid is
+  gone, no PID file survives, and there was exactly one `started`.
+- `common/mod.rs` gains the resident row's own helpers (moved, unchanged) and `World::follower`, a member's
+  own follower Store.
+**CRITIQUE.** The grantee's refusal is the World's (KERNEL-25's owner gate through the grant's rights). It
+produces no Turn, so "the process lives" here shows that a refused call reaches nothing physical, and the
+row cannot see a controller that would kill on a refused call, because there is nothing for it to see.
+The alive check is after a sync, not after a quiet interval. That is deliberate (no wall-clock verdict),
+and it is sound because the controller acts only on Turns and reports. `exited 9` is the raw wait status
+of a SIGKILL'd bwrap child, the launcher's kill. A grain that exits on its own with status 9 would read
+the same, but the probe here only waits. The grantee's join flow runs `nd init` through the OPERATOR's
+follow socket (init only signs its possession and prints its token, so it reads no World). After its
+enrolment, every grantee command reads through its own follower.
+**META-CRITIQUE.** This row passed on its first run, which is a reason to distrust it, not to trust it. The
+plants below are what make it evidence. Both red at the stop step, the step the need names.
+**Plants (run, hbox logs/hosting7-rplants.py with PLANT_TESTS=--test grain, output
+logs/hosting7-gplants.out, each red at the stop step).** (g) the controller ignores stop (`decideCell`'s
+non-running branch returns no verdict): `hang: the stop`. (h) grain-launch ignores the kill frame: `hang:
+the stop`.
+**Flag day.** None: a new row, and the harness moved into the shared test module.
+
+## HOSTING-23 Only a code the table names is passed through; any other is the mechanism's (HOSTING-7, 2026-10-18, OPS-3's burst5 find)
+
+**Decision.** keybroker passes its decider's exit code through only when Lean's `DeciderExit` names it
+(`decider_exit::ALL`). Any other code means the decider never ran its own end: bwrap failed to set up
+the sandbox, or the program or a library is missing. Then keybroker ends with the new KeybrokerExit row
+`deciderMechanism` (79, fatal), with the raw code on stderr. grain-launch does the same for its controller:
+a status below 128 that `ControllerExit` does not name (`controller_exit::ALL`) ends the new LaunchExit
+row `controllerMechanism` (67, fatal), and a status of 128 or more is still `controllerSignaled`. The
+membership lists come from one mechanism, as CODEC-7 required: `Emit.Rust.byteModule` now emits `pub
+const ALL: &[u8]` for every byte table, in `all` order, so no table exists without its list. The
+client's, launcher's and broker's generated files re-emit. Every table keeps its named distinctness and
+range theorems (`codes_nodup`, `codes_reserved` in Proofs.BrokerExit and Proofs.LaunchExit), and
+`codes_disjoint` places 67, 68 and 79 apart from every Host, nd-supervise, decider, keybroker and
+controller code.
+**Why.** burst5 run 1: the unit lacked AF_NETLINK, so bwrap died at sandbox setup and exited 1. keybroker
+passed the 1 through, and 1 is in no table, so systemd treated it as restartable and looped to the start
+limit. A code the table does not name is not a verdict; passing it through let the mechanism's failure
+masquerade as an unclassified decider end.
+**Alternatives.** (1) Classify unknown codes as restart: a broken mechanism loops, which is the bug.
+(2) Hand-written per-table code lists: two shapes that drift (CODEC-7). (3) Map unknown codes to the
+existing `deciderRefused` / `controllerRefused`: those name a refusal at spawn, which keybroker saw itself.
+A mechanism death after spawn is a different fact, and the operator's sentence differs.
+**CRITIQUE.** A decider bug that exits with an unnamed code (an uncaught Lean panic: 1) now reads as the
+mechanism's. That is fatal either way, and stderr carries the raw code, but the sentence points the
+operator at the mechanism first. The LaunchExit codes now leave the 116-127 block (it is full) for 67 and
+68, because the space below 128 is nearly spent. Free codes below 128 are now 7, 14, 15, 31, 44, 53-63, 69.
+**META-CRITIQUE.** HOSTING-16/19 wrote "the decider's code is passed through" as if every code the
+decider's PROCESS ends with were the decider's. The process is bwrap's before it is Lean's. The table
+said what Lean can end with; the pass-through assumed what the OS can.
+**Tests and plants (run).** broker.rs `a_decider_that_never_ran_its_own_end_stops_keybroker_by_name`:
+DECIDER = /usr/bin/false under the real nd-bwrap path ends `deciderMechanism 1`, exit 79. isolation.rs:
+CONTROLLER = /usr/bin/false ends `controllerMechanism 1`, exit 67. The pass-through of named codes keeps
+its regression tests (`store` 76 through keybroker; 106/107/109 through grain-launch). Plants (hbox
+logs/hosting7-rplants.py, output logs/hosting7-mplants.out, each red): m1 keybroker passes every u8 through;
+m2 grain-launch passes every code through.
+**Vacuity read (10-18, VACUITY-READER-H4): one REAL hole, fixed.** keybroker's first cut read every unnamed
+code as the mechanism's, including 128 + n. Under bwrap a status of 128 or more IS a signal death, so an
+OOM-killed decider (bwrap exits 137) would have ended `deciderMechanism`, fatal: one OOM kill would stop
+the unit for good, reversing `deciderSignaled`'s documented restart class. Fixed: a status of 128 or
+more is `deciderSignaled` (102) in keybroker, and `controllerSignaled` (126) BY NAME in grain-launch, whose
+stderr used to say `controllerEnded 137` while it exited 126. Tests: a decider and a controller that each
+SIGKILL themselves under the real nd-bwrap path end `deciderSignaled` (102) and `controllerSignaled` (126).
+This also exercises the `< 128` guard that HOSTING-19's read left review-guarded. Plants: m4, keybroker
+without the ≥128 branch, ends `deciderMechanism 137`, red; m5, grain-launch without it, prints
+`controllerEnded 137`, red. ALL versus the consts, plan_hidden_layout, and the report-pipe path: ACCEPT.
+
+## HOSTING-24 grain-launch refuses a missing layout directory at start (HOSTING-7, 2026-10-18, ROOT/OPS-3)
+
+**Decision.** `Hosting.layoutHidden` names the directories under `worlds/<label>` that every plan hides
+(`store`, `members`). `Proofs.plan_hidden_layout` proves it is exactly a plan's `hidden`
+(`p.hidden = layoutHidden.map (worldRoot l ++ [·])`), so a change to the plan's hidden list cannot leave
+it behind. `Emit.Hosting` emits it as `LAYOUT_HIDDEN`, computed from the Lean list, never as literals in
+Emit. grain-launch, after the roots check and before starting the controller, requires each
+`ROOT/worlds/LABEL/<name>` to be a directory. Otherwise it ends with the new LaunchExit row
+`layoutMissing` (68, fatal), naming the path. Before this, a missing `members` refused every launch
+`pathMissing` at resolve, and the controller counted each refusal as an exit until `crashLoop` (the
+resident row's first run measured it).
+**CRITIQUE.** grain-launch checks existence, not mode or ownership. The sandbox needs only existence to
+hide a path, and custody of `members` (0700 nd-hosted, RUNBOOK §2b) is the operator's. A directory removed
+after start still gives `pathMissing` at the next launch, so the start check narrows the window and does
+not close it. `worlds` itself is still a literal in grain-launch (the controller's Store path), as before.
+**META-CRITIQUE.** The alternative of making the controller check it was refused because the controller
+is confined to its Store and must never see `members`, which holds seeds. The check sits with the one
+process that may stat the layout and read nothing in it.
+**Tests and plants (run).** isolation.rs
+`a_missing_layout_or_a_controller_that_never_ran_stops_grain_launch_by_name`: for each LAYOUT_HIDDEN name,
+removed, grain-launch ends `layoutMissing <path>` (68) and the controller never starts. CONTROL: the
+emitted list holds `store` and `members`. Plants (each red): m3 the start check removed (the isolation
+test); Lean, `layoutHidden` without `members` (plan_hidden_layout fails, `rfl`).
+**Flag day (both).** KeybrokerExit gains 79, LaunchExit gains 67 and 68 (fatal), and the two units'
+RestartPreventExitStatus and EXITS.md gain them (Ops.Units arms carried cross-layer with OPS-3's
+sentences). Every `byteModule` table gains `ALL` (client/src/generated.rs, launcher/src/generated.rs,
+launcher/src/broker_generated.rs re-emitted, unedited; CODEC-7 agreed the Emit/Rust.lean and
+Emit/Hosting.lean edits). generated.rs gains LAYOUT_HIDDEN. Nothing persisted changes.
+
+## HOSTING-25 The resident reaches the World: a typed MEMBER root, built as HOSTING-20 ruled (HOSTING-8, 2026-10-19)
+
+**Decision.** HOSTING-20's owed half, built. A plan's sockets are TYPED by their root: `Plan.connect` is
+deleted and replaced by two fields, `broker` (relative to the broker root, keybroker's SOCKDIR) and
+`member` (relative to the new MEMBER root, `/run/nd-member`). `Hosting.memberOf` gives a resident exactly
+`[[<dirOf id>, "nd.sock"]]`, the socket nd-supervise serves `nd --stdio` on as nd over the resident's member
+workspace `worlds/<l>/members/<dirOf id>`, which every plan already hides. An app gets none. The launch
+frame carries `broker` and `member` as two named `paths` fields (`launcher/src/generated.rs` re-emitted).
+grain-launch takes `ROOT BROKER MEMBER LABEL PIDS CONTROLLER …`, joins each list onto its own root, hands
+`sandbox::Policy.connect` = broker sockets then member sockets (at most `CONNECT_MAX` = 2), and refuses
+`rootsOverlap` for every pair of the three roots.
+- **"A member socket that is not its own" is refused by name, twice.** In Lean it cannot be planned:
+  `plan_sockets_own` (each field is exactly the grain's own socket of that root), `plan_sockets_named`
+  (every socket entry of either root begins with the grain's own directory) and `plan_sockets_disjoint`
+  (two grains' plans share no socket of either root). The member is keyed by the grain's id, so the plan
+  has no input that could name another member. Of the controller's frames, `reconcile_launch_named`:
+  every launch the controller writes has sockets `<a.grain>/…` and every allowed path under
+  `worlds/<label>/grains/<a.grain>` (through `grainOf_named` and `launch_named`). In Rust, grain-launch
+  checks that law of every launch frame before anything resolves (`foreign_path`): the program, read,
+  write and exec paths lie under `worlds/LABEL/grains/<grain>/`, and each socket of either root is
+  exactly `<grain>/<name>`. A frame that breaks it ends the run with the new LaunchExit `foreignPath`
+  (69, fatal): a defect in the controller, and the socket or package would be another grain's.
+- **The confinement is exactly [broker socket, member socket].** `plan_sockets_max`: a plan names at most
+  two sockets in all. The isolation test plants two residents' sockets under each root plus a file in
+  each root. The resident reaches its own two sockets, and the other resident's sockets and both files are
+  ENOENT. Its own directories list exactly `broker.sock` and `nd.sock`. The roots show at most its own
+  directory (bwrap scaffolding).
+- **The resident row writes the World.** `cargo:launcher:resident` now runs a real resident member
+  (`World::member`: `nd --init-hosted` in the member workspace, `init`, the operator's `enroll`, `grant
+  world … observe`, its own follower Store), with `nd --stdio` confined under nd-supervise (write = the
+  member workspace, connect = [host.sock, its follow socket], CLIENT-24). Measured inside the grain,
+  through MEMBER/<dirOf>/nd.sock, via the probe's new `nd` op (the client's own frame and layout code):
+  `write OBJ 1 resident --via RM` gives `ok 0 tx …` and `read OBJ` gives `ok 0 1=resident`. The operator's
+  `nd read OBJ` over its own sockets prints `1=resident`. A write to an object it holds no grant on gives
+  `ok 1 refused noGrant`, and the operator reads that object unchanged. `rotate` gives `ok 1 refused
+  notOnSurface rotate`. The other resident's member socket is `denied ENOENT`. The member directory lists
+  `nd.sock`. The member workspace (its custody) is `denied ENOENT` inside, while it holds custody on the
+  host. R1 now reads exactly `[BROKER/<g>/broker.sock, MEMBER/<g>/nd.sock]` from grain-launch's lines.
+- **Custody: nothing widens.** The member key stays in the member workspace, which every plan hides. The
+  grain sees a socket and never a key. The socket admits the hosted uid and group only (nd-supervise
+  `--group --peer`, CLIENT-21/24). Its surface is STDIO_VERBS, and custody refuses rotation. The
+  resident's authority is exactly its member's grants (HOSTING-20 CRITIQUE). The row grants `observe` on
+  the World and `observe,mutate` on one object, nothing else.
+- **The writer's socket sits alone in its own directory.** A confined connector sees its socket's whole
+  parent directory (CLIENT-20). The test World used to serve host.sock inside the operator's workspace,
+  where a `--connect` would have exposed the operator's custody to `nd --stdio`. `World` now serves
+  `run/host.sock` (`World::host_sock`, `ND_HOST_SOCK` set). That is a deployment fact for OPS: host.sock
+  never shares a directory with keys.
+- **Test trees are owned (GATES-6, cv 01a14ed7-79cf).** isolation.rs's `Tree` removes its three roots on
+  drop, so a judged run leaves nothing in the target dir, also when the test panics
+  (`a_panicking_test_still_removes_its_tree`). The busy test's directory is a `Gone`. The judge slots'
+  old leftovers are Ember's to remove, not this lane's.
+**Alternatives.** (1) One `connect : List (Root × Path)` list. That needs a tagged path entry in the Layout
+family (CODEC work) for the same typing two fields give for free. (2) Keep the untyped `connect` and
+append the member socket under BROKER. HOSTING-20 refused that (keybroker's directory must list exactly
+`broker.sock`, and a plan could confuse the roots). (3) Have grain-launch compute `<root>/<grain>/<name>`
+itself, making "own" structural in Rust too. That moves Lean's path rule into Rust (law 2) for a property
+the Lean theorem plus one frame-law check already give.
+**CRITIQUE.** `foreignPath` can be produced only by a frame Lean never writes (`hosting-drive
+--plant-foreign`, `--plant-read-worlds`), so in deployment it is a guard against a controller defect, not a
+path that runs. Its plants show the check fires, not that it is ever needed. Because it refuses a read
+outside the grain's directory first, the isolation row's `worlds/` plant now meets `foreignPath`, not the
+sandbox's `Exposed`. That is the next barrier, and its own test is sandbox/tests/confine.rs. The member socket's server is the test's
+nd-supervise. No unit renders it yet (owed by OPS: the per-resident member unit, as nd, with `--group
+--peer`, making `/run/nd-member/<dirOf>` 02710 first). The deployed shape therefore runs only in this
+row's one-uid form: 0600, no `--group/--peer`, because a 0660 socket of one's own uid is `connectMode`
+(HOSTING-21). The cross-uid peer check is CLIENT-21/24's plant, declared unrun across uids. The member's
+follow Store advances only when its nd reads (each `read`/`write` catches up first), so it lags no
+command. The member socket must exist before the launch resolves it, otherwise `pathMissing` and then
+crashLoop: the same ordering fact as the broker socket. HOSTING-26 settles that for keybroker. For the
+member socket it is the member unit's (OPS), started when the grain is born, before start.
+**META-CRITIQUE.** The first run of the member helper hid the operator's workspace and connected to a
+host.sock inside it. That would have been refused, or worse, exposed the workspace, had nd-supervise not
+refused a child with nothing hidden first for a different reason. The finding (a connect grant is a view
+of the socket's directory) is CLIENT-20's, already written down, and I still placed a socket next to keys.
+The harness now has no socket beside a key anywhere it builds.
+**Vacuity read (VACUITY-READER-H8, a fresh reader).** ACCEPT on the Plan, Wire and exit statements, with one REAL
+hole, now fixed. `plan_sockets_named` speaks of the Grain `grainOf` built, never of the frame's `grain`.
+`grainOf`'s `idHex := dir` was unstated, so `grainOf` naming another directory survived every theorem
+while Lean emitted another grain's sockets and package under this grain's name. Fixed by `grainOf_named`,
+`launch_named` and `reconcile_launch_named` (Proofs/Controller.lean). The reader's companion note, that
+Rust tied sockets to the frame's name but never the program or paths, is fixed by widening the check to
+`foreign_path`. Minor and accepted: Rust is stricter than Lean on socket depth (exactly two components), and
+69 is sysexits' EX_UNAVAILABLE, which nothing here uses.
+**Theorems** (Hosting/Proofs/Plan.lean, Hosting/Proofs/Controller.lean `grainOf_named`, `launch_named`,
+`reconcile_launch_named`): `plan_roles` restated (the plan has `broker := brokerOf g, member
+:= memberOf g`); `plan_sockets_own`, `plan_sockets_named`, `plan_sockets_disjoint`, `plan_sockets_max`,
+`plan_sockets_clean` replace `plan_connect_own/disjoint/clean`; tooth `planned_resident_encodes` (the
+broker field is `[<id>, broker.sock]`, the member field `[<id>, nd.sock]`, and the frame encodes);
+Proofs.Wire `launch_fields` names `broker` and `member`; Proofs.LaunchExit `codes_nodup/disjoint/reserved`
+cover 69.
+**Plants (run, hbox logs/hosting8-plants.py, output logs/hosting8-plants.out, each red).** p1 Lean's
+`memberOf` gives a resident nothing: red at R1, and isolation's own member socket. p2 grain-launch joins
+member sockets onto BROKER: red, the launch never comes (pathMissing → crashLoop, `hang: the launch`). p3
+the socket half of `foreign_path` removed: red, `foreignPath` not reported and the drive launches. p3b
+the path half removed: red, the `worlds/` read is not refused by name. p8 Lean's `grainOf` names
+another directory: `grainOf_named` fails to build. p4 broker and member
+roots allowed to nest: red, `overlapping_roots_are_refused` (the grain started). p5 the member sockets
+dropped from the policy: red at R1. p6 Lean's plan names another directory: `plan_sockets_own` and the
+tooth fail to build. p7 `Tree` not removed on drop: red, the panicking test's tree outlived it.
+**Flag day.** The launch frame's `connect` is replaced by `broker` and `member` (generated.rs re-emitted).
+grain-launch gains MEMBER (argv ROOT BROKER MEMBER LABEL PIDS CONTROLLER), and a grain-launch started with
+the old five-argument shape treats LABEL as MEMBER and refuses. LaunchExit gains `foreignPath` 69. The
+grain-launch unit (ExecStart, RestartPreventExitStatus 69) and EXITS.md are re-rendered.
+`deploy/units/linux/tmpfiles/nd-member.conf` is new. The launcher crate depends on nanodregg-client
+(Cargo.lock). Nothing persisted changes. Every resident launch now needs its member socket to exist.
+
+## HOSTING-26 keybroker serves the World's resident grains; `RESIDENTS` is deleted (HOSTING-8, 2026-10-19; HOSTING-18 RULED (A) by ROOT)
+
+**Decision.** keybroker's operator argument RESIDENTS was deleted. It was a second copy of a World fact, which law 1 forbids. keybroker now serves exactly the World's resident grains, learned from its decider's frames, from each grain's birth.
+- **Which grains.** `Controller.residentOf` reads a cell as a resident grain when all of these hold:
+  - it is a lifecycle object (`isGrain`);
+  - its state decodes by the controller's own reader (`grainOf`);
+  - its kind is `resident`;
+  - its phase is anything but `removed`.
+  A grain is therefore served from `installed`, its birth, before its start can be decided.
+- **How the decider follows them.** `hosting-broker` follows the cells with the same act it uses for the operator's allowances: `Track.update`/`Track.absorb` (new Hosting/Track.lean, generic over the reader; the allowance copies `Allow.readAt/update/absorb` were deleted). Every id is read at the open, then every touched id after each catch-up. `update_tracks`, `absorb_tracks` and `start_tracks` are now stated for any reader, so the held set is exactly the World's.
+- **The request.** A new request `residents (atMs)` makes the decider catch up and answer `residents (names)`: the held grains' `dirOf`, at most `Bounds.residentsMax` = 1024. Past that bound the decider ends with the new DeciderExit `residentsPastBound` (7, fatal) by name. It never truncates silently.
+- **keybroker's tick.** keybroker asks every `TICK` (200 ms), binds a socket for each new name (HOSTING-17's directory checks first, as at start), and closes and removes the socket and directory of each name that is gone. A wrong-kind answer, or a decider that does not answer, is the decider's end (bounded wait) or `deciderLost`.
+- **"A resident not in the World is refused by name": three layers.**
+  1. It has no socket: keybroker never binds a name the World does not hold. SOCKDIR lists exactly the resident grains.
+  2. An ask on a connection that was open to a resident since removed is refused `notResident`, a new wire refusal (code 21). `Broker.admit` decides only a socket whose name the World holds, and `admit_notResident` shows the broker is unchanged.
+  3. A plan's broker socket is always one keybroker serves (`launch_served`).
+- **Theorems.**
+  - `launch_resident`: a launch whose plan names a broker socket is of a cell `residentOf` reads.
+  - `residentOf_iff` and `residentOf_teeth`; `Follow.absorbTurns` with `absorbTurns_tracks`, `residents_mem`, `answer_encodes`, `decodeRequest_*` (Proofs/Residents.lean); `dirOf_size`.
+  - `launch_served`: if the held set tracks the World (the premise `update_tracks` gives), every broker socket the controller plans for id `i` is `dirOf i` of a held id. That is the decider's answer, and the plan's socket name (`plan_sockets_own`).
+  - `grainOf_rename(_map)`.
+  - `admit_notResident`, `admit_resident`, `admit_encodes`.
+  - `residents_encode`: 1024 names of 64 bytes always fit one frame, so `unencodable` stays unreachable.
+  - `verdictOf_wire` gains the residents case.
+  - `refuse_encodes` is factored out.
+  - `admit_tooth`.
+  - The code-space theorems cover 7.
+**THE RACE (named, planted; ROOT: option (B) only if a deployment hits it).**
+- **Where it comes from.** The decider follows the writer's Store, and the controller follows its own follower Store, which is driven by `nd sync`. On one World they agree (`launch_served`). Between two Stores of one World there is lag.
+- **What it does.** A resident grain born and started before keybroker has learned the birth gets a launch whose broker socket does not exist yet. The launch is refused `pathMissing`, and the controller counts that as an exit. Five within its window refuse `crashLoop` until the window passes and a new Turn arrives.
+- **Planted in the resident row.** keybroker is down while a resident grain is created and started. Its package, volume and member socket exist, so `grain-launch: <c> failed pathMissing` is for the broker socket alone, and the grain never starts. keybroker's next life learns the birth and binds the socket.
+- **Why it is rare in deployment.** The decider reads the writer's Store, which leads; the controller reads a follower that trails by up to one `nd sync` interval. So the birth reaches keybroker first unless keybroker is down or more than a tick behind.
+- **(B), if a deployment hits it.** Have the controller hold a resident's launch until its socket exists. That needs the controller to see the socket, which it must not: it is confined to its Store.
+**Alternatives.**
+- (1) Bind from the operator's allowances (cv 01a14ad0-ae99's first wording). Refused: a resident grain with no allowance yet would have no socket, its launch would crash-loop, and the socket set would differ from the plans' (`launch_served` would be false). Under this decision such a grain has a socket and is refused `noAllowance` by name.
+- (2) Have the decider push resident frames unasked. Refused: keybroker's decider pipe is request/response under one lock, so a push needs a second reader thread and an interleaving protocol, which polling avoids at the cost of one tick of latency.
+- (3) Keep RESIDENTS and check it against the World. Refused: that keeps two shapes (CLAUDE.md: prefer deleting).
+**CRITIQUE.**
+- **Liveness, not safety.** The 200 ms poll costs a decider lock and an empty `Tail.next` per tick. An ask waits behind a residents poll at most one catch-up.
+- **The 1024 bound** is a design ceiling with a fatal, named end, not a measured limit.
+- **A removed resident's in-flight connection** stays open until it asks: it is then refused `notResident`, or it times out (`RESIDENT_IDLE`). The serving thread of a removed socket ends on its next wake: keybroker connects to it once to wake the accept.
+- **A grain removed while running** loses its broker socket at once. The controller kills it on the same Turn, so it holds a dead connection for at most that interval.
+- **One uid only.** `launch_served` speaks of one World, and the two-Store lag is the race above. The cross-uid shape is unrun on hbox, as in HOSTING-21.
+**META-CRITIQUE.** The cv task worded the derivation from allowances, and I first reached for that, because the decider already followed allowances. The plans' socket set is a property of lifecycle grains, not of allowances. A socket set taken from allowances would have reintroduced the very mismatch this decision deletes, one level down. Stating `launch_served` before choosing the reader is what showed it.
+**Vacuity read (VACUITY-READER-H8b).**
+- **Second pass: ACCEPT** (the four holes are closed). The links that remain code only: `run`'s seeding, catchUp's Turns, `serve`'s order of checks, and keybroker.rs binding exactly the answered names.
+- **First pass: NOT ACCEPTED.** No statement was vacuous, and the coverage direction (`launch_served`) holds. "Exactly" and "always encodes" were code only. Four holes, all fixed:
+  - H1. `residentOf` had no upper bound. Now `residentOf_iff`, plus `residentOf_teeth` by `decide +kernel`: a born resident and a running one are read; an app, a removed resident and a look-alike of another package are not.
+  - H2. The IO loop's links. `refresh` now calls the pure `Follow.absorbTurns`, and `Proofs.Residents.absorbTurns_tracks` and `residents_mem` cover it.
+  - H3. `residents_encode`'s premise was never met for what `serve` emits. Now `dirOf_size` (no premise) and `Proofs.Residents.answer_encodes`.
+  - H4. `decodeRequest` had no theorem. Now `decodeRequest_residents` and `decodeRequest_decide` (round trips).
+  - A tautological helper conjunct was deleted.
+- **Still code only:**
+  - `run`'s seeding of both readers through `Track.update … [] (Loop.allIds …)`, which `start_tracks` speaks of;
+  - the older allowance link, that a drain's Turns are `Step.turns ts` of a fold.
+- **Plants:** r1 (drop `isGrain`) and r2 (`absorbTurns` keeps `f.grains`) both fail to build.
+**Plants** (run with hbox logs/hosting8-plants26.py, output logs/hosting8-plants26.out; each was red):
+
+| plant | mutation | red at |
+|---|---|---|
+| q1 | `residentOf` ignores kind | "start: SOCKDIR is not exactly the resident grains" (an app is served) |
+| q2 | `residentOf` serves removed grains | "the removed resident's socket to go" (hang) |
+| q3 | `admit` decides everyone | the removed resident's open connection gets `noAllowance`, not `notResident` |
+| q4 | keybroker never unbinds | the socket never goes (hang) |
+| q5 | keybroker asks only once | "the born resident's socket" (hang) |
+| q6 | the decider's grains are not followed | the born socket (hang) |
+| q7 | `residentOf` reads `app` | `launch_resident` fails to build |
+
+**Flag day.**
+- keybroker's argv is KEYS ANCHORS SOCKDIR PIDS UPSTREAM STORE OPERATOR PEER DECIDER. RESIDENTS is gone; a keybroker started with the old ten words refuses `usage`.
+- New request `residents` (2) and verdict `residents` (3); Broker.Refusal gains `notResident` 21 (broker_generated.rs re-emitted).
+- DeciderExit gains `residentsPastBound` 7.
+- Re-rendered: nd-keybroker.service (ExecStart without ${ND_RESIDENTS}, RestartPreventExitStatus 7) and EXITS.md.
+- RUNBOOK's keybroker.env sentence is OPS-5's.
+- The broker test's resident names are real resident grains (`World::r1`, `r2`, born at genesis), and SOCKDIR is short (`short_dir`).
+- Nothing persisted changes.
+
+## HOSTING-29 The resident receives the reply TEXT; Lean reads the provider's JSON (HOSTING-9, 2026-10-19, ROOT ruling on HOSTING-8's three twin traps)
+
+**Ruling it builds under** (ROOT, 10-19): the real resident (HOSTING-27) is a Lean executable, and it must never parse provider bytes. If it did, a Rust resident would need three twins: a reader of Lang's text, a writer of Lang's string escaping, and a reader of the provider's JSON. keybroker's answer therefore carries the extracted reply text. This is a broker wire change, landed on one `hosting!` day together with HOSTING-28.
+
+**Decision.**
+- **Lean reads the provider's answer.** After a grant's upstream call, keybroker hands its decider a new request `reply 3 (status : u32, body)`. The decider answers with `Broker.reply` (Hosting/Reply.lean), a pure function:
+  - a status other than 200 becomes the new verdict `status 5`. The body is never read and never relayed.
+  - a 200 body is read for its reply text, the new verdict `reply 4 (text)`, or it is refused `replyMalformed` (new refusal, code 22).
+  - The decider holds no key and no member seed (charter row: no seed in a process that parses provider bytes). keybroker still decides nothing.
+- **The reader** (`Json.value` / `elems` / `members`) is an RFC 8259 value parser. It reads over the body's `ByteArray` at an index (law 3: bytes are never `List UInt8` in a def-module), and every function carries a structural fuel, so the teeth reduce in the kernel.
+  - Strings are read by `Json.unstr`, which handles every escape: `\" \\ \/ \b \f \n \r \t`, `\uXXXX` as UTF-8, and a surrogate pair as one scalar value. A raw control byte, an unknown escape, or a lone or reversed surrogate is refused. The reader is tail-recursive, so a 128 KB string costs no stack.
+  - Nesting deeper than `Bounds.depthMax` (64) is refused, because the reader recurses once per level. Every recursion is bounded by a fuel of three steps per byte.
+  - Numbers and the literals `true`, `false`, `null` are skipped, not kept. A number is a sign or digit followed by any run of number bytes. The lenient number cannot hold a structural byte, so it never moves where a value ends.
+- **What counts as the reply:** the `text` of the body's `content` blocks of type `text`, concatenated in order.
+  - The body must be one object, with nothing but whitespace after it.
+  - `content` is present and is an array (a repeat is refused by the duplicate rule below, so `field` takes the one copy).
+  - Each block is an object with exactly one `type`, which is a string. A `text` block has exactly one `text`, which is a string. A block of another type adds nothing.
+  - A key repeated in ANY object of the body, at any depth, refuses the body (`replyMalformed`), because a reader and the provider might disagree on which copy counts.
+  - No text block (an empty `content`, or only other types such as `tool_use`) is the empty reply, `.reply ""`. What to do with it is the resident's call.
+  - The text must be UTF-8 and at most `Bounds.replyMax` (frameMax − 64) bytes.
+- **The one reader.** `Json.unstr` is the deployed reader, and the proofs read Lean's own printer back with it. The private spec reader `Proofs.Broker.Json.unstr` is DELETED. `unstr_str`, `unstrAcc_esc` and `unstrAcc_str` now state facts about the deployed function, so `body_shape`'s "read back exactly" claim speaks of the code that runs.
+- **keybroker** (Rust):
+  - A response holding the key is still `keyEchoed` before Lean sees it, so the decider never holds key bytes.
+  - The reply TEXT is checked again, and a text holding the key is `keyEchoed` before the resident sees it. A JSON escape can spell the key without its bytes: `CANARY…` decodes to `CANARY…`.
+  - `Verdict::Reply` becomes `Answer::Reply`, `Verdict::Status` becomes `Answer::Status`, and a refusal becomes `Answer::Refused`. Any other verdict to a `reply` is the decider out of turn, and the connection closes.
+- **The answer frame changes** (append-only codes, case 1 re-shaped): `reply 1 (text)`, `refused 2`, `status 3 (status : u32)`. `answer 1 (status, body)` is deleted, so the resident's wire has no provider body at all.
+- Lean gains `Wire.decodeAnswer` and `Wire.encodeAsk` (`askWire?`). The resident (HOSTING-27) reads its answers, and writes its asks, with the one codec.
+- **THE BAR's "hosted Hermes" is the HOSTING-27 resident.** This decision is what makes it possible without a twin.
+
+**Theorems** (Hosting/Proofs/Reply.lean; axioms propext, Classical.choice, Quot.sound only):
+- `Proofs.Broker.reply_printed`, beside the printer's specification `escL`: a 200 body holding one text block printed by Lean's own `Json.str` reads back to exactly that text, for every UTF-8 text within `replyMax`, whatever bytes it holds. The proof runs the deployed reader over the printed body's bytes. Every key and the text are read by `unstr_str`: wherever the bytes from index `i` on are a printed string, the deployed `unstr` returns exactly its contents and the index after its closing quote.
+- `reply_status`: any status other than 200 is passed on as itself.
+- `reply_encodes`: every verdict `reply` returns has a frame, so `unencodable` stays unreachable.
+- `decodeRequest_reply`, `decodeAnswer_reply`, `answerCodec_lawful`: the frames round-trip.
+- Teeth, all `decide +kernel`:
+  - `anthropic_tooth`: an Anthropic-shaped body with fields before and after `content`, a nested `usage`, a `null`, a negative exponent number, and `\n \" \/ é 😀`.
+  - `blocks_tooth`: two text blocks around a `thinking` block, with keys in either order.
+  - `decoy_tooth`: a `content` written inside another field's string is not a field.
+  - `malformed_teeth`, each refused: a repeated `content`, a repeated `text`, a lone high surrogate, a reversed pair, a raw line feed in a string, trailing bytes, `content` as an object, a top-level array, a text block with no `text`.
+  - `utf8_tooth`: a raw 0xFF byte in the text is refused.
+  - `depth_tooth` and `object_depth_tooth`: a nesting of 64 levels is read and 65 is refused, whether arrays or objects.
+  - `escapes_tooth`: `\b \f \r \t`, uppercase hex, and a three-byte scalar (`\u20ac`).
+  - `whitespace_tooth`: a pretty-printed body.
+  - `fuel_tooth`: a 300-element array.
+  - `shape_teeth`, each refused: a duplicate `id`, a duplicate inside `usage`, the atoms `Z` and `tru`, a block with no `type`, a non-object block. `content:[]` and a body of only `tool_use` blocks are `.reply ""`.
+  - `status_tooth`.
+- `reply_over`: a reply text longer than `replyMax` is refused, whatever else holds.
+
+**Tests** (`cargo:launcher:broker`, `cargo:launcher:resident`):
+- The fake upstream answers an Anthropic-shaped body. The resident gets `reply "hello back"`, and no byte of the provider's JSON (`"stop_reason"`) reaches it.
+- `the_resident_receives_the_text_lean_read_never_the_body`:
+  - a 429 is `status 429`, and its body (`slow down`) never reaches the resident;
+  - `{"ok":true}` is `replyMalformed`;
+  - a text spelling the key through `C` is `keyEchoed`. CONTROL: the raw body holds no key bytes;
+  - escapes reach the resident decoded (`a\nb é "q"`).
+- The probe prints `ok reply <text>` / `ok status <n>` / `ok refused <name>`.
+
+**Alternatives.**
+1. A Rust JSON extractor in keybroker: a second reader of provider bytes, in the key-holding process. Refused (law 2, and HOSTING-12's "nothing in the key path parses provider JSON").
+2. Pass the whole body to the resident and let the model read it: then the resident parses provider bytes, which is HOSTING-8's twin (c). Refused.
+3. `Lean.Json.parse` from core: `import Lean` is refused outside Census (closure C2/C5). It reads `String` and not bytes, and nothing here proves it agrees with `Json.str`. Refused.
+4. Keep `answer status body` beside `reply`: two shapes. Refused (prefer deleting).
+
+**CRITIQUE.**
+- **The reader is a JSON parser in the decider: new attack surface.** It is bounded in depth (64), fuel (3/byte) and stack (tail-recursive strings, depth-bounded mutual recursion). It is not proved to terminate within its fuel on all inputs; it simply refuses when the fuel runs out.
+- **That the fuel `3 · length + 3` suffices for every valid body is not proved** (VACUITY-READER-H9's residual). A constant fuel of about 400 would survive every tooth. Running out of fuel only refuses, so this is liveness, never safety.
+- **Real bodies are larger than the teeth.** A 100 KB body is about 300 K fuel steps over a `List UInt8`. That is unmeasured for speed, and no wall-clock verdict is allowed. The first real call is where it is seen.
+- **The lenient number grammar** accepts `1-2e`. It cannot move a value boundary, and numbers are discarded, so the leniency is unobservable in the reply. It is still not RFC 8259, and that is named here.
+- **What is not proved:**
+  - Only a one-block body is proved to round-trip (`reply_printed`). Multi-block bodies, decoys and keys after `content` are teeth, not theorems.
+  - That `value` refuses every body a strict RFC 8259 parser refuses is not proved. The refusal teeth cover the cases above.
+- **Anthropic's `content` may hold `tool_use` blocks** once tools exist. They are skipped today; a tool-using resident needs its own decision.
+- **The reply drops `stop_reason`**, so a reply cut off at `max_tokens` reads as a whole reply. The resident cannot tell, and so cannot say "(truncated)".
+
+**META-CRITIQUE.** I chose to read the body into a value tree and then select from it, rather than scan for `"content"`. A scanner is the code a decoy defeats, and the tree makes "exactly once" a filter, not a search. My pull was toward the smaller scanner, and `decoy_tooth` is the reason I did not take it. I wanted a theorem over every body the provider might send. That is a grammar-level round trip, which I did not attempt, and I named the one-block theorem as what is proved.
+
+**Vacuity read (VACUITY-READER-H9).**
+- First pass: ACCEPT-WITH-HOLES. No statement was vacuous, collapsed or circular. `printed` is built by the deployed printer, and `escL` is tied to the deployed `esc` by `esc_data`. Nine holes, each with a surviving plant:
+  1. objects spent no depth (a stack blowup);
+  2. escapes nothing exercised (`\b \f \r \t`, uppercase hex, three-byte UTF-8);
+  3. whitespace never tested;
+  4. fuel only checked on small bodies;
+  5. `replyMax` not pinned;
+  6. atoms more lenient than documented;
+  7. untyped blocks;
+  8. the docstring claimed duplicates were refused everywhere, but the code refused them only for three keys (now: everywhere);
+  9. the empty reply not pinned.
+  All nine are closed by the teeth above, `reply_over`, and the any-depth duplicate check.
+- Second pass: ACCEPT, with one residual: the fuel's sufficiency, which is liveness only.
+
+**Plants** (hbox logs/hosting9-plants.py; the final run over the `ByteArray` reader is logs/hosting9-plants3.out, and every plant below is RED there):
+- `\n` decoded as `n`: `anthropic_tooth`.
+- `depthMax` 65: `value_printed` and `depth_tooth`.
+- The surrogate multiplier 1024 → 1000: `anthropic_tooth`.
+- The status check disabled: `reply_status` and `status_tooth`.
+- Trailing bytes accepted: `malformed_teeth`.
+- The UTF-8 check removed: `utf8_tooth`.
+- `\\` decoded as `/`: `unstrAcc_esc` (the printer and the reader disagree).
+- After the vacuity read, each RED:
+  - objects spending no depth: both depth teeth;
+  - `\t` read as a space, uppercase hex off by one, the 3-byte `utf8Of` bytes swapped: `escapes_tooth`;
+  - no whitespace: `whitespace_tooth`;
+  - fuel 70: `fuel_tooth`, `value_printed` and the depth teeth;
+  - any byte starting an atom, an untyped block dropped, duplicates allowed below the top: `shape_teeth`;
+  - `replyMax + 59`: `reply_over` and `reply_encodes`;
+  - an empty array refused: `shape_teeth`.
+- Rust:
+  - the text keyEchoed check deleted: the reply test (the spelled key reached the resident);
+  - the raw body relayed as the text: the main test;
+  - the status replaced by 200: the reply test.
+
+## HOSTING-28 The provider's leaf key is pinned, as operator data; the anchors are the provider's roots (HOSTING-9, 2026-10-19; ROOT ruling P2)
+
+**Ruling it builds under** (ROOT, 10-19). The first ruling was "a build-time constant". It could not have an accepted test case without trusting the test's public key in production, so ROOT re-ruled P2:
+- pins are operator DATA, shaped exactly like ANCHORS;
+- only the LEAF's SPKI is pinned;
+- the production file is emitted from a Lean constant and gated;
+- the check is fail closed;
+- the provider is never handshaken by the lanes (the first contact is Ember's act);
+- the anchors are narrowed to the provider's roots the same day.
+
+**Why only the leaf.** rustls exposes the chain the server SENT (`peer_certificates`), not the path it verified. The verified path needs a custom verifier, and that is the `dangerous` API HOSTING-15 rules out. A pin matched anywhere in the sent chain is unsound: a forger holding a mis-issued leaf adds the provider's real, public intermediate certificate to its chain and passes. The leaf is the one certificate rustls verified for the name, so it is the one a pin can soundly name.
+
+**Decision.**
+- **PINS**, keybroker's third argument: `keybroker KEYS ANCHORS PINS SOCKDIR PIDS UPSTREAM STORE OPERATOR PEER DECIDER`.
+  - It is read once at start through `custody::read_public` (the anchors' checks), at 0..=64 KiB.
+  - The format is strict: `HOST HEX` lines, each ended by LF. HOST is printable ASCII with no space. HEX is exactly 64 lowercase hexadecimal digits: the SHA-256 of the leaf certificate's DER SubjectPublicKeyInfo.
+  - An empty file is no pin at all. Any other shape, or a pin given twice, ends keybroker `pinsMalformed`. There are no comments, no blank lines, and no uppercase.
+  - Custody refusals end keybroker by name, before any socket opens: `pinsLink` 140, `pinsNotRegular` 141, `pinsOwner` 142, `pinsMode` 143, `pinsLength` 144, `pinsDir` 145, `pinsMissing` 146, `pinsIo` 147, `pinsMalformed` 148. All are fatal (`RestartPreventExitStatus`).
+- **The check.** After the TLS 1.3 handshake has verified the chain for Lean's host, keybroker hashes the leaf's SPKI and checks it against the host's set. `rustls-webpki` `EndEntityCert::subject_public_key_info` parses the leaf, and ring's SHA-256 hashes it; both are already in the TCB under rustls, at the same pinned versions.
+  - Not in the set, or a host with no pin, is refused `pinMismatch` (new refusal, code 23) before a request byte is written.
+  - The pin is host-scoped: a pin listed for another host does not count.
+- **`deploy/tls/pins` is EMPTY**, emitted by the new `emit-pins` from `Hosting.Pins.pins = []` and gated in `gates/generated.tsv`.
+  - No provider's leaf key has been read by anything in this tree, so every real call is refused `pinMismatch` until the operator computes the pin at the first real call.
+  - The installed copy, `/etc/nd/keybroker/pins`, is the operator's. Rotation is the operator's act with no rebuild, so there is no ExecStartPre comparing it with the build's copy (unlike the anchors).
+  - The operator's recipe, which goes in RUNBOOK §2a via OPS-5: `openssl s_client -connect api.anthropic.com:443 -servername api.anthropic.com </dev/null | openssl x509 -pubkey -noout | openssl pkey -pubin -outform der | sha256sum` gives one line `api.anthropic.com <hex>`. Across a rotation, keep the old line beside the new one.
+- **The anchors are the provider's roots: 7 of 121.**
+  - `emit-anchors` keeps only the crate roots whose DER SHA-256 is in `PROVIDER_ROOTS`: GTS Root R1, R3 and R4 (R2 is not in the crate), and SSL.com's four TLS roots (Root CA RSA and ECC, TLS RSA and ECC Root CA 2022).
+  - Provenance: Certificate Transparency (crt.sh, 10-18), never a handshake. The unexpired certificates for `api.anthropic.com` are issued by GTS WR3, WR1 and WE1, under GTS R1 and R4, and by Cloudflare TLS Issuing ECC/RSA CA 4, under SSL.com's transit CAs.
+  - `one_block_per_provider_root`: each kept fingerprint is exactly one root of the pinned crate.
+  - A provider that moves to another CA fails `tlsCertificate`. The fix is to add its root to `PROVIDER_ROOTS` and re-emit.
+- **TCB.** No new component: `rustls-webpki` 0.103.15 and `ring` 0.17.14 were already in keybroker's build under rustls, and now they are also direct dependencies.
+
+**Tests:**
+- `a_leaf_key_the_operator_did_not_pin_is_refused_before_a_byte`: two upstreams with certificates from the same CA for the same name.
+  - The pinned one is answered `reply "hello back"`.
+  - The other is `pinMismatch`, and its upstream receives nothing.
+  - The pinned leaf listed for `other.example` is `pinMismatch`.
+  - The shipped `deploy/tls/pins` (empty) is `pinMismatch`.
+- `a_bad_pins_file_stops_keybroker_by_name`:
+  - uppercase hex, 63 digits, no final LF, a repeated pin, two spaces, an empty line, and a `#` comment are each `pinsMalformed`;
+  - 0666 is `pinsMode`, a symlink is `pinsLink`, and a missing file is `pinsMissing`, each with Lean's code and no socket;
+  - CONTROL: an empty file, a good file and the production file each pass, and keybroker goes on to its decider.
+- The TLS plants pin their upstream, so the truncation case meets the TLS close, never the pin.
+
+**Alternatives.**
+1. The build-time constant (the first ruling): its accepted case needs the test key in production. Refused, as reasoned above.
+2. Pin the intermediate or the root in the sent chain: unsound. Refused.
+3. A custom verifier exposing the verified path: the `dangerous` API, refused by HOSTING-15.
+4. Narrow the anchors only, with no pin: the 7 roots would still be trusted for any key. The pin adds "this key", the anchors add "these issuers". Kept both.
+
+**CRITIQUE.**
+- **A leaf pin breaks at every provider key rotation.** Every ask is then `pinMismatch` until the operator re-pins. That is loud and fail closed, but it is an outage. Two lines across a rotation is the mitigation, and it needs the new key in advance, which a provider does not announce.
+- **The operator computes the pin over the same network** the pin defends. A pin taken during an attack pins the attacker. The recipe should be run from two vantage points; that is said in the RUNBOOK and is not checked.
+- **`PROVIDER_ROOTS` is Rust data in OPS's emitter**, beside Lean's provider table, not derived from it. A second provider row in Lean without roots here is refused `tlsCertificate` at the first call: loud, but a second source.
+- **The CT evidence is a snapshot.** Anthropic may issue from another CA tomorrow.
+- **`pinMismatch` cannot distinguish an attack from a rotation.** keybroker logs nothing per ask, so the operator learns it from the resident's refusals.
+
+**META-CRITIQUE.** I proposed P2 after showing the build-time constant could not be both safe and tested. That argument was about the test. The real argument is that a leaf pin must change without a build, and I found it second. The narrowing was ROOT's complement, and I think it does most of the work against the 121-CA exposure. The pin's marginal value over 7 roots is real (it defends against a mis-issuance by GTS or SSL.com) but smaller than it sounds.
+
+**Plants** (hbox logs/hosting9-plants.py; each RED):
+- The pin check deleted: the other leaf is answered.
+- The pin not host-scoped: `other.example`'s pin is accepted.
+- Uppercase hex accepted: `pinsMalformed` not raised.
+- PINS read without custody: 0666 accepted.
+- The anchors not narrowed: `one_block_per_provider_root`.
+
+**Also in this landing (GATES-6's flake).** keybroker writes its end line in ONE `write`. `eprintln!` wrote it in pieces, and the decider, which shares that stderr and may still be ending, could print inside it: `keybroker: hosting-broker: keybrokerGone sockDir …`. That made `a_bad_socket_directory_stops_keybroker_by_name` red under load, by a race of stderr, not by a verdict. One line under PIPE_BUF is one atomic write.
+
+**Flag day (HOSTING-28 + HOSTING-29, one `hosting!`).**
+- Broker frames:
+  - `answer 1` is now `reply 1 (text)`, and `status 3` is new;
+  - request `reply 3`, verdicts `reply 4` and `status 5`;
+  - refusals `replyMalformed` 22 and `pinMismatch` 23;
+  - `broker_generated.rs` is re-emitted.
+- keybroker's argv gains PINS. A keybroker started with the old ten words refuses `usage`. KeybrokerExit gains 140–148.
+- Re-emitted:
+  - `deploy/units` (nd-keybroker.service's ExecStart, RestartPreventExitStatus, EXITS.md);
+  - `deploy/tls/anchors.pem` (121 → 7 blocks);
+  - the new `deploy/tls/pins` (empty).
+- What now refuses:
+  - every real upstream call is `pinMismatch` until the operator pins;
+  - a certificate chaining to any of the 114 dropped roots is `tlsCertificate`;
+  - the live harness keybroker ends `pinsMissing` (146) until deploy/live/broker.sh installs `$R/etc/pins` (OPS-5's, after this hash).
+- `gates/codec-vectors.tsv` does NOT move: no codec vector covers the broker's tagged sets (checked: `codec-vectors --check` ok).
+- Nothing persisted changes.
+
+## HOSTING-27 The real resident: a Lean executable that answers a bell, THE BAR's hosted Hermes (HOSTING-10, 2026-10-19; ROOT rulings 10-19)
+
+**What it is.** `resident` (`lean_exe`, `Hosting/Resident/*.lean`, root `Hosting.Resident.Main` holding only `main`) is THE BAR's "hosted Hermes": the process that answers a person in the World with a model's words. A resident grain runs it as `pkg/resident`, confined by grain-launch like any grain:
+- it reads its package and its volume;
+- it connects to its own broker socket and its own member socket;
+- it sees nothing else.
+
+It serves ONE bell (`world/resident/Bell`, LANG-52) named in its config. When a ring is pending, it asks keybroker once, with the ring's text as the one user message, and answers the bell with the reply text Lean read out of the provider's JSON (HOSTING-29). The founder rings and reads; the resident answers.
+
+**What stands between it and a real model.** The operator's acts, not code:
+1. **The provider's leaf SPKI pin in the deployed PINS file** (HOSTING-28). It ships empty, so every real call is refused `pinMismatch` before a request byte. The resident then answers every ring `(refused pinMismatch)`.
+2. **A provider key in keybroker's key file** (Ember's act). Without one, the answer is `(refused keyMissing)`.
+3. An allowance for the resident on the model (the operator's `create --pkg Allowance`).
+
+The real upstream is never in a test.
+
+**Decision (ROOT's rulings, each built).**
+- **A Lean exe, not Rust.** A Rust resident would have needed three twins (law 2): a reader of Lang's printed text, a Lang string printer, and a JSON reader. The resident reads the bell's state line with `Lang.Read.readData` at the type the bell's description prints (PROTOCOL-44 `state TYPE`, PROTOCOL-48 `read OBJ`, `readText_reads`). It writes its answer with `Lang.Print.data` (`answerArg_reads`). It asks with `Broker.Wire.encodeAsk` and reads `decodeAnswer`. The method index of `answer` comes from the description's `method I answer (rec (text bytes))` line, never from the program.
+- **Sockets through `Host.Sock`** (HOST-52, co-signed HOST-14, landed first). The member wire is the client's: `u32le len ‖ Op.command ‖ commandLayout`, answered `u32le len ‖ Status ‖ commandReplyLayout`, every layout `Protocol.Table`'s through the one codec. Every socket failure comes back as a named value. A `timeout` that escapes `Host.readExact` is caught.
+- **No `IO.appPath`** (absent under bwrap). **argv is the plan, field for field.** grain-launch passes EVERY grain its launch frame's paths, joined exactly as the policy joins them (`launcher::plan_argv`):
+  - the program, then for each of read, write, exec, broker and member a count and its paths;
+  - hidden paths are not passed.
+  The resident accepts only its own plan. `Resident.place` reads label, grain and entry from the program path, computes Lean's `plan l g` for that resident grain, takes the three roots off the front, and requires argv to be EXACTLY that plan joined onto them (`accepted_is_plan`). Anything else ends `argvNotPlan` before a file is read: broker and member swapped, a dropped or extra path, another resident's socket, a count that is not `toString`'s spelling. The paths it then uses are the plan's, not argv's (equal by the theorem).
+- **The config is ONE Lang data value**, `pkg/resident.conf`, read by `readData` at the fixed `confTy = (rec (bell digest) (grant digest) (maxTokens nat) (model bytes) (system bytes))`. `grant` is the operator's grant to the resident's member that `invoke … --via` names. A file over 64 KiB, or missing, is `confMissing`. A value not of the type (or an id not 32 bytes) is `confMalformed`.
+- **Exactly one ask per ring.** Each ask costs the meter.
+  - Before a byte of the ask leaves, the resident keeps an intent for the ring, `(unanswered restart)`, in `vol/kept-<bell>`. Each keep is a fresh file, synced (`Host.File`), renamed, directory-synced, and read back equal, or the resident ends `volume`.
+  - A not-sent ask (connect or write failed) forgets the intent. Keybroker made no call.
+  - A spent ask replaces the intent with the answer text: the reply fitted to 1..2000 bytes at a UTF-8 boundary, or a named text (`(refused NAME)`, `(status N)`, `(unanswered WHY)`, `(empty reply)`). That replacement happens before `invoke`.
+  - A kept answer is delivered, never re-asked (`decide_kept`, `decide_ask`), across failed invokes and restarts. The bell taking it forgets it.
+- **A refusal is judged by the bell's STATE, not its name.** The member surface renders every method-check refusal as `refused program`: the bell's own reason (`unrung`, `notResident`) does not cross `nd --stdio` (found by the row, not by reading). So after any refusal the resident reads the bell again.
+  - If the same ring still waits, the bell refused THIS answer. The resident ends `answerRefused NAME` (`program`, `grantRight`, `noGrant`, …) with the text kept, and the controller's restarts re-deliver, are refused again up to `crashLoop`, and never ask again.
+  - Otherwise the ring was answered or replaced (the `unrung` race), and the kept answer is forgotten.
+- **The loop is total**: `lifetimeTicks` = 2^48 ticks of `tickMs` = 1 s, exhaustion ends `lifetime` (law 4). Exits are named, codes 10–16 (`exit_codes_nodup`); a grain's code is the controller's to count, never a verdict.
+
+**Theorems** (`Hosting/Proofs/Resident.lean`): `parse_argv`, `place_args`, `accepted_is_plan`; `decide_idle`, `decide_kept`, `decide_ask`; `utf8Prefix_size`, `fit_size`, `answerText_size`; `answerArg_some`, `answerArg_reads`; `keptText_some`, `kept_reads`; `exit_codes_nodup`. **VACUITY-READER-H10** (a second agent, two passes):
+- Pass 1 found that the theorems covered the pure functions while Run.lean could still ask twice. The holes: the keep result was checked after delivery; a crash between "ask sent" and "answer kept"; a non-durable keep; no read-back; an unproved "unprintable" branch. Each is fixed: the intent record, keep-before-deliver, Host.File sync + rename + dir sync + read-back, answerArg_some/keptText_some, and paths taken from the plan.
+- Pass 2: "no ask can be sent twice for one ring now". answerArg_reads and kept_reads moved WEAK → OK.
+- accepted_is_plan stays WEAK on its `plan` conjunct (a field of `Placed`, so free). Its content is `argv = p.args.argv` and `kind = resident`, and Run's paths come from `p.plan`.
+- decide_* still cover the pure function. The loop's order of effects is argued, not proved (critique below).
+- Pass 2's three small holes are fixed: a refusal whose state cannot be re-read stops after `unreadMax` = 8 in a row; the full stderr line is logged with the name; the identity limit is named in Run's header.
+
+**Row `cargo:launcher:resident_bell`**: the real host, the real `hosting-controller` under grain-launch's unit argv, keybroker on its unit argv, the FAKE provider, and the resident's member served by `nd --stdio`. GREEN in about 12 s (logs/hosting10-bell-nocapture.log).
+- B1: the founder rings `hi` and reads exactly `(record (answer "hello back") (open true) (pending false) (resident #M) (ring "hi") (ringer #OP))`.
+- B2: a second ring gets its own answer. The provider has received exactly 2 requests, and still 2 after five idle ticks. The key went upstream on both (control) and is in no file of the resident's volume.
+- unrung: the resident's member answers a bell with nothing pending; it is refused and the state does not move.
+- notResident: the operator answering is refused.
+- The resident exe on a bell whose resident is the operator: one ask, `answerRefused program`; restarted, it answers from the kept text; the provider's count rises by exactly one.
+- The resident exe on a bell whose grant lacks `invoke:0`: one ask, then `answerRefused grantRight`, the same way.
+- Off its fence: the true argv (read from grain-launch's report) passes `place` and reaches the config (`confMissing`, exit 11). Broker and member swapped, and another resident's broker socket, each end `argvNotPlan` (exit 10).
+- **Plant, run once by hand:** grain-launch's `plan_argv` with member before broker. The real launch's resident ends `resident: argvNotPlan not this resident's plan`, and the row is RED at "the resident learns the bell" (logs/hosting10-bell-m3.log).
+
+**Flag day.** grain-launch's children now receive argv: every grain gets its plan's paths. The probe ignores them. Nothing persisted, no frame and no codec changes. New: `lean_exe resident`, the row, `world/resident/Bell` used by HOSTING for the first time.
+
+**Critique.**
+- **"Exactly once" is proved for the pure decision, not for the loop.** The loop's ask arm is: keep the intent, ask, keep the answer, deliver. That sequence is argued from Run.lean and tested by the row (the provider's count), not proved. A theorem over `tick` with ask/keep/deliver as effect labels would close it.
+- **A ring is identified by (ringer, text).** Two identical rings in a row cannot be told apart. Kept answers are cleared on delivery, so this matters only when a delivery is unsettled and the same person rings the same text again: they get the earlier answer. A ring counter in the Bell's state (LANG's) would give a true identity.
+- **A misconfigured resident spends one ask before it learns.** The stdio surface has no "who am I" verb, so the resident cannot check `state.resident` against itself before asking. On `notResident` / `noGrant` it ends, and kept text stops every further ask. One ask per misconfiguration is the price, stated rather than hidden. A member-id verb (PROTOCOL's) would remove it.
+- **A refusal judged by state can misjudge one case.** An identical new ring (same ringer, same text) arriving between an `unrung` refusal and the re-read looks like the old ring still waiting, so the resident ends `answerRefused` wrongly. A restart then answers it from the kept text. No ask is repeated. The ring identity limit is the root cause, again.
+- **The member surface drops a method's refusal reason** (`refused program`). PROTOCOL-15 was told. When `refused program REASON` crosses it, `deliver` can name the refusal, and still judge by state.
+- **The shape is read once per process.** A bell whose package changes under a running resident is met by `answerRefused` or `bellShape`, not followed.
+- **The 2000-byte bound is a copy.** The description shows `answer`'s type (`bytes`), not its bound (`(bytes 1 2000)` is a check in the method). `textMax` is the one copy here, and a bell that bounds tighter refuses by name, which ends the resident without a second ask.
+- **It polls**, one `read` per second through the member's follower. THE BAR v2 (PERF-2) measures that; a follow-socket notification is the alternative and is not built.
+
+**Meta-critique.** The first draft exited on a refusal with nothing kept. Its exit was clean, its log line named the refusal, and the controller restarted it into a second, third and fourth ask for one ring. The row's provider count is what showed the shape was wrong, not any reading of the code. The second draft kept the answer after the ask, and the vacuity reader found the crash window between "ask sent" and "answer kept". The intent record closes that window at the cost of one extra durable write per ring. The lesson is the one HOST-14 gave about SIGPIPE: the property ("never twice") lives in the order of effects, which is exactly where neither a type nor the pure theorems look.
+
+## HOSTING-31 The resident answers the Bell as a queue: one read per tick, lowest first, the kept ring before any other (HOSTING-11, 2026-10-20; with LANG-58, one `lang!` commit)
+
+**What changed.** LANG-58 made the Bell a queue: state `(rec (open bool) (resident digest))` and three relations keyed `(notBefore nat, ringer digest)`: `rings` (1024), `pending` (64, the cursor; the text held here too) and `answers` (1024). The resident now works on that shape:
+- **The description** (`Shape.read`): `answer`'s index from `method I answer T` with `T = (rec (notBefore nat) (ringer digest) (text bytes))`, and `pending` from its `rel` line, read by `Lang.Read.rel` (LANG's reader of LANG's printer). The key must be `(notBefore nat) (ringer digest)` in that order and the value `(rec (text bytes))`; `Shape` carries both as proofs, so no theorem over a shape needs them as premises. The read's K is the declared limit (logged: `pending limit 64`), never a constant.
+- **The tick is ONE read**: `read BELL pending K` (PROTOCOL-51). The range read refuses past K and never truncates, so with K = the limit the lines are every pending ring (`rangeLines_reads`), in key order (`range_keys_ascend_read`), which is ring order. Each line is read by `Lang.Read.readData` at `Lang.rowTy pending` (`read_iff_row`: the ring is exactly that row datum).
+- **The decision** (`decideTick` over the whole list): a kept ring (its answer decided by an earlier ask) that is still pending is answered with its kept text WHEREVER it stands; otherwise the lowest pending ring (the head) is asked about; nothing pending is idle.
+- **The intent** is kept before the ask as before, now holding the ring's key and text: `(record (answer T) (notBefore N) (ringer #H) (text X))`.
+- **The answer**: `invoke BELL 0 (record (notBefore N) (ringer #H) (text T)) --via GRANT`. The resident names no pin; the client's derivePins is refused `rowUnpinned` with the key and re-plans with the row pin (the KERNEL-54 day). A refusal is judged by re-reading `pending`: still there = THIS answer was refused (`answerRefused NAME`, kept text stays); gone = answered (a delivery whose reply was lost), forget.
+- The `answered` log line names the key (`answered N HEX K bytes`), which is what the row's order check reads.
+
+**Why "the kept ring first" and not "always the lowest".** A ringer may backdate its notBefore by up to the kernel's window (1024 heights), so a ring can land BELOW the one the resident has already asked about. "Always the lowest" would then ask about the new ring and overwrite the kept answer, and the old ring would be asked about a second time: two asks for one ring. So the order the resident keeps is "lowest first, the ring already asked about before any other" (`decide_kept_first`, `decide_ask`'s second conjunct). The backdate bound is the slack in that order the resident trusts; it does not check it.
+
+**Theorems** (`Hosting/Proofs/Resident.lean`; changed statements, each with the disjunct check: no conclusion below has a disjunct):
+- `decide_idle k : decideTick [] k = .idle`.
+- `decide_kept_first (h : r ∈ p) : decideTick p (some (r, t)) = .answer r t`.
+- `decide_ask (h : decideTick p k = .ask r) : p.head? = some r ∧ ∀ q t, k = some (q, t) → q ∉ p` (the ask is the lowest, and never while a kept ring is pending; so never for the kept ring).
+- `decide_answer (h : decideTick p k = .answer r t) : k = some (r, t) ∧ r ∈ p` (an answer only ever re-delivers the kept text, for a pending ring; never out of order otherwise).
+- `ofRow_row`, `ofRow_eq`, `read_iff_row sh s r : Ring.read sh s = .ok r ↔ Read.readData (rowTy sh.pending) s = .ok r.row`.
+- `answerArg_reads` (premises: notBefore < natLimit, ringer and text within bounds) reads back to exactly `answerDatum r t`; `answerArg_some r t` unconditional; `kept_reads` (same bounds) to `(r, t)`; `keptText_some` unconditional.
+**VACUITY-READER-H10** (a03299b1d149d4bc2, one pass on this diff): no changed statement vacuous; every conjunct checked against the premises alone; no double ask found (backdated ring, lost reply both ways, restart, key reuse). `ofRow_row` is a definitional lemma; `decide_ask` proves the head, and head = lowest rests on Protocol's range theorems (docstring says so). Three holes, answered in the critique.
+Unchanged: `parse_argv`, `place_args`, `accepted_is_plan`, `fit_size`, `answerText_size`, `exit_codes_nodup`.
+
+**Row `cargo:launcher:resident_bell`** (re-cut; GREEN in 33 s on main ecb02bf + the KERNEL-54 day + LANG-58, logs/hosting11-bell2.log). On main without the day the answer is refused `rowUnpinned` (main's derivePins pins cells only): the row needs the day, which lands first.
+- Q1, the acceptance row the queue was bought for: the operator and C (a second member with its own `nd --stdio`, granted `invoke:4`) ring at one moment before the resident runs. Both land, at the same notBefore (one view), listed in key order; `rings` holds what `pending` holds.
+- Q2: the resident starts with both pending and answers them in key order (its log); both answers read back at their keys; `pending` is empty; the provider saw exactly one request per ring; no answer of the resident's was refused.
+- Q3: a second answer to an answered ring through the resident's own member: exactly `refused missingRow`; `answers` unchanged.
+- Q4: the operator (not the resident) answers a pending ring: `refused program`; the ring stays pending; the resident then answers it (3 rings, 3 asks).
+- Q5: the owner retires the lowest answered ring: admitted; its `answers` and `rings` rows are gone and nothing else.
+- Q6: the provider holds its reply (`upstream_held`, a switch in common/mod.rs); the resident is stopped after its ask was recorded and before any reply. Restarted, it answers that ring `(unanswered restart)` from the intent and asks no more.
+- HOSTING-27's refusals re-cut to the queue: `answerRefused program` (a bell whose resident is the operator) and `answerRefused grantRight` (no `invoke:0`), each after exactly one ask, the ring still pending; argv off its plan → `argvNotPlan` (CONTROL: the true argv reaches `confMissing`).
+- **Plants, run by hand, each red by name** (logs/hosting11-plants.out; hosting11-plants.sh + hosting11-mutate.py): answering an answered ring (decideTick without the pending check and the kept answer not forgotten on delivery) → Q2 "an answer was refused"; answering out of order (the highest pending) → Q2 "lowest first"; the intent dropped (no keep before the ask) → Q6 "the intent dropped: a restart asked again"; a stranger's answer (the Bell without its resident check and with guard `said` admitting any insert, core re-emitted by `ob`) → Q4 "a stranger's answer landed".
+
+**Flag day** (in the one `lang!` commit): the resident reads only the queue Bell. A resident against an old Bell ends `bellShape noPending`; an old kept file (`(record (ring …) (ringer …) (text …))`) does not read at the new `keptTy` and ends `volume kept unreadable`: delete it with the grain's volume (every Store re-geneses on the KERNEL-21 day anyway). No frame, codec or plan change.
+
+**Critique.**
+- **The double hold.** The ring's text is held in `pending` AND in `rings` (64 × 2000 B at most twice, both final). I asked for it (HOSTING-10's requirement: one read per tick); the cost is LANG's rows and hashes per ring, measured in LANG-18's steps (ring 77 / answer 77 required steps). The alternative, reading `rings 1 PREFIX` for each ring answered, costs a second read per answer and a second refusal path; I keep the double hold.
+- **The backdate bound is trusted, not checked.** The resident cannot see admission height, so a ringer can jump the queue by up to windowMax heights. It cannot make the resident ask twice (the kept ring goes first) and it cannot starve a ring forever (each backdate is bounded and each ringer holds one key per height), but "lowest first" is "lowest notBefore first", not "first admitted".
+- **A ringer re-using its own key.** After a ring is answered AND retired, the same ringer can ring again at the same notBefore within the window. If the old answer is still kept (only while a delivery is unsettled) and the text is equal, the new ring gets the old answer, never a second ask. With a different text it is a different ring and is asked about.
+- **Exactly once is still proved for the decision, not the loop.** The effect order (intent keep → ask → answer keep → deliver) is argued and planted (Q6 and its plant), not proved. HOSTING-27's critique item stands.
+- **The refusal names**: a method check still reads `refused program` (PROTOCOL-54 brings the hint); kernel refusals cross by name (`missingRow` measured).
+- **One refused ring stops the queue** (VACUITY-READER-H10's hole 2). `answerRefused` with the ring still pending ends the process; a restart re-delivers the kept ring first and ends again. Under the single-ring Bell that cost one ring; under the queue it costs all of them. Kept, for now, because every refusal known to reach it is bell-wide (not the bell's resident, no `invoke:0`, `answers` full until the owner retires): each refuses every ring alike, and stopping is the signal. A refusal that singled out one ring would need a refused marker to skip it; none exists in the Bell today. Named in Run's header.
+- **A late answer and a re-rung key** (the reader's hole 1, closed by an existing check, not new code). The Bell names a ring by key only and `answer` does not carry the ring's text. A delivery whose reply was lost could in principle land after the owner retired the ring and the ringer re-rang the same key with a new text. With another text it cannot: the row pin derivePins signs is the row leaf's digest (`Kernel.rowPin`: the leaf's bytes, its value and version inside, KERNEL-54), so the re-inserted row with another text makes the late call `stale`. With the same text the late answer lands on the new ring: the same-text key-reuse case above, an old answer for an identical question, never a second ask. And the resident re-delivers only a kept ring whose key AND text are still pending.
+- **K = the limit is complete** (the reader's hole 3): the kernel holds at most `limit` rows (`relationFull`), and a range read past K is refused, never truncated; a gap would be a failed read, logged and retried, never silent.
+- **Readall reads every line each tick** (≤ 64 lines). The resident needs every line for the kept-ring check; reading only the head would reopen the double ask.
+
+**Meta-critique.** The brief said "pick the lowest unanswered (the first line)". Taken literally, that rule asks twice the first time a ringer backdates below a ring whose answer is kept. The theorem the brief leaned on (ring order is key order) is true and irrelevant to that case: the danger is not mis-ordering but a NEW lowest ring arriving while an older one is mid-delivery. I found it by asking what happens to the kept record when the head changes, not by reading the ordering theorem. The planted "answering out of order" mutation catches a resident that ignores order, but no plant catches "lowest-first overwrote the kept ring"; that case is covered by `decide_ask`'s second conjunct alone, and the row never makes a backdated ring (the nd client always signs notBefore = its follower's height). A row with a backdated ring needs a client that signs below its view, which only the kernel sim has.
+
+## HOSTING-32 The residents' members leave the hosted tree: MEMBERS, STATE and the follower sockets under nd's own roots; the stdio child writes its workspace and never a Store (HOSTING-11, 2026-10-20; ROOT cv 01a1507c-7245; OPS-5 agreed to the Ops/Units.lean part)
+
+**The defect.** Under nd-members (CLIENT-29) a resident's follower Store was `MEMBERS/<n>/store`, inside the member workspace its `nd --stdio` child may write: the stdio child could corrupt its own follower's Store, and rewrite `MEMBERS/<n>/follow`, the member and grant its follower acts as. And MEMBERS sat under nd-hosted's 0700 tree while nd-members needs it nd-owned (OPS-5's f68f968 finding).
+
+**The layout** (`Hosting/Plan.lean`, "The deployed roots", absolute paths as components; `Ops.Units` renders the units and tmpfiles from these, never from literals):
+- `hostedRoot` = /srv/nd-hosted: Stores, packages, volumes (nd-hosted's). A World's layout under it is `worlds/<l>/store` alone: `membersDir` is deleted, a plan hides only the Store, `layoutHidden` = ["store"].
+- `membersRoot l` = /srv/nd-members/<l>/members: each `<id>` a member workspace (custody record), the stdio child's ONLY write.
+- `stateRoot l` = /srv/nd-members/<l>/follow: `<id>/store` (written only by the `host follow` child) and `<id>/follow` (the provisioning step's).
+- `followSockRoot` = /run/nd-member-follow: `<id>/follow.sock`, unchanged, label-free. `memberRoot` /run/nd-member (02710 nd:nd-hosted, the one group-traversable directory) and `brokerRoot` /run/nd-broker unchanged.
+- /srv/nd-members is nd 0700 (tmpfiles nd-members.conf); each /srv/nd-members/<l> and its two children are made at provisioning (RUNBOOK §2b, OPS-5): a tmpfiles line cannot be a per-label template.
+
+**nd-members** (`launcher/src/bin/nd-members.rs`): argv MEMBER MEMBERS STATE FOLLOW PIDS …; STATE must pass `check_private_dir` or it ends `stateRoot` (160, fatal, new in `MembersExit`); the four roots must be pairwise disjoint after canonicalizing or it ends `rootsOverlap` (161, fatal, new); the store and the follow file are read from STATE/<n>; the follower child is given `--hide MEMBERS`, the stdio child `--hide STATE`, the decider both. A sandbox `hidden` path is an exposure assertion, not a mask (every policy is deny-default): a launch whose policy would reach it is refused `exposed`. So the stdio child has two barriers to the follower Store: its write set (the workspace only) and the hide.
+
+**Theorems** (`Hosting/Proofs/Plan.lean`; changed or new; no conclusion has a disjunct):
+- `roots_disjoint l l'`: the hosted root, `membersRoot l` and `stateRoot l'` are pairwise not prefixes of one another, both ways, for every pair of labels.
+- `hosted_outside_members l x`: no path under the hosted root (every plan path, joined by grain-launch) reaches or contains a workspace root or a state root.
+- `sockets_fit n (hn : n.size ≤ 64)`: the broker, member and follower socket paths are ≤ 107 bytes (sun_path; HOST-52 `pathTooLong` at 108) for every name grain-launch accepts (`grain_name_ok`: ≤ 64), and no socket root holds a label, so it holds for every label; tooth `follow_sock_past_bound`: a 74-byte name puts the follower's socket at 108.
+- `labelOk_size`: a label is ≤ `componentMax` (64) bytes, already, by `clean`: ROOT's "bound LABEL's length" was in force; the label-bearing paths (`membersRoot`, `stateRoot`) are bounded with it and no socket carries one. I did not add a second bound.
+- `bytes_size`: `Path.bytes` (what `Path.text` renders) is `textBytes` long, so `sockets_fit` is about the rendered text.
+- Restated: `plan_roles` (hidden = [store]), `plan_not_exposed`, `plan_no_store` (was `plan_no_store_no_workspace`: the workspace half is now `hosted_outside_members`), `plan_components_clean`.
+
+**Rows.** `cargo:launcher:members` 8/8, new: `the_stdio_child_writes_its_workspace_and_no_follower_store`: the launcher's probe in nd's place (`probe --stdio WS …`, a new mode: targets and results in WS), under exactly the policy nd-members gives `nd --stdio`: a write into the workspace lands; a write into its follower Store, a read of its `follow` file and a listing of the Store are each denied; CONTROL: the same probe unconfined reaches all four. `isolation` 10/10 (its layout control now `LAYOUT_HIDDEN == ["store"]`), `grain`, `resident`, `resident_bell` green with the member workspaces outside the hosted tree.
+**Plants (by hand, logs/hosting11-h32-plant-*.log):** the stdio child given `--write STATE` and no hide → RED "the stdio child wrote its follower Store"; given `--write STATE` with the hide → its launch refused `exposed … reaches hidden …` (the probe never runs: RED at "the probe's four lines"); the follower given `--write MEMBERS` → refused `exposed`, RED at "a born resident's member socket". The hide alone removed stays green: with the write set narrow it asserts, it does not narrow (stated, not hidden).
+
+**Flag day.** Paths move: a deployed box's /srv/nd-hosted/worlds/<l>/members (workspaces with their stores and follow files) must be re-provisioned under /srv/nd-members/<l>/{members,follow} (RUNBOOK §2b, OPS-5). nd-members' argv gains STATE: the old unit's argv ends `usage` 150. A missing STATE ends `stateRoot` 160. grain-launch no longer requires worlds/<l>/members. Re-emitted: nd-members@.service, EXITS.md, tmpfiles/nd-members.conf (new), launcher generated LAYOUT_HIDDEN and members_exit. Nothing persisted changes format.
+
+**Critique.**
+- The roots are Lean data the units render, but grain-launch and nd-members take them from argv, so a unit edited by hand could pass nested roots. Both now check at start: grain-launch its three (`rootsOverlap`, unchanged), nd-members MEMBER, MEMBERS, STATE and FOLLOW after canonicalizing (`rootsOverlap` 161, new; members.rs: STATE inside MEMBERS ends by name). One comparison serves both (`launcher::pairwise_apart`). nd-members does not see the hosted root, so "MEMBERS outside /srv/nd-hosted" is the theorem's and the unit's, not a start check.
+- The follow sockets stay label-free in /run/nd-member-follow, shared by every World's nd-members on the box, as /run/nd-member and /run/nd-broker already are. Names are grain ids (digests of different Worlds' cells), so a collision is a hash collision; the per-World PID directories and the cleanup act only on names that World answered.
+- `--hide STATE` for the stdio child has no plant of its own that the write set does not also catch (above). Kept because it is the exposure check that refuses a widened policy before launch, the same role the plan's `hidden` plays for grains.
+- The tests still pass nd-members' argv by hand (members.rs); switching them to the rendered ExecStart is CLIENT-9's (ROOT's note).
+
+**Meta-critique.** ROOT's example put the follower sockets under /srv/nd-members/<L>/follow and then needed a label bound to fit sun_path. Splitting the follower's STATE (a Store and a file: any length) from its SOCKET (bounded) removes the constraint instead of budgeting it: the length theorem is about roots that hold no label. I checked whether a label bound was missing anyway and found it already in `clean` (64); the honest move was a theorem naming it, not a new constant.
+
+## HOSTING-33 `hosting-residents STORE`: nd-members' decider answers only `residents`, so its unit carries no stand-in clock or key slots (HOSTING-11, 2026-10-20; ROOT, from CLIENT-8's close-out)
+
+**What.** nd-members (HOSTING-30) asked `hosting-broker T0 SLOTS STORE OPERATOR` only for `residents`; the unit gave it `0 1` for a clock and a key-slot list no `residents` answer reads, and the operator id, which only allowances need. `hosting-residents STORE` (`Hosting/ResidentsCli.lean`, `lean_exe hosting-residents`, root `Hosting.ResidentsMain`) follows the World and answers `residents` frames, nothing else.
+
+**No twin.** It is hosting-broker's follow with the rest removed: the same `BrokerCli.Follow`, `catchUp`, `Follow.absorbTurns`, `readFrame`, `emit` and `Exit` (so the `DeciderExit` table, `Proofs.Residents.absorbTurns_tracks`, `residents_mem` and `answer_encodes` are about it too). It holds no `Broker` and no operator: with an empty operator `Allow.allowanceOf` matches nothing, so `held` stays empty. A `decide` or `reply` frame ends it `badRequest`; any argv but one STORE, `usage`.
+
+**The unit.** `membersUnit.decider` = /opt/nd/bin/hosting-residents, `deciderArgs` = [/srv/nd/store]; `membersUnit_decider_store` (Ops/Proofs/Units.lean) `: membersUnit.deciderArgs = [.lit membersUnit.store]` (by `rfl`: putting a literal back fails the build: the plant ROOT asked for, as a theorem). The unit comment about `0 1` goes; ND_OPERATOR is no longer in nd-members' argv (ND_PEER still is).
+
+**Rows.** `cargo:launcher:members` 9/9 now drives `hosting-residents` (its row's exes: hosting-residents,host); new `the_residents_decider_answers_residents_and_refuses_a_decide`: the World's two resident grains answered; a `decide` frame ends it `badRequest` (72); no argv and `0 1` end it `usage` (70).
+
+**Flag day.** nd-members@.service re-emitted (decider and its argv). keybroker still runs hosting-broker (it decides asks). Nothing persisted.
+
+**Critique.** The exit names are the decider table's, so a parent-closed pipe is still named `keybrokerGone` in hosting-residents' stderr although its parent is nd-members; renaming it `parentGone` would touch keybroker's table and units for a word. Left, stated. And `Follow` still carries `pkgId`/`operator`/`held` fields this decider never fills: the price of sharing the follow (and its theorems) instead of a second struct.
+
+**Meta-critique.** The first instinct was a `Grains` struct of its own with a grains-only absorb: three lines shorter and a twin of `Follow.absorbTurns`'s grains half, outside every theorem about it. Sharing the struct costs two unused fields and keeps the one theorem true of both deciders.
+
+## HOSTING-34 The resident on LANG-59's Bell: `answer` re-sends the ring's text, exactly-once is the `rings` guard (HOSTING-11, 2026-10-20; one `lang!` with LANG-19)
+
+**What changed for the resident.** LANG-59 deletes `answers`: a ring's answer lives in `rings[k]` (`(answer (option bytes)) (text bytes)`), and `answer` upserts it under a guard that refuses unless the ring is unanswered and the re-sent text is the ring's own. The resident:
+- `answerArgTy` = `(rec (notBefore nat) (ringText bytes) (ringer digest) (text bytes))` (labels ascending: "ringText" < "ringer"); `answerDatum r t` re-sends `r.text`, the text the pending row held when the resident read it (the same read, no new one). `Shape.read` still checks the described type against it, so a Bell whose `answer` differs ends `bellShape answerType`.
+- The tick, the decision, the intent record and `deliver` are unchanged: one read of `pending`, the kept ring first, a refusal judged by re-reading `pending`. The client pins both rows (`derivePins` twice).
+- `answerArg_reads` gains the premise `r.text.size ≤ bytesMax` (true of every text the reader produced) and reads back the four fields; `answerArg_some` stays unconditional. No other statement changed; no conclusion has a disjunct.
+
+**Row** `cargo:launcher:resident_bell` GREEN on main e1e8084 + LANG-19's logs/lang19-LANG-59.patch (154b6963) + this half (logs/hosting11-h34-bell2/3.log): Q1 both founders' rings land over one view; Q2 lowest first, answers read from `rings` as `(answer (some "hello back"))`; Q3 a second answer through the resident's member is `refused lawDenied` with the hint `rung: answered` (the guard reads the row as it is, before the kernel would say anything); Q4 the owner's answer `refused program`; Q5 retire admitted (its `rings` row gone); Q6 the intent survives a kill mid-ask. Plants re-run by hand (logs/hosting11-h34-plants.out): answering an answered ring, answering out of order, the intent dropped: each RED by name.
+
+**What this closes.** VACUITY-READER-H10's note on HOSTING-31 (a late answer landing on a re-rung key) was answered there by the row pin; it is now a CHECK: the answer names the ring's text and the guard compares (`rung: text`).
+
+**Critique.** The resident still trusts the pending row's text to be the ring's (both written by `ring` in one edit set). If they ever disagreed, every answer to that ring would be `rung: text` and the queue would stop at it (HOSTING-31's head-of-line note): a loud failure, not a wrong answer.
+
+## HOSTING-35 The resident rows run on nd-members: the member socket is served as deployed, and the birth race is planted at it (HOSTING-12, 2026-10-20; HOSTING-30's last row item)
+
+**What changed.** `cargo:launcher:resident_bell` and `cargo:launcher:resident` no longer serve the resident's member socket from the test (World::member's per-test `nd-supervise … nd --stdio`). The operator's provisioning step runs (`World::provision`: `nd --init-hosted`, `init`, `enroll`, `grant world … observe`, the follower Store and `STATE/<name>/follow`). Then nd-members runs on the argv its emitted unit renders (`deploy/units/linux/nd-members@.service`, `members_rendered`) and binds `MEMBER/<dirOf>/nd.sock` together with the member's own follower, from the World's `residents` answer. This is the deployed topology from the birth to the socket. Founder C in resident_bell keeps World::member: it is a member of its own, not a resident. In resident.rs, the other resident's member socket and the race grain's socket are nd-members' too (the hand-bound listeners are gone).
+- **One harness.** `Roots`, `World::enrol`/`World::provision` and `Members` move from members.rs into tests/common (members.rs keeps its plants' hand-built argv). That argv now hides the operator's holding as the unit does, and an assertion ties it word for word to the rendered unit.
+- **One renderer.** `unit_argv` replaces the three ExecStart readers (keybroker, grain-launch, nd-members). A word the unit says twice takes one value; the drift check still reaches the real parser because the argv passed is the unit's own word sequence.
+- **grain-launch names what a failed launch missed.** `failed <name> <what>`: the confine error's path (the directory of a missing socket), the mkdir error, the spawn error. Before this, `failed pathMissing` could not tell the broker socket from the member socket. The report frame is unchanged.
+
+**THE RACE at nd-members (HOSTING-26's, planted).** nd-members is down while a resident grain is born, provisioned and started. Its package, volume and broker socket exist. MEASURED: every launch is refused `pathMissing confine: MEMBER/<dirOf>: ENOENT`, exactly `restartsMax` = 5 times within milliseconds (the controller relaunches on each `failed` report), then `refused crashLoop`, and nothing is started. nd-members' next life binds the socket (a `sync` through it answers 0). An unrelated Turn relaunches nothing. The owner's stop and start (in two controller rounds; the test retries a pair the controller read in one round) launch it, and no launch fails after the socket exists. Option (B) stays unbuilt: no deployment has hit the race. The measured price is what (B) would buy: today a birth nd-members has not bound costs the owner a stop and start.
+
+**Rows.** resident_bell 1/1, resident 2/2, members 9/9, isolation 10/10, grain 1/1 (logs/hosting12-t-{bell4,res2,mem1,iso1,grain1}.log); clippy -D warnings, fmt clean.
+
+**Vacuity read (VACUITY-READER-H12, a second agent): first pass NOT ACCEPTED, five holes, all fixed.**
+1. W-key's control had a disjunct provable from setup (`keys exists || the workspace is non-empty`: `enrol` always writes there). It is now `keys` is a file.
+2. "pathMissing for the member socket alone" was not checked: the line named no path. grain-launch now names it, and the row matches the member directory exactly 5 times among exactly 5 failures, with the broker socket still present (control).
+3. "the owner's stop and start launch it" was not asserted (a relaunch by itself would have passed). Now an unrelated Turn relaunches nothing (no `started`, no new `crashLoop`), and `tries ≥ 1`.
+4. nd-members' next life was checked by `exists()` alone. Now a `sync` through the socket answers 0.
+5. `member-other` ENOENT inside the sandbox had no host control once the test-held listener was gone. Now a host connect to that socket succeeds beside the verdict.
+Accepted as stated (no fix): the set semantics of `unit_argv` (stricter than the old counted keybroker check).
+
+**Residuals, named.** `/home` in the unit is mapped to the operator's holding (this box's scratch lives under /home), so the whole-/home hide is exercised only on a deployed box. Only ExecStart is rendered (User, UMask, RestrictAddressFamilies, Restart* unexercised). The race is planted as "nd-members down", not as a slow `residents` poll. nd-members' rebind of a resident's stale socket after a SIGKILL is not asserted (the row's first `sync` after the restart goes through the late resident's socket, because a stale one is unlinked and re-bound with a window). One uid, 0600 sockets.
+
+**Critique.** The stop/start retry in the race plant is a timing loop over an unobservable controller round. It is bounded and named, and the assertion is on the outcome, not the timing, but a deterministic form needs the controller to report "forgotten". The crash-loop window never matters for a grain whose only reports are its own failures: the controller's `now` is the latest report time, so with no report after the fifth failure the window never passes in its view. Recovery is by stop and start, which is what the Loop doc says. Measured, not a defect, and stated here so nobody relies on the window.
+
+**Meta-critique.** I first planted the race and stopped at "pathMissing, then crashLoop", which was HOSTING-26's sentence. The vacuity reader found that two of its three claims were differential evidence (before and after) rather than assertions, and that the line it matched could not name which socket was missing. The fix that mattered was in grain-launch, not the test: a refusal line that names its object. The row's own success had hidden that.
+
+## HOSTING-36 The resident's tick is a tree of effects, and their order is a theorem over every path (HOSTING-12, 2026-10-20; HOSTING-27/31 critique item)
+
+**What changed.** `Hosting/Resident/Run.lean`: the tick is `tickP w m : Prog Tick`, a tree whose every node is ONE effect (a member command, a keep, a forget, an ask, a stderr line), and whose continuation is what the tick does with that effect's result. `tick w m := (tickP w m).run w`, and `Prog.run` performs one node at a time. A command's bytes are a function of its name (`Cmd.argv`: describe, read sh, invoke sh r t, reread sh), so a name in a trace is the command sent. deliverP, answeredP, actOn, readP and tickP replace the IO `deliver` and `tick`. The IO behaviour is unchanged effect for effect and line for line on stderr (the reader compared arm by arm; resident_bell 1/1 on the new exe, logs/hosting12-t-bell6.log).
+
+**Theorems** (`Hosting/Proofs/ResidentRun.lean`, over `Runs`: every path, every result of every effect; the trace vocabulary, `Ev`, `core`, `readRings`, `askText`, `keptAfter` and the counters, is the def-module `Hosting/Resident/Trace.lean`, closure C3).
+- `tick_order`: the effects (stderr dropped) are `TickCore`. A describe comes only without a shape, and the read is at the shape it read as. Then the read. Then `decideTick`'s act on the rings THAT read returned:
+  - idle: a forget iff an answer was kept;
+  - answer: `deliver`;
+  - ask r: keep `(r, intentText)`; only if that succeeded, the ask `askOf conf r`; then by how it ended: never sent → forget; answered a → keep `answerText a`; lost → keep `(unanswered WHY)`; only if that keep succeeded, `deliver`.
+  - `deliver` is one invoke for `(r, t)`, then by its reply: taken → forget; refused → the re-read, and a forget only when it no longer lists r.
+- `tick_counts`: at most one describe (only without a shape); at most one ask, for a ring `decideTick` asked from the read's rings, right after the intent keep (`ask_is_head`: the head, so the lowest pending); at most one invoke, either of the kept answer the decision named (no ask on that path), or of `askText` of this tick's ask, right after that text was kept (the intent replaced).
+- `kept_follows`: on every path that goes on, the next tick's kept answer is what the successful keeps and forgets leave, in order: an equation, so the memory never holds a text the volume did not report kept.
+- Teeth: `order_refuses_ask_before_keep`, `_ask_after_failed_keep`, `_intent_invoke`, `_second_ask`, `_invoke_other`, `_invoke_unkept`, `_forget_while_pending`, `_two_describes`, `_describe_with_shape`. Reach: `ask_path_exists` (for every ring `decideTick` asks about and every broker answer, a path keeps, asks, keeps and invokes).
+- **Plant (by hand, logs/hosting12-plant.out):** the intent keep removed from `actOn`. The proof goes RED (`Alternative ask has not been provided` in actOn_core) and the row goes RED at Q6 "the intent dropped: a restart asked again". Restored: green.
+
+**What is code, not theorem (the trust boundary, named in the module header).** `Prog.run` performs each node's one effect and continues on its result (six lines). `keep` reports true only when the volume reads back exactly what it wrote (its read-back; `kept_reads` for the text). `run` seeds the first tick's kept answer from the volume, and the induction over ticks is the `for` loop.
+
+**Vacuity read (VACUITY-READER-H12).**
+- First pass: NOT ACCEPTED, six holes: the re-read argv was free and labels decided "one invoke"; the act was not tied to `decideTick`; the invoked text was not tied to the ask's end; nothing related the next tick's memory to the trace; two teeth missing; the trust note was incomplete.
+- Second pass: ACCEPT, with one residual: deliver's forget was not tied to the replies. I tightened that (`DeliverAfter` plus the tooth) rather than stating it.
+- Disjunct check: no arm admits every list; none is provable from the premises; ActCore's idle arms are disjoint on k and each pins the list.
+
+**Critique.** The tree is written in continuation style, not do-notation, so a reader of Run.lean sees nodes rather than IO, and that costs some readability. It was chosen because the proofs invert each node by `cases`. A `Prog` monad with bind would read like the old code, but every proof would go through bind lemmas. The trust boundary moved and did not vanish: `Prog.run` is six lines nobody proves. A wrong `run` (say, performing a node twice) would leave every theorem true.
+
+**Meta-critique.** My first statement was a grammar over effect LABELS that dropped the replies, because that made the proofs short. It "proved" the brief's order while admitting an ask about any ring, a forget whatever was decided, and a second invoke under another label. Recording the replies is what made the grammar refer to the decision at all. The short proof was short because it said less.
+
+## HOSTING-37 The three gaps HOSTING-36 named, closed as theorems: the interpreter performs exactly a path; keep and forget are durable and atomic under the volume's stated contract; the restart's seed is what the volume holds (HOSTING-12, 2026-10-20; ROOT)
+
+**What changed.**
+- **The interpreter.** `Prog.run` is replaced by `Prog.interp` over a `Handler M` (five calls), and `tick := (tickP w m).interp (ioHandler w)` (`tick_def`, rfl).
+  - `interp_runs`, by induction over the tree: at the recording handler (`Trace.recorder`: each call takes its result from an oracle and appends itself), `interp` appends exactly one event per node it passes, in tree order, with the result it continued on, and ends with that path's end. So the trace is a `Runs` path for EVERY oracle.
+  - `interp_order`: the recorded trace is `TickCore`.
+- **The volume.** keep and forget are `performAll` over explicit step lists (`keepOps`: removeIfExists tmp, create tmp, write, sync, rename tmp over kept, syncDir; `forgetOps`: removeIfExists kept, syncDir), with `perform` mapping each step to its one POSIX call. `Where.keptTmp` is derived (`kept ++ ".tmp"`), so `keptTmp_ne` is a theorem, not a premise.
+  - The contract is a model (`Resident/Volume.lean`), and a crash is a RELATION (`Crash`):
+    - each entry comes back as ANY value it held since the last directory sync, independently of the others (a rename's two halves too);
+    - a synced file comes back with its contents, an unsynced one with ANY contents or unreadable.
+    - Nothing else is assumed. `Vol.read` distinguishes absent from present, so a torn file is present, as `run` sees it.
+  - Theorems (`Proofs/ResidentVolume.lean`), each over EVERY crash outcome:
+    - `keep_durable`: after every step, exactly the text.
+    - `keep_atomic`: after ANY prefix, the old text or the new; never torn, never another.
+    - `keep_live_atomic`: the same without a crash.
+    - `forget_durable` and `forget_atomic`: the old text, or nothing.
+  - **Premises as invariants.** `Fresh` and `Live` hold of the empty volume and are kept by every step and every crash. `Stable` holds after every crash, every completed keep and every completed forget.
+- **The seed.** `seedOf` reads `Vol.read`'s three cases exactly as `run` does.
+  - `seed_after_keep`: every crash after a completed keep whose read-back reported (r, t) restarts with (r, t).
+  - `seed_during_keep`: a crash at any step restarts from the old seed or that answer.
+  - `seed_after_forget`: from nothing.
+  - With `kept_follows` (per tick), the memory and the volume agree across ticks and across a crash.
+
+**Teeth.**
+- `interpTwice_no_path`: an interpreter that performs a node's call twice (`Prog.interpTwice`, kept only as the tooth's subject) records a trace that is no path.
+- `keep_without_sync_tears`: with no file fsync, SOME crash outcome holds an unreadable kept file.
+- `keep_without_syncDir_reverts`: with no directory sync, some outcome reverts to the old text.
+- `in_place_loses_both`: writing the kept name in place, some outcome holds neither text.
+
+**Plants (by hand, logs/hosting12-plant2.out).**
+- (A) `.sync` removed from keepOps: ResidentVolume is RED.
+- (B) `interp` performs a cmd node's call twice: ResidentRun is RED (interp_runs).
+- Restored: green. resident_bell 1/1 on the new exe (logs/hosting12-t-bell8.log).
+
+**Behaviour change.** forget syncs the directory even when the kept file was absent (before, it synced only after an unlink). So forget can now fail, and the resident stop `volume`, on a directory sync of an absent file. It also completes an earlier forget whose unlink happened but whose directory sync failed.
+
+**What stays trusted, named.**
+- `ioHandler`'s five fields ARE the five calls, and `perform`'s six arms ARE the six POSIX calls (definitions).
+- `interp_runs` is proved at one handler. That IO's bind sequences effects in order is the runtime's.
+- That the volume's filesystem meets `Vol.apply` is the operator's: a local POSIX filesystem; on Darwin, Host.File's sync is F_FULLFSYNC.
+- `keep` reporting true happens only after `performAll` returned and the read-back matched (code).
+- **Named gap:** a keep that FAILS part way without a crash (the rename done, the directory sync thrown) leaves the kept entry unstable. The resident stops `volume`, and its restart seeds the live text. A crash during the NEXT keep may then bring back the text from before the failed keep: an older answer re-delivered, a wasted answer, never a second ask. Likewise a forget that fails part way (the unlink done, the directory sync thrown): the restart seeds none, and a crash during the next keep may bring the forgotten text back, which is re-delivered, refused as no longer pending, and forgotten (a wasted invoke). `keep_atomic`'s `Stable` premise excludes both starts.
+- **Assumed of the deployment:** the volume's history is the empty volume followed only by keepOps, forgetOps and crashes; nothing but this resident writes `kept-*` in its volume (grain-launch gives the grain its own volume).
+
+**Vacuity read (VACUITY-READER-H12).** First pass NOT ACCEPTED, six holes:
+1. the model was not conservative (a deterministic crash; one lemma held only by that);
+2. nothing established Stable/Fresh (Fresh was not even preserved by syncDir);
+3. the seed's model merged torn and absent, unlike `run`;
+4. the double-call tooth tested Runs, not the interpreter;
+5. keep's true was not listed as code;
+6. the crash-free restart was not covered.
+All six are fixed as above. Second pass: ACCEPT, with three small items, all taken: `keep_without_syncDir_reverts` regained its premise that the old text differs, the failed-forget gap is named, and the single-writer assumption is stated. Disjunct check: no disjunct provable from the premises; in `keep_atomic` the old arm needs the prefix before the directory sync or an outcome keeping the old entry, and the new arm needs the rename.
+
+**Critique.** The model is mine, written for this proof. A model that is too strong makes every theorem vacuous about the real disk, and my first model was: its crash was a function, so one lemma ("exactly the old text before the directory sync") held only because of that. The reader caught it. The model is now a relation over every outcome I know a POSIX filesystem may produce. Teeth A and the tooth theorems show that dropping either sync breaks the statements, so neither sync is decorative. Not modelled: concurrent writers (only this process writes the volume) and a full disk (a failed write is an IO error, so keep reports false).
+
+**Meta-critique.** The pull was to call the interpreter "six lines by inspection" a second time. Writing `interp` over a handler cost one structure and made the six lines a theorem at the one handler that matters for the order proofs. The part left trusted is now genuinely the runtime's.
+
+## HOSTING-39 A keep or forget that failed part way is resumed at the restart: the start re-runs a whole keep (or forget) of what the volume holds before its first tick, so nothing a new life acts on can be undone by a crash (HOSTING-13, 2026-10-21; ROOT's item, HOSTING-37's named gap)
+
+**The gap (HOSTING-37's).** A keep that fails part way without a crash (the rename done, the directory sync thrown) ends the resident `volume`. Its restart seeds from the live text, which the volume has not made durable: the kept entry still remembers the text before the failed keep. A crash during the next keep can then bring that older text back, and it is re-delivered: a wasted answer, never a second ask. A forget that fails after its unlink can likewise bring back the forgotten text (a wasted invoke).
+
+**What changed.**
+- `Resident.resumeOps w held`: a whole `keepOps w s` when the start read the text `s`, `forgetOps w` when the kept name is absent, no steps when it is unreadable (the start already ends `volume` there, `seedOf`).
+- `Resident.resume`: performs the steps, reads the kept name back, and returns `true` only when it reads as `held` again. Only then does it say `resident: resumed the kept answer` (or `resumed nothing kept`).
+- `run`: seeds from `held`, performs `resume w held`, ends `volume "resume"` when that fails, and only then starts ticking. Every start costs one keep (a file write, two fsyncs, a rename) or one directory sync.
+
+**Theorems (`Proofs/ResidentVolume.lean`, "The resume").**
+- `resume_read`: without a crash, the kept name reads as it did.
+- `resume_durable`: for EVERY volume whose kept name is readable, every crash outcome after the resume reads exactly what the start read. There is no other premise: `keep_durable` and `forget_durable` hold of every volume.
+- `stable_after_resume`: `Stable` again at the kept name.
+- `next_keep_after_resume`, `next_forget_after_resume`: a crash at EVERY prefix of the next keep (forget) comes back with what the start read, or the new text (nothing). Never the text from before the failed keep.
+- `keep_resumed`: a keep of `s` stopped at ANY prefix without a crash, then the resume. Every crash outcome reads what the start read, and that is the text before the keep or `s`: as after one completed keep, or as before it began. `forget_resumed`: likewise, with the old text or nothing.
+- `live_applyAll`: the `Live` invariant over a step list.
+- **Every life stays readable.** `KeptSynced`: every inode the kept name has named since the last directory sync is synced and readable. It holds of the empty volume (`keptSynced_empty`) and is kept by every prefix of a keep, a forget and a resume, and by every crash (`keptSynced_keep`, `_forget`, `_resume`, `_crash`). So every reachable volume meets it, and `readable_of_keptSynced` discharges the readability premise above.
+- `resume_atomic`: a crash at ANY prefix of the resume comes back readable, `KeptSynced`, `Fresh` and `Live` again. So a resume that fails or crashes part way, any number of lives in a row, never wedges a later start at `kept unreadable`. And no life acts before its resume has read back.
+
+**Teeth.**
+- `unresumed_keep_reverts`: with no resume, a keep that failed after its rename leaves the start reading the new text, and some crash outcome reads another text (the old one).
+- `unresumed_forget_reverts`: with no resume, a forget that failed after its unlink leaves the start reading nothing, and some crash outcome brings the forgotten text back.
+
+**Plants (by hand).**
+- (A) `resumeOps` gives no steps for a text: ResidentVolume is RED at `resume_read` and `resume_durable` (logs/hosting13-plantA.log).
+- (B) the resume call is removed from `run`: resident_bell is RED, "Q6: the restart did not resume its kept intent" (logs/hosting13-t-plantB2.log).
+- A first plant B stayed GREEN: the line had been put on the `serving bell` line, which prints whether or not the resume ran. The line now comes from `resume` itself, after its read-back.
+- Restored: green, resident_bell 1/1 (logs/hosting13-t-bell2.log).
+
+**Critique.**
+- *The brief said "the resident's next tick re-runs an incomplete keep".* A failed keep or forget already ends the process (`volume`), so the "next tick" is the restart's first. The restart does not know which keep failed, but it does not need to: re-keeping what the volume holds covers a failed keep, a failed forget, and any start, with one mechanism in one place.
+- *Cheaper: resume with only `syncDir`.* Under the contract the live kept entry always names a synced file, because keepOps renames only after its fsync. So a directory sync alone would re-establish `Stable` on every reachable volume. REFUSED: its theorem would need a reachable-state invariant ("the live kept inode is synced") as a premise. The whole keep's durability needs no premise at all. The price of the stronger theorem is one file write and one fsync per start.
+- *Why not retry in-process instead of ending `volume`?* That would add a node to the tick's Prog and re-open HOSTING-36's order theorems (keep before ask, answer before invoke) for a failure that is rare and already handled by the supervisor's restart.
+
+**Meta-critique.**
+- The behavioural check sees that the resume RAN and read back. Q6 counts `resumed the kept answer` at the restart holding the intent, and `resumed nothing kept` at the start before it.
+- It cannot tell a real resume from one with no steps: with no steps the read-back still matches. That is plant A, which is RED in Lean, where `resume_durable` pins the steps.
+- It never exercises a thrown directory sync: there is no fault hook.
+- It cannot see the new inode: the restart delivers and forgets the kept file within its first tick.
+- It cannot see durability: an unsynced file and a synced one read back alike. Durability is the theorem's.
+- Still code, not theorem (named in the module header):
+  - `run` performs `resumeOps w held` with the very `held` it seeds from, before the first tick.
+  - `held` is `Vol.read` at the kept name.
+  - The text read is written back byte for byte.
+- The resume can itself fail part way. That is `resume_atomic`'s case: the process ends before acting, a crash returns a readable value, and the next start resumes again.
+
+**Vacuity reads.**
+- Reader pass 1: ACCEPT, with 4 holes, all addressed.
+  1. A resume failing or crashing part way across lives was covered by nothing. Fixed by `KeptSynced` and `resume_atomic`.
+  2. Doc texts credited the wrong theorems and over-claimed. Corrected.
+  3. The code assumptions of the resume were unnamed. Named in the header.
+  4. The Q6 plant sees the wiring only. The "nothing kept" branch is now counted; the inode and fault-hook limits are named above.
+- Pass 2: ACCEPT. One header overclaim was narrowed: `resume_atomic` excludes an unreadable FILE, not a text `keptRead` refuses (every kept text is `keptText`'s or passed `seedOf`). Optional: `resume_atomic` says "readable", not which text. Safety is `resume_durable`'s, since no life acts before its resume reads back.
+
+**Still assumed, of the deployment.** Only this resident writes `kept-*` in its volume (HOSTING-37's single-writer assumption). The filesystem meets the contract.
+
+**Shape.** Nothing on a wire or in a persisted format changes; the kept file's name and text are as before. A new stderr line: `resident: resumed the kept answer` / `resumed nothing kept`.
+
+## HOSTING-38 A crash-loop window passes without a Turn: grain-launch reports its clock (`tick`, every `tickMs`), and the controller relaunches a crash-looped grain in the round whose clock passes its window (HOSTING-13, 2026-10-21; ROOT ruled (B) with conditions)
+
+**The defect (a liveness defect in the controller's own terms).**
+- The controller's clock is the latest `atMs` the launcher reported, and a round runs only on a Turn or a report.
+- A grain refused `crashLoop` whose only reports were its own failures gets no further report. So its window never passes, and nothing decides it again: recovery was the owner's stop and start.
+- HOSTING-26's race reaches it: with nd-members down at a birth there are 5 × `pathMissing` in milliseconds, then `crashLoop`, for ever. Planted in HOSTING-35's resident_bell.
+
+**The choice.**
+- (A) the World's height: REFUSED. Height counts admitted Turns (`Step.dheight`), so a window in Turns is a function of strangers' traffic. On a quiet World (a fresh devnet, the race's own case) it never passes. On a busy one it passes in milliseconds and stops throttling. It would also mix two units, since exit times are in ms.
+- (B) grain-launch's idle loop writes `tick atMs` (report case 4) every `tickMs` (1000, emitted as `TICK_MS`) of its own `Instant` clock: CHOSEN. That is the same clock every `atMs` already comes from (advisory, HOSTING-7), so the controller trusts nothing new. A tick is a report, so the decider stays a function of the World and the reports: neither the controller nor the plan reads a clock.
+
+**What changed.**
+- `Hosting/Wire.lean`:
+  - `Report.tick (atMs)` and `reportCases` gain ("tick", 4, [atMs]).
+  - `tickMs` is added.
+  - `launcher/src/generated.rs` is re-emitted with the case, `TICK_MS`, and `RESTART_WINDOW_MS` (the bell test waits out the window by it, never by a literal).
+- `Hosting/Loop.lean`:
+  - `Report.grain?` (a tick names no grain); `absorbOne` leaves a tick out.
+  - `State` gains `tickAt`. `clockOne`/`State.clock`: a tick moves the clock only when at least `tickMs` past the last accepted tick; a faster tick is ignored by that rule.
+  - `lifted`: the launched grains with no child, crash-looping at the previous clock and not at this round's, and none when the clock did not move.
+  - `roundIds` = touched ++ returning ++ lifted.
+- grain-launch: `tick` every `TICK_MS` in its serve loop.
+- hosting-drive: a tick is read and not printed; `reportsMax` 2^20.
+- hosting-sim: G18.
+
+**Theorems (`Proofs/Loop.lean`).**
+- `step_lifts`: a grain this process launched, whose cell qualifies and plans, with no child, crash-looping at the previous clock and not at this round's, is launched in that round, whatever was touched or reported. `tick_lifts` is its plain case: ONE tick, nothing touched, no exit report.
+- `lifts_eventually`: any accepted tick that is at least `restartWindowMs` past each kept exit relaunches the grain. So "the window passes" is a theorem; only "the launcher keeps ticking" is assumed.
+- `step_quiet`: a round of ticks only, nothing touched, no grain lifted: no action. `step_ticks_quiet`: a flood of ticks within `tickMs` of the last accepted one emits nothing.
+- `tick_ignored`, `tick_accepted`, `ticks_within`: any number of ticks within `tickMs` of the last accepted one is no clock movement at all.
+- `lifted_length`: at most one lifted id per launched grain; a flood of reports cannot make a round decide more than the memory holds.
+- `clock_mono`; `crashLooping_antitone`: once the window passed it stays passed until new exits, so "lifted in this round" is exact.
+- Re-proved over `Report.grain?` and `State.clock`: `absorb_stranger`, `returning_complete`, `step_decides`, `step_launch_complete`, `step_one_per_grain`. `Proofs/Wire`: `reportOf_wire`, `reportWire_some` gain the case.
+
+**Teeth (plants by hand, each RED by name).**
+- `lifted` dropped from `roundIds`: `step_lifts` fails, and resident_bell's race never starts by itself.
+- The "crash-looping at the previous clock" conjunct dropped: `lifted_nil`/`step_quiet` fail (every not-running known grain would be re-decided every tick).
+- The `tickMs` rule dropped from `clockOne`: `tick_ignored` fails, and the sim's G18 "a tick within tickMs is ignored" goes RED.
+- Determinism (ROOT's condition) is a fact of `step`'s type: it is pure, with no IO, so a replay on the same World and the same reports (ticks included) is the same by construction. A replay line was drafted in G18 and DELETED, because it could never go red (the reader's hole 1). No check is attached to determinism, because none could fail.
+
+**The plant (resident_bell's race, re-cut).**
+- nd-members comes back, and an unrelated Turn launches nothing (control).
+- With NO owner act, the grain starts by itself: not before half the window after its crash loop, and within the window plus 60 s. Measured: 59 s and 60 s.
+- The control's premise is asserted: the window cannot have passed yet when the unrelated Turn runs.
+
+**Critique.**
+- *A tick every second forever is idle traffic.* It is one frame per second and one controller round (a tail read and an O(launched) filter). The cheaper alternative, the controller asking for a wake-up at a time, would add an action kind and make the launcher hold timers for the decider. Refused: the launcher decides nothing.
+- *ROOT's rate rule ("a fast ticker cannot shorten a window").* The window is measured in the reported milliseconds, so tick frequency cannot shorten it at all. Only a false `atMs` can, and that is the launcher's advisory trust, unchanged since HOSTING-7. So the rule bounds WORK, not the window: an ignored tick moves no clock, and `lifted` is empty without computing anything. Implemented as ruled, and stated as what it buys.
+- *pathMissing option (B) is now moot.* The race costs one window (≤ 60 s), not an owner's act. It returns only if a deployment finds 60 s at a birth too long.
+
+**Meta-critique.**
+- `lifts_eventually` makes the window's passing a theorem. That the launcher keeps ticking, and that no accepted tick is ignored for good, is the pairing, not a theorem: grain-launch spaces its ticks by the same emitted `TICK_MS`, and a new launcher means a new controller (`launcherGone`) starting from `State.empty`. The bell plant measures it end to end.
+
+**Vacuity read.** ACCEPT, with 4 holes, all fixed:
+1. The G18 replay line could not go red. Deleted; determinism is stated as a fact of the type.
+2. Eventual relaunch rested on prose. Now `lifts_eventually`.
+3. The bell control's timing premise was implicit. Now asserted.
+4. "A fast ticker costs no decision" was two theorems. Now `step_ticks_quiet`.
+
+The reader checked `step_quiet`'s `hq`: no branch is trivially true, and it is equivalent to `lifted = []`. It found `tick_lifts`' premises satisfiable together (G18's own data), nothing reading a wall clock in the decider, and no way for an ignored tick to stall a lift.
+- The plan, `decideCell` and `crashLooping` are unchanged. The window's length and restartsMax are as HOSTING-7 set them.
+
+**Breaks.** The report wire gains a case: a controller without it refuses a tick `badReport`. Both ends come from one tree and re-emit together (generated.rs, ROOT for CODEC). `Loop.State` gains `tickAt`, in memory only; nothing is persisted.
+
+
+## HOSTING-17 ADDENDUM · Ember ratified the custody fence as built (2026-10-21; ROOT for HOSTING, no HOSTING lane live; cv 01a155a1-f440; OPS-6 wrote it)
+
+**Decision.** Ember ratified, on DECISIONS-20261021.md card 5, the custody bundle AS BUILT: CLIENT-26..32, OPS-15,
+HOSTING-20/25/26/32 on top of HOSTING-17 (ratified 10-17). The fence:
+- `nd` runs host serve, keybroker and its decider, nd-members and every nd-supervise child (`nd --stdio`, `host follow`);
+  `nd-hosted` runs grain-launch, the controller and every grain; `nd` is in no group of `nd-hosted`'s, so a sandbox
+  escape is the hosted uid and reads no key and writes no Store (HOSTING-17 §1).
+- The provider key (`/etc/nd/keybroker/provider.key`, nd 0600) is read by keybroker alone; a grain gets allowances.
+  Member seeds are `/srv/nd-members/L/members/<id>` and resident follower Stores `/srv/nd-members/L/follow/<id>/store`,
+  nd 0700 outside the hosted tree (HOSTING-32), hidden from every plan; the stdio child cannot reach its follower's
+  Store or `follow` file.
+- A grain connects to exactly `[BROKER/<g>/broker.sock, MEMBER/<g>/nd.sock]`, 0660 nd:nd-hosted inside setgid 02710
+  directories, SO_PEERCRED uid and gid checked (`peerRefused`). host.sock stays nd-only: the less-trusted side never
+  initiates to the writer (HOSTING-20).
+- Narrowing items: CLIENT-26 (one spawner, sponsor key a chain-checked file), CLIENT-27 settlement, CLIENT-28 (one fd
+  per connection, fds_max 73), HOSTING-32. Keeping items: CLIENT-29/31/32, OPS-15, HOSTING-25/26.
+
+**The widenings, named.** (1) `signIncoming` (CLIENT-27): while a rotation is ARMED the precommitted next key may sign
+READ envelopes, never a call (stdio custody refuses), so a landed rotation can confirm through a Host answering
+`unknownKey`. It is the one new key use in the bundle and it is bounded; the alternative was a lockout. (2) The TCB
+grows by two crates, `signal-hook` and `signal-hook-registry` (gates/tcb.tsv, trusted-unverified, CLIENT-30). Nothing
+else widened. HOSTING-20's second resident-initiated socket widened the surface by one, already the 4th point of the
+HOSTING-17 bundle.
+
+**Never run** (true when written; RUN since on hbox with the real `nd` / `nd-hosted` uids, HOSTING-40, which refutes three of HOSTING-17's sentences and finds the `/home` hide unreached for those uids). hbox had one uid. `peerRefused` for another uid and the grain's `/home` hide have never run with a real
+second uid; both are proved and planted with a configured other uid. The member follower's policy still comes from Rust
+and unit text, not a Lean plan (cv 01a14df6-0647). A real two-uid box is the first thing a deployment buys.
+
+**Deployment shape (Ember, same day).** "Deployment will be inside its own VMs." This changes STAND-INS B1 (the
+deployment box is a VM with the real nd / nd-hosted uids, so B1, B3 and B6 run in one VM window) and does not retire the
+uid split: the VM is a boundary outside the fence.
+
+**Design question filed (not decided).** Ember: "more seamless integration eventually." Question: with a VM per
+deployment, does the nd / nd-hosted split, the 02710 socket directories and the hand-run operator joins (OPS-15) stay
+as they are, or do they fold into the VM boundary and a provisioning step? Trigger (proposed by OPS-6, ROOT to confirm):
+the first B1 window run inside a VM, when the fence has been exercised with two real uids and the operator steps can be
+counted; file a `cv task` at that run. Until then nothing changes.
+
+**Flag day.** None. Documentation only.
+
+## HOSTING-40 The two-uid fence, run for real: three refutations of HOSTING-17 on its first run as `nd` and `nd-hosted` (HOSTING-15, HOSTING-16, 2026-10-21; ROOT rulings 10-21; OPS-6 agreed to the UMask lines; ROOT for CLIENT to the nd-bwrap comment)
+
+**What was run.** Every launcher row before this ran as one uid, where keybroker binds 0600 and neither its peer check nor `Policy.connect`'s group branch can meet a second uid. On hbox the deployed users were made from the generated `deploy/units/linux/sysusers/nd.conf` (`nd` uid/gid 981, `nd-hosted` 980; `nd` ∉ `nd-hosted`, `nd-hosted` with no supplementary group), the run directories from the four generated tmpfiles confs, and `launcher/tests/fence.rs` ran the World (`host serve`, `host follow` under nd-supervise, the operator's `nd`) and keybroker as `nd`, on keybroker's rendered argv with PEER = 980, and each connector as its own uid under `sudo -n -u`. The row is `cargo-untraced:launcher:fence` (GATES-10's kind: a traced process cannot take sudo's setuid). It is the run the HOSTING-17 ADDENDUM (Ember's ratification, 10-21) names as never run.
+
+**Refuted 1 (R1): the mechanism was unexecutable by both deployed uids.** `sandbox/apparmor/nd-bwrap` installed `/usr/local/libexec/nd-bwrap` root:`<operator-group>` 0750. Neither `nd` nor `nd-hosted` is in an operator group, and HOSTING-17 §1 forbids `nd-hosted` a supplementary group, so `sudo -u nd test -x` and `sudo -u nd-hosted test -x` both failed: keybroker's decider, `host serve`/`follow`, nd-members' children (all `nd`) and grain-launch's controller and grains (`nd-hosted`) could start nothing confined. Options: 0755 (REFUSED by ROOT: every local uid gains the userns grant, a widening); a group holding both uids (REFUSED: §1); a POSIX ACL naming exactly the two uids (CHOSEN): `setfacl -m u:nd:rx,u:nd-hosted:rx /usr/local/libexec/nd-bwrap`, mode and group unchanged. The install comment in `sandbox/apparmor/nd-bwrap` now carries it and says why; the RUNBOOK carries the same line (OPS-6).
+
+**Refuted 2 (R3): HOSTING-17 §2/§3's `SOCKDIR/<r>` at 02710 could not be made by a create-then-chmod.** keybroker (and nd-members for `MEMBER/<dirOf>`) did `create_dir` then `chmod 02710`. Linux clears S_ISGID on a chmod by a caller outside the file's group without CAP_FSETID, and `nd` is outside `nd-hosted` by design, so the directory landed 0710 and keybroker's own check ended it: `sockDir /run/nd-broker/t…/<r> Mode(456)`. Fix: `launcher::make_dir(d, perm)` is a `DirBuilder` mkdir at `perm & 0o777` and nothing after it; S_ISGID and the group come from the setgid parent; no chmod and no umask change. A umask window around the mkdir was drafted first and REFUSED by ROOT (the umask is process-wide). keybroker and nd-members both use it.
+
+**Refuted 3 (R4): HOSTING-17 §7's "`UMask=0077` stays".** mkdir's mode is masked by the umask; under the unit's 0077 the directory is 02700 and keybroker ends `sockDir … Mode(1472)`: the emitted units could not serve a resident across two uids. `nd-keybroker.service` and `nd-members@.service` are now `UMask=0027` (Ops/Units.lean, OPS-6 agreed): group bits survive for the setgid group; others still get nothing. What 0027 adds, enumerated: a file or directory these two units (and their children, which inherit it) create without an explicit mode gains group read/search. Custody files are created at an explicit 0600 (`fsx::write_new`) and directories at an explicit 0700, which 0027 does not change. Elsewhere the group is `nd`, which holds only `nd` (sysusers). Inside the setgid directories (`SOCKDIR/<r>`, `MEMBER/<r>`) the group is `nd-hosted`, and the only inode made there is the socket, bound and then chmodded 0660/0600 explicitly (keybroker; nd-supervise for nd-members' sockets). Others get nothing under either mask. The rows already run under hbox's umask 002, which is wider than 0027. fence.rs runs keybroker under the UMask read from its rendered unit (`unit_umask`), so a unit back at 0077 turns the row RED.
+
+**Real-uid verdicts** (logs/hosting15-fence-r3.log, logs/hosting15-fence-h16-r2.log):
+- keybroker: as `nd-hosted`, `refused NoAllowance` (decided, past the peer check); as `nd` (gid nd), as this uid with `-g nd-hosted`, and as `nd-hosted -g nd`, each `refused PeerRefused`; as this uid with no group, `connect PermissionDenied` (SOCKDIR's 02710).
+- `Policy.connect`: as `nd-hosted`, `resolved; confined refused NoAllowance` (the child under nd-bwrap as 980 was decided: SO_PEERCRED translates out of the user namespace); as `nd-hosted -g nd`, `ConnectOwner`; as `nd`, `ConnectMode`; as this uid, `PathMissing` (EACCES).
+- The units' `--hide /home` (nd-host-serve, nd-hosted-follow@, nd-members@): as `nd` and `nd-hosted`, a grant of `/home`, `/home/hbox` or `/home/mini-operator` is refused `confine: cannot list grant /home/<user>` (GrantUnlisted, the grant scan), and with the `/home` hide removed the refusal is identical: on a box whose `/home` holds only other users' 0750 homes, the scan refuses before the hide is reached. Where it is reached (this uid, a grant of cargo's directory under /home) it refuses `exposed: … reaches hidden /home`, and with it removed the confined child reads the directory (exit 0). A confined child as `nd` does not see `/home` (exit 1); `nd` unconfined does. cv 01a155e0-8f91 holds the deployed-uid exercise of the hide itself (it needs a path under /home those uids can list: an operator act).
+
+**Plants (by hand, each applied alone and restored; all RED).** keybroker's peer check made `true`: `nd` got `NoAllowance`. The `ConnectOwner` branch made an accept: `resolved; confined refused PeerRefused`. `make_dir` back to create-then-chmod: both tests, `Mode(456)`. keybroker under 0077: both tests, `Mode(1472)`. The sandbox's `Exposed` check disabled: this uid's hidden grant launched (exit 0). The grant scan made to skip an unlistable directory: `nd`'s `/home` grant became `exposed: /home reaches hidden /home`.
+
+**A skip is never a pass.** When the fence is absent (no uids, nd-bwrap unexecutable by either, nd's run root or `/run/nd-broker` missing or at the wrong shape) each test prints `skipped: no nd-hosted uid (<test>: <what>; restore: <command>)` and returns. GATES-10's runner reads it INCOMPLETE in a landing (named in the verdict line; the landing proceeds) and RED in the standing run (ROOT: an operator must restore the directories; a reboot clears /run). The restore commands printed are exactly: `sudo systemd-sysusers <tree>/deploy/units/linux/sysusers/nd.conf`; `sudo setfacl -m u:nd:rx,u:nd-hosted:rx /usr/local/libexec/nd-bwrap`; `sudo install -d -o nd -g nd -m 0700 /tank/hosting15-nd`; `sudo systemd-tmpfiles --create` the four generated confs (nd-broker, nd-follow, nd-member, nd-member-follow).
+
+**Sudo run on hbox** (each printed before it ran, rc 0): `systemd-sysusers deploy/units/linux/sysusers/nd.conf`; the setfacl above; `systemd-tmpfiles --create` the four confs by path; `install -d -o nd -g nd -m 0700 /tank/hosting15-nd` and `-o nd-hosted -g nd-hosted … /tank/hosting15-hosted`. Run trees are removed by the test's own helper as the uid that made them, which refuses a path outside its root, a symlink, or a name not in the run's manifest.
+
+**Breaks.** The two units' UMask changes: re-emit `deploy/units`. A directory an older binary left at the wrong mode is refused by the binaries' existing checks, as before; /run is cleared at a reboot. The nd-bwrap ACL is an operator step on every Linux host (the install comment and the RUNBOOK).
+
+## HOSTING-41 The member socket waits for the follower's command loop, not its supervisor's bind (2026-10-20, CX-HOSTING)
+
+**Premise price.** Landed theorems gaining hypotheses: none. Landed theorems restated: none. No theorem added; this is Rust lifecycle plumbing with a real-process ordering plant.
+
+**Finding.** The traced members run in main/.git/nanodregg-gate-4/b9a703534e14.log:567–618 failed its “never more than one” stdio-start assertion. Its first two follower attempts each started stdio before the real Host refused missing key; five follower failures ended in memberCrashLoop. nd-supervise binds after spawning its child, before that child's application startup checks. A socket inode establishes that the supervisor bound, not that the follower opened its Store. Widening the assertion would retain the race.
+
+**Decision.** Each follower process now owns its readiness result. After its socket appears, nd-members sends an empty command through the existing FollowSocket codec. The real follower parses it as noVerb, with no custody, signing, host request, World mutation or new protocol operation. A successfully decoded Step is the readiness witness: Host.Cli.followVerb reads the key and opens the Store, runResident checks threads and opens its port, and only then can Follow.loop answer. A supervisor close is not a Step and cannot establish readiness. Only after that reply may nd-members spawn the stdio supervisor that binds the resident's member socket.
+
+The probe runs outside the residents tick, using the client's existing reply bounds. There is at most one probe per follower process; a process slot is retained through reap/stop until its probe finishes, so restarts cannot accumulate detached probes. A fresh follower owns a fresh readiness result. A failed transport probe is retried on a later tick; existing follower restart cadence and crash-loop limits are unchanged. The private follow socket still binds before the Host checks; it must exist to carry this handshake. The resident-facing stdio socket no longer starts in that window.
+
+**Alternatives.** Checking for a key file in Rust would duplicate only one part of Host startup, miss corrupt Stores and other refusals, and race the actual open. Sleeping a fixed time would reproduce the same race under slower execution. Parsing the Host's human STATUS line would turn diagnostics into a second readiness protocol. The existing command reply exercises the actual loop and needs no foreign-layer or wire change.
+
+**Plant.** members.rs runs the real nd-supervise and Host, interposing a shell barrier before Host executes. The test releases the barrier; each attempted Host startup is also delayed two seconds, holding open the same bind-to-refusal window the traced run exposed. The empty-Store test still asserts five follower starts and crash-loop removal, and strengthens stdio starts to exactly zero. A valid-Store control asserts zero stdio starts while startup is held, then releases the Host and requires a successful sync through the member socket. With only the readiness condition replaced by the old socket-bound condition, both tests fail: logs/cxhosting-order-off.log:31, stdio before startup (1 versus 0), and :57, stdio children without a follower (1 versus 0). That output contains the real refused missing key on all five attempts; it does not print a manufactured refusal. The whole output was read; its diagnostic scan found the expected test failure and the unprovisioned second resident's ENOENT, no wrapper error.
+
+**Critique.** This establishes startup ordering, not perpetual follower health: a follower may die after answering, as it may die during any command. Existing restart and named-close behavior handles that case. A readiness round trip adds a socket, a bounded reply wait and a thread during startup; at most one is retained per follower, and the tick is never held behind it. Readiness trusts the supplied Host executable, as the existing launcher does. FollowSocket uses the existing private-socket connection path; this does not change its transport contract.
+
+**Meta-critique.** The old test counted a small number of observed starts and called that a bound. Waiting for an actual follower reply removes the scheduling premise. The plant holds the relevant startup interval explicitly and checks a healthy follower's eventual usability as well as the refusing follower's zero starts.
+
+**Validation.** This worktree's host, hosting-residents and hosting-broker built under 6G/2 threads. Seven filtered members tests passed (including restart, removal/grace, workspace isolation and the other-follower refusal), the real two-uid fence passed all three cases, and focused clippy with warnings denied passed. Logs: cxhosting-members-final.log, cxhosting-fence.log, cxhosting-clippy.log.
+
+**Size price, ROOT ruling (real 2026-10-20).** ROOT-for-GATES authorizes the nd-members Rust-lines ceiling 639 → 685, exactly the measured count, for the added refuse-before-bind check. The 48 net implementation lines (637 → 685) add the FollowSocket/Follow imports, per-process readiness and single-probe state, the asynchronous empty-command round trip, probe retention through reap/stop, and the readiness condition before stdio starts. None is a widened runtime bound: reply limits, resident count, restart cadence, crash-loop count and stop grace are unchanged. The ceiling rises by 46 because the previous 639 ceiling had two spare lines. No code is moved outside the metric. This commit requests the full judge with hosting!: because GATES-22 otherwise classifies a ceilings.tsv-only gate edit as fast data.
+
+## HOSTING-42 · The member socket: an `ok` answer is committed on the member's own World, under one premise about bytes (2026-10-23, CX-E2-2; E2b, R-0052/R-0058/R-0062/R-0065; promo/IMPACT-E2.md §1, §5; promo/READ-E2-grok.md, promo/READ-E2b-grok.md)
+
+**Premise price.** Landed theorems gaining a hypothesis: none. Landed theorems restated, renamed or deleted: none. New: Hosting/Proofs/Socket.lean, and ONE trust row, `stdio-leg` in gates/tcb.tsv, a hypothesis (`StdioLeg`) of the new theorems only.
+
+**Finding.** Every theorem over `ResidentRun.Runs` already covers every reply the member socket could give, so none said what an `ok` reply MEANS on the member's side. The leg (resident → `nd --stdio` → follow's command machine → the Host) holds nine Rust decisions (IMPACT-E2 PART 1). Only R7 could make a reply say ok, and PROTOCOL-64 (T0) moved that bit into Lean: follow says `done ok` for a submitted call only when its own World settles it committed. After T0, what Rust does on the ok path is move bytes.
+
+**Decision.** The premise is one sentence about bytes, the `stdio-leg` row: an ok reply whose exit is `CommandExit.ok` is the follower's Lean done of that command: nd --stdio gave follow the resident's argv, gave follow back byte for byte every continuation follow handed out, and the resident decoded follow's done. In Lean it is `SocketRel` over `FollowRun`. A `FollowRun` is `start` on the argv, then `step` on each continuation follow handed out, with ANY result (the attempt store's, custody's, the Host's: chosen, never trusted), follow's World free to fold on between frames, ending in a `done`. `.error` and every non-ok exit claim nothing. R1 to R3 (nd's synthesized `notOnSurface`/`undecodable`, `client`, `hostContradicted`) are not in the premise; on the resident's side, `resident_argv_on_stdio` shows nd's screen never fires on the resident's argv, and `deliverAfter_unsettled` shows any exit other than ok or refused is followed by what a failure is followed by.
+
+`delivered_answer_committed` (premise `StdioLeg`; codec premise `hX`, the one Host.Proofs.Refine takes, discharged at the deployed codec by `Codec.Proofs.Deployed.eq_callBytes_of_decodeCall`): on every path of a tick, an invoke of `answer` for `(r, t)` that came back ok was the kept answer or this tick's (`tick_counts`). Follow planned a call on its World whose body invokes the object the config's `bell` names, at `sh.answer`, with the bytes `Lang.argsOf` reads from the TEXT `answerArg r t` at that object's own method, through the config's grant. Follow's World at its ok journals that call's transaction id. Route: `run_invoke_ok` (an invoke ends ok only at the settlement, `step_invoke_ok`; its continuation is step 3's submit of a planned call, `step_cont`; T0's `step_settled_ok`), then `Settle.settle_committed`: the journal entry itself, with no collision disjunct. The join from the decoded call to the planned one goes through `txIdOf`, a function of the call bytes only. The parse of the resident's argv is a theorem (`invokeArgv_parse`, `ofHex_hex`). `answer_args_at_answerArgTy`: at a method of type `answerArgTy`, those bytes are `answerDatum r t`'s.
+
+**What the model claims, and what it does not.**
+- Claimed: an ok answer is a committed call on the member's own World, carrying exactly the text the resident printed for the ring and its kept answer, to the bell's `answer`, read at the bell's own method. Rust is trusted for three byte fields and nothing else.
+- Not claimed: the strong form `callArg = answerDatum r t` (R-0065). The resident checked the method's type only in `Shape.read`, maybe ticks and Worlds earlier. Its triggers are three facts no landed theorem states: (i) `Mem.shape`'s provenance across `Ticks` (HOSTING); (ii) a live object's package slot fixed under the follower's fold, a receivers-wide fact over every `Body` (KERNEL, cv task filed by ROOT); (iii) `Shape.read` of `describe` reading back the method's argument type (Protocol Describe + Lang `readTy_ty` + wf of a loaded package's argument types).
+- Not claimed: the bell's ROW, `rings[(notBefore, ringer)].answered = some (ask t)`. That is the compiled Bell's `answer` method, which no landed theorem states. `answered_row_is_kept_answer` is named in the module docstring and waits for that witness, a LANG card: the Bell as a witness of `activity_monitor_safe`, plus the `answer` method's edit. LITP's "the join stays a journey row" is NOT deleted.
+- Not claimed: a commit whose reply is LOST. Follow appends and dies before `port.send`; the resident sees `.error`, or exit `client` if nd dies. This is PROT-5's at-most-once and outside this card. Nothing here claims the converse of ok ⇒ journaled.
+- Not claimed: that an ok reply's stdout is the receipt (`settled` returns step 3's pre-submit `out`); who else holds the resident's key (custody, HOSTING-32's sandbox); restarts; liveness; that nd's attempt loop implements `Attempt.next`.
+
+**Plant: this theorem's own tooth, not T0's.** `Cmd.argv`'s invoke arm prints `answerArg r r.text`, the ring's own text as the answer (Hosting/Resident/Run.lean:271, `t` renamed `_t` so the plant compiles). Whole tree, `lake build`, at e2905e7 (logs/e2b/plantArgv.log) and again at 28e2d88 (logs/e2b/plantArgv-tip.log): ONE failure, `Hosting.Proofs.Socket` at `delivered_answer_committed`. Its goal there is the planted argv, `invokeArgv … (answerArg r r.text)`, against the text printed for `(r, t)`. Every other module built: `Hosting.Resident.Run`, `resident:exe`, `Hosting.Proofs.Resident`, `ResidentRun`, `BellConform`, and every theorem in Socket.lean except this one. logs/e2b/plantArgv-green.log and plantArgv-tip-green.log, on the planted tree: `settled_ok`, `step_settled_ok`, `tick_counts`, `bell_resident_conforms` and `answerArg_reads` elaborate, axioms `propext, Classical.choice, Quot.sound`. Deployed, at e2905e7 (launcher/tests/resident_bell.rs, logs/e2b/plantArgv-bell.log): Q2 "each ring's answer, at its key" RED, the answers read back as the rings' own texts (`from-c`, `from-op`) instead of the provider's `hello back`. Restored: whole tree green (719 jobs at e2905e7, logs/e2b/restore.log; 727 at 28e2d88, restore-tip.log), and resident_bell green (logs/e2b/restore-bell.log). Whole logs are under hbox /tank/dregg-build/nanodregg/logs/e2b/. T0's tooth stays T0's: P-T0c (PROTOCOL-64) reds `settled_ok`.
+
+**Critique.** The theorem is at the text grain. It says the call carries the resident's printed text, read at whatever type the bell's method declares on follow's World, not that the bytes are the resident's datum. The gap is a real, named type join (i)–(iii), not a proof convenience. `FollowRun` lets follow's World fold arbitrarily between frames and lets the result of every step be arbitrary. So the theorem trusts nothing about the Host, custody or the attempt store. The cost is that the conclusion's World is "follow's World at its ok", which the premise names by existence only. `hX` is a codec premise, not a Rust one, and is discharged at the deployed codec.
+
+**Meta-critique.** The bias to watch is reading "the premise is one sentence" as "the premise is small". The sentence still trusts that nd never rewrites a continuation. `k` is unauthenticated (Machine.lean's own note), and at step 4 it names WHICH call follow checks. A relay that substituted another of follow's own continuations would be outside the sentence, and nothing in Lean catches it. The lift condition, nd's relay proved in a verified transport, or `k` MACed by follow, is the real fix. It is named here so that it is not mistaken for done.
+
+## HOSTING-43 · The member socket, strong form: the delivered answer IS the resident's datum (2026-10-23, CX-HOST2; R-0065, R-0069; HOSTING-42's three triggers, KERNEL-64's finding)
+
+**Premise price.** Landed theorems gaining a hypothesis: `Lang.install_loads` and `Lang.readPackage_installed` gain `cell.discipline = .rom` (no consumer of the first; every consumer of the second passes `rfl`: every package cell it reads is install's ROM birth). Restated (RESTATES-MEANING): `Protocol.Command.methodLine_resolves` (now also says the label is an atom, the type well formed, and the call lines); in Hosting.Proofs.Socket `FollowRun` (between frames follow's World is `Reach`ed by its own frames, and the run names the follow state its `done` was handed out at), `Planned`/`ContOf` (from a base World, `Reach`ed), `run_invoke_ok`, `start_contOf`, `StdioLeg` (one follower, `LegFrom`), `stdioLeg_errors` (from a given World). Deleted: `SocketRel` (now `LegFrom`'s per-event reading, `stdioLeg_event`), Socket's private `decideTick_answer` (now `Lifetime.decideTick_answer_kept`). The `stdio-leg` row is restated, not widened (below). Re-genesis / re-emit: none: no wire, state or descriptor shape changes; a description of a valid object prints the same text.
+
+**(a) What follow's World does between frames: decided from the deployed follower.** HOSTING-42's `FollowRun.step` let follow's World move between frames by a BARE `World.fold` of any log; KERNEL-64 found trigger (ii) false there (a hand-made Turn may write slot 0) and offered two fixes: carry `Honest` per step, or have follow audit. READ Host/Follow.lean: `loop` changes follow's World ONLY to `answer`'s `fs'.world`, i.e. `Command.step`'s output on a frame (`start` returns no Follow), appended durably before the reply; a restart reopens the World those appends persisted (HOST-22). And `Command.step` absorbs a log page only through `absorbStep`, which re-derives every event (`submit` = `receive` + `admit` for a Turn, `judge` or `cancel` recording the refusal): that IS the audit. So neither `Honest` as a premise nor a new audit call: the premise now names the frames themselves, `Moves w w' := ∃ f f' kb res p r, f.world = w ∧ Command.step … f kb res = (f', p, r) ∧ f'.world = w'`, `Reach` its closure, and the package fact is a THEOREM of every step: `Protocol.Proofs.FollowHead.step_packageAt` (`absorbStep_object_head` from KERNEL-64's `submit_object_head`; a refusal changes no cell). Saying "between frames" by the deployed loop's own transition makes the premise narrower than HOSTING-42's, and true.
+
+**A defect found by (a), fixed: adopt's genesis check was time-of-check.** `start` refused an adopt unless follow's World was at step 0; the step that adopts (phase 7, `Thin.accept … = .done w'`) replaced follow's World with no check. Between the two, other commands' pages may move follow's World, and a continuation is no witness of what `start` saw (`k` is unauthenticated). So a stale or forged phase-7 continuation could replace a populated World with a base, and no package fact survives that. Now `atGenesis w := w.steps = 0 ∧ w.trie = .empty` (AMENDED by PROTOCOL-67: no follow holds an empty World, a genesis inserts the founders cells; the floor is now a World a genesis builds, `genesisWorld_atGenesis`) is checked at `start` AND at the step that adopts (`notAtGenesis`, `drop`). With it, `step_keeps`: any property every re-derived event keeps and holding nothing refutes is kept by EVERY step (a live bell refutes `atGenesis`, `atGenesis_live`).
+
+**(ii) also needs the package's CELL fixed, not only the slot.** KERNEL-64 fixes the object's slot 0 (the package id P). An invoke and a describe each read the package through `Lang.readPackage (worldLook w) P`, the cell at P on THEIR World. Package cells are born ROM by install, and ROM is fixed under every fold (`Frame.fold_rom`); but `readPackage` read any `kindPackage` cell. Now it refuses a package cell that is not ROM (`malformedCell`): what a package id reads is the same at every World any fold reaches. `PackageAt X w obj P pc` (live object, package P, ROM cell pc at P) is the fact `step_packageAt` / `reach_packageAt` carry.
+
+**(i) `Lifetime.shape_provenance`.** `Lifetime w m es`: one process's ticks, each a `Runs (tickP w m)` path from the memory the last went on with. In a lifetime started with no shape (`run` starts every one so), every `.cmd (.invoke sh r t) x` is preceded in the same process by `.cmd .describe y` with `describedShape y = some sh` (`tick_shape`, `tick_invoke_shape`). Also `lifetime_bounds`: every invoked ring and answer is within Lang's bounds (rings by `readData` at the row type, answers fitted, the seed by `readData` at `keptTy`, `seed_ok`), the premise `answer_args_at_answerArgTy` takes.
+
+**(iii) `SocketStrong.describe_shape`.** If follow described `obj` on `w` (`ok`) and `Shape.read` of that text gives `sh`, then `PackageAt X w obj P pc`, and the package's method `sh.answer` is labelled `answer` with argument type EXACTLY `answerArgTy`. Three printer guards made it provable, each a refusal of what was already never printed for an installed package: `describe` refuses a non-object (`wrongKind`: invoke runs only an object) and refuses `noText` if any line holds a break (`noBreak`), so splitting at breaks reads back exactly the lines; `methodLine` prints only an atom label (`Lang.labelAtom`, so the line's words are index, label, type) and a well-formed type (`Ty.wf`, so `Lang.Print.readTy_ty` reads it back). The resident's `Shape.read` now splits with `splitLines` and `methodWords` (plain recursion over characters, `splitLines_join`, `methodWords_line`); on every description `describe` prints, it reads what the old `splitOn` reading did.
+
+**(d) `SocketStrong.delivered_answer_committed_strong`.** Premises: the codec's `hX` (as HOSTING-42, discharged at the deployed codec), `Lifetime w m es` with `m.shape = none` and `KeptOk m.kept` (`run`'s start, `seed_ok`), and `StdioLeg` over `core es`. Conclusion: for an invoke `(sh, r, t)` that came back `ok`, follow's World at its `ok` journals a call `⟨u, sig⟩` of the member's (`u.member = me.member`) whose body is `invoke o sh.answer args invokeBudget (some g)`, `o`/`g` the config's bell/grant, and `Lang.Wire.encodeData answerArgTy (answerDatum r t) = some args`: the argument bytes ARE the datum's encoding. No disjunct; no premise beyond the row.
+
+**The `stdio-leg` row, restated.** Old: each ok reply is a follower run of its argv. New: the resident's member commands are served, in the order it sent them, by ONE follower: each ok reply is a run of its argv starting at a World that follower reached from where the previous ok run ended (`LegFrom`). What Rust is trusted for is still to move three byte fields, now to one follower: nd-supervise starts ONE child behind the member socket and muxes every connection's frames into that child's stdio, and the service manager restarts the pair (READ client/src/bin/nd-supervise.rs's header); the child is `host follow`, whose `loop` answers one frame at a time. The new sentence is not larger trust: HOSTING-42's per-event runs were each about SOME follower state, which `nd --stdio` never chose.
+
+**Plants (MEASURED on hbox wt/host2-plant at 1103509 + this change; logs /tank/dregg-build/nanodregg/logs/host2/).** Each: the text-grain module built by bounded topological build (Hosting.Proofs.Socket closure), its axioms printed; the strong module elaborated as a file, its errors and axioms printed.
+- P1 (i), a shape from another object: `Cmd.argv`'s describe arm describes `{ c with bell := c.grant }`. Text grain GREEN, `delivered_answer_committed` axioms `propext, Classical.choice, Quot.sound`. Strong RED at `delivered_answer_committed_strong` itself (SocketStrong.lean:518, `rw [hbd] at ho`: the object described is not the object invoked); its axioms carry `sorryAx`. plant-P1.log.
+- P2 (ii), a package swap mid-fold in a hand-made fold: `Moves` widened by `∨ ∃ l, World.fold X.env w l = .ok w'` (HOSTING-42's old premise). Text grain GREEN (same axioms). Strong RED at `reach_packageAt` (:44: across a hand-made fold the package is not kept), `delivered_answer_committed_strong` carries `sorryAx`. plant-P2.log, p2.py.
+- P3 (iii), a describe that lies about the type: `describeText` inserts `method 0 answer (rec (notBefore nat) (ringText bytes) (ringer digest) (text bytes))` whatever the package declares. Every Protocol module builds (plant-P3-pre.log: `failed=[]`); text grain GREEN; strong RED at `describeText_method` (:241, the forged line is no method line of the package), `delivered_answer_committed_strong` carries `sorryAx`. plant-P3.log, p3.py.
+- Control: this change on c57603d, all 469 library modules but Hosting.Proofs.Reply (OOM at 10G alone; not built) GREEN by a bounded topological build (b6.log `DONE failed=[]`); new theorems' axioms `propext, Classical.choice, Quot.sound`.
+
+**(e) `answered_row_is_kept_answer`: not proved; it needs a Lang change, named exactly.** `activity_program_safe` takes `p.imports = []`, `p.holes = []` and `p.body = .record fs` with the log's guard field equal to `activityWaiting …`. The installed Bell is `Std.hole`'s instance (world/resident/Bell.ob: an `activity` block): its root has imports and its body is an application (StdActivityMonitor's own note). So no premise of the monitor theorem holds of the Bell, and the `answer` method's edit is a hand-written `upsert rings …` that no theorem evaluates. The Lang change: (1) `activity_monitor_safe` over a loaded closure (the root's imports and holes resolved by `load`, the guard field found after relocation), i.e. `runLaw_ref_admits` and `load_top` at a root with imports; (2) a witness that the compiled Bell's `rung` guard is `activityWaiting` with the Bell's plans and resumer (`deq req.agent state.resident`); (3) a run lemma for the Bell's `answer` method: its edits are exactly `upsert rings (agent ringer, notBefore) {answered = some (ask text), captured = ask ringText}` and `retract pending (…)`. With (1)–(3) and `delivered_answer_committed_strong`, `answered_row_is_kept_answer` is a join. Filed as cv task 01a167fe-5e84 (LANG), not landed in this card.
+
+**Vacuity read (author).** No disjunct in any new statement. `shape_provenance`'s conclusion has a disjunct `m.shape = some sh ∨ …`; the strong theorem refutes the left by its premise `m.shape = none`, and P1 shows the right disjunct carries the join (planting it away reds the strong theorem). `StdioLeg` is satisfiable (`stdioLeg_errors`) and not provable (a trace with an ok reply needs a run). `PackageAt` is refutable (P2).
+
+**Critique.** The strong theorem rests on three printer guards that are new refusals; on an installed package each is unreachable, but the proof of that is install's checks plus `decodePackage`, and I did not prove it: a package cell some fold produced outside install (none does under `absorbStep`) would now describe as `noText` rather than print. `Lifetime` is one process: across a resident restart the shape is described again (`run` starts with none), which the theorem uses rather than proves. `LegFrom` reads `Reach` forward; a follower whose Store lost an acknowledged append would move BACK, which HOST-22's durability (append before reply) excludes, and that is outside Lean.
+
+**Meta-critique.** The bias to watch: taking the card's three triggers as the whole join because the card named three. Building it found two more the card did not name: the package CELL (not only the slot) had to be fixed, and adopt could replace follow's World mid-run. Both were found only because the proof would not close, not by review; a fourth (bounds on the ring and answer) was a premise of an existing lemma. The plants show each named trigger is load-bearing; they do not show there is no sixth.
+
+## HOSTING-44 · The answered row is the kept answer: the deployed Bell as a witness, joined to the strong socket (2026-10-23, CX-BELL; R-0069; HOSTING-43 (e), cv 01a167fe-5e84)
+
+**Premise price.** Landed theorems gaining a hypothesis: none. Restated (RESTATES-MEANING): `Hosting.Proofs.Socket.delivered_answer_committed_strong`, whose conclusion gains one conjunct (the World `wp` follow planned the call on holds the bell's package `P` in a ROM cell, `P` reads as `pk`, and `pk`'s method at `sh.answer` is labelled `answer`; same premises, the facts were already inside its proof). `Lang.Std.deq_true` (StdActivityMonitor) is no longer private. New: Lang/Bell.lean, Lang/Proofs/MethodRun.lean, Lang/Proofs/Bell.lean, Hosting/Proofs/BellRow.lean, and the lang-journey row LBw. Re-genesis / re-emit: none; no wire, state or package shape changes.
+
+**Finding: the blocker HOSTING-43 (e) named was false.** (e) said "the installed Bell is `Std.hole`'s instance: its root has imports and its body is an application", so `activity_program_safe` could not apply and a loaded-closure monitor was needed first. MEASURED (the reader on the shipped core, `world/resident/Bell`, at d23091d): `imports 0 holes 0`, the body a record of `answer bell close open queued retire ring rung`, `rels [pending, rings]`. The core text starts `(package (imports) …`; `Bell.ob` has no `import`. The claim came from StdActivityMonitor's own note, which put "the compiled Bell's `rung` is the next witness" beside "`Std.hole`'s installed root is outside the premises"; those are two different packages. So the card's part (1), the monitor over a loaded closure, is not on the Bell's path, and it is not done here: no deployed consumer needs it. It stays the right theorem for a package built on `Std.hole`, the day one is installed.
+
+**Decision.**
+1. **The witness names the Bell** (Lang/Bell.lean). The parts the theorems read are built by the generators and lowering pieces the surface uses: the state `S`, the plan `ask`, the resumer `deq req.agent state.resident`, the refusal names, `pending := activityCursor plans 64 "queued"`, `rings := activityLog plans 1024 "rung"`, `answer` (`Surface.boundCheck` over the two `(bytes 1 2000)` bounds, then the resident check, then the two edits) and `rung := activityWaiting S plans rings resumer names`. `shapeOk p` (a Boolean: statements live in Proofs modules, closure C3) says a package is the Bell at each of them: no imports, no holes, that state and those relations, `answer`'s declared type, and the body fields `answer` and `rung`; `shape_parts` reads it as statements. **LBw** (lang-journey, beside LB0 and LB0d) computes `shapeOk` of the shipped core, and reads a planted core in which `answer` writes the ring's text; the plant must differ from the core and still read, so a plant that stopped applying reads RED.
+2. **The guard is the waiting guard, as installed** (Lang/Proofs/Bell.lean). `rung_is_waiting`: at a Bell, `rings` is guarded by `rung` and `rung` is `activityWaiting …`; every premise `activity_program_safe` takes of the guard holds. `bell_monitored`: `activity_program_safe` at the Bell through `Lang.program`'s `run`. Every `rings` edit of a returning run of ANY Bell method is a `WaitingStep` over the row the kernel found at its key. `resumes_resident`: the resumer admits exactly a request whose signer is the state's `resident`.
+3. **What `answer` writes** (`answer_run`, the deployed run). A run of the method labelled `answer` that returned:
+   - decoded `answerData nb x k y`, with `x` and `y` inside 1..2000;
+   - was signed by the state's resident;
+   - makes no calls;
+   - and its row acts are exactly the upsert of `rings` (relation 1) at `keyBytes (k, nb)` to the bytes of `answeredVal x y` (`answered (some (ask y))`, captured `ask {text := x}`), and the retract of `pending` (relation 0) at the same key.
+
+   The proof is forward: it evaluates the method body by `BigStep` in the run's environment. Each refusing branch (a bound out, a stranger) is a derivation to `.error`, which `bigStep_deterministic` against the run's `.ok` excludes. `Means` and `means_deterministic` then fix the extracted edits, and `editsOf` fixes the row acts. Its helpers (`runMeasured_inv`, `apply4_method`, `get_data`, `means_toVal`) are in Lang/Proofs/MethodRun.lean. `Lang.Proofs.StdOffer` (another lane's file) carries public copies of four of them in `Lang.Std`; folding them onto MethodRun is filed (cv 01a16821-581a).
+4. **The join** (Hosting/Proofs/BellRow.lean). `answered_row_is_kept_answer` takes the strong theorem's premises and an `ok` invoke of `answer` for `(r, t)`. It concludes three things:
+   - **`t` is a kept answer of `r`** (`lifetime_invoke_kept`): the one the process started with (`m.kept`, read back from the volume), or one it kept in the same lifetime with `keep r t true`.
+   - **The call was journaled.** Follow's World at its `ok` journals the member's call invoking the bell `o` at `sh.answer` with bytes `args`. The bell's package `P` reads as `pk`, and `pk` labels `sh.answer` `answer`.
+   - **What every returning run of that invoke writes, when `pk` is the Bell (`shapeOk pk`).** On any view that reads `P` as `pk`, with any state and any request, the run is the resident's and makes no calls. Its row acts are exactly `rings[(r.ringer, r.notBefore)] := answered (some (ask t))` with capture `ask {text := r.text}`, plus the retract of `pending` there. That upsert is the `answer` step of the log row's machine.
+
+   The join decodes the strong theorem's `encodeData answerArgTy (answerDatum r t) = some args` by `decodeData_eq_ok_iff` and equates it with the argument `answer_run` decoded.
+
+**What the model claims, and what it does not.**
+- Claimed: the forward direction of B8 at the run grain. The answer a resident's `ok` delivered, under the `stdio-leg` row, is exactly what any run of its journaled call writes into the ring's `rings` row, and it is a kept answer. Every `rings` edit of every Bell run is a step of the machine.
+- Not claimed: that the World which committed the call HOLDS that row afterwards. The kernel has no read-back lemma for a written row slot after `rowsRun`, so LITP's "the join stays a journey row" stands for the World's rows (cv 01a16821-5828).
+- Not claimed: that the journal entry at `txIdOf ⟨u, sig⟩` was put by a commit of this call. `journalAt` is read; the step that wrote it is not reconstructed, and doing so would carry a collision disjunct on `txIdOf` (cv 01a16821-5835).
+- Not claimed: the converse, "every `answered` row came from the resident's socket". `bell_monitored` gives every answered row's writer as the resident's member through the resumer. Who else holds that key is custody (HOSTING-32), and is not here.
+- Not claimed: that the configured `bell` IS a Bell. `shapeOk pk` is a premise of the inner implication. LBw shows the shipped file meets it; the resident's `Shape.read` checks only `answer`'s type and `pending`'s layout, never the package id.
+
+**Plants (MEASURED, hbox wt/bell; logs /tank/dregg-build/nanodregg/logs/bell/).**
+- P1, the generated edit: Lang/Bell.lean's `answer` writes `arg.ringText` as the answer (plant-P1.diff). Results (plant-P1.log):
+  - `Hosting.Proofs.SocketStrong` builds GREEN;
+  - `Lang.Proofs.Bell` is RED at `answer_run` (:289; re-measured after the `shapeOk` split at :290, plant-P1b.log: the extracted edits are not the answer's);
+  - `Hosting.Proofs.BellRow` does not build;
+  - LBw FAIL, `lang-journey: RED (1)`.
+- P2, the deployed Bell: `Bell.ob` and its core both write `arg.ringText` (plant-P2.diff). Results (plant-P2.log, plant-P2-journey.log):
+  - LB0 stays ok (the pair is consistent);
+  - LBw FAIL (`shapeOk` false);
+  - LB7/LB8/LB8b FAIL, `lang-journey: RED (7)`;
+  - every Lean module GREEN (the theorems are over `shapeOk`);
+  - resident_bell RED at "Q2: each ring's answer, at its key".
+
+  A first P2 journey read `shapeOk` true from a lang-journey binary still built with P1's witness. Rebuilt on the restored witness, it read as above.
+- Restored: LBw ok, `lang-journey: GREEN` (restore-journey.log). Lean modules GREEN.
+
+**(4) of the card, resident_bell at d23091d (HOSTING-43's describe refusals and splitter).** MEASURED GREEN, unmodified tree, `cargo test -p nanodregg-launcher --test resident_bell`: `1 passed … finished in 72.24s` (resident_bell-d23091d.log). Nothing to fix forward.
+
+**Vacuity read (author).**
+- `shapeOk` holds of the shipped core (LBw) and fails of a planted one (LBw's own plant, P2).
+- `answer_run`'s premise, a returning run of `answer`, is met on the deployed path: journey LB7 admits B's answer through `Lang.program`, and resident_bell Q2 reads the answers back.
+- `lifetime_invoke_kept`'s two disjuncts are each unprovable from the premises: a fresh lifetime keeps before it invokes; a restarted one answers from the volume's seed (resident_bell Q6). This is INFERRED from the event grammar; no tooth instantiates each.
+
+**Critique.**
+- **The name reads as a universal.** "every answered row is a kept answer" is not what is proved. What is proved is the ok-delivered direction at the run grain, plus the monitor over all runs. The docstring says so; the name does not.
+- **`shapeOk` is checked of a FILE by a runtime row, not of the object the config names.** A config pointing `bell` at a non-Bell object gets the strong theorem and nothing from this one. The real fix is the resident checking the bell's package id against the shipped Bell's, a HOSTING change named here and not made (cv 01a16821-5842).
+- **MethodRun duplicates StdOffer's public helpers until they are folded.**
+
+**Meta-critique.** The bias to watch is carrying a predecessor's blocker as a premise. HOSTING-43 (e) wrote "the installed Bell is `Std.hole`'s instance" from a docstring. The card was cut from it as a three-part Lang change, and it reached this lane as a requirement: "(1) generalise the monitor to a loaded closure". Measuring the installed package took one reader call and refuted it. Had the lane started with (1), it would have built a loaded-closure monitor for a package nobody installs, then found the Bell needed none of it. A blocker named in a decision is a claim to re-measure, not a fact. The same bias runs the other way in this decision's own "Not claimed" lines, and the next lane should re-measure those before building on them.
+
+## HOSTING-45 · The configured bell is the Bell: the resident checks the package it is about to serve, by its bytes (2026-10-23, CX-BACKLOG-2; cv 01a16821-5842, HOSTING-44's critique; R-0069)
+
+**Decision.**
+1. **The description carries the package's bytes** (`Protocol/Command/Machine.lean`, `describeLines`; doc in `Protocol/Command/Describe.lean`). After `package HEX`, `read OBJ ?` prints `core HEX`: the package cell's slot 0, the bytes `Lang.readPackage` decodes, by `Lang.Print.hex`. The id was already their digest (KERNEL-3); the bytes let a reader check WHICH program it calls, not only its interface.
+2. **The resident checks them** (`Hosting/Resident/Bell.lean`). `Shape.read` = `bellCore` then `Shape.ofLines` (the old reader, unchanged). `bellCore`: the first `core` line's hex (`Protocol.Text.ofHex`) must decode (`Lang.Wire.decodePackage`) to a package with `Lang.Bell.shapeOk`, else `noCore` (a data object), `core` (not a package's bytes) or `notBell`. The resident ends `bellShape notBell` at its first describe, before any read or ask (stderr `resident: bellShape notBell`, exit 13).
+3. **The theorem** (`Hosting/Proofs/SocketStrong.lean`). `describeText_core`: the one `core`-form line of a description is the hex of slot 0 of the live cell at the object's package (`packageLines_core`: no package line is in that form). `bellCore_ok`. `describe_shape` gains `Lang.Bell.shapeOk pk` for the `pk` that `readPackage (worldLook X.env w) P` reads; `delivered_answer_committed_strong` exports it; `answered_row_is_kept_answer` loses the `shapeOk pk = true →` premise of its run implication and states `shapeOk pk` outright. The Bell premise of HOSTING-44 is now the resident's own check, of the object its config names.
+
+**Why bytes in the description, and not the alternatives (the fork, named).** (a) The task's own sketch, compare the described package id with the shipped Bell's id: the id is a content digest, so the theorem would carry a hash disjunct (the cell's bytes vs the shipped Bell's) and a `RomContent` premise on follow's World (proved for folds, `fold_romContent`, not for follow's base), and the resident would need the shipped Bell's bytes or id built in. (b) A second command (`read PKG ?` on a package cell): the resident's tick tree would gain a describe, re-cutting `tick_counts`/`tick_order` and the Lifetime provenance for no gain. (c) Bytes in the one describe: no premise, no hash, no tick change; the price is a longer description (the Bell's: about 2 x its package bytes in hex, within `frameBytesMax`).
+
+**What re-emits / breaks.** `read OBJ ?` output gains one line for every object with a package. No frame layout, wire codec, VK or genesis changes; nothing re-emits. A reader that matched the description line by line sees one more line (the rows' `bind`s read the head; judged at the next convergence).
+
+**Plants (MEASURED, hbox wt/backlog, `logs/backlog/plants/`).**
+- The positive case is in `launcher/tests/resident_bell.rs`: a Bell planted to write the ring's own text as the answer (LBw's plant: the same `answer` type and `pending` layout, so `Shape.ofLines` alone accepts it), installed, created with the resident's member, granted `observe,invoke:0`, rung once; the config names it. GREEN (`c4-resident_bell.log`: `1 passed … finished in 80.44s`): `bellShape notBell` within 120 s, no ask, the ring still pending, no answer.
+- `Shape.read` without `bellCore`: `Hosting.Proofs.SocketStrong` RED at `shape_read_ok` (l.387, `C4-no-bell-check.build.log`); the resident built from it serves the planted Bell and `resident_bell` RED by name, "hang: a notBell end not within 120 s" (`C4-no-bell-check.test.log`). Restored byte-identical.
+
+**Critique.**
+- The check is `shapeOk`, a property of the package's parts the witness reads, not equality with the shipped core. Two Bells that agree there (doc text, method order) both pass. That is the right grain for the theorems, which speak of `shapeOk`, not of a byte string.
+- The resident trusts `ofHex` / `decodePackage` to be the functions follow used; `describeText_core` + `ofHex_hex` + `readPackage_ok` make that a theorem for `describe_shape`'s `pk`, so nothing is trusted beyond the `stdio-leg` row.
+- A package bigger than the frame minus its description would now fail to describe. INFERRED: the kernel bounds a package by `eventBytesMax` (65536), so the hex is at most 131072 of `frameBytesMax` 262144; the rest of the description is not bounded by a theorem here.
+
+**Meta-critique.** The pull was the task's own sketch, an id comparison, because it reads as the cheap fix ("the resident compares two ids"). Priced, it adds a hash disjunct and a premise about follow's base to every downstream theorem, the premise-spread the KERNEL lesson (price premises, not only cost) warns about. The bias was taking "the cheap check" for "the cheap theorem".
+
+## HOSTING-46 · An abandoned ring does not stall the resident's queue: measured, and stated (2026-10-23, CX-BACKLOG-2; closes cv 01a1682e-7f9d, filed by CX-DEADLINE at LANG-76; R-0069)
+
+**The claim (INFERRED by CX-DEADLINE, never run).** A ring retired (LANG-76's deadline arm) between the resident's read of `pending` and its answer would end the resident `answerRefused` and stall the queue until a restart.
+
+**The measurement (MEASURED, hbox wt/backlog, `logs/backlog/c7-measure.log`).** New launcher row `resident_bell` Q7. Its steps:
+1. The resident is stopped and a ring `abandoned` is rung.
+2. 2048 writes (the Bell's patience) move the World past its deadline.
+3. The provider is set to hold the next ask, and the resident is started.
+4. Once the ask reaches the provider (so after the resident's read and before its answer), the owner retires the ring (`invoke BELL 3 …` with both pins). The ring leaves `pending` and `rings`.
+5. The hold is released.
+
+The resident's whole log for that process:
+
+    resident: resumed nothing kept
+    resident: serving bell 81ad44f5…
+    resident: describe exit 51 behind 1826 2086
+    resident: bell answer method 0 pending limit 64
+    resident: asked; answer 10 bytes
+    resident: answer refused (refused lawDenied); the ring is no longer pending
+
+A ring `after` is then rung and answered. Q7 asserts exactly one more ask and no `answerRefused` end. GREEN: 1 passed in 218.44 s (Q7 adds about 135 s to the row).
+
+**It does not reproduce. Why, exactly.** `deliverP` judges every refusal by the bell's ROWS, not by its name. After a refused answer it re-reads `pending`, and only if the ring is still listed does it end `answerRefused`. A retired ring is not listed, so the kept answer is forgotten and the tick ends `next`. The claim read Run's header ("a refusal that singled out one ring would block the rest") and missed the re-read branch. The header now names the abandoned ring as not such a refusal.
+
+**Stated** (`Hosting/Proofs/ResidentRun.lean`). `deliver_gone_continues`: in a run of `deliverP` whose invoke came back refused and whose re-read lists rings without this one, the tick ends `next {kept := none, unread := 0}`, or `stop volume "forget"`, and never `answerRefused`. Plant (MEASURED, `logs/backlog/plants/C7-gone-stops.build.log`): the gone branch ending `answerRefused` reds `deliver_core` (l.184), `deliver_kept` (l.503) and `deliver_gone_continues` (l.542) by name. Restored.
+
+**Also changed.** The row's 2048 extra heights left a member started later in the row (the race's `c2`) more than a page budget behind, so its first `sync` answered `behind` (51). That is follow's correct answer for a long catch-up (PROTOCOL-38). The row's `member_sync` re-runs `sync` while it answers `behind`, at most 64 times.
+
+**Critique.** Q7 costs about 135 s of the smoke for one race. The theorem covers every interleaving; the row covers one. The row stays because it is the measurement the theorem was built from, and it is the only end-to-end run of LANG-76's deadline arm with a live resident.
+
+**Meta-critique.** The pull was to build the fix the card offered ("skip by refusal name") before measuring. That would have added a second path beside a re-read that already did the job.
+
+## HOSTING-47 · The journal join is bounded by follow's own frames: `journal_committed` and `answered_row_committed` restated over an explicit path (2026-10-24, FIX-HOSTING; readers/COLLATION-20261024 §A5, READ-HOSTING D1; R-0069, R-0071)
+
+**Finding (READ, READ-HOSTING D1).** `Committed.journal_committed` (PROTOCOL-69) ended in a third disjunct: some byte string `b ≠ callBytes c`, decoding to a call received and admitted at ANY World satisfying `Q`, has `c`'s id. The set of such `b` is unbounded (any member keys, any arguments), so a 32-byte `domTx` digest has second preimages of the fixed target among it with overwhelming likelihood: the disjunct holds by counting, whatever the premises (the 10-20 minted class: a disjunct provable from the premises is vacuous). PROTOCOL-69's defence ("a second preimage, `c` fixed by the premises") answered the wrong question: fixing the target does not help when the domain is unbounded. `answered_row_committed` inherited it, and its first disjunct, `wb.journalAt … = some e`, was its own premise `hj` at `wb := wf` (`Reach.refl`).
+
+**Decision: the bounded form, because it was a lemma away (two, measured below).** Not the delete. The path follow took is a premise the statements can name.
+1. **A frame's events are a function of its bytes** (CROSS-LAYER: PROTOCOL). `Protocol/Command/Frames.lean` (a def module: closure C3 keeps non-Prop definitions out of proof modules): `frameEvents res`, the events of a log page in the result as the Host sent it or in custody's `ok` payload (`stepResult`'s two readings); `frameCalls`, `pathCalls S` their call bytes. `Machine.eventCall` is the call bytes of an event, and `absorbStep` now decodes `eventCall e` (one definition of that slice, not two; `absorbStep_refusedFinal`'s proof unfolds it). `Protocol/Proofs/FollowHead.lean`'s `step_world`: one `Command.step` leaves follow's World as it was, or `absorbPage`s events all in `frameEvents result`, or adopts at a World `atGenesis`. `step_keeps` is now proved FROM `step_world` (one case analysis of the machine, not two; its statement is unchanged).
+2. **The provenance names its bytes** (`Protocol/Proofs/FollowJournal.lean`). `JournalFrom X Q L w₀ w` gains the list `L`: every journal entry is `w₀`'s or the commit of a call decoded from bytes IN `L`. `absorbStep_journalFrom` needs the event's call bytes (`eventCall`) in `L`; `step_journalFrom` needs the frame's `frameCalls` in `L`. The untraced form had no other consumer.
+3. **The path is a premise** (`Hosting/Proofs/Socket.lean`). `Moves X dc B me res w w'` names the frame's result; `ReachOn S w w'` is the inductive over frames whose results are `S`; `Reach w w' := ∃ S, ReachOn S w w'` (one inductive, not two: `Reach.refl/trans/step` are theorems, `reach_packageAt` inducts on `ReachOn`). Every landed use of `Reach` is unchanged.
+4. **The theorems** (`Committed.lean`, `BellRow.lean`). `journal_committed`: from `ReachOn S w₀ w`, a `w₀` that held NO entry at `txIdOf X c` (`hfresh`, new), and `w` journalling `e` there: `X.callBytes c ∈ pathCalls S` and `c` was received at a `Q` World with canonical rows and admitted, `e` its entry; or `CollidesAmong X.env.hash ((callBytes c :: pathCalls S).map (domTx, ·))`. `answered_row_committed` the same over the bell's rows. The freshness premise deletes the base disjunct that was its own premise; the list is fixed by the premises (`S`, `c`), so the collision is one somebody FOUND and handed follow.
+
+**The census (MEASURED, hbox wt/fixhosting, `python3 logs/fixhosting/a5_plant.py .lake/scratch/a5`).** `#statement_census` over Hosting plus a scratch module `HostingPlant.A5` holding the PRE-restatement statement (proof `sorry`; never in the tree): `STATEMENT-CENSUS ok: 21 disjunctions`. Rows: `journal_committed` ok and `answered_row_committed` ok, each with right disjunct `CollidesAmong X.env.hash (List.map … (X.callBytes c :: pathCalls S))`. The plant `journal_committed_unbounded` ALSO reads ok: one side of its hash equation is `txIdOf X c`, the premise's, so GATES-20s's two-chosen-sides rule does not fire. That is GATES-20s's own named miss ("a lucky second preimage"). FIX-GATES had no report when this landed (`work/codex/FIX-GATES.report.md` absent, 2026-10-24); the plant stays a scratch theorem the census SHOULD red, and is handed to FIX-GATES: a hash equation with one side fixed and the other's input bound by an `∃` that no membership guard bounds is the unbounded second preimage.
+
+**Builds (MEASURED, hbox wt/fixhosting, `SWARM_MEM_MAX=6G LEAN_NUM_THREADS=2 swarm-build`).** `lake build Protocol Host` and every `Hosting` module but `Hosting.Proofs.Reply`: 348 jobs green. `Hosting.Proofs.Reply` is EXCLUDED (OOMs at 10 GB alone, HOSTING-43; this card does not touch its closure). `step_world` first timed out at 200000 heartbeats: the case split unfolded `next` (replies are irrelevant to the World) and its adopt arm ran `simpa` on whatever `rename_i` named; with `unfold step` only and the adopt arm reading its own `¬(!atGenesis _) = true` hypothesis it fits the default budget (no `maxHeartbeats` option anywhere).
+
+**Price.** RESTATES-MEANING: `journal_committed` (new premises `ReachOn S` for `Reach`, `hfresh`; new conclusion), `answered_row_committed` (the same), `JournalFrom` and its four lemmas (`L`), `step_journalFrom` (`hL`), `Moves` (the result is a parameter), `Reach` (an `∃` over `ReachOn`). Premises added: `hfresh` to the two theorems; `hL`/membership to the provenance lemmas. Nothing deployed consumes either theorem (grep: docstrings only). No wire, VK or genesis change; nothing re-emits.
+
+**Critique.**
+- `v`, the World the call was admitted at, is still not tied to the path: it satisfies `Q` and has canonical rows. The call's BYTES are on the path, which is what the hash disjunct needed; a World-indexed trace would also pin `v`, and nothing consumes that yet.
+- `hfresh` is a premise nothing proves for the resident's own call: the planning World does not journal the signed call's id (another id), but no theorem says the base lacked it. It is satisfiable (a genesis World's journal is empty) and it is the honest shape: "an entry the path ADDED".
+- `frameEvents` over-approximates: it lists the page under both readings of the result, though one phase reads only one. Over-approximation only lengthens `pathCalls`, i.e. a collision among MORE of the frames' own inputs; still a list the premises fix.
+- The resident-level composite is still not stated: there the call is the conclusion's choice. Composition is by application, as PROTOCOL-69 said.
+
+**Meta-critique.** The pull was the cheaper half of the card: delete both theorems and say "the join is at the text grain", because the bounded form looked like a re-proof of follow's machine. It was two lemmas (`step_world` by the same case split `step_keeps` already used, then `step_keeps` re-derived from it), and the cost estimate would have become the constraint. The second pull, once the bounded form built: to call the census green "the census reads it ok", when the census reads the UNBOUNDED form ok too. A gate that cannot tell the two apart certified neither; the only evidence the new form is bounded is its statement, read here, not the gate's row.
+
+## HOSTING-48 · No refusal repeats forever: every retry the resident schedules is counted, and `retriesMax` of them in a row end it `retryExhausted` by name (2026-10-24, FIX-HOSTING; COLLATION §A13, READ-HOSTING D3 and B4, B8; answers HOSTING-46's question; R-0069, R-0071)
+
+**Finding (READ, READ-HOSTING D3).** An invoke reply whose exit is neither `ok` nor `refused` (`uncertain` 2, `behind` 51, `client` 52, `declined` 53, `open` 54, `hostContradicted` 55, `pageIo` 57) or a transport `.error` took `.say "answer unsettled …" (.done (.next m))` (Run.lean:367, :344): retried every second, for up to `lifetimeTicks` = 2^48 ticks, never ending by name, against the module's own rule ("a refusal must not repeat forever", Run.lean:137-139). The describe and read failures did the same (a describe refused `wrongKind` looped forever), and an ask never sent. `Socket.deliverAfter_unsettled`'s docstring called these "crash-stop"; its statement was a true one-tick iff with the failure's continuation, and the failure's continuation was the unbounded retry. `Mem.unread` counted only refusals whose re-read failed, and "in a row" was not in a row (B8: nothing reset it but an ok answer or a gone-forget).
+
+**Decision.**
+1. **One counter, one bound, one name** (`Hosting/Resident/Run.lean`). `Mem.retries` (was `unread`): ticks in a row that ended on a retry. `retriesMax := 32` (law 4's bound vocabulary; 32 ticks at `tickMs` is half a minute, every tick's read and answer each catching follow up by `pagesPerCommandMax` pages). `retry m why`: one more counted, or `.stop .retryExhausted why` once that would be `retriesMax` (new `Exit.retryExhausted`, code 17). EVERY tick end that schedules a retry goes through it: describe/read failure or non-ok exit, invoke failure or exit neither `ok` nor `refused`, a refusal whose re-read failed (was `unreadMax`, deleted), an ask never sent. Every settling end sets `retries := 0`. The detail names the last thing that did not settle (`retryExhausted answer exit 51`).
+2. **The theorems** (`Hosting/Proofs/ResidentRun.lean`). `Unsettled : Ev → Prop` (the trace-level reading of "did not settle"); `Retried n a`. `tick_retry`: every path of `tickP` holding an `Unsettled` effect ends `Retried m.retries`, or `volume` (the forget after an unsent ask failed). `tick_lt`: every memory a tick hands on has `retries < retriesMax`. **`no_refusal_repeats_forever`**: for a chain `Ticks w m ess` from `m.retries < retriesMax` whose every tick holds an unsettled effect, `ess.length ≤ retriesMax - m.retries`. `Socket.deliverAfter_unsettled` restated: on a path of `deliverP` whose invoke came back neither ok nor refused, nothing follows it and the tick ends `Retried`.
+3. **One inductive over a process's ticks** (B4). `Ticks` moves into `ResidentRun` (from `BellConform`); `Lifetime.Lifetime`, its flattened twin, is DELETED, and its consumers (`shape_provenance`, `lifetime_bounds`, `lifetime_invoke_kept`, `delivered_answer_committed_strong`, `answered_row_is_kept_answer`) are restated over `Ticks w m ess` and `core ess.flatten`. The duplicated `core_append` (Lifetime, BellConform) is one, in `ResidentRun`.
+4. **A launcher row** (`launcher/tests/resident_bell.rs` Q8, CROSS-LAYER: the brief's row, in CLIENT/RUST's crate). The resident exe runs on its true argv, its member socket a proxy at the plan's path under another root (`behind_proxy`): describe and read pass through to the real member socket, every invoke is answered exit `behind`. Asserted: exit 17 and last stderr line `resident: retryExhausted answer exit 51`; every invoke the proxy answered is one logged `answer unsettled exit 51`, more than one; at most one tick a second (plus 30 s); exactly one ask; the ring still pending; then the grain answers it from the kept text, no second ask. The bound's value is not copied into Rust: the row reads it off the log (law 2).
+
+**Plants (MEASURED, hbox wt/fixhosting, each restored byte-identical: `cmp` against the saved copy).**
+- `retry` never stopping (`.next { m with retries := m.retries + 1 }` always): `logs/fixhosting/plants/A13-retry-unbounded.build.log`, RED at `retry_retried` (ResidentRun.lean:95-103) and `retry_lt` (:849-850), the two facts `no_refusal_repeats_forever` and `tick_lt` stand on.
+- the old behaviour on one branch (`behind` and the other unsettled exits back to `.done (.next m)`): `logs/fixhosting/plants/A13-behind-unsettled-uncounted.build.log`, RED at `deliver_retry` (:741), `deliver_lt` (:892) and `deliver_kept` (:548).
+
+**Builds (MEASURED, hbox wt/fixhosting, 6G swarm-build).** Every `Hosting` module but `Hosting.Proofs.Reply`: 259 jobs green (Reply EXCLUDED as in HOSTING-47).
+
+**The row (MEASURED, hbox wt/fixhosting, `logs/fixhosting/q8-row.log`).** `cargo test --locked -p nanodregg-launcher --test resident_bell` with ND_LEAN_BIN = the worktree's freshly built `resident hosting-controller hosting-broker host hosting-residents`: `Q8: 32 retries in 33 s, then retryExhausted`; `test result: ok. 1 passed`, 371.28 s for the whole row.
+
+**Price.** RESTATES-MEANING: the five Lifetime consumers (`Ticks`/`ess.flatten` for `Lifetime`/`es`), `bell_resident_conforms` (`ResidentRun.Ticks`), `deliverAfter_unsettled` (a new statement), `deliver_runs` (ends `retry m "answer e"`), `deliver_gone_continues` (`retries := 0`). DELETES: `Lifetime.Lifetime`, `BellConform.Ticks`, both `core_append`s, `Mem.unread`, `unreadMax`. Behaviour: a resident whose member keeps answering an unsettling exit, or whose sockets stay down, now EXITS 17 after `retriesMax` ticks instead of spinning; its controller counts the exit toward `crashLoop` (`Controller.restartsMax`) and relaunches it once the window passes (HOSTING-38). A refusal whose re-read failed used to end `answerRefused NAME (…; state unread)` after 8; it now ends `retryExhausted answer refused NAME (…); state unread WHY` after 32. Nothing re-emits; no wire or genesis change.
+
+**Critique.**
+- 32 is a choice, not a measurement. A follower far behind (a member re-genesised, a long log) answers `behind` while it catches up; at 2 × 28 pages a tick the resident gives it 32 × 56 pages before it ends and the controller's restart budget takes over. The right bound would be stated in pages, or reset on observed progress (the `behind HEIGHT TIP` line carries it); the resident does not read it. Named, not built.
+- `Unsettled` is the program's branch conditions restated at the trace grain (B5's pattern, again). It is tied to the program by `tick_retry`'s proof, and the plants show the tie bites, but a new failure branch in `tickP` that forgets `retry` is caught only if it also forgets an `Unsettled` case.
+- An ask never sent now counts: a broker socket down for half a minute ends the resident. That is the bound applied uniformly; whether "costs nothing" deserves its own, larger budget is a taste fork I did not take.
+- The row shows one instance (`behind` from a proxy); the theorem covers every unsettled exit. The row costs ~32 s.
+
+**Meta-critique.** The pull was to bound only the invoke branch the card names (exit ∉ {ok, refused}) and leave the describe/read/ask retries as they were, "out of scope". Those were the same defect at other nodes (READ-HOSTING D3 lists `wrongKind` looping on the describe), and one counter is less to trust than four. The second pull: hand-copy `32` into the Rust row so it could assert the exact count. The row now reads the count from the resident's own log and checks the invariant (one logged retry per invoke, one tick a second), which is what the theorem says; the value is the Lean table's.
+
+## HOSTING-49 · What the member says is decoded once, refused by name when it is not text, and checked to describe the configured bell (2026-10-24, FIX-HOSTING; COLLATION §A14, READ-HOSTING D2, Q4, B1, B3, B5, B6; R-0069, R-0071)
+
+**Finding (MEASURED by the reader with lean, READ-HOSTING D2).** A read reply whose stdout is not UTF-8 became `""` (`(String.fromUTF8? r.stdout).getD ""`, Run.lean's read and re-read, Trace.lean's `readRings`), which `Ring.readAll` reads as zero rings. The resident then forgot its kept answer and asked again, a second meter charge, and `BellConform.Frees` counted that read as freeing the ring, so `bell_resident_conforms` called the double ask legal. Law 7: a decode failure rendered as the verdict "nothing pending". With it (Q4): the describe's reply was never checked to be OF the configured bell (the `object` line is printed and ignored); (B1) the range read and the description were split by two splitters; (B3) `textMax = 2000` was a twin of `Lang.Bell.answerBounds` with a stale justification; (B5) the theorems' `readRings` restated the program's inline decode; (B6) a refused description ended `bellShape description`, its reason only on the line before.
+
+**Decision.**
+1. **One decoder for each reply, refusing by name** (`Hosting/Resident/Run.lean`). `readOut sh r : Except (Exit × String) (List Ring)` and `describeOut c r : Except (Exit × String) Shape`: stdout not UTF-8 → `undecodable` (new `Exit.undecodable`, code 18) before any parse; a line that does not read → `bellShape NAME`. The tick's read, re-read and describe, and the theorems' `readRings`/`describedShape` (Trace.lean), are these functions (B5's "one definition"). A refused description ends `bellShape <reason>` (B6).
+2. **The description is of the configured bell** (`Hosting/Resident/Bell.lean`, law 4). `Shape.ofDescription bell out`: the `object HEX` line's hex must be `bell`'s bytes, or `wrongObject`; then `Shape.read`. `describedShape` takes the config, so `Lifetime.shape_provenance` now reads "a describe of `w.conf.bell` whose reply reads as `sh`".
+3. **One splitter** (B1): `Ring.readAll` splits with `splitLines`, the description's splitter; a blank line is still no row.
+4. **One bound** (B3): `textMax` is the `text` field's upper bound in `Lang.Bell.answerBounds`, the bounds the package `bellCore` accepts carries (`Lang.Bell.shapeOk` checks its `answer` term, `boundCheck` over them). `textMax_le_bytesMax` still decides.
+5. **Theorems.** `BellConform.undecodable_frees_nothing`: a read or re-read reply whose stdout is not UTF-8 frees no ring (`bell_resident_conforms`'s `Frees` no longer counts it). `ResidentRun.read_undecodable_stops`: such a read ends the tick `undecodable read`, nothing after it. `SocketStrong.describeOut_ok`, `describedShape_names_bell`: an accepted description's `object` line names the config's bell.
+
+**Plants (MEASURED, hbox wt/fixhosting, restored byte-identical by `cmp`).**
+- `readOut`'s undecodable branch back to the old reading (`Ring.readAll sh ""`): `logs/fixhosting/plants/A14-undecodable-as-empty.build.log`, RED at `read_undecodable_stops` (ResidentRun.lean:1013). `undecodable_frees_nothing` (BellConform, which imports ResidentRun) is not reached in that build; it reads `readRings`, which is `readOut`, so it stands on the same function.
+- `objectNamed … || true`: `logs/fixhosting/plants/Q4-object-unchecked.build.log`, RED at `describeOut_ok` (SocketStrong.lean:541), which `describedShape_names_bell` and the strong theorem use.
+
+**Builds (MEASURED).** Every `Hosting` module but `Hosting.Proofs.Reply`: 263 jobs green (Reply EXCLUDED).
+
+**Price.** RESTATES-MEANING: `readRings`, `describedShape` (now `describedShape c`), `TickCore`, `tick_shape`, `shape_provenance`, `Ring.readAll`, `textMax`, `readRings_ok`'s proof. Behaviour: a non-UTF-8 member reply now ENDS the resident `undecodable` (exit 18) instead of reading as empty; a description naming another object ends it `bellShape wrongObject`; the describe's end line is `bellShape <reason>`. An honest follower prints every byte string as `"text"` or `#hex` (Lang/Print.lean), so neither reaches a correct deployment; both are what the trusted relay (`stdio-relay`) could produce. Nothing re-emits.
+
+**Critique.**
+- `undecodable` ENDS the resident rather than retrying. A corrupt byte is either a relay fault (end, by name, and let the controller restart it) or a follower printing non-text (a bug that a retry repeats); a retry counted by HOSTING-48 would also have been defensible. I chose the end because the describe path already ended `bellShape` on unparseable output.
+- `objectNamed` compares the FIRST `object` line. `describe` prints exactly one (Machine.lean's first line), so the first is the one; the check does not prove that, it trusts the grammar the statement reads.
+- `textMax` reads `answerBounds` by the field path `["text"]`. If Lang renamed the field, `textMax` would be 0 and `fit` would answer `(empty reply)` for everything; no theorem pins the path. `fit_size`'s `0 < size` still holds (it names the empty reply), so it would fail loudly in the rows, not in the proofs.
+
+**Meta-critique.** The pull was a one-line fix at Run.lean:400 (`getD ""` → refuse) and leave `readRings` as a second copy of the decode, because the card names one line. The reader had already named that copy (B5); fixing the line and not the copy would have left `Frees` reading the old semantics while the program read the new one, a green proof about a program that no longer exists.
+
+## HOSTING-50 · The `stdio-leg` trust row is four trusts; the one that was a theorem away is now a theorem (2026-10-24, FIX-HOSTING; COLLATION §A20, READ-HOSTING Q1; R-0069, R-0071)
+
+**Finding (READ, READ-HOSTING Q1).** gates/tcb.tsv's `stdio-leg` row was one long sentence bundling four trusts: (1) the byte relay (argv in, continuations back, `done` out); (2) topology: ONE follower behind the member socket for the resident's process life; (3) follow's World moves only by the frames it answers; (4) a restarted follow reopens exactly what it persisted; and, named only in HOSTING-42's meta-critique, (5) WHICH continuation nd sends back.
+
+**Decision.** The row is deleted and replaced by four rows, each one sentence, each with its own lift condition:
+- `stdio-relay` (client/src/{stdio,run,sockets,frame,mux}.rs): nd --stdio moves the three byte fields and nothing else.
+- `stdio-one-follower` (nd-supervise, Ops units): one follower on one Store serves the member socket for the resident's process life (READ-HOSTING Q3: a member re-genesised under a running resident breaks it; named in the row).
+- `stdio-continuation` (client/src/run.rs, attempt.rs): nd resumes follow with the continuation follow handed out for THIS command (any result; never another command's). Lift: follow authenticates its continuations.
+- `follow-loop` (Host/Follow.lean `loop`, Host/Loop.lean `append`): the IO loop answers each frame only after its absorbed steps are durable and goes on with exactly the World `Host.Follow.answer` returned.
+
+**Proved, so no longer trusted** (`Hosting/Proofs/FollowAnswer.lean`, new). `answer_world`: the World `Host.Follow.answer` returns is the one it was given (a refusal before the machine, a hang-up, `Command.start`) or `Command.step`'s on the continuation and result of the value `v` the frame's own payload decoded to as a `resume` frame (stated: `resumeFrame.decode f.payload = .ok v`). `answer_reach`: so it is `ReachOn S` from the given World with `S = []` or `S = [v.2.1.1]`, that frame's result: the list the journal join (HOSTING-47) bounds by. This is the pure half of trust (3), which the old row carried whole; what remains in `follow-loop` is the loop's three IO arms handing that World on (code reading: `world := fs'.world`; `Host.append`, whose Resident takes `w'` for a non-empty batch; `world := w'` at an adopt, where `Command.step`'s adopt arm returns that World).
+
+**Cited, not a row.** Trust (4): a restarted follow reopens by the writer's own open (`Host/Follow.lean` header, HOST-22), and `Host.Proofs.Refine.host_reopen_folds` states that whatever base and segment bytes the deployed open reads, the World it returns is the fold of exactly the steps its records decode to; the physical IO under it is the existing `extern:Host.File` row (HOST's). That the records ARE the steps follow answered is the `follow-loop` row's "only after the steps are durable".
+
+**Builds (MEASURED).** `Hosting.Proofs.FollowAnswer` green on hbox (6G swarm-build); `python3 gates/tcb.py` below.
+
+**Price.** No theorem restated; `StdioLeg`'s statement is unchanged (its docstrings now name the four rows). New theorems: `answer_world`, `answer_reach`. Nothing re-emits.
+
+**Critique.**
+- (3)'s proven half is about `answer`, not `loop`: the theorem does not see the IO. The loop is three lines per arm and the row says exactly what is read there; the lift is the pure-round factoring Host.Loop's writer already has.
+- (2) and (5) remain trusts about Rust and the deployment. (5) is the sharper: a relay that resends another of follow's OWN continuations is outside every theorem here; follow-side MAC on continuations would make it follow's choice. Named as the lift; not built.
+- COLLATION A20's other half (tcb.py comparing sha256 pins; rows for rustix, linux-raw-sys, libc, errno, windows-sys) landed beside this card at 294d1c5 (GATES-20y); the four rows here sit under that table and `tcb.check` reads them `[]`.
+
+**Meta-critique.** The pull was to delete trust (3) outright as "already a theorem" because `FollowRun` quantifies over `Reach`. `Reach` is a premise, not a fact about the deployed loop; what was a theorem away was the pure `answer`, and the IO glue is still a trust. Deleting the row would have been the "honestly labelled" move in reverse: a trust renamed a theorem.
+
+## HOSTING-51 · The reply reader's fuel and depth are theorems, not 12 GB teeth: `Hosting.Proofs.Reply` builds in 1.6 GB (2026-10-24, FIX-REPLY; READ-HOSTING law 9, the Reply item; cv 01a16fec-e804)
+
+**Finding (MEASURED, hbox, `LEAN_NUM_THREADS=1 lake env lean` under a 16G `swarm-build` scope, `/usr/bin/time`).** The module took 86 s and peaked at 12779 MiB (13,085,292 KiB) alone. It was OOM-killed at 6 GB and 10 GB, built once at 15 GB (FIX-HOST-2), and the 6 GB convergence of 10-24 was cgroup-killed on it (84 false reds). `set_option profiler` names no declaration for kernel time, so each declaration was elaborated alone: the module's imports and private defs, plus that one theorem. Every peak includes the ~762 MiB the imports cost.
+
+| declaration | term | wall s | peak MiB |
+|---|---|---|---|
+| (imports + `rd`, `nest`, `nestObj` only) | — | 1.1 | 762 |
+| `reply_status`, `answerCodec_lawful`, `decodeRequest_reply`, `decodeAnswer_reply`, `reply_encodes`, `reply_over` | `simp`/`rw`/`omega` | 0.3–0.5 | 766 |
+| `blocks_tooth`, `decoy_tooth`, `malformed_teeth`, `utf8_tooth`, `escapes_tooth`, `whitespace_tooth`, `shape_teeth`, `status_tooth` | `decide +kernel`, bodies ≤ ~90 B | 0.3–2.6 | 766 |
+| `depth_tooth` | `decide +kernel`, 64 nested arrays (~170 B) | 4.4 | 1075 |
+| `anthropic_tooth` | `decide +kernel`, ~290 B | 7.2 | 1317 |
+| `object_depth_tooth` | `decide +kernel`, 63 nested objects (~360 B) | 28.1 | 4624 |
+| `fuel_tooth` | `decide +kernel`, a 300-element array (~650 B) | 65.4 | 11982 |
+
+The whole file's peak is the largest declaration plus a little (12779 against 11982). So declarations were checked one after another and each one's memory was freed (INFERRED). **What the cost is (MEASURED by variants).** It is the kernel running the reader `Json.value` on a closed body. It is not the building of the body string: computing `.toUTF8.size` of the 300-element body takes 0.8 s and 764 MiB. The same body written as a literal costs as much as the `intercalate` (12210 MiB, 66.7 s). The 63-object body as a literal costs 3327 MiB. The cost grows with the square of the body. For bodies of 100, 200 and 300 elements the peaks are 2105, 5929 and 12210 MiB, or 1343, 5167 and 11448 MiB above the base: 1 : 3.8 : 8.5. The mechanism is INFERRED: `byteAt b i` is `b.data[i]`, and the kernel reduces that by walking the array's underlying list, so each access costs O(i) steps and every step is cached.
+
+**Decision.** The two big teeth were each one instance of a general fact. The general facts are now proved for every body, and the instances are deleted.
+- `value_fuel` (with `value_ge`, `ws_ge`, `dropNum_ge`, `unstrAcc_ge`, `atom_ge`, `byteAt_lt`) says fuel past the bound never changes a reading. A value at `i` read with at least `3 * (b.size - i) + 1` steps reads the same with any more; an array's elements or an object's members need `+ 2`. `replyText_fuel` is the consequence for `replyText`: `Json.value body (3 * body.size + 3 + k) depthMax 0 = Json.value body (3 * body.size + 3) depthMax 0` for every `body` and `k`. The fuel never decides a body. `fuel_tooth` showed this for one 650-byte body.
+- `value_depth` (with `value_depth_mono`, `value_within`, `value_depth_conv`, `elems_acc`, `members_acc`) says the depth bound is exact. For `d ≤ d'`, `Json.value b n d i = some r ↔ Json.value b n d' i = some r ∧ Within d r.1`. `Within d v` (a new `inductive … : Prop`) means `v` is nested at most `d` levels: every value is one level, and an array's elements and an object's member values sit one level under it. So objects use up depth exactly as arrays do, for every body. `object_depth_tooth` showed this at one boundary.
+- `depth_tooth` stays. It is the cheap instance (1075 MiB) that pins the constant: 63 nested arrays are read and 64 are refused. The module docstring now says why a tooth is short and why a fact about long or deep bodies is a theorem.
+
+**After (MEASURED).** `lake env lean Hosting/Proofs/Reply.lean` alone: 11.9 s, 1640 MiB. `SWARM_MEM_MAX=16G LEAN_NUM_THREADS=1 swarm-build lake build Hosting.Proofs.Reply` from a warm tree: 21.2 s, 1620 MiB peak for the build, green under `warningAsError`. Axioms: `replyText_fuel` uses `propext, Classical.choice, Quot.sound`; `value_depth` uses `propext, Quot.sound`. The module is now well under the 6 GB lane budget.
+
+**The ceiling (lands as a GATES change; the judge's code is judged in full, so it waits for the running convergence).** `gates/build_peak.py` is a `script:` row of gates/runs.tsv. It reads `gates/build-peaks.tsv` (`module<TAB>ceiling-MiB<TAB>why`). After the build it elaborates each listed module alone, single-threaded, and reads that process tree's peak RSS from `os.wait4`. Above the ceiling, a missing file or a failed elaboration is `FAIL` by name. `--harness-control` reads every ceiling as 1 MiB. Row: `Hosting.Proofs.Reply 2560`. SIZE.md is the wrong place for it. gates/size.py measures the source tree before anything is built, and its metric executables have a 120 s timeout. A peak is a property of an elaboration, so the gate runs after the build. MEASURED on the new module: `peak 1631 MiB … BUILD PEAKS GREEN`. The control gives `peak 1670 MiB … FAIL … (harness-control …)`, exit 1. The plant is the old module put back in place: `peak 12894 MiB ceiling 2560 MiB` / `FAIL Hosting.Proofs.Reply: peak 12894 MiB above its ceiling 2560 MiB`.
+
+**Price.** Landed theorems gaining a hypothesis: none. RESTATES: none. DELETES: `fuel_tooth`, `object_depth_tooth`, the private `nestObj`. Each is subsumed by a theorem for every body. New statements: `Within`, `value_fuel`, `replyText_fuel`, `value_depth` and its parts, and the index lemmas. No code changed; nothing re-emits.
+
+**Critique.**
+- `replyText_fuel` says the fuel never decides a reading. It does not say that a 300-element array before `content` is read; that the array grammar reads such a body rests on the short teeth plus the fuel theorem. A length-dependent bug other than fuel cannot hide here: the indices are `Nat` and nothing else in the reader counts. That is a reading of `Hosting/Reply.lean`, not a theorem.
+- `Within` is a statement the reader has to accept as the meaning of "nested at most d". It has four constructors and the docstring names them. `value_depth` relates the reader to `Within`; nothing relates `Within` to RFC 8259's informal nesting.
+- The ceiling covers one listed module. The general hole remains: any other module that is silently heavy is found by an OOM, as this one was. Closing it needs the per-module peak of every module the build elaborates, which means wrapping the `lean` that lake runs. That is filed as cv 01a17003-b9dd, not done here.
+- The measured peak includes the mmapped import `.olean`s (~760 MiB), so it moves as Kernel and Codec grow. The ceiling of 2560 leaves 920 MiB of headroom. A 650-byte tooth adds ~11 GB and is red at once; growth in the imports alone would take years of current growth to reach the ceiling (INFERRED).
+
+**Meta-critique.** The brief offered "move the heavy theorem to its own module and list it". That keeps a 12 GB module in the default target and only gives the OOM a better name. Shrinking the tooth to a 100-element body (2.1 GB) would have weakened a check. Each tooth was one sample of a fact that is easy to state in general. The general proofs elaborate in about a second, and each is strictly stronger than the sample it replaces. The remaining pull was to delete `depth_tooth` as well, since `value_depth` covers its shape. It stays: `value_depth` is relative to a deeper reading, and the tooth is what shows the constant 64 is where the boundary sits.
+
+## HOSTING-52 · A real model answers the Bell: the deployed resident through keybroker, THE PIN and the Anthropic API, as an opt-in row that reads the receipt and the budget (2026-10-26, FABLE-AGENT; `redregg/work/promo/DESIGN-AGENT.md` A0, §1)
+
+**Premise price.** Landed theorems gaining a hypothesis: none. Restated or deleted: none. No `.lean` module changes. New: `launcher/tests/agent_real.rs` (not a `gates/runs.tsv` row), one letter in `launcher/tests/common/mod.rs`'s socket-directory table.
+
+**Finding (MEASURED).** The provider was already real in the deployed path: `Broker.providerOf` names `api.anthropic.com` for every `claude-*` model, `Hosting/Pins.lean` ships THE PIN (OPS-19), keybroker verifies the chain and the leaf's SPKI before a request byte. What stood between the resident and a model was HOSTING-27's operator act: a key file. The only "stub" was the test suite's fake TLS provider (`common::REPLY = "hello back"`). So "replace the provider by a real LLM call" is not a code change; it is a ROW that runs the deployed path against the real upstream, which HOSTING-27 ruled out of every test. This card keeps that ruling for the STANDING set and adds the one row that is not standing.
+
+**Decision.** `agent_real.rs` is `#[ignore]` (never in `gates/runs.tsv`, never run by the judge or the convergence): it spends the operator's money and needs the network. It is run by hand with `ND_PROVIDER_KEY_FILE` naming keybroker's key file (`7 <key>`, 0600, a custody-clean chain: RUNBOOK §2a), handed to keybroker as KEYS and never read, never printed. `ND_REAL_MODEL` (default `claude-haiku-5-5`) must start with `claude-`. Everything else is the deployed path exactly as `resident_bell.rs` drives it: a real Store and follower, nd-members serving the resident's member, the Bell installed from `world/resident/Bell`, keybroker on its unit argv with the repository's `deploy/tls/anchors.pem` and `deploy/tls/pins`, dial address `api.anthropic.com:443`, grain-launch over the real controller.
+- **R1, the receipt.** The operator rings `Reply with the single word pong.`; the resident asks once; the answer `rings[k]` holds is a non-empty text that is none of the resident's NAMED texts (`(refused …)`, `(status …)`, `(unanswered …)`, `(empty reply)`): the words came from the provider, not from a refusal rendered as text (law 7 at the agent's grain). The key is in no file of the volume (control, as resident_bell's).
+- **R2, the budget.** The allowance's cap (600 micro-units at 1000 per kTok, `maxTokens` 300) fits exactly one worst-case ask; the second ring in the same window (`windowMs` 120000) is answered `(refused overSpend)`: the World's own receipt that the agent hit its cap, `Broker.capped_decide` seen from a member's `nd read`. The row waits for keybroker's start window to roll before the first ring (`Broker.start` spends it, HOSTING-13), and reports a roll between the two asks as inconclusive by name, never as green.
+- `maxTokens` 300, not resident_bell's 50: the model thinks before it answers and thinking counts toward `max_tokens`; a tight cap yields an empty text, which the resident answers `(empty reply)` by name (R1 would then fail by that name, which is the row doing its job).
+
+**MEASURED (hbox, wt/fable-agent at 18cd38b + this change, logs/agent_real3.log).** `cargo test --locked -p nanodregg-launcher --test agent_real -- --ignored --nocapture`: GREEN in 37.2 s. `R1: the model answered "pong" to "Reply with the single word pong."`; `R2: the second ring was answered "(refused overSpend)": the cap of 600 held`. Two earlier runs failed by name before the row's letter reached `dir()` (a sync fault, not the path's).
+
+**What the model claims, and what it does not.**
+- Claimed: the deployed resident, decider, keybroker, pin and anchors carry a ring to a real model and its words back into a signed Turn, and the broker's cap refuses the second ask before a byte leaves, with the refusal visible in the World.
+- Not claimed: anything about the model's words beyond "not a named text"; that the spend is visible in the World (it is broker memory: DESIGN-AGENT §6.3, filed as A4); that the row runs anywhere but by hand.
+
+**Critique.** A row that is never run by the judge rots: the pin expires 2026-12-20 and the model name will move, and nothing red will say so until someone runs it. That is the price of HOSTING-27's ruling, kept on purpose: a standing row that spends money and needs the network is a flake and a bill. The one-word prompt is a weak check of "the model's words"; a stronger check (the reply equals a word the model was told to say) would make the row depend on the model obeying, which is not what it measures.
+
+**Meta-critique.** The brief said "the provider is a stub that says hello back"; the first hour's reading showed the stub was the TEST's and the provider was real, so the first deliverable shrank from a code change to a row. The bias to watch is the opposite one: having found the path real, treating A0 as done without running it. It was run, and the first two runs were red for a reason outside the path (the row's own setup); the third is the measurement.
+
+## HOSTING-53 · The Bell is the agent's inbox: a ring carries an AIM and `answer` delivers the text to the aim's target as one typed nested call in the same Turn; the first target is the document's section, whose candidate is withdrawn by name when the Bell's grant is revoked (2026-10-26, FABLE-AGENT-2; `redregg/work/promo/DESIGN-AGENT.md` A1, §4, §6)
+
+**Premise price.** Landed theorems gaining a hypothesis: `Hosting.Proofs.Resident.answerArg_reads`, `kept_reads`, `Hosting.Proofs.Socket.answer_args_at_answerArgTy` (each `AimOk r.to`: the aim within Lang's bounds, discharged by `RingOk`, which now carries it: `ring_read_ok`, `seed_ok` prove it from the read). Restated in meaning: `Lang.Bell.answer_run` ("makes no calls" → "makes, by the aim it echoed, no call or exactly the forward"), `answer_sig` (the slot), `answer_commits` (the capture holds the aim), `Hosting.Proofs.Socket.answered_row_is_kept_answer` (the forward by the ring's aim), `answered_row_committed`; the witness's definitions and the resident's `Ring`, `answerArgTy` (now `Lang.Bell.answerArg` itself: one definition), `pendingVal`, `keptTy`. Deleted: none.
+
+**Finding.** A ring was the only obligation the resident could discharge: `answer` wrote the text into `rings` and nowhere else (DESIGN-AGENT §0). The generalisation is the ring as ANY obligation, and its grain is the ring's REPLY-TO: a ring carries where its answer goes, and the Bell delivers it. The memo (§4.1) put the aim in a third relation `targets` read by `answer` through a declared point read. Building it refuted that on two counts (MEASURED, FABLE-AGENT's `logs/emitbell5/6.log`): the edit type `E` is copied into every `done`/`refuse` annotation, and with a third relation the package reached 88,007 then 74,402 bytes against `eventBytesMax` 65,536; and a declared point read is exactly the caller's row pins (`Lang/Rel.lean` `relReads`): with no pin the point reads `none` SILENTLY, so an unpinned `targets` row would have been a fail-open forward. The right shape was one step away: the aim is part of the ring's CAPTURED value, immutable with the ring under the generated waiting guard `rung`, which compares the capture. No pin, no point read, no new guard: an answer that drops or alters the aim is refused `rung: text` by what exists.
+
+**Decision.**
+- `world/resident/Bell.ob`: types `Aim {cand, method, target, via}`, `Support {cell, pin}`, `Proposal {cand, s0, s1, value}` (`Std.hole`'s `proposal` at `bytes`); the plan captures `{text, to : option Aim}`; `ring` takes `{text, to}`; `answer` takes `{notBefore, ringText, ringer, text, to}`, declares `(calls ((invoke Proposal))) (edits 2)`, and cases on `arg.to`: none, the two edits; some `t`, the two edits and `(invoke (args {cand t.cand, s0 some {cell t.via, pin t.via}, s1 none, value arg.text}) (budget 100000) (method t.method) (obj t.target) (via (some t.via)))`. The forward's support IS the grant (`cell = pin = via`): the doc row's own shape, so the candidate's justification is the thing a human revokes. The package is 57,957 bytes (MEASURED; 45,980 before).
+- The kernel derives the nested call as the Bell OBJECT (`Kernel/Receive/Derive.lean`: a nested call's actor is the calling object), so the forward is authorised by a grant the target's owner gave the Bell, while the candidate row's `by` is the request's agent, the SIGNER, i.e. the resident B (MEASURED, LI6: `reqOf u obj principal` keeps `u.member`; the authority is the object's): the agent's reach is the Bell's grant set, visible in the World as cells, revoked per target by its owner, never the agent's to widen.
+- Answered ⇔ delivered, in one Turn: `invoke` derives the tree atomically; a target that refuses (`missingCell` after a revoke, the grant cell a tombstone; `closed`; `keyTaken`) refuses the whole answer and the ring stays pending by name (MEASURED, LI9b). The resident does not change its loop: it reads `pending` at the row type (now with the aim), asks once, keeps (the kept file round-trips the aim), invokes `answer` echoing what it read, pins the same two rows. `invokeArgv` is unchanged. The HOSTING order theorems (`tick_counts`, `bell_resident_conforms`, `delivered_answer_committed_strong`) are unchanged in statement.
+- `Hosting.Resident.answerArgTy := Lang.Bell.answerArg`: the type the resident checks the description against and the type the witness speaks of were two spellings of one record; now one.
+- Not built: the ringer-withdraws-its-own-ring arm (DESIGN-AGENT §6.4; A1b, the next landing: `Lang/StdActivity.lean`, restates `waiting_retract_iff` and siblings); the per-ring refused marker (§6.4's second fix); the spend in the World (§6.3, A4, Ember's custody decision).
+
+**MEASURED (hbox, wt/fable-agent on 1e8a2a0 + this change).**
+- `lake build` of the reach: `Lang.Proofs.Bell`, `Lang.Proofs.BellCommit`, every `Hosting.Proofs.*` and `Hosting.Resident.Main` green (logs/hb4.log, 206 jobs); `lang-journey`, `rows`, `bench-worstcut-rows`, `resident` exes built (logs/jb1.log).
+- `lang-journey`: GREEN (logs/lj2.log; LB0, LB0d, LBw, LB1–LB13 and LI1–LI9b all ok); `--hole-omitted-blocker-pin-admits` GREEN; `--harness-control` RED (1) as designed.
+- `rows` and `rows --deployed`: ALL PASS (50 rows, the bell, bellDoc and bigEvent rows among them, and the lang-journey row); `bench-worstcut-rows {fresh}`: PASS, WASTE audit-verifies-per-step 1.000.
+- `cargo test --locked -p nanodregg-launcher --test resident_bell`: ok, 1 passed in 312 s (logs/cargo_rb1.log): the hosted resident exe reads the aim-shaped pending rows over `nd --stdio`, keeps and answers `(to none)` rings through the deployed path (Q1–Q8 as before).
+- The core: `checkWith: ok`; `Lang.Bell.shapeOk` of the re-emitted `world/resident/Bell` true (LBw); the plant that writes the ring's text as the answer still caught.
+
+**Rows (Lang/Journey/Inbox.lean, LI1–LI9b).** LI1 the Bell (A owns, B resident); LI2 the section (A edits); LI3 A grants the BELL OBJECT `propose` on the section and posts the fact `(cell gB, pin gB)`; LI4 A rings aimed at `propose` through gB, the pending row holds the aim; LI5 B answers with the aim dropped: `rung: text`; LI6 B answers echoing it: admitted, `rings[k]` answered with the text, the section's candidate holds the same bytes, `verified`, `by` the resident, the pending row gone, one Turn; LI6b the answered capture still holds the aim as rung; LI7 A selects it; LI8 A revokes gB, `rejudge` → `suspended "support0 dead"`, `select` refused `support0 dead`; LI9 a second aimed ring after the revoke: B's echoing answer is refused `missingCell` (the revoked grant), the ring stays pending, no candidate.
+
+**What is claimed, and what is not.**
+- Claimed: `answer_run` states the forward (the exact Body, its argument bytes `proposalData cand via text`, the budget, the via) from the shape the resident checks (`shapeOk`), so the witness speaks of the deployed core; `answered_row_is_kept_answer` carries it to the resident's own journaled call; the Sim rows measure the delivery, the withdrawal and the refusal through the real receivers.
+- Not claimed: that the hosted resident (the Lean exe through `nd --stdio`, `launcher/tests/resident_bell.rs`) has answered an aimed ring over a real World: resident_bell's rings are unaimed (the row sends `(to none)`); the aimed hosted row is A2 (`launcher/tests/agent_hole.rs`, the next landing after A1b). That nested reads are derived from the outer call's pins over `nd` (INFERRED from the Sim's `pinsFor`; A2 measures it).
+
+**Critique.** The aim names a METHOD INDEX (`propose` is 3 in the generated section); a ringer that names the wrong index forwards to another method of the target, which refuses by its argument type, which refuses the answer: the ring stalls until its patience (2048 heights) unless the ringer can withdraw it, which it cannot yet (A1b). The candidate id is the ringer's choice (LI uses the grant's bytes), so a second summons for the same hole is a second candidate: the agent cannot revise (DESIGN-AGENT §7's second way); revision is the chooser's `select`. `by` is the resident's member (the signer), not the Bell: a reader of the section sees WHO answered, and learns which Bell only from the support's grant cell (its grantee is the Bell object). The refusal after a revoke is `missingCell`, the kernel's name for a tombstoned via, not the `noGrant` the memo predicted: right by name, not by the memo's name.
+
+**Meta-critique.** The memo's `targets` relation was designed from the kernel's authority rule and the activity's guard without pricing the package bytes or the read's pin discipline; both refutations were one build away and the design was written first. The bias to watch now is the mirror one: a capture that fits the guard is a good shape for an aim, and it will tempt every later obligation into the capture too (A3's typed response belongs there; a second target does not).
+
+## HOSTING-56 · THE SEED: the writer's certify key lives in keybroker, which signs with it only heads the Lean decider's own fold of the Store holds, never one below or beside the last it signed, across restarts (2026-10-26, TRUST-SEED-2; DESIGN-TRUST §4.4b, cv 01a17a5c-fa21; Ember's YES, cv 01a1769d-2f64; CROSS-LAYER: HOST owns the producer (HOST-80), CODEC the emitted file, CLIENT `fsx` and devtools, OPS the exit table)
+
+**The custody, in one paragraph a member can read.** The writer's signing seed is not in the writer.
+It sits in keybroker's key file, beside the provider keys, read once under the same custody checks
+(0600, the operator's), and keybroker signs with it only what Lean's decider approves: a head of
+THIS World that the decider's own fold of the Store reached at a record end, not below the last head
+the key signed and, at that step count, that head itself. The writer can ask, never read: a thief of
+the writer process (sandboxed by nd-supervise, the key file's directory outside its view) can obtain
+certificates only of heads on the one history the decider folded, and never two at one step count
+(`Hosting.Proofs.Certify.granted_one_head`: over ANY run of grants, any number of decider lives, each
+with whatever fold its Store's files gave it, two heads granted at one step are one head), so it
+cannot get the pair `Protocol.Proofs.Head.certified_equivocation` needs. The last certified head is
+made durable beside KEYS (`KEYS.certified`) by keybroker BEFORE it signs, and a restarted decider
+reads it back and ANCHORS it to the Store it opened: the opened World is that head, or the step pairs
+the Store keeps from it advance its chain to the opened World's (`Certify.anchoredBy`, the kernel's
+`chainOf`; where the pairs come from does not matter, a chain match binds the history,
+`fold_head_binds`); otherwise it certifies nothing (`unanchored`). A thief of the key file can sign
+any head, which is why the genesis lists the key (a stranger trusts the World's authority, never the
+host) and why the NEXT key is committed in advance (`certify.next`; its use is the pre-rotation's,
+the next KERNEL number). The seed signs heads ONLY: keybroker prepends `CERTIFY_DOMAIN` (emitted from
+`Protocol.Head.domCertify`) itself and has no path that signs raw bytes with the slot. Refusal
+receipts stay unsigned (KERNEL-44 stands).
+
+**What landed.**
+- Wire (`Hosting/BrokerWire.lean`): request `certify atMs` (tag 4; the writer's certified bytes follow
+  as one frame, unread by keybroker), verdict `sign certified` (tag 6), the writer's own answer
+  family `CertifyAnswer` = `signed key signature` | `refused` (so no resident can be handed a
+  signature), refusals `badCertify notOnFold notYet regressed unanchored certifyState` (codes 24–29).
+- The decision (`Hosting/Certify.lean`): `Certifier` (origin, the heads at the last `headsMax` = 4096
+  record ends, the last certified head, `anchored`), `decide` (byte-for-byte certified bytes of a head
+  of this World; anchored; `regressed` below the last or beside it; `notYet` past the tip; `notOnFold`
+  unless the window holds that exact head), `opened`, `absorb`, `pairsBetween`, `anchoredBy`. Proofs
+  (`Hosting/Proofs/Certify.lean`): `decide_ok`, `certify_on_fold`, `Granted`, `granted_one_head`,
+  `anchoredBy_chain`.
+- The decider (`Hosting/BrokerCli.lean`): `hosting-broker T0 SLOTS STORE OPERATOR [CERTIFIED]`; its
+  tail step also yields each record's head (`headStep`), catch-ups feed the window (refusal-only
+  records included), the open builds the certifier from CERTIFIED (empty = nothing certified; a file
+  that is not one head's certified bytes leaves it unanchored, one stderr line) with the kept pairs
+  (`Host.Check.openClean`) when the opened World is past the last head; `certify` is answered `sign`
+  or `refuse`. `hosting-residents` shares `catchUp` and refuses `certify` as `badRequest`.
+- keybroker (`launcher/src/bin/keybroker.rs`): KEYS lines `certify HEX` / `certify.next HEX` (both or
+  neither: `keyFileFormat`); `keybroker --certify-pub KEYS` prints `certify PUB` and `next PUB` for
+  `host genesis --certifier PUB --threshold 1`; with the slot, `KEYS.certified` is checked private or
+  made empty (`certifiedState`, exit 163), handed to the decider (read-only in its sandbox) and
+  `SOCKDIR/.writer/certify.sock` is bound (a 0700 directory, SOCKDIR's setgid bit cleared, holding
+  nothing else; the socket 0600; peer = keybroker's own uid, the writer running as the key holder);
+  one connection at a time (`busy`); a `sign` is persisted (`fsx::replace`, `certifyState` if not:
+  nothing signed) and only then signed (ring's Ed25519, already in the TCB under rustls).
+- Emitted (`Emit/Broker.lean` → `launcher/src/broker_generated.rs`): `wire::CertifyAnswer`,
+  `CERTIFY_DOMAIN`, `WRITER_DIR`, `CERTIFY_SOCK`, the new codes. `Emit/Rust.lean`'s struct-variant
+  layout now measures the fields between the braces, as rustfmt does (measured on `Signed`: 32 inside,
+  36 with them, one line under rustfmt); `generated.rs` and `launcher/src/generated.rs` re-emit
+  byte-identical.
+
+**Flag day (say what broke).** The decider's request and verdict families gained a tag each and
+keybroker's exit table a code (163): `broker_generated.rs` and `deploy/units` (EXITS.md, the
+keybroker unit's RestartPreventExitStatus) re-emitted. A keybroker of before cannot drive this
+decider's `sign` (it would close the connection: out of turn); nothing deployed holds either. KEYS
+files without certify lines read as before. No Store re-geneses for this landing (the Store format
+is unchanged; a World that wants its writer certified is made with `--certifier` at genesis).
+
+**Measured.** `launcher/tests/certify.rs` (hbox): a real World whose authority is the certify key;
+`host seal --certify` certifies the base (`KEYS.certified` = the certified bytes); a thin joiner's
+`nd adopt` takes the certified base and refuses one flipped signature byte `badCertifySignature`;
+over the writer's socket `badCertify`, `notYet`, `notOnFold`, `regressed` (below and beside); after a
+keybroker restart past the head, `regressed` (so: anchored from the kept pairs), `notOnFold` for the
+old head, and the next seal certified. CONTROL: the true head granted, its signature byte-identical
+to base.cert's.
+
+**Critique.** (1) `headsMax` record ends, not steps: a writer that seals while the decider is more
+than 4096 records behind gets `notOnFold`, a liveness name, never a wrong grant. (2) The anchor at a
+restart reads the WHOLE kept segment once (`openClean`), O(kept bytes) at the decider's start, only
+when the opened World is past the last head. (3) A last head older than the oldest kept file can
+never anchor: the operator's act is to empty `KEYS.certified`, which re-roots trust in the Store as
+it is, and the action text says not to do it while the World lives. (4) The writer's uid is the key
+holder's: the custody boundary is nd-supervise's view (KEYS' directory hidden), not a uid; the units
+do not yet render `--certify`, `--connect` and that hide (cv 01a17b00-67a4, OPS). (5) The peer check is the
+uid alone: any process of the key holder's uid may ask; what it can obtain is still only heads of
+the decider's fold.
+
+**Meta-critique.** The design said "a Host.Tail replay: enough to stop two certificates at one
+step". Building it showed the property is not the replay's at all: it is the persisted last head
+plus `regressed`, which holds whatever the fold is; the fold buys `certify_on_fold` (only heads that
+history reached), and the anchor buys extension across restarts. Three mechanisms, three theorems
+or checks, each named; the risk to watch is a later reader collapsing them back into "the decider
+follows the Store, so it is safe".
+## HOSTING-58 · The hole the agent fills, hosted: the resident pins the target's fact row (`nd invoke --pin OBJ/REL KEY`), and the inbox runs over a real World (2026-10-27, FABLE-AGENT-4; `redregg/work/promo/DESIGN-AGENT.md` A2)
+
+The open measurement A1 left (does `nd` derive the nested call's pins?) has a split answer. Cells and kernel rows, yes: `derivePins` runs the whole tree, so the forward's cells (section, its package and helpers, the Bell's grant) and the candidate row come from the derivation's own `unpinned`/`rowUnpinned` asks. The hole's `facts`, no, and never: `Std.hole` reads them as the CALLER's points (`holeFactsView`, complete observation of the keys the caller pinned; an omitted point is `unpinned support0`, LANG-79), so no derivation can choose them, and when this was built `--pin REL KEY` could only name a row of the invoked object (the Bell). I first added `--pin-in OBJ REL KEY`; at the rebase CLIENT-50 had landed the same capability for the offer's fuse as `--pin OBJ/REL KEY` (`Command.pinTarget`), so the second spelling was dropped and the resident uses that one: it adds exactly one pin for an aimed ring, `Lang.Bell.forwardRel` at `Lang.Bell.forwardKey via`: a function of the aim alone (the forward's support IS the via grant, `proposalData`), so the resident still reads nothing of the target, and the Sim's Inbox rows use the same two definitions. `invokeArgv_parse` is restated: the parsed invoke's reads are `ForwardReads` (no range; every point is `TARGET/facts` of the aim). `launcher/tests/agent_hole.rs` (`cargo:launcher:agent_hole`) runs H1–H3 over the deployed path with the fake provider; `a_real_model_fills_the_section` is the same tour on the real model, opt-in (`#[ignore]`, `ND_PROVIDER_KEY_FILE`). The testground's `inbox` demo runs it in the tab with bob as a scripted answerer, labelled. MEASURED (hbox ~/nd-land/agent): the control H2a (the resident's member answering without the pin) is refused `unpinned support0` and the ring stays pending; agent_hole ok in 27 s; the real-model tour ok in 65 s on claude-haiku-5-5, whose sentence became the section's verified candidate; the touched rows ok (`launcher:sock` red once under load 80, ok alone); the testground gate GREEN with the `inbox` demo (18 commands). **Critique.** The resident now knows one fact of `Std.hole`'s layout (its support relation is `facts`, keyed by `cell`): the Bell's forward was already typed at `Std.hole`'s proposal, so this is the same coupling made visible, but a second kind of target (not a hole) needs its own pin rule, and the right home for that rule is the aim's target declaring its points (a method's `reads` clause the resident could read off `read OBJ ?`), not a table in the resident. `--pin OBJ/REL` lets any member pin any object's rows in its Turn; that adds no authority (a pin is a read the kernel checks, and a stale one refuses the call), but it widens what a signed call can claim to have observed.
+
+## HOSTING-59 · The resident is a term of the open calculus: two holes, `serve` and `use`, filled when reached; a refused answer naming a cell it cites is withdrawn by that name and the queue goes on (2026-10-27, FABLE-CTX-4/5; `redregg/work/promo/DESIGN-CTX.md` §11; LANG-101)
+
+**Before.** The resident's tick was `Hosting.Resident.Prog`, its own tree type, and `Hosting/Contextual/NanoBridge.lean` embedded it into `Prot` with hole type `Empty`: no hole of the calculus met the deployed system. Every decision was a `match` in the tree. An aimed ring whose `via` grant was retired before the answer was refused, the re-read still listed it, and the resident ended `answerRefused`: the whole queue stopped behind one ring until the operator acted.
+
+**What changed.** `Prog α := Prot sig (fun _ => Hole) (fun _ => α) ()`; `Prog.interp` is `Slot.interp` with `fill` as the resolver. `serve` (after the read): a slot over the kept ring's answer, an ask per pending ring, idling; a ring's act cites `pending r` and `stands r` (not withdrawn); `serveChoice_eq` says the choice is `decideTick` over the rings that stand. `use` (after a refused answer and the re-read): `closed` (the ring left pending: forget), `withdraw c` (the ring waits and a probe `read c ?` of the aim's `via` or target found it gone, refused `missingCell`: say `answer withdrawn … its support c is gone (line)`, forget, record the ring in `Mem.withdrawn` under `c`), `stop` (`answerRefused`, every cited cell there). The probes are a new member command (`Cmd.probe`), sent only on the refusal path of a ring that still waits. `Mem.prune` drops withdrawn rings the read no longer lists. Proofs: `ResidentRun` carried to the term; `Hosting/Proofs/ResidentSlots.lean` (`resident_repair`, `use_withdraws`, `withdrawn_blocked`, `withdrawn_not_served`, `serve_keeps_withdrawn`, `serve_repairs`); `BellConform`'s round became a set of owed rings, with `bell_resident_conforms` and `Frees` unchanged in statement (a withdrawn ring stays owed while it waits and is never asked again). `NanoBridge` and `ContextualNano` deleted; `ContextualFailures` is `LostReply` (its `Peer` moved in). `agent_hole` H4: a ring through the retired grant, then a plain ring, on the deployed path.
+
+**Critique.** The first build read the refusal's TEXT for a hex id; H4 measured the member's line as exactly `refused missingCell`, so that slot would have stopped the queue on the deployed path while every unit theorem stayed true. The probes replace it: the support is read from the World. A cited cell that is gone for a reason other than the refusal's (both are dead) is still a correct withdrawal, since a gone cell can never support the answer. The withdrawn list is memory: a restart asks each withdrawn ring once more (one meter charge each) and withdraws it again (owed: persisting it, a volume file). `serve`'s supports are two Booleans the resident computes from its own read, so the slot here re-states `decideTick` rather than adding a decision; the new decision is entirely in `use`. The `text r` and `pins r` holes of DESIGN-CTX §11's table are not holes yet: the model's answer is still a value, not a candidate with the ring's capture as its support.
+
+**Meta-critique.** The pull was to keep the round's debt a single ring and count a withdrawal as freeing it (`Frees` gaining an arm). That would have made `bell_resident_conforms` weaker than the code: it would permit a second ask about a withdrawn ring. The set of owed rings costs one invariant (`Owes`: each owed ring is the kept one or does not stand) and keeps the statement.
+
+## HOSTING-60 · The certify key's grants extend each other across step counts and restarts: the decider checks every record's chain link itself (2026-10-27, TRUST-4; CRIT-TRUST's recovery finding; DESIGN-TRUST §4.4c items 1–2)
+
+**The gap (READ).** HOSTING-56 proved one granted head per step count (`granted_one_head`). CRIT-TRUST: sign-once per step count is not enough, because a key can endorse one branch at step 10 and another at step 11 without signing twice at either. The decider's window held the heads its Tail fold produced, and nothing checked that each head extends the one before: the property rested on the Tail fold being honest.
+
+**Decision.** `Certify.Certifier.absorb` takes each record's step pairs with its head and checks the link itself (`Certify.linked`: same origin, the step counts differ by the pair count, and the kernel's `chainOf` from the window's tip over the pairs reaches the head). A linked head joins the window; an unlinked one (a corrupt or rewritten fold) restarts the window and unanchors the decider, which then certifies nothing more in that life. `BrokerCli.catchUp` hands the decider the pairs `headStep` already computes. And the next seed leaves keybroker's key file: KEYS held `certify.next` beside `certify`, so a thief of the file held the successor secret too, and nothing consumed it (no genesis input commits a next certify key yet). keybroker now refuses a KEYS file with a `certify.next` line (`keyFileFormat`), and `--certify-pub` prints the current key only. The next seed's custody and its commitment in the authority are KERNEL work (DESIGN-TRUST §4.4c items 3–4; cv 01a17a5c-fa4c).
+
+**Theorems** (`Hosting/Proofs/Certify.lean`). `Extends` (one World, and step pairs whose chain link runs from one head's chain to the other's), with `refl`, `trans`, `steps_le`; `Line` (the window's heads pairwise extend in order; when anchored, the last certified head is extended by the tip and comparable with every head in the window); `opened_line`, `absorb_line`, `decide_line` (every certifier the decider builds keeps `Line`); `restart_extends` (an anchored restart's World extends the persisted last certified head); `grant_extends`; **`granted_extends`** (over any run of grants across any number of decider lives, every granted head extends every earlier one and the persisted start). `GrantedLined.granted` keeps `granted_one_head` available on the same runs.
+
+**Critique.** (1) `Extends` is stated by step pairs, not by a fold: it says the chain link runs, not that the steps were admitted. That is what the decider can check without re-executing, and it is enough to rule out two branches under one key unless the chain hash collides. (2) The premise that each life's certifier is built only by `opened`, `absorb` and `decide` is about the IO loop in `BrokerCli`, which is read, not proved. (3) The guarantee still rests on `KEYS.certified` surviving with the seed, and on one keybroker per seed (DESIGN-TRUST §4.4c, "assumptions that stay named").
+
+**Meta-critique.** The first version of the decider trusted the fold it followed to be one history, because within one process it is. The restart was guarded; the window was not. Checking the link where the head enters costs one `chainOf` per record and removes the trust.
+
+**What changed shape.** `Certifier.absorb`'s signature (Lean only). keybroker's KEYS format: a `certify.next` line is refused; rewrite such a file without it. `deploy/units/EXITS.md` re-emitted (the `keyFileFormat` text).
+
+## HOSTING-62 · A resident under the hosted testground World: keybroker serves it as any resident grain, its member and the resident run under nd-supervise, and the operator's daily ask cap lives beside the key (2026-10-27, FABLE-AGENT-5; cv 01a17afc-b967; `redregg/work/promo/DESIGN-AGENT.md` A2)
+
+**What the system does now.** The testground's hosted World can have a resident that answers its public Bell with a model's words. `run.sh resident STATE` makes it once, with the World up: the resident's member (custody, and a follow Store joined from the guest-book's invitation), then, through one operator line on the guest-book's socket (`resident TOKEN MODEL CAP WINDOW_MS PRICE`), the World's inbox: the member enrolled, a resident grain (`world/grain/Lifecycle`, installed and never started), its allowance (`world/hosting/Allowance`, owned by the guest-book), the public Bell with the resident as its resident, and the document section's four texts. `world.json` gains `inbox` (Bell, resident, section package), and every later enrolment grants the visitor `invoke:3,invoke:4` on the Bell (ring, withdraw its own ring). Two foreground commands run it: `run.sh keys` (keybroker and its decider over the writer's Store) and `run.sh resident-serve` (the resident's follower, its `nd --stdio` member and the resident, each under nd-supervise; the resident's argv is exactly its plan joined onto the hosted tree, keybroker's socket directory and the member root).
+
+**The provider slot is the resident socket that already exists.** The brief asked for a `provider` slot in keybroker beside `certify`. The per-resident socket (HOSTING-12/26) is that slot already: keybroker binds `SOCKDIR/<grain>/broker.sock` for each resident grain the World holds, 0600 when the peer is its own uid, and the key never leaves keybroker (the decider prints the request, keybroker adds the key, the resident gets the reply text Lean read). A fixed socket beside `certify` would have been a second path to the same call with its own identity rule. So the World holds one resident grain that no controller starts, and the resident is launched by the unit instead of grain-launch, with the same plan and the same self-confinement (CLIENT-48/52).
+
+**The daily ask cap.** The allowance is a World object signed by the guest-book. On the demo box the guest-book's seeds sit in a network-facing process, so a bound that a World key can change is not a bound on the bill. `asks N` in KEYS (the key's own custody, the operator's) caps the asks keybroker sends per day of the operator clock, whatever the allowances say. The count lives in `KEYS.asks` (16 bytes, day and count), which keybroker makes durable before every call it sends (`askState` if it cannot; nothing is sent), as it keeps CERTIFIED before it signs; the decider reads it at its start (`--asks N PATH`), so no restart refunds a day. The decision is Lean's (`Broker.Daily.take`, applied by `Broker.daily` after `Broker.admit`): past N the ask is refused `askCap` and the World's allowance is not charged. Proofs (`Hosting/Proofs/Broker.lean`): `take_le` (a day never grants past N; the day never moves back), `take_counts` (within a day every grant counts, never resets), `ofBytes_bytes` (what keybroker keeps is what the next life reads), `admit_daily_encodes` (every verdict under the cap has a frame; `providerOf_fits` leaves room for the sixteen bytes), `daily_tooth`. Wire: `Verdict.grant` gains `asked`; refusals `askCap` 30, `askState` 31; keybroker exit `asksState` 164. Re-emitted: `launcher/src/broker_generated.rs`, `deploy/units` (EXITS.md, the keybroker unit's RestartPreventExitStatus).
+
+**The two numbers.** The World's cap: the allowance, 25,000 micro-dollars per 5-minute window at 500 micro-dollars per 1,000 tokens (claude-haiku-5-5's output price, $0.50/MTok, charged for input and output alike: the worst case). One ask is charged its worst case before the call: body bytes plus 300 output tokens, about 1,250 micro-dollars for a 2,000-byte question, so the window admits about 20 asks; it bounds bursts, and a keybroker restart forfeits at most 5 minutes. The broker's cap: `asks 300` per day, so the provider bill is at most 300 × 1,250 = 375,000 micro-dollars ($0.38) a day even if the World's allowance is raised; the measured answers cost about 1/20 of the worst case. The resident member's own meter is the kernel's (KERNEL-68: 2^21 ticks per window per member); it bounds the World work of its answers, not money.
+
+MEASURED (hbox, a hand-run World under `run.sh`, Ember's key through keybroker, never read by anything else): `testground/hosted-run.mjs URL inbox` (two joined visitors; alice creates a section, grants the Bell `invoke:3`, posts the fact, rings aimed at it, waits) answered in 5.7 s: "Lighthouses have guided sailors safely past dangerous coastlines for centuries, serving as beacons of hope on the open sea." as the verified candidate `by` the resident's member; retire, rejudge, `support0 dead`, select refused. The page in Chromium through a tunnel, Ask the resident: "every step as expected, 5.7 s", the tide-pool sentence as the candidate. `launcher:broker` `the_daily_ask_cap_holds_across_a_restart`: two asks granted, the third `askCap` with no call, a restart in a fresh allowance window still `askCap`, the control (no `asks` line) granted, a 0644 count file stops keybroker `asksState`.
+
+**Critique.** (1) A restart forfeits the allowance's window (HOSTING-13); with a 5-minute window a deploy or crash leaves the inbox answering `(refused overSpend)` for up to 5 minutes, and those answers are delivered to the visitors' sections as candidates. The resident delivers a named refusal as text; a visitor sees it, which is honest, but a refused ask should not become a document's candidate (DESIGN-AGENT §6.4's per-ring refused marker is the fix). (2) The resident's member, the follower and the resident are one unit; a crash of one restarts all three. That is right for a member and its follower, and costs one extra ask only if the resident was between keeping its intent and answering. (3) The guest-book is the allowance's operator and the Bell's owner. A guest-book compromise can make new allowances and Bells; the daily cap, in a file no tenant process but keybroker reads, is what bounds the bill then. (4) The resident hides KEYDIR and the guest-book's seeds from its supervisors by `--hide`; on the demo box the units add `InaccessiblePaths=` for the key directory in every other unit of the same uid, because one uid runs all four.
+
+**Meta-critique.** The pull was to build the `provider` slot the brief named, mirroring `certify`. Reading `keybroker.rs` showed the slot already exists under another name; building a second one would have doubled the identity rule for no new capability. The second pull was to set the allowance window to a day and call that the daily cap: the theorems already bound it, but a restart would have left the inbox dark until midnight UTC, and the World's key would still have been able to raise it.
+## HOSTING-61 · The certify key's successor seed lives in an operator-held file keybroker never reads; `host rotate-certifier` rotates on a stopped Store (2026-10-27; TRUST-5; with KERNEL-79, PROTOCOL-86; DESIGN-TRUST §4.4c item 4)
+
+**Decision: where the successor secret lives.** In a file the operator keeps apart from KEYS (offline media, another account), written once by `keybroker --certify-keygen OUT` (fresh OS randomness, never derived; created new at 0600, synced; an existing OUT refused `keygenExists`), which prints only `certify-next HEX`, the successor's public key. `host genesis --certifier HEX --certifier-next HEX` commits the digest of that key (Lean computes it; the genesis input holds only the digest). keybroker never opens OUT: HOSTING-60 already refuses a KEYS file with a `certify.next` line.
+
+**Why a file, not a second broker.** §4.4c asks that the successor secret survive a compromise of the current key. A second keybroker would hold it in a running process on the same box, under the same operator account the first one runs as: a thief of that account takes both, which is the failure HOSTING-60 removed from KEYS. The successor is used once, to sign the rotation; it needs no socket, no decider and no uptime. A file the operator moves off the box has the smallest compromise boundary, and the box never holds it until the rotation.
+
+**The rotation procedure.** (1) `keybroker --certify-keygen NEXT2` (the key after the successor). (2) Stop `host serve`. (3) `host rotate-certifier STORE SUCCESSOR NEXT2_PUB`: on the Store's lock, the rotation call (`Head.rotationCall`: the slot whose commitment the successor's key opens, signed by the successor seed, committing NEXT2's digest) is judged by `Receive.submit` against the Store's World; a seed no commitment opens is refused `notPreRotated` by name and nothing is written; an admitted one is appended as one record and a base is sealed after it; it prints `rotated certifier=I key=HEX steps=S chain=C`. (4) Put the successor's `certify HEX` line in KEYS in place of the old one; keep `KEYS.certified` (the rotated base extends the last certified head, so the decider anchors it, HOSTING-60). (5) Start keybroker and `host serve --certify`: serve now certifies the newest base at start whenever the Store's certificate does not certify it under that base's own authority (before: only when there was none), so the first page after the rotation carries the successor's certificate. And it does so INLINE, before the loop serves a frame: PROTOCOL-84 queued the start certification to the seal worker, and under load the founder's first command read a page before `base.cert` existed and was refused `uncertifiedPage absent` (MEASURED: one run of `launcher/tests/certify.rs` at load 36). An honest writer now never serves a page before its start certificate is written or refused.
+
+**Tests.** `launcher/tests/certify.rs` (linux, real binaries): the genesis commits a `--certify-keygen` seed; keygen refuses to overwrite it; after the existing seal, decider and restart checks, `host rotate-certifier` with an uncommitted seed is refused `notPreRotated`, with the successor it is admitted; KEYS takes the successor's line; serve certifies the rotated base at start; the stranger with the genesis input alone takes the successor's certificate and still takes the old one for its head; the founder writes and catches up past the rotation.
+
+**Critique.** (1) The rotation needs the writer stopped. It is rare and the operator's, so a restart is cheap; a live rotation through serve's socket would put the successor seed on the network path. (2) keybroker does not check that its seed is the authority's current key; `host serve --certify` names the slot the key holds (`Head.slotOf`) and refuses `notCertifier` when it holds none, so a KEYS file left on the retired key certifies nothing and every follower past the rotation refuses the stale certificate `uncertifiedPage`. That is loud, not silent. (3) The successor seed file has no custody check beyond its mode; it is never read by a running process, which is the point.
+
+**What changed shape.** keybroker: `--certify-keygen OUT` (new). host: `genesis --certifier-next` (required beside every `--certifier`, else `badNext`), `rotate-certifier` (new), genesis prints `certifier-next I DIGEST` lines after `authority`, serve's start certification rule. Every Store re-geneses (KERNEL-79).

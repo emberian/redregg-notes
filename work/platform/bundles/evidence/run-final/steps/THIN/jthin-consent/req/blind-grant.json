@@ -1,0 +1,14 @@
+{
+  "type": "minidregg-workspace-proposal-v1",
+  "action": "delegate",
+  "name": "tc-blind",
+  "recipient": "14624123575744617878",
+  "verbs": [
+    "observe",
+    "mutate"
+  ],
+  "fields": [
+    "401"
+  ],
+  "maxCost": "50000"
+}

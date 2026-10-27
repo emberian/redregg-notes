@@ -1,0 +1,23 @@
+ Lang/Contextual/Closure.lean                  |  609 -------------
+ Lang/Contextual/Core.lean                     |  384 --------
+ Lang/Contextual/CoreCalculus.lean             |   34 -
+ Lang/Contextual/LangInstance.lean             |   85 +-
+ Lang/HoleDecl.lean                            |    4 +-
+ Lang/Index.lean                               |    3 +-
+ Lang/Proofs/Contextual/ClosureStatements.lean |   70 --
+ Lang/Proofs/Contextual/Core.lean              | 1194 -------------------------
+ Lang/Proofs/Contextual/CoreInstance.lean      |  114 ---
+ Lang/Proofs/Contextual/History.lean           |  142 ---
+ Lang/Proofs/Contextual/HoleBridge.lean        |  238 -----
+ Lang/Proofs/Contextual/Judge.lean             |  207 -----
+ Lang/Proofs/Contextual/LangInstance.lean      |   43 +-
+ Lang/Proofs/Contextual/Operations.lean        |  227 -----
+ Lang/Proofs/Contextual/Outcomes.lean          |  258 ------
+ Lang/Proofs/Contextual/Provenance.lean        |  176 ----
+ Lang/Proofs/Contextual/Repair.lean            |  252 ------
+ Lang/Proofs/Contextual/Soundness.lean         |  325 -------
+ Lang/Proofs/Contextual/Typing.lean            |   54 --
+ Lang/Proofs/Index.lean                        |    4 +-
+ Lang/Proofs/StdHole.lean                      |   24 +
+ Lang/Subst.lean                               |    2 +-
+ 22 files changed, 103 insertions(+), 4346 deletions(-)

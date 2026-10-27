@@ -1,0 +1,7 @@
+✔ [648/727] Built Protocol.Rows.Loopback:c.o (3.2s)
+✔ [722/727] Built Protocol.Rows.Run (4.5s)
+✔ [723/727] Built Protocol.Rows.Main (290ms)
+✔ [726/727] Built Protocol.Rows.Run:c.o (12s)
+✔ [727/727] Built rows:exe (724ms)
+Build completed successfully (727 jobs).
+exit 0

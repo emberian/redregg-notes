@@ -1,0 +1,28 @@
+  step   hook    bytes  margin  socket (sun_path holds 107)
+  J0     world      35      72  /run/user/1001/jm.XXXXXX/world.sock
+  M3     m3         44      63  /run/user/1001/jm.XXXXXX/m3/public/mini.sock
+  M4     m4         50      57  /run/user/1001/jm.XXXXXX/m4/store/public/mini.sock
+  M5     m5         66      41  /run/user/1001/jm.XXXXXX/m5/hermes/state/mcp-0000000000000011.sock
+  M7     m7         44      63  /run/user/1001/jm.XXXXXX/m7/public/mini.sock
+  M8     m8         52      55  /run/user/1001/jm.XXXXXX/m8/fixture/public/mini.sock
+  J13    j13        51      56  /run/user/1001/jm.XXXXXX/j13/store/public/mini.sock
+  JN2    jnock2     54      53  /run/user/1001/jm.XXXXXX/jnock2/world/public/mini.sock
+  JN3    jnock3     54      53  /run/user/1001/jm.XXXXXX/jnock3/world/public/mini.sock
+  JN5    jnock5     54      53  /run/user/1001/jm.XXXXXX/jnock5/world/public/mini.sock
+  JPAY4  jpay4      58      49  /run/user/1001/jm.XXXXXX/jpay4/acceptance/public/mini.sock
+  JPAY6  jpay6      70      37  /run/user/1001/jm.XXXXXX/jpay6/runtime-state/mcp-0000000000000011.sock
+  JROTL  jrotl      37      70  /run/user/1001/jm.XXXXXX/jrotl/f.sock
+STEP J0: clean start: private single-authority service, one sponsor ...
+STEP J0 PASS 17.715s service up and a signed read answered in 17.691s
+STEP J1: enroll an independently generated newcomer key ...
+STEP J1 PASS 14.195s subject 11474594955279643985, record 1; key absent from genesis/config; lookup = same receipt
+STEP J2: sponsor creates a resource under a permissive law ...
+STEP J2 PASS 4.360s object 17984725589838119881 under all[], record 2
+STEP J3: sponsor delegates observe+mutate (no control) to newcomer ...
+STEP J3 PASS 11.571s child 11811271977672078107 verbs observe,mutate, record 3
+STEP J4: newcomer signed read, writes field to 1, reads back 1 ...
+STEP J4 PASS 21.590s read 3.810s, write 7.694s, readback field 2 = 1, record 4
+STEP J5: a key with no grant: read and write refused ...
+STEP J5 PASS 60.393s 8/8 refused: 4 by the Host (enrolled no-grant read x2, propose, crafted submit), 2 by local consent before signing (unenrolled read, submit), and the same unenrolled read and write sent by a hostile client past that gate: the Host refuses both (this key is not enrolled on this Host); image unchanged; third = record 5
+STEP K12T: range transclusion: disclosure at transclusion time, snapshot pinned, live follows, a late joiner sees the placeholder ...
+STEP K12T PASS 393.015s 28/28 transclusion rows as expected: disclosure checked at transclusion time, snapshot pinned (read at its height), live follows the range, endpoint death by policy, no bytes in the host

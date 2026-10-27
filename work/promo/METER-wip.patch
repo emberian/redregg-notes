@@ -1,0 +1,1957 @@
+diff --git a/Codec/Kernel.lean b/Codec/Kernel.lean
+index ff635fd..cdcc09d 100644
+--- a/Codec/Kernel.lean
++++ b/Codec/Kernel.lean
+@@ -214,10 +214,11 @@ def turn (dc : Stream D) : Stream (Turn D) :=
+     (product dc (product nat64 (product nat64 (product (rawList Bounds.touchesMax (touch dc))
+       (product (rawList Bounds.createsMax (product dc cell)) (product (rawList Bounds.nullifiersMax dc)
+         (product nat64 (product (rawBytes Bounds.eventBytesMax)
+-          (product (rawList Bounds.rowsMax (rowTouch dc)) (rawList Bounds.rangesMax (rangeRead dc)))))))))))
+-    (fun (tx, nb, vu, ts, cs, ns, ch, ev, rs, qs) => some ⟨tx, nb, vu, ts, cs, ns, ch, ev, rs, qs⟩)
++          (product (rawList Bounds.rowsMax (rowTouch dc)) (product (rawList Bounds.rangesMax (rangeRead dc))
++            (product dc nat64)))))))))))
++    (fun (tx, nb, vu, ts, cs, ns, ch, ev, rs, qs, m, k) => some ⟨tx, nb, vu, ts, cs, ns, ch, ev, rs, qs, m, k⟩)
+     (fun t => (t.txId, t.notBefore, t.validUntil, t.touches, t.creates, t.nullifiers, t.charge, t.event, t.rows,
+-      t.ranges))
++      t.ranges, t.member, t.ticks))
+ 
+ /-! ## Calls -/
+ 
+diff --git a/Codec/Proofs/Kernel.lean b/Codec/Proofs/Kernel.lean
+index 76cfad7..86a48e5 100644
+--- a/Codec/Proofs/Kernel.lean
++++ b/Codec/Proofs/Kernel.lean
+@@ -120,7 +120,8 @@ def Turn.Fits (PD : D → Prop) (t : Turn D) : Prop :=
+   (t.nullifiers.length ≤ Bounds.nullifiersMax ∧ ∀ n ∈ t.nullifiers, PD n) ∧
+   t.charge < 2 ^ 64 ∧ t.event.size ≤ Bounds.eventBytesMax ∧
+   (t.rows.length ≤ Bounds.rowsMax ∧ ∀ x ∈ t.rows, RowTouch.Fits PD x) ∧
+-  (t.ranges.length ≤ Bounds.rangesMax ∧ ∀ q ∈ t.ranges, RangeRead.Fits PD q)
++  (t.ranges.length ≤ Bounds.rangesMax ∧ ∀ q ∈ t.ranges, RangeRead.Fits PD q) ∧
++  PD t.member ∧ t.ticks < 2 ^ 64
+ 
+ theorem turn_lawfulOn {PD : D → Prop} {dc : Stream D} (hd : LawfulOn PD dc) :
+     LawfulOn (Turn.Fits PD) (turn dc) := by
+@@ -132,7 +133,8 @@ theorem turn_lawfulOn {PD : D → Prop} {dc : Stream D} (hd : LawfulOn PD dc) :
+           (product_lawfulOn (rawList_lawfulOn hd _ (by decide))
+             (product_lawfulOn nat64_lawfulOn (product_lawfulOn (rawBytes_lawfulOn _ (by decide))
+               (product_lawfulOn (rawList_lawfulOn (rowTouch_lawfulOn hd) _ (by decide))
+-                (rawList_lawfulOn (rangeRead_lawfulOn hd) _ (by decide)))))))))))
++                (product_lawfulOn (rawList_lawfulOn (rangeRead_lawfulOn hd) _ (by decide))
++                  (product_lawfulOn hd nat64_lawfulOn)))))))))))
+     "kernel/turn" ?_ ?_).mono ?_ ?_
+   · intro y _; rfl
+   · intro x y h; simp at h; subst h; rfl
+@@ -333,10 +335,11 @@ canonical and `turnBytes` is injective on admitted turns (with `turn_lawfulOn`).
+ theorem checkBounds_fits (t : Turn D) (h : checkBounds t = .ok ()) : Turn.Fits (fun _ => True) t := by
+   simp only [checkBounds, req, decide_eq_true_eq] at h
+   simp only [bind_req, ite_req, List.all_eq_true, Bool.and_eq_true, decide_eq_true_eq] at h
+-  obtain ⟨hT, hOps, hC, hN, hE, hS, ⟨hKc, hKt⟩, ⟨hVc, hVt⟩, _, _, ⟨⟨⟨hVu, hNb⟩, hCh⟩, hKind⟩, hR⟩ := h
++  obtain ⟨hT, hOps, hC, hN, hE, hS, ⟨hKc, hKt⟩, ⟨hVc, hVt⟩, _, _, hTk, ⟨⟨⟨hVu, hNb⟩, hCh⟩, hKind⟩, hR⟩ := h
+   refine ⟨trivial, by simpa [Bounds.counterLimit] using hNb, by simpa [Bounds.counterLimit] using hVu,
+     ⟨hT, fun x hx => ⟨trivial, trivial, ?_⟩⟩, ⟨hC, fun c hc => ⟨trivial, ?_, hS c hc, fun p hp => ⟨?_, hVc c hc p hp⟩⟩⟩,
+-    ⟨hN, fun _ _ => trivial⟩, by simpa [Bounds.counterLimit] using hCh, hE, ?_, ?_⟩
++    ⟨hN, fun _ _ => trivial⟩, by simpa [Bounds.counterLimit] using hCh, hE, ?_, ?_, trivial,
++    by unfold Bounds.treeTicksMax at hTk; omega⟩
+   · have hops := hOps x hx
+     have hk := hKt x hx
+     have hv := hVt x hx
+@@ -455,10 +458,11 @@ theorem turn_size_logWeight {dc : Stream D} (hdc : ∀ d, dc.size d = 32) (t : T
+ 
+ 
+ /-- Tooth: the digest premise is load-bearing — with a length-prefixed digest (4 bytes for the empty
+-one) the empty turn's record is 52 bytes, not its log weight 80. -/
++one) the empty turn's record is 64 bytes (two empty digests, the id and the member), not its log
++weight 120. -/
+ theorem turn_size_needs_digest32 :
+-    (turn (rawBytes 64)).size (⟨ByteArray.empty, 0, 0, [], [], [], 0, ByteArray.empty, [], []⟩ : Turn ByteArray) = 52 ∧
+-      Turn.logWeight (⟨ByteArray.empty, 0, 0, [], [], [], 0, ByteArray.empty, [], []⟩ : Turn ByteArray) = 80 := by
++    (turn (rawBytes 64)).size (⟨ByteArray.empty, 0, 0, [], [], [], 0, ByteArray.empty, [], [], ByteArray.empty, 0⟩ : Turn ByteArray) = 64 ∧
++      Turn.logWeight (⟨ByteArray.empty, 0, 0, [], [], [], 0, ByteArray.empty, [], [], ByteArray.empty, 0⟩ : Turn ByteArray) = 120 := by
+   decide
+ 
+ end Nanodregg.Codec.Kernel
+diff --git a/Codec/Proofs/World.lean b/Codec/Proofs/World.lean
+index 0caa383..f02b7a0 100644
+--- a/Codec/Proofs/World.lean
++++ b/Codec/Proofs/World.lean
+@@ -183,11 +183,13 @@ def RefusalSlot.Fits (PD : D → Prop) : RefusalSlot D → Prop
+   | .tx i => PD i
+   | .count m _ => PD m
+   | .total o _ => PD o
++  | .ticks m _ => PD m
+ 
+-abbrev RefusalSlotWireFits (PD : D → Prop) : (s : Fin 3) → RefusalSlotF D s → Prop
++abbrev RefusalSlotWireFits (PD : D → Prop) : (s : Fin 4) → RefusalSlotF D s → Prop
+   | 0 => PD
+   | 1 => fun p => PD p.1 ∧ True
+   | 2 => fun p => PD p.1 ∧ True
++  | 3 => fun p => PD p.1 ∧ True
+ 
+ omit [Ord D] in
+ theorem refusalSlotWire_lawfulOn {PD : D → Prop} {dc : Stream D} (hd : LawfulOn PD dc) :
+@@ -195,12 +197,13 @@ theorem refusalSlotWire_lawfulOn {PD : D → Prop} {dc : Stream D} (hd : LawfulO
+   | 0 => hd
+   | 1 => product_lawfulOn hd u64_lawful.on
+   | 2 => product_lawfulOn hd u64_lawful.on
++  | 3 => product_lawfulOn hd u64_lawful.on
+ 
+ omit [Ord D] in
+ theorem refusalSlot_lawfulOn {PD : D → Prop} {dc : Stream D} (hd : LawfulOn PD dc) :
+     LawfulOn (RefusalSlot.Fits PD) (refusalSlot dc) := by
+   unfold refusalSlot
+-  refine (refine_lawfulOn (choice_lawfulOn 3 (by decide) (refusalSlotWire_lawfulOn hd)) "kernel/refusal-slot"
++  refine (refine_lawfulOn (choice_lawfulOn 4 (by decide) (refusalSlotWire_lawfulOn hd)) "kernel/refusal-slot"
+     ?_ ?_).mono ?_ ?_
+   · intro y _; cases y <;> rfl
+   · intro x y h
+@@ -209,14 +212,17 @@ theorem refusalSlot_lawfulOn {PD : D → Prop} {dc : Stream D} (hd : LawfulOn PD
+     | 0, i, h => simp at h; subst h; rfl
+     | 1, (m, w), h => simp at h; subst h; rfl
+     | 2, (o, w), h => simp at h; subst h; rfl
++    | 3, (m, w), h => simp at h; subst h; rfl
+   · intro y h; cases y with
+     | tx i => exact h
+     | count m w => exact h.1
+     | total o w => exact h.1
++    | ticks m w => exact h.1
+   · intro y h; cases y with
+     | tx i => exact h
+     | count m w => exact ⟨h, trivial⟩
+     | total o w => exact ⟨h, trivial⟩
++    | ticks m w => exact ⟨h, trivial⟩
+ 
+ /-- A refusals leaf's counters below 2^64 (what the leaf digest needs to be injective,
+ `refusalDigest_inj`). -/
+@@ -426,7 +432,8 @@ theorem refusalLeaf_fits_of_refusalsFits {H : Nat} {l : List (RefusalSlot D × R
+   intro p hp
+   have hq := List.all_eq_true.mp h p hp
+   obtain ⟨k, v⟩ := p
+-  cases k <;> cases v <;> simp_all [RefusalLeaf.Fits, refusalFits, Bounds.counterLimit, Bounds.refusalsPerWindow, Bounds.refusalsPerWindowMax] <;>
++  cases k <;> cases v <;> simp_all [RefusalLeaf.Fits, refusalFits, Bounds.counterLimit, Bounds.refusalsPerWindow, Bounds.refusalsPerWindowMax,
++    Bounds.ticksPerWindow, Bounds.treeTicksMax] <;>
+     omega
+ 
+ omit [Ord D] in
+diff --git a/Codec/World.lean b/Codec/World.lean
+index 596cd4b..3bc0d7e 100644
+--- a/Codec/World.lean
++++ b/Codec/World.lean
+@@ -142,24 +142,27 @@ members together (`total`, KERNEL-55 R1, a `count` leaf under the World's origin
+ the other two (`kernel/refusal-order`); which key holds which leaf, and the window facts, are the
+ World's `kernel/refusals` refusal (KERNEL's `refusalsFits`, which refuses a misfit pairing). -/
+ 
+-abbrev RefusalSlotF (D : Type) : Fin 3 → Type
++abbrev RefusalSlotF (D : Type) : Fin 4 → Type
+   | 0 => D
+   | 1 => D × UInt64
+   | 2 => D × UInt64
++  | 3 => D × UInt64
+ 
+-def refusalSlotWire (dc : Stream D) : (s : Fin 3) → Stream (RefusalSlotF D s)
++def refusalSlotWire (dc : Stream D) : (s : Fin 4) → Stream (RefusalSlotF D s)
+   | 0 => dc
+   | 1 => product dc u64
+   | 2 => product dc u64
++  | 3 => product dc u64
+ 
+ /-- A refusals key: its kind (0 a refused transaction id, 1 a member's window count, 2 the World's
+ window total, as in `refusalKeyBytes`), then the id, or the member and the window, or the origin
+ and the window. The kind byte leads the key bytes, so a listing holds every `tx`, then every
+ `count`, then the `total` (`Codec.Proofs.SlotOrder.refusalKeyBytes_kind_lt`). -/
+ def refusalSlot (dc : Stream D) : Stream (RefusalSlot D) :=
+-  refine "kernel/refusal-slot" (choice 3 (refusalSlotWire dc))
+-    (fun | ⟨0, i⟩ => some (.tx i) | ⟨1, (m, w)⟩ => some (.count m w) | ⟨2, (o, w)⟩ => some (.total o w))
+-    (fun | .tx i => ⟨0, i⟩ | .count m w => ⟨1, (m, w)⟩ | .total o w => ⟨2, (o, w)⟩)
++  refine "kernel/refusal-slot" (choice 4 (refusalSlotWire dc))
++    (fun | ⟨0, i⟩ => some (.tx i) | ⟨1, (m, w)⟩ => some (.count m w) | ⟨2, (o, w)⟩ => some (.total o w)
++         | ⟨3, (m, w)⟩ => some (.ticks m w))
++    (fun | .tx i => ⟨0, i⟩ | .count m w => ⟨1, (m, w)⟩ | .total o w => ⟨2, (o, w)⟩ | .ticks m w => ⟨3, (m, w)⟩)
+ 
+ /-- A refusals key's kind: the wire's choice tag and the key bytes' first byte (`refusalKeyBytes`): 0 a
+ refused transaction id, 1 a member's window count, 2 the World's window total (KERNEL-55 R1). -/
+@@ -167,6 +170,7 @@ def refusalKind {K : Type} : RefusalSlot K → Nat
+   | .tx _ => 0
+   | .count _ _ => 1
+   | .total _ _ => 2
++  | .ticks _ _ => 3
+ 
+ abbrev RefusalLeafF (D : Type) : Fin 2 → Type
+   | 0 => Nat × Nat × D
+diff --git a/Codec/WorldSize.lean b/Codec/WorldSize.lean
+index a7aca64..bf4cd5e 100644
+--- a/Codec/WorldSize.lean
++++ b/Codec/WorldSize.lean
+@@ -33,7 +33,7 @@ def journalBytes (w : World D) : Nat := 72 * w.journal.toList.length
+ a count's u64). -/
+ def refusalEntryBytes : RefusalSlot D × RefusalLeaf D → Nat
+   | (k, v) =>
+-    (match k with | .tx _ => 33 | .count _ _ => 41 | .total _ _ => 41) +
++    (match k with | .tx _ => 33 | .count _ _ => 41 | .total _ _ => 41 | .ticks _ _ => 41) +
+     (match v with | .refused _ _ _ => 49 | .count _ => 9)
+ 
+ /-- The refusals' bytes on the wire, entry by entry. -/
+diff --git a/Emit/Vectors.lean b/Emit/Vectors.lean
+index e462cbb..ccf395e 100644
+--- a/Emit/Vectors.lean
++++ b/Emit/Vectors.lean
+@@ -147,7 +147,7 @@ def rowsOf (l : List (RowSlot Sim.D × RowLeaf)) : Rows Sim.D :=
+ 
+ def turn : G (Turn Sim.D) := do
+   return ⟨← dig, ← nat64, ← nat64, ← list 2 touch, ← list 1 (do return (← dig, ← cell)), ← list 2 dig, ← nat64,
+-    ← bytes 8, ← list 2 rowTouch, ← list 1 rangeRead⟩
++    ← bytes 8, ← list 2 rowTouch, ← list 1 rangeRead, ← dig, ← nat64⟩
+ def right (k : Nat) : G Right := do
+   match k with
+   | 0 => return .observe
+diff --git a/Host/Sim/Run.lean b/Host/Sim/Run.lean
+index 941d453..b0d5ab8 100644
+--- a/Host/Sim/Run.lean
++++ b/Host/Sim/Run.lean
+@@ -753,7 +753,7 @@ def refusalPlants (seed : Nat) (failures : IO.Ref Nat) : IO Unit := do
+     check "plant-lookup-recorded: past journalForgets, while the record is kept, still `refused relationFull`"
+       (journalForgets w₂.height 0 && lookupOn w₂ == "refused relationFull") failures
+     let t₀ : Turn Kernel.Sim.D := { txId := 424242, notBefore := 3 * W - 10, validUntil := 3 * W + 10, touches := [],
+-                                    creates := [], nullifiers := [], charge := 0, event := ByteArray.empty }
++                                    creates := [], nullifiers := [], charge := 0, event := ByteArray.empty, member := 0 }
+     match World.admit kx.env w₂ { t₀ with charge := t₀.weight } with
+     | .error e => check s!"plant-lookup-recorded: the turn at height 3·windowMax admits ({e.name})" false failures
+     | .ok w₃ =>
+@@ -764,8 +764,8 @@ def refusalPlants (seed : Nat) (failures : IO.Ref Nat) : IO Unit := do
+ def rowsMk {D : Type} [Ord D] [DecidableEq D] (E : Env D) (w : World D) (tag : String) (touches : List (Touch D))
+     (creates : List (D × Cell)) (rows : List (RowTouch D)) : Turn D :=
+   let t0 : Turn D := ⟨E.hash "nanodregg/host-sim/rows" (tag.toUTF8 ++ E.bytes w.chain), w.height + 1,
+-    w.height + 64, touches, creates, [], 0, ByteArray.empty, rows, []⟩
+-  ⟨t0.txId, t0.notBefore, t0.validUntil, t0.touches, t0.creates, t0.nullifiers, t0.weight, t0.event, t0.rows, t0.ranges⟩
++    w.height + 64, touches, creates, [], 0, ByteArray.empty, rows, [], E.hash "nanodregg/host-sim/rows" tag.toUTF8, 0⟩
++  { t0 with charge := t0.weight }
+ 
+ /-- The two rows Turns from `w` (KERNEL-46/48): a parent cell born with one declared relation (limit 3,
+ cap 10, key width 2, retractable), then one row inserted under it with the parent pinned. -/
+diff --git a/Host/Sim/Toy.lean b/Host/Sim/Toy.lean
+index 18701aa..19ff0ca 100644
+--- a/Host/Sim/Toy.lean
++++ b/Host/Sim/Toy.lean
+@@ -37,7 +37,7 @@ def env : Env Nat where
+ 
+ def mkTurn (txId notBefore validUntil : Nat) (nullifiers : List Nat) : Turn Nat :=
+   let t : Turn Nat := { txId, notBefore, validUntil, touches := [], creates := [], nullifiers,
+-                        charge := 0, event := ByteArray.empty }
++                        charge := 0, event := ByteArray.empty, member := 0 }
+   { t with charge := t.weight }
+ 
+ /-- A toy tag: FNV of the input under a domain byte, as 32 bytes. -/
+diff --git a/Kernel/Bounds.lean b/Kernel/Bounds.lean
+index 0aeb6a2..fbbb31c 100644
+--- a/Kernel/Bounds.lean
++++ b/Kernel/Bounds.lean
+@@ -13,6 +13,9 @@ inductive Bound
+   | event | slotsPerCell | slotKey | valueBytes | window | weight | counter | denoms | rows
+   /-- a cell's or row's version, or a relation's floor, would reach `Bounds.counterLimit` (KERNEL-54) -/
+   | version
++  /-- a Turn's `ticks` past `Bounds.treeTicksMax` or `counterLimit` (DESIGN-OBS §1.3: a forged log cannot
++  jump the meter) -/
++  | ticks
+   deriving DecidableEq, Repr
+ 
+ namespace Bounds
+@@ -84,6 +87,11 @@ power of two that does; THE BAR's invoke measures 30 ticks per call (gates/waste
+ is ~4000 such runs. -/
+ def treeTicksMax : Nat := 131072
+ 
++/-- The ticks one member's admitted Turns may spend per window of `windowMax` heights (DESIGN-OBS
++§1.3, the meter): sixteen full-budget trees, by analogy with `refusalsPerWindow`; at THE BAR's ~30
++ticks per invoke, ~70,000 invokes per member per window. A Turn past it is `ticksBudget`, recorded. -/
++def ticksPerWindow : Nat := 16 * treeTicksMax
++
+ /-- A row key's width bound (LANG-44 (e) said 64; KERNEL-48 raises it to 128: a key of two digests in Lang's data encoding, each with CODEC's length byte, is 66 bytes, and CoAuthor's ballots are keyed {pick, voter}). -/
+ def keyBytesMax : Nat := 128
+ /-- The rows trie's depth (KERNEL-46 amendment 1, cv 01a14f7e): a 32-byte parent, the relation (a
+diff --git a/Kernel/Proofs/Admit.lean b/Kernel/Proofs/Admit.lean
+index e85b389..bac8eda 100644
+--- a/Kernel/Proofs/Admit.lean
++++ b/Kernel/Proofs/Admit.lean
+@@ -41,6 +41,8 @@ structure Checked (E : Env D) (w : World D) (t : Turn D) (posts : List (Post D))
+   rowsRemain : checkRowsRemain E w t = .ok ()
+   ranges : checkRanges E w t = .ok ()
+   rows : rowsRun E w t = .ok (rowsAfter E w t)
++  /-- the member's meter this window admits the turn's ticks (KERNEL-68) -/
++  ticks : checkTicks E w t = .ok ()
+ 
+ theorem check_ok {E : Env D} {w : World D} {t : Turn D} {posts : List (Post D)}
+     (h : check E w t = .ok posts) : Checked E w t posts := by
+@@ -52,13 +54,13 @@ theorem check_ok {E : Env D} {w : World D} {t : Turn D} {posts : List (Post D)}
+   unfold checkWith at h
+   simp only [except_bind_ok] at h
+   obtain ⟨⟨⟩, h1, ⟨⟩, h2, ⟨⟩, h3, ⟨⟩, h4, raw, h5, ⟨⟩, hv, ⟨⟩, h6, ⟨⟩, hrr, ⟨⟩, hrg, rr, hrw, ⟨⟩, h7,
+-    ⟨⟩, h8, ⟨⟩, hs, h9⟩ := h
++    ⟨⟩, h8, ⟨⟩, hk, ⟨⟩, hs, h9⟩ := h
+   simp only [pure, Except.pure, Except.ok.injEq, Prod.mk.injEq] at h9
+   obtain ⟨h9, -⟩ := h9
+   subst h9
+   have ha : rowsAfter E w t = rr := by unfold rowsAfter; rw [hrw]
+   rw [← ha] at hrw h7
+-  exact ⟨h1, h3, h4, h2, hs, ⟨raw, h5, rfl⟩, hv, h6, h7, h8, hrr, hrg, hrw⟩
++  exact ⟨h1, h3, h4, h2, hs, ⟨raw, h5, rfl⟩, hv, h6, h7, h8, hrr, hrg, hrw, hk⟩
+ 
+ /-- Every touch of a checked turn passed `touchCheck`. -/
+ theorem Checked.touch {E : Env D} {w : World D} {t : Turn D} {posts : List (Post D)}
+diff --git a/Kernel/Proofs/Carry.lean b/Kernel/Proofs/Carry.lean
+index 98ba5a1..431f362 100644
+--- a/Kernel/Proofs/Carry.lean
++++ b/Kernel/Proofs/Carry.lean
+@@ -326,7 +326,7 @@ private theorem deriveTurn_world' [DecidableEq D] (X : Ctx D) (U : Unsigned D 
+     deriveTurn X look rv c =
+       deriveTurn { X with callBytes := fun _ => X.callBytes c, unsignedBytes := U } look rv
+         { c with unsigned := { c.unsigned with world := o } } := by
+-  unfold deriveTurn derive
++  unfold deriveTurn deriveWithTicks
+   rw [tree_world X U look rv c o, dispatch_world X U look rv c o]
+   rfl
+ 
+diff --git a/Kernel/Proofs/InvokeNext.lean b/Kernel/Proofs/InvokeNext.lean
+index 1e6ba2d..b752a64 100644
+--- a/Kernel/Proofs/InvokeNext.lean
++++ b/Kernel/Proofs/InvokeNext.lean
+@@ -454,7 +454,8 @@ theorem invoke_next_slots {X : Ctx D} {w w' : World D} {c : Call D} {t : Turn D}
+       method args r (min budget (poolOf c.unsigned.body)) = .ok (s, calls, rows, used)) :
+     ∃ cell', w'.live X.env obj = some cell' ∧ ∀ k, (stateOf cell').get k = s.get k := by
+   obtain ⟨-, hw⟩ := receive_ok_with hc
+-  obtain ⟨-, d, hd, hs⟩ := receiveWith_sealed hw
++  obtain ⟨-, d, _k, hd, hs⟩ := receiveWith_sealed hw
++  replace hd := derive_of_withTicks hd
+   obtain ⟨-, -, htouch, -⟩ := sealTurn_ok hs
+   rw [derive_eq, hb] at hd
+   cases hdisp : invoke X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c
+@@ -538,7 +539,8 @@ theorem invoke_next_judged {X : Ctx D} {w w' : World D} {c : Call D} {t : Turn D
+     ∃ laws, lawsOf X obj cell = .ok laws ∧
+       X.program.judge (pinned X.env w c.unsigned.pins) (some p) laws (stateOf cell) s r = .ok () := by
+   obtain ⟨-, hw⟩ := receive_ok_with hc
+-  obtain ⟨-, d, hd, -⟩ := receiveWith_sealed hw
++  obtain ⟨-, d, _k, hd, -⟩ := receiveWith_sealed hw
++  replace hd := derive_of_withTicks hd
+   rw [derive_eq, hb] at hd
+   cases hdisp : invoke X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c
+       (tree X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c Bounds.callDepthMax)
+diff --git a/Kernel/Proofs/InvokeTree.lean b/Kernel/Proofs/InvokeTree.lean
+index d86a6fe..c3eb907 100644
+--- a/Kernel/Proofs/InvokeTree.lean
++++ b/Kernel/Proofs/InvokeTree.lean
+@@ -290,7 +290,7 @@ theorem dispatched_of_signed {X : Ctx D} {w : World D} {c : Call D} {obj : D} {m
+ 
+ /-- A sealed Turn's effects name distinct cells, as `firstDup` saw it (`duplicateEffect`). -/
+ theorem sealTurn_firstDup {X : Ctx D} {c : Call D} {cr : List (D × Cell)} {efs : List (D × Act)}
+-    {ns : List D} {rs : List (RowSlot D × RowAct)} {t : Turn D} (h : sealTurn X c cr efs ns rs = .ok t) :
++    {ns : List D} {rs : List (RowSlot D × RowAct)} {t : Turn D} {k : Nat} (h : sealTurn X c cr efs ns rs k = .ok t) :
+     firstDup (efs.map Prod.fst) = none := by
+   unfold sealTurn at h
+   simp only [except_bind_ok] at h
+@@ -343,7 +343,8 @@ theorem invoke_tree_slots [Std.TransOrd D] [Std.LawfulEqOrd D] {X : Ctx D} {w w'
+       X.program.judge (pinned X.env w c.unsigned.pins) (some p) laws (stateOf cell) s r = .ok () ∧
+       ∃ cell', w'.live X.env obj = some cell' ∧ ∀ k, (stateOf cell').get k = s.get k := by
+   obtain ⟨-, hw⟩ := receive_ok_with hc
+-  obtain ⟨-, d, hd', hs⟩ := receiveWith_sealed hw
++  obtain ⟨-, d, _k, hd', hs⟩ := receiveWith_sealed hw
++  replace hd' := derive_of_withTicks hd'
+   rw [derive_eq] at hd'
+   cases hR : dispatch X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c
+       (tree X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c Bounds.callDepthMax)
+@@ -424,7 +425,8 @@ theorem invoked_of_signed {X : Ctx D} {w : World D} {c : Call D} {t : Turn D} {o
+     (hc : receive X w c = .ok t) (hb : c.unsigned.body = .invoke obj method args budget via) :
+     Invoked X w c obj := by
+   obtain ⟨-, hw⟩ := receive_ok_with hc
+-  obtain ⟨-, d, hd, -⟩ := receiveWith_sealed hw
++  obtain ⟨-, d, _k, hd, -⟩ := receiveWith_sealed hw
++  replace hd := derive_of_withTicks hd
+   rw [derive_eq] at hd
+   cases hr : dispatch X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c
+       (tree X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c Bounds.callDepthMax)
+@@ -451,7 +453,8 @@ theorem dispatched_invoke_fresh {X : Ctx D} {w : World D} {c : Call D} {t : Turn
+     (hc : receive X w c = .ok t) (hd : Dispatched X w c n wk actor (.invoke obj method args budget via)) :
+     obj ∉ wk.visited := by
+   obtain ⟨-, hw⟩ := receive_ok_with hc
+-  obtain ⟨-, d, hd', -⟩ := receiveWith_sealed hw
++  obtain ⟨-, d, _k, hd', -⟩ := receiveWith_sealed hw
++  replace hd' := derive_of_withTicks hd'
+   rw [derive_eq] at hd'
+   cases hR : dispatch X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c
+       (tree X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c Bounds.callDepthMax)
+@@ -923,7 +926,8 @@ theorem object_turn_cases {X : Ctx D} {w w' : World D} {c : Call D} {t : Turn D}
+       (∃ laws via, c.unsigned.body = .law obj laws via) ∨
+       ∃ n wk a method args budget via, Dispatched X w c n wk a (.invoke obj method args budget via) := by
+   obtain ⟨-, hw⟩ := receive_ok_with hc
+-  obtain ⟨-, d, hd, hs⟩ := receiveWith_sealed hw
++  obtain ⟨-, d, _k, hd, hs⟩ := receiveWith_sealed hw
++  replace hd := derive_of_withTicks hd
+   rw [derive_eq] at hd
+   cases hR : dispatch X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c
+       (tree X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c Bounds.callDepthMax)
+diff --git a/Kernel/Proofs/InvokeTreeWitness.lean b/Kernel/Proofs/InvokeTreeWitness.lean
+index 3042861..9560461 100644
+--- a/Kernel/Proofs/InvokeTreeWitness.lean
++++ b/Kernel/Proofs/InvokeTreeWitness.lean
+@@ -221,11 +221,11 @@ private def ownB : Draft UInt8 := ⟨[], writeOf 5 (diffOps (stateOf bCell) sB),
+ 
+ private def dummy : Turn UInt8 :=
+   { txId := 0, notBefore := 0, validUntil := 0, touches := [], creates := [], nullifiers := [],
+-    charge := 0, event := .empty }
++    charge := 0, event := .empty, member := 0 }
+ 
+ private def t1 : Turn UInt8 :=
+   ((sealTurn wCtx c1 (ownA.append ownB).creates (ownA.append ownB).effects (ownA.append ownB).nullifiers
+-    (ownA.append ownB).rows).toOption).getD dummy
++    (ownA.append ownB).rows (poolOf c1.unsigned.body - wkB.pool)).toOption).getD dummy
+ 
+ private def w1 : World UInt8 := ((World.admit wEnv w0 t1).toOption).getD w0
+ 
+diff --git a/Kernel/Proofs/InvokeWitness.lean b/Kernel/Proofs/InvokeWitness.lean
+index bab9357..54916cd 100644
+--- a/Kernel/Proofs/InvokeWitness.lean
++++ b/Kernel/Proofs/InvokeWitness.lean
+@@ -105,13 +105,14 @@ theorem receive_of {X : Ctx D} {w : World D} {c : Call D} {obj : D} {method : Na
+     (hi : invoke X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c
+       (tree X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c Bounds.callDepthMax)
+       ⟨[], poolOf c.unsigned.body, 0⟩ c.unsigned.member obj method args budget via = .ok (d, wk)) :
+-    receive X w c = sealTurn X c d.creates d.effects d.nullifiers d.rows := by
++    receive X w c = sealTurn X c d.creates d.effects d.nullifiers d.rows (poolOf c.unsigned.body - wk.pool) := by
+   have h0 : req (decide (c.unsigned.world = w.origin)) Refusal.wrongWorld =
+       (Except.ok () : Except (Refusal D) Unit) := by simp [req, hw]
+   have hk' : keyRule (pinned X.env w c.unsigned.pins) c.unsigned = .ok () := by
+     unfold keyRule; rw [hb]; exact hk
+-  have hd : derive X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c = .ok d := by
+-    unfold derive; rw [hb] at hi ⊢; simp only [dispatch, hi, Except.map]
++  have hd : deriveWithTicks X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c =
++      .ok (d, poolOf c.unsigned.body - wk.pool) := by
++    unfold deriveWithTicks; rw [hb] at hi ⊢; simp only [dispatch, hi, Except.map]
+   unfold receive receiveWith deriveTurn
+   simp only [h0, hs, hk', hd, bind, Except.bind]
+ 
+@@ -220,10 +221,10 @@ private def s1 : Slots := [(stateBase, natBytes 7)]
+ 
+ private def dummy : Turn UInt8 :=
+   { txId := 0, notBefore := 0, validUntil := 0, touches := [], creates := [], nullifiers := [],
+-    charge := 0, event := .empty }
++    charge := 0, event := .empty, member := 0 }
+ 
+ private def t1 : Turn UInt8 :=
+-  ((sealTurn wCtx c1 [] (writeOf 5 (diffOps (stateOf objCell) s1)) [] []).toOption).getD dummy
++  ((sealTurn wCtx c1 [] (writeOf 5 (diffOps (stateOf objCell) s1)) [] [] 41).toOption).getD dummy
+ 
+ private def w1 : World UInt8 := ((World.admit wEnv w0 t1).toOption).getD w0
+ 
+@@ -283,7 +284,7 @@ private def req2 : Req UInt8 := reqOf c2.unsigned 5 7 (.invoke 0)
+ private def s2 : Slots := [(stateBase, natBytes 9)]
+ 
+ private def t2 : Turn UInt8 :=
+-  ((sealTurn wCtx c2 [] (writeOf 5 (diffOps (stateOf cell2) s2)) [] []).toOption).getD dummy
++  ((sealTurn wCtx c2 [] (writeOf 5 (diffOps (stateOf cell2) s2)) [] [] 41).toOption).getD dummy
+ 
+ private def w2 : World UInt8 := ((World.admit wEnv w1 t2).toOption).getD w1
+ 
+diff --git a/Kernel/Proofs/Journal.lean b/Kernel/Proofs/Journal.lean
+index 4cfb5b5..37da127 100644
+--- a/Kernel/Proofs/Journal.lean
++++ b/Kernel/Proofs/Journal.lean
+@@ -450,7 +450,7 @@ theorem check_journal_filter {E : Env D} {w : World D} {t : Turn D} {H : Nat} {J
+           have hkept : kept H e = true := by
+             simp only [kept, decide_eq_true_eq]; rw [windowMax_eq] at *; omega
+           simp [Option.filter, hkept]
+-    exact (check_local (w := w) (w' := { w with journal := J }) (t := t) ⟨fun _ _ => rfl, rfl, rfl, rfl, hg, rfl, .same rfl⟩).symm
++    exact (check_local (w := w) (w' := { w with journal := J }) (t := t) ⟨fun _ _ => rfl, rfl, rfl, rfl, hg, rfl, rfl, .same rfl⟩).symm
+   · unfold check checkWith
+     cases hb : checkBounds t with
+     | error _ => simp [bind, Except.bind, Except.map]
+@@ -983,7 +983,8 @@ private def rtTurn (nb v ev : Nat) : Turn UInt8 :=
+       creates := []
+       nullifiers := []
+       charge := 0
+-      event := rtBytes ev }
++      event := rtBytes ev
++      member := 0 }
+   { t0 with charge := t0.weight }
+ 
+ private def rtWorld : World UInt8 where
+diff --git a/Kernel/Proofs/JournalHead.lean b/Kernel/Proofs/JournalHead.lean
+index 04e1884..18080d6 100644
+--- a/Kernel/Proofs/JournalHead.lean
++++ b/Kernel/Proofs/JournalHead.lean
+@@ -39,7 +39,7 @@ theorem admit_height_lt {E : Env D} {w w' : World D} {t : Turn D} (h : World.adm
+   have hb := admit_bounded h
+   unfold checkBounds at hb
+   simp only [except_bind_ok] at hb
+-  obtain ⟨⟨⟩, _, ⟨⟩, _, ⟨⟩, _, ⟨⟩, _, ⟨⟩, _, ⟨⟩, _, ⟨⟩, _, ⟨⟩, _, ⟨⟩, _, ⟨⟩, _, ⟨⟩, hc, -⟩ := hb
++  obtain ⟨⟨⟩, _, ⟨⟩, _, ⟨⟩, _, ⟨⟩, _, ⟨⟩, _, ⟨⟩, _, ⟨⟩, _, ⟨⟩, _, ⟨⟩, _, ⟨⟩, _, ⟨⟩, _, ⟨⟩, hc, -⟩ := hb
+   rw [req_ok] at hc
+   simp only [Bool.and_eq_true, decide_eq_true_eq, List.all_eq_true] at hc
+   rw [admit_height h]
+diff --git a/Kernel/Proofs/Ledger.lean b/Kernel/Proofs/Ledger.lean
+index 16a1db5..bfea68d 100644
+--- a/Kernel/Proofs/Ledger.lean
++++ b/Kernel/Proofs/Ledger.lean
+@@ -743,7 +743,7 @@ admitted turn sealed with effects `efs` leaves at each effect cell whose act is
+ `postWrite` makes of the cell observed there, and every cell no effect names (and not born) as it
+ was. -/
+ theorem sealed_writes {X : Ctx D} {w w' : World D} {c : Call D} {t : Turn D} {efs : List (D × Act)}
+-    {ns : List D} (hseal : sealTurn X c [] efs ns = .ok t) (ha : World.admit X.env w t = .ok w') :
++    {ns : List D} {k : Nat} (hseal : sealTurn X c [] efs ns [] k = .ok t) (ha : World.admit X.env w t = .ok w') :
+     (∀ k ops, (∃ e ∈ efs, e.1 = k) → actFor efs k = .write ops →
+       ∃ cell post, w.live X.env k = some cell ∧ postWrite k cell ops = .ok post ∧ w'.live X.env k = some post) ∧
+       ∀ k, (∀ e ∈ efs, e.1 ≠ k) → k ∉ createdIds t → w'.entry X.env k = w.entry X.env k := by
+@@ -813,7 +813,8 @@ theorem transfer_exact {X : Ctx D} {w w' : World D} {c : Call D} {t : Turn D} {s
+         w'.live X.env g = some post) ∧
+       ∀ k, k ≠ srcR.resolve X → k ≠ dstR.resolve X → via ≠ some k → k ∉ createdIds t →
+         w'.entry X.env k = w.entry X.env k := by
+-  obtain ⟨_, d, hdd, hsl⟩ := receiveWith_sealed (receive_ok_with hr).2
++  obtain ⟨_, d, _k, hdd, hsl⟩ := receiveWith_sealed (receive_ok_with hr).2
++  replace hdd := derive_of_withTicks hdd
+   rw [derive_eq, hb] at hdd
+   simp only [dispatch, stepped_map] at hdd
+   obtain ⟨scell, sv, dcell, dv, principal, spend, hs, hd, -, hne, hpos, -, hfs, hfd, hsp, rfl⟩ := transfer_ok hdd
+@@ -885,7 +886,8 @@ theorem credit_exact {X : Ctx D} {w w' : World D} {c : Call D} {t : Turn D} {wel
+         w'.live X.env g = some post) ∧
+       ∀ k, k ≠ well → k ≠ acctR.resolve X → via ≠ some k → k ∉ createdIds t →
+         w'.entry X.env k = w.entry X.env k := by
+-  obtain ⟨_, d, hdd, hsl⟩ := receiveWith_sealed (receive_ok_with hr).2
++  obtain ⟨_, d, _k, hdd, hsl⟩ := receiveWith_sealed (receive_ok_with hr).2
++  replace hdd := derive_of_withTicks hdd
+   rw [derive_eq, hb] at hdd
+   simp only [dispatch, stepped_map] at hdd
+   obtain ⟨wcell, wv, acell, av, principal, spend, hs, hda, -, hwell, hne, hpos, hden, hle, hcap, hsp, rfl⟩ :=
+diff --git a/Kernel/Proofs/LedgerNext.lean b/Kernel/Proofs/LedgerNext.lean
+index 653d8e1..77010d7 100644
+--- a/Kernel/Proofs/LedgerNext.lean
++++ b/Kernel/Proofs/LedgerNext.lean
+@@ -446,7 +446,8 @@ theorem grant_turn_cell {X : Ctx D} {w w' : World D} {c : Call D} {t : Turn D} {
+         i ≤ ledgerSpendsMax ∧
+         w'.live X.env g = some { cell with slots := cell.slots.set (base + i) (countBytes (left - u)) } := by
+   obtain ⟨-, hw⟩ := receive_ok_with hr
+-  obtain ⟨-, d, hd, hs⟩ := receiveWith_sealed hw
++  obtain ⟨-, d, _k, hd, hs⟩ := receiveWith_sealed hw
++  replace hd := derive_of_withTicks hd
+   rw [derive_eq] at hd
+   cases hR : dispatch X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c
+       (tree X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c Bounds.callDepthMax)
+@@ -568,7 +569,7 @@ theorem honest_ledgerContiguous {X : Ctx D} :
+ cells), so the admitted World holds there what `postWrite` makes of the cell the turn observed. -/
+ private theorem effect_written {X : Ctx D} {w w' : World D} {c : Call D} {t : Turn D}
+     {cr : List (D × Cell)} {efs : List (D × Act)} {ns : List D} {rs : List (RowSlot D × RowAct)}
+-    (hs : sealTurn X c cr efs ns rs = .ok t) (ha : World.admit X.env w t = .ok w')
++    {k : Nat} (hs : sealTurn X c cr efs ns rs k = .ok t) (ha : World.admit X.env w t = .ok w')
+     {k : D} {ops : List Op} (he : (k, Act.write ops) ∈ efs) :
+     ∃ cell post, w.live X.env k = some cell ∧ postWrite k cell ops = .ok post ∧ w'.live X.env k = some post := by
+   obtain ⟨-, -, htouch, -, -, -, -, -, -, hpins⟩ := sealTurn_ok hs
+@@ -584,7 +585,7 @@ private theorem effect_written {X : Ctx D} {w w' : World D} {c : Call D} {t : Tu
+ as `(i + 1, left - u)`. -/
+ private theorem effect_reads_back {X : Ctx D} {w w' : World D} {c : Call D} {t : Turn D}
+     {cr : List (D × Cell)} {efs : List (D × Act)} {ns : List D} {rs : List (RowSlot D × RowAct)}
+-    (hs : sealTurn X c cr efs ns rs = .ok t) (ha : World.admit X.env w t = .ok w')
++    {k : Nat} (hs : sealTurn X c cr efs ns rs k = .ok t) (ha : World.admit X.env w t = .ok w')
+     (hcan : CellsCanon X.env w) (hlc : LedgerContiguous X.env w)
+     {g : D} {gc : Cell} {base i left u : Nat} (hb : LedgerBase base)
+     (hg : readKind (pinned X.env w c.unsigned.pins) g kindGrant = .ok gc) (hll : ledgerLeft base g gc = .ok (i, left))
+@@ -606,18 +607,18 @@ private theorem receive_top {X : Ctx D} {w : World D} {c : Call D} {t : Turn D}
+     ∃ R, dispatch X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c
+         (tree X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c Bounds.callDepthMax)
+         ⟨[], poolOf c.unsigned.body, 0⟩ c.unsigned.member c.unsigned.body = .ok R ∧
+-      sealTurn X c R.1.creates R.1.effects R.1.nullifiers R.1.rows = .ok t := by
++      sealTurn X c R.1.creates R.1.effects R.1.nullifiers R.1.rows (poolOf c.unsigned.body - R.2.pool) = .ok t := by
+   obtain ⟨-, hw⟩ := receive_ok_with hr
+-  obtain ⟨-, d, hdd, hs⟩ := receiveWith_sealed hw
+-  rw [derive_eq] at hdd
++  obtain ⟨-, d, k, hdd, hs⟩ := receiveWith_sealed hw
++  unfold deriveWithTicks at hdd
+   cases hR : dispatch X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c
+       (tree X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c Bounds.callDepthMax)
+       ⟨[], poolOf c.unsigned.body, 0⟩ c.unsigned.member c.unsigned.body with
+   | error e => rw [hR] at hdd; cases hdd
+   | ok R =>
+       rw [hR] at hdd
+-      simp only [Except.map, Except.ok.injEq] at hdd
+-      subst hdd
++      simp only [Except.map, Except.ok.injEq, Prod.mk.injEq] at hdd
++      obtain ⟨rfl, rfl⟩ := hdd
+       exact ⟨R, rfl, hs⟩
+ 
+ /-- **A transfer through a grant reads back its amount, at any depth** (LEDGER-7's link). A signed
+diff --git a/Kernel/Proofs/Local.lean b/Kernel/Proofs/Local.lean
+index 5607112..5a7b183 100644
+--- a/Kernel/Proofs/Local.lean
++++ b/Kernel/Proofs/Local.lean
+@@ -439,16 +439,17 @@ theorem rows_local {E : Env D} {w w' : World D} {t : Turn D}
+ check `t` alike: the same refusal, or the same posts. -/
+ theorem check_local {E : Env D} {w w' : World D} {t : Turn D} (h : Agree E w w' t) :
+     check E w' t = check E w t := by
+-  obtain ⟨hcells, hH, hS, hA, hJ, hR, hrows⟩ := h
++  obtain ⟨hcells, hH, hS, hA, hJ, hR, hM, hrows⟩ := h
+   obtain ⟨hrem, hran, hrun⟩ := rows_local hcells hrows
+   have hwin : checkWindow w' t = checkWindow w t := by unfold checkWindow; rw [hH]
++  have htk : checkTicks E w' t = checkTicks E w t := by unfold checkTicks ticksUsed; rw [hH, hM]
+   have hjour : checkJournal E w' t = checkJournal E w t := by unfold checkJournal; rw [hJ, hR]
+   have hst : checkSteps w' = checkSteps w := by unfold checkSteps; rw [hS]
+   have hch : ∀ b, checkCharge w' t b = checkCharge w t b := by intro b; unfold checkCharge; rw [hA]
+   show Prod.fst <$> checkWith E w' t = Prod.fst <$> checkWith E w t
+   unfold checkWith
+   simp only [hwin, hjour, touches_local hcells, checkNullifiers_local hcells, hrem, hran,
+-    checkCreates_local hcells, hst, hch, map_bind, map_pure]
++    checkCreates_local hcells, hst, hch, htk, map_bind, map_pure]
+   revert hrun
+   cases rowsRun E w t <;> cases rowsRun E w' t <;> intro hrun
+   · cases hrun; rfl
+@@ -467,13 +468,13 @@ private def readCell : Cell := ⟨0, .ram, []⟩
+ 
+ /-- From genesis: `readCell` live at `p`, the allowance exactly the keep turn's weight. -/
+ private def keptWorld (E : Env D) (o p : D) : World D :=
+-  { World.genesis E o 145 with
++  { World.genesis E o 185 with
+     trie := (Trie.T.empty : Cells D).insert (trieSpec E) (.cell p) (.entry (.live readCell 0)) }
+ 
+ /-- Pin `p` (`keep`) at its live pin, touch nothing else, pay the exact weight. -/
+ private def keepTurn (E : Env D) (o p : D) : Turn D :=
+   { txId := o, notBefore := 1, validUntil := 1, touches := [⟨p, pinOf E (some (.live readCell 0)), .keep⟩],
+-    creates := [], nullifiers := [], charge := 145, event := ByteArray.empty }
++    creates := [], nullifiers := [], charge := 185, event := ByteArray.empty, member := o }
+ 
+ private theorem keepTurn_admitted (E : Env D) (o p : D) (w : World D) (hw : w = keptWorld E o p) :
+     check E w (keepTurn E o p) = .ok [] := by
+@@ -502,7 +503,7 @@ theorem check_local_outside (E : Env D) (o p q : D) (hq : q ≠ p) :
+     rw [Trie.get_insert_self]
+     simp [w, keptWorld, Trie.get_insert, hq, Trie.get_empty]
+   · rw [check_local (w := w) (w' := w') (t := keepTurn E o p)
+-      ⟨fun s hs => Trie.get_insert_ne _ _ _ fun e => hnr (e ▸ hs), rfl, rfl, rfl, rfl, rfl, .same rfl⟩, hw]
++      ⟨fun s hs => Trie.get_insert_ne _ _ _ fun e => hnr (e ▸ hs), rfl, rfl, rfl, rfl, rfl, rfl, .same rfl⟩, hw]
+ 
+ /-- **Tooth: a `keep` pin is read, so the read set cannot shrink to the footprint.** `keptWorld` and
+ genesis differ only at `p`, which the keep turn reads and does not write; the turn is admitted from
+@@ -515,7 +516,7 @@ theorem check_reads_kept (E : Env D) (o p : D) :
+       w'.refusals = w.refusals ∧ w'.rows = w.rows ∧ check E w t = .ok [] ∧
+       (check E w' t ≠ check E w t ∨ CollidesAmong E.hash [pinPre E none, pinPre E (some (.live readCell 0))]) := by
+   have hw := keepTurn_admitted E o p _ rfl
+-  refine ⟨keptWorld E o p, World.genesis E o 145, keepTurn E o p, ?_, .touched (x := ⟨p, pinOf E (some (.live readCell 0)), .keep⟩) (by simp [keepTurn]),
++  refine ⟨keptWorld E o p, World.genesis E o 185, keepTurn E o p, ?_, .touched (x := ⟨p, pinOf E (some (.live readCell 0)), .keep⟩) (by simp [keepTurn]),
+     fun s hs => ?_, rfl, rfl, rfl, rfl, rfl, rfl, hw, ?_⟩
+   · intro h
+     cases h with
+@@ -529,9 +530,9 @@ theorem check_reads_kept (E : Env D) (o p : D) :
+       have := congrArg Prod.fst h
+       simp [pinPre, domAbsent, domCell] at this
+     · left
+-      have hmap : mapEx (touchCheck E (World.genesis E o 145)) (keepTurn E o p).touches = .error (.stale p) := by
++      have hmap : mapEx (touchCheck E (World.genesis E o 185)) (keepTurn E o p).touches = .error (.stale p) := by
+         simp [keepTurn, mapEx, touchCheck, World.entry, World.genesis, Trie.get_empty, req, hpin, bind, Except.bind]
+-      have hc : check E (World.genesis E o 145) (keepTurn E o p) = .error (.stale p) := by
++      have hc : check E (World.genesis E o 185) (keepTurn E o p) = .error (.stale p) := by
+         unfold check checkWith; rw [hmap]; rfl
+       rw [hc, hw]; simp
+ 
+@@ -555,7 +556,7 @@ theorem check_unread_row {E : Env D} {n : Nat} (hE : E.Lawful n) {w : World D} {
+     ({ w with rows := w.rows.insert (rowSpec E) k v } : World D).rows ≠ w.rows ∧
+       check E { w with rows := w.rows.insert (rowSpec E) k v } t = check E w t := by
+   refine ⟨fun h => ?_, check_local (w := w) (w' := { w with rows := w.rows.insert (rowSpec E) k v }) (t := t)
+-    ⟨fun _ _ => rfl, rfl, rfl, rfl, rfl, rfl, .read hE hc (Trie.canon_insert (rowSpec E) k v hc) hf
++    ⟨fun _ _ => rfl, rfl, rfl, rfl, rfl, rfl, rfl, .read hE hc (Trie.canon_insert (rowSpec E) k v hc) hf
+       fun s hs => Trie.get_insert_ne _ _ _ fun e => hk (e ▸ hs)⟩⟩
+   have e := congrArg (fun r => r.get (rowSpec E) k) h
+   simp only [Trie.get_insert_self] at e
+diff --git a/Kernel/Proofs/Logic/Frame.lean b/Kernel/Proofs/Logic/Frame.lean
+index bdb08e5..1c32938 100644
+--- a/Kernel/Proofs/Logic/Frame.lean
++++ b/Kernel/Proofs/Logic/Frame.lean
+@@ -68,7 +68,9 @@ structure Frame (E : Env D) (w w' : World D) (t : Turn D) : Prop where
+   journal : w.JournalCanon E → ∀ k, k ≠ t.txId →
+     w'.journalAt E k = if (w.height + 1) % Bounds.windowMax = 0
+       then (w.journalAt E k).filter (kept (w.height + 1)) else w.journalAt E k
+-  refusals : w.RefusalsCanon E → ∀ k,
++  /-- every refusals leaf but the turn's own meter leaf (its member's ticks this window, which the
++  turn bumps when it spent ticks: KERNEL-68) -/
++  refusals : w.RefusalsCanon E → ∀ k, k ≠ .ticks t.member (refusalWindow (w.height + 1)) →
+     w'.refusalAt E k = if (w.height + 1) % Bounds.windowMax = 0
+       then (w.refusalAt E k).filter (keptRefusal (w.height + 1) k) else w.refusalAt E k
+ 
+@@ -76,7 +78,7 @@ structure Frame (E : Env D) (w w' : World D) (t : Turn D) : Prop where
+ theorem admit_Frame {E : Env D} {w w' : World D} {t : Turn D} (h : World.admit E w t = .ok w') :
+     Frame E w w' t := by
+   obtain ⟨posts, hk, rfl⟩ := admit_ok h
+-  refine ⟨fun s hs => ?_, fun hr s hs => ?_, fun hc k hne => ?_, fun hc k => ?_⟩
++  refine ⟨fun s hs => ?_, fun hr s hs => ?_, fun hc k hne => ?_, fun hc k hnm => ?_⟩
+   · show (commitTrie E w t posts).get _ _ = _
+     cases s with
+     | cell c =>
+@@ -108,8 +110,13 @@ theorem admit_Frame {E : Env D} {w w' : World D} {t : Turn D} (h : World.admit E
+             fun key hs' e => hs (by rw [e]; exact .head hx hne hs')⟩)]
+   · rw [commit_journalAt hc, if_neg hne]
+   · unfold World.refusalAt
+-    rw [commit_refusals]
+-    exact pruneRefusals_get hc k
++    rw [commit_refusals, pruneRefusals_get (commitMeter_canon hc) k]
++    have hm : (commitMeter E w t).get (refusalSpec E) k = w.refusals.get (refusalSpec E) k := by
++      unfold commitMeter
++      split
++      · rfl
++      · exact Trie.get_insert_ne _ _ _ hnm
++    rw [hm]
+ 
+ /-! ## The read set: what `check` reads (the locality half, `Kernel.Proofs.Local.check_local`) -/
+ 
+@@ -147,7 +154,8 @@ inductive RowsAgree (E : Env D) (w w' : World D) (t : Turn D) : Prop
+ 
+ /-- **`w'` agrees with `w` on what `check E · t` reads**: the cells on `CellRead`, with no premise;
+ the height (the window), the steps and the allowance (the charge); the journal at the turn's
+-transaction id and the refusals at its `.tx` key (`checkJournal`); the rows (`RowsAgree`). -/
++transaction id and the refusals at its `.tx` key (`checkJournal`) and at its member's meter key
++(`checkTicks`); the rows (`RowsAgree`). -/
+ structure Agree (E : Env D) (w w' : World D) (t : Turn D) : Prop where
+   cells : ∀ s, CellRead t s → w'.trie.get (trieSpec E) s = w.trie.get (trieSpec E) s
+   height : w'.height = w.height
+@@ -155,6 +163,9 @@ structure Agree (E : Env D) (w w' : World D) (t : Turn D) : Prop where
+   allowance : w'.allowance = w.allowance
+   journal : w'.journalAt E t.txId = w.journalAt E t.txId
+   refusal : w'.refusalAt E (.tx t.txId) = w.refusalAt E (.tx t.txId)
++  /-- the turn's member's meter leaf this window (`checkTicks`, KERNEL-68) -/
++  meter : w'.refusalAt E (.ticks t.member (refusalWindow (w.height + 1))) =
++    w.refusalAt E (.ticks t.member (refusalWindow (w.height + 1)))
+   rows : RowsAgree E w w' t
+ 
+ omit [Ord D] [DecidableEq D] in
+@@ -186,7 +197,7 @@ private def toothCell : Cell := ⟨0, .ram, []⟩
+ /-- From genesis (height 0): bear `toothCell` at `c`, touch nothing, pay the exact weight. -/
+ private def bornTurn (c : D) : Turn D :=
+   { txId := c, notBefore := 1, validUntil := 1, touches := [], creates := [(c, toothCell)],
+-    nullifiers := [], charge := 170, event := ByteArray.empty }
++    nullifiers := [], charge := 210, event := ByteArray.empty, member := c }
+ 
+ /-- **Tooth: `born` is in the cells' footprint.** From genesis a turn bearing one cell is admitted,
+ and the frame over the footprint without `born` (the cells of non-`keep` touches, and the
+@@ -195,11 +206,11 @@ theorem cellFoot_needs_born (E : Env D) (o c : D) :
+     ∃ w w' t, World.admit E w t = .ok w' ∧
+       ¬ ∀ s, (∀ x ∈ t.touches, x.act ≠ .keep → s ≠ .cell x.cell) → (∀ n ∈ t.nullifiers, s ≠ .nullifier n) →
+         w'.trie.get (trieSpec E) s = w.trie.get (trieSpec E) s := by
+-  have hc : check E (World.genesis E o 170) (bornTurn c) = .ok [] := rfl
+-  refine ⟨_, _, bornTurn c, show World.admit E _ _ = .ok (commit E (World.genesis E o 170) (bornTurn c) []) by
++  have hc : check E (World.genesis E o 210) (bornTurn c) = .ok [] := rfl
++  refine ⟨_, _, bornTurn c, show World.admit E _ _ = .ok (commit E (World.genesis E o 210) (bornTurn c) []) by
+     unfold World.admit; rw [hc], fun hall => ?_⟩
+   have h := hall (.cell c) (fun x hx => by simp [bornTurn] at hx) (fun n hn => by simp [bornTurn] at hn)
+-  rw [show (commit E (World.genesis E o 170) (bornTurn c) []).trie = commitTrie E (World.genesis E o 170) (bornTurn c) []
++  rw [show (commit E (World.genesis E o 210) (bornTurn c) []).trie = commitTrie E (World.genesis E o 210) (bornTurn c) []
+     from rfl, commitTrie_eq] at h
+   change (Trie.T.empty.insert (trieSpec E) (.cell c) (.entry (.live toothCell 0))).get (trieSpec E) (.cell c) =
+     none at h
+@@ -208,15 +219,15 @@ theorem cellFoot_needs_born (E : Env D) (o c : D) :
+ 
+ /-- A World holding one live cell `p` with one declared relation `0` under it (no rows, limit 1). -/
+ private def rowWorld (E : Env D) (o p : D) : World D :=
+-  { World.genesis E o 250 with
++  { World.genesis E o 290 with
+     trie := (Trie.T.empty : Cells D).insert (trieSpec E) (.cell p) (.entry (.live toothCell 0))
+     rows := (Trie.T.empty : Rows D).insert (rowSpec E) (.head p 0) (.head 0 0 1 0 0 false 0) }
+ 
+ /-- Pin `p` (`keep`) and insert one row into its relation `0`, paying the exact weight. -/
+ private def rowTurn (E : Env D) (o p : D) : Turn D :=
+   { txId := o, notBefore := 1, validUntil := 1, touches := [⟨p, pinOf E (some (.live toothCell 0)), .keep⟩], creates := [],
+-    nullifiers := [], charge := 250, event := ByteArray.empty,
+-    rows := [⟨.row ⟨p, 0, ByteArray.empty⟩, none, .insert 0 ByteArray.empty⟩] }
++    nullifiers := [], charge := 290, event := ByteArray.empty,
++    rows := [⟨.row ⟨p, 0, ByteArray.empty⟩, none, .insert 0 ByteArray.empty⟩], member := o }
+ 
+ /-- **Tooth: `head` is in the rows' footprint.** A turn inserting one row is admitted on canonical
+ rows, and the frame over the footprint without `head` (the non-`keep` row touches' slots, and the
+diff --git a/Kernel/Proofs/Logic/HistoryWitness.lean b/Kernel/Proofs/Logic/HistoryWitness.lean
+index 8338362..fe7460a 100644
+--- a/Kernel/Proofs/Logic/HistoryWitness.lean
++++ b/Kernel/Proofs/Logic/HistoryWitness.lean
+@@ -90,7 +90,7 @@ private def hCall : Call UInt8 :=
+ 
+ private def hDummy : Turn UInt8 :=
+   { txId := 0, notBefore := 0, validUntil := 0, touches := [], creates := [], nullifiers := [],
+-    charge := 0, event := .empty }
++    charge := 0, event := .empty, member := 0 }
+ 
+ private def hTurn : Turn UInt8 := ((receive hCtx hW hCall).toOption).getD hDummy
+ private def hAfter : World UInt8 := ((World.admit hEnv hW hTurn).toOption).getD hW
+diff --git a/Kernel/Proofs/Logic/Triple.lean b/Kernel/Proofs/Logic/Triple.lean
+index 275365e..4674ba7 100644
+--- a/Kernel/Proofs/Logic/Triple.lean
++++ b/Kernel/Proofs/Logic/Triple.lean
+@@ -168,7 +168,7 @@ private def cNew : Call UInt8 := tCall ⟨#[42]⟩ 5 (.create none [] [])
+ 
+ private def tDummy : Turn UInt8 :=
+   { txId := 0, notBefore := 0, validUntil := 0, touches := [], creates := [], nullifiers := [],
+-    charge := 0, event := .empty }
++    charge := 0, event := .empty, member := 0 }
+ 
+ private def tTurn (c : Call UInt8) : Turn UInt8 := ((receive tCtx tW c).toOption).getD tDummy
+ private def tAfter (c : Call UInt8) : World UInt8 := ((World.admit tEnv tW (tTurn c)).toOption).getD tW
+diff --git a/Kernel/Proofs/ObjectHead.lean b/Kernel/Proofs/ObjectHead.lean
+index c957351..f52ee89 100644
+--- a/Kernel/Proofs/ObjectHead.lean
++++ b/Kernel/Proofs/ObjectHead.lean
+@@ -146,7 +146,8 @@ theorem turn_object_head [Std.TransOrd D] [Std.LawfulEqOrd D] {X : Ctx D} {w w'
+       (∀ k, k < lawBase → cell'.slots.get k = cell.slots.get k) ∧
+       (cell.slots.get slotPackage ≠ none → ∀ k, k < stateBase → cell'.slots.get k = cell.slots.get k) := by
+   obtain ⟨-, hw⟩ := receive_ok_with hc
+-  obtain ⟨-, d, hd, hs⟩ := receiveWith_sealed hw
++  obtain ⟨-, d, _k, hd, hs⟩ := receiveWith_sealed hw
++  replace hd := derive_of_withTicks hd
+   rw [derive_eq] at hd
+   cases hR : dispatch X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c
+       (tree X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c Bounds.callDepthMax)
+diff --git a/Kernel/Proofs/Receive.lean b/Kernel/Proofs/Receive.lean
+index 6403687..0ba6686 100644
+--- a/Kernel/Proofs/Receive.lean
++++ b/Kernel/Proofs/Receive.lean
+@@ -54,7 +54,7 @@ theorem receive_congr {X : Ctx D} {w₁ w₂ : World D} {c : Call D} (ho : w₁.
+ pins as its touches, its window, its call and the receiver's nullifiers; every effect is on a
+ pinned cell. -/
+ theorem sealTurn_ok {X : Ctx D} {c : Call D} {cr : List (D × Cell)} {efs : List (D × Act)}
+-    {ns : List D} {rs : List (RowSlot D × RowAct)} {t : Turn D} (h : sealTurn X c cr efs ns rs = .ok t) :
++    {ns : List D} {rs : List (RowSlot D × RowAct)} {t : Turn D} {k : Nat} (h : sealTurn X c cr efs ns rs k = .ok t) :
+     t.charge = t.weight ∧ t.charge ≤ c.unsigned.maxCharge ∧
+       t.touches = touchesOf c.unsigned.pins efs ∧
+       t.event = X.callBytes c ∧ t.txId = txIdOf X c ∧ t.notBefore = c.unsigned.notBefore ∧
+@@ -80,7 +80,7 @@ theorem sealTurn_ok {X : Ctx D} {c : Call D} {cr : List (D × Cell)} {efs : List
+ /-- A sealed Turn's row touches are what `rowTouchesOf` makes of the caller's row pins and the
+ receiver's row effects, and its range reads are the caller's. -/
+ theorem sealTurn_rows {X : Ctx D} {c : Call D} {cr : List (D × Cell)} {efs : List (D × Act)}
+-    {ns : List D} {rs : List (RowSlot D × RowAct)} {t : Turn D} (h : sealTurn X c cr efs ns rs = .ok t) :
++    {ns : List D} {rs : List (RowSlot D × RowAct)} {t : Turn D} {k : Nat} (h : sealTurn X c cr efs ns rs k = .ok t) :
+     ∃ rts, rowTouchesOf c.unsigned.rowPins rs = .ok rts ∧ t.rows = rts ∧ t.ranges = c.unsigned.ranges := by
+   unfold sealTurn at h
+   simp only [except_bind_ok] at h
+@@ -130,16 +130,22 @@ Draft: what its Body derived at the signer, and every call of its tree. -/
+ theorem receiveWith_sealed {X : Ctx D} {look : Pinned D} {rv : RowView D} {c : Call D} {t : Turn D}
+     (h : receiveWith X look rv c = .ok t) :
+     X.verify c.unsigned.key (X.callMessage c.unsigned) c.signature = true ∧
+-      ∃ d, derive X look rv c = .ok d ∧
+-        sealTurn X c d.creates d.effects d.nullifiers d.rows = .ok t := by
++      ∃ d k, deriveWithTicks X look rv c = .ok (d, k) ∧
++        sealTurn X c d.creates d.effects d.nullifiers d.rows k = .ok t := by
+   unfold receiveWith at h
+   simp only [except_bind_ok] at h
+   obtain ⟨⟨⟩, hs, ⟨⟩, _, h⟩ := h
+   unfold deriveTurn at h
+   simp only [except_bind_ok] at h
+-  obtain ⟨d, hd, h⟩ := h
++  obtain ⟨⟨d, k⟩, hd, h⟩ := h
+   unfold checkSignature at hs
+-  exact ⟨req_ok.mp hs, d, hd, h⟩
++  exact ⟨req_ok.mp hs, d, k, hd, h⟩
++
++omit [Ord D] in
++/-- The Draft of a derivation with its ticks is the Draft `derive` returns (KERNEL-68). -/
++theorem derive_of_withTicks {X : Ctx D} {look : Pinned D} {rv : RowView D} {c : Call D} {d : Draft D} {k : Nat}
++    (h : deriveWithTicks X look rv c = .ok (d, k)) : derive X look rv c = .ok d := by
++  unfold derive; rw [h]; rfl
+ 
+ /-- **The receivers' contract** (Q1): what every derived Turn is to the call it was derived from,
+ named. It is signed with the key the call names, pays exactly its weight within the signed price,
+@@ -160,7 +166,7 @@ structure Derived (X : Ctx D) (c : Call D) (t : Turn D) : Prop where
+ observation. -/
+ theorem receive_derived {X : Ctx D} {w : World D} {c : Call D} {t : Turn D}
+     (h : receive X w c = .ok t) : Derived X c t := by
+-  obtain ⟨hv, _, _, hs⟩ := receiveWith_sealed (receive_ok_with h).2
++  obtain ⟨hv, _, _, _, hs⟩ := receiveWith_sealed (receive_ok_with h).2
+   obtain ⟨h1, h2, h3, h4, h5, h6, h7, _⟩ := sealTurn_ok hs
+   exact ⟨hv, h1, h2, by rw [h3]; exact touchesOf_pins _ _, h4, h5, h6, h7⟩
+ 
+@@ -183,7 +189,7 @@ theorem keyRule_deriveTurn (X : Ctx D) (look : Pinned D) (rv : RowView D) (c : C
+   | rotate key next =>
+     cases hr : rotate X look c key next with
+     | error e =>
+-      unfold deriveTurn derive
++      unfold deriveTurn deriveWithTicks
+       rw [hb]
+       simp [dispatch, stepped, hr, Except.map, bind, Except.bind]
+     | ok d => simp [Except.map, bind, Except.bind, hr]
+diff --git a/Kernel/Proofs/Rederive.lean b/Kernel/Proofs/Rederive.lean
+index a326717..4d64b48 100644
+--- a/Kernel/Proofs/Rederive.lean
++++ b/Kernel/Proofs/Rederive.lean
+@@ -239,7 +239,7 @@ theorem checkPins_error_never_admitted {X : Ctx D} {w : World D} {c : Call D} {r
+     {t : Turn D} (ht : receive X w c = .ok t) : ∀ w', World.admit X.env w t ≠ .ok w' := by
+   intro w' ha
+   have hd := receive_derived ht
+-  obtain ⟨-, d, -, hs⟩ := receiveWith_sealed (receive_ok_with ht).2
++  obtain ⟨-, d, _k, -, hs⟩ := receiveWith_sealed (receive_ok_with ht).2
+   obtain ⟨rts, hrts, hrows, hranges⟩ := sealTurn_rows hs
+   have hok : checkPins X.env w c.unsigned.pins c.unsigned.rowPins c.unsigned.ranges = .ok () := by
+     refine checkPins_ok_iff.mpr ⟨fun p hp' => ?_, fun p hp' key hk => ?_,
+diff --git a/Kernel/Proofs/Refusals.lean b/Kernel/Proofs/Refusals.lean
+index 8feae3e..83f8d87 100644
+--- a/Kernel/Proofs/Refusals.lean
++++ b/Kernel/Proofs/Refusals.lean
+@@ -117,13 +117,14 @@ theorem refuse_refusalAt {E : Env D} {w w' : World D} {r : Refused D} (h : World
+ /-- The refusals after an admission, read at any key: at a multiple of `windowMax`, the leaf if it is
+ kept; otherwise the leaf (on a canonical trie). -/
+ theorem admit_refusalAt {E : Env D} {w w' : World D} {t : Turn D} (hc : w.RefusalsCanon E)
+-    (h : World.admit E w t = .ok w') (k : RefusalSlot D) :
++    (h : World.admit E w t = .ok w') (k : RefusalSlot D)
++    (hk : k ≠ .ticks t.member (refusalWindow (w.height + 1))) :
+     w'.refusalAt E k =
+       if (w.height + 1) % Bounds.windowMax = 0 then (w.refusalAt E k).filter (keptRefusal (w.height + 1) k)
+       else w.refusalAt E k := by
+   obtain ⟨_, _, rfl⟩ := admit_ok h
+   unfold World.refusalAt
+-  rw [commit_refusals, pruneRefusals_get hc]
++  rw [commit_refusals, pruneRefusals_get (commitMeter_canon hc), commitMeter_get_ne hk]
+ 
+ /-! ## The invariant -/
+ 
+@@ -191,18 +192,46 @@ theorem refusalFits_succ {H : Nat} {k : RefusalSlot D} {l : RefusalLeaf D} (hf :
+       unfold refusalWindow
+       congr 1
+       rw [windowMax_eq] at hz ⊢; omega
++  · rename_i m win n
++    refine ⟨?_, hf.2.1, hf.2.2⟩
++    by_cases hz : (H + 1) % Bounds.windowMax = 0
++    · have := hk hz
++      simpa [keptRefusal] using this
++    · rw [hf.1]
++      unfold refusalWindow
++      congr 1
++      rw [windowMax_eq] at hz ⊢; omega
+ 
+ /-- **The invariant holds after every admission.** -/
+ theorem admit_refusalsOk {E : Env D} {w w' : World D} {t : Turn D} (hw : w.RefusalsOk E)
+     (h : World.admit E w t = .ok w') : w'.RefusalsOk E := by
+   refine ⟨admit_refusalsCanon hw.1 h, fun k l hk => ?_⟩
+   rw [admit_height h]
+-  rw [admit_refusalAt hw.1 h k] at hk
+-  split at hk
+-  · rw [Option.filter_eq_some_iff] at hk
+-    exact refusalFits_succ (hw.2 k l hk.1) (fun _ => hk.2)
+-  · rename_i hz
+-    exact refusalFits_succ (hw.2 k l hk) (fun h' => absurd h' hz)
++  by_cases hm : k = .ticks t.member (refusalWindow (w.height + 1))
++  · -- the meter leaf (KERNEL-68): untouched for a Turn with no ticks, else the bumped count, which
++    -- `checkTicks` bounded by `ticksPerWindow`
++    obtain ⟨posts, hck, rfl⟩ := admit_ok h
++    subst hm
++    rw [commit_refusalAt_meter hw.1] at hk
++    split at hk
++    · split at hk
++      · rw [Option.filter_eq_some_iff] at hk
++        exact refusalFits_succ (hw.2 _ l hk.1) (fun _ => hk.2)
++      · rename_i hz
++        exact refusalFits_succ (hw.2 _ l hk) (fun h' => absurd h' hz)
++    · rename_i hz
++      cases hk
++      have hb := hck.ticks
++      unfold checkTicks at hb
++      rw [req_ok, decide_eq_true_eq] at hb
++      simp only [refusalFits, decide_eq_true_eq]
++      exact ⟨trivial, by omega, hb⟩
++  · rw [admit_refusalAt hw.1 h k hm] at hk
++    split at hk
++    · rw [Option.filter_eq_some_iff] at hk
++      exact refusalFits_succ (hw.2 k l hk.1) (fun _ => hk.2)
++    · rename_i hz
++      exact refusalFits_succ (hw.2 k l hk) (fun h' => absurd h' hz)
+ 
+ /-- **The invariant holds after every recorded refusal**: the new leaf fits (refused at the next
+ height, below `2^64` because its window is), the member's count stays within the budget. -/
+@@ -290,7 +319,7 @@ theorem admit_refusalCount {E : Env D} {w w' : World D} {t : Turn D} (hc : w.Ref
+     rw [admit_height h]; unfold refusalWindow; congr 1
+     rw [windowMax_eq] at hz ⊢; omega
+   unfold refusalCount
+-  rw [hw, admit_refusalAt hc h, if_neg hz]
++  rw [hw, admit_refusalAt hc h (.count m (refusalWindow w.height)) (by simp), if_neg hz]
+ 
+ /-- **A member's recorded refusals in one window are its count's growth**: over a log that stays in
+ one window (`w` and `w'` at heights with one quotient by `windowMax`), the member's count grows by
+@@ -348,6 +377,7 @@ theorem refusalsDisjoint_iff {E : Env D} {w : World D} (hc : w.RefusalsCanon E)
+     cases k with
+     | count m win => cases l <;> rfl
+     | total o win => cases l <;> rfl
++    | ticks m win => cases l <;> rfl
+     | tx id =>
+         cases l with
+         | refused hh code mb =>
+@@ -363,7 +393,7 @@ theorem admit_refusalsDisjoint {E : Env D} {w w' : World D} {t : Turn D} (hc : w
+     w'.RefusalsDisjoint E := by
+   intro id hh code mb hr
+   have hr₀ : w.refusalAt E (.tx id) = some (.refused hh code mb) := by
+-    rw [admit_refusalAt hc h] at hr
++    rw [admit_refusalAt hc h (.tx id) (by simp)] at hr
+     split at hr
+     · exact (Option.filter_eq_some_iff.mp hr).1
+     · exact hr
+@@ -401,6 +431,7 @@ private def plantRefusalKeyBytes (E : Env D) : RefusalSlot D → ByteArray
+   | .tx id => E.bytes id ++ Nanodregg.Codec.Stream.nat64.bytes 0
+   | .count m win => E.bytes m ++ Nanodregg.Codec.Stream.u64.bytes win
+   | .total o win => E.bytes o ++ Nanodregg.Codec.Stream.u64.bytes win
++  | .ticks m win => E.bytes m ++ Nanodregg.Codec.Stream.u64.bytes win
+ 
+ private def plantRefusalSpec (E : Env D) : Trie.Spec (RefusalSlot D) (RefusalLeaf D) D :=
+   { refusalSpec E with bit := fun k => byteBit (plantRefusalKeyBytes E k), kbytes := plantRefusalKeyBytes E }
+@@ -430,7 +461,7 @@ theorem fold_refused_retains {E : Env D} {k : D} {hh code : Nat} {mb : D} :
+       have hh₂ := fold_height h₂
+       have hh₁ := admit_height h₁
+       have hr₁ : w₁.refusalAt E (.tx k) = some (.refused hh code mb) := by
+-        rw [admit_refusalAt hc h₁, hr]
++        rw [admit_refusalAt hc h₁ (.tx k) (by simp), hr]
+         split
+         · simp only [Option.filter, keptRefusal, decide_eq_true_eq]
+           rw [if_pos (by omega)]
+diff --git a/Kernel/Proofs/RefusalsCounted.lean b/Kernel/Proofs/RefusalsCounted.lean
+index 018a6cd..abfbdab 100644
+--- a/Kernel/Proofs/RefusalsCounted.lean
++++ b/Kernel/Proofs/RefusalsCounted.lean
+@@ -92,6 +92,7 @@ theorem tallyAt_step (E : Env D) (seed : D) (H : Nat) (m : D) (t : Refusals D)
+   cases k with
+   | count m' win => cases v <;> simp [tallyStep, refusedIn]
+   | total o win => cases v <;> simp [tallyStep, refusedIn]
++  | ticks m' win => cases v <;> simp [tallyStep, refusedIn]
+   | tx id =>
+       cases v with
+       | count n => simp [tallyStep, refusedIn]
+@@ -133,6 +134,7 @@ theorem tally_support (E : Env D) (seed : D) (H : Nat) :
+       cases k' with
+       | count m' win => cases v' <;> exact ht k v hk
+       | total o win => cases v' <;> exact ht k v hk
++      | ticks m' win => cases v' <;> exact ht k v hk
+       | tx id =>
+           cases v' with
+           | count n => exact ht k v hk
+@@ -241,6 +243,7 @@ theorem refusalsCounted_iff {E : Env D} {w : World D} (hw : w.RefusalsOk E) :
+           cases k with
+           | count m' win => cases v <;> simp [refusedIn] at hpos'
+           | total o win => cases v <;> simp [refusedIn] at hpos'
++          | ticks m' win => cases v <;> simp [refusedIn] at hpos'
+           | tx id =>
+               cases v with
+               | count n => simp [refusedIn] at hpos'
+@@ -270,6 +273,7 @@ theorem refusalsCounted_iff {E : Env D} {w : World D} (hw : w.RefusalsOk E) :
+           cases k with
+           | count m' win => cases v <;> simp [refusedWin] at hpos'
+           | total o win => cases v <;> simp [refusedWin] at hpos'
++          | ticks m' win => cases v <;> simp [refusedWin] at hpos'
+           | tx id =>
+               cases v with
+               | count n => simp [refusedWin] at hpos'
+@@ -292,6 +296,7 @@ theorem refusalsCounted_iff {E : Env D} {w : World D} (hw : w.RefusalsOk E) :
+     rintro ⟨k, v⟩ hp
+     have hg := (hmem _ _).mp hp
+     cases k with
++    | ticks m win => cases v <;> rfl
+     | count m win =>
+         cases v with
+         | refused h c mb => trivial
+@@ -440,7 +445,7 @@ theorem admit_countedOk {E : Env D} {w w' : World D} {t : Turn D} (hw : w.Refusa
+   have hc6' : ∀ o win v, w'.refusalAt E (.total o win) = some v → o = w'.origin := by
+     intro o win v hg
+     rw [ho]
+-    rw [admit_refusalAt hw.1 h] at hg
++    rw [admit_refusalAt hw.1 h (.total o win) (by simp)] at hg
+     split at hg
+     · exact hc6 o win v (Option.filter_eq_some_iff.mp hg).1
+     · exact hc6 o win v hg
+@@ -458,6 +463,7 @@ theorem admit_countedOk {E : Env D} {w w' : World D} {t : Turn D} (hw : w.Refusa
+       cases k with
+       | count _ _ => cases v <;> exact ⟨rfl, rfl⟩
+       | total _ _ => cases v <;> exact ⟨rfl, rfl⟩
++      | ticks _ _ => cases v <;> exact ⟨rfl, rfl⟩
+       | tx id =>
+           cases v with
+           | count _ => exact ⟨rfl, rfl⟩
+@@ -482,7 +488,7 @@ theorem admit_countedOk {E : Env D} {w w' : World D} {t : Turn D} (hw : w.Refusa
+       omega
+     · have h0 : refusalCount E w' m = 0 := by
+         unfold refusalCount
+-        rw [admit_refusalAt hw.1 h, if_pos hz, hh]
++        rw [admit_refusalAt hw.1 h (.count m (refusalWindow w'.height)) (by simp), if_pos hz, hh]
+         cases hg : w.refusalAt E (.count m (refusalWindow (w.height + 1))) with
+         | none => rfl
+         | some v =>
+@@ -499,7 +505,7 @@ theorem admit_countedOk {E : Env D} {w w' : World D} {t : Turn D} (hw : w.Refusa
+       exact (hold p (List.mem_filter.mp hp).1 m).1
+     · have h0 : refusalTotal E w' = 0 := by
+         unfold refusalTotal
+-        rw [admit_refusalAt hw.1 h, if_pos hz, hh, ho]
++        rw [admit_refusalAt hw.1 h (.total w'.origin (refusalWindow w'.height)) (by simp), if_pos hz, hh, ho]
+         cases hg : w.refusalAt E (.total w.origin (refusalWindow (w.height + 1))) with
+         | none => rfl
+         | some v =>
+@@ -537,7 +543,7 @@ theorem admit_countedOk {E : Env D} {w w' : World D} {t : Turn D} (hw : w.Refusa
+     · rw [admit_refusalCount hw.1 h hz m, hl, hh, hfun m]; exact hc2 m
+     · have ht : refusalTotal E w' = refusalTotal E w := by
+         unfold refusalTotal
+-        rw [admit_refusalAt hw.1 h, if_neg hz, hh, ho, hwin]
++        rw [admit_refusalAt hw.1 h (.total w'.origin (refusalWindow w'.height)) (by simp), if_neg hz, hh, ho, hwin]
+       rw [ht, hl, hh, hq]; exact hc3
+     · rw [hl, hh, hq]; exact hc4
+     · rw [hl, hh, hq]; exact hc5
+diff --git a/Kernel/Proofs/Refuse.lean b/Kernel/Proofs/Refuse.lean
+index d475710..fa78811 100644
+--- a/Kernel/Proofs/Refuse.lean
++++ b/Kernel/Proofs/Refuse.lean
+@@ -220,8 +220,15 @@ theorem pruneRefusals_get {E : Env D} {H : Nat} {r : Refusals D} (hr : Trie.Cano
+   · exact Trie.get_retainAt (refusalSpec E) _ [] hr (fun _ _ _ _ _ _ h => by simp at h) k
+   · rfl
+ 
++/-- A Turn's commit prunes the refusals at the new height, over the meter leaf it bumped
++(`commitMeter`: unchanged for a Turn with no ticks, KERNEL-68). -/
+ theorem commit_refusals {E : Env D} {w : World D} {t : Turn D} {posts : List (Post D)} :
+-    (commit E w t posts).refusals = pruneRefusals E (w.height + 1) w.refusals := rfl
++    (commit E w t posts).refusals = pruneRefusals E (w.height + 1) (commitMeter E w t) := rfl
++
++/-- A Turn with no ticks leaves the refusals as before, but for the prune. -/
++theorem commit_refusals_of_ticks_zero {E : Env D} {w : World D} {t : Turn D} {posts : List (Post D)}
++    (h : t.ticks = 0) : (commit E w t posts).refusals = pruneRefusals E (w.height + 1) w.refusals := by
++  rw [commit_refusals]; unfold commitMeter; simp [h]
+ 
+ theorem commitRefusal_refusals {E : Env D} {w : World D} {r : Refused D} :
+     (commitRefusal E w r).refusals =
+@@ -232,12 +239,48 @@ theorem commitRefusal_refusals {E : Env D} {w : World D} {r : Refused D} :
+   unfold commitRefusals
+   rw [Trie.insertAll_eq_foldl]; rfl
+ 
++/-- The meter's write keeps the refusals canonical (one insert, or nothing: KERNEL-68). -/
++theorem commitMeter_canon {E : Env D} {w : World D} {t : Turn D} (hc : w.RefusalsCanon E) :
++    Trie.Canon (refusalSpec E) 0 (commitMeter E w t) := by
++  unfold commitMeter
++  split
++  · exact hc
++  · exact Trie.canon_insert _ _ _ hc
++
++/-- The meter's write touches no other key (KERNEL-68). -/
++theorem commitMeter_get_ne {E : Env D} {w : World D} {t : Turn D} {k : RefusalSlot D}
++    (hk : k ≠ .ticks t.member (refusalWindow (w.height + 1))) :
++    (commitMeter E w t).get (refusalSpec E) k = w.refusals.get (refusalSpec E) k := by
++  unfold commitMeter
++  split
++  · rfl
++  · exact Trie.get_insert_ne _ _ _ hk
++
++/-- The meter leaf after a Turn (KERNEL-68): untouched, then pruned, for a Turn with no ticks; else the
++member's ticks this window, bumped by the Turn's, which the prune keeps (it is this window's). -/
++theorem commit_refusalAt_meter {E : Env D} {w : World D} {t : Turn D} {posts : List (Post D)}
++    (hc : w.RefusalsCanon E) :
++    (commit E w t posts).refusalAt E (.ticks t.member (refusalWindow (w.height + 1))) =
++      if t.ticks = 0 then
++        (if (w.height + 1) % Bounds.windowMax = 0 then
++          (w.refusalAt E (.ticks t.member (refusalWindow (w.height + 1)))).filter
++            (keptRefusal (w.height + 1) (.ticks t.member (refusalWindow (w.height + 1))))
++         else w.refusalAt E (.ticks t.member (refusalWindow (w.height + 1))))
++      else some (.count (ticksUsed E w t.member + t.ticks)) := by
++  unfold World.refusalAt
++  rw [commit_refusals, pruneRefusals_get (commitMeter_canon hc)]
++  unfold commitMeter
++  by_cases ht : t.ticks = 0
++  · simp only [ht, ↓reduceIte]
++  · simp only [ht, ↓reduceIte, Trie.get_insert_self]
++    split <;> simp [keptRefusal, Option.filter]
++
+ theorem admit_refusalsCanon {E : Env D} {w w' : World D} {t : Turn D} (hc : w.RefusalsCanon E)
+     (h : World.admit E w t = .ok w') : w'.RefusalsCanon E := by
+   obtain ⟨_, _, rfl⟩ := admit_ok h
+   unfold World.RefusalsCanon
+   rw [commit_refusals]
+-  exact pruneRefusals_canon hc
++  exact pruneRefusals_canon (commitMeter_canon hc)
+ 
+ theorem refuse_refusalsCanon {E : Env D} {w w' : World D} {r : Refused D} (hc : w.RefusalsCanon E)
+     (h : World.refuse E w r = .ok w') : w'.RefusalsCanon E := by
+diff --git a/Kernel/Proofs/Rooted.lean b/Kernel/Proofs/Rooted.lean
+index 9437d6d..fc41e9d 100644
+--- a/Kernel/Proofs/Rooted.lean
++++ b/Kernel/Proofs/Rooted.lean
+@@ -459,7 +459,8 @@ theorem derive_born {X : Ctx D} {look : Pinned D} {rv : RowView D} {c : Call D}
+ /-- What a derived Turn bears: the call's Draft, sealed once. -/
+ theorem receiveWith_born {X : Ctx D} {look : Pinned D} {rv : RowView D} {c : Call D} {t : Turn D}
+     (h : receiveWith X look rv c = .ok t) : ∃ d, derive X look rv c = .ok d ∧ t.creates = d.creates := by
+-  obtain ⟨_, d, hd, hs⟩ := receiveWith_sealed h
++  obtain ⟨_, d, _k, hd, hs⟩ := receiveWith_sealed h
++  replace hd := derive_of_withTicks hd
+   exact ⟨d, hd, (sealTurn_ok hs).2.2.2.2.2.2.2.1⟩
+ 
+ section Steps
+diff --git a/Kernel/Proofs/RotateStale.lean b/Kernel/Proofs/RotateStale.lean
+index 5be8d89..2381635 100644
+--- a/Kernel/Proofs/RotateStale.lean
++++ b/Kernel/Proofs/RotateStale.lean
+@@ -37,7 +37,8 @@ theorem admit_seen {E : Env D} {w w' : World D} {t : Turn D} {x : Touch D}
+ theorem rotate_writes_member {X : Ctx D} {w : World D} {c : Call D} {t : Turn D} {key : ByteArray} {next : D}
+     (hb : c.unsigned.body = .rotate key next) (hr : receive X w c = .ok t) :
+     ∃ x ∈ t.touches, x.cell = c.unsigned.member ∧ ∃ ops, x.act = .write ops := by
+-  obtain ⟨_, d, hdd, hsl⟩ := receiveWith_sealed (receive_ok_with hr).2
++  obtain ⟨_, d, _k, hdd, hsl⟩ := receiveWith_sealed (receive_ok_with hr).2
++  replace hdd := derive_of_withTicks hdd
+   rw [derive_eq, hb] at hdd
+   simp only [dispatch, stepped_map] at hdd
+   unfold rotate at hdd
+@@ -87,7 +88,7 @@ theorem rotate_stales_outstanding {X : Ctx D} {w₀ w₁ w₂ w w' : World D} {l
+     simp [World.fold, World.step, ha]
+   have hfw : w.CellsFit Cell.Fits X.env := fold_cellsFit (fold_cellsFit (fold_cellsFit hf h₁) h12) h₂
+   have hpre := pinPre_adv_ne (E := X.env) (cellsFit_verFit hf c.unsigned.member) (cellsFit_verFit hfw c.unsigned.member) hadv
+-  obtain ⟨_, d, -, hsl⟩ := receiveWith_sealed (receive_ok_with hrc).2
++  obtain ⟨_, d, _k, -, hsl⟩ := receiveWith_sealed (receive_ok_with hrc).2
+   obtain ⟨_, _, htouch, -⟩ := sealTurn_ok hsl
+   have hx' := List.mem_map_of_mem (f := fun p : D × D =>
+     ({ cell := p.1, seen := p.2, act := actFor d.effects p.1 } : Touch D)) hpin
+diff --git a/Kernel/Proofs/RowsComm.lean b/Kernel/Proofs/RowsComm.lean
+index 47f56c2..d75e6eb 100644
+--- a/Kernel/Proofs/RowsComm.lean
++++ b/Kernel/Proofs/RowsComm.lean
+@@ -856,7 +856,7 @@ theorem admit_comm_rows {E : Env D} {n : Nat} (hE : E.Lawful n) {w w₁ w₂ w
+ private def rain (id p seen : D) (rel : Nat) (k : ByteArray) (amt : Nat) (v : ByteArray) (h ch : Nat) : Turn D :=
+   { txId := id, notBefore := h + 1, validUntil := h + 2, touches := [⟨p, seen, .keep⟩], creates := [],
+     nullifiers := [], charge := ch, event := ByteArray.empty,
+-    rows := [⟨.row ⟨p, rel, k⟩, none, .insert amt v⟩], ranges := [] }
++    rows := [⟨.row ⟨p, rel, k⟩, none, .insert amt v⟩], ranges := [], member := id }
+ 
+ omit [Ord D] in
+ /-- **Tooth 1: two rains on one bell meet the premises.** Two single-insert turns into one relation of
+diff --git a/Kernel/Proofs/RowsRange.lean b/Kernel/Proofs/RowsRange.lean
+index 6b1c1ec..89d6812 100644
+--- a/Kernel/Proofs/RowsRange.lean
++++ b/Kernel/Proofs/RowsRange.lean
+@@ -825,7 +825,7 @@ private def admRange (l : List (RowSlot UInt8 × RowLeaf)) : RangeRead UInt8 :=
+ 
+ private def admTurn0 (l : List (RowSlot UInt8 × RowLeaf)) : Turn UInt8 :=
+   { txId := 1, notBefore := 0, validUntil := 1, touches := [⟨7, pinOf admEnv (some (.live admCell 0)), .keep⟩],
+-    creates := [], nullifiers := [], charge := 0, event := ByteArray.empty, ranges := [admRange l] }
++    creates := [], nullifiers := [], charge := 0, event := ByteArray.empty, ranges := [admRange l], member := 0 }
+ 
+ private def admTurn (l : List (RowSlot UInt8 × RowLeaf)) : Turn UInt8 :=
+   { admTurn0 l with charge := (admTurn0 l).weight }
+diff --git a/Kernel/Proofs/StaleOnly.lean b/Kernel/Proofs/StaleOnly.lean
+index e1b5b30..c780f03 100644
+--- a/Kernel/Proofs/StaleOnly.lean
++++ b/Kernel/Proofs/StaleOnly.lean
+@@ -137,6 +137,10 @@ theorem checkCreates_staleOnly {P : D → Prop} (E : Env D) (w : World D) (t : T
+     StaleOnly P (checkCreates E w t) := by
+   unfold checkCreates; stale_only
+ 
++theorem checkTicks_staleOnly {P : D → Prop} (E : Env D) (w : World D) (t : Turn D) :
++    StaleOnly P (checkTicks E w t) := by
++  unfold checkTicks; stale_only
++
+ omit [DecidableEq D] in
+ theorem checkSteps_staleOnly {P : D → Prop} (w : World D) : StaleOnly P (checkSteps (D := D) w) := by
+   unfold checkSteps; stale_only
+@@ -301,6 +305,7 @@ theorem admit_stale_pin {E : Env D} {w : World D} {t : Turn D} {y : D}
+   refine StaleOnly.bind ((rowsRun_staleOnly E w t hr).mono fun _ h => .inr (.inl h)) fun _ _ => ?_
+   refine StaleOnly.bind (checkCharge_staleOnly w t _) fun _ _ => ?_
+   refine StaleOnly.bind (checkCreates_staleOnly E w t) fun _ _ => ?_
++  refine StaleOnly.bind (checkTicks_staleOnly E w t) fun _ _ => ?_
+   refine StaleOnly.bind (checkSteps_staleOnly w) fun _ _ => ?_
+   exact StaleOnly.pure' _
+ 
+@@ -340,7 +345,7 @@ private def sStaleKeep : Touch UInt8 := ⟨7, pinOf sEnv none, .keep⟩
+ private def sTurn0 (ts : List (Touch UInt8)) (rs : List (RowTouch UInt8)) (qs : List (RangeRead UInt8)) :
+     Turn UInt8 :=
+   { txId := 1, notBefore := 0, validUntil := 1, touches := ts, creates := [], nullifiers := [],
+-    charge := 0, event := ByteArray.empty, rows := rs, ranges := qs }
++    charge := 0, event := ByteArray.empty, rows := rs, ranges := qs, member := 0 }
+ 
+ private def sTurn (ts : List (Touch UInt8)) (rs : List (RowTouch UInt8)) (qs : List (RangeRead UInt8)) :
+     Turn UInt8 := { sTurn0 ts rs qs with charge := (sTurn0 ts rs qs).weight }
+diff --git a/Kernel/Proofs/Tree.lean b/Kernel/Proofs/Tree.lean
+index 70415d1..c7f961b 100644
+--- a/Kernel/Proofs/Tree.lean
++++ b/Kernel/Proofs/Tree.lean
+@@ -142,7 +142,7 @@ theorem derive_all {P : Draft D → Prop} (hP : ∀ a b, P a → P b → P (a.ap
+     (hbase : ∀ (sub : Sub D) wk actor (b : Body D) r, b.isInvoke = false →
+       dispatch X look rv c sub wk actor b = .ok r → P r.1)
+     {d : Draft D} (h : derive X look rv c = .ok d) : P d := by
+-  unfold derive at h
++  unfold derive deriveWithTicks at h
+   cases hd : dispatch X look rv c (tree X look rv c Bounds.callDepthMax)
+       ⟨[], poolOf c.unsigned.body, 0⟩ c.unsigned.member c.unsigned.body with
+   | error e => rw [hd] at h; cases h
+@@ -162,7 +162,10 @@ theorem stepped_map {wk : Walk D} {d : Except (Refusal D) (Draft D)} :
+ `⟨[], poolOf body, 0⟩`. -/
+ theorem derive_eq {X : Ctx D} {look : Pinned D} {rv : RowView D} {c : Call D} :
+     derive X look rv c = (dispatch X look rv c (tree X look rv c Bounds.callDepthMax) ⟨[], poolOf c.unsigned.body, 0⟩
+-      c.unsigned.member c.unsigned.body).map (·.1) := rfl
++      c.unsigned.member c.unsigned.body).map (·.1) := by
++  unfold derive deriveWithTicks
++  cases dispatch X look rv c (tree X look rv c Bounds.callDepthMax) ⟨[], poolOf c.unsigned.body, 0⟩
++      c.unsigned.member c.unsigned.body <;> rfl
+ 
+ /-! ## Each object once -/
+ 
+diff --git a/Kernel/Proofs/Versions.lean b/Kernel/Proofs/Versions.lean
+index a3775ef..63774c4 100644
+--- a/Kernel/Proofs/Versions.lean
++++ b/Kernel/Proofs/Versions.lean
+@@ -1090,13 +1090,13 @@ private def vCell : Cell := { kind := 0, discipline := .ram, slots := [] }
+ 
+ private def vBirth0 : Turn UInt8 :=
+   { txId := 1, notBefore := 0, validUntil := 1, touches := [], creates := [(5, vCell)],
+-    nullifiers := [], charge := 0, event := ByteArray.empty }
++    nullifiers := [], charge := 0, event := ByteArray.empty, member := 0 }
+ 
+ private def vBirth : Turn UInt8 := { vBirth0 with charge := vBirth0.weight }
+ 
+ private def vRetire0 : Turn UInt8 :=
+   { txId := 2, notBefore := 0, validUntil := 2, touches := [⟨5, pinOf vEnv (some (.live vCell 0)), .retire⟩],
+-    creates := [], nullifiers := [], charge := 0, event := ByteArray.empty }
++    creates := [], nullifiers := [], charge := 0, event := ByteArray.empty, member := 0 }
+ 
+ private def vRetire : Turn UInt8 := { vRetire0 with charge := vRetire0.weight }
+ 
+@@ -1171,20 +1171,20 @@ private def dKeep : Touch UInt8 := ⟨7, pinOf vEnv (some (.live vCell 0)), .kee
+ 
+ private def dT1₀ : Turn UInt8 :=
+   { txId := 1, notBefore := 0, validUntil := 1, touches := [dKeep], creates := [], nullifiers := [],
+-    charge := 0, event := ByteArray.empty, rows := [⟨.row dKey, none, .insert 1 ByteArray.empty⟩] }
++    charge := 0, event := ByteArray.empty, rows := [⟨.row dKey, none, .insert 1 ByteArray.empty⟩], member := 0 }
+ 
+ private def dT1 : Turn UInt8 := { dT1₀ with charge := dT1₀.weight }
+ 
+ private def dT2₀ : Turn UInt8 :=
+   { txId := 2, notBefore := 0, validUntil := 2, touches := [dKeep], creates := [], nullifiers := [],
+     charge := 0, event := ByteArray.empty,
+-    rows := [⟨.row dKey, some (rowPin vEnv 0 (some (.row 1 ByteArray.empty 0))), .retract⟩] }
++    rows := [⟨.row dKey, some (rowPin vEnv 0 (some (.row 1 ByteArray.empty 0))), .retract⟩], member := 0 }
+ 
+ private def dT2 : Turn UInt8 := { dT2₀ with charge := dT2₀.weight }
+ 
+ private def dT3₀ : Turn UInt8 :=
+   { txId := 3, notBefore := 0, validUntil := 3, touches := [⟨7, pinOf vEnv (some (.live vCell 0)), .retire⟩],
+-    creates := [], nullifiers := [], charge := 0, event := ByteArray.empty }
++    creates := [], nullifiers := [], charge := 0, event := ByteArray.empty, member := 0 }
+ 
+ private def dT3 : Turn UInt8 := { dT3₀ with charge := dT3₀.weight }
+ 
+@@ -1773,7 +1773,7 @@ first tooth above) where, without it, a head that stood at width 1 stands again
+ /-- A turn that bears cell 7 and declares its relation 3 at width 2. -/
+ private def wReborn₀ : Turn UInt8 :=
+   { txId := 4, notBefore := 0, validUntil := 4, touches := [], creates := [(7, vCell)], nullifiers := [],
+-    charge := 0, event := ByteArray.empty, rows := [⟨.head 7 3, none, .declare 10 100 2 true⟩] }
++    charge := 0, event := ByteArray.empty, rows := [⟨.head 7 3, none, .declare 10 100 2 true⟩], member := 0 }
+ 
+ private def wReborn : Turn UInt8 := { wReborn₀ with charge := wReborn₀.weight }
+ 
+diff --git a/Kernel/Proofs/WriteNext.lean b/Kernel/Proofs/WriteNext.lean
+index 6e3db86..402ef4d 100644
+--- a/Kernel/Proofs/WriteNext.lean
++++ b/Kernel/Proofs/WriteNext.lean
+@@ -234,25 +234,25 @@ private theorem receive_root {X : Ctx D} {w : World D} {c : Call D} {t : Turn D}
+     ∃ r, dispatch X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c
+         (tree X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c Bounds.callDepthMax)
+         ⟨[], poolOf c.unsigned.body, 0⟩ c.unsigned.member c.unsigned.body = .ok r ∧
+-      sealTurn X c r.1.creates r.1.effects r.1.nullifiers r.1.rows = .ok t := by
++      sealTurn X c r.1.creates r.1.effects r.1.nullifiers r.1.rows (poolOf c.unsigned.body - r.2.pool) = .ok t := by
+   obtain ⟨-, hw⟩ := receive_ok_with hc
+-  obtain ⟨-, d, hd, hs⟩ := receiveWith_sealed hw
+-  rw [derive_eq] at hd
++  obtain ⟨-, d, k, hd, hs⟩ := receiveWith_sealed hw
++  unfold deriveWithTicks at hd
+   cases hR : dispatch X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c
+       (tree X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c Bounds.callDepthMax)
+       ⟨[], poolOf c.unsigned.body, 0⟩ c.unsigned.member c.unsigned.body with
+   | error e => rw [hR] at hd; cases hd
+   | ok r =>
+       rw [hR] at hd
+-      simp only [Except.map, Except.ok.injEq] at hd
+-      subst hd
++      simp only [Except.map, Except.ok.injEq, Prod.mk.injEq] at hd
++      obtain ⟨rfl, rfl⟩ := hd
+       exact ⟨r, rfl, hs⟩
+ 
+ /-- An admitted turn whose one act at a live, pinned cell is `writeOf obj ops`: the cell is live
+ after, with `ops` applied (or kept, when there are none), `ops`' keys distinct. -/
+ private theorem admit_writeOf {X : Ctx D} {w w' : World D} {c : Call D} {t : Turn D} {obj : D}
+     {cell : Cell} {ops : List Op} {cr : List (D × Cell)} {ns : List D} {rs : List (RowSlot D × RowAct)}
+-    (hs : sealTurn X c cr (writeOf obj ops) ns rs = .ok t) (ha : World.admit X.env w t = .ok w')
++    {k : Nat} (hs : sealTurn X c cr (writeOf obj ops) ns rs k = .ok t) (ha : World.admit X.env w t = .ok w')
+     (hl : w.live X.env obj = some cell) (hp : ∃ q ∈ c.unsigned.pins, q.1 = obj) :
+     w'.live X.env obj = some { cell with slots := applyOps cell.slots ops } ∧ (opKeys ops).Nodup := by
+   obtain ⟨-, -, htouch, -⟩ := sealTurn_ok hs
+diff --git a/Kernel/Receive/Call.lean b/Kernel/Receive/Call.lean
+index 67af092..40a9279 100644
+--- a/Kernel/Receive/Call.lean
++++ b/Kernel/Receive/Call.lean
+@@ -562,8 +562,8 @@ the effects (a receiver writes or retires only cells it read, so only pinned one
+ otherwise; at most one effect per cell: `duplicateEffect`), the receiver's nullifiers, the call as
+ the event, the exact charge (refused above the signed ceiling). -/
+ def sealTurn [DecidableEq D] (X : Ctx D) (c : Call D) (creates : List (D × Cell))
+-    (effects : List (D × Act)) (nullifiers : List D) (rows : List (RowSlot D × RowAct) := []) :
+-    Except (Refusal D) (Turn D) := do
++    (effects : List (D × Act)) (nullifiers : List D) (rows : List (RowSlot D × RowAct) := [])
++    (ticks : Nat := 0) : Except (Refusal D) (Turn D) := do
+   let pins := c.unsigned.pins
+   effectsPinned pins effects
+   let rts ← rowTouchesOf c.unsigned.rowPins rows
+@@ -572,7 +572,8 @@ def sealTurn [DecidableEq D] (X : Ctx D) (c : Call D) (creates : List (D × Cell
+       touches := touchesOf pins effects,
+       creates,
+       nullifiers, charge := 0,
+-      event := X.callBytes c, rows := rts, ranges := c.unsigned.ranges }
++      event := X.callBytes c, rows := rts, ranges := c.unsigned.ranges,
++      member := c.unsigned.member, ticks }
+   let t := { t0 with charge := t0.weight }
+   if t.charge ≤ c.unsigned.maxCharge then .ok t else .error (.overPrice t.charge)
+ 
+diff --git a/Kernel/Receive/Derive.lean b/Kernel/Receive/Derive.lean
+index a63a880..b59fec3 100644
+--- a/Kernel/Receive/Derive.lean
++++ b/Kernel/Receive/Derive.lean
+@@ -365,10 +365,17 @@ def poolOf : Body D → Nat
+   | .invoke _ _ _ budget _ => min budget Bounds.treeTicksMax
+   | _ => 0
+ 
++/-- The signed call's Draft: its Body at the signer, its calls down to `callDepthMax`; and the ticks
++the tree used of its pool (the pool at the start less what is left: 0 for every Body but an
++invoke), which the Turn carries for the kernel's meter (DESIGN-OBS §1.3). -/
++def deriveWithTicks (X : Ctx D) (look : Pinned D) (rv : RowView D) (c : Call D) :
++    Except (Refusal D) (Draft D × Nat) :=
++  (dispatch X look rv c (tree X look rv c Bounds.callDepthMax) ⟨[], poolOf c.unsigned.body, 0⟩
++    c.unsigned.member c.unsigned.body).map fun r => (r.1, poolOf c.unsigned.body - r.2.pool)
++
+ /-- The signed call's Draft: its Body at the signer, its calls down to `callDepthMax`. -/
+ def derive (X : Ctx D) (look : Pinned D) (rv : RowView D) (c : Call D) : Except (Refusal D) (Draft D) :=
+-  (dispatch X look rv c (tree X look rv c Bounds.callDepthMax) ⟨[], poolOf c.unsigned.body, 0⟩
+-    c.unsigned.member c.unsigned.body).map (·.1)
++  (deriveWithTicks X look rv c).map (·.1)
+ 
+ /-- A rotation is signed by the incoming key; every other call by the member's current key. -/
+ def keyRule (look : Pinned D) (u : Unsigned D) : Except (Refusal D) Unit :=
+@@ -378,8 +385,8 @@ def keyRule (look : Pinned D) (u : Unsigned D) : Except (Refusal D) Unit :=
+ 
+ /-- The signed call's Turn: its tree's Draft, sealed ONCE (KERNEL-28 (c)). -/
+ def deriveTurn (X : Ctx D) (look : Pinned D) (rv : RowView D) (c : Call D) : Except (Refusal D) (Turn D) := do
+-  let d ← derive X look rv c
+-  sealTurn X c d.creates d.effects d.nullifiers d.rows
++  let (d, ticks) ← deriveWithTicks X look rv c
++  sealTurn X c d.creates d.effects d.nullifiers d.rows ticks
+ 
+ /-- Derive from the pinned view: signature, key, then the call's tree. -/
+ def receiveWith (X : Ctx D) (look : Pinned D) (rv : RowView D) (c : Call D) : Except (Refusal D) (Turn D) := do
+diff --git a/Kernel/Receive/Submit.lean b/Kernel/Receive/Submit.lean
+index ee7a64d..86b73c4 100644
+--- a/Kernel/Receive/Submit.lean
++++ b/Kernel/Receive/Submit.lean
+@@ -108,7 +108,7 @@ def rejectNames : List String :=
+    "notConserved", "floorNotConserved", "refusedFinal", "refusalBudget", "keyTaken", "relationFull",
+    "relationCapped", "rowParentUnpinned", "orphanRow", "rowsRemain", "keyWidth", "noRelation",
+    "retractForbidden", "declareLate", "rangeTooLong", "duplicateRow", "rowShape", "missingRow",
+-   "refusalsFull"]
++   "refusalsFull", "ticksBudget"]
+ 
+ /-- A verdict's wire name. -/
+ def Verdict.name : Verdict D → String
+diff --git a/Kernel/Sim/Gen.lean b/Kernel/Sim/Gen.lean
+index b836eec..86bd973 100644
+--- a/Kernel/Sim/Gen.lean
++++ b/Kernel/Sim/Gen.lean
+@@ -748,7 +748,7 @@ def metAtAdmit (st : State D) (what want : String) : Except (Reject D) (World D)
+ def forgedTurn (P : Params D) (w : World D) (tag : String) (touches : List (Touch D)) (creates : List Cell) : Turn D :=
+   let txId := P.env.hash "nanodregg/sim/forge" (tag.toUTF8 ++ P.env.bytes w.chain)
+   let t0 : Turn D := ⟨txId, 0, w.height + 1, touches,
+-    creates.zipIdx.map (fun p => (bornId P.env txId p, p.1)), [], 0, ByteArray.empty, [], []⟩
++    creates.zipIdx.map (fun p => (bornId P.env txId p, p.1)), [], 0, ByteArray.empty, [], [], txId, 0⟩
+   { t0 with charge := t0.weight }
+ 
+ /-- The value probes: forged turns no receiver derives, each refused by the kernel by name. -/
+@@ -798,6 +798,36 @@ def probeRom (P : Params D) (st : State D) : State D :=
+   | .error r, _ => { st with failures := s!"probe rom-id: the control at its content id refused {r.name}" :: st.failures }
+   | _, .ok _ => { st with failures := "probe rom-id: a ROM birth at a non-content id was admitted" :: st.failures }
+ 
++/-- The meter probe (DESIGN-OBS §1.3): on a COPY of the World, sixteen forged Turns by one member,
++each spending `Bounds.treeTicksMax` ticks, are admitted (the sixteenth is the control), the
++seventeenth is refused `ticksBudget` naming the member (`ticks-window:ticksBudget`), and a Turn
++stating more ticks than one tree may use is `overBound`. Met straight at `World.admit`; nothing of
++the run's World moves. Skipped when the seventeen heights would cross a window boundary (the meter
++resets there, which is its design, not this probe's subject). -/
++def probeTicks (P : Params D) (st : State D) : State D :=
++  let w := st.host
++  if (w.height + 1) / Bounds.windowMax ≠ (w.height + 17) / Bounds.windowMax then st else
++  let m := P.env.hash "nanodregg/sim/ticks-member" ByteArray.empty
++  let spend (w : World D) (i : Nat) : Turn D :=
++    { forgedTurn P w s!"ticks-{i}" [] [] with member := m, ticks := Bounds.treeTicksMax }
++  let step (acc : Except String (World D)) (i : Nat) : Except String (World D) := do
++    let w ← acc
++    match World.admit P.env w (spend w i) with
++    | .ok w' => pure w'
++    | .error r => throw s!"probe ticks-window: full tree {i + 1} of 16 in one window refused {r.name}"
++  match (List.range 16).foldl step (.ok w) with
++  | .error e => { st with failures := e :: st.failures }
++  | .ok w16 =>
++    match World.admit P.env w16 (spend w16 16),
++      World.admit P.env w { spend w 99 with ticks := Bounds.treeTicksMax + 1 } with
++    | .error r, .error r' =>
++      if r.name = "ticksBudget" ∧ r'.name = "overBound" then
++        { st with steps := st.steps + 1, refusedAsExpected := st.refusedAsExpected + 2,
++                  seen := "ticks-window:ticksBudget" :: "ticksBudget" :: "overBound" :: st.seen }
++      else { st with failures := s!"probe ticks-window: expected ticksBudget and overBound, got {r.name} and {r'.name}" :: st.failures }
++    | .ok _, _ => { st with failures := "probe ticks-window: a seventeenth full tree in one window was admitted" :: st.failures }
++    | _, .ok _ => { st with failures := "probe ticks-over: a Turn stating more ticks than a tree may use was admitted" :: st.failures }
++
+ /-- After every step: the World's value agrees with the model, every denomination sums to 0, its
+ floor sum is its cap, and every account is within its floor. A whole-World scan (Sim only). -/
+ def scanValue (P : Params D) (st : State D) : State D :=
+@@ -1174,7 +1204,7 @@ def act (P : Params D) (st : State D) : State D :=
+   match k with
+   | 15 | 16 => ledgerAct P st (k - 15)
+   | 17 | 18 => ledgerAct P st 2
+-  | 19 => probeRom P (probeValue P st)
++  | 19 => probeTicks P (probeRom P (probeValue P st))
+   | 23 => if !st.treeDone then treeArms P st else if st.capDone then st else capArms P st
+   | 20 => ledgerAct P st 3
+   | 21 => -- birth a programmed object; half the time its owner makes method 0 public (KERNEL-26:
+@@ -1568,7 +1598,8 @@ def probeGenesis (P : Params D) (st : State D) (founders : List (ByteArray × D)
+ def journalTurn (P : Params D) (i nb vu : Nat) : Turn D :=
+   let t0 : Turn D :=
+     { txId := P.env.hash "nanodregg/sim/journal-tx" (toString i).toUTF8, notBefore := nb, validUntil := vu,
+-      touches := [], creates := [], nullifiers := [], charge := 0, event := ByteArray.empty }
++      touches := [], creates := [], nullifiers := [], charge := 0, event := ByteArray.empty,
++      member := P.env.hash "nanodregg/sim/journal-tx" (toString i).toUTF8 }
+   { t0 with charge := t0.weight }
+ 
+ /-- One verdict of the journal probe, by name. -/
+@@ -2067,7 +2098,7 @@ Its charge is its own weight; its credit is the retired cell's whole weight. -/
+ def retireTurn (P : Params D) (w : World D) (id : D) : Turn D :=
+   let txId := P.env.hash "nanodregg/sim/forge" ("retire-budget".toUTF8 ++ P.env.bytes w.chain)
+   let t0 : Turn D := ⟨txId, w.height + 1, w.height + 1, [⟨id, pinOf P.env (w.entry P.env id), .retire⟩], [], [], 0,
+-    ByteArray.empty, [], []⟩
++    ByteArray.empty, [], [], txId, 0⟩
+   { t0 with charge := t0.weight }
+ 
+ /-- The budget probe (cv 01a14ba9-cbf4, `Kernel.Proofs.Budget`), at the end of every seed, on the
+@@ -2133,7 +2164,7 @@ def rowsTurn (P : Params D) (w : World D) (tag : String) (touches : List (Touch
+     (creates : List (D × Cell)) (rows : List (RowTouch D)) (ranges : List (RangeRead D)) : Turn D :=
+   let t0 : Turn D :=
+     { txId := rowsTx P w tag, notBefore := w.height + 1, validUntil := w.height + 64, touches, creates,
+-      nullifiers := [], charge := 0, event := ByteArray.empty, rows, ranges }
++      nullifiers := [], charge := 0, event := ByteArray.empty, rows, ranges, member := rowsTx P w tag }
+   { t0 with charge := t0.weight }
+ 
+ /-- A relation's head as `(count, sum)`. -/
+@@ -2830,7 +2861,7 @@ def planted : List String :=
+   ["wrongWorld", "lawDenied", "noGrant", "unknownKey", "replayed", "stale", "notPrecommitted", "notIssuer",
+    "missingCell", "enrollSpent", "transferSpent", "creditSpent", "rightTarget", "grantRight", "grantWidens", "unrooted", "duplicateEffect",
+    "overflow", "sameAccount", "zeroAmount", "assetMismatch", "belowFloor", "spent",
+-   "notConserved", "floorNotConserved", "valueMalformed", "overBound", "notWell", "founderKeyTooLong"]
++   "notConserved", "floorNotConserved", "valueMalformed", "overBound", "notWell", "founderKeyTooLong", "ticksBudget"]
+ 
+ /-- The arms a run of 16 or more seeds must each reach with the named verdict (`what:verdict`): a
+ refusal name met somewhere else does not test the receiver this arm exercises. -/
+@@ -2839,7 +2870,7 @@ def plantedArms : List String :=
+    "law-self:lawDenied", "transfer-via:ok", "transfer-past-cap:transferSpent", "transfer-mutate:grantRight", "credit-via:ok", "credit-past-cap:creditSpent",
+    "right-target:rightTarget", "cancel:recorded", "cancel-final:refusedFinal", "cancel-other:badSignature",
+    "cancel-early:outsideWindow", "cancel-forged:cancelForged", "rotate-stales:stale", "law:ok", "create-frozen:ok", "write:lawDenied", "write-no-grant:noGrant",
+-   "rom-id:notContentId", "genesis-founder-key:founderKeyTooLong",
++   "rom-id:notContentId", "ticks-window:ticksBudget", "genesis-founder-key:founderKeyTooLong",
+    "proof-sibling:refused", "proof-leaf:refused", "proof-tomb-live:refused", "proof-spent-unspent:refused",
+    "proof-stale:refused", "proof-overlong:refused", "proof-spent-empty:refused",
+    "account-twice:idTaken", "account-for-other:ok", "transfer-ref-not-well:notWell",
+diff --git a/Kernel/Turn.lean b/Kernel/Turn.lean
+index 667f735..38575cb 100644
+--- a/Kernel/Turn.lean
++++ b/Kernel/Turn.lean
+@@ -21,6 +21,11 @@ log with `World.admit` alone, and nothing it would have to trust. It carries
+   its log record plus everything it can add to the World (KERNEL-12). The signer signs the price.
+ * `event` — the ingress bytes (the signed call), opaque to the kernel, kept in the log so the
+   log alone is the audit trail. No archive beside it.
++* `member` and `ticks` (DESIGN-OBS §1.3) — who signed the call, and the ticks its whole tree of
++  runs used. Both are re-derived by every follower from the event (`Receive.rederive`: a page
++  carries the call, never the writer's Turn), so a writer cannot state another member or another
++  count; the kernel meters `ticks` per member per window (`World.ticksUsed`, `ticksBudget`) as it
++  counts refusals, and a receipt of a Turn names its signer as a refusal's names the member charged.
+ -/
+ import Kernel.Cell
+ 
+@@ -117,6 +122,10 @@ structure Turn (D : Type) where
+   rows : List (RowTouch D) := []
+   /-- the range reads the turn pins (LANG-44 (c), the second pin kind) -/
+   ranges : List (RangeRead D) := []
++  /-- the member whose signed call this is (DESIGN-OBS §1.3; re-derived from `event`) -/
++  member : D
++  /-- the ticks the call's tree of runs used (0 for every Body but an invoke; re-derived) -/
++  ticks : Nat := 0
+   deriving DecidableEq
+ 
+ /-- The cells a turn bears, without their ids. -/
+@@ -196,8 +205,9 @@ def Touch.weight {D : Type} (x : Touch D) : Nat := 2 * digestWeight + x.act.logW
+ 
+ /-- What a turn's log record costs, field by field in the codec's order (`Codec.Kernel.turn`):
+ txId, the window, the touches, the born cells with their ids, the nullifiers (each list with its
+-header), the charge and the event (with its length). At the deployed digest this is the record's
+-byte count: CODEC proves `(Codec.Kernel.turn dc).size t = t.logWeight`. -/
++header), the charge and the event (with its length), the rows, the ranges, the member and the
++ticks. At the deployed digest this is the record's byte count: CODEC proves
++`(Codec.Kernel.turn dc).size t = t.logWeight`. -/
+ def Turn.logWeight {D : Type} (t : Turn D) : Nat :=
+   digestWeight + 2 * counterWeight
+     + headerWeight + (t.touches.map Touch.weight).sum
+@@ -207,6 +217,7 @@ def Turn.logWeight {D : Type} (t : Turn D) : Nat :=
+     + headerWeight + t.event.size
+     + headerWeight + (t.rows.map RowTouch.weight).sum
+     + headerWeight + (t.ranges.map RangeRead.weight).sum
++    + digestWeight + counterWeight
+ 
+ /-- The most a turn can add to the World (`Kernel.Proofs.Weight.admit_world_weight`): each born
+ cell with its id, each write's ops, each spent nullifier, each row touch's growth (KERNEL-46
+diff --git a/Kernel/World.lean b/Kernel/World.lean
+index 21fae0a..be3b230 100644
+--- a/Kernel/World.lean
++++ b/Kernel/World.lean
+@@ -131,6 +131,10 @@ inductive Reject (D : Type)
+   `Bounds.refusalsPerWindowMax` (KERNEL-55 R1): the refusal is not recorded (it is NOT a verdict on
+   the call; a liveness cost on refusal finality until the window turns, never on admission) -/
+   | refusalsFull
++  /-- the member's admitted ticks this window, with this Turn's, would pass `Bounds.ticksPerWindow`
++  (DESIGN-OBS §1.3, the meter): a rate limit on compute as `refusalBudget` is on refusals; recorded
++  (class (A): the call was signed and its pins compared) and final within its window -/
++  | ticksBudget (member : D)
+   deriving DecidableEq, Repr
+ 
+ /-- The refusal's name on the wire (law 7): its constructor's, arguments dropped
+@@ -175,6 +179,7 @@ def Reject.name {D : Type} : Reject D → String
+   | .rowShape _ => "rowShape"
+   | .missingRow _ => "missingRow"
+   | .refusalsFull => "refusalsFull"
++  | .ticksBudget _ => "ticksBudget"
+ 
+ variable {D : Type} [Ord D]
+ 
+@@ -213,6 +218,9 @@ inductive RefusalSlot (D : Type)
+   | tx (id : D)
+   | count (member : D) (win : UInt64)
+   | total (origin : D) (win : UInt64)
++  /-- the member's ticks this window (DESIGN-OBS §1.3, the meter): a `count` leaf written by
++  `World.admit` for every Turn with `ticks > 0`, pruned with the window's counts -/
++  | ticks (member : D) (win : UInt64)
+   deriving DecidableEq
+ 
+ /-- What the refusals trie holds: at a `tx` key, the height the call was refused AT (the World's
+@@ -477,6 +485,7 @@ def refusalKeyBytes (E : Env D) : RefusalSlot D → ByteArray
+   | .tx id => ⟨#[0]⟩ ++ E.bytes id ++ Nanodregg.Codec.Stream.nat64.bytes 0
+   | .count m win => ⟨#[1]⟩ ++ E.bytes m ++ Nanodregg.Codec.Stream.u64.bytes win
+   | .total o win => ⟨#[2]⟩ ++ E.bytes o ++ Nanodregg.Codec.Stream.u64.bytes win
++  | .ticks m win => ⟨#[3]⟩ ++ E.bytes m ++ Nanodregg.Codec.Stream.u64.bytes win
+ 
+ /-- What a refusals leaf commits to: a kind byte (refused 0, count 1), then its counters as eight
+ little-endian bytes each, then (refused) the charged member's bytes. -/
+@@ -530,6 +539,7 @@ def RefusalLeaf.fits {D : Type} : RefusalSlot D → RefusalLeaf D → Bool
+   | .tx _, .refused _ _ _ => true
+   | .count _ _, .count _ => true
+   | .total _ _, .count _ => true
++  | .ticks _ _, .count _ => true
+   | _, _ => false
+ 
+ /-! ## Rows (KERNEL-46, LANG-44): the fourth instance of the one trie, and its two pin kinds -/
+@@ -909,6 +919,7 @@ def checkBounds (t : Turn D) : Except (Reject D) Unit := do
+     (.overBound .valueBytes)
+   req (t.validUntil ≤ t.notBefore + Bounds.windowMax) (.overBound .window)
+   req (t.weight ≤ Bounds.weightMax) (.overBound .weight)
++  req (t.ticks ≤ Bounds.treeTicksMax) (.overBound .ticks)
+   req (t.validUntil < Bounds.counterLimit && t.notBefore < Bounds.counterLimit &&
+        t.charge < Bounds.counterLimit && t.creates.all fun c => c.2.kind < Bounds.kindLimit)
+     (.overBound .counter)
+@@ -955,6 +966,28 @@ def checkShape (t : Turn D) : Except (Reject D) Unit := do
+ def checkWindow (w : World D) (t : Turn D) : Except (Reject D) Unit :=
+   req (t.notBefore ≤ w.height + 1 && w.height + 1 ≤ t.validUntil) .outsideWindow
+ 
++/-- The ticks a member's admitted Turns have spent in the window a Turn would land in (height + 1),
++read off the meter leaf (DESIGN-OBS §1.3); 0 where there is none. -/
++def ticksUsed (E : Env D) (w : World D) (m : D) : Nat :=
++  match w.refusalAt E (.ticks m (refusalWindow (w.height + 1))) with
++  | some (.count n) => n
++  | _ => 0
++
++/-- The meter (DESIGN-OBS §1.3): the member's ticks this window, with the Turn's, within
++`Bounds.ticksPerWindow`; else `ticksBudget`, naming the member. A Turn with no ticks always passes.
++Checked LAST but for the step counter (after the charge and the births): a stale, replayed, unfunded
++or malformed call is refused by its own name first, and `ticksBudget` is the last word, as
++`overAllowance` is for bytes. -/
++def checkTicks (E : Env D) (w : World D) (t : Turn D) : Except (Reject D) Unit :=
++  req (ticksUsed E w t.member + t.ticks ≤ Bounds.ticksPerWindow) (.ticksBudget t.member)
++
++/-- The refusals after a checked Turn: the meter leaf bumped by the Turn's ticks when it spent any
++(one path per invoke, none for any other Body), then pruned at the window's end with the journal. -/
++def commitMeter (E : Env D) (w : World D) (t : Turn D) : Refusals D :=
++  if t.ticks = 0 then w.refusals
++  else w.refusals.insert (refusalSpec E) (.ticks t.member (refusalWindow (w.height + 1)))
++    (.count (ticksUsed E w t.member + t.ticks))
++
+ /-- The step counter stays below `2^64` (KERNEL-47; every step, a Turn or a refusal, checks it), so
+ every reached World's `steps` fits CODEC's `u64`. -/
+ def checkSteps (w : World D) : Except (Reject D) Unit :=
+@@ -1448,6 +1481,7 @@ def checkWith (E : Env D) (w : World D) (t : Turn D) : Except (Reject D) (List (
+   let rr ← rowsRun E w t
+   checkCharge w t (credit posts + rr.2)
+   checkCreates E w t
++  checkTicks E w t
+   checkSteps w
+   pure (posts, rr)
+ 
+@@ -1526,6 +1560,7 @@ def refusalFits (height : Nat) : RefusalSlot D → RefusalLeaf D → Bool
+       code < Bounds.counterLimit)
+   | .count _ win, .count n => decide (win = refusalWindow height ∧ 1 ≤ n ∧ n ≤ Bounds.refusalsPerWindow)
+   | .total _ win, .count n => decide (win = refusalWindow height ∧ 1 ≤ n ∧ n ≤ Bounds.refusalsPerWindowMax)
++  | .ticks _ win, .count n => decide (win = refusalWindow height ∧ 1 ≤ n ∧ n ≤ Bounds.ticksPerWindow)
+   | _, _ => false
+ 
+ /-- A refusals listing a World at `height` can hold (KERNEL-47; the twin of `journalFits`, for CODEC's
+@@ -1556,6 +1591,7 @@ height it could be admitted at); a count or a total only for the current window.
+ def keptRefusal (H : Nat) : RefusalSlot D → RefusalLeaf D → Bool
+   | .count _ win, _ => decide (win = refusalWindow H)
+   | .total _ win, _ => decide (win = refusalWindow H)
++  | .ticks _ win, _ => decide (win = refusalWindow H)
+   | _, .refused h _ _ => decide (H < h + 2 * Bounds.windowMax)
+   | _, .count _ => false
+ 
+@@ -1569,7 +1605,7 @@ can fail failed in `checkWith`. -/
+ def commitWith (E : Env D) (w : World D) (t : Turn D) (posts : List (Post D)) (rr : Rows D × Nat) : World D :=
+   let trie := commitTrie E w t posts
+   let journal := commitJournal E w t
+-  let refusals := pruneRefusals E (w.height + 1) w.refusals
++  let refusals := pruneRefusals E (w.height + 1) (commitMeter E w t)
+   let rows := rr.1
+   { trie
+     journal
+@@ -1609,7 +1645,7 @@ private theorem checkWith_rows {E : Env D} {w : World D} {t : Turn D} {posts : L
+   unfold checkWith at h
+   simp only [bind_ok_iff] at h
+   obtain ⟨⟨⟩, -, ⟨⟩, -, ⟨⟩, -, ⟨⟩, -, raw, -, ⟨⟩, -, ⟨⟩, -, ⟨⟩, -, ⟨⟩, -, rr', hrw, ⟨⟩, -,
+-    ⟨⟩, -, ⟨⟩, -, h9⟩ := h
++    ⟨⟩, -, ⟨⟩, -, ⟨⟩, -, h9⟩ := h
+   simp only [pure, Except.pure, Except.ok.injEq, Prod.mk.injEq] at h9
+   rw [← h9.2]; exact hrw
+ 
+@@ -1741,6 +1777,10 @@ def refusalsCounted [DecidableEq D] (E : Env D) (w : World D) : Bool :=
+     l.all fun p => match p with
+       | (.count m win, .count n) => decide (tally.get (tallySpec E w.chain) (.count m win) = some (.count n))
+       | (.total o win, .count n) => decide (o = w.origin ∧ win = refusalWindow w.height ∧ n = now)
++      -- a ticks leaf (DESIGN-OBS §1.3): the Turns that summed it are not in this trie, so the state
++      -- check cannot re-tally it (the fold theorem `fold_ticks_meter` is its truth; a received base
++      -- trusts it as it trusts every cell); `refusalFits` bounds its value and window
++      | (.ticks _ _, .count _) => true
+       | (.tx _, .refused h _ m) =>
+           !decide ((h - 1) / Bounds.windowMax = j) ||
+             ((w.refusalAt E (.count m (refusalWindow w.height))).isSome &&
+diff --git a/Lang/Journey/Head.lean b/Lang/Journey/Head.lean
+index 2418dbf..71e163d 100644
+--- a/Lang/Journey/Head.lean
++++ b/Lang/Journey/Head.lean
+@@ -279,6 +279,16 @@ def headRows (r0 : Run) (b : Sim.Member) (rA0 : Run) (a : Sim.Member) (acceptTex
+   let (rt9, vt9) := invoke rt3 T [tpkg] 0 (cellArg HA) [] (pinT rt3.st.host T HA)
+   let (_, vt10) := invoke rt9 T [tpkg, HA] 1 (acceptArg (receiptOf cA)) (rangeT rt9.st.host T HA)
+   r := note r s!"TL3 distrust HA ({vt9}); release with A's receipt: {vt10}" (vt9 == "admitted" && programRefused vt10 "untrusted")
++  -- M0 (DESIGN-OBS §1.3, the meter): the kernel's count of B's ticks this window, read off B's
++  -- World, is the sum of the ticks of B's admitted Turns in the session's log (every Turn re-derived
++  -- through `Receive.submit`), and above zero: the rows ran programs
++  let wM := rt4.st.host
++  let logSum := (rt4.st.log.filterMap fun s => match s with
++    | .turn t => if t.member = b.id then some t.ticks else none
++    | _ => none).sum
++  let meter := ticksUsed Sim.env wM b.id
++  r := note r s!"M0 the kernel's meter of B's ticks this window reads {meter}; the log's sum over B's admitted Turns is {logSum}; A's founder has no meter here: {ticksUsed Sim.env wM a.id}"
++    (meter == logSum && logSum > 0 && ticksUsed Sim.env wM a.id == 0)
+   return r
+ 
+ /-- A fresh session for the HD and RC rows: World B (the rows' World) and World A (the foreign one). -/
+diff --git a/Lang/Proofs/DispatchRows.lean b/Lang/Proofs/DispatchRows.lean
+index 61fdba8..36c4728 100644
+--- a/Lang/Proofs/DispatchRows.lean
++++ b/Lang/Proofs/DispatchRows.lean
+@@ -116,7 +116,7 @@ theorem dispatched_ok_rows {X : Ctx D} {w : World D} {c : Call D} {R : Draft D 
+ 
+ /-- The sealed Turn's rows are `rowTouchesOf` the caller's row pins and the Draft's rows. -/
+ theorem sealTurn_rows {X : Ctx D} {c : Call D} {cr : List (D × Cell)} {efs : List (D × Act)}
+-    {ns : List D} {rs : List (RowSlot D × RowAct)} {t : Turn D} (h : sealTurn X c cr efs ns rs = .ok t) :
++    {ns : List D} {rs : List (RowSlot D × RowAct)} {t : Turn D} {k : Nat} (h : sealTurn X c cr efs ns rs k = .ok t) :
+     rowTouchesOf c.unsigned.rowPins rs = .ok t.rows := by
+   unfold sealTurn at h
+   simp only [except_bind_ok] at h
+@@ -204,7 +204,8 @@ theorem dispatched_invoke_rows {X : Ctx D} {w : World D} {c : Call D} {t : Turn
+       (∀ e ∈ rows, e.1.under.1 = obj) ∧
+       ∀ e ∈ rows, ∃ τ ∈ t.rows, τ.slot = e.1 ∧ τ.act = e.2 := by
+   obtain ⟨-, hw⟩ := receive_ok_with hc
+-  obtain ⟨-, d, hd', hs⟩ := receiveWith_sealed hw
++  obtain ⟨-, d, _k, hd', hs⟩ := receiveWith_sealed hw
++  replace hd' := derive_of_withTicks hd'
+   rw [derive_eq] at hd'
+   cases hR : dispatch X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c
+       (tree X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c Bounds.callDepthMax)
+@@ -239,7 +240,8 @@ theorem dispatched_invoke_children {X : Ctx D} {w : World D} {c : Call D} {t : T
+     ∀ i (hi : i < calls.length), ∃ wk', Dispatched X w c m wk' obj calls[i] := by
+   intro i hi
+   obtain ⟨-, hw⟩ := receive_ok_with hc
+-  obtain ⟨-, d, hd', -⟩ := receiveWith_sealed hw
++  obtain ⟨-, d, _k, hd', -⟩ := receiveWith_sealed hw
++  replace hd' := derive_of_withTicks hd'
+   rw [derive_eq] at hd'
+   cases hR : dispatch X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c
+       (tree X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c Bounds.callDepthMax)
+diff --git a/Lang/Proofs/StdOfferFuse.lean b/Lang/Proofs/StdOfferFuse.lean
+index dd2353b..03942b7 100644
+--- a/Lang/Proofs/StdOfferFuse.lean
++++ b/Lang/Proofs/StdOfferFuse.lean
+@@ -478,7 +478,8 @@ private theorem fuse_tree {bytesOf : D → ByteArray} {digestOf : ByteArray →
+         offerTakeIx db rq f = .ok (s, [], rows, used) ∧
+       ∀ e ∈ rows, ∃ τ ∈ t.rows, τ.slot = e.1 ∧ τ.act = e.2) := by
+   obtain ⟨-, hw⟩ := receive_ok_with hc
+-  obtain ⟨-, d, hd', hs⟩ := receiveWith_sealed hw
++  obtain ⟨-, d, _k, hd', hs⟩ := receiveWith_sealed hw
++  replace hd' := derive_of_withTicks hd'
+   rw [derive_eq] at hd'
+   cases hRt : dispatch X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c
+       (tree X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c Bounds.callDepthMax)
+diff --git a/Ledger/Proofs/EscrowAdmitted.lean b/Ledger/Proofs/EscrowAdmitted.lean
+index cad8269..39d053d 100644
+--- a/Ledger/Proofs/EscrowAdmitted.lean
++++ b/Ledger/Proofs/EscrowAdmitted.lean
+@@ -169,7 +169,7 @@ private def callAt (w : World UInt8) (vu method : Nat) (args : ByteArray) : Call
+ 
+ private def dummy : Turn UInt8 :=
+   { txId := 0, notBefore := 0, validUntil := 0, touches := [], creates := [], nullifiers := [],
+-    charge := 0, event := .empty }
++    charge := 0, event := .empty, member := 0 }
+ 
+ private def noDraft : Draft UInt8 × Walk UInt8 := (⟨[], [], [], []⟩, ⟨[], 0, 0⟩)
+ 
+@@ -213,7 +213,7 @@ private def out1 : Draft UInt8 × Walk UInt8 :=
+   ((deriveCalls sub1 obj ⟨[], writeOf obj (diffOps (stateOf objCell) (slotsAt "held")), [], []⟩
+     { visited := [obj], pool := poolOf c1.unsigned.body - 119, born := 0 } calls1).toOption).getD noDraft
+ private def t1 : Turn UInt8 :=
+-  ((sealTurn tX c1 out1.1.creates out1.1.effects out1.1.nullifiers out1.1.rows).toOption).getD dummy
++  ((sealTurn tX c1 out1.1.creates out1.1.effects out1.1.nullifiers out1.1.rows (poolOf c1.unsigned.body - out1.2.pool)).toOption).getD dummy
+ private def w1 : World UInt8 := ((World.admit tEnv w0 t1).toOption).getD w0
+ 
+ private theorem c1_pkg : readKind look1 pkg kindPackage = .ok pkgCell := by rfl
+@@ -274,7 +274,7 @@ private def out2 : Draft UInt8 × Walk UInt8 :=
+   ((deriveCalls sub2 obj ⟨[], writeOf obj (diffOps (stateOf cell2) (slotsAt "released")), [], []⟩
+     { visited := [obj], pool := poolOf c2.unsigned.body - 113, born := 0 } calls2).toOption).getD noDraft
+ private def t2 : Turn UInt8 :=
+-  ((sealTurn tX c2 out2.1.creates out2.1.effects out2.1.nullifiers out2.1.rows).toOption).getD dummy
++  ((sealTurn tX c2 out2.1.creates out2.1.effects out2.1.nullifiers out2.1.rows (poolOf c2.unsigned.body - out2.2.pool)).toOption).getD dummy
+ private def w2 : World UInt8 := ((World.admit tEnv w1 t2).toOption).getD w1
+ 
+ private theorem c2_pkg : readKind look2 pkg kindPackage = .ok pkgCell := by rfl
+diff --git a/Ledger/Proofs/GrantCapTooth.lean b/Ledger/Proofs/GrantCapTooth.lean
+index 5763dff..3f48632 100644
+--- a/Ledger/Proofs/GrantCapTooth.lean
++++ b/Ledger/Proofs/GrantCapTooth.lean
+@@ -92,7 +92,7 @@ private def callAt (w : World UInt8) (vu : Nat) : Call UInt8 :=
+ 
+ private def dummy : Turn UInt8 :=
+   { txId := 0, notBefore := 0, validUntil := 0, touches := [], creates := [], nullifiers := [],
+-    charge := 0, event := .empty }
++    charge := 0, event := .empty, member := 0 }
+ 
+ private def c1 : Call UInt8 := callAt w0 5
+ private def t1 : Turn UInt8 := ((receive gX0 w0 c1).toOption).getD dummy
+diff --git a/Protocol/Proofs/Behind.lean b/Protocol/Proofs/Behind.lean
+index 4ab2226..23a8335 100644
+--- a/Protocol/Proofs/Behind.lean
++++ b/Protocol/Proofs/Behind.lean
+@@ -230,7 +230,7 @@ theorem receive_pins {X : Ctx D} {v : World D} {c : Call D} {t : Turn D} (h : re
+       (∀ x ∈ t.rows, ∀ s, x.seen = some s → (x.slot, s) ∈ c.unsigned.rowPins) ∧
+       t.ranges = c.unsigned.ranges := by
+   refine ⟨(receive_derived h).pinned, ?_⟩
+-  obtain ⟨-, d, -, hs⟩ := receiveWith_sealed (receive_ok_with h).2
++  obtain ⟨-, d, _k, -, hs⟩ := receiveWith_sealed (receive_ok_with h).2
+   unfold sealTurn at hs
+   simp only [except_bind_ok] at hs
+   obtain ⟨⟨⟩, -, rts, hr, hs⟩ := hs
+diff --git a/Protocol/Proofs/Receipt.lean b/Protocol/Proofs/Receipt.lean
+index 745ac47..7a40b61 100644
+--- a/Protocol/Proofs/Receipt.lean
++++ b/Protocol/Proofs/Receipt.lean
+@@ -128,7 +128,7 @@ theorem refusalsOk_fits {w : World D} (hr : w.RefusalsOk E) :
+   intro k v hk
+   have hf := hr.2 k v hk
+   cases k <;> cases v <;> simp only [refusalFits, Bounds.counterLimit, Bounds.refusalsPerWindow, Bounds.refusalsPerWindowMax,
+-    decide_eq_true_eq] at hf <;>
++    Bounds.ticksPerWindow, Bounds.treeTicksMax, decide_eq_true_eq] at hf <;>
+     simp only [Codec.Kernel.RefusalLeaf.Fits] <;> (try cases hf) <;> omega
+ 
+ include hE in
+diff --git a/Protocol/Proofs/Settle.lean b/Protocol/Proofs/Settle.lean
+index 4a281cf..6346bf9 100644
+--- a/Protocol/Proofs/Settle.lean
++++ b/Protocol/Proofs/Settle.lean
+@@ -344,7 +344,7 @@ theorem genesisWorld_windowedIn (X : Ctx D) (S : List (Kernel.Step D)) (name non
+ theorem admit_windowedIn {X : Ctx D} {S : List (Kernel.Step D)} {w w' : World D} {t : Turn D}
+     (hw : WindowedIn X S w) (h : World.admit X.env w t = .ok w') : WindowedIn X S w' := by
+   refine ⟨admit_refusalsOk hw.1 h, fun id hh code mb hk => ?_⟩
+-  rw [admit_refusalAt hw.1.1 h] at hk
++  rw [admit_refusalAt hw.1.1 h (.tx id) (by simp)] at hk
+   split at hk
+   · exact hw.2 id hh code mb (Option.filter_eq_some_iff.mp hk).1
+   · exact hw.2 id hh code mb hk
+diff --git a/decisions/kernel.md b/decisions/kernel.md
+index 043896f..4fb25c6 100644
+--- a/decisions/kernel.md
++++ b/decisions/kernel.md
+@@ -3265,3 +3265,76 @@ Item 3's trigger fired. The trigger was "the first row whose invariant spans two
+ - A signed row for `duplicateEffect` (a two-transfer method in `lang-journey`).
+ 
+ **KERNEL-66 amendment (2026-10-24, FIX-KERNEL; lang-journey was RED on main since f1839ed).** Three journey rows expected the old order. LB8b (a second answer of one ring over the view the first answer moved) expected the guard's `rung: answered`; LH7b (a select over the view before a re-pin) expected the method's `support0 moved`; P8.2 (a plan signed before the revoke of its provider's grant) accepted either `support0 dead` or `rejected stale`. Each call's pin moved, so under KERNEL-66 each is `rejected stale`, declined before the guard or method runs. That is the name KERNEL-66 means: the refusal names the stale observation, not what a receiver says of the new state. The rows now expect exactly `rejected stale`; LB8 and LH7 still read the guard's and the method's own refusals on a current view. MEASURED (hbox wt/fixkernel on 0a299c8): lang-journey GREEN in both modes. THE BAR (`--records 60 --standing`) reads PASS, and its `--harness-control` reads RED harness-control with every comparator fired, so no `refused stale` appears (FIX-PROTOCOL's BAR line was INFERRED; it does not reproduce). Its expected word is `declined stale` (scripts/bar.sh `STALE`), unchanged. A different defect found while reading: `Protocol.Command.staleBehind` (Machine.lean) still classifies a call stale by the OLD order (`receive`, then `World.admit`'s `stale`). On follow's World, a call whose pin moved but whose receiver also refuses on the new state reads `false`, so its settlement stays `open` where the Host now declines it `stale`. Its twin-free form is `checkPins` on follow's World. `staleBehind_spec` and `Behind.lean`'s finality proofs restate with it. This is PROTOCOL's file; it is handed to FIX-PROTOCOL as a card.
++
++## KERNEL-68 · The meter: a Turn names its member and its ticks, and the kernel counts a member's ticks per window as it counts refusals (FABLE-OBS, 2026-10-27; DESIGN-OBS §1, redregg/work/promo/DESIGN-OBS.md; FRONTIER-AXES axis 4)
++
++**Decision.**
++1. `Turn` gains `member : D` and `ticks : Nat` (`Kernel/Turn.lean`): who signed the call, and the ticks
++   its whole tree of runs used (0 for every Body but an invoke). `Receive.sealTurn` sets both from the
++   call and the Walk's pool (`deriveWithTicks`); every follower re-derives them from the event
++   (`Receive.rederive`: a page carries the call, never the writer's Turn), so a writer that states another
++   member or count is `eventMismatch`. The log record grows by 40 bytes (`logWeight`; `Codec.Kernel.turn`
++   gains the two fields); `checkBounds` refuses `ticks` past `treeTicksMax` (`overBound .ticks`): a forged
++   log cannot jump the meter.
++2. The refusals trie gains a fourth key kind, `RefusalSlot.ticks member win` (kind byte 3, one width with
++   the others), holding the existing `count` leaf: the member's admitted ticks in the window the Turn
++   lands in (`refusalWindow (height + 1)`, the journal's window). `World.admit` checks `ticksUsed +
++   t.ticks ≤ Bounds.ticksPerWindow` (`checkTicks`, beside `checkWindow`; refused `ticksBudget member`,
++   a class-(A) rejection `judge` records as it records `overAllowance`) and, for a Turn with ticks, writes
++   the leaf (`commitMeter`: one trie path per invoke, none for any other Body) before the window prune.
++   `refusalFits` bounds the leaf (1 ≤ n ≤ `ticksPerWindow`, the current window); `keptRefusal` prunes it
++   with the counts; `refusalsCounted` accepts it (the Turns that summed it are not in the trie: see critique).
++3. `Bounds.ticksPerWindow := 16 * treeTicksMax` (2^21): sixteen full-budget trees per member per window,
++   by analogy with `refusalsPerWindow = 16`; ~70,000 invokes of THE BAR's size.
++4. Probes and rows: kernel-sim `probeTicks` (sixteen full trees admitted on a copy, the seventeenth
++   `ticksBudget`, a tree past `treeTicksMax` `overBound`; planted names `ticksBudget`,
++   `ticks-window:ticksBudget`); lang-journey M0 (B's meter reads back as the sum of the ticks of B's
++   admitted Turns in the session log, and A's founder has none).
++
++**Why.** A member may spend `treeTicksMax` ticks per call at every height it can get a call into, bounded
++by nothing (READ `Derive.lean` `poolOf`); refusals were given a window budget (KERNEL-44) and admissions
++were not. The honest self-measurements of a World are the functions of its log the kernel maintains and a
++follower re-derives (DESIGN-OBS §1.2); the refusals trie is the one place the kernel already keeps a
++per-window per-member counter under the chain, pruned on the schedule a meter wants, and readable by a
++path against the refusals root. A kernel-owned CELL would be touched by a Turn that did not name it
++(`admit_frame`, `fold_potential`, every pin theorem) and a receiver-written one would serialise a member's
++calls on its pin (KERNEL-54's reason refusal counts are not pins). A fifth trie is the cut HOLISTIC-KERNEL
++§2.2 judged wrong. The member in the Turn rather than recovered from the event: the kernel never reads the
++event; a decoder in `Env` would sit in `World.admit`'s hot path and in every kernel theorem's premises;
++`Refused` carries `member` for the same reason (KERNEL-50).
++
++**Alternatives.** (a) Bytes per member per window (Σ `charge`) first: cheaper and computed by the kernel
++with no receive-layer trust; declined as the FIRST meter because bytes already have a global budget
++(`allowance`) and ticks have none; it is the second key kind, same leaf, same check (DESIGN-OBS §1.4).
++(b) A `ticks` field in the journal entry so the meter is a tally of the journal (KERNEL-50's property for
++refusals): restates the journal leaf, its injectivity and every `JournalHead` theorem, for a check whose
++only reader is a base decode. Declined. (c) A member only on invoke Turns (`Option D`): a forged-log probe
++shape on the wire. Declined; every Turn naming its signer is what B1 (authority confinement) wants.
++
++**Price.** Hypotheses on landed theorems: 0 (a new key kind in an existing trie). Restated by binder: the
++26 Turn construction sites (MEASURED), `Codec.Kernel.turn` and its size/injectivity theorems, the refusals
++families that case on the slot (`refusalFits`, `keptRefusal`, `RefusalLeaf.fits`, `refusalKeyBytes`,
++`refusalsCounted`, `RefusalsBound`, `RefusalsHead`, Codec/World's slot codec and `WorldSize`). Flag day
++`kernel!`: the Turn record and the refusal code table (`rejectNames` + `ticksBudget`) move, so every
++pre-meter Store is `shapeMismatch` and re-geneses; `codec-vectors` re-emits. Waste: `admit
++trie-hashes-per-turn` rises by one path for invoke Turns only (the sim's `Required` counts it through
++`fresh`); `submit bytes-per-turn` falls (40 bytes in numerator and denominator).
++
++**Refuses.** `ticksBudget MEMBER` (recorded, final within the window), `overBound ticks`, `shapeMismatch`
++for a pre-meter Store, `kernel/refusals` for a ticks leaf outside its window or past `ticksPerWindow`.
++
++**CRITIQUE.** (1) `refusalsCounted` cannot re-tally a ticks leaf from the trie (the Turns are not in it), so
++a decoded base with a forged meter passes the state check and is caught only by the trust a received base
++already needs (`CheckpointTrusted`, a sponsor's pin). KERNEL-50's "a function of its records" holds for
++refusals and not for ticks; the fold theorem `fold_ticks_meter` (NOT yet written: the next step) is its
++truth. (2) The cap is a taste number with no OWNER: a member cannot buy or be granted more. If a row (the
++Bell's resident, an agent member) approaches 2^21 ticks in a window, the honest growth is `Right.ticks cap`
++as a counted right carved from a founder's World grant, spent per invoke like `enroll n`. (3) 32 bytes of
++member on every record for a counter only invokes need.
++
++**META-CRITIQUE.** The refusals trie was chosen because KERNEL-44 built it and it is where the kernel already
++measures itself; its name is now wrong (it is the WINDOW trie) and this entry does not rename it. The brief
++said "ticks per window per member is the obvious one"; the bytes meter is cheaper and more honest and was
++nearly built first; ticks won only because it is the hole with no cousin.
++
++**Status.** built in `wt/fable-obs`; landing as `kernel!` (FABLE-OBS.report.md holds the hashes).

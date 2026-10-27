@@ -1,0 +1,3 @@
+workspace continuity: legacy; initialize with workspace --action continuity-init --name REF
+workspace attempt: /run/user/1001/p4.lLiI5S/r/world/sponsor/attempts/s2-move
+workspace continuity: legacy; initialize with workspace --action continuity-init --name REF

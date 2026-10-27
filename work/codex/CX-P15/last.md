@@ -1,0 +1,3 @@
+READY 2026-10-20: /tank/dregg-build/nanodregg/wt/CX-P15 (base 7e02852). Changed paths: Lang/Contextual/P5.lean, Lang/Proofs/Contextual/P5.lean, Lang/Contextual/P1.lean, Lang/Proofs/Contextual/P1.lean, decisions/lang.md. Draft message: /tank/dregg-build/nanodregg/logs/CX-P15-message.txt. Build and source gates GREEN; 45 self disjunct reads recorded; ROOT's independent reader pending.
+
+DONE 2026-10-20: READY for ROOT's reader. Landed hashes: none (this brief forbids lane landing).

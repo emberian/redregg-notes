@@ -1,0 +1,984 @@
+diff --git a/Host/Cli.lean b/Host/Cli.lean
+index c673430..5459ac0 100644
+--- a/Host/Cli.lean
++++ b/Host/Cli.lean
+@@ -13,6 +13,12 @@
+ STORE is the only path any verb touches. Frames are `Host.Wire`'s (the supervisor's mux is the
+ other end). The exit code is `Host.Status.code` of how the process ended (`Host.Exit`): one code
+ per status, each of class done, restart or fatal, with its name on stderr.
++There is no fuel exit: a spent round reopens in process (`Host.restarts`, D4).
++
++`serve` and `follow` are never silent (D8): one `STATUS` line on stderr once the Store is open and
++the reader thread is proved live, one at exit; a reader that cannot get its own thread (the
++runtime runs a `.dedicated` task inline when it cannot read the CPU count: the macOS sandbox
++without `hw.ncpu`) is refused `noThreads` by name rather than answering nothing.
+ -/
+ import Host.Deployed
+ import Host.Follow
+@@ -24,9 +30,17 @@ namespace Nanodregg.Host.Cli
+ 
+ open Nanodregg.Kernel Nanodregg.Codec Nanodregg.Host.Deployed
+ 
+-/-- How many batches one `serve` process runs before it exits `fuel` and is restarted (law 4: the
+-one unbounded loop is the supervisor's restart). -/
+-def fuelBatches : Nat := 1 <<< 24
++/-- Batches per round: each round ends in an in-process reopen checked against the loop's state,
++so the open path runs routinely (D4). -/
++def fuelBatches : Nat := 1 <<< 12
++
++/-- Frames the reader reads in one process (`Stop.lifetime`): 2^48, centuries at any rate the
++loop can sustain. -/
++def lifetimeFrames : Nat := 1 <<< 48
++
++/-- Rounds in one process. A round that ends `fuel` consumed `fuelBatches` batches of at least one
++frame each, so the reader's lifetime ends first and `Exit.lifetime` is unreachable before it. -/
++def restartsMax : Nat := lifetimeFrames / fuelBatches + 1
+ 
+ /-- Frames the reader task may queue ahead of the loop. -/
+ def queueMax : Nat := 1024
+@@ -75,12 +89,48 @@ refuses by name). -/
+ def serving (act : IO UInt32) : IO UInt32 :=
+   try act catch e => refuse .ioServing s!"ioServing {e}"
+ 
+-/-- Read frames from stdin into a bounded channel in a dedicated task; the loop's port. -/
+-def stdioPort : IO Port := do
++/-- Whether a `.dedicated` task gets a thread of its own. Without one the reader would run inline,
++read stdin to its end, and only then let the loop answer: a resident that answers nothing. -/
++def threadsLive : IO Bool := do
++  let me ← IO.getTID
++  match ← IO.wait (← IO.asTask IO.getTID .dedicated) with
++  | .ok tid => pure (tid ≠ me)
++  | .error _ => pure false
++
++/-- Read frames from stdin into a bounded channel in a dedicated task; the loop's port and the
++reader's task (why it stopped). -/
++def stdioPort : IO (Port × Task (Except IO.Error Stop)) := do
+   let ch ← Std.CloseableChannel.Sync.new (some queueMax)
+   let input ← IO.getStdin
+-  let _ ← IO.asTask (pump input ch fuelBatches) .dedicated
+-  return channelPort ch (← IO.getStdout)
++  let reader ← IO.asTask (pump input ch lifetimeFrames) .dedicated
++  let out ← IO.getStdout
++  return (channelPort ch (← IO.mkRef none) (sendTo out), reader)
++
++def status (verb : String) (fields : List (String × String)) : IO Unit :=
++  IO.eprintln s!"STATUS {verb} {" ".intercalate (fields.map fun (k, v) => s!"{k}={v}")}"
++
++def residentFields (r : Resident (World D)) : List (String × String) :=
++  [("height", toString r.world.height), ("chain", r.world.chain.toHex),
++   ("offset", toString r.pos.offset), ("base_offset", toString r.sealed.offset),
++   ("base_height", toString r.sealed.height)]
++
++/-- Run a resident on stdin/stdout: prove the reader thread live, state the opened Store, run the
++rounds, and at the end answer every frame still queued `refused stopped`, then state the exit. -/
++def runResident (verb : String) (r₀ : Resident (World D))
++    (rounds : Port → Resident (World D) → IO (Exit × Resident (World D))) : IO UInt32 := do
++  if !(← threadsLive) then return ← refuse .noThreads
++  let (port, reader) ← stdioPort
++  status verb (residentFields r₀)
++  let (exit, r) ← rounds port r₀
++  let exit ← match exit with
++    | .eof => match ← IO.wait reader with
++      | .ok .eof => pure Exit.eof
++      | .ok stop => pure (Exit.stream stop)
++      | .error _ => pure (Exit.stream .readFailed)
++    | e => pure e
++  let refused ← refuseQueued port (named FrameRefusal.stopped.name) (queueMax + 1)
++  status verb (("exit", exit.status.name) :: ("refused_queued", toString refused) :: residentFields r)
++  return exitCode exit
+ 
+ def serveVerb (store : String) : IO UInt32 := do
+   match ← (readKey store : IO (Except (StoreFault (Record.Fault (Reject D))) Digest)) with
+@@ -90,13 +140,13 @@ def serveVerb (store : String) : IO UInt32 := do
+     match ← openWriter store keys c world recorder.mark foldStep with
+     | .error f => refuseStore f
+     | .ok wr => serving do
+-      let port ← stdioPort
+-      let (exit, _) ← serve (machine X) recorder keys.segment (fileCheckpoint store keys c world) c
+-        (fileStore wr.segment) (pager keys store (← File.open (segmentPath store) .read)) port limits
+-        fuelBatches wr.opening.resident none
++      let pagerSeg ← File.open (segmentPath store) .read
++      let code ← runResident "serve" wr.opening.resident fun port =>
++        restarts (serve (machine X) recorder keys.segment (fileCheckpoint store keys c world) c
++            (fileStore wr.segment) (pager keys store pagerSeg) port limits fuelBatches)
++          (reopenAt store keys c world recorder.mark foldStep) recorder.mark restartsMax
+       wr.segment.sync  -- the writer's handle, and so its lock, lives to here
+-      if exitCode exit ≠ 0 then IO.eprintln s!"exit {exit.status.name}"
+-      return exitCode exit
++      return code
+ 
+ def followVerb (store memberHex grantHex : String) : IO UInt32 := do
+   let some member := hexDigest memberHex | refuse .usage "member"
+@@ -109,13 +159,13 @@ def followVerb (store memberHex grantHex : String) : IO UInt32 := do
+     match ← openWriter store keys c world recorder.mark auditStep with
+     | .error f => refuseStore f
+     | .ok wr => serving do
+-      IO.eprintln s!"follow: audited to height {wr.opening.opened.world.height}"
+-      let port ← stdioPort
+-      let (exit, _) ← Follow.loop keys ⟨member, grant, Follow.window⟩ (fileStore wr.segment)
+-        (fileCheckpoint store keys c world) port fuelBatches none wr.opening.resident
++      let download ← IO.mkRef none
++      let code ← runResident "follow" wr.opening.resident fun port =>
++        restarts (Follow.loop keys ⟨member, grant, Follow.window⟩ (fileStore wr.segment)
++            (fileCheckpoint store keys c world) port download fuelBatches)
++          (reopenAt store keys c world recorder.mark auditStep) recorder.mark restartsMax
+       wr.segment.sync  -- the follower's handle, and so its lock, lives to here
+-      if exitCode exit ≠ 0 then IO.eprintln s!"exit {exit.status.name}"
+-      return exitCode exit
++      return code
+ 
+ def verb : List String → IO UInt32
+   | ["genesis", store, name] => genesisVerb store name []
+diff --git a/Host/Exit.lean b/Host/Exit.lean
+index 437bc0b..9a11e2d 100644
+--- a/Host/Exit.lean
++++ b/Host/Exit.lean
+@@ -33,6 +33,8 @@ inductive ExitClass where
+ inductive Status where
+   | eof
+   | uncertain
++  /-- a round's end inside the process: `Host.restarts` consumes it and reopens in process (D4),
++  so `host` never exits with it; seen from outside it is a defect -/
+   | fuel
+   | sealIo
+   /-- argv does not parse, or an argument's value is refused (founder keys, member, grant) -/
+@@ -75,6 +77,18 @@ inductive Status where
+   | pastEnd
+   /-- the base file is shorter than its World: it changed under the read -/
+   | shortBase
++  /-- a fuel restart's in-process reopen refused (D4) -/
++  | reopenFailed
++  /-- a fuel restart reopened a state other than the one the loop held: a defect in open or append -/
++  | reopenDiverged
++  /-- the restart budget is spent (unreachable before the reader's own lifetime) -/
++  | lifetime
++  /-- the request stream stopped inside a frame, with a bad length, a read error, or at the
++  reader's frame lifetime; nd-supervise exits with the child, so a restart re-pairs the pipe -/
++  | stream
++  /-- a `.dedicated` task did not get its own thread (the runtime ran it inline): the reader would
++  block the loop, and the resident would answer nothing -/
++  | noThreads
+   deriving DecidableEq, Repr
+ 
+ namespace Status
+@@ -83,7 +97,7 @@ def all : List Status :=
+   [eof, uncertain, fuel, sealIo, usage, entropy, recordTooLarge, worldTooLarge, indexTooLarge, io, ioServing,
+    locked, .exists, badKey, shortRead, noBase, baseTooLarge, baseCorrupt, baseUndecodable,
+    segmentShort, tailTooLong, corrupt, record, tagWidth, behindAnchor, chainMismatch, badIndex,
+-   pageTooLarge, pastEnd, shortBase]
++   pageTooLarge, pastEnd, shortBase, reopenFailed, reopenDiverged, lifetime, stream, noThreads]
+ 
+ def code : Status → Nat
+   | eof => 0
+@@ -116,14 +130,19 @@ def code : Status → Nat
+   | pageTooLarge => 35
+   | pastEnd => 36
+   | shortBase => 37
++  | reopenFailed => 38
++  | reopenDiverged => 39
++  | lifetime => 40
++  | stream => 41
++  | noThreads => 42
+ 
+ def cls : Status → ExitClass
+   | eof => .done
+-  | uncertain | fuel | sealIo | ioServing => .restart
++  | uncertain | fuel | sealIo | ioServing | lifetime | stream => .restart
+   | usage | entropy | recordTooLarge | worldTooLarge | indexTooLarge | io
+   | locked | .exists | badKey | shortRead | noBase | baseTooLarge | baseCorrupt | baseUndecodable
+   | segmentShort | tailTooLong | corrupt | record | tagWidth | behindAnchor | chainMismatch
+-  | badIndex | pageTooLarge | pastEnd | shortBase => .fatal
++  | badIndex | pageTooLarge | pastEnd | shortBase | reopenFailed | reopenDiverged | noThreads => .fatal
+ 
+ /-- The name printed beside the code (`refused NAME` / `exit NAME` on stderr). -/
+ def name (s : Status) : String := ((toString (repr s)).splitOn ".").getLast!
+@@ -170,5 +189,9 @@ def Exit.status : Exit → Status
+   | .uncertain _ => .uncertain
+   | .sealFailed f => f.status
+   | .recordTooLarge _ => .recordTooLarge
++  | .reopenFailed _ => .reopenFailed
++  | .reopenDiverged => .reopenDiverged
++  | .lifetime => .lifetime
++  | .stream _ => .stream
+ 
+ end Nanodregg.Host
+diff --git a/Host/Follow.lean b/Host/Follow.lean
+index def21bf..2114f46 100644
+--- a/Host/Follow.lean
++++ b/Host/Follow.lean
+@@ -73,24 +73,26 @@ def answer {D : Type} [Ord D] [DecidableEq D] (X : Receive.Ctx D) (B : Protocol.
+   | some op => refused (.wrongSocket op)
+ 
+ /-- The follower loop: one frame at a time, at most `fuel` frames. `dl` is the base download in
+-progress, held in memory only (a restart starts it again). Absorbed Turns are appended through
++progress, held in memory only, in a reference the caller owns, so it survives a fuel restart's
++in-process reopen exactly as the port's queued frames do (a process restart starts it again). Absorbed Turns are appended through
+ `Host.append` BEFORE the step is answered; an adopted base is sealed as follow's own newest base
+ at its segment position (no record before it belongs to the adopted World's history, so the index
+ restarts empty) BEFORE the step is answered. -/
+-def loop (keys : Keys) (me : Command.Self D) (store : Store) (ck : Checkpoint (World D)) (port : Port) :
+-    Nat → Option Protocol.Thin.Download → Resident (World D) → IO (Exit × Resident (World D))
+-  | 0, _, r => finish .fuel r
+-  | fuel + 1, dl, r => do
++def loop (keys : Keys) (me : Command.Self D) (store : Store) (ck : Checkpoint (World D)) (port : Port)
++    (dl : IO.Ref (Option Protocol.Thin.Download)) : Nat → Resident (World D) → IO (Exit × Resident (World D))
++  | 0, r => finish .fuel r
++  | fuel + 1, r => do
+     let r ← match ← reap r with
+       | .ok r => pure r
+       | .error f => return (.sealFailed f, { r with pending := none })
+     let some f ← port.recv | finish .eof r
+     let (fs', p, status, payload) :=
+-      answer X ⟨world, World.height, keys.worldDigest, c.worldBytesMax⟩ me ⟨r.world, dl⟩ f
++      answer X ⟨world, World.height, keys.worldDigest, c.worldBytesMax⟩ me ⟨r.world, ← dl.get⟩ f
++    dl.set fs'.download
+     match p with
+     | .turns [] =>
+       port.send ⟨f.conn, status, payload⟩
+-      loop keys me store ck port fuel fs'.download { r with world := fs'.world }
++      loop keys me store ck port dl fuel { r with world := fs'.world }
+     | .turns ts =>
+       match ← append recorder keys.segment ck c store r fs'.world (recorder.encode fs'.world ts.toArray) with
+       | .error e =>
+@@ -98,7 +100,7 @@ def loop (keys : Keys) (me : Command.Self D) (store : Store) (ck : Checkpoint (W
+         finish e r
+       | .ok r =>
+         port.send ⟨f.conn, status, payload⟩
+-        loop keys me store ck port fuel fs'.download r
++        loop keys me store ck port dl fuel r
+     | .adopt w' =>
+       let r ← match r.pending with
+         | none => pure r
+@@ -111,7 +113,7 @@ def loop (keys : Keys) (me : Command.Self D) (store : Store) (ck : Checkpoint (W
+         return (.sealFailed e, { r with pending := none })
+       | .ok sealed =>
+         port.send ⟨f.conn, status, payload⟩
+-        loop keys me store ck port fuel fs'.download
++        loop keys me store ck port dl fuel
+           { r with world := w', sealed, index := #[], pending := none }
+ 
+ end Nanodregg.Host.Follow
+diff --git a/Host/Loop.lean b/Host/Loop.lean
+index 11d8f64..0ea2b42 100644
+--- a/Host/Loop.lean
++++ b/Host/Loop.lean
+@@ -14,8 +14,12 @@ the next batch. Replies leave only after the sync, so no reply reports a state a
+ back. A failed append or sync is never retried (HOST-4: after a failed fsync the kernel may have
+ dropped the dirty pages); the supervisor restarts the Host and `recover` decides what is on disk.
+ 
+-The loop is the one unbounded loop (LAW 4 as amended): `fuel` batches, then `Exit.fuel`, and the
+-supervisor restarts it, so reopen runs routinely.
++A round of `serve` runs `fuel` batches and returns `Exit.fuel`; `restarts` (the resident's one
++fuel-and-restart loop, LAW 4 as amended) then reopens the Store from disk IN PROCESS, asserts the
++reopened state is the state the loop held (`reopenDiverged` otherwise), and serves the next round
++on the same port. So reopen runs routinely and no connection notices (D4). The loop holds no frame
++between batches: a frame that does not fit a batch goes back into the port (`Port.unread`), so a
++round can end at any batch boundary without dropping one (`Host.Proofs.Loop.drainM_conserves`).
+ 
+ The physical store is a record of two IO actions (`Store`), so the simulation and the crash plants
+ drive this same loop over an in-memory disk (`Host.MemStore`), and `host serve` over the file.
+@@ -43,7 +47,12 @@ structure Port where
+   recv : IO (Option Frame)
+   /-- a frame already queued, without blocking -/
+   poll : IO (Option Frame)
++  /-- put a frame back at the front: the next `recv` or `poll` returns it. Called only right after
++  a `poll` returned it, so the port holds at most one frame put back. -/
++  unread : Frame → IO Unit
+   send : Reply → IO Unit
++  /-- stop accepting frames; the ones already queued stay readable by `poll` -/
++  close : IO Unit
+ 
+ structure Limits where
+   batchMax : Nat
+@@ -53,7 +62,7 @@ structure Limits where
+ inductive Exit where
+   /-- the request stream ended -/
+   | eof
+-  /-- the batch budget of this process is spent; restart -/
++  /-- the batch budget of this round is spent; `restarts` reopens and continues -/
+   | fuel
+   /-- an append or sync failed: the batch's replies were `uncertain`; restart and recover -/
+   | uncertain (detail : String)
+@@ -62,6 +71,14 @@ inductive Exit where
+   /-- a batch record over `Cadence.recordBytesMax`: the batch was not appended and its replies
+   were `uncertain` -/
+   | recordTooLarge (bytes : Nat)
++  /-- a fuel restart's reopen refused (the refusal's name) -/
++  | reopenFailed (name : String)
++  /-- the reopened Store is not the state the loop held: a defect in the open or the append path -/
++  | reopenDiverged
++  /-- the resident's restart budget is spent (unreachable before the port's own lifetime bound) -/
++  | lifetime
++  /-- the request stream stopped other than at a frame boundary, or at the reader's lifetime -/
++  | stream (stop : Stop)
+   deriving Repr
+ 
+ def Exit.name : Exit → String
+@@ -70,6 +87,10 @@ def Exit.name : Exit → String
+   | .uncertain _ => "uncertain"
+   | .sealFailed _ => "sealFailed"
+   | .recordTooLarge _ => "recordTooLarge"
++  | .reopenFailed _ => "reopenFailed"
++  | .reopenDiverged => "reopenDiverged"
++  | .lifetime => "lifetime"
++  | .stream _ => "stream"
+ 
+ /-- How the loop seals a base: `seal w offset tag` writes the base of `w`, which is the segment
+ prefix `[0, offset)` chained to `tag`, durably, and returns its World's encoded size. With `async`
+@@ -108,20 +129,28 @@ def withinTail (c : Cadence) (sealed : Sealed) (pos n : Nat) : Bool :=
+   decide (pos + n - sealed.offset ≤ c.tailMax sealed.bytes)
+ 
+ /-- Take the queued frames after `first`: at most `limits.batchMax` frames and, past the first,
+-`limits.batchBytesMax` payload bytes. A frame that does not fit is carried into the next batch. -/
+-def drain (port : Port) (limits : Limits) (first : Frame) : IO (Array Frame × Option Frame) :=
++`limits.batchBytesMax` payload bytes. A frame that does not fit is put back (`unread`), so the
++caller holds nothing but the batch. Generic in the monad so its conservation is a theorem over a
++list model of the port (`Host.Proofs.Loop.drainM_conserves`); the loop runs it in `IO`. -/
++def drainM {m : Type → Type} [Monad m] (poll : m (Option Frame)) (unread : Frame → m Unit)
++    (limits : Limits) (first : Frame) : m (Array Frame) :=
+   go limits.batchMax #[first] first.payload.size
+ where
+-  go : Nat → Array Frame → Nat → IO (Array Frame × Option Frame)
+-    | 0, acc, _ => pure (acc, none)
++  go : Nat → Array Frame → Nat → m (Array Frame)
++    | 0, acc, _ => pure acc
+     | fuel + 1, acc, bytes => do
+-      if limits.batchMax ≤ acc.size then return (acc, none)
+-      match ← port.poll with
+-      | none => return (acc, none)
++      if limits.batchMax ≤ acc.size then return acc
++      match ← poll with
++      | none => return acc
+       | some f =>
+-        if limits.batchBytesMax < bytes + f.payload.size then return (acc, some f)
++        if limits.batchBytesMax < bytes + f.payload.size then
++          unread f
++          return acc
+         go fuel (acc.push f) (bytes + f.payload.size)
+ 
++def drain (port : Port) (limits : Limits) (first : Frame) : IO (Array Frame) :=
++  drainM port.poll port.unread limits first
++
+ variable {W T R : Type}
+ 
+ /-- The replies of a batch whose append did not complete: all `uncertain`. -/
+@@ -224,22 +253,19 @@ def append (rec : Recorder W T) (s : Log.Sealer) (ck : Checkpoint W) (c : Cadenc
+ builds a deferred reply (a `log` or `read` page: status, payload) from the durable state `r`. -/
+ def serve (m : Machine W T R Frame) (rec : Recorder W T) (s : Log.Sealer) (ck : Checkpoint W)
+     (c : Cadence) (store : Store) (pager : Resident W → Deferred → IO (UInt8 × ByteArray)) (port : Port)
+-    (limits : Limits) : Nat → Resident W → Option Frame → IO (Exit × Resident W)
+-  | 0, r, _ => finish .fuel r
+-  | fuel + 1, r, carried => do
++    (limits : Limits) : Nat → Resident W → IO (Exit × Resident W)
++  | 0, r => finish .fuel r
++  | fuel + 1, r => do
+     let r ← match ← reap r with
+       | .ok r => pure r
+       | .error f => return (.sealFailed f, { r with pending := none })
+-    let first ← match carried with
+-      | some f => pure (some f)
+-      | none => port.recv
+-    let some first := first | finish .eof r
+-    let (batch, carry) ← drain port limits first
++    let some first ← port.recv | finish .eof r
++    let batch ← drain port limits first
+     let (w', out) := m.admitBatch r.world (batch.toList.map fun f => ⟨f.conn, f⟩)
+     if out.staged.isEmpty then
+       let r := { r with world := w' }
+       (← fillPages pager r out).forM port.send
+-      serve m rec s ck c store pager port limits fuel r carry
++      serve m rec s ck c store pager port limits fuel r
+     else
+       match ← append rec s ck c store r w' (rec.encode w' out.staged) with
+       | .error e =>
+@@ -247,14 +273,54 @@ def serve (m : Machine W T R Frame) (rec : Recorder W T) (s : Log.Sealer) (ck :
+         finish e r
+       | .ok r =>
+         (← fillPages pager r out).forM port.send
+-        serve m rec s ck c store pager port limits fuel r carry
++        serve m rec s ck c store pager port limits fuel r
++
++/-- What a reopened Store must agree with the loop on: the World's height and chain, the segment
++position and its tag, and the index length. The pair assertion of every fuel restart. -/
++def agrees (mark : W → Nat × ByteArray) (a b : Resident W) : Bool :=
++  mark a.world == mark b.world && a.pos.offset == b.pos.offset && a.pos.tag == b.pos.tag &&
++    a.index.size == b.index.size && b.pending.isNone
++
++/-- The resident's one fuel-and-restart loop (LAW 4 as amended): run a round; on `fuel`, reopen
++the Store from disk in process (`reopen` names its own refusal: `reopenFailed` for an open that
++refuses, `reopenDiverged` for bytes on disk the loop never synced) (the round's `finish` has settled any seal, and every appended byte
++was synced), refuse a reopen that disagrees with the state the loop held, and run the next round
++from the REOPENED state on the same port. Every other exit ends the resident. `rounds` is a static
++bound the port's lifetime reaches first (`Host.Cli.restartsMax`). -/
++def restarts (round : Resident W → IO (Exit × Resident W))
++    (reopen : IO (Except Exit (Resident W))) (mark : W → Nat × ByteArray) :
++    Nat → Resident W → IO (Exit × Resident W)
++  | 0, r => return (.lifetime, r)
++  | k + 1, r => do
++    let (exit, r) ← round r
++    match exit with
++    | .fuel =>
++      match ← reopen with
++      | .error e => return (e, r)
++      | .ok r' =>
++        if agrees mark r r' then restarts round reopen mark k r'
++        else return (.reopenDiverged, r)
++    | e => return (e, r)
++
++/-- At an exit that ends the resident: stop the port and answer every frame still queued
++`refused stopped`, so no accepted request goes unanswered. At most `bound` frames. -/
++def refuseQueued (port : Port) (stopped : UInt8 × ByteArray) (bound : Nat) : IO Nat := do
++  port.close
++  go bound 0
++where
++  go : Nat → Nat → IO Nat
++    | 0, n => pure n
++    | k + 1, n => do
++      match ← port.poll with
++      | none => pure n
++      | some f => port.send ⟨f.conn, stopped.1, stopped.2⟩; go k (n + 1)
+ 
+ /-! ## The stdio port: a reader task frames stdin into a bounded channel -/
+ 
+-/-- Frame `input` into `ch` until it stops; at most `fuel` frames. Closes the channel and returns
+-why it stopped. -/
++/-- Frame `input` into `ch` until it stops; at most `fuel` frames (`Stop.lifetime`). Closes the
++channel and returns why it stopped. -/
+ def pump (input : IO.FS.Stream) (ch : Std.CloseableChannel.Sync Frame) : Nat → IO Stop
+-  | 0 => do discard <| (ch.close).toBaseIO; pure .eof
++  | 0 => do discard <| (ch.close).toBaseIO; pure .lifetime
+   | fuel + 1 => do
+     match ← readFrame input with
+     | .ok f =>
+@@ -268,10 +334,19 @@ def sendTo (output : IO.FS.Stream) (r : Reply) : IO Unit := do
+   output.write (encodeReply r)
+   output.flush
+ 
+-/-- The port over a channel the reader task fills. -/
+-def channelPort (ch : Std.CloseableChannel.Sync Frame) (output : IO.FS.Stream) : Port where
+-  recv := ch.recv
+-  poll := ch.tryRecv
+-  send := sendTo output
++/-- The port over a channel, with a one-frame slot for `unread`; replies go to `send`. -/
++def channelPort (ch : Std.CloseableChannel.Sync Frame) (back : IO.Ref (Option Frame))
++    (send : Reply → IO Unit) : Port where
++  recv := do
++    match ← back.swap none with
++    | some f => pure (some f)
++    | none => ch.recv
++  poll := do
++    match ← back.swap none with
++    | some f => pure (some f)
++    | none => ch.tryRecv
++  unread f := back.set (some f)
++  send
++  close := discard <| (ch.close).toBaseIO
+ 
+ end Nanodregg.Host
+diff --git a/Host/Proofs/Exit.lean b/Host/Proofs/Exit.lean
+index d34b480..73a7e04 100644
+--- a/Host/Proofs/Exit.lean
++++ b/Host/Proofs/Exit.lean
+@@ -46,7 +46,8 @@ theorem StoreFault.status_iff_name {F : Type} (a b : StoreFault F) :
+ /-- The status refines the `Exit`'s own name: equal statuses, equal names, so the stderr line
+ (`exit NAME`, from the status) and `Exit.name` cannot disagree about which exit it was. -/
+ theorem Exit.name_of_status (a b : Exit) (h : a.status = b.status) : a.name = b.name := by
+-  rcases a with _ | _ | _ | (_ | _ | _) | _ <;> rcases b with _ | _ | _ | (_ | _ | _) | _ <;>
++  rcases a with _ | _ | _ | (_ | _ | _) | _ | _ | _ | _ | _ <;>
++  rcases b with _ | _ | _ | (_ | _ | _) | _ | _ | _ | _ | _ <;>
+   simp_all [Exit.status, SealFault.status, Exit.name]
+ 
+ end Nanodregg.Host
+diff --git a/Host/Proofs/Loop.lean b/Host/Proofs/Loop.lean
+new file mode 100644
+index 0000000..03b828d
+--- /dev/null
++++ b/Host/Proofs/Loop.lean
+@@ -0,0 +1,93 @@
++/-
++# Host.Proofs.Loop — a batch cut neither drops, duplicates nor reorders a frame (D4)
++
++`drainM` is the loop's batch cut, generic in the monad. Over a list model of the port (`poll` pops
++the front, `unread` pushes a frame back on the front), the batch followed by what the port still
++holds is exactly the first frame followed by what the port held: every frame the loop took is in
++the batch or back in the port, in arrival order, and the batch is never empty. Since the loop
++holds nothing between batches but the port (`serve` takes no carried frame), a round may end
++`fuel` at any batch boundary and the next round, on the same port, sees every frame not yet
++batched: no accepted frame is lost across a restart.
++-/
++import Host.Loop
++
++namespace Nanodregg.Host
++
++/-- The list model of a port's queue: `poll` pops the front. (Private: a proof module exports no
++definitions, closure C3.) -/
++private def listPoll : StateM (List Frame) (Option Frame) :=
++  modifyGet fun | [] => (none, []) | f :: q => (some f, q)
++
++/-- `unread` pushes a frame back on the front. -/
++private def listUnread (f : Frame) : StateM (List Frame) Unit :=
++  modify (f :: ·)
++
++/-! The four ways one step of the cut goes, over the list model. -/
++
++theorem go_full (limits : Limits) (n : Nat) (acc : Array Frame) (bytes : Nat) (q : List Frame)
++    (hm : limits.batchMax ≤ acc.size) :
++    (drainM.go listPoll listUnread limits (n + 1) acc bytes).run q = (acc, q) := by
++  simp only [drainM.go, hm, if_true]; rfl
++
++theorem go_empty (limits : Limits) (n : Nat) (acc : Array Frame) (bytes : Nat)
++    (hm : ¬ limits.batchMax ≤ acc.size) :
++    (drainM.go listPoll listUnread limits (n + 1) acc bytes).run [] = (acc, []) := by
++  simp only [drainM.go, hm, if_false]; rfl
++
++theorem go_over (limits : Limits) (n : Nat) (acc : Array Frame) (bytes : Nat) (f : Frame)
++    (q : List Frame) (hm : ¬ limits.batchMax ≤ acc.size)
++    (hb : limits.batchBytesMax < bytes + f.payload.size) :
++    (drainM.go listPoll listUnread limits (n + 1) acc bytes).run (f :: q) = (acc, f :: q) := by
++  simp only [drainM.go, hm, if_false]
++  change (if limits.batchBytesMax < bytes + f.payload.size then
++      (listUnread f *> pure acc : StateM (List Frame) (Array Frame)) else _).run q = _
++  rw [if_pos hb]; rfl
++
++theorem go_take (limits : Limits) (n : Nat) (acc : Array Frame) (bytes : Nat) (f : Frame)
++    (q : List Frame) (hm : ¬ limits.batchMax ≤ acc.size)
++    (hb : ¬ limits.batchBytesMax < bytes + f.payload.size) :
++    (drainM.go listPoll listUnread limits (n + 1) acc bytes).run (f :: q) =
++      (drainM.go listPoll listUnread limits n (acc.push f) (bytes + f.payload.size)).run q := by
++  simp only [drainM.go, hm, if_false]
++  change (if limits.batchBytesMax < bytes + f.payload.size then _ else
++      (pure PUnit.unit >>= fun _ =>
++        drainM.go listPoll listUnread limits n (acc.push f) (bytes + f.payload.size) :
++          StateM (List Frame) (Array Frame))).run q = _
++  rw [if_neg hb]; rfl
++
++/-- The cut's invariant: what it returns followed by what it leaves is what it held followed by the
++port; it only grows the batch; and it grows it to at most `max 1 batchMax` frames. -/
++theorem drainM_go_conserves (limits : Limits) (fuel : Nat) (acc : Array Frame) (bytes : Nat)
++    (q : List Frame) :
++    ((drainM.go listPoll listUnread limits fuel acc bytes).run q).1.toList ++
++        ((drainM.go listPoll listUnread limits fuel acc bytes).run q).2 = acc.toList ++ q ∧
++      acc.size ≤ ((drainM.go listPoll listUnread limits fuel acc bytes).run q).1.size ∧
++      (acc.size ≤ max 1 limits.batchMax →
++        ((drainM.go listPoll listUnread limits fuel acc bytes).run q).1.size ≤ max 1 limits.batchMax) := by
++  induction fuel generalizing acc bytes q with
++  | zero => exact ⟨rfl, Nat.le_refl _, id⟩
++  | succ n ih =>
++    by_cases hm : limits.batchMax ≤ acc.size
++    · rw [go_full limits n acc bytes q hm]; exact ⟨rfl, Nat.le_refl _, id⟩
++    · cases q with
++      | nil => rw [go_empty limits n acc bytes hm]; exact ⟨rfl, Nat.le_refl _, id⟩
++      | cons f q =>
++        by_cases hb : limits.batchBytesMax < bytes + f.payload.size
++        · rw [go_over limits n acc bytes f q hm hb]; exact ⟨rfl, Nat.le_refl _, id⟩
++        · rw [go_take limits n acc bytes f q hm hb]
++          obtain ⟨h1, h2, h3⟩ := ih (acc.push f) (bytes + f.payload.size) q
++          have hsz : (acc.push f).size = acc.size + 1 := Array.size_push ..
++          refine ⟨by rw [h1]; simp, by omega, fun _ => h3 (by omega)⟩
++
++/-- **No frame lost, duplicated or reordered by a batch cut**; the batch is never empty and holds
++at most `max 1 batchMax` frames. -/
++theorem drainM_conserves (limits : Limits) (first : Frame) (q : List Frame) :
++    ((drainM listPoll listUnread limits first).run q).1.toList ++
++        ((drainM listPoll listUnread limits first).run q).2 = first :: q ∧
++      0 < ((drainM listPoll listUnread limits first).run q).1.size ∧
++      ((drainM listPoll listUnread limits first).run q).1.size ≤ max 1 limits.batchMax := by
++  have := drainM_go_conserves limits limits.batchMax #[first] first.payload.size q
++  simp only [drainM]
++  exact ⟨by simpa using this.1, by simpa using this.2.1, this.2.2 (by simp)⟩
++
++end Nanodregg.Host
+diff --git a/Host/Serve.lean b/Host/Serve.lean
+index e32abf4..722e1e7 100644
+--- a/Host/Serve.lean
++++ b/Host/Serve.lean
+@@ -39,6 +39,9 @@ inductive FrameRefusal where
+   | undecodableCall
+   | notServed (op : Protocol.Op)
+   | wrongSocket (op : Protocol.Op)
++  /-- the resident stopped before this frame reached a batch: nothing of it was admitted, and
++  resending it to the restarted Host is safe -/
++  | stopped
+   deriving Repr
+ 
+ /-- The refusal's name on the wire. -/
+@@ -47,6 +50,7 @@ def FrameRefusal.name : FrameRefusal → String
+   | .undecodableCall => "undecodableCall"
+   | .notServed _ => "notServed"
+   | .wrongSocket _ => "wrongSocket"
++  | .stopped => "stopped"
+ 
+ /-- A `refused` reply carrying a refusal's name. -/
+ def named (name : String) : UInt8 × ByteArray :=
+diff --git a/Host/Sim/File.lean b/Host/Sim/File.lean
+index f13c30f..85d1433 100644
+--- a/Host/Sim/File.lean
++++ b/Host/Sim/File.lean
+@@ -33,7 +33,8 @@ def newKey : IO Digest := do
+ 
+ /-- Serve `frames` as the writer of `dir`; return what the loop holds and whether a second writer
+ was refused. The writer (and its lock) is released when this returns. -/
+-def serveDir (dir : System.FilePath) (keys : Keys) (c : Cadence) (seed : Nat) (frames : List Frame) :
++def serveDir (dir : System.FilePath) (keys : Keys) (c : Cadence) (seed : Nat) (frames : List Frame)
++    (roundFuel : Nat := 5) (viaChannel : Bool := false) :
+     IO (Except String (Resident (World Nat) × Bool)) := do
+   match ← (openWriter dir keys c world recorder.mark foldStep : IO (Except Fault _)) with
+   | .error e => return .error s!"open: {e.name}"
+@@ -42,14 +43,29 @@ def serveDir (dir : System.FilePath) (keys : Keys) (c : Cadence) (seed : Nat) (f
+     let sp ← IO.mkRef (splits seed frames.length)
+     let sent ← IO.mkRef #[]
+     let o := wr.opening
+-    let (exit, r) ← serve machine recorder keys.segment (fileCheckpoint dir keys c world) c
+-      (fileStore wr.segment) (fun _ _ => pure (0, ByteArray.empty)) (scriptPort fr sp sent) ⟨16, 1 <<< 20⟩
+-      (frames.length + 1) o.resident none
++    -- `viaChannel`: the frames go through the DEPLOYED port (`channelPort`: a closeable channel
++    -- and the one-frame `unread` slot), all queued, with batches cut by bytes so frames are put
++    -- back at round ends
++    let (port, limits) ← if viaChannel then do
++        let ch ← Std.CloseableChannel.Sync.new
++        for f in frames do discard <| (ch.send f).toBaseIO
++        discard <| (ch.close).toBaseIO
++        let p := channelPort ch (← IO.mkRef none) fun r => sent.modify (·.push r)
++        pure (p, (⟨16, 3 * (frames.head?.map (·.payload.size)).getD 1⟩ : Limits))
++      else pure (scriptPort fr sp sent, (⟨16, 1 <<< 20⟩ : Limits))
++    -- rounds of `roundFuel` batches, each ending in the real in-process reopen of the files (D4)
++    let (exit, r) ← restarts (serve machine recorder keys.segment (fileCheckpoint dir keys c world) c
++        (fileStore wr.segment) (fun _ _ => pure (0, ByteArray.empty)) port limits roundFuel)
++      (reopenAt dir keys c world recorder.mark foldStep) recorder.mark (frames.length + 1) o.resident
+     let second ← (openWriter dir keys c world recorder.mark foldStep : IO (Except Fault _))
+     let refused := match second with | .error .locked => true | _ => false
+     wr.segment.sync  -- the writer's handle (and so its lock) is alive up to here
++    let replies := (← sent.get).size
+     match exit with
+-    | .eof => return .ok (r, refused)
++    | .eof =>
++      if replies ≠ frames.length then
++        return .error s!"{frames.length} requests, {replies} replies"
++      return .ok (r, refused)
+     | e => return .error s!"serve ended {e.name}"
+ 
+ def follow (dir : System.FilePath) (keys : Keys) (c : Cadence) : IO (Except Fault (Opening (World Nat))) :=
+@@ -58,13 +74,13 @@ def follow (dir : System.FilePath) (keys : Keys) (c : Cadence) : IO (Except Faul
+ def fileSize (p : System.FilePath) : IO Nat := do
+   return (← (← File.open p .read).size).toNat
+ 
+-def run (args : List String) : IO UInt32 := do
+-  let seed := (args.head? >>= String.toNat?).getD 1
++def body (seed : Nat) (dirA dirB : System.FilePath) : IO UInt32 := do
+   let failures ← IO.mkRef 0
+   let frames := (scenario seed 200).map (·.1)
+   let key ← newKey
+   let keys := Keys.ofKey key
+-  IO.FS.withTempDir fun dir => do
++  do
++    let dir := dirA
+     let made ← (Host.genesis dir key keys cadence world recorder.mark Sim.genesis : IO (Except Fault Unit))
+     check "genesis creates the Store" (match made with | .ok () => true | .error _ => false) failures
+     let again ← (Host.genesis dir key keys cadence world recorder.mark Sim.genesis : IO (Except Fault Unit))
+@@ -97,10 +113,10 @@ def run (args : List String) : IO UInt32 := do
+       let other := Keys.ofKey (← newKey)
+       check "plant-foreign-key: the Store under another key is refused `baseCorrupt`"
+         (match ← follow dir other cadence with | .error f => f.name = "baseCorrupt" | _ => false) failures
+-      match ← serveDir dir keys cadence seed (frames.drop 120) with
++      match ← serveDir dir keys cadence seed (frames.drop 120) (viaChannel := true) with
+       | .error e => check s!"plant-crash-mid-seal: writer reopens and serves ({e})" false failures
+       | .ok (r2, _) =>
+-        check "plant-crash-mid-seal: writer truncated the tail, ignored the tmp, served on"
++        check "plant-crash-mid-seal: writer truncated the tail, ignored the tmp, served on, through the deployed channelPort in rounds of 5 with frames put back, one reply per request"
+           (r.world.height < r2.world.height) failures
+         let size ← fileSize (segmentPath dir)
+         let reopened ← follow dir keys cadence
+@@ -109,7 +125,8 @@ def run (args : List String) : IO UInt32 := do
+            | .ok o => o.opened.torn = 0 && sameWorld o.opened.world r2.world && o.pos.offset == size
+            | .error _ => false) failures
+   -- plant-foreign-frame, on a Store that never seals (its tail is every frame)
+-  IO.FS.withTempDir fun dir => do
++  do
++    let dir := dirB
+     let still := { cadence with sealMinBytes := 1 <<< 20, recordBytesMax := 1 <<< 16 }
+     let _ ← (Host.genesis dir key keys still world recorder.mark Sim.genesis : IO (Except Fault Unit))
+     match ← serveDir dir keys still seed (frames.take 60) with
+@@ -131,4 +148,17 @@ def run (args : List String) : IO UInt32 := do
+   IO.println (if n = 0 then "ALL PASS" else s!"{n} FAILED")
+   return (if n = 0 then 0 else 1)
+ 
++/-- `host-file-sim SEED [DIR]`: the Stores live under a fresh `DIR/run-<seed>-<random hex>/`
++(DIR defaults to `.lake/host-file-sim`), which this run creates, refuses to reuse, and removes
++when it ends (D9: no runtime temp-file primitive; they abort under a missing TMPDIR). -/
++def run (args : List String) : IO UInt32 := do
++  let seed := (args.head? >>= String.toNat?).getD 1
++  let root : System.FilePath := (args.drop 1).head?.getD ".lake/host-file-sim"
++  let runDir := root / s!"run-{seed}-{← IO.rand 0 (1 <<< 30)}"
++  if ← runDir.pathExists then
++    IO.eprintln s!"refused exists {runDir}"; return 2
++  IO.FS.createDirAll runDir
++  try body seed (runDir / "a") (runDir / "b")
++  finally IO.FS.removeDirAll runDir
++
+ end Nanodregg.Host.Sim.File
+diff --git a/Host/Sim/MemStore.lean b/Host/Sim/MemStore.lean
+index 5b85146..6fb23c0 100644
+--- a/Host/Sim/MemStore.lean
++++ b/Host/Sim/MemStore.lean
+@@ -98,6 +98,8 @@ def scriptPort (frames : IO.Ref (List Frame)) (split : IO.Ref (List Bool))
+     match ← frames.get with
+     | [] => pure none
+     | f :: rest => frames.set rest; pure (some f)
++  unread f := frames.modify (f :: ·)
+   send r := sent.modify (·.push r)
++  close := pure ()
+ 
+ end Nanodregg.Host.Sim
+diff --git a/Host/Sim/Run.lean b/Host/Sim/Run.lean
+index e151443..9414ee5 100644
+--- a/Host/Sim/Run.lean
++++ b/Host/Sim/Run.lean
+@@ -111,23 +111,54 @@ structure RunResult where
+   replies : Array Reply
+   disk : Disk
+   bases : Bases
++  /-- in-process reopens at fuel restarts -/
++  reopens : Nat
++  /-- fuel returns at which the replies sent were not the frames taken from the port -/
++  unanswered : Nat
+ 
+-/-- Serve `frames` from a disk, its bases, and the state they opened to. -/
++/-- The in-process reopen of a fuel restart over the in-memory image (what `Host.reopenAt` does over
++the files): the one open of the newest base and the synced segment; unsynced bytes are a divergence. -/
++def memReopen (c : Cadence) (disk : IO.Ref Disk) (bases : IO.Ref Bases) (reopens : IO.Ref Nat) :
++    IO (Except Exit (Resident (World Nat))) := do
++  reopens.modify (· + 1)
++  let d ← disk.get
++  if 0 < d.pending.size then return .error .reopenDiverged
++  match reopenWith c (← bases.get).file d.synced with
++  | .error f => return .error (.reopenFailed f.name)
++  | .ok o => return if o.opened.torn = 0 then .ok { world := o.opened.world, pos := o.pos, sealed := o.sealed, index := o.index } else .error .reopenDiverged
++
++/-- Serve `frames` from a disk, its bases, and the state they opened to, in rounds of `roundFuel`
++batches, each ending in an in-process reopen (`Host.restarts`, D4). -/
+ def serveFrom (c : Cadence) (seed : Nat) (frames : List Frame) (failSyncAt : Option Nat) (d : Disk)
+-    (b : Bases) (r : Resident (World Nat)) : IO RunResult := do
++    (b : Bases) (r : Resident (World Nat)) (roundFuel : Nat := frames.length + 1)
++    (limits : Limits := ⟨16, 1 <<< 20⟩) (dropUnread : Bool := false) : IO RunResult := do
+   let disk ← IO.mkRef d
+   let bases ← IO.mkRef b
+   let fr ← IO.mkRef frames
+   let sp ← IO.mkRef (splits seed frames.length)
+   let sent ← IO.mkRef #[]
+-  let (exit, r) ← serve machine recorder keys.segment (memCheckpoint disk bases keys c world) c
+-    (memStore disk failSyncAt) (fun _ _ => pure (0, ByteArray.empty)) (scriptPort fr sp sent) ⟨16, 1 <<< 20⟩
+-    (frames.length + 1) r none
+-  return ⟨exit, r, ← sent.get, ← disk.get, ← bases.get⟩
++  let reopens ← IO.mkRef 0
++  let unanswered ← IO.mkRef 0
++  -- at every fuel return, before the reopen: every frame taken from the port has its reply
++  let reopen : IO (Except Exit (Resident (World Nat))) := do
++    let taken := frames.length - (← fr.get).length
++    if (← sent.get).size ≠ taken then
++      unanswered.modify (· + 1)
++      unless dropUnread do  -- the plant run expects it; its check reads the count
++          IO.println s!"FAIL requests = replies at fuel return {← reopens.get}: {taken} taken, {(← sent.get).size} answered"
++    memReopen c disk bases reopens
++  let (exit, r) ← restarts (serve machine recorder keys.segment (memCheckpoint disk bases keys c world) c
++      (memStore disk failSyncAt) (fun _ _ => pure (0, ByteArray.empty))
++      (if dropUnread then { scriptPort fr sp sent with unread := fun _ => pure () } else scriptPort fr sp sent)
++      limits roundFuel)
++    reopen recorder.mark (frames.length + 2) r
++  return ⟨exit, r, ← sent.get, ← disk.get, ← bases.get, ← reopens.get, ← unanswered.get⟩
+ 
+-def runWith (c : Cadence) (seed : Nat) (frames : List Frame) (failSyncAt : Option Nat) : IO RunResult := do
++def runWith (c : Cadence) (seed : Nat) (frames : List Frame) (failSyncAt : Option Nat)
++    (roundFuel : Nat := frames.length + 1) (limits : Limits := ⟨16, 1 <<< 20⟩) (dropUnread := false) :
++    IO RunResult := do
+   match genesisStore c with
+-  | .ok (d, b, r) => serveFrom c seed frames failSyncAt d b r
++  | .ok (d, b, r) => serveFrom c seed frames failSyncAt d b r roundFuel limits dropUnread
+   | .error f => throw (IO.userError s!"genesis: {f.name}")
+ 
+ /-- Where the log after genesis's origin frame starts (every record the loop writes is after it). -/
+@@ -279,6 +310,39 @@ def run (args : List String) : IO UInt32 := do
+   let r2 ← runOnce (seed + 7919) frames none
+   IO.println s!"second split: {r2.disk.syncs} batches"
+   check "a different batch split reaches the same chain" (r2.resident.world.chain = w.chain) failures
++  -- D4: rounds of 3 batches, each ending in an in-process reopen from the image, and batches cut
++  -- by bytes so frames are put back into the port (at round ends too)
++  let tight : Limits := ⟨16, 3 * (frames.head?.map (·.payload.size)).getD 1⟩
++  let f3 ← runWith cadence seed frames none 3 tight
++  let ref ← runWith cadence seed frames none (frames.length + 1) tight
++  check s!"fuel restarts: {f3.reopens} in-process reopens, one reply per request, the same replies in the same order as without restarts, the same chain"
++    (2 ≤ f3.reopens && f3.replies.size = 200 && (match f3.exit with | .eof => true | _ => false) &&
++      sameWorld f3.resident.world w &&
++      (f3.replies.toList.zip ref.replies.toList).all fun (a, b) => a.conn == b.conn && a.status == b.status && a.payload == b.payload)
++    failures
++  check s!"requests = replies at every one of {f3.reopens} fuel returns" (f3.unanswered = 0) failures
++  let dropped ← runWith cadence seed frames none 3 tight (dropUnread := true)
++  check s!"plant-drop-unread: a port that drops a put-back frame loses replies ({dropped.replies.size} of 200), so the check above can see a dropped frame"
++    (dropped.replies.size < 200 && 0 < dropped.unanswered) failures
++  -- plant-reopen-diverged: a reopen that loses the last synced frame is refused, never served from
++  let fr ← IO.mkRef frames
++  let sp ← IO.mkRef (splits seed frames.length)
++  let sent ← IO.mkRef #[]
++  let (gd, gb, gr) ← match genesisStore cadence with
++    | .ok g => pure g
++    | .error f => throw (IO.userError s!"genesis: {f.name}")
++  let disk ← IO.mkRef gd
++  let bases ← IO.mkRef gb
++  let (dexit, _) ← restarts (serve machine recorder keys.segment (memCheckpoint disk bases keys cadence world)
++      cadence (memStore disk none) (fun _ _ => pure (0, ByteArray.empty)) (scriptPort fr sp sent)
++      ⟨16, 1 <<< 20⟩ 3)
++    (do
++      let d ← disk.get
++      match reopenWith cadence (← bases.get).file (d.synced.extract 0 (d.synced.size - 1)) with
++      | .error f => return .error (.reopenFailed f.name)
++      | .ok o => return .ok { world := o.opened.world, pos := o.pos, sealed := o.sealed, index := o.index }) recorder.mark 10 gr
++  check "plant-reopen-diverged: a reopen missing the last synced byte stops the resident `reopenDiverged`"
++    (match dexit with | .reopenDiverged => true | _ => false) failures
+   -- plant-world-too-large
+   let tiny := { cadence with worldBytesMax := 400 }
+   let t ← runWith tiny seed frames none
+diff --git a/Host/Store.lean b/Host/Store.lean
+index 9c61c44..0eadb5d 100644
+--- a/Host/Store.lean
++++ b/Host/Store.lean
+@@ -90,6 +90,15 @@ def openAt (dir : System.FilePath) (keys : Keys) (c : Cadence) (world : Stream W
+ def Opening.resident (o : Opening W) : Resident W :=
+   { world := o.opened.world, pos := o.pos, sealed := o.sealed, index := o.index }
+ 
++/-- The reopen of a fuel restart (`Host.restarts`): the one open, through a fresh read handle (the
++writer's locked append handle stays the lock). A torn tail here is bytes the loop never synced, a
++divergence, never something to truncate. -/
++def reopenAt (dir : System.FilePath) (keys : Keys) (c : Cadence) (world : Stream W)
++    (mark : W → Nat × ByteArray) (step : W → ByteArray → Except F W) : IO (Except Exit (Resident W)) := do
++  match ← openAt dir keys c world mark step (← File.open (segmentPath dir) .read) with
++  | .error f => return .error (.reopenFailed f.name)
++  | .ok o => return if o.opened.torn = 0 then .ok o.resident else .error .reopenDiverged
++
+ /-- An open writer: the locked append handle, and the loop's state. -/
+ structure Writer (W : Type) where
+   segment : File
+diff --git a/Host/Wire.lean b/Host/Wire.lean
+index f144683..03550ec 100644
+--- a/Host/Wire.lean
++++ b/Host/Wire.lean
+@@ -33,8 +33,19 @@ inductive Stop where
+   | truncated
+   /-- a frame body outside `5 ≤ len ≤ bodyMax` -/
+   | badLength (len : Nat)
++  /-- the reader's frame budget (`Host.Cli.lifetimeFrames`) is spent -/
++  | lifetime
++  /-- reading the stream raised an IO error -/
++  | readFailed
+   deriving DecidableEq, Repr
+ 
++def Stop.name : Stop → String
++  | .eof => "eof"
++  | .truncated => "truncated"
++  | .badLength _ => "badLength"
++  | .lifetime => "lifetime"
++  | .readFailed => "readFailed"
++
+ /-- The frame a body holds: `u32 conn ‖ u8 op ‖ payload`. -/
+ def decodeBody (body : ByteArray) : Except Stop Frame :=
+   match Stream.u32.get body 0, Stream.u8.get body 4 with
+diff --git a/Protocol/Rows/Writer.lean b/Protocol/Rows/Writer.lean
+index b0538ab..da74f90 100644
+--- a/Protocol/Rows/Writer.lean
++++ b/Protocol/Rows/Writer.lean
+@@ -52,7 +52,7 @@ event the rows log (the largest is a package install) and makes a cold follower
+ def pageBudget : Nat := 4096
+ 
+ def limits : Limits := ⟨16, 1 <<< 20⟩
+-/-- Batches one loop process serves before it exits `fuel` (the supervisor restarts it). -/
++/-- Batches one round of the loop serves before it ends `fuel` (`Host.restarts` reopens in process). -/
+ def fuel : Nat := 1000000
+ 
+ /-- `Host.handle`, except under the `openLog` plant: a `log` envelope that decodes is paged
+@@ -128,16 +128,13 @@ structure Running where
+ def start (P : Params) (m : Mem) (r : Resident (World D)) : IO Running := do
+   let reqs ← Std.CloseableChannel.Sync.new
+   let reps ← Std.CloseableChannel.Sync.new
+-  let port : Port :=
+-    { recv := reqs.recv
+-      poll := reqs.tryRecv
+-      send := fun r => do discard <| (reps.send r).toBaseIO }
++  let port := channelPort reqs (← IO.mkRef none) fun r => do discard <| (reps.send r).toBaseIO
+   let task ← IO.asTask (prio := .dedicated) do
+     try
+       serve (machine P) ⟨fun w ts => Record.encode Sim.dc w ts,
+           fun w => (w.height, P.X.env.bytes w.chain)⟩ Host.Sim.keys.segment
+         (checkpoint m) cadence (Host.Sim.memStore m.disk none) (pager P.X P.lieTip P.forgeBase m)
+-        port limits fuel r none
++        port limits fuel r
+     finally
+       discard <| (reps.close).toBaseIO
+   pure ⟨reqs, reps, task⟩
+diff --git a/decisions/host.md b/decisions/host.md
+index 216dc52..64f8cee 100644
+--- a/decisions/host.md
++++ b/decisions/host.md
+@@ -344,3 +344,65 @@ written) would remove that, at the price of (a)'s second artifact.
+ **Meta-critique.** I put it in the base because the base was already atomic and MAC'd, which is
+ reusing what I just built. That is a convenience argument, not a design argument.
+ **Status.** open.
++
++## HOST-19 · the fuel restart reopens in process; the loop holds no frame between batches; the resident is never silent (2026-10-17, HOST-4; OPS D4 + D8's startup half)
++**The defect.** `| 0, r, _ => finish .fuel r` discarded the frame `drain` had carried, and `fuel` exited
++the PROCESS (code 4). Every frame queued in the reader's channel and every client connection through
++nd-supervise died with it, at a routine restart. The pump's own budget was `fuelBatches` FRAMES and it
++reported `eof` when spent, so after 2^24 frames the Host stopped reading and exited 0, silently. Under
++the macOS floor without `hw.ncpu` a `.dedicated` task ran inline, so the reader read stdin to its end
++before the loop answered anything, and the process exited 0 (PERF's repro).
++**Decision.** (1) The carry is deleted. `Port.unread` puts the frame that does not fit back into the port,
++so `serve` holds nothing between batches: its signature has no frame argument, and a round can end at
++any batch boundary. `drainM` is generic in the monad, and `Host.Proofs.Loop.drainM_conserves` states,
++over a list model of the port, `batch ++ port' = first :: port` with a non-empty batch of at most
++`max 1 batchMax` frames (OPS's law-6 read asked for the bound: without it a cut could take everything
++and still conserve). `Host.Follow.loop`'s base download in progress moved from a recursion argument
++into a reference the caller owns, for the same reason: it is volatile state that must outlive a round. (2)
++`Host.restarts` is the resident's one fuel-and-restart loop (law 4). On `fuel`, it reopens the Store in
++process through `reopenAt` (the one `openAt`, with a fresh read handle; the locked append handle stays
++the lock). It refuses `reopenDiverged` unless the reopened (height, chain), segment position, tag and
++index length equal what the loop held, and a torn tail at reopen is also `reopenDiverged`. Then it
++continues on the same port. `fuelBatches` drops 2^24 → 2^12, so every 4096 batches the open path is
++re-checked against the live state. That is a pair assertion that runs for real, not at the next crash.
++(3) The bounds are stated. The reader reads `lifetimeFrames` = 2^48 frames and stops `Stop.lifetime`.
++`restartsMax = lifetimeFrames / fuelBatches + 1`, because a round that ends `fuel` consumed ≥ fuelBatches
++frames, so `Exit.lifetime` cannot come first. (4) Never silent. `threadsLive` compares `IO.getTID` of
++the main thread with that of a `.dedicated` task and refuses `noThreads` by name (rc 2). Measured under
++PERF's floor profile: `refused noThreads`, rc 2, where HEAD hung. One `STATUS serve|follow height= chain=
++offset= base_offset= base_height=` line goes to stderr at open and one `STATUS … exit=NAME
++refused_queued=N …` at exit. A reader that stopped `truncated`/`badLength`/`readFailed`/`lifetime`
++ends `Exit.stream` by name, never `eof`. (5) At every exit, every frame still queued is answered
++`refused stopped` (FrameRefusal.stopped: not admitted, safe to resend) after the channel is closed.
++**Exit table** (OPS's D5, Host/Exit.lean): reopenFailed 38, reopenDiverged 39 and noThreads 42 are
++fatal; lifetime 40 and stream 41 restart (nd-supervise exits with the child, so a restart re-pairs
++the pipe). `Status.fuel` (4) stays a constructor because `Exit.fuel` is a round's end, but `host`
++never exits with it. `Exit.stream .eof` maps to `stream`, not `eof`, so `Exit.name_of_status` stays true.
++**Plants** (host-sim, seeds 1–3): `requests = replies at every fuel return` (a named FAIL line per
++round, which is OPS's F1 check); `fuel restarts` (rounds of 3 batches with batches cut by bytes, so
++frames go back into the port at round ends: ~30 in-process reopens, the same 200 replies in the same
++order as the run without restarts, the same chain); `plant-drop-unread` (a port that drops the put-back
++frame loses replies, e.g. 173 of 200, so the check can see a dropped frame); `plant-reopen-diverged`
++(a reopen missing the last synced byte stops the resident `reopenDiverged`). host-file-sim runs every
++serve in rounds of 5 batches through the real `reopenAt` over the files, and its second writer run
++goes through the DEPLOYED `channelPort` (closeable channel + the `unread` slot) with byte-cut batches,
++so the code the theorem's model stands for is the code under test, with one reply per request.
++**Alternatives.** (a) Keep the process exit and have nd-supervise respawn the child while holding the
++sockets. That puts a restart policy in Rust (law 2), and the frames in the dead child's pipe are still
++lost. (b) Keep the carry and pass it through `Exit.fuel (carry)`, as OPS's D4 sketch had it. That works,
++but the invariant is then a parameter every exit path must remember, and the uncertain/sealFailed
++exits dropped it too. With `unread`, holding nothing is a fact of the signature. (c) `repeat` for the
++top loop: `partial` in disguise, which the gate cannot see.
++**Critique.** An in-process reopen re-checks the open path, but it resets no process state, so leaks
++and fragmentation persist, and so does a bug in the reader task, which outlives every round. The reopen
++costs one base decode + tail fold per 4096 batches (~4 ms at THE BAR, ~5 s at worldBytesMax): at
++the top of the range that is a 5 s write stall every 4096 batches, and it must be measured before
++worldBytesMax is believed (ASSEMBLY-perf ID-7). Residue: at a process-ending exit, the one frame the
++reader has read but not yet queued is unanswered, because its send fails on the closed channel. Its
++connection's close is the only signal. `threadsLive` depends on `IO.getTID` naming OS threads. The
++theorem is over a list model of the port: that `channelPort` IS that model (one slot, popped before
++the channel) is code, not proof.
++**Meta-critique.** I deleted the carry because I like invariants that live in types, and the type
++fact is what I can prove. The restart reads as a self-check, and that may be making a 5 s stall at
++size look like a virtue.
++**Status.** landed (HOST-4).

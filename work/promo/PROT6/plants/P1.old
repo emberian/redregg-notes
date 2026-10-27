@@ -1,0 +1,3 @@
+    (.ite (eqData (offerRoleTy roles) (.get (.var 2) "role") (.get (.var 1) "role"))
+      (refusedT "sameRole")
+      (.ite (andT (offerInBox fs (.get (.var 2) "terms") (.var 0)) (offerInBox fs (.get (.var 1) "terms") (.var 0)))

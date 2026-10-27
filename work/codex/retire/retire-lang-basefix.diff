@@ -1,0 +1,13 @@
+diff --git a/Kernel/Sim/Gen.lean b/Kernel/Sim/Gen.lean
+index 2dbfd18..89a7cd0 100644
+--- a/Kernel/Sim/Gen.lean
++++ b/Kernel/Sim/Gen.lean
+@@ -1882,7 +1882,7 @@ def probeRetire (P : Params D) (st : State D) : State D :=
+       | .error v => failWith st s!"probe retire-object: expected ok, got {vname v}"
+       | .ok (t2, w2) =>
+           let back := ((w1.entry P.env obj).map Entry.weight).getD 0
+-          if !(w2.allowance + t2.charge = w1.allowance + back ∧ 0 < back ∧ w2.entry P.env obj = some .tomb) then
++          if !(w2.allowance + t2.charge = w1.allowance + back ∧ 0 < back ∧ w2.entry P.env obj = some Entry.tomb) then
+             failWith st s!"probe retire-object: allowance {w2.allowance} + charge {t2.charge} ≠ {w1.allowance} + {back}"
+           else
+             let st := { st with refusedAsExpected := st.refusedAsExpected + 1, seen := "retire-object:ok" :: "ok" :: st.seen }

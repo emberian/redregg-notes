@@ -1,0 +1,14 @@
+04:09:20Z burst-up: staged on persvati
+  [persvati] == user phase 2026-10-15T00:09:21-04:00 tip=a5483db36cf7aaf34378a15c90b68c2de538f16a role=lane
+  [persvati] lean toolchain leanprover/lean4:v4.30.0: present
+  [persvati] rust toolchain nightly-2026-06-21: present
+  [persvati] installed-from: a5483db36cf7aaf34378a15c90b68c2de538f16a (staged by burst-up)
+  [persvati] install-sccache: sccache 0.18.0 at /home/ember/mini-pipeline/pipeline/bin/sccache; cache /home/ember/mini-pipeline/sccache (120G); snippet /home/ember/mini-pipeline/pipeline/sccache.env
+  [persvati] lean-ask-install-repl: /home/ember/mini-pipeline/pipeline/repl/.lake/build/bin/repl (leanprover/lean4:v4.30.0, repl dde7dd4397951755f1f6c2b4b3a83a26911d63ad)
+  [persvati] pipeline-sccache.service: active
+  [persvati] pipeline-slots.service: active
+  [persvati] briefs: 2 files in /home/ember/mini-pipeline/briefs
+  [persvati] == user phase DONE 2026-10-15T00:09:24-04:00
+04:09:24Z burst-up: user phase ok on persvati
+04:09:26Z burst-up: burst4-a accepts persvati's peer key (box-peer-gate)
+04:09:30Z burst-up: persvati: peer burst4-a as burst4-gate

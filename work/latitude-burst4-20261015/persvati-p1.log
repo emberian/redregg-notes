@@ -1,0 +1,19 @@
+04:07:27Z burst-up: staged on persvati
+  [persvati] /tmp/tmp.0xhvyqaJmZ/capnproto-1.5.0/c++/src/kj/compat/http.c++:5210:27: note: ‘*(kj::Array<char>*)((char*)&offeredExtensions + offsetof(kj::Maybe<kj::String>,kj::Maybe<kj::String>::ptr.kj::_::NullableValue<kj::String>::<unnamed>)).kj::Array<char>::disposer’ was declared here
+  [persvati]  5210 |     kj::Maybe<kj::String> offeredExtensions;
+  [persvati]       |                           ^~~~~~~~~~~~~~~~~
+  [persvati] capnp: Cap'n Proto version 1.5.0 (/home/ember/mini-pipeline/pipeline/bin/capnp)
+  [persvati] NO-ROOT.txt: 5 items not installed (/home/ember/mini-pipeline/burst/NO-ROOT.txt)
+  [persvati] == root phase DONE 2026-10-15T00:07:54-04:00: 3 lane slots x 4 threads, slice 41G
+04:07:54Z burst-up: root phase (--no-root, as the login user) ok on persvati
+  [persvati] == user phase 2026-10-15T00:07:55-04:00 tip=a5483db36cf7aaf34378a15c90b68c2de538f16a role=lane
+  [persvati] lean toolchain leanprover/lean4:v4.30.0: present
+  [persvati] rust toolchain nightly-2026-06-21: present
+  [persvati] installed-from: a5483db36cf7aaf34378a15c90b68c2de538f16a (staged by burst-up)
+  [persvati] install-sccache: sccache 0.18.0 at /home/ember/mini-pipeline/pipeline/bin/sccache; cache /home/ember/mini-pipeline/sccache (120G); snippet /home/ember/mini-pipeline/pipeline/sccache.env
+  [persvati] lean-ask-install-repl: /home/ember/mini-pipeline/pipeline/repl/.lake/build/bin/repl (leanprover/lean4:v4.30.0, repl dde7dd4397951755f1f6c2b4b3a83a26911d63ad)
+  [persvati] pipeline-sccache.service: active
+  [persvati] pipeline-slots.service: active
+  [persvati] briefs: 0 files in /home/ember/mini-pipeline/briefs
+  [persvati] == user phase DONE 2026-10-15T00:08:13-04:00
+04:08:13Z burst-up: user phase ok on persvati

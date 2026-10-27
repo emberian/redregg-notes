@@ -19,6 +19,9 @@ disagree, the pointed file wins. Facts below are MEASURED at ~02:00Z unless mark
 7. `work/TASK-TRIAGE-20261008.md` + `.tsv` — 560 tasks bucketed; 81 verified close-done not yet run; 141 other-project to park.
 8. `work/resume/STALL-WATCH-20261007.md` — the root's hour-by-hour log, 10-07 05:21Z → now.
 
+## Overnight 10-09 (sequential Claude repairs, landing rule in force)
+- main 1c7e46da → 09984242 (genesis-clock helper; jpay2–4, welcomecontinuity, sshe2e green) → 4f50bd01 (m6grain via per-store broker; candidate ships mini-spk-volume-helper). → 7dea0626 (REPAIR-3: derived StoreEpoch; old Stores refuse by epoch by name; hostupgrade green). main 7dea0626: standing run 138 rows, FAIL=0, UNCONFIGURED=7 (objective: no lean env; m7: M7_REFERENCE; JPAY6: TEST_PROVIDER; exchange: MINI_FN_LAUNCHER; hostupgrade-PREVIOUS: needs a second main at this epoch). No agents running. Logs: work/REPAIR-{1,2,3}-LOG.md. Next: MATURATION-MAP steps 4 (inputs into the journey service env) and 5 (BIRTHS row). Instrument item: the standing runner is serial (~35 min/tip) and polls; run per-sha scopes concurrently.
+
 ## State of the code (measured)
 - GitHub main = **1c7e46da** (kern LANDED after the prune; 5896a594 was the product tip). NOT Deployable: its standing journey run (correct runner) has call/send/domain/objectrecord
   OOM at 24G (fixed on train kern), jpay2–4 / welcomecontinuity / sshe2e red on missing `clockGenesisNow` (clock flag day
@@ -34,13 +37,9 @@ disagree, the pointed file wins. Facts below are MEASURED at ~02:00Z unless mark
   are Ember's call; see the decisions memo).
 
 ## Infrastructure (measured)
-- burst3-a (Latitude sv_BDXM5E4JzNrpk, 67.213.117.177, f4-metal-medium, $1.52/h; ssh -F ~/.ssh/burst3-20261008.conf):
-  KEPT through the reorient (Ember 10-09). Shared remote /srv/git/minidregg.git (lane/* only), mirrored to hbox every
-  10 min (hbox:/tank/dregg-build/claude-lanes/bundles/burst3-minidregg.git). Warm base 546c1c88 (stale vs main; advance
-  with scripts/pipeline/advance-base-burst.sh from a gated lane). Latitude credit left ≈ $125.
+- burst3-a DELETED 2026-10-10 03:00Z (Ember). Every lane ref is in hbox:/tank/dregg-build/claude-lanes/bundles/burst3-minidregg.git (482 refs) and in work/burst3-teardown-20261010/burst3-lanes.bundle; journey results + hub registry in burst3-state.tgz there. A new box comes up with the burst-up recipe (work/latitude-burst3-20261008/) and needs: the hub (redregg tools/cxo at f5f5bbf), Codex auth copied fresh, fn builds re-copied from the Mac scratch, warm base built at main. Latitude credit ≈ $95.
 - cxo hub on burst3-a at redregg `f5f5bbf` (all ten fixes installed 01:45Z; selftest-local 65/66, the one fail is a Linux
-  TERM→KILL timing in the orphan-kill test). Codex credential = Ember's relogged account (used 6%, resets 10-16),
-  copied to ~/.cxo/codex-home/auth.json at 02:00Z; remove at teardown. Known dual-copy hazard: a refresh on either side
+  TERM→KILL timing in the orphan-kill test). Codex credential: the box copy died with the box; the Mac's ~/.codex/auth.json is the only one. Known dual-copy hazard: a refresh on either side
   can revoke the other. Default model gpt-6.1-sol; astra for Lean.
 - fn: dev pin build 6679dae0e at /srv/fnbin/6679dae0e; fn's qualified pin 4b22a49bc staged at /srv/fnbin/4b22a49bc
   (sha 7d7f77c4…866f). Production pin stays d420a2b5 until a rehearsal + Ember's go. fn is draining toward its own freeze.

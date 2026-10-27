@@ -1,0 +1,29 @@
+whole build exit 1
+      2 error
+error: Lang/Proofs/StdOffer.lean:981:92: unsolved goals
+error: Lang/Proofs/StdOffer.lean:1077:96: Application type mismatch: The argument
+error: Lean exited with code 1
+error: build failed
+- Lang.Proofs.StdOffer
+journey exit 1
+800c800
+< ok   LF1 A invokes Z.fuse {deal = the bytes of {pair {a X, b Y}, theta {price 9}}, x X, y Y, viaX (A's grant), viaY (B's grant)} pinning Z, X, Y, both grants and both offer rows: admitted; read back: X's offer 0 present false, Y's offer 0 present false; session rows under X and Y true, their captured values equal true (and the forwarded deal true)
+---
+> FAIL LF1 A invokes Z.fuse {deal = the bytes of {pair {a X, b Y}, theta {price 9}}, x X, y Y, viaX (A's grant), viaY (B's grant)} pinning Z, X, Y, both grants and both offer rows: admitted; read back: X's offer 0 present false, Y's offer 0 present true; session rows under X and Y false, their captured values equal false (and the forwarded deal true)
+803c803
+< ok   LF3 LF1's call without pinning Y's cell: refused unpinned Nanodregg.Kernel.Receive.Refusal.unpinned 11036927902987516806
+---
+> ok   LF3 LF1's call without pinning Y's cell: refused unpinned Nanodregg.Kernel.Receive.Refusal.unpinned 4037949912325567597
+807,811c807,811
+< ok   LF6a control: LF1's call with viaY none: refused noGrant Nanodregg.Kernel.Receive.Refusal.noGrant 11036927902987516806
+< ok   LF6b control: LF1's call with viaY B's live grant to Z of [invoke post] only: refused grantRight Nanodregg.Kernel.Receive.Refusal.grantRight 3955362801580472245
+< ok   LF6c control: LF1's call with B's take grant not pinned: refused unpinned Nanodregg.Kernel.Receive.Refusal.unpinned 8579411056453027292
+< ok   LF7 control: Z.fuse naming Z itself as x: refused revisited Nanodregg.Kernel.Receive.Refusal.revisited 3403209807821037968
+< lang-journey: GREEN
+---
+> FAIL LF6a control: LF1's call with viaY none: admitted
+> FAIL LF6b control: LF1's call with viaY B's live grant to Z of [invoke post] only: admitted
+> FAIL LF6c control: LF1's call with B's take grant not pinned: admitted
+> ok   LF7 control: Z.fuse naming Z itself as x: refused revisited Nanodregg.Kernel.Receive.Refusal.revisited 16967939632803995749
+> lang-journey: RED (4)
+restored identical

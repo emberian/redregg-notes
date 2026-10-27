@@ -1,0 +1,824 @@
+diff --git a/Lang/Contextual/Protocol.lean b/Lang/Contextual/Protocol.lean
+index beec095..8214ec7 100644
+--- a/Lang/Contextual/Protocol.lean
++++ b/Lang/Contextual/Protocol.lean
+@@ -36,7 +36,7 @@ substitute into the filling, so a filling's own holes stay open under the same `
+ 
+ namespace Nanodregg.Lang.Contextual.Protocol
+ 
+-/-! ## Signatures, the accounting of an operation, polarity -/
++/-! ## Signatures, the accounting of an operation -/
+ 
+ /-- An indexed signature (mini's `IxSignature`, restated): at index `i` the operations `Op i`; each
+ operation's response type; the response selects the next index. -/
+@@ -53,12 +53,6 @@ structure Spec {Ix : Type} (S : Sig Ix) (Tok Fact Ob : Type) where
+   requires : {i : Ix} → S.Op i → List Fact
+   establishes : {i : Ix} → S.Op i → List Ob
+ 
+-/-- Who chooses a hole's filling (and, reused, which side must accept it). -/
+-inductive Polarity
+-  | ours
+-  | theirs
+-deriving DecidableEq, Repr
+-
+ /-! ## Open protocols -/
+ 
+ /-- The free open protocol over `S` with result family `A` and hole names `Hole`: return a result,
+@@ -74,12 +68,15 @@ inductive Prot {Ix : Type} (S : Sig Ix) (Hole : Ix → Type) (A : Ix → Type) :
+ section
+ variable {Ix : Type} {S : Sig Ix} {Hole : Ix → Type} {A : Ix → Type}
+ 
+-/-- A hole's interface `u :: [Γ_u; Δ_u ⊢ Protocol(i, post)] ⊣ owes`, with its polarity and an
+-acceptance contract that every filling must pass (`Fills`). The start index is the hole name's
+-index. -/
+-structure Iface (S : Sig Ix) (Hole : Ix → Type) (A : Ix → Type) (Tok Fact Ob : Type) (i : Ix) where
+-  /-- who chooses the filling -/
+-  pol : Polarity
++/-- A hole's interface `u :: [Γ_u; Δ_u ⊢ Protocol(i, post)] ⊣ owes`, with the ROLE that chooses
++its filling and an acceptance contract that every filling must pass (`Fills`). The start index is
++the hole name's index. Roles are a type of the protocol (the Bell's ringer and resident; Std.hole's
++chooser and acceptor), not a two-valued side: a protocol is judged from one role's view (`HasProt sp
++me …`), its holes are that role's choices, and what another role chooses enters it as a `call`
++that role answers (`Proofs.Contextual.Protocol.hasProt_holes_mine`). -/
++structure Iface (S : Sig Ix) (Hole : Ix → Type) (A : Ix → Type) (Role Tok Fact Ob : Type) (i : Ix) where
++  /-- the role that chooses the filling -/
++  chooser : Role
+   /-- the reusable facts a filling may require (`Γ_u`) -/
+   ctx : List Fact
+   /-- the tokens a filling may spend (`Δ_u`) -/
+@@ -92,8 +89,8 @@ structure Iface (S : Sig Ix) (Hole : Ix → Type) (A : Ix → Type) (Tok Fact Ob
+   accepts : Prot S Hole A i → Prop
+ 
+ /-- `Ω`: the declared interface of every unresolved component. -/
+-abbrev Ctx (S : Sig Ix) (Hole : Ix → Type) (A : Ix → Type) (Tok Fact Ob : Type) :=
+-  (i : Ix) → Hole i → Option (Iface S Hole A Tok Fact Ob i)
++abbrev Ctx (S : Sig Ix) (Hole : Ix → Type) (A : Ix → Type) (Role Tok Fact Ob : Type) :=
++  (i : Ix) → Hole i → Option (Iface S Hole A Role Tok Fact Ob i)
+ 
+ /-- `σ`: a partial substitution, a filling for some holes (doc 2 section 9). -/
+ abbrev Subst (S : Sig Ix) (Hole : Ix → Type) (A : Ix → Type) :=
+@@ -107,17 +104,17 @@ def subst (σ : Subst S Hole A) : {i : Ix} → Prot S Hole A i → Prot S Hole A
+     | some f => f
+     | none => .hole h
+ 
+-/-- `σ` restricted to the holes `Ω` declares `ours`: a `theirs` hole is never filled. -/
+-def Subst.ours {Tok Fact Ob : Type} (Ω : Ctx S Hole A Tok Fact Ob) (σ : Subst S Hole A) :
+-    Subst S Hole A := fun i h =>
++/-- `σ` restricted to the holes `Ω` declares chosen by `me`: another role's hole is never filled. -/
++def Subst.mine {Role Tok Fact Ob : Type} [DecidableEq Role] (me : Role)
++    (Ω : Ctx S Hole A Role Tok Fact Ob) (σ : Subst S Hole A) : Subst S Hole A := fun i h =>
+   match Ω i h with
+-  | some I => if I.pol = .ours then σ i h else none
++  | some I => if I.chooser = me then σ i h else none
+   | none => none
+ 
+-/-- `P[σ]` under `Ω`: fill the `ours` holes `σ` names. -/
+-def fill {Tok Fact Ob : Type} (Ω : Ctx S Hole A Tok Fact Ob) (σ : Subst S Hole A)
+-    {i : Ix} (P : Prot S Hole A i) : Prot S Hole A i :=
+-  subst (σ.ours Ω) P
++/-- `P[σ]` under `Ω`, as role `me`: fill the holes `me` chooses that `σ` names. -/
++def fill {Role Tok Fact Ob : Type} [DecidableEq Role] (me : Role) (Ω : Ctx S Hole A Role Tok Fact Ob)
++    (σ : Subst S Hole A) {i : Ix} (P : Prot S Hole A i) : Prot S Hole A i :=
++  subst (σ.mine me Ω) P
+ 
+ /-- The single substitution `[f/h]`. -/
+ def Subst.single [DecidableEq Ix] [∀ i, DecidableEq (Hole i)] {i : Ix} (h : Hole i)
+@@ -239,12 +236,14 @@ def Hist.established {Tok Fact Ob : Type} (sp : Spec S Tok Fact Ob) (H : Hist S)
+ 
+ /-! ## The first-class open object (doc 2 section 9) -/
+ 
+-/-- `(P, Ω, σ, Γ, Δ, Q, Φ, t)`: the retained TEMPLATE, its open interface, the current partial
+-substitution, the hypotheses and tokens, the result contract, the obligation bound, and the
+-accepted history. The template is kept apart from `σ`: that is what makes re-substitution possible. -/
+-structure Open (S : Sig Ix) (Hole : Ix → Type) (A : Ix → Type) (Tok Fact Ob : Type) (i : Ix) where
++/-- `(me, P, Ω, σ, Γ, Δ, Q, Φ, t)`: the role whose object it is, the retained TEMPLATE, its open
++interface, the current partial substitution, the hypotheses and tokens, the result contract, the
++obligation bound, and the accepted history. The template is kept apart from `σ`: that is what makes
++re-substitution possible. -/
++structure Open (S : Sig Ix) (Hole : Ix → Type) (A : Ix → Type) (Role Tok Fact Ob : Type) (i : Ix) where
++  me : Role
+   template : Prot S Hole A i
+-  Ω : Ctx S Hole A Tok Fact Ob
++  Ω : Ctx S Hole A Role Tok Fact Ob
+   σ : Subst S Hole A
+   Γ : List Fact
+   Δ : List Tok
+@@ -253,15 +252,15 @@ structure Open (S : Sig Ix) (Hole : Ix → Type) (A : Ix → Type) (Tok Fact Ob
+   hist : Hist S
+ 
+ /-- The object's current protocol `P[σ]`. -/
+-def Open.current {Tok Fact Ob : Type} {i : Ix} (O : Open S Hole A Tok Fact Ob i) :
+-    Prot S Hole A i :=
+-  fill O.Ω O.σ O.template
++def Open.current {Role Tok Fact Ob : Type} [DecidableEq Role] {i : Ix}
++    (O : Open S Hole A Role Tok Fact Ob i) : Prot S Hole A i :=
++  fill O.me O.Ω O.σ O.template
+ 
+ /-- Replace the object's partial substitution. Data only: the GUARD (no re-substitution of a hole
+ the history has entered) is the statement `Open.Replan` in `Lang.Proofs.Contextual.ProtocolTyping`,
+ a hypothesis of every theorem about a re-plan (`Open.resubst_wf`). -/
+-def Open.replan {Tok Fact Ob : Type} {i : Ix} (O : Open S Hole A Tok Fact Ob i)
+-    (σ' : Subst S Hole A) : Open S Hole A Tok Fact Ob i :=
++def Open.replan {Role Tok Fact Ob : Type} {i : Ix} (O : Open S Hole A Role Tok Fact Ob i)
++    (σ' : Subst S Hole A) : Open S Hole A Role Tok Fact Ob i :=
+   { O with σ := σ' }
+ 
+ /-! ## Admission: current evidence, separate from derivability -/
+@@ -316,13 +315,13 @@ def Spec.mapTok {Tok Tok' Fact Ob : Type} (e : Tok → Tok') (sp : Spec S Tok Fa
+   establishes := sp.establishes
+ 
+ /-- An interface with its tokens renamed. -/
+-def Iface.mapTok {Tok Tok' Fact Ob : Type} (e : Tok → Tok') {i : Ix}
+-    (I : Iface S Hole A Tok Fact Ob i) : Iface S Hole A Tok' Fact Ob i :=
++def Iface.mapTok {Role Tok Tok' Fact Ob : Type} (e : Tok → Tok') {i : Ix}
++    (I : Iface S Hole A Role Tok Fact Ob i) : Iface S Hole A Role Tok' Fact Ob i :=
+   { I with need := I.need.map e }
+ 
+ /-- A context with its tokens renamed. -/
+-def Ctx.mapTok {Tok Tok' Fact Ob : Type} (e : Tok → Tok') (Ω : Ctx S Hole A Tok Fact Ob) :
+-    Ctx S Hole A Tok' Fact Ob := fun i h => (Ω i h).map (Iface.mapTok e)
++def Ctx.mapTok {Role Tok Tok' Fact Ob : Type} (e : Tok → Tok') (Ω : Ctx S Hole A Role Tok Fact Ob) :
++    Ctx S Hole A Role Tok' Fact Ob := fun i h => (Ω i h).map (Iface.mapTok e)
+ 
+ /-- A view as a store of keys. -/
+ def View.ofStore {Tok Fact : Type} (w : Fact ⊕ Tok → Bool) : View Tok Fact :=
+@@ -464,19 +463,25 @@ def answer (c : Bool) : Subst sig HoleN Res := fun
+   | .waiting, h => nomatch h
+   | .revealed, () => some (.ret c)
+ 
+-/-- The hole's interface, with polarity `p` (no facts, tokens or obligations in this game). -/
+-def iface (p : Polarity) : Iface sig HoleN Res Unit Unit Unit .revealed where
+-  pol := p
++/-- The game's two roles: the player whose plan this is, and its peer. -/
++inductive Party
++  | player
++  | peer
++deriving DecidableEq, Repr
++
++/-- The hole's interface, chosen by `c` (no facts, tokens or obligations in this game). -/
++def iface (c : Party) : Iface sig HoleN Res Party Unit Unit Unit .revealed where
++  chooser := c
+   ctx := []
+   need := []
+   post := fun _ _ => True
+   owes := []
+   accepts := fun _ => True
+ 
+-/-- `Ω` declaring the answer hole with polarity `p`. -/
+-def ctxOf (p : Polarity) : Ctx sig HoleN Res Unit Unit Unit := fun
++/-- `Ω` declaring the answer hole chosen by `c`. -/
++def ctxOf (c : Party) : Ctx sig HoleN Res Party Unit Unit Unit := fun
+   | .waiting, h => nomatch h
+-  | .revealed, () => some (iface p)
++  | .revealed, () => some (iface c)
+ 
+ end Coin
+ 
+@@ -485,6 +490,12 @@ end Coin
+ 
+ namespace Negotiation
+ 
++/-- The roles: the buyer, whose plan this is, and a provider, who answers `commit`. -/
++inductive Party
++  | buyer
++  | provider
++deriving DecidableEq, Repr
++
+ /-- Two candidate providers. -/
+ inductive Provider
+   | p1
+@@ -572,17 +583,18 @@ def plan (p : Provider) : P .reserved := .call (S := sig) (Op.commit p) fun ok =
+ /-- The cancellation path. -/
+ def cancelPlan : P .reserved := .call (S := sig) Op.cancel fun _ => .ret false
+ 
+-/-- The hole's interface: ours, accepted by us, may use both providers' authority and the
+-deadline, may spend the capability, may owe payment to either provider or the refund. -/
+-def iface : Iface sig HoleN Res Tok Fact Ob .reserved where
+-  pol := .ours
++/-- The hole's interface: chosen by the buyer, accepted by the buyer, may use both providers'
++authority and the deadline, may spend the capability, may owe payment to either provider or the
++refund. -/
++def iface : Iface sig HoleN Res Party Tok Fact Ob .reserved where
++  chooser := .buyer
+   ctx := [.auth .p1, .auth .p2, .beforeDeadline]
+   need := [.cap]
+   post := fun _ _ => True
+   owes := [.pay .p1, .pay .p2, .refund]
+   accepts := fun _ => True
+ 
+-def Ω : Ctx sig HoleN Res Tok Fact Ob := fun
++def Ω : Ctx sig HoleN Res Party Tok Fact Ob := fun
+   | .reserved, () => some iface
+   | .idle, h => nomatch h
+   | .done, h => nomatch h
+@@ -612,7 +624,8 @@ def Δ₀ : List Tok := [.cap]
+ def Φ₀ : List Ob := [.holdDeposit, .pay .p1, .pay .p2, .refund]
+ 
+ /-- The open object: the template with `f` chosen for the provider hole, history `H`. -/
+-def obj (f : P .reserved) (H : Hist sig) : Open sig HoleN Res Tok Fact Ob .idle where
++def obj (f : P .reserved) (H : Hist sig) : Open sig HoleN Res Party Tok Fact Ob .idle where
++  me := .buyer
+   template := template
+   Ω := Ω
+   σ := choose f
+diff --git a/Lang/Journey.lean b/Lang/Journey.lean
+index f0803b1..9a60e3e 100644
+--- a/Lang/Journey.lean
++++ b/Lang/Journey.lean
+@@ -1424,6 +1424,17 @@ def bellRows (mode : Mode) (r0 : Run) (a b : Sim.Member) (src : String) : Run :=
+   let (r11, v11, _) := go prog r (call r a 4 (bellArg "one more") r.st.host.height)
+   r := note { r11 with log := r.log, bad := r.bad } s!"LB11 pending holds {headCount r.st.host obj 0}; A rings once more: {v11}"
+     (headCount r.st.host obj 0 == some 64 && v11.startsWith "rejected relationFull")
++  -- LB12n-LB12q who may open, close and retire: the object's owner, or a member whose grant names
++  -- the method (KERNEL-25 `invoke_authorized`). B, the resident, holds a grant for answer and ring
++  -- only, so its close, open and retire are refused by the kernel before the Bell runs.
++  let (_, v12n, _) := go prog r (call r b 1 (argBytes (.record []) (.record [])) r.st.host.height)
++  r := note r s!"LB12n B (the resident, granted answer and ring) closes A's bell: {v12n}"
++    (v12n.startsWith "refused grantRight" && asBool (bellField p r.st.host obj "open") == some true)
++  let (_, v12o, _) := go prog r (call r b 2 (argBytes (.record []) (.record [])) r.st.host.height)
++  r := note r s!"LB12o B opens A's bell: {v12o}" (v12o.startsWith "refused grantRight")
++  let (_, v12q, _) := go prog r (call r b 3 (retireArg h1 a) r.st.host.height (pinRow r.st.host 1 dR k1))
++  r := note r s!"LB12q B retires A's answered ring at {h1}: {v12q}"
++    (v12q.startsWith "refused grantRight" && present r.st.host 1 dR k1)
+   -- LB12 closed
+   let (r12, v12, _) := go prog r (call r a 1 (argBytes (.record []) (.record [])) r.st.host.height)
+   r := note r12 s!"LB12 A closes the bell: {v12}" (v12 == "admitted" && asBool (bellField p r12.st.host obj "open") == some false)
+diff --git a/Lang/Proofs/Contextual/Negotiation.lean b/Lang/Proofs/Contextual/Negotiation.lean
+index 94d754c..eda347e 100644
+--- a/Lang/Proofs/Contextual/Negotiation.lean
++++ b/Lang/Proofs/Contextual/Negotiation.lean
+@@ -3,7 +3,7 @@
+ 
+ The proposal's document 3 first integration experiment: two parties negotiate a ONE-USE capability
+ with ALTERNATIVE providers, a DEADLINE and a CANCELLATION path. The open protocol
+-(`Negotiation.template`: reserve the deposit, then an `ours` provider hole) is judged once, under
++(`Negotiation.template`: reserve the deposit, then a provider hole the buyer chooses) is judged once, under
+ hypotheses (`Γ₀`: both providers' authority, the deadline); each candidate (`plan p1`, `plan p2`,
+ `cancelPlan`) is a filling checked against the hole's interface; admission asks the CURRENT world.
+ The four changes, each forced to say which operation it is:
+@@ -42,25 +42,25 @@ def Consistent (i : Internal) (e : External) : Prop :=
+ /-! ## The open protocol is judged; every candidate fills the hole -/
+ 
+ /-- The template is judged: `Ω; Γ₀; [cap] ⊢ template : Protocol(idle, True) ⊣ Φ₀`. -/
+-theorem template_hasProt : HasProt spec Ω Γ₀ (fun _ _ => True) Φ₀ Δ₀ template :=
++theorem template_hasProt : HasProt spec .buyer Ω Γ₀ (fun _ _ => True) Φ₀ Δ₀ template :=
+   .call (S := sig) Op.reserve _ rfl (by simp [spec]) (by simp [spec, Φ₀])
+     fun _ => .hole () iface rfl rfl (by simp [iface, Γ₀]) (SubBag.refl _) (fun _ _ _ => trivial)
+       (by simp [iface, Φ₀])
+ 
+ /-- Each provider's plan satisfies the hole's interface (spends the capability once, uses that
+ provider's authority and the deadline, owes that provider's payment). -/
+-theorem plan_fills (p : Provider) : Fills spec Ω iface (plan p) := by
++theorem plan_fills (p : Provider) : Fills spec .buyer Ω iface (plan p) := by
+   refine ⟨.spend (S := sig) (Op.commit p) _ .cap rfl (by simp [iface]) ?_ ?_
+     fun _ => .ret _ trivial, trivial⟩
+   · cases p <;> simp [spec, iface]
+   · cases p <;> simp [spec, iface]
+ 
+ /-- The cancellation path satisfies the hole's interface. -/
+-theorem cancel_fills : Fills spec Ω iface cancelPlan :=
++theorem cancel_fills : Fills spec .buyer Ω iface cancelPlan :=
+   ⟨.call (S := sig) Op.cancel _ rfl (by simp [spec]) (by simp [spec, iface])
+     fun _ => .ret _ trivial, trivial⟩
+ 
+-theorem choose_ok {f : P .reserved} (hf : Fills spec Ω iface f) : SubstOK spec Ω (choose f) := by
++theorem choose_ok {f : P .reserved} (hf : Fills spec .buyer Ω iface f) : SubstOK spec .buyer Ω (choose f) := by
+   intro i h g hs
+   cases i with
+   | idle => exact nomatch h
+@@ -72,8 +72,8 @@ theorem choose_ok {f : P .reserved} (hf : Fills spec Ω iface f) : SubstOK spec
+ 
+ /-- Family 1, instance: every candidate's instantiation is judged at the template's judgment. -/
+ theorem instantiations_hasProt :
+-    (∀ p, HasProt spec Ω Γ₀ (fun _ _ => True) Φ₀ Δ₀ (fill Ω (choose (plan p)) template)) ∧
+-      HasProt spec Ω Γ₀ (fun _ _ => True) Φ₀ Δ₀ (fill Ω (choose cancelPlan) template) :=
++    (∀ p, HasProt spec .buyer Ω Γ₀ (fun _ _ => True) Φ₀ Δ₀ (fill .buyer Ω (choose (plan p)) template)) ∧
++      HasProt spec .buyer Ω Γ₀ (fun _ _ => True) Φ₀ Δ₀ (fill .buyer Ω (choose cancelPlan) template) :=
+   ⟨fun p => fill_preserves_hasProt (choose_ok (plan_fills p)) template_hasProt,
+     fill_preserves_hasProt (choose_ok cancel_fills) template_hasProt⟩
+ 
+@@ -90,8 +90,8 @@ theorem interpret_instance :
+ /-- The open protocol has exactly one hole, the provider; every instantiation has none. -/
+ theorem holes_instance :
+     (holes finite template).length = 1 ∧ Occurs template .reserved () ∧
+-      (∀ p, holes finite (fill Ω (choose (plan p)) template) = []) ∧
+-      holes finite (fill Ω (choose cancelPlan) template) = [] := by
++      (∀ p, holes finite (fill .buyer Ω (choose (plan p)) template) = []) ∧
++      holes finite (fill .buyer Ω (choose cancelPlan) template) = [] := by
+   refine ⟨rfl, (mem_holes_iff finite template .reserved ()).mp
+       (by simp [holes, template, finite]; exact ⟨rfl, HEq.rfl⟩),
+     fun p => ?_, rfl⟩
+@@ -135,8 +135,8 @@ theorem unrelated_update_repair_reuses :
+ now; the open protocol stays judged and the other candidates stay available. -/
+ theorem provider_revoked_unavailable :
+     available w0 = [1, 2, 3] ∧ available (w0.revoke .p1) = [2, 3] ∧
+-      Fills spec Ω iface (plan .p1) ∧ admits spec (w0.revoke .p1).view (plan .p1) = false ∧
+-      HasProt spec Ω Γ₀ (fun _ _ => True) Φ₀ Δ₀ template ∧
++      Fills spec .buyer Ω iface (plan .p1) ∧ admits spec (w0.revoke .p1).view (plan .p1) = false ∧
++      HasProt spec .buyer Ω Γ₀ (fun _ _ => True) Φ₀ Δ₀ template ∧
+       admits spec (w0.revoke .p1).view (plan .p2) = true :=
+   ⟨rfl, rfl, plan_fills .p1, rfl, template_hasProt, rfl⟩
+ 
+@@ -166,7 +166,7 @@ partial correspondence: only epoch-`E` openings name the token) carries the open
+ judgment over, and every effect is admissible against the world's epoch-`E` view exactly when it
+ was against the old view. -/
+ theorem representation_change_transports (E : Nat) :
+-    HasProt (spec.mapTok (Tok.at E)) (Ω.mapTok (Tok.at E)) Γ₀ (fun _ _ => True) Φ₀
++    HasProt (spec.mapTok (Tok.at E)) .buyer (Ω.mapTok (Tok.at E)) Γ₀ (fun _ _ => True) Φ₀
+         (Δ₀.map (Tok.at E)) template ∧
+       ∀ (w : World) {i : Phase} (op : Op i),
+         admitOp (spec.mapTok (Tok.at E)) (w.viewAt E) (S := sig) op =
+@@ -264,7 +264,7 @@ theorem deadline_expires (w : World) (hd : w.deadline ≤ w.now) :
+ /-- **The cancellation path refunds**: every complete run of the plan with the cancellation
+ chosen establishes exactly the deposit and its refund, and no payment. -/
+ theorem cancel_path_refunds_obligation {t : Trace sig} {j : Phase} {a : Res j}
+-    (h : Runs (fill Ω (choose cancelPlan) template) t j a) :
++    (h : Runs (fill .buyer Ω (choose cancelPlan) template) t j a) :
+     established spec t = [.holdDeposit, .refund] := by
+   change Runs (Prot.call (S := sig) Op.reserve fun _ => cancelPlan) t j a at h
+   cases h with
+@@ -277,7 +277,7 @@ theorem cancel_path_refunds_obligation {t : Trace sig} {j : Phase} {a : Res j}
+ /-- The contrast: every complete run with `p` chosen establishes the deposit and `p`'s payment,
+ and no refund. -/
+ theorem commit_path_pays (p : Provider) {t : Trace sig} {j : Phase} {a : Res j}
+-    (h : Runs (fill Ω (choose (plan p)) template) t j a) :
++    (h : Runs (fill .buyer Ω (choose (plan p)) template) t j a) :
+     established spec t = [.holdDeposit, .pay p] := by
+   change Runs (Prot.call (S := sig) Op.reserve fun _ => plan p) t j a at h
+   cases h with
+@@ -290,14 +290,14 @@ theorem commit_path_pays (p : Provider) {t : Trace sig} {j : Phase} {a : Res j}
+ /-! ## The lost reply -/
+ 
+ theorem reach_reserved (f : P .reserved) :
+-    Reach (fill Ω (choose f) template) [reserved] ⟨Phase.reserved, f⟩ :=
++    Reach (fill .buyer Ω (choose f) template) [reserved] ⟨Phase.reserved, f⟩ :=
+   Reach.call (S := sig) (op := Op.reserve) (k := fun _ => f) () (Reach.here _)
+ 
+ theorem reach_hole : Reach template [reserved] ⟨Phase.reserved, .hole ()⟩ :=
+   Reach.call (S := sig) (op := Op.reserve)
+     (k := fun _ => Prot.hole (S := sig) (Hole := HoleN) (A := Res) (i := Phase.reserved) ()) () (Reach.here _)
+ 
+-theorem started_lost (p : Provider) : Started (fill Ω (choose (plan p)) template) (lost p) :=
++theorem started_lost (p : Provider) : Started (fill .buyer Ω (choose (plan p)) template) (lost p) :=
+   Started.uncertain (S := sig) (k := fun ok => .ret ok) (reach_reserved (plan p))
+ 
+ theorem dispatched_lost (p : Provider) : Dispatched template (lost p) .reserved () :=
+@@ -307,7 +307,7 @@ theorem dispatched_lost (p : Provider) : Dispatched template (lost p) .reserved
+ `p` in flight is a history of the plan; it has established `p`'s payment (from dispatch); and the
+ provider hole counts as entered. -/
+ theorem lost_reply_keeps_obligation (p : Provider) :
+-    Started (fill Ω (choose (plan p)) template) (lost p) ∧
++    Started (fill .buyer Ω (choose (plan p)) template) (lost p) ∧
+       (lost p).established spec = [.holdDeposit, .pay p] ∧
+       Dispatched template (lost p) .reserved () ∧ (obj (plan p) (lost p)).WF spec :=
+   ⟨started_lost p, rfl, dispatched_lost p,
+@@ -316,8 +316,8 @@ theorem lost_reply_keeps_obligation (p : Provider) :
+ /-- With the commitment to `p1` in flight, neither the other provider's plan nor the cancellation
+ has that history. -/
+ theorem lost_reply_not_started :
+-    ¬ Started (fill Ω (choose (plan .p2)) template) (lost .p1) ∧
+-      ¬ Started (fill Ω (choose cancelPlan) template) (lost .p1) := by
++    ¬ Started (fill .buyer Ω (choose (plan .p2)) template) (lost .p1) ∧
++      ¬ Started (fill .buyer Ω (choose cancelPlan) template) (lost .p1) := by
+   constructor
+   · intro h
+     obtain ⟨R, hr, hc⟩ := started_some_iff.mp h
+@@ -347,12 +347,12 @@ theorem lost_reply_blocks_replan :
+   refine ⟨fun g => ?_, fun hw => lost_reply_not_started.1 hw.started,
+     fun g => ?_, fun hw => lost_reply_not_started.2 hw.started⟩
+   · have := g .reserved () (dispatched_lost .p1)
+-    simp [obj, Subst.ours, Ω, iface, choose, plan] at this
++    simp [obj, Subst.mine, Ω, iface, choose, plan] at this
+     obtain ⟨h, _⟩ := this
+     injection h with h
+     cases h
+   · have := g .reserved () (dispatched_lost .p1)
+-    simp [obj, Subst.ours, Ω, iface, choose, plan, cancelPlan] at this
++    simp [obj, Subst.mine, Ω, iface, choose, plan, cancelPlan] at this
+ 
+ /-- The provider hole counts as entered once the commitment is ANSWERED too. -/
+ theorem dispatched_answered (p : Provider) (b : Bool) :
+@@ -372,7 +372,7 @@ theorem answered_blocks_replan (b : Bool) :
+         (A := Res) (i := Phase.done) ok) b (Reach.here _)
+     exact Started.settled (reach_append (reach_reserved (plan .p1)) h2)
+   · have := g .reserved () (dispatched_answered .p1 b)
+-    simp [obj, Subst.ours, Ω, iface, choose, plan] at this
++    simp [obj, Subst.mine, Ω, iface, choose, plan] at this
+     obtain ⟨h, _⟩ := this
+     injection h with h
+     cases h
+@@ -383,7 +383,7 @@ theorem answered_blocks_replan (b : Bool) :
+       cases hr with
+       | call r hr => cases hr
+ 
+-theorem planFlip_fills (p : Provider) : Fills spec Ω iface (planFlip p) := by
++theorem planFlip_fills (p : Provider) : Fills spec .buyer Ω iface (planFlip p) := by
+   refine ⟨.spend (S := sig) (Op.commit p) _ .cap rfl (by simp [iface]) ?_ ?_
+     fun _ => .ret _ trivial, trivial⟩
+   · cases p <;> simp [spec, iface]
+@@ -400,7 +400,7 @@ theorem guard_stricter_than_wf :
+     Started.uncertain (S := sig) (k := fun ok => .ret (!ok)) (reach_reserved (planFlip .p1))⟩,
+     fun g => ?_⟩
+   have := g .reserved () (dispatched_lost .p1)
+-  simp [obj, Subst.ours, Ω, iface, choose, plan, planFlip] at this
++  simp [obj, Subst.mine, Ω, iface, choose, plan, planFlip] at this
+   have := congrFun this true
+   simp at this
+ 
+@@ -408,21 +408,21 @@ theorem guard_stricter_than_wf :
+ theorem guarded_replan_after_dispatch_is_noop (p : Provider) (σ' : Subst sig HoleN Res)
+     (g : (obj (plan p) (lost p)).Replan σ') :
+     ((obj (plan p) (lost p)).replan σ').current = (obj (plan p) (lost p)).current := by
+-  have e : σ'.ours Ω Phase.reserved () = (choose (plan p)).ours Ω Phase.reserved () :=
++  have e : σ'.mine .buyer Ω Phase.reserved () = (choose (plan p)).mine .buyer Ω Phase.reserved () :=
+     g .reserved () (dispatched_lost p)
+-  show Prot.call (S := sig) Op.reserve (fun _ => subst (σ'.ours Ω) (.hole (i := Phase.reserved) ())) =
+-    Prot.call (S := sig) Op.reserve (fun _ => subst ((choose (plan p)).ours Ω) (.hole (i := Phase.reserved) ()))
++  show Prot.call (S := sig) Op.reserve (fun _ => subst (σ'.mine .buyer Ω) (.hole (i := Phase.reserved) ())) =
++    Prot.call (S := sig) Op.reserve (fun _ => subst ((choose (plan p)).mine .buyer Ω) (.hole (i := Phase.reserved) ()))
+   congr 1
+   funext x
+-  have e' : σ'.ours Ω (sig.next Op.reserve x) () =
+-      (choose (plan p)).ours Ω (sig.next Op.reserve x) () := e
++  have e' : σ'.mine .buyer Ω (sig.next Op.reserve x) () =
++      (choose (plan p)).mine .buyer Ω (sig.next Op.reserve x) () := e
+   simp only [subst]
+   rw [e']
+ 
+ /-- **Before dispatch, re-planning is a free substitution**: reserved but nothing dispatched, the
+ provider hole is not entered; the object re-planned from `p1` to `p2` (or to the cancellation) is
+ well-formed with the same history. -/
+-theorem replan_before_dispatch (f : P .reserved) (hf : Fills spec Ω iface f) :
++theorem replan_before_dispatch (f : P .reserved) (hf : Fills spec .buyer Ω iface f) :
+     ¬ Dispatched template H₀ .reserved () ∧
+       (obj (plan .p1) H₀).Replan (choose f) ∧ ((obj (plan .p1) H₀).replan (choose f)).WF spec ∧
+         ((obj (plan .p1) H₀).replan (choose f)).hist = H₀ := by
+@@ -459,9 +459,9 @@ authority is withdrawn, a typed completion satisfies the buyer's guard (`plan p1
+ completion is admitted (`plan p2`), but the completion space, ONE `θ` for typing, the guard,
+ authority and resources, is empty. -/
+ theorem separate_witnesses_over_substitutions :
+-    (∃ θ, SubstOK spec Ω θ ∧ BuyerGuard θ) ∧ (∃ θ, SubstOK spec Ω θ ∧ AdmittedIn (w0.revoke .p1) θ) ∧
+-      ¬ ∃ θ, Conds.space ⟨SubstOK spec Ω, BuyerGuard, AdmittedIn (w0.revoke .p1),
+-        fun θ => ∀ f, θ .reserved () = some f → Fills spec Ω iface f⟩ θ := by
++    (∃ θ, SubstOK spec .buyer Ω θ ∧ BuyerGuard θ) ∧ (∃ θ, SubstOK spec .buyer Ω θ ∧ AdmittedIn (w0.revoke .p1) θ) ∧
++      ¬ ∃ θ, Conds.space ⟨SubstOK spec .buyer Ω, BuyerGuard, AdmittedIn (w0.revoke .p1),
++        fun θ => ∀ f, θ .reserved () = some f → Fills spec .buyer Ω iface f⟩ θ := by
+   refine ⟨⟨choose (plan .p1), choose_ok (plan_fills .p1), rfl⟩,
+     ⟨choose (plan .p2), choose_ok (plan_fills .p2), plan .p2, rfl, rfl⟩, ?_⟩
+   rintro ⟨θ, _, hg, ⟨f, hf, ha⟩, _⟩
+diff --git a/Lang/Proofs/Contextual/Protocol.lean b/Lang/Proofs/Contextual/Protocol.lean
+index 104b17a..4ab70d1 100644
+--- a/Lang/Proofs/Contextual/Protocol.lean
++++ b/Lang/Proofs/Contextual/Protocol.lean
+@@ -4,9 +4,11 @@
+ The four theorem families of the proposal's document 2 section 9, over `Lang.Contextual.Protocol`:
+ 
+ * CONTEXTUAL COMPLETION: `fill_preserves_hasProt` (a filling satisfying the hole's interface:
+-  index, context, tokens, result, obligations, polarity, acceptance; preserves the judgment);
+-  `fill_skips_theirs`, `theirs_hole_untypable` (DESIGN RULES, stated as theorems so they are
+-  checked: `fill` restricts to `ours` holes by definition and the hole rule requires `ours`).
++  index, context, tokens, result, obligations, chooser role, acceptance; preserves the judgment);
++  `fill_skips_others`, `others_hole_untypable` (DESIGN RULES, stated as theorems so they are
++  checked: `fill me` restricts to the holes `me` chooses by definition, and the hole rule requires
++  `me` as chooser); `hasProt_holes_mine` (every hole of a protocol judged as `me` is one `me`
++  chooses: another role's choice enters it as a `call`).
+ * INTERPRETATION OF SUBSTITUTION: `fold_fusion`, `fold_subst`, `interpret_fill` (interpreting
+   `P[σ]` IS interpreting the template with `σ` in the environment), via fusion.
+ * SELECTIVE REPAIR: `locality`, `repair_agrees_from_scratch`, `repair_residual`, `repair_reuses`.
+@@ -31,6 +33,7 @@ namespace Nanodregg.Lang.Contextual.Protocol
+ 
+ section
+ variable {Ix : Type} {S : Sig Ix} {Hole : Ix → Type} {A : Ix → Type}
++variable {Role : Type} {me : Role}
+ variable {Tok Fact Ob : Type}
+ 
+ /-! ## Bags -/
+@@ -54,10 +57,10 @@ theorem SubBag.erase [DecidableEq Tok] {Δ₁ Δ₂ : List Tok} (h : SubBag Δ
+ 
+ /-- Weakening: more facts, a weaker postcondition, more permitted obligations, more tokens. -/
+ theorem HasProt.weaken [DecidableEq Tok] {sp : Spec S Tok Fact Ob}
+-    {Ω : Ctx S Hole A Tok Fact Ob} {Γ Γ' : List Fact} {Q Q' : (j : Ix) → A j → Prop}
++    {Ω : Ctx S Hole A Role Tok Fact Ob} {Γ Γ' : List Fact} {Q Q' : (j : Ix) → A j → Prop}
+     {Φ Φ' : List Ob} (hΓ : ∀ f ∈ Γ, f ∈ Γ') (hQ : ∀ j a, Q j a → Q' j a)
+     (hΦ : ∀ o ∈ Φ, o ∈ Φ') {Δ Δ' : List Tok} {i : Ix} {P : Prot S Hole A i}
+-    (h : HasProt sp Ω Γ Q Φ Δ P) (hΔ : SubBag Δ Δ') : HasProt sp Ω Γ' Q' Φ' Δ' P := by
++    (h : HasProt sp me Ω Γ Q Φ Δ P) (hΔ : SubBag Δ Δ') : HasProt sp me Ω Γ' Q' Φ' Δ' P := by
+   induction h generalizing Δ' with
+   | ret a hq => exact .ret a (hQ _ _ hq)
+   | call op k hc hr he _ ih =>
+@@ -72,15 +75,15 @@ theorem HasProt.weaken [DecidableEq Tok] {sp : Spec S Tok Fact Ob}
+ 
+ /-- Substituting an interface-respecting substitution preserves the judgment. -/
+ theorem subst_preserves_hasProt [DecidableEq Tok] {sp : Spec S Tok Fact Ob}
+-    {Ω : Ctx S Hole A Tok Fact Ob} {σ : Subst S Hole A} (hσ : SubstOK sp Ω σ)
++    {Ω : Ctx S Hole A Role Tok Fact Ob} {σ : Subst S Hole A} (hσ : SubstOK sp me Ω σ)
+     {Γ : List Fact} {Q : (j : Ix) → A j → Prop} {Φ : List Ob} {Δ : List Tok} {i : Ix}
+-    {P : Prot S Hole A i} (h : HasProt sp Ω Γ Q Φ Δ P) : HasProt sp Ω Γ Q Φ Δ (subst σ P) := by
++    {P : Prot S Hole A i} (h : HasProt sp me Ω Γ Q Φ Δ P) : HasProt sp me Ω Γ Q Φ Δ (subst σ P) := by
+   induction h with
+   | ret a hq => exact .ret a hq
+   | call op k hc hr he _ ih => exact .call op _ hc hr he ih
+   | spend op k t hc ht hr he _ ih => exact .spend op _ t hc ht hr he ih
+   | @hole Δ i h I hI hp hctx hneed hpost howes =>
+-    show HasProt sp Ω Γ Q Φ Δ (match σ i h with | some f => f | none => .hole h)
++    show HasProt sp me Ω Γ Q Φ Δ (match σ i h with | some f => f | none => .hole h)
+     cases hs : σ i h with
+     | none => exact .hole h I hI hp hctx hneed hpost howes
+     | some f =>
+@@ -89,11 +92,11 @@ theorem subst_preserves_hasProt [DecidableEq Tok] {sp : Spec S Tok Fact Ob}
+       cases hI'
+       exact hf.weaken hctx hpost howes hneed
+ 
+-/-- Restricting to `ours` keeps a substitution interface-respecting. -/
+-theorem SubstOK.ours [DecidableEq Tok] {sp : Spec S Tok Fact Ob} {Ω : Ctx S Hole A Tok Fact Ob}
+-    {σ : Subst S Hole A} (hσ : SubstOK sp Ω σ) : SubstOK sp Ω (σ.ours Ω) := by
++/-- Restricting to the holes `me` chooses keeps a substitution interface-respecting. -/
++theorem SubstOK.mine [DecidableEq Role] [DecidableEq Tok] {sp : Spec S Tok Fact Ob} {Ω : Ctx S Hole A Role Tok Fact Ob}
++    {σ : Subst S Hole A} (hσ : SubstOK sp me Ω σ) : SubstOK sp me Ω (σ.mine me Ω) := by
+   intro i h f hs
+-  unfold Subst.ours at hs
++  unfold Subst.mine at hs
+   split at hs
+   · split at hs
+     · exact hσ i h f hs
+@@ -103,42 +106,57 @@ theorem SubstOK.ours [DecidableEq Tok] {sp : Spec S Tok Fact Ob} {Ω : Ctx S Hol
+ /-- **Contextual completion** (family 1): filling the holes of a judged protocol with fillings that
+ satisfy their interfaces preserves the protocol's judgment, at the same facts, tokens, result
+ contract and obligation bound. -/
+-theorem fill_preserves_hasProt [DecidableEq Tok] {sp : Spec S Tok Fact Ob}
+-    {Ω : Ctx S Hole A Tok Fact Ob} {σ : Subst S Hole A} (hσ : SubstOK sp Ω σ)
++theorem fill_preserves_hasProt [DecidableEq Role] [DecidableEq Tok] {sp : Spec S Tok Fact Ob}
++    {Ω : Ctx S Hole A Role Tok Fact Ob} {σ : Subst S Hole A} (hσ : SubstOK sp me Ω σ)
+     {Γ : List Fact} {Q : (j : Ix) → A j → Prop} {Φ : List Ob} {Δ : List Tok} {i : Ix}
+-    {P : Prot S Hole A i} (h : HasProt sp Ω Γ Q Φ Δ P) :
+-    HasProt sp Ω Γ Q Φ Δ (fill Ω σ P) :=
+-  subst_preserves_hasProt hσ.ours h
+-
+-/-- **Polarity, a design rule**: `fill` never fills a hole `Ω` declares `theirs`, whatever `σ`
+-offers. True by the definition of `Subst.ours`; stated so the rule is checked, not as a finding. -/
+-theorem fill_skips_theirs {Ω : Ctx S Hole A Tok Fact Ob} (σ : Subst S Hole A) {i : Ix}
+-    {h : Hole i} {I : Iface S Hole A Tok Fact Ob i} (hI : Ω i h = some I)
+-    (hp : I.pol = .theirs) : fill Ω σ (.hole h) = .hole h := by
+-  simp [fill, subst, Subst.ours, hI, hp]
+-
+-/-- **Polarity, a design rule**: a `theirs` hole is not a judged protocol, because the `hole` rule of
+-`HasProt` requires `ours`. Another participant's choice must be written as a `call` whose response
+-selects the continuation. Stated so the rule is checked, not as a finding. -/
+-theorem theirs_hole_untypable [DecidableEq Tok] {sp : Spec S Tok Fact Ob}
+-    {Ω : Ctx S Hole A Tok Fact Ob} {Γ : List Fact} {Q : (j : Ix) → A j → Prop} {Φ : List Ob}
+-    {Δ : List Tok} {i : Ix} {h : Hole i} {I : Iface S Hole A Tok Fact Ob i}
+-    (hI : Ω i h = some I) (hp : I.pol = .theirs) : ¬ HasProt sp Ω Γ Q Φ Δ (.hole h) := by
++    {P : Prot S Hole A i} (h : HasProt sp me Ω Γ Q Φ Δ P) :
++    HasProt sp me Ω Γ Q Φ Δ (fill me Ω σ P) :=
++  subst_preserves_hasProt hσ.mine h
++
++/-- **Roles, a design rule**: `fill me` never fills a hole `Ω` declares chosen by another role,
++whatever `σ` offers. True by the definition of `Subst.mine`; stated so the rule is checked, not as
++a finding. -/
++theorem fill_skips_others [DecidableEq Role] {Ω : Ctx S Hole A Role Tok Fact Ob} (σ : Subst S Hole A) {i : Ix}
++    {h : Hole i} {I : Iface S Hole A Role Tok Fact Ob i} (hI : Ω i h = some I)
++    (hp : I.chooser ≠ me) : fill me Ω σ (.hole h) = .hole h := by
++  simp [fill, subst, Subst.mine, hI, hp]
++
++/-- **Roles, a design rule**: a hole another role chooses is not a protocol judged as `me`, because
++the `hole` rule of `HasProt` requires `me` as its chooser. Stated so the rule is checked, not as a
++finding. -/
++theorem others_hole_untypable [DecidableEq Tok] {sp : Spec S Tok Fact Ob}
++    {Ω : Ctx S Hole A Role Tok Fact Ob} {Γ : List Fact} {Q : (j : Ix) → A j → Prop} {Φ : List Ob}
++    {Δ : List Tok} {i : Ix} {h : Hole i} {I : Iface S Hole A Role Tok Fact Ob i}
++    (hI : Ω i h = some I) (hp : I.chooser ≠ me) : ¬ HasProt sp me Ω Γ Q Φ Δ (.hole h) := by
+   intro hh
+   cases hh with
+   | hole _ I' hI' hp' =>
+     rw [hI] at hI'
+     cases hI'
+-    rw [hp] at hp'
+-    cases hp'
++    exact hp hp'
++
++/-- **Another role's choice is a call, never a hole of mine**: every hole occurring in a protocol
++judged as `me` is declared, and `me` chooses it. So a component another role decides enters `me`'s
++protocol as a `call` whose response that role gives, the continuation a family over its answer. -/
++theorem hasProt_holes_mine [DecidableEq Tok] {sp : Spec S Tok Fact Ob}
++    {Ω : Ctx S Hole A Role Tok Fact Ob} {Γ : List Fact} {Q : (j : Ix) → A j → Prop} {Φ : List Ob} :
++    ∀ {Δ : List Tok} {i : Ix} {P : Prot S Hole A i} {j : Ix} {h : Hole j},
++      HasProt sp me Ω Γ Q Φ Δ P → Occurs P j h → ∃ I, Ω j h = some I ∧ I.chooser = me
++  | _, _, _, _, _, hp, .here _ => by
++    cases hp with
++    | hole _ I hI hc => exact ⟨I, hI, hc⟩
++  | _, _, _, _, _, hp, .call r ho => by
++    cases hp with
++    | call _ _ _ _ _ hk => exact hasProt_holes_mine (hk r) ho
++    | spend _ _ _ _ _ _ _ hk => exact hasProt_holes_mine (hk r) ho
+ 
+ /-- On interface-respecting substitutions `fill` is plain substitution. -/
+-theorem fill_eq_subst [DecidableEq Tok] {sp : Spec S Tok Fact Ob} {Ω : Ctx S Hole A Tok Fact Ob}
+-    {σ : Subst S Hole A} (hσ : SubstOK sp Ω σ) {i : Ix} (P : Prot S Hole A i) :
+-    fill Ω σ P = subst σ P := by
+-  have : σ.ours Ω = σ := by
++theorem fill_eq_subst [DecidableEq Role] [DecidableEq Tok] {sp : Spec S Tok Fact Ob} {Ω : Ctx S Hole A Role Tok Fact Ob}
++    {σ : Subst S Hole A} (hσ : SubstOK sp me Ω σ) {i : Ix} (P : Prot S Hole A i) :
++    fill me Ω σ P = subst σ P := by
++  have : σ.mine me Ω = σ := by
+     funext j h
+-    unfold Subst.ours
++    unfold Subst.mine
+     cases hs : σ j h with
+     | none => split <;> (try split) <;> rfl
+     | some f =>
+@@ -314,11 +332,11 @@ theorem consumed_cons (sp : Spec S Tok Fact Ob) (e : Entry S) (t : Trace S) :
+ `Δ` (as a bag: each token at most as often as `Δ` holds it, together with what the residual still
+ holds), establishes only obligations within `Φ`, and leaves a residual judged at the remaining
+ tokens. -/
+-theorem hasProt_reach [DecidableEq Tok] {sp : Spec S Tok Fact Ob} {Ω : Ctx S Hole A Tok Fact Ob}
++theorem hasProt_reach [DecidableEq Tok] {sp : Spec S Tok Fact Ob} {Ω : Ctx S Hole A Role Tok Fact Ob}
+     {Γ : List Fact} {Q : (j : Ix) → A j → Prop} {Φ : List Ob} {Δ : List Tok} {i : Ix}
+     {P : Prot S Hole A i} {t : Trace S} {R : Σ j, Prot S Hole A j}
+-    (h : HasProt sp Ω Γ Q Φ Δ P) (hr : Reach P t R) :
+-    ∃ Δ', HasProt sp Ω Γ Q Φ Δ' R.2 ∧
++    (h : HasProt sp me Ω Γ Q Φ Δ P) (hr : Reach P t R) :
++    ∃ Δ', HasProt sp me Ω Γ Q Φ Δ' R.2 ∧
+       (∀ x, (consumed sp t).count x + Δ'.count x ≤ Δ.count x) ∧
+       ∀ o ∈ established sp t, o ∈ Φ := by
+   induction hr generalizing Δ with
+@@ -361,20 +379,20 @@ theorem hasProt_reach [DecidableEq Tok] {sp : Spec S Tok Fact Ob} {Ω : Ctx S Ho
+ 
+ /-- **At most once** (the discipline is AFFINE: `ret` accepts any leftover `Δ`, so a token may also
+ go unspent): a token `Δ` holds once is spent at most once on any path of a judged protocol. -/
+-theorem at_most_once [DecidableEq Tok] {sp : Spec S Tok Fact Ob} {Ω : Ctx S Hole A Tok Fact Ob}
++theorem at_most_once [DecidableEq Tok] {sp : Spec S Tok Fact Ob} {Ω : Ctx S Hole A Role Tok Fact Ob}
+     {Γ : List Fact} {Q : (j : Ix) → A j → Prop} {Φ : List Ob} {Δ : List Tok} {i : Ix}
+     {P : Prot S Hole A i} {t : Trace S} {R : Σ j, Prot S Hole A j} {x : Tok}
+-    (h : HasProt sp Ω Γ Q Φ Δ P) (hr : Reach P t R) (hx : Δ.count x ≤ 1) :
++    (h : HasProt sp me Ω Γ Q Φ Δ P) (hr : Reach P t R) (hx : Δ.count x ≤ 1) :
+     (consumed sp t).count x ≤ 1 := by
+   obtain ⟨Δ', _, hc, _⟩ := hasProt_reach h hr
+   have := hc x
+   omega
+ 
+ /-- A complete path of a judged protocol ends in a result within `Q`. -/
+-theorem hasProt_runs [DecidableEq Tok] {sp : Spec S Tok Fact Ob} {Ω : Ctx S Hole A Tok Fact Ob}
++theorem hasProt_runs [DecidableEq Tok] {sp : Spec S Tok Fact Ob} {Ω : Ctx S Hole A Role Tok Fact Ob}
+     {Γ : List Fact} {Q : (j : Ix) → A j → Prop} {Φ : List Ob} {Δ : List Tok} {i : Ix}
+     {P : Prot S Hole A i} {t : Trace S} {j : Ix} {a : A j}
+-    (h : HasProt sp Ω Γ Q Φ Δ P) (hr : Runs P t j a) : Q j a := by
++    (h : HasProt sp me Ω Γ Q Φ Δ P) (hr : Runs P t j a) : Q j a := by
+   obtain ⟨Δ', h', _, _⟩ := hasProt_reach h (runs_reach hr)
+   cases h' with
+   | ret _ hq => exact hq
+@@ -436,9 +454,9 @@ theorem resubst_preserves_started {σ σ' : Subst S Hole A} {i : Ix} {P : Prot S
+ /-- The obligations a history of a judged protocol established, the in-flight call's included,
+ are within `Φ`. -/
+ theorem started_obligations [DecidableEq Tok] {sp : Spec S Tok Fact Ob}
+-    {Ω : Ctx S Hole A Tok Fact Ob} {Γ : List Fact} {Q : (j : Ix) → A j → Prop} {Φ : List Ob}
++    {Ω : Ctx S Hole A Role Tok Fact Ob} {Γ : List Fact} {Q : (j : Ix) → A j → Prop} {Φ : List Ob}
+     {Δ : List Tok} {i : Ix} {P : Prot S Hole A i} {H : Hist S}
+-    (h : HasProt sp Ω Γ Q Φ Δ P) (hs : Started P H) : ∀ o ∈ H.established sp, o ∈ Φ := by
++    (h : HasProt sp me Ω Γ Q Φ Δ P) (hs : Started P H) : ∀ o ∈ H.established sp, o ∈ Φ := by
+   cases hs with
+   | settled hr =>
+     obtain ⟨_, _, _, hob⟩ := hasProt_reach h hr
+@@ -457,14 +475,14 @@ theorem started_obligations [DecidableEq Tok] {sp : Spec S Tok Fact Ob}
+ well-formed object by an interface-respecting substitution is well-formed, keeps the accepted
+ history (answered and in flight), and every obligation that history established stays within the
+ object's bound. -/
+-theorem Open.resubst_wf [DecidableEq Tok] {sp : Spec S Tok Fact Ob} {i : Ix}
+-    {O : Open S Hole A Tok Fact Ob i} (hO : O.WF sp) {σ' : Subst S Hole A}
+-    (hσ' : SubstOK sp O.Ω σ')
++theorem Open.resubst_wf [DecidableEq Role] [DecidableEq Tok] {sp : Spec S Tok Fact Ob} {i : Ix}
++    {O : Open S Hole A Role Tok Fact Ob i} (hO : O.WF sp) {σ' : Subst S Hole A}
++    (hσ' : SubstOK sp O.me O.Ω σ')
+     (g : O.Replan σ') :
+     (O.replan σ').WF sp ∧ (O.replan σ').hist = O.hist ∧
+       ∀ o ∈ (O.replan σ').hist.established sp, o ∈ O.Φ := by
+   have hst : Started (O.replan σ').current O.hist :=
+-    resubst_preserves_started (σ := O.σ.ours O.Ω) hO.started g
++    resubst_preserves_started (σ := O.σ.mine O.me O.Ω) hO.started g
+   have hwf : (O.replan σ').WF sp := ⟨hO.typed, hσ', hst⟩
+   exact ⟨hwf, rfl, started_obligations (fill_preserves_hasProt hσ' hO.typed) hst⟩
+ 
+@@ -653,9 +671,9 @@ representations need not name anything) carries a judged protocol to a judged pr
+ new representation, its tokens renamed. -/
+ theorem hasProt_mapTok {Tok' : Type} [DecidableEq Tok] [DecidableEq Tok']
+     {e : Tok → Tok'} {e' : Tok' → Tok} (h₁ : ∀ a, e' (e a) = a)
+-    {sp : Spec S Tok Fact Ob} {Ω : Ctx S Hole A Tok Fact Ob} {Γ : List Fact}
++    {sp : Spec S Tok Fact Ob} {Ω : Ctx S Hole A Role Tok Fact Ob} {Γ : List Fact}
+     {Q : (j : Ix) → A j → Prop} {Φ : List Ob} {Δ : List Tok} {i : Ix} {P : Prot S Hole A i}
+-    (h : HasProt sp Ω Γ Q Φ Δ P) : HasProt (sp.mapTok e) (Ω.mapTok e) Γ Q Φ (Δ.map e) P := by
++    (h : HasProt sp me Ω Γ Q Φ Δ P) : HasProt (sp.mapTok e) me (Ω.mapTok e) Γ Q Φ (Δ.map e) P := by
+   induction h with
+   | ret a hq => exact .ret a hq
+   | call op k hc hr he _ ih =>
+@@ -835,14 +853,15 @@ theorem response_indexed_names_have_foresight :
+ /-- `planHole` is the response-free naming. -/
+ theorem planHole_named : planHole = planNamed (Hn := HoleN) fun _ => () := rfl
+ 
+-/-- **A `theirs` hole is never planned**: declared `theirs`, the hole is never filled by our plan, so
+-every run of the open plan stops at the hole. It "loses" only because `wins` scores a stuck run as
+-`false`: the theorem says the planner cannot win by filling, not that the peer wins. -/
+-theorem theirs_never_planned (σ : Subst sig HoleN Res) (b : Bool) :
+-    wins b (fill (ctxOf .theirs) σ planHole) () = false := by
++/-- **The peer's hole is never planned by the player**: chosen by the peer, the hole is never
++filled by the player's plan, so every run of the open plan stops at the hole. It "loses" only
++because `wins` scores a stuck run as `false`: the theorem says the player cannot win by filling, not
++that the peer wins. -/
++theorem peer_hole_never_planned (σ : Subst sig HoleN Res) (b : Bool) :
++    wins b (fill .player (ctxOf .peer) σ planHole) () = false := by
+   unfold fill
+   rw [wins_planHole]
+-  simp [Subst.ours, ctxOf, iface]
++  simp [Subst.mine, ctxOf, iface]
+ 
+ end Coin
+ 
+diff --git a/Lang/Proofs/Contextual/ProtocolTyping.lean b/Lang/Proofs/Contextual/ProtocolTyping.lean
+index d062786..9fdf071 100644
+--- a/Lang/Proofs/Contextual/ProtocolTyping.lean
++++ b/Lang/Proofs/Contextual/ProtocolTyping.lean
+@@ -26,41 +26,41 @@ inductive Occurs : {i : Ix} → Prot S Hole A i → (j : Ix) → Hole j → Prop
+ def SubBag {Tok : Type} [DecidableEq Tok] (Δ₁ Δ₂ : List Tok) : Prop :=
+   ∀ t, Δ₁.count t ≤ Δ₂.count t
+ 
+-/-- `HasProt sp Ω Γ Q Φ Δ P`. A `call` requires its facts from `Γ`, records its obligations in `Φ`,
++/-- `HasProt sp me Ω Γ Q Φ Δ P`: the protocol judged as role `me`. A `call` requires its facts from `Γ`, records its obligations in `Φ`,
+ and, if it spends a token, takes it from `Δ`: every continuation is judged with that token gone
+ (LINEAR: a token is spent by at most one call on any path, `Proofs.hasProt_reach`). A hole is
+-judged by its declared interface: it must be ours, its context and tokens available here, its
++judged by its declared interface: `me` must be its chooser, its context and tokens available here, its
+ results within `Q`, its obligations within `Φ`. -/
+-inductive HasProt {Tok Fact Ob : Type} [DecidableEq Tok] (sp : Spec S Tok Fact Ob)
+-    (Ω : Ctx S Hole A Tok Fact Ob) (Γ : List Fact) (Q : (j : Ix) → A j → Prop) (Φ : List Ob) :
++inductive HasProt {Role Tok Fact Ob : Type} [DecidableEq Tok] (sp : Spec S Tok Fact Ob) (me : Role)
++    (Ω : Ctx S Hole A Role Tok Fact Ob) (Γ : List Fact) (Q : (j : Ix) → A j → Prop) (Φ : List Ob) :
+     List Tok → {i : Ix} → Prot S Hole A i → Prop
+-  | ret {Δ : List Tok} {i : Ix} (a : A i) : Q i a → HasProt sp Ω Γ Q Φ Δ (.ret a)
++  | ret {Δ : List Tok} {i : Ix} (a : A i) : Q i a → HasProt sp me Ω Γ Q Φ Δ (.ret a)
+   | call {Δ : List Tok} {i : Ix} (op : S.Op i)
+       (k : (r : S.Resp op) → Prot S Hole A (S.next op r)) :
+       sp.consumes op = none → (∀ f ∈ sp.requires op, f ∈ Γ) →
+       (∀ o ∈ sp.establishes op, o ∈ Φ) →
+-      (∀ r, HasProt sp Ω Γ Q Φ Δ (k r)) → HasProt sp Ω Γ Q Φ Δ (.call op k)
++      (∀ r, HasProt sp me Ω Γ Q Φ Δ (k r)) → HasProt sp me Ω Γ Q Φ Δ (.call op k)
+   | spend {Δ : List Tok} {i : Ix} (op : S.Op i)
+       (k : (r : S.Resp op) → Prot S Hole A (S.next op r)) (t : Tok) :
+       sp.consumes op = some t → t ∈ Δ → (∀ f ∈ sp.requires op, f ∈ Γ) →
+       (∀ o ∈ sp.establishes op, o ∈ Φ) →
+-      (∀ r, HasProt sp Ω Γ Q Φ (Δ.erase t) (k r)) → HasProt sp Ω Γ Q Φ Δ (.call op k)
+-  | hole {Δ : List Tok} {i : Ix} (h : Hole i) (I : Iface S Hole A Tok Fact Ob i) :
+-      Ω i h = some I → I.pol = .ours → (∀ f ∈ I.ctx, f ∈ Γ) → SubBag I.need Δ →
+-      (∀ j a, I.post j a → Q j a) → (∀ o ∈ I.owes, o ∈ Φ) → HasProt sp Ω Γ Q Φ Δ (.hole h)
+-
+-/-- A filling satisfies a hole's interface: judged in the hole's own context, tokens, result and
+-obligations, and passing the hole's acceptance contract. -/
+-def Fills {Tok Fact Ob : Type} [DecidableEq Tok] (sp : Spec S Tok Fact Ob)
+-    (Ω : Ctx S Hole A Tok Fact Ob) {i : Ix} (I : Iface S Hole A Tok Fact Ob i)
++      (∀ r, HasProt sp me Ω Γ Q Φ (Δ.erase t) (k r)) → HasProt sp me Ω Γ Q Φ Δ (.call op k)
++  | hole {Δ : List Tok} {i : Ix} (h : Hole i) (I : Iface S Hole A Role Tok Fact Ob i) :
++      Ω i h = some I → I.chooser = me → (∀ f ∈ I.ctx, f ∈ Γ) → SubBag I.need Δ →
++      (∀ j a, I.post j a → Q j a) → (∀ o ∈ I.owes, o ∈ Φ) → HasProt sp me Ω Γ Q Φ Δ (.hole h)
++
++/-- A filling satisfies a hole's interface: judged as `me` in the hole's own context, tokens, result
++and obligations, and passing the hole's acceptance contract. -/
++def Fills {Role Tok Fact Ob : Type} [DecidableEq Tok] (sp : Spec S Tok Fact Ob) (me : Role)
++    (Ω : Ctx S Hole A Role Tok Fact Ob) {i : Ix} (I : Iface S Hole A Role Tok Fact Ob i)
+     (f : Prot S Hole A i) : Prop :=
+-  HasProt sp Ω I.ctx I.post I.owes I.need f ∧ I.accepts f
++  HasProt sp me Ω I.ctx I.post I.owes I.need f ∧ I.accepts f
+ 
+-/-- A substitution respects `Ω`: it fills only declared `ours` holes, each with a filling that
+-satisfies the hole's interface. -/
+-def SubstOK {Tok Fact Ob : Type} [DecidableEq Tok] (sp : Spec S Tok Fact Ob)
+-    (Ω : Ctx S Hole A Tok Fact Ob) (σ : Subst S Hole A) : Prop :=
+-  ∀ i h f, σ i h = some f → ∃ I, Ω i h = some I ∧ I.pol = .ours ∧ Fills sp Ω I f
++/-- A substitution respects `Ω` for role `me`: it fills only declared holes `me` chooses, each with
++a filling that satisfies the hole's interface. -/
++def SubstOK {Role Tok Fact Ob : Type} [DecidableEq Tok] (sp : Spec S Tok Fact Ob) (me : Role)
++    (Ω : Ctx S Hole A Role Tok Fact Ob) (σ : Subst S Hole A) : Prop :=
++  ∀ i h f, σ i h = some f → ∃ I, Ω i h = some I ∧ I.chooser = me ∧ Fills sp me Ω I f
+ 
+ /-- `φ` is an algebra morphism `src → dst` (carriers may differ). -/
+ structure AlgebraHom {C D : Ix → Type} (src : Algebra S Hole A C) (dst : Algebra S Hole A D)
+@@ -100,16 +100,17 @@ def Dispatched {i : Ix} (P : Prot S Hole A i) (H : Hist S) (j : Ix) (h : Hole j)
+ 
+ /-- A well-formed open object: the template is judged, the substitution respects `Ω`, the
+ history is a history of the current protocol. -/
+-structure Open.WF {Tok Fact Ob : Type} [DecidableEq Tok] (sp : Spec S Tok Fact Ob) {i : Ix}
+-    (O : Open S Hole A Tok Fact Ob i) : Prop where
+-  typed : HasProt sp O.Ω O.Γ O.Q O.Φ O.Δ O.template
+-  substOK : SubstOK sp O.Ω O.σ
++structure Open.WF {Role Tok Fact Ob : Type} [DecidableEq Role] [DecidableEq Tok]
++    (sp : Spec S Tok Fact Ob) {i : Ix} (O : Open S Hole A Role Tok Fact Ob i) : Prop where
++  typed : HasProt sp O.me O.Ω O.Γ O.Q O.Φ O.Δ O.template
++  substOK : SubstOK sp O.me O.Ω O.σ
+   started : Started O.current O.hist
+ 
+ /-- The guard on a re-plan: the new substitution agrees with the old one on every hole the history
+ has entered (there is no unguarded re-plan in any theorem: each takes this as a hypothesis). -/
+-def Open.Replan {Tok Fact Ob : Type} {i : Ix} (O : Open S Hole A Tok Fact Ob i) (σ' : Subst S Hole A) : Prop :=
+-  ∀ j h, Dispatched O.template O.hist j h → σ'.ours O.Ω j h = O.σ.ours O.Ω j h
++def Open.Replan {Role Tok Fact Ob : Type} [DecidableEq Role] {i : Ix} (O : Open S Hole A Role Tok Fact Ob i)
++    (σ' : Subst S Hole A) : Prop :=
++  ∀ j h, Dispatched O.template O.hist j h → σ'.mine O.me O.Ω j h = O.σ.mine O.me O.Ω j h
+ 
+ end
+ 

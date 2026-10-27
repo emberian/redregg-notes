@@ -1,0 +1,5 @@
+# FAERIE-STALE — nanodregg 9c170a8b (pushed to main)
+
+- Host/DESIGN.md: deleted. Still-true rationale moved to docs/OPERATING.md, new section "Durability and recovery": group commit with no timer, no reply before sync, failed sync never retried and replies uncertain, torn-tail versus storeCorrupt rule, the supervisor routing replies by connection. The rest (segment layout, seal cadence, plant table, 1-segment-never-deleted) was stale or already in Lean headers (Host/Loop.lean, Log.lean, Open.lean, Exit.lean).
+- client/DESIGN.md: deleted. Still-true parts moved to docs/MEMBER.md, new section "What nd does and does not do": nd as step executor of follow, custody file checks and freeze-before-send, frame layout, what nd does not have. Dropped as stale: bwrap/sandbox launch claims, the committed/not-committed settlement files, the 6-op/5-tag counts, the 2,000-line ceiling.
+- Links fixed: README.md (the "earlier designs" row removed), decisions/ops.md (alternative (a) now says "the Host docs"). CHARTER.md line 146 mentions per-layer DESIGN.md generically; left alone.

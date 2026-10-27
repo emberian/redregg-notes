@@ -1,0 +1,8 @@
+1008,1012c1008
+<         match ownSettle X me w cb with
+<         | some (.refused code) =>
+<             refusedAt X (.host (settledName ((Settle.Verdict.refused code : Settle.Verdict D).text X.env.bytes)))
+<         | some .expired => refusedAt X (.host "expired")
+<         | v => attemptContradicted X "refused" v
+---
+>         refusedAt X (.host (settledName txt))

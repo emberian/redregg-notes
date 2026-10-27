@@ -1,0 +1,631 @@
+diff --git a/Lang/Package.lean b/Lang/Package.lean
+index e62e6b3..65ab201 100644
+--- a/Lang/Package.lean
++++ b/Lang/Package.lean
+@@ -271,6 +271,8 @@ inductive CheckError
+   | badRel (label : Label)
+   /-- a method reads a relation that is not cell-keyed with its keys' cell liveness (E1) -/
+   | liveNotCellKeyed (label : Label)
++  /-- a method reads a peer's rows (PROT-6) and its argument names no `pair : rec {a, b : digest}` -/
++  | peerNotNamed (label : Label)
+   deriving DecidableEq, Repr
+ 
+ /-- The refusal's name (law 7): its constructor's. -/
+@@ -283,12 +285,13 @@ def CheckError.name : CheckError → String
+   | .noLaw _ => "noLaw" | .badLaw _ => "badLaw"
+   | .tooManyRels => "tooManyRels" | .relKey _ => "relKey" | .badRel _ => "badRel"
+   | .liveNotCellKeyed _ => "liveNotCellKeyed"
++  | .peerNotNamed _ => "peerNotNamed"
+ 
+ /-- What goes on the wire inside `Refusal.program`: the name, then the label it is about (for
+ `illTyped`, the failed rule and its path: `illTyped noField @body.f`). -/
+ def CheckError.wire : CheckError → String
+   | e@(.noMethod ℓ) | e@(.badMethod ℓ) | e@(.noLaw ℓ) | e@(.badLaw ℓ) | e@(.relKey ℓ) | e@(.badRel ℓ)
+-  | e@(.liveNotCellKeyed ℓ) =>
++  | e@(.liveNotCellKeyed ℓ) | e@(.peerNotNamed ℓ) =>
+       s!"{e.name} {ℓ}"
+   | e@(.illTyped why) => s!"{e.name} {why.text}"
+   | e => e.name
+@@ -305,6 +308,7 @@ def CheckError.text : CheckError → String
+   | .tooManyRels => "relations" | .relKey ℓ => s!"relation {ℓ} has no fixed-width key"
+   | .badRel ℓ => s!"relation {ℓ} is malformed"
+   | .liveNotCellKeyed ℓ => s!"method {ℓ} reads a relation that is not cell-keyed (live)"
++  | .peerNotNamed ℓ => s!"method {ℓ} reads a peer's rows and its argument names no pair"
+ 
+ def isRecordData : Ty → Bool
+   | t@(.record _) => t.wf && t.isData
+@@ -368,13 +372,63 @@ def readsOf (rels : List (Label × RelDecl)) : Ty → Option (List (Label × Rel
+     | none => none
+   | _ => none
+ 
++/-- The reserved field of a method's rows record that holds a PEER read (PROT-6): reads of the
++package's own relations under the other object of the argument's `pair`. No relation is labelled
++`peer` (`checkRel`), so the field never shadows one. -/
++def peerLabel : Label := "peer"
++
++/-- The argument field a peer-reading method names its pair by: the reader is one of `a`, `b`, and
++its peer is the other (`Lang.peerOf`). -/
++def pairTy : Ty := .record [("a", .digest), ("b", .digest)]
++
++/-- A method's rows argument: its own reads (`readsTy`), and when it declares peer reads `ps`, the
++field `peer` holding them, in sorted position. -/
++def rowsTy (rels : List (Label × RelDecl)) (rs ps : List (Label × RelRead)) : Ty :=
++  match ps, readsTy rels rs with
++  | [], R => R
++  | _, .record fs => .record (Row.sort (fs ++ [(peerLabel, readsTy rels ps)]))
++  | _, R => R
++
++/-- A rows record read back as its own reads and its peer reads, exactly (`rowsTy rels rs ps = R`);
++a record without a `peer` field is `readsOf`'s, with no peer reads. -/
++def rowsOf (rels : List (Label × RelDecl)) : Ty → Option (List (Label × RelRead) × List (Label × RelRead))
++  | R@(.record row) =>
++    match Row.find? peerLabel row with
++    | none => (readsOf rels R).map (·, [])
++    | some P =>
++      match readsOf rels (.record (row.filter (·.1 ≠ peerLabel))), readsOf rels P with
++      | some rs, some ps => if !ps.isEmpty && rowsTy rels rs ps == R then some (rs, ps) else none
++      | _, _ => none
++  | _ => none
++
++/-- The peer reads a method type declares (`[]`: none). -/
++def methodPeer (rels : List (Label × RelDecl)) : Ty → List (Label × RelRead)
++  | .fn R _ => ((rowsOf rels R).map (·.2)).getD []
++  | _ => []
++
++/-- A method type that reads a peer's rows names the pair in its argument record. -/
++def pairNamed (A : Ty) (ps : List (Label × RelRead)) : Bool :=
++  ps.isEmpty ||
++    match A with
++    | .record row => Row.find? "pair" row == some pairTy
++    | _ => false
++
++/-- A method type whose rows argument reads a peer while its argument names no pair: refused
++`peerNotNamed` by name at install (law 7), not as a bad method. -/
++def peerUnnamed (rels : List (Label × RelDecl)) : Ty → Bool
++  | .fn R (.fn _ (.fn A _)) =>
++    match rowsOf rels R with
++    | some (_, ps) => !pairNamed A ps
++    | none => false
++  | _ => false
++
+ /-- The signature of a method field, if it has a method's shape over state `S` and relations
+ `rels`: `fn R (fn S (fn A (fn reqTy (rec {calls, edits, state})))))`. -/
+ def methodSig (S : Ty) (rels : List (Label × RelDecl)) : Ty → Option Sig
+   | .fn R (.fn S' (.fn A (.fn Q (.record [("calls", .record row), ("edits", .record erow), ("state", S'')])))) =>
+       if S' = S ∧ Q = reqTy ∧ S'' = S ∧ A.isData then
+-        match callSlotsOf row, editSlotsOf rels erow, readsOf rels R with
+-        | some ks, some es, some rs => some ⟨A, ks, rs, es⟩
++        match callSlotsOf row, editSlotsOf rels erow, rowsOf rels R with
++        | some ks, some es, some (rs, ps) => if pairNamed A ps then some ⟨A, ks, rs, es⟩ else none
+         | _, _, _ => none
+       else none
+   | _ => none
+@@ -391,6 +445,7 @@ def checkMethods (S : Ty) (rels : List (Label × RelDecl)) (row : List (Label ×
+       | some t =>
+         if (methodArg S rels t).isSome then checkMethods S rels row ms
+         else if liveNotCellKeyed rels t then .error (.liveNotCellKeyed ℓ)
++        else if peerUnnamed rels t then .error (.peerNotNamed ℓ)
+         else .error (.badMethod ℓ)
+ 
+ mutual
+@@ -457,6 +512,8 @@ def checkRel (S : Ty) (row : List (Label × Ty)) (r : Label × RelDecl) : Except
+       (match d.guard with
+        | none => true
+        | some g => Row.find? g row == some (guardTy S d)) do throw (.badRel ℓ)
++  -- the label a method's rows record holds a peer read at (PROT-6) is never a relation's
++  if ℓ = peerLabel then throw (.badRel ℓ)
+ 
+ def checkRels (S : Ty) (row : List (Label × Ty)) (rels : List (Label × RelDecl)) : Except CheckError Unit := do
+   if rels.length > relsMax then throw .tooManyRels
+diff --git a/Lang/Program.lean b/Lang/Program.lean
+index 5ffdbeb..30268a9 100644
+--- a/Lang/Program.lean
++++ b/Lang/Program.lean
+@@ -363,6 +363,43 @@ def resolveMethod (p : Package) (method : Nat) : Except (Refusal D) (Label × Si
+   let some sg := methodSig p.state p.rels mty | throw (.program s!"method {ℓ}")
+   pure (ℓ, sg)
+ 
++/-- The peer reads method `ℓ` of `p` declares (PROT-6; `[]`: none). -/
++def Package.peerReads (p : Package) (ℓ : Label) : List (Label × RelRead) :=
++  match Row.find? ℓ (recordRow p.iface) with
++  | some t => methodPeer p.rels t
++  | none => []
++
++/-- The object a peer read is under (PROT-6): the member of the argument's `pair` that is not the
++reader, each a digest of the World (`digestOf`); a pair that does not name the reader is
++`notParty`, one that names it twice `samePeer`. -/
++def peerOf (self : D) (args : Data) : Except (Refusal D) D := do
++  let some (.record [("a", .digest a), ("b", .digest b)]) := args.field "pair"
++    | throw (.program "peer: no pair")
++  if a == b then throw (.program "peer: samePeer")
++  let other ← if a == bytesOf self then pure b
++    else if b == bytesOf self then pure a
++    else throw (.program "peer: notParty")
++  match digestOf other with
++  | some p => pure p
++  | none => throw (.program "peer: not a digest")
++
++/-- A method's rows argument (LANG-49, PROT-6): its own reads (`readsData` under `self`), and, when
++it declares peer reads `ps`, the SAME reads under its peer (`readsData` under `peerOf`), at the field
++`peer`. The peer is a live object of THIS package (`readKind` first: an unpinned peer is the
++kernel's own `unpinned`, by name; then its package slot), so its relations are this package's and
++no foreign declaration is read. Every row of either part is a row the caller pinned (`RowView`). -/
++def methodReads (look : Pinned D) (pkg : D) (rels : List (Label × RelDecl)) (rv : RowView D) (self : D)
++    (args : Data) (rs ps : List (Label × RelRead)) : Except (Refusal D) Data := do
++  let own ← readsData digestOf look rels rv self rs
++  if ps.isEmpty then return own
++  let peer ← peerOf bytesOf digestOf self args
++  let cell ← readKind look peer kindObject
++  unless cell.slots.get slotPackage == some (bytesOf pkg) do throw (.program "peer: another package")
++  let pd ← readsData digestOf look rels rv peer ps
++  match own with
++  | .record fs => pure (.record (Row.sort (fs ++ [(peerLabel, pd)])))
++  | d => pure d
++
+ /-- What a method run starts from once every boundary check has passed (LANG-41): the closure's
+ bodies and size, the method's label, the state's record row, the type the result is extracted at,
+ the state and the arguments as data, and the term the machine evaluates in its environment
+@@ -401,7 +438,7 @@ def runSetupWith (loader : Pinned D → Nat → ByteArray → Loaded → Except
+   let a ← match Wire.decodeData sg.arg args with
+     | .ok d => if digestsOk digestOf d.digests then pure d else throw (.program "arguments: not a digest")
+     | .error e => throw (.program s!"arguments: {decodeText e}")
+-  let rows ← readsData digestOf look p.rels rv r.self sg.reads
++  let rows ← methodReads bytesOf digestOf look pkg p.rels rv r.self a sg.reads (p.peerReads ℓ)
+   pure { lib := L.lib, pkgs := L.pkgs.length, g, rels := p.rels, label := ℓ, row,
+          ty := resultTy p.state sg.calls (editTy p.rels) sg.edits, state := s,
+          args := a, reads := rows, term := apply4 g ℓ, env := [(reqData bytesOf r).toVal, a.toVal, s.toVal, rows.toVal], preparation := charge L }
+diff --git a/Lang/Proofs/CallLive.lean b/Lang/Proofs/CallLive.lean
+index 62a0aa8..276cce0 100644
+--- a/Lang/Proofs/CallLive.lean
++++ b/Lang/Proofs/CallLive.lean
+@@ -530,12 +530,14 @@ theorem methodSig_slots {S t : Ty} {rels : List (Label × RelDecl)} {sg : Sig}
+   split at h
+   · split at h
+     · split at h
+-      · rename_i ks es rs hks hes hrs
+-        cases h
+-        unfold callSlotsOf at hks
+-        split at hks
+-        · exact callSlotsOf_ok hks
+-        · cases hks
++      · rename_i ks es rs ps hks hes hrs
++        split at h
++        · cases h
++          unfold callSlotsOf at hks
++          split at hks
++          · exact callSlotsOf_ok hks
++          · cases hks
++        · cases h
+       · cases h
+     · cases h
+   · cases h
+diff --git a/Lang/Proofs/Extract.lean b/Lang/Proofs/Extract.lean
+index a25f8c8..d924479 100644
+--- a/Lang/Proofs/Extract.lean
++++ b/Lang/Proofs/Extract.lean
+@@ -371,7 +371,7 @@ theorem runMeasured_means {bytesOf : D → ByteArray} {digestOf : ByteArray →
+       L.pkgs[g]? = some p ∧ resolveMethod (D := D) p method = .ok x ∧
+       readState digestOf (recordRow p.state) state = .ok sd ∧
+       Wire.decodeData x.2.arg args = .ok ad ∧
+-      readsData digestOf look p.rels rv r.self x.2.reads = .ok wd ∧
++      methodReads bytesOf digestOf look pkg p.rels rv r.self ad x.2.reads (p.peerReads x.1) = .ok wd ∧
+       BigStep L.lib [(reqData bytesOf r).toVal, ad.toVal, sd.toVal, wd.toVal] (apply4 g x.1) (.ok v) ∧
+       Means L.lib (resultTy p.state x.2.calls (editTy p.rels) x.2.edits) v
+         (.record [("calls", c), ("edits", e), ("state", .record ds)]) ∧
+diff --git a/Lang/Proofs/Invoke.lean b/Lang/Proofs/Invoke.lean
+index dfc9f22..b1114b7 100644
+--- a/Lang/Proofs/Invoke.lean
++++ b/Lang/Proofs/Invoke.lean
+@@ -104,7 +104,7 @@ theorem methodArg_wf {p : Package} {ℓ : Label} {mty A : Ty} (h : p.checkShape
+   rw [hrow] at hw
+   simp only [Ty.wf, Bool.and_eq_true] at hw
+   have := rowWf_find hw.2 hf
+-  obtain ⟨ks, rs, es, hks⟩ := methodArg_spec hA
++  obtain ⟨ks, rs, ps, es, hks⟩ := methodArg_spec hA
+   rw [hks] at this
+   simp only [methodTy, Ty.wf, Bool.and_eq_true] at this
+   exact this.2.2.1
+@@ -154,7 +154,7 @@ theorem methodArg_dataTy {p : Package} {ℓ : Label} {mty A : Ty} (h : p.checkSh
+   rw [hrow] at hwi
+   simp only [Wire.tyWire, Bool.and_eq_true] at hwi
+   have ht := tyRowWire_find hwi.2 hf
+-  obtain ⟨ks, rs, es, hks⟩ := methodArg_spec hA
++  obtain ⟨ks, rs, ps, es, hks⟩ := methodArg_spec hA
+   rw [hks] at ht
+   simp only [methodTy, Wire.tyWire, Bool.and_eq_true] at ht
+   simp only [Wire.dataTy, Bool.and_eq_true]
+@@ -456,6 +456,65 @@ theorem readsData_conforms {D : Type} {digestOf : ByteArray → Option D} {look
+     all_goals first | cases hy | skip
+     exact ⟨_, by rw [‹Row.find? _ rels = some _›]; rfl, rfl, relReads_conforms ‹_›⟩
+ 
++theorem rowConforms_insert {ℓ : Label} {d : Data} {T : Ty} (hd : Conforms d T) :
++    ∀ {ds : List (Label × Data)} {r : List (Label × Ty)}, RowConforms ds r →
++      RowConforms (Row.insert (ℓ, d) ds) (Row.insert (ℓ, T) r)
++  | _, _, .nil => .cons hd .nil
++  | _, _, .cons (ℓ := k) h hr => by
++    by_cases hc : ℓ ≤ k
++    · simp only [Row.insert, if_pos hc]; exact .cons hd (.cons h hr)
++    · simp only [Row.insert, if_neg hc]; exact .cons h (rowConforms_insert hd hr)
++
++/-- Sorting two rows of the same labels keeps them conforming (`Row.sort` compares labels only). -/
++theorem rowConforms_sort : ∀ {ds : List (Label × Data)} {r : List (Label × Ty)}, RowConforms ds r →
++    RowConforms (Row.sort ds) (Row.sort r)
++  | _, _, .nil => .nil
++  | _, _, .cons h hr => by
++    simp only [Row.sort, List.foldr_cons]
++    exact rowConforms_insert h (rowConforms_sort hr)
++
++/-- **The rows argument is a value of the declared rows type** (LANG-49, PROT-6): the own reads at
++`readsTy`, and the peer reads, when declared, at the `peer` field (`rowsTy`). -/
++theorem methodReads_conforms {D : Type} {bytesOf : D → ByteArray} {digestOf : ByteArray → Option D}
++    {look : Pinned D} {pkg : D} {rels : List (Label × RelDecl)} {rv : RowView D} {self : D} {args : Data}
++    {rs ps : List (Label × RelRead)} {v : Data}
++    (h : methodReads bytesOf digestOf look pkg rels rv self args rs ps = .ok v) :
++    Conforms v (rowsTy rels rs ps) := by
++  unfold methodReads at h
++  simp only [bind, Except.bind, pure, Except.pure] at h
++  split at h
++  · cases h
++  · rename_i own hown
++    have ho := readsData_conforms hown
++    cases ps with
++    | nil => cases h; exact ho
++    | cons q qs =>
++      simp only [List.isEmpty_cons, Bool.false_eq_true, ↓reduceIte] at h
++      cases hpo : peerOf bytesOf digestOf self args with
++      | error e => rw [hpo] at h; cases h
++      | ok peer =>
++        rw [hpo] at h
++        simp only at h
++        cases hk : readKind look peer kindObject with
++        | error e => rw [hk] at h; cases h
++        | ok cell =>
++          rw [hk] at h
++          simp only at h
++          by_cases hc : (cell.slots.get slotPackage == some (bytesOf pkg)) = true
++          · simp only [hc, ↓reduceIte] at h
++            cases hpd : readsData digestOf look rels rv peer (q :: qs) with
++            | error e => rw [hpd] at h; cases h
++            | ok pd =>
++              rw [hpd] at h
++              simp only at h
++              have hp := readsData_conforms hpd
++              simp only [readsTy] at ho
++              cases ho with
++              | record hr =>
++                cases h
++                exact .record (rowConforms_sort (rowConforms_append hr (.cons hp .nil)))
++          · simp [hc] at h
++
+ /-- The run inside `Program.run`, on what it decoded, never reaches `stuck`: it ends with a value
+ of the method's result type (its calls and its new state) or a named non-`stuck` fault. -/
+ theorem invoke_never_stuck {D : Type} {bytesOf : D → ByteArray} {digestOf : ByteArray → Option D}
+@@ -467,15 +526,16 @@ theorem invoke_never_stuck {D : Type} {bytesOf : D → ByteArray} {digestOf : By
+     (hm : Row.find? ℓ (recordRow p.iface) = some mty) (hA : methodSig p.state p.rels mty = some sg)
+     (hstate : readState digestOf (recordRow p.state) state = .ok sd)
+     (hargs : Wire.decodeData sg.arg args = .ok ad)
+-    (hrows : readsData digestOf look p.rels rv r.self sg.reads = .ok wd)
++    {pkg : D} (hrows : methodReads bytesOf digestOf look pkg p.rels rv r.self ad sg.reads (p.peerReads ℓ) = .ok wd)
+     (hr : reqOk bytesOf r = true) :
+     RunOK L.ifaces (resultTy p.state sg.calls (editTy p.rels) sg.edits)
+       (run L.lib Bounds.stackMax ticks 0
+         (State.init (apply4 g ℓ) [(reqData bytesOf r).toVal, ad.toVal, sd.toVal, wd.toVal])) := by
+   have hs := readState_conforms hstate
+   rw [← checkShape_state ((load_checked hload g p hp).1)] at hs
++  rw [Package.peerReads_of hm] at hrows
+   exact method_run_sound hload hp hm hA (toVal_typed hs) (toVal_typed (decodeData_conforms hargs))
+-    (toVal_typed (reqOk_conforms hr)) (toVal_typed (readsData_conforms hrows))
++    (toVal_typed (reqOk_conforms hr)) (toVal_typed (methodReads_conforms hrows))
+ 
+ /-- The twin for laws: every law of a loaded package, run in `Program.judge` on the old and new states
+ it decoded from the slots and the request, never reaches `stuck`: it ends with a value of
+diff --git a/Lang/Proofs/LiveInvoke.lean b/Lang/Proofs/LiveInvoke.lean
+index 0185ab6..d6f01a7 100644
+--- a/Lang/Proofs/LiveInvoke.lean
++++ b/Lang/Proofs/LiveInvoke.lean
+@@ -20,17 +20,19 @@ theorem method_live_run_sound {D : Type} {rv : RowView D} {self : D} {digestOf :
+     (hp : L.pkgs[g]? = some p)
+     (hm : Row.find? ℓ (recordRow p.iface) = some mty) (hA : methodSig p.state p.rels mty = some sg)
+     (hs : ValTy (Loaded.ifaces L) sv p.state) (ha : ValTy (Loaded.ifaces L) av sg.arg)
+-    (hr : ValTy (Loaded.ifaces L) reqv reqTy) (hw : ValTy (Loaded.ifaces L) wv (readsTy p.rels sg.reads)) :
++    (hr : ValTy (Loaded.ifaces L) reqv reqTy)
++    (hw : ValTy (Loaded.ifaces L) wv (rowsTy p.rels sg.reads (methodPeer p.rels mty))) :
+     RunOK (Loaded.ifaces L) (resultTy p.state sg.calls (editTy p.rels) sg.edits)
+       (run L.lib Bounds.stackMax ticks 0 (State.init (apply4 g ℓ) [reqv, av, sv, wv])) := by
+   obtain ⟨hlib, _⟩ := loadLive_libTy hload
+   obtain ⟨row, hrow, hfind⟩ := recordRow_find hm
+   have hmt := (methodSig_spec hA).1
++  generalize methodPeer p.rels mty = ps at hw hmt
+   subst hmt
+-  have href : HasType (Loaded.ifaces L) [reqTy, sg.arg, p.state, readsTy p.rels sg.reads] (.ref g)
++  have href : HasType (Loaded.ifaces L) [reqTy, sg.arg, p.state, rowsTy p.rels sg.reads ps] (.ref g)
+       (.record row) :=
+     .ref (by rw [← hrow]; simp [Loaded.ifaces, hp])
+-  have ht : HasType (Loaded.ifaces L) [reqTy, sg.arg, p.state, readsTy p.rels sg.reads] (apply4 g ℓ)
++  have ht : HasType (Loaded.ifaces L) [reqTy, sg.arg, p.state, rowsTy p.rels sg.reads ps] (apply4 g ℓ)
+       (resultTy p.state sg.calls (editTy p.rels) sg.edits) :=
+     .app (.app (.app (.app (.get href hfind) (.var rfl)) (.var rfl)) (.var rfl)) (.var rfl)
+   exact run_sound hlib _ _ _ (.eval (.cons hr (.cons ha (.cons hs (.cons hw .nil)))) ht .nil)
+@@ -44,15 +46,16 @@ theorem invoke_live_never_stuck {D : Type} {bytesOf : D → ByteArray} {digestOf
+     (hm : Row.find? ℓ (recordRow p.iface) = some mty) (hA : methodSig p.state p.rels mty = some sg)
+     (hstate : readState digestOf (recordRow p.state) state = .ok sd)
+     (hargs : Wire.decodeData sg.arg args = .ok ad)
+-    (hrows : readsData digestOf look p.rels rv r.self sg.reads = .ok wd)
++    {pkg : D} (hrows : methodReads bytesOf digestOf look pkg p.rels rv r.self ad sg.reads (p.peerReads ℓ) = .ok wd)
+     (hr : reqOk bytesOf r = true) :
+     RunOK L.ifaces (resultTy p.state sg.calls (editTy p.rels) sg.edits)
+       (run L.lib Bounds.stackMax ticks 0
+         (State.init (apply4 g ℓ) [(reqData bytesOf r).toVal, ad.toVal, sd.toVal, wd.toVal])) := by
+   have hs := readState_conforms hstate
+   rw [← checkShape_state ((loadLive_checked hload g p hp).1)] at hs
++  rw [Package.peerReads_of hm] at hrows
+   exact method_live_run_sound hload hp hm hA (toVal_typed hs) (toVal_typed (decodeData_conforms hargs))
+-    (toVal_typed (reqOk_conforms hr)) (toVal_typed (readsData_conforms hrows))
++    (toVal_typed (reqOk_conforms hr)) (toVal_typed (methodReads_conforms hrows))
+ 
+ end
+ 
+diff --git a/Lang/Proofs/Load.lean b/Lang/Proofs/Load.lean
+index 19b548d..6e8e2b0 100644
+--- a/Lang/Proofs/Load.lean
++++ b/Lang/Proofs/Load.lean
+@@ -329,11 +329,32 @@ theorem readsOf_spec {rels : List (Label × RelDecl)} {R : Ty} {rs : List (Label
+     · cases h
+   · cases h
+ 
+-/-- **The type IS the declaration** (LANG-49): a method field's signature reads back exactly the
+-type it was read from, its rows argument, call slots and edit slots included. -/
++/-- A rows record reads back exactly (PROT-6): its own reads and its peer reads are the ones it spells. -/
++theorem rowsOf_spec {rels : List (Label × RelDecl)} {R : Ty} {rs ps : List (Label × RelRead)}
++    (h : rowsOf rels R = some (rs, ps)) : rowsTy rels rs ps = R := by
++  unfold rowsOf at h
++  split at h
++  · rename_i row
++    split at h
++    · simp only [Option.map_eq_some_iff, Prod.mk.injEq] at h
++      obtain ⟨rs', hr, rfl, rfl⟩ := h
++      simpa [rowsTy] using readsOf_spec hr
++    · split at h
++      · split at h
++        · rename_i hc
++          cases h
++          simp only [Bool.and_eq_true, beq_iff_eq] at hc
++          exact hc.2
++        · cases h
++      · cases h
++  · cases h
++
++/-- **The type IS the declaration** (LANG-49, PROT-6): a method field's signature reads back exactly
++the type it was read from, its rows argument (its own reads, and its peer reads `methodPeer`), call
++slots and edit slots included. -/
+ theorem methodSig_spec {S : Ty} {rels : List (Label × RelDecl)} {t : Ty} {sg : Sig}
+     (h : methodSig S rels t = some sg) :
+-    t = methodTy S sg.arg sg.calls (readsTy rels sg.reads) (editTy rels) sg.edits ∧
++    t = methodTy S sg.arg sg.calls (rowsTy rels sg.reads (methodPeer rels t)) (editTy rels) sg.edits ∧
+       sg.calls.length ≤ Kernel.Bounds.callsMax ∧ sg.edits ≤ editsMax := by
+   unfold methodSig at h
+   split at h
+@@ -341,23 +362,32 @@ theorem methodSig_spec {S : Ty} {rels : List (Label × RelDecl)} {t : Ty} {sg :
+     · rename_i hc
+       obtain ⟨rfl, rfl, rfl, _⟩ := hc
+       split at h
+-      · rename_i ks es rs hks hes hrs
+-        cases h
+-        obtain ⟨hrow, hlen⟩ := callSlotsOf_spec hks
+-        obtain ⟨herow, hes'⟩ := editSlotsOf_spec hes
+-        have hR := readsOf_spec hrs
+-        subst hrow herow hR
+-        exact ⟨rfl, hlen, hes'⟩
++      · rename_i ks es rs ps hks hes hrs
++        split at h
++        · cases h
++          obtain ⟨hrow, hlen⟩ := callSlotsOf_spec hks
++          obtain ⟨herow, hes'⟩ := editSlotsOf_spec hes
++          have hR := rowsOf_spec hrs
++          refine ⟨?_, hlen, hes'⟩
++          subst hrow herow hR
++          simp only [methodPeer, hrs, Option.map_some, Option.getD_some]
++          rfl
++        · cases h
+       · cases h
+     · cases h
+   · cases h
+ 
+ theorem methodArg_spec {S : Ty} {rels : List (Label × RelDecl)} {t A : Ty} (h : methodArg S rels t = some A) :
+-    ∃ ks rs es, t = methodTy S A ks (readsTy rels rs) (editTy rels) es := by
++    ∃ ks rs ps es, t = methodTy S A ks (rowsTy rels rs ps) (editTy rels) es := by
+   unfold methodArg at h
+   simp only [Option.map_eq_some_iff] at h
+   obtain ⟨sg, hs, rfl⟩ := h
+-  exact ⟨sg.calls, sg.reads, sg.edits, (methodSig_spec hs).1⟩
++  exact ⟨sg.calls, sg.reads, _, sg.edits, (methodSig_spec hs).1⟩
++
++/-- The peer reads a resolved method declares are its type's (`methodPeer`). -/
++theorem Package.peerReads_of {p : Package} {ℓ : Label} {mty : Ty}
++    (hm : Row.find? ℓ (recordRow p.iface) = some mty) : p.peerReads ℓ = methodPeer p.rels mty := by
++  simp [Package.peerReads, hm]
+ 
+ theorem recordRow_find {T : Ty} {ℓ : Label} {t : Ty} (h : Row.find? ℓ (recordRow T) = some t) :
+     ∃ row, T = .record row ∧ Row.find? ℓ row = some t := by
+@@ -374,17 +404,19 @@ theorem method_run_sound {D : Type} {digestOf : ByteArray → Option D} {look :
+     (hp : L.pkgs[g]? = some p)
+     (hm : Row.find? ℓ (recordRow p.iface) = some mty) (hA : methodSig p.state p.rels mty = some sg)
+     (hs : ValTy (Loaded.ifaces L) sv p.state) (ha : ValTy (Loaded.ifaces L) av sg.arg)
+-    (hr : ValTy (Loaded.ifaces L) rv reqTy) (hw : ValTy (Loaded.ifaces L) wv (readsTy p.rels sg.reads)) :
++    (hr : ValTy (Loaded.ifaces L) rv reqTy)
++    (hw : ValTy (Loaded.ifaces L) wv (rowsTy p.rels sg.reads (methodPeer p.rels mty))) :
+     RunOK (Loaded.ifaces L) (resultTy p.state sg.calls (editTy p.rels) sg.edits)
+       (run L.lib Bounds.stackMax ticks 0 (State.init (apply4 g ℓ) [rv, av, sv, wv])) := by
+   obtain ⟨hlib, _⟩ := load_libTy hload
+   obtain ⟨row, hrow, hfind⟩ := recordRow_find hm
+   have hmt := (methodSig_spec hA).1
++  generalize methodPeer p.rels mty = ps at hw hmt
+   subst hmt
+-  have href : HasType (Loaded.ifaces L) [reqTy, sg.arg, p.state, readsTy p.rels sg.reads] (.ref g)
++  have href : HasType (Loaded.ifaces L) [reqTy, sg.arg, p.state, rowsTy p.rels sg.reads ps] (.ref g)
+       (.record row) :=
+     .ref (by rw [← hrow]; simp [Loaded.ifaces, hp])
+-  have ht : HasType (Loaded.ifaces L) [reqTy, sg.arg, p.state, readsTy p.rels sg.reads] (apply4 g ℓ)
++  have ht : HasType (Loaded.ifaces L) [reqTy, sg.arg, p.state, rowsTy p.rels sg.reads ps] (apply4 g ℓ)
+       (resultTy p.state sg.calls (editTy p.rels) sg.edits) :=
+     .app (.app (.app (.app (.get href hfind) (.var rfl)) (.var rfl)) (.var rfl)) (.var rfl)
+   exact run_sound hlib _ _ _ (.eval (.cons hr (.cons ha (.cons hs (.cons hw .nil)))) ht .nil)
+@@ -404,7 +436,7 @@ theorem runSetupWith_spec {D : Type} {bytesOf : D → ByteArray} {digestOf : Byt
+       resolveMethod (D := D) p method = .ok (ℓ, sg) ∧
+       readState digestOf (recordRow p.state) state = .ok sd ∧
+       Wire.decodeData sg.arg args = .ok ad ∧ digestsOk digestOf ad.digests = true ∧
+-      readsData digestOf look p.rels rv r.self sg.reads = .ok wd ∧
++      methodReads bytesOf digestOf look pkg p.rels rv r.self ad sg.reads (p.peerReads ℓ) = .ok wd ∧
+       S = { lib := L.lib, pkgs := L.pkgs.length, g, rels := p.rels, label := ℓ, row := recordRow p.state,
+             ty := resultTy p.state sg.calls (editTy p.rels) sg.edits, state := sd, args := ad,
+             reads := wd, term := apply4 g ℓ, env := [(reqData bytesOf r).toVal, ad.toVal, sd.toVal, wd.toVal], preparation := charge L } := by
+@@ -426,7 +458,7 @@ theorem runSetup_spec {D : Type} {bytesOf : D → ByteArray} {digestOf : ByteArr
+       resolveMethod (D := D) p method = .ok (ℓ, sg) ∧
+       readState digestOf (recordRow p.state) state = .ok sd ∧
+       Wire.decodeData sg.arg args = .ok ad ∧ digestsOk digestOf ad.digests = true ∧
+-      readsData digestOf look p.rels rv r.self sg.reads = .ok wd ∧
++      methodReads bytesOf digestOf look pkg p.rels rv r.self ad sg.reads (p.peerReads ℓ) = .ok wd ∧
+       S = { lib := L.lib, pkgs := L.pkgs.length, g, rels := p.rels, label := ℓ, row := recordRow p.state,
+             ty := resultTy p.state sg.calls (editTy p.rels) sg.edits, state := sd, args := ad,
+             reads := wd, term := apply4 g ℓ, env := [(reqData bytesOf r).toVal, ad.toVal, sd.toVal, wd.toVal] } := by
+diff --git a/Lang/Proofs/Provenance.lean b/Lang/Proofs/Provenance.lean
+index 3e19fa4..90a01eb 100644
+--- a/Lang/Proofs/Provenance.lean
++++ b/Lang/Proofs/Provenance.lean
+@@ -895,6 +895,73 @@ theorem readsData_digests {look : Pinned D} {rels : List (Label × RelDecl)} {rv
+     repeat' split at ha
+     all_goals first | (cases ha; done) | (cases ha; exact relReads_digests ‹_›)
+ 
++theorem rowDigests_mem {b : ByteArray} : ∀ {fs : List (Label × Data)},
++    b ∈ Data.rowDigests fs → ∃ y ∈ fs, b ∈ y.2.digests
++  | [], h => by simp [Data.rowDigests] at h
++  | y :: fs, h => by
++    simp only [Data.rowDigests, List.mem_append] at h
++    rcases h with h | h
++    · exact ⟨y, by simp, h⟩
++    · obtain ⟨z, hz, hb⟩ := rowDigests_mem h
++      exact ⟨z, by simp [hz], hb⟩
++
++theorem rowDigests_of_mem {b : ByteArray} : ∀ {fs : List (Label × Data)} {y : Label × Data},
++    y ∈ fs → b ∈ y.2.digests → b ∈ Data.rowDigests fs
++  | [], _, h, _ => by simp at h
++  | z :: fs, y, h, hb => by
++    simp only [Data.rowDigests, List.mem_append]
++    rcases List.mem_cons.mp h with rfl | h
++    · exact .inl hb
++    · exact .inr (rowDigests_of_mem h hb)
++
++/-- **Every digest of a method's rows argument is one `digestOf` accepted** (LANG-49, PROT-6): its own
++reads' and its peer reads', both `readsData`'s. -/
++theorem methodReads_digests {bytesOf : D → ByteArray} {look : Pinned D} {pkg : D}
++    {rels : List (Label × RelDecl)} {rv : RowView D} {self : D} {args : Data}
++    {rs ps : List (Label × RelRead)} {wd : Data}
++    (h : methodReads bytesOf digestOf look pkg rels rv self args rs ps = .ok wd) :
++    ∀ b ∈ wd.digests, (digestOf b).isSome = true := by
++  unfold methodReads at h
++  simp only [bind, Except.bind, pure, Except.pure] at h
++  split at h
++  · cases h
++  · rename_i own hown
++    cases ps with
++    | nil => cases h; exact readsData_digests hown
++    | cons q qs =>
++      simp only [List.isEmpty_cons, Bool.false_eq_true, ↓reduceIte] at h
++      cases hpo : peerOf bytesOf digestOf self args with
++      | error e => rw [hpo] at h; cases h
++      | ok peer =>
++        rw [hpo] at h
++        simp only at h
++        cases hk : readKind look peer kindObject with
++        | error e => rw [hk] at h; cases h
++        | ok cell =>
++          rw [hk] at h
++          simp only at h
++          by_cases hc : (cell.slots.get slotPackage == some (bytesOf pkg)) = true
++          · simp only [hc, ↓reduceIte] at h
++            cases hpd : readsData digestOf look rels rv peer (q :: qs) with
++            | error e => rw [hpd] at h; cases h
++            | ok pd =>
++              rw [hpd] at h
++              simp only at h
++              split at h
++              · rename_i fs
++                cases h
++                intro b hb
++                simp only [Data.digests] at hb
++                obtain ⟨y, hy, hb⟩ := rowDigests_mem hb
++                rw [(Row.sort_perm _).mem_iff] at hy
++                rcases List.mem_append.mp hy with hy | hy
++                · exact readsData_digests hown b (by simp only [Data.digests]; exact rowDigests_of_mem hy hb)
++                · simp only [List.mem_singleton] at hy
++                  subst hy
++                  exact readsData_digests hpd b hb
++              · cases h; exact readsData_digests hown
++          · simp [hc] at h
++
+ /-- Where a digest of a method run may come from: a member or object id of the request, a digest
+ of the arguments, a digest of the state the World held, a digest of the rows `rows` the caller's
+ view gave (LANG-49), or an id literal of the loaded closure. -/
+@@ -961,7 +1028,7 @@ theorem runSetup_accepted_of (hdig : ∀ x, (digestOf (bytesOf x)).isSome = true
+   · exact hdig _
+   · exact digestsOk_mem hda b h
+   · exact readState_digests hst b h
+-  · exact readsData_digests hrows b h
++  · exact methodReads_digests hrows b h
+   · exact hlits t ht b h
+ 
+ theorem runSetupLive_sources {look : Pinned D} {rv : RowView D} {pkg : D} {state : Kernel.Slots} {method : Nat}
+@@ -1005,7 +1072,7 @@ theorem runSetupLive_accepted_of (hdig : ∀ x, (digestOf (bytesOf x)).isSome =
+   · exact hdig _
+   · exact digestsOk_mem hda b h
+   · exact readState_digests hst b h
+-  · exact readsData_digests hrows b h
++  · exact methodReads_digests hrows b h
+   · exact hlits t ht b h
+ 
+ theorem mem_rowDigests {b : ByteArray} {ℓ : Label} {d : Data} :
+diff --git a/Ledger/Proofs/EscrowWitness.lean b/Ledger/Proofs/EscrowWitness.lean
+index 15fa276..eae95ef 100644
+--- a/Ledger/Proofs/EscrowWitness.lean
++++ b/Ledger/Proofs/EscrowWitness.lean
+@@ -53,7 +53,7 @@ private theorem setup_eq {look : Pinned D} {rv : RowView D} {pkg : D} {state : S
+     (hp : L.pkgs[g]? = some p) (hm : resolveMethod (D := D) p method = .ok (ℓ, sg))
+     (hs : readState digestOf (recordRow p.state) state = .ok sd)
+     (ha : Wire.decodeData sg.arg args = .ok ad) (had : digestsOk digestOf ad.digests = true)
+-    (hw : readsData digestOf look p.rels rv r.self sg.reads = .ok wd) :
++    (hw : methodReads bytesOf digestOf look pkg p.rels rv r.self ad sg.reads (p.peerReads ℓ) = .ok wd) :
+     runSetup bytesOf digestOf look rv pkg state method args r = .ok
+       { lib := L.lib, pkgs := L.pkgs.length, g, rels := p.rels, label := ℓ, row := recordRow p.state,
+         ty := resultTy p.state sg.calls (editTy p.rels) sg.edits, state := sd, args := ad,
+@@ -128,12 +128,11 @@ private def r1 : Req DD := { agent := dg 4, principal := dg 4, self := dg 9, not
+ private theorem hq1 : reqOk bo r1 = true := by decide +kernel
+ private theorem hs0 : readState dO (recordRow escrow.state) s0 = .ok (stateD terms "open") := by rfl
+ private theorem ha1 : Wire.decodeData depositArg a1 = .ok (.record [("grant", .digest (bo gr))]) := by rfl
+-private theorem hw0 : readsData dO look escrow.rels noRows (dg 9) [] = .ok (.record []) := by rfl
+ 
+ private theorem run1 : (match runMeasured bo dO look noRows pid s0 0 a1 r1 100000 with
+     | .ok (s, _, _, _, _) => decide (s = slotsAt "held") | .error _ => false) = true := by
+   have hS1 := setup_eq (bytesOf := bo) (digestOf := dO) (look := look) (rv := noRows) (pkg := pid)
+-    (method := 0) hq1 hload rfl rfl hs0 ha1 (by decide +kernel) hw0
++    (method := 0) hq1 hload rfl rfl hs0 ha1 (by decide +kernel) (by rfl)
+   unfold runMeasured runMeasuredWith
+   rw [hS1]
+   decide +kernel
+@@ -149,7 +148,7 @@ private theorem ha2 : Wire.decodeData unit a2 = .ok (.record []) := by rfl
+ private theorem run2 : (match runMeasured bo dO look noRows pid (slotsAt "held") 2 a2 r2 100000 with
+     | .ok (s, _, _, _, _) => decide (s = slotsAt "released") | .error _ => false) = true := by
+   have hS := setup_eq (bytesOf := bo) (digestOf := dO) (look := look) (rv := noRows) (pkg := pid)
+-    (method := 2) hq2 hload rfl rfl hs1 ha2 (by decide +kernel) hw0
++    (method := 2) hq2 hload rfl rfl hs1 ha2 (by decide +kernel) (by rfl)
+   unfold runMeasured runMeasuredWith
+   rw [hS]
+   decide +kernel
+@@ -208,7 +207,7 @@ theorem escrow_runs_witness : ∃ (pkg : Codec.Digest) (state : Slots) (runs : L
+ private theorem run3 : (match runMeasured bo dO look noRows pid (slotsAt "released") 2 a2 r2 100000 with
+     | .ok (s, _, _, _, _) => decide (s = slotsAt "released") | .error _ => false) = true := by
+   have hS := setup_eq (bytesOf := bo) (digestOf := dO) (look := look) (rv := noRows) (pkg := pid)
+-    (method := 2) hq2 hload rfl rfl hs2 ha2 (by decide +kernel) hw0
++    (method := 2) hq2 hload rfl rfl hs2 ha2 (by decide +kernel) (by rfl)
+   unfold runMeasured runMeasuredWith
+   rw [hS]
+   decide +kernel

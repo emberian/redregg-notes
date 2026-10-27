@@ -1,0 +1,15 @@
+
+omit [Ord D] [DecidableEq D] in
+/-- One wire name, one verdict row (law 7): the refusal and reject tables share no name, so a name
+read off a record tells its own row of `codeTable` (`Verdict.name_injective`, the two-table form of
+`Refusal.name_injective` and `Reject.name_injective`). -/
+theorem Verdict.name_injective (a b : Verdict D) (h : a.name = b.name) : a.code = b.code := by
+  cases a with
+  | refused r =>
+    cases b with
+    | refused s => simp only [Verdict.name, Verdict.code] at h ⊢; rw [h]
+    | rejected s => cases r <;> cases s <;> simp_all [Verdict.name, Refusal.name, Reject.name]
+  | rejected r =>
+    cases b with
+    | refused s => cases r <;> cases s <;> simp_all [Verdict.name, Refusal.name, Reject.name]
+    | rejected s => simp only [Verdict.name, Verdict.code] at h ⊢; rw [h]

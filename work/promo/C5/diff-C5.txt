@@ -1,0 +1,32 @@
+before 49512 (rows carrying a renamed-from name: 0 ) after 49536
+vanished 1 declared 0 UNDECLARED 1
+new 25 type-digest changed 0 value-hash changed 1
+module changed 0 of which from a module the step does not move 0
+   VANISHED Nanodregg.Lang.changedHypotheses.match_1 Lang.LiveHoles
+   UNDECLARED Nanodregg.Lang.changedHypotheses.match_1 Lang.LiveHoles
+   NEW Nanodregg.Lang.hypothesisStep Lang.LiveHoles
+   NEW Nanodregg.Lang.hypothesisStep.eq_1 Lang.Proofs.LiveHoles
+   NEW Nanodregg.Lang.hypothesisStep.match_1 Lang.LiveHoles
+   NEW Nanodregg.Lang.rowSupportHolds.eq_1 Lang.Proofs.LiveHoles
+   NEW Nanodregg.Lang.rowSupportHolds.eq_2 Lang.Proofs.LiveHoles
+   NEW Nanodregg.Lang.selectHole_hypotheses Lang.Proofs.LiveHoles
+   NEW Nanodregg.Lang.selectHole_hypotheses._simp_1_2 Lang.Proofs.LiveHoles
+   NEW Nanodregg.Lang.selectHole_live_selects Lang.Proofs.LiveHoles
+   NEW _private.Lang.Proofs.LiveHoles.0.Nanodregg.Lang.changed_fold Lang.Proofs.LiveHoles
+   NEW _private.Lang.Proofs.LiveHoles.0.Nanodregg.Lang.changed_fold._f Lang.Proofs.LiveHoles
+   NEW _private.Lang.Proofs.LiveHoles.0.Nanodregg.Lang.changed_fold.match_1_1 Lang.Proofs.LiveHoles
+   NEW _private.Lang.Proofs.LiveHoles.0.Nanodregg.Lang.changed_fold_ok Lang.Proofs.LiveHoles
+   NEW _private.Lang.Proofs.LiveHoles.0.Nanodregg.Lang.changed_fold_ok._f Lang.Proofs.LiveHoles
+   NEW _private.Lang.Proofs.LiveHoles.0.Nanodregg.Lang.changed_fold_ok.match_1_1 Lang.Proofs.LiveHoles
+   NEW _private.Lang.Proofs.LiveHoles.0.Nanodregg.Lang.deadPositions Lang.Proofs.LiveHoles
+   NEW _private.Lang.Proofs.LiveHoles.0.Nanodregg.Lang.deadPositions.eq_1 Lang.Proofs.LiveHoles
+   NEW _private.Lang.Proofs.LiveHoles.0.Nanodregg.Lang.deadPositions.match_1 Lang.Proofs.LiveHoles
+   NEW _private.Lang.Proofs.LiveHoles.0.Nanodregg.Lang.deadPositions.match_1.eq_1 Lang.Proofs.LiveHoles
+   NEW _private.Lang.Proofs.LiveHoles.0.Nanodregg.Lang.deadPositions.match_1.eq_2 Lang.Proofs.LiveHoles
+   NEW _private.Lang.Proofs.LiveHoles.0.Nanodregg.Lang.deadPositions.match_1.splitter Lang.Proofs.LiveHoles
+   NEW _private.Lang.Proofs.LiveHoles.0.Nanodregg.Lang.hypothesisStep_ok Lang.Proofs.LiveHoles
+   NEW _private.Lang.Proofs.LiveHoles.0.Nanodregg.Lang.rowSupportHolds.match_1.eq_1 Lang.Proofs.LiveHoles
+   NEW _private.Lang.Proofs.LiveHoles.0.Nanodregg.Lang.rowSupportHolds.match_1.eq_2 Lang.Proofs.LiveHoles
+   NEW _private.Lang.Proofs.LiveHoles.0.Nanodregg.Lang.rowSupportHolds.match_1.splitter Lang.Proofs.LiveHoles
+   NEW _private.Lang.Proofs.LiveHoles.0.Nanodregg.Lang.selectHole_inv Lang.Proofs.LiveHoles
+   VALUE Nanodregg.Lang.changedHypotheses Lang.LiveHoles

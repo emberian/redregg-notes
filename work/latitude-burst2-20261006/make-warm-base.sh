@@ -15,7 +15,7 @@ cp -p "$R" "$W/logs/green.result"
 for p in "$W"/src/.lake/packages/*/; do git -C "$p" config core.trustctime false; done
 git -C "$W/src" config core.trustctime false
 [ -z "$(git -C "$W/src" status --porcelain --untracked-files=no)" ] || { echo "base tracked tree dirty"; exit 1; }
-install -m 755 /srv/mini-logs/mk-lane.sh "$W/mk-lane.sh"
+install -m 755 /srv/mini/scripts/pipeline/mk-lane.sh "$W/mk-lane.sh"   # the repo's one copy (at the frozen tip); never a hand-scp'd one
 cat > "$W/FROZEN" <<F
 tip=$TIP
 frozen_at=$(date -Is)

@@ -1,0 +1,56 @@
+run root /run/user/1001/p4.uTDpCg/r
+  step   hook    bytes  margin  socket (sun_path holds 107)
+  J0     world      35      72  /run/user/1001/jm.XXXXXX/world.sock
+  M3     m3         44      63  /run/user/1001/jm.XXXXXX/m3/public/mini.sock
+  M4     m4         50      57  /run/user/1001/jm.XXXXXX/m4/store/public/mini.sock
+  M5     m5         66      41  /run/user/1001/jm.XXXXXX/m5/hermes/state/mcp-0000000000000011.sock
+  M7     m7         44      63  /run/user/1001/jm.XXXXXX/m7/public/mini.sock
+  M8     m8         52      55  /run/user/1001/jm.XXXXXX/m8/fixture/public/mini.sock
+  J13    j13        51      56  /run/user/1001/jm.XXXXXX/j13/store/public/mini.sock
+  JN2    jnock2     54      53  /run/user/1001/jm.XXXXXX/jnock2/world/public/mini.sock
+  JN3    jnock3     54      53  /run/user/1001/jm.XXXXXX/jnock3/world/public/mini.sock
+  JN5    jnock5     54      53  /run/user/1001/jm.XXXXXX/jnock5/world/public/mini.sock
+  JPAY4  jpay4      58      49  /run/user/1001/jm.XXXXXX/jpay4/acceptance/public/mini.sock
+  JPAY6  jpay6      70      37  /run/user/1001/jm.XXXXXX/jpay6/runtime-state/mcp-0000000000000011.sock
+  JROTL  jrotl      37      70  /run/user/1001/jm.XXXXXX/jrotl/f.sock
+STEP J0: clean start: private single-authority service, one sponsor ...
+STEP J0 PASS 1.971s service up and a signed read answered in 1.947s
+STEP J1: enroll an independently generated newcomer key ...
+STEP J1 PASS 1.528s subject 13226990559643049062, record 1; key absent from genesis/config; lookup = same receipt
+STEP J2: sponsor creates a resource under a permissive law ...
+STEP J2 PASS 1.093s object 16136663523376565541 under all[], record 2
+STEP J3: sponsor delegates observe+mutate (no control) to newcomer ...
+STEP J3 PASS 2.160s child 9902027794564023612 verbs observe,mutate, record 3
+STEP J4: newcomer signed read, writes field to 1, reads back 1 ...
+STEP J4 PASS 2.799s read 0.654s, write 1.323s, readback field 2 = 1, record 4
+STEP THIN: THIN-CONSENT: what thin consent shows is what commits; lying Hosts and unobservable targets refused before signing ...
+STEP THIN PASS 25.241s JTHIN: all thin-consent rows passed
+STEP JP2: a friend's key never touches the box: enroll, use and delegate over the proxy ...
+STEP JP2 FAIL 11.369s hook exit 1: 20 of 60 rows failed; first: 19: create notes declared all[] (remote shell)
+
+step  status      wall_s  what / detail / deciding artifact
+J0   PASS         1.971  clean start: private single-authority service, one sponsor
+                          service up and a signed read answered in 1.947s
+                          -> /run/user/1001/p4.uTDpCg/r/world/handoff.json
+J1   PASS         1.528  enroll an independently generated newcomer key
+                          subject 13226990559643049062, record 1; key absent from genesis/config; lookup = same receipt
+                          -> /run/user/1001/p4.uTDpCg/r/world/attempts/newcomer/submit.json
+J2   PASS         1.093  sponsor creates a resource under a permissive law
+                          object 16136663523376565541 under all[], record 2
+                          -> /run/user/1001/p4.uTDpCg/r/world/sponsor/attempts/create-shared/outcome.json
+J3   PASS         2.160  sponsor delegates observe+mutate (no control) to newcomer
+                          child 9902027794564023612 verbs observe,mutate, record 3
+                          -> /run/user/1001/p4.uTDpCg/r/world/sponsor/attempts/grant-newcomer/outcome.json
+J4   PASS         2.799  newcomer signed read, writes field to 1, reads back 1
+                          read 0.654s, write 1.323s, readback field 2 = 1, record 4
+                          -> /run/user/1001/p4.uTDpCg/r/world/newcomer-workspace/attempts/first-action/outcome.json
+THIN  PASS        25.241  THIN-CONSENT: what thin consent shows is what commits; lying Hosts and unobservable targets refused before signing
+                          JTHIN: all thin-consent rows passed
+                          -> /run/user/1001/p4.uTDpCg/r/steps/THIN/jthin-consent/rows.tsv
+JP2  FAIL        11.369  a friend's key never touches the box: enroll, use and delegate over the proxy
+                          hook exit 1: 20 of 60 rows failed; first: 19: create notes declared all[] (remote shell)
+                          -> /run/user/1001/p4.uTDpCg/r/steps/JP2/steps.tsv
+
+FRONTIER: JP2   (accepted records: 4; load average start/end: 4.91 5.25 6.27 / 4.68 5.09 6.16 on 32 CPUs; result: /run/user/1001/p4.uTDpCg/r/journey-result.json)
+JOURNEY-EXIT 1
+COPIED

@@ -1,0 +1,8 @@
+-| Lean modules | 498 | — |
+-| Lean proof-modules | 269 | — |
++| Lean modules | 494 | — |
++| Lean proof-modules | 265 | — |
+-| Lean lines (Lang) | 42185 | — |
++| Lean lines (Lang) | 42279 | — |
+-| max dependents of a non-foundation module | 349 | — |
++| max dependents of a non-foundation module | 346 | — |

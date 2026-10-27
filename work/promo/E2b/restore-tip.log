@@ -1,0 +1,16 @@
+✔ [711/727] Built Hosting.Resident.Run (670ms)
+✔ [712/727] Built Hosting.Resident.Main (223ms)
+✔ [713/727] Built Hosting.Resident.Volume (433ms)
+✔ [714/727] Built Hosting.Resident.Run:c.o (713ms)
+✔ [715/727] Built Hosting.Resident.Trace (556ms)
+✔ [717/727] Built Hosting.Proofs.Resident (1.3s)
+✔ [718/727] Built resident:exe (752ms)
+✔ [719/727] Built Lang.Contextual.NanoBridge (589ms)
+✔ [720/727] Built Hosting.Proofs.ResidentVolume (1.3s)
+✔ [721/727] Built Hosting.Proofs.ResidentRun (3.2s)
+✔ [722/727] Built Hosting.Proofs.BellConform (623ms)
+✔ [723/727] Built Lang.Proofs.Contextual.Protocol (1.0s)
+✔ [724/727] Built Lang.Proofs.Contextual.Negotiation (690ms)
+✔ [726/727] Built Hosting.Proofs.Socket (12s)
+Build completed successfully (727 jobs).
+lake exit 0

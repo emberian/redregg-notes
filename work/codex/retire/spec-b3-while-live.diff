@@ -1,0 +1,71 @@
+diff -ru a/Spec/Proofs/Claims.lean b/Spec/Proofs/Claims.lean
+--- a/Spec/Proofs/Claims.lean	2026-10-26 20:57:47
++++ b/Spec/Proofs/Claims.lean	2026-10-26 20:57:47
+@@ -112,7 +112,8 @@
+ 
+ /-- **B3. Law (what an object's author is promised), for `NoRef` laws.** Along an audited log, an
+ object live at the start has a history of judged steps (`ObjectHistory`), its package never
+-changes, and EVERY history of it between the two Worlds in whose judged steps a `NoRef` law `t` of
++changes while it is live (it ends live with its package, or retired: a tombstone, KERNEL-70), and
++EVERY history of it between the two Worlds in whose judged steps a `NoRef` law `t` of
+ its package is in force is a chain of steps the law's reference meaning admits (`Std.Step [] t`,
+ the `BigStep` semantics), each paired with the request that made it. Every history, not some: a
+ judged step carries the view of the call that made it, and a step of another call reaching the same
+@@ -127,7 +128,8 @@
+     ∀ {w w' : World D} {l : List (Step D)}, Audited S w l w' → CellsCanon S.X.env w →
+     ∀ {cell : Cell}, w.live S.X.env obj = some cell → cell.kind = kindObject →
+       (∃ tr, ObjectHistory S.X obj w w' tr) ∧
+-        (∃ cell', w'.live S.X.env obj = some cell' ∧ packageOf S.X obj cell' = packageOf S.X obj cell) ∧
++        ((∃ cell', w'.live S.X.env obj = some cell' ∧ packageOf S.X obj cell' = packageOf S.X obj cell) ∨
++          w'.entry S.X.env obj = some .tomb) ∧
+         ∀ tr, ObjectHistory S.X obj w w' tr →
+           (∀ e ∈ tr, law ∈ e.2.1.toList ++ e.2.2.1 ∧ Lang.readPackage e.1 law = .ok p) →
+           ∀ {o : Lang.Data}, Lang.readState S.X.digestOf (Lang.recordRow p.state) (stateOf cell) = .ok o →
+diff -ru a/Spec/Proofs/Deployed.lean b/Spec/Proofs/Deployed.lean
+--- a/Spec/Proofs/Deployed.lean	2026-10-26 20:57:47
++++ b/Spec/Proofs/Deployed.lean	2026-10-26 20:57:47
+@@ -31,14 +31,20 @@
+   exact fold_reaches_host deployed_lawful hg hf hs hc
+ 
+ /-- **B3 of the deployed system, for `NoRef` laws**: `object_history_of_honest`,
+-`fold_package_fixed`, `object_history_chain` (stated for every history) at the deployed program
++`fold_package_fixed` (live with its package, or a tombstone), `object_history_chain` (stated for
++every history) at the deployed program
+ (`deployed_ctx_lawful`). -/
+ theorem top_integrity_law (d : ByteArray → ByteArray) : Integrity.law (deployed d) := by
+   intro obj law p fs ℓ t hb hℓ hfind hlaw hnr w w' l ha hcan cell hl hk
+   rw [audited_deployed] at ha
+   obtain ⟨tr, htr⟩ := object_history_of_honest ha.1 ha.2 hcan hl hk
+-  obtain ⟨cell', hl', -, -, hpk⟩ := fold_package_fixed ha.1 ha.2 hl hk
+-  exact ⟨⟨tr, htr⟩, ⟨cell', hl', hpk⟩, fun tr' htr' hin _ ho =>
++  have hpk : (∃ cell', w'.live Host.Deployed.X.env obj = some cell' ∧
++      packageOf Host.Deployed.X obj cell' = packageOf Host.Deployed.X obj cell) ∨
++      w'.entry Host.Deployed.X.env obj = some .tomb := by
++    rcases fold_package_fixed ha.1 ha.2 hl hk with ⟨cell', hl', -, -, hp⟩ | ht
++    · exact .inl ⟨cell', hl', hp⟩
++    · exact .inr ht
++  exact ⟨⟨tr, htr⟩, hpk, fun tr' htr' hin _ ho =>
+     object_history_chain (deployed_ctx_lawful _) rfl hb hℓ hfind hlaw hnr htr' hin hl ho⟩
+ 
+ /-- **C(ii) of the deployed system, submit-class**: `step_settled_ok`, `settle_committed`. -/
+diff -ru a/Spec/Proofs/Floor.lean b/Spec/Proofs/Floor.lean
+--- a/Spec/Proofs/Floor.lean	2026-10-26 20:57:47
++++ b/Spec/Proofs/Floor.lean	2026-10-26 20:57:47
+@@ -329,10 +329,16 @@
+           have ha' : Audited (rawWriter d) w₁ [.turn tw] w₂ :=
+             ⟨by simp only [System.fold, System.step, hs],
+               ⟨c, decide_eq_true_eq.mp hd, htw, fun _ _ => trivial⟩⟩
+-          obtain ⟨-, ⟨cell'', hl'', hpk⟩, -⟩ :=
++          obtain ⟨-, hpk₀, -⟩ :=
+             h (obj := obj) (law := oneDigest) (p := pkg0) (fs := [("law", law0)]) (ℓ := "law") (t := law0)
+               rfl (by simp [pkg0]) (by simp [Lang.Row.find?]) ⟨_, _, _, _, rfl⟩
+               (by simp [law0, Lang.NoRef]) ha' hcan hl hk
++          rcases hpk₀ with ⟨cell'', hl'', hpk⟩ | ht
++          swap
++          · have ht' : w₂.entry Xd.env obj = some .tomb := ht
++            have : w₂.live Xd.env obj = none := by simp [World.live, ht']
++            rw [hl'] at this
++            cases this
+           have hl₂ : w₂.live Xd.env obj = some cell'' := hl''
+           have hpk' : packageOf Xd obj cell'' = packageOf Xd obj cell := hpk
+           rw [hl'] at hl₂

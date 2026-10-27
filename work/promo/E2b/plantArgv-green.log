@@ -1,0 +1,19 @@
+ Hosting/Resident/Run.lean | 2 +-
+ gates/tcb.tsv             | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+'Nanodregg.Protocol.Command.settled_ok' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nanodregg.Protocol.Command.step_settled_ok' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nanodregg.Hosting.Proofs.ResidentRun.tick_counts' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nanodregg.Hosting.Proofs.BellConform.bell_resident_conforms' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nanodregg.Hosting.Proofs.Resident.answerArg_reads' depends on axioms: [propext, Classical.choice, Quot.sound]
+def Nanodregg.Hosting.Resident.Cmd.argv : Nanodregg.Hosting.Resident.Conf →
+  Nanodregg.Hosting.Resident.Cmd → List ByteArray :=
+fun c x =>
+  match x with
+  | Nanodregg.Hosting.Resident.Cmd.describe => Nanodregg.Hosting.Resident.describeArgv c
+  | Nanodregg.Hosting.Resident.Cmd.read sh => Nanodregg.Hosting.Resident.pendingArgv c sh
+  | Nanodregg.Hosting.Resident.Cmd.reread sh => Nanodregg.Hosting.Resident.pendingArgv c sh
+  | Nanodregg.Hosting.Resident.Cmd.invoke sh r _t =>
+    match Nanodregg.Hosting.Resident.answerArg r r.text with
+    | some a => Nanodregg.Hosting.Resident.invokeArgv c sh a
+    | none => []

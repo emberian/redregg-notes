@@ -1,0 +1,148 @@
+✔ [96/100] Built Lang.Contextual.Protocol (973ms)
+✔ [97/100] Built Lang.Proofs.Contextual.ProtocolTyping (416ms)
+✔ [98/100] Built Lang.Contextual.NanoBridge (415ms)
+✔ [99/100] Built Lang.Proofs.Contextual.Protocol (1.5s)
+✖ [100/100] Building Lang.Proofs.Contextual.Negotiation (649ms)
+trace: .> LEAN_PATH=/tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean /home/hbox/.elan/toolchains/leanprover--lean4---v4.30.0/bin/lean /tank/dregg-build/nanodregg/wt/promo/Lang/Proofs/Contextual/Negotiation.lean -o /tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean/Lang/Proofs/Contextual/Negotiation.olean -i /tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean/Lang/Proofs/Contextual/Negotiation.ilean -c /tank/dregg-build/nanodregg/wt/promo/.lake/build/ir/Lang/Proofs/Contextual/Negotiation.c --setup /tank/dregg-build/nanodregg/wt/promo/.lake/build/ir/Lang/Proofs/Contextual/Negotiation.setup.json --json
+error: Lang/Proofs/Contextual/Negotiation.lean:47:37: unsolved goals
+x✝ : sig.Resp Op.reserve
+⊢ Fact.auth Provider.p1 ∈ ?m.48 ∧ Fact.auth Provider.p2 ∈ ?m.48 ∧ Fact.beforeDeadline ∈ ?m.48
+error: Lang/Proofs/Contextual/Negotiation.lean:48:7: unsolved goals
+x✝ : sig.Resp Op.reserve
+⊢ Ob.pay Provider.p1 ∈ ?m.50 ∧ Ob.pay Provider.p2 ∈ ?m.50 ∧ Ob.refund ∈ ?m.50
+error: Lang/Proofs/Contextual/Negotiation.lean:47:53: This simp argument is unused:
+  Γ₀
+
+Hint: Omit it from the simp argument list.
+  simp [iface,̵ ̵Γ̵₀̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+error: Lang/Proofs/Contextual/Negotiation.lean:48:23: This simp argument is unused:
+  Φ₀
+
+Hint: Omit it from the simp argument list.
+  simp [iface,̵ ̵Φ̵₀̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+error: Lang/Proofs/Contextual/Negotiation.lean:71:23: Application type mismatch: The argument
+  rfl
+has type
+  ?m.155 = ?m.155
+but is expected to have type
+  iface.chooser = Party.buyer
+in the application
+  And.intro rfl
+error: Lang/Proofs/Contextual/Negotiation.lean:97:17: Application type mismatch: The argument
+  rfl
+has type
+  ?m.73 = ?m.73
+but is expected to have type
+  holes finite (fill Party.buyer Ω (choose cancelPlan) template) = []
+in the application
+  ⟨fun p => ?m.70, rfl⟩
+error: Lang/Proofs/Contextual/Negotiation.lean:269:2: 'change' tactic failed, pattern
+  Runs (Prot.call Op.reserve fun x => cancelPlan) t j a
+is not definitionally equal to target
+  Runs (fill Party.buyer Ω (choose cancelPlan) template) t j a
+error: Lang/Proofs/Contextual/Negotiation.lean:282:2: 'change' tactic failed, pattern
+  Runs (Prot.call Op.reserve fun x => plan p) t j a
+is not definitionally equal to target
+  Runs (fill Party.buyer Ω (choose (plan p)) template) t j a
+error: Lang/Proofs/Contextual/Negotiation.lean:294:2: Type mismatch
+  Reach.call () (Reach.here ((fun x => f) ()))
+has type
+  Reach (Prot.call Op.reserve fun x => f) [⟨Phase.idle, ⟨Op.reserve, ()⟩⟩] ⟨sig.next Op.reserve (), (fun x => f) ()⟩
+but is expected to have type
+  Reach (fill Party.buyer Ω (choose f) template) [reserved] ⟨Phase.reserved, f⟩
+error: Lang/Proofs/Contextual/Negotiation.lean:324:4: 'change' tactic failed, pattern
+  Reach (Prot.call Op.reserve fun x => plan Provider.p2) [reserved] R
+is not definitionally equal to target
+  Reach (fill Party.buyer Ω (choose (plan Provider.p2)) template) [reserved] R
+error: Lang/Proofs/Contextual/Negotiation.lean:331:4: 'change' tactic failed, pattern
+  Reach (Prot.call Op.reserve fun x => cancelPlan) [reserved] R
+is not definitionally equal to target
+  Reach (fill Party.buyer Ω (choose cancelPlan) template) [reserved] R
+error: Lang/Proofs/Contextual/Negotiation.lean:352:14: Unknown identifier `h`
+error: Lang/Proofs/Contextual/Negotiation.lean:352:4: Tactic `injection` failed: equality expected
+
+case refine_1
+g : (obj (plan Provider.p1) (lost Provider.p1)).Replan (choose (plan Provider.p2))
+h✝ : ?m.119
+⊢ False
+error: Lang/Proofs/Contextual/Negotiation.lean:354:2: unsolved goals
+case refine_2
+g : (obj (plan Provider.p1) (lost Provider.p1)).Replan (choose cancelPlan)
+this : True
+⊢ False
+error: Lang/Proofs/Contextual/Negotiation.lean:350:37: This simp argument is unused:
+  choose
+
+Hint: Omit it from the simp argument list.
+  simp [obj, Subst.mine, Ω, iface, c̵h̵o̵o̵s̵e̵,̵ ̵plan] at this
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+error: Lang/Proofs/Contextual/Negotiation.lean:355:37: This simp argument is unused:
+  choose
+
+Hint: Omit it from the simp argument list.
+  simp [obj, Subst.mine, Ω, iface, c̵h̵o̵o̵s̵e̵,̵ ̵plan, cancelPlan] at this
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+error: Lang/Proofs/Contextual/Negotiation.lean:355:51: This simp argument is unused:
+  cancelPlan
+
+Hint: Omit it from the simp argument list.
+  simp [obj, Subst.mine, Ω, iface, choose, plan,̵ ̵c̵a̵n̵c̵e̵l̵P̵l̵a̵n̵] at this
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+error: Lang/Proofs/Contextual/Negotiation.lean:377:14: Unknown identifier `h`
+error: Lang/Proofs/Contextual/Negotiation.lean:377:4: Tactic `injection` failed: equality expected
+
+case refine_2
+b : Bool
+g : (obj (plan Provider.p1) (answeredH Provider.p1 b)).Replan (choose (plan Provider.p2))
+h✝ : ?m.133
+⊢ False
+error: Lang/Proofs/Contextual/Negotiation.lean:380:4: 'change' tactic failed, pattern
+  Started (Prot.call Op.reserve fun x => plan Provider.p2) (answeredH Provider.p1 b)
+is not definitionally equal to target
+  Started ((obj (plan Provider.p1) (answeredH Provider.p1 b)).replan (choose (plan Provider.p2))).current
+    ((obj (plan Provider.p1) (answeredH Provider.p1 b)).replan (choose (plan Provider.p2))).hist
+error: Lang/Proofs/Contextual/Negotiation.lean:375:37: This simp argument is unused:
+  choose
+
+Hint: Omit it from the simp argument list.
+  simp [obj, Subst.mine, Ω, iface, c̵h̵o̵o̵s̵e̵,̵ ̵plan] at this
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+error: Lang/Proofs/Contextual/Negotiation.lean:404:19: Application type mismatch: The argument
+  this
+has type
+  True
+but is expected to have type
+  ?m.75 = ?m.76
+in the application
+  congrFun this
+error: Lang/Proofs/Contextual/Negotiation.lean:398:70: unsolved goals
+g : (obj (plan Provider.p1) (lost Provider.p1)).Replan (choose (planFlip Provider.p1))
+this : True
+⊢ False
+error: Lang/Proofs/Contextual/Negotiation.lean:403:35: This simp argument is unused:
+  choose
+
+Hint: Omit it from the simp argument list.
+  simp [obj, Subst.mine, Ω, iface, c̵h̵o̵o̵s̵e̵,̵ ̵plan, planFlip] at this
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+error: Lang/Proofs/Contextual/Negotiation.lean:403:49: This simp argument is unused:
+  planFlip
+
+Hint: Omit it from the simp argument list.
+  simp [obj, Subst.mine, Ω, iface, choose, plan,̵ ̵p̵l̵a̵n̵F̵l̵i̵p̵] at this
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+error: Lang/Proofs/Contextual/Negotiation.lean:416:2: No goals to be solved
+error: Lean exited with code 1
+Some required targets logged failures:
+- Lang.Proofs.Contextual.Negotiation
+error: build failed

@@ -1,0 +1,13 @@
+burst5-a (Latitude sv_zrPm0dBJ65KOw, DAL, f4-metal-medium: 16c/32t, 187 GB, NVMe). Disposable; hbox mirrors its remote.
+The hbox rules in SAFETY-BLOCK.txt apply here with these paths:
+- Lean builds: <your lane tree>/scripts/pipeline/with-lean-slot swarm-build lake build ...   (repo FIFO slots; box.env
+  PIPELINE_LEAN_SLOTS x PIPELINE_LEAN_SLOT_THREADS; launch detached `setsid nohup ... & echo $! > job.pid`).
+  /srv/pipeline/slots/with-lean-slot is the installed copy of the same script (same locks/queue).
+- Pipeline layout PIPELINE_ROOT=/srv/pipeline (box.env: /srv/pipeline/box.env). Warm base /srv/warm-base (FROZEN at main cfb68bf9).
+  Lanes: /srv/warm-base/mk-lane.sh <name> (lanes under $PIPELINE_LANES). Shared Lake cache: $LAKE_CACHE_DIR (box.env).
+- Shared remote: /srv/git/minidregg.git (push lane/<name>; it has remote `github`). hbox pulls it every 10 min into
+  /tank/dregg-build/claude-lanes/bundles/burst5-minidregg.git.
+- GitHub: this box has a WRITE deploy key for emberian/minidregg; push lanes directly (git push github HEAD:refs/heads/lane/<name>).
+  Commits move between boxes THROUGH GitHub; nothing relays through the Mac.
+- fn images: /srv/fnbin/6679dae0e/fn-6679dae0e/{fn-host,fn-host.core}.
+- PID files or nothing: never pkill -f / killall / kill -u. Every wait loop sleeps and has a deadline.

@@ -1,0 +1,760 @@
+diff --git a/Lang/Check.lean b/Lang/Check.lean
+index 681f8b1..e068905 100644
+--- a/Lang/Check.lean
++++ b/Lang/Check.lean
+@@ -15,11 +15,11 @@ A `case` must have at least one arm (its result type comes from the arms).
+ -/
+ import Lang.Bounds
+ import Lang.Term
+-import Lang.Contextual.HoleDecl
++import Lang.HoleDecl
+ 
+ namespace Nanodregg.Lang
+ 
+-abbrev HoleSignature := List (Contextual.HoleDecl (List Ty) Ty)
++abbrev HoleSignature := List (HoleDecl (List Ty) Ty)
+ 
+ /-- Which typing rule a term breaks (law 7: each a constructor with a name). -/
+ inductive TypeError
+diff --git a/Lang/Contextual/Closure.lean b/Lang/Contextual/Closure.lean
+index ee928f2..7682143 100644
+--- a/Lang/Contextual/Closure.lean
++++ b/Lang/Contextual/Closure.lean
+@@ -31,7 +31,7 @@ live. Withdrawal is a liveness change: it can suspend, it never refutes (`confli
+ only from the checker and the guard, which read no token).
+ -/
+ 
+-import Lang.Contextual.HoleDecl
++import Lang.HoleDecl
+ 
+ namespace Nanodregg.Lang.Contextual
+ 
+diff --git a/Lang/Contextual/Core.lean b/Lang/Contextual/Core.lean
+index dc55549..5fbabd6 100644
+--- a/Lang/Contextual/Core.lean
++++ b/Lang/Contextual/Core.lean
+@@ -25,6 +25,8 @@ The judgments (`HasTy`, `HasSubst`, `Step`) are statements, so they live in the
+ `Lang.Proofs.Contextual.Typing` (gate C3); this module is data only.
+ -/
+ 
++import Lang.Index
++
+ namespace Nanodregg.Lang.Contextual
+ 
+ /-- Simple types with the contextual box `[Ψ ⊢ A]`. -/
+@@ -68,11 +70,6 @@ inductive Tm
+ 
+ /-! ## Renaming of ordinary variables -/
+ 
+-/-- A renaming under one more ordinary binder. -/
+-def upR (ρ : Nat → Nat) : Nat → Nat
+-  | 0 => 0
+-  | i + 1 => ρ i + 1
+-
+ mutual
+ /-- Rename the ordinary free variables of a term (not inside `box`: a box body is closed over the
+ ambient context). -/
+@@ -353,12 +350,6 @@ def check (Γ : Ctx) (t : Tm) (A : Ty) : Bool :=
+ 
+ /-! ## Strengthening at any position -/
+ 
+-/-- The index map of weakening at `x`: indices from `x` up move up by one. -/
+-def liftIdx (x i : Nat) : Nat := if i < x then i else i + 1
+-
+-/-- Its inverse away from `x`: indices above `x` move down by one. -/
+-def lowerIdx (x i : Nat) : Nat := if i < x then i else i - 1
+-
+ /-- Weakening at `x` (the projection `π` that forgets hypothesis `x`), as a term map. -/
+ def shiftAt (x : Nat) (t : Tm) : Tm := rename (liftIdx x) t
+ 
+diff --git a/Lang/Contextual/HoleDecl.lean b/Lang/Contextual/HoleDecl.lean
+deleted file mode 100644
+index d963a59..0000000
+--- a/Lang/Contextual/HoleDecl.lean
++++ /dev/null
+@@ -1,10 +0,0 @@
+-/- The shared contextual declaration, independent of the closure implementation. -/
+-namespace Nanodregg.Lang.Contextual
+-
+-/-- A hole declaration `u :: [Ψ ⊢ A]`: the hole's name, its local context, its type. -/
+-structure HoleDecl (Ctx Ty : Type) where
+-  name : Nat
+-  ctx : Ctx
+-  ty : Ty
+-
+-end Nanodregg.Lang.Contextual
+diff --git a/Lang/Contextual/HoleModel.lean b/Lang/Contextual/LangInstance.lean
+similarity index 54%
+rename from Lang/Contextual/HoleModel.lean
+rename to Lang/Contextual/LangInstance.lean
+index 5f61433..f27f223 100644
+--- a/Lang/Contextual/HoleModel.lean
++++ b/Lang/Contextual/LangInstance.lean
+@@ -1,8 +1,37 @@
+-/- The two-support, one-blocker deployed fragment of the existing Lang calculus. -/
+-import Lang.Contextual.LangCalculus
++/-
++# Lang.Contextual.LangInstance — the DEPLOYED term language as a `CalculusData` (ACTIVITIES-2)
++
++The data half of CLOSURE's calculus over deployed `Lang.Term`, built from the operations the Host runs
++(`Lang.Subst`): `msubst` is `fillRefs`; strengthening and weakening rename ordinary variables at a position
++with `lowerIdx`/`liftIdx` (`Lang.Index`). The signature-aware laws live in
++`Lang.Proofs.Contextual.LangInstance`; deployed strengthening is exercised and proved over the installed
++contextual ROM generator. No deployed module imports this one.
++
++Below `langData`: the two-support, one-blocker deployed fragment of the same calculus that the `Std.hole`
++bridge (`Lang.Proofs.Contextual.HoleBridge`) is stated over.
++-/
++import Lang.Subst
++import Lang.Contextual.Closure
+ 
+ namespace Nanodregg.Lang.Contextual
+ 
++/-- `Lang.Term` as a `CalculusData`. -/
++def langData : CalculusData where
++  Ty := Lang.Ty
++  Ctx := List Lang.Ty
++  Tm := Term
++  tmEq := Term.decEq
++  msubst := Term.fillRefs
++  check Ψ M A := decide (Lang.infer [] Ψ M = some A)
++  uses M x := Term.usesVar x M
++  drop Ψ x := Ψ.eraseIdx x
++  strengthen x := Term.renameVar (lowerIdx x)
++  weaken x := Term.renameVar (liftIdx x)
++  var := Term.var
++  lookup Ψ x := Ψ[x]?
++
++/-! ## The two-support, one-blocker fragment of `langData` for the `Std.hole` bridge -/
++
+ variable {E : Type}
+ 
+ /-- Recorded status is advisory. The filling is a real Lang term; its checker
+@@ -44,4 +73,3 @@ def holeModelTemplate (V : Lang.Ty) (guard : E → Term → Bool) (chooser accep
+   names := by simp
+ 
+ end Nanodregg.Lang.Contextual
+-
+diff --git a/Lang/Contextual/LangSubstitution.lean b/Lang/Contextual/LangSubstitution.lean
+deleted file mode 100644
+index 5d01b3d..0000000
+--- a/Lang/Contextual/LangSubstitution.lean
++++ /dev/null
+@@ -1,95 +0,0 @@
+-/- Capture-avoiding ordinary substitution for the deployed Lang terms.
+-This is the common substitution operation needed by a contextual hole occurrence.
+-The hole signature and installed candidate representation are separate decisions. -/
+-import Lang.Check
+-import Lang.Contextual.Core
+-
+-namespace Nanodregg.Lang.Contextual
+-
+-mutual
+-/-- Rename the free variables (`lam` and every `case` arm bind one more). -/
+-def Term.renameVar (ρ : Nat → Nat) : Term → Term
+-  | .var i => .var (ρ i)
+-  | .lam a b => .lam a (Term.renameVar (upR ρ) b)
+-  | .app f a => .app (Term.renameVar ρ f) (Term.renameVar ρ a)
+-  | .fix t => .fix (Term.renameVar ρ t)
+-  | .nat n => .nat n
+-  | .bool b => .bool b
+-  | .bytes s => .bytes s
+-  | .digest s => .digest s
+-  | .prim p a b => .prim p (Term.renameVar ρ a) (Term.renameVar ρ b)
+-  | .record fs => .record (Term.renameVarRow ρ fs)
+-  | .get t ℓ => .get (Term.renameVar ρ t) ℓ
+-  | .extend t fs => .extend (Term.renameVar ρ t) (Term.renameVarRow ρ fs)
+-  | .inj a ℓ t => .inj a ℓ (Term.renameVar ρ t)
+-  | .case t arms => .case (Term.renameVar ρ t) (Term.renameVarArms ρ arms)
+-  | .ite c a b => .ite (Term.renameVar ρ c) (Term.renameVar ρ a) (Term.renameVar ρ b)
+-  | .ref i => .ref i
+-  | .hole n σ => .hole n (Term.renameVarList ρ σ)
+-  | .refuse T w => .refuse T w
+-def Term.renameVarList (ρ : Nat → Nat) : List Term → List Term
+-  | [] => []
+-  | t :: ts => Term.renameVar ρ t :: Term.renameVarList ρ ts
+-/-- Fields bind nothing. -/
+-def Term.renameVarRow (ρ : Nat → Nat) : List (Label × Term) → List (Label × Term)
+-  | [] => []
+-  | (ℓ, t) :: fs => (ℓ, Term.renameVar ρ t) :: Term.renameVarRow ρ fs
+-/-- Every arm binds its payload at index 0. -/
+-def Term.renameVarArms (ρ : Nat → Nat) : List (Label × Term) → List (Label × Term)
+-  | [] => []
+-  | (ℓ, t) :: as => (ℓ, Term.renameVar (upR ρ) t) :: Term.renameVarArms ρ as
+-end
+-
+-
+-/-- Extend a substitution under one ordinary binder: preserve its new variable,
+-and shift every substituted free variable past it. -/
+-def Term.upVarSubst (σ : Nat → Term) : Nat → Term
+-  | 0 => .var 0
+-  | i + 1 => Term.renameVar Nat.succ (σ i)
+-
+-mutual
+-/-- Simultaneous, capture-avoiding substitution of ordinary variables.
+-Package references are constants; case payloads bind exactly like lambdas. -/
+-def Term.substVar (σ : Nat → Term) : Term → Term
+-  | .var i => σ i
+-  | .lam A b => .lam A (Term.substVar (Term.upVarSubst σ) b)
+-  | .app f a => .app (Term.substVar σ f) (Term.substVar σ a)
+-  | .fix t => .fix (Term.substVar σ t)
+-  | .nat n => .nat n
+-  | .bool b => .bool b
+-  | .bytes s => .bytes s
+-  | .digest s => .digest s
+-  | .prim p a b => .prim p (Term.substVar σ a) (Term.substVar σ b)
+-  | .record fs => .record (Term.substVarRow σ fs)
+-  | .get t l => .get (Term.substVar σ t) l
+-  | .extend t fs => .extend (Term.substVar σ t) (Term.substVarRow σ fs)
+-  | .inj A l t => .inj A l (Term.substVar σ t)
+-  | .case t arms => .case (Term.substVar σ t) (Term.substVarArms σ arms)
+-  | .ite c a b => .ite (Term.substVar σ c) (Term.substVar σ a) (Term.substVar σ b)
+-  | .ref n => .ref n
+-  | .hole n ts => .hole n (Term.substVarList σ ts)
+-  | .refuse A why => .refuse A why
+-def Term.substVarList (σ : Nat → Term) : List Term → List Term
+-  | [] => []
+-  | t :: ts => Term.substVar σ t :: Term.substVarList σ ts
+-def Term.substVarRow (σ : Nat → Term) : List (Label × Term) → List (Label × Term)
+-  | [] => []
+-  | (l, t) :: fs => (l, Term.substVar σ t) :: Term.substVarRow σ fs
+-def Term.substVarArms (σ : Nat → Term) : List (Label × Term) → List (Label × Term)
+-  | [] => []
+-  | (l, t) :: arms =>
+-      (l, Term.substVar (Term.upVarSubst σ) t) :: Term.substVarArms σ arms
+-end
+-
+-/-- A list supplies the first variables; beyond the list, indices are lowered
+-by its length. Thus a singleton gives ordinary beta substitution. -/
+-def Term.substListFn : List Term → Nat → Term
+-  | [], i => .var i
+-  | t :: _, 0 => t
+-  | _ :: ts, i + 1 => Term.substListFn ts i
+-
+-/-- Instantiate a term in its declared context by an explicit substitution. -/
+-def Term.substList (σ : List Term) (t : Term) : Term :=
+-  Term.substVar (Term.substListFn σ) t
+-
+-end Nanodregg.Lang.Contextual
+diff --git a/Lang/HoleBudget.lean b/Lang/HoleBudget.lean
+index 014cb0c..17afa1f 100644
+--- a/Lang/HoleBudget.lean
++++ b/Lang/HoleBudget.lean
+@@ -1,8 +1,8 @@
+ /- Bound contextual expansion before allocating its resulting syntax.
+ Counts are syntax nodes, including row/substitution cons cells. -/
+-import Lang.Contextual.LangCalculus
++import Lang.Subst
+ 
+-namespace Nanodregg.Lang.Contextual
++namespace Nanodregg.Lang
+ 
+ mutual
+ def Term.nodes : Term → Nat
+@@ -85,4 +85,4 @@ def Term.fillBounded (limit candidateMax : Nat) (σ : Nat → Option Term) (t :
+   else if Term.fillNodes σ t > limit then .error "holeSizeBound"
+   else .ok (Term.fillRefs σ t)
+ 
+-end Nanodregg.Lang.Contextual
++end Nanodregg.Lang
+diff --git a/Lang/HoleDecl.lean b/Lang/HoleDecl.lean
+new file mode 100644
+index 0000000..be2fe43
+--- /dev/null
++++ b/Lang/HoleDecl.lean
+@@ -0,0 +1,11 @@
++/- The shared contextual hole declaration: `Lang.Check`'s `HoleSignature` is a list of these; the closure
++(`Lang.Contextual.Closure`) instantiates it at its own context and type. -/
++namespace Nanodregg.Lang
++
++/-- A hole declaration `u :: [Ψ ⊢ A]`: the hole's name, its local context, its type. -/
++structure HoleDecl (Ctx Ty : Type) where
++  name : Nat
++  ctx : Ctx
++  ty : Ty
++
++end Nanodregg.Lang
+diff --git a/Lang/HoleROM.lean b/Lang/HoleROM.lean
+index 08ce915..371a37b 100644
+--- a/Lang/HoleROM.lean
++++ b/Lang/HoleROM.lean
+@@ -1,6 +1,6 @@
+ /- Contextual declarations and candidate code are immutable ROM, not row values. -/
+ import Lang.Check
+-import Lang.Contextual.LangCalculus
++import Lang.Subst
+ 
+ namespace Nanodregg.Lang
+ 
+@@ -33,7 +33,7 @@ structure HoleROM where
+   guard : Term
+   deriving Inhabited, DecidableEq
+ 
+-def HoleROM.decl (h : HoleROM) : Contextual.HoleDecl (List Ty) Ty :=
++def HoleROM.decl (h : HoleROM) : HoleDecl (List Ty) Ty :=
+   ⟨h.name, h.ctx, h.ty⟩
+ 
+ def holeSignature (hs : List HoleROM) : HoleSignature := hs.map HoleROM.decl
+diff --git a/Lang/Index.lean b/Lang/Index.lean
+new file mode 100644
+index 0000000..136e994
+--- /dev/null
++++ b/Lang/Index.lean
+@@ -0,0 +1,17 @@
++/- De Bruijn index maps shared by the deployed term operations (`Lang.Subst`) and the CMTT core
++(`Lang.Contextual.Core`): one of each. -/
++
++namespace Nanodregg.Lang
++
++/-- A renaming under one more ordinary binder. -/
++def upR (ρ : Nat → Nat) : Nat → Nat
++  | 0 => 0
++  | i + 1 => ρ i + 1
++
++/-- The index map of weakening at `x`: indices from `x` up move up by one. -/
++def liftIdx (x i : Nat) : Nat := if i < x then i else i + 1
++
++/-- Its inverse away from `x`: indices above `x` move down by one. -/
++def lowerIdx (x i : Nat) : Nat := if i < x then i else i - 1
++
++end Nanodregg.Lang
+diff --git a/Lang/Journey/ContextualChecks.lean b/Lang/Journey/ContextualChecks.lean
+index 76ecec3..f06fc40 100644
+--- a/Lang/Journey/ContextualChecks.lean
++++ b/Lang/Journey/ContextualChecks.lean
+@@ -43,17 +43,17 @@ def gateRows : List (String × Bool) := Id.run do
+   let sig : HoleSignature := [⟨7, [.nat], .nat⟩]
+   let closed := { plain with holes := [] }
+   return [
+-    ("successor-fill-term", decide (Contextual.Term.fillRefs fill termHole = .nat 9)),
+-    ("successor-fill-fields", decide (Contextual.Term.fillRefsRow fill [("v", termHole)] = [("v", .nat 9)])),
+-    ("successor-fill-arms", decide (Contextual.Term.fillRefsRow fill [("v", armHole)] = [("v", .prim .add (.var 0) (.nat 9))])),
+-    ("successor-declared-term", Contextual.Term.usesRef 7 termHole && (inferE [] [] termHole sig).isOk && !(inferE [] [] termHole).isOk),
+-    ("successor-declared-fields", Contextual.Term.usesRefRow 7 [("v", termHole)] && (inferFields [] [] [("v", termHole)] sig).isOk &&
++    ("successor-fill-term", decide (Term.fillRefs fill termHole = .nat 9)),
++    ("successor-fill-fields", decide (Term.fillRefsRow fill [("v", termHole)] = [("v", .nat 9)])),
++    ("successor-fill-arms", decide (Term.fillRefsRow fill [("v", armHole)] = [("v", .prim .add (.var 0) (.nat 9))])),
++    ("successor-declared-term", Term.usesRef 7 termHole && (inferE [] [] termHole sig).isOk && !(inferE [] [] termHole).isOk),
++    ("successor-declared-fields", Term.usesRefRow 7 [("v", termHole)] && (inferFields [] [] [("v", termHole)] sig).isOk &&
+       !(inferFields [] [] [("v", termHole)]).isOk),
+-    ("successor-declared-arms", Contextual.Term.usesRefRow 7 [("v", armHole)] && (inferArms [] [] [("v", armHole)] [("v", .nat)] sig).isOk &&
++    ("successor-declared-arms", Term.usesRefRow 7 [("v", armHole)] && (inferArms [] [] [("v", armHole)] [("v", .nat)] sig).isOk &&
+       !(inferArms [] [] [("v", armHole)] [("v", .nat)]).isOk),
+-    ("reader-import-contract", decide (Contextual.Term.fillRefs (fun _ => some (.nat 0)) (.ref 0) = .ref 0) &&
++    ("reader-import-contract", decide (Term.fillRefs (fun _ => some (.nat 0)) (.ref 0) = .ref 0) &&
+       (inferE [.nat] [] (.ref 0)).isOk && !(inferE [] [] (.ref 0)).isOk &&
+-      !Contextual.Term.usesRef 0 (.ref 0)),
++      !Term.usesRef 0 (.ref 0)),
+     ("closed-admission-identity", (admitContextual (fun _ => some (3 : Sim.D))
+       (fun _ _ => .error "must-not-prepare-closed") .empty closed ⟨[], [], []⟩ []).isOk),
+ 
+@@ -82,8 +82,8 @@ def gateRows : List (String × Bool) := Id.run do
+     ("selection-support-version", named (selectHole (view (some 0) (some 1) (left := some 2)) (3 : Sim.D) h)
+       "holeDerivationMoved 0"),
+     ("guard-budget", named (selectHole good (3 : Sim.D) { h with guard := longGuard }) "holeGuardFault 0"),
+-    ("expansion-work-bound", named (Contextual.Term.fillBounded 1 1 (fun _ => none) (.nat 1)) "holeWorkBound"),
+-    ("expansion-size-bound", named (Contextual.Term.fillBounded 64 3 (fun _ => some duplicate) nested) "holeSizeBound"),
++    ("expansion-work-bound", named (Term.fillBounded 1 1 (fun _ => none) (.nat 1)) "holeWorkBound"),
++    ("expansion-size-bound", named (Term.fillBounded 64 3 (fun _ => some duplicate) nested) "holeSizeBound"),
+     ("contextual-print-mismatch", printMismatch),
+     ("contextual-print-unreadable", named (Print.contextualText p "(") "contextualPrintRead"),
+     ("rom-candidate-literals", match checkROMLits (fun _ => (none : Option Sim.D))
+diff --git a/Lang/LiveHoles.lean b/Lang/LiveHoles.lean
+index 4808ac7..40e51fe 100644
+--- a/Lang/LiveHoles.lean
++++ b/Lang/LiveHoles.lean
+@@ -7,7 +7,6 @@ import Kernel.Receive.Call
+ 
+ namespace Nanodregg.Lang
+ open Nanodregg.Kernel Nanodregg.Kernel.Receive
+-open Contextual
+ 
+ /-- Signature validation checks every candidate at exactly its declared context,
+ including candidates not currently selected. A candidate cannot introduce another hole. -/
+diff --git a/Lang/Program.lean b/Lang/Program.lean
+index dc7f653..2d974b5 100644
+--- a/Lang/Program.lean
++++ b/Lang/Program.lean
+@@ -165,7 +165,7 @@ def checkROMLits (p : Package) : Except (Refusal D) Unit :=
+ and law checking). Ordinary fields still evaluate; no selected code is guessed. -/
+ def unresolvedBody (p : Package) : Except String Term :=
+   if p.holes.isEmpty then .ok p.body
+-  else Contextual.Term.fillBounded Wire.nodeMax 1
++  else Term.fillBounded Wire.nodeMax 1
+     (fun n => ((holeSignature p.holes).find? (fun d => d.name == n)).map
+       (fun d => .refuse d.ty "holeUnresolved".toUTF8)) p.body
+ 
+@@ -211,9 +211,9 @@ def loadLive (rv : RowView D) (self : D) (look : Pinned D) (fuel : Nat)
+ the selected candidate cannot exceed the maximum over its committed candidates. -/
+ def Package.preparationCost (p : Package) : Nat :=
+   if p.holes.isEmpty then 0
+-  else Contextual.Term.nodes p.body *
++  else Term.nodes p.body *
+     (1 + (p.holes.flatMap (fun h => h.code)).foldl
+-      (fun n c => max n (Contextual.Term.nodes c.body)) 1) + 256 * p.holes.length
++      (fun n c => max n (Term.nodes c.body)) 1) + 256 * p.holes.length
+ 
+ 
+ def checkInstall (look : Pinned D) (b : ByteArray) : Except (Refusal D) Unit := do
+diff --git a/Lang/Proofs/Contextual/HoleBridge.lean b/Lang/Proofs/Contextual/HoleBridge.lean
+index d6d7f3e..4d89c61 100644
+--- a/Lang/Proofs/Contextual/HoleBridge.lean
++++ b/Lang/Proofs/Contextual/HoleBridge.lean
+@@ -1,5 +1,5 @@
+ /- The generated hole's decision gate against the landed contextual judgment. -/
+-import Lang.Contextual.HoleModel
++import Lang.Contextual.LangInstance
+ import Lang.Proofs.Contextual.Judge
+ import Lang.Proofs.Contextual.LangInstance
+ import Lang.Proofs.StdHoleCoverage
+diff --git a/Lang/Proofs/Contextual/LangInstance.lean b/Lang/Proofs/Contextual/LangInstance.lean
+index 49c7ea5..d68663e 100644
+--- a/Lang/Proofs/Contextual/LangInstance.lean
++++ b/Lang/Proofs/Contextual/LangInstance.lean
+@@ -1,4 +1,5 @@
+ /- The deployed language, including substituted contextual holes, is a lawful calculus. -/
++import Lang.Contextual.LangInstance
+ import Lang.Proofs.Contextual.LangOccurrences
+ import Lang.Proofs.Contextual.ClosureStatements
+ 
+@@ -13,50 +14,33 @@ theorem hasType_closed_lift {M : Term} {A : Lang.Ty} (h : HasType [] [] M A)
+ 
+ /-! ## The holes' declarations -/
+ 
+-theorem tyOf_some {Ω : List (HoleDecl (List Lang.Ty) Lang.Ty)} {n : Nat} {A : Lang.Ty}
+-    (h : tyOf Ω n = some A) : ∃ d ∈ Ω, d.name = n ∧ d.ty = A := by
+-  unfold tyOf at h
++theorem holeTy_some {Ω : List (HoleDecl (List Lang.Ty) Lang.Ty)} {n : Nat} {A : Lang.Ty}
++    (h : holeTy Ω n = some A) : ∃ d ∈ Ω, d.name = n ∧ d.ty = A := by
++  unfold holeTy at h
+   simp only [Option.map_eq_some_iff] at h
+   obtain ⟨d, hd, ht⟩ := h
+   exact ⟨d, List.mem_of_find?_eq_some hd, by simpa using List.find?_some hd, ht⟩
+ 
+ /-- Removing declarations of OTHER names (or none of name `n`) leaves `n`'s type alone. -/
+-theorem tyOf_filter (p : HoleDecl (List Lang.Ty) Lang.Ty → Bool) (n : Nat) :
++theorem holeTy_filter (p : HoleDecl (List Lang.Ty) Lang.Ty → Bool) (n : Nat) :
+     ∀ Ω : List (HoleDecl (List Lang.Ty) Lang.Ty), (∀ d ∈ Ω, d.name = n → p d = true) →
+-      tyOf (Ω.filter p) n = tyOf Ω n
++      holeTy (Ω.filter p) n = holeTy Ω n
+   | [], _ => rfl
+   | d :: Ω, h => by
+-    have ih := tyOf_filter p n Ω fun d' hd' => h d' (List.mem_cons_of_mem _ hd')
++    have ih := holeTy_filter p n Ω fun d' hd' => h d' (List.mem_cons_of_mem _ hd')
+     by_cases hn : d.name = n
+     · have hp := h d List.mem_cons_self hn
+-      simp only [tyOf, List.filter_cons_of_pos hp, List.find?_cons, hn, beq_self_eq_true]
++      simp only [holeTy, List.filter_cons_of_pos hp, List.find?_cons, hn, beq_self_eq_true]
+     · have hb : (d.name == n) = false := by simp [hn]
+       by_cases hp : p d = true
+-      · simp only [tyOf, List.filter_cons_of_pos hp, List.find?_cons, hb] at ih ⊢
++      · simp only [holeTy, List.filter_cons_of_pos hp, List.find?_cons, hb] at ih ⊢
+         exact ih
+-      · simp only [tyOf, List.filter_cons_of_neg hp, List.find?_cons, hb] at ih ⊢
++      · simp only [holeTy, List.filter_cons_of_neg hp, List.find?_cons, hb] at ih ⊢
+         exact ih
+ 
+-theorem lt_holeBound : ∀ {Ω : List (HoleDecl (List Lang.Ty) Lang.Ty)} {d : HoleDecl (List Lang.Ty) Lang.Ty},
+-    d ∈ Ω → d.name < holeBound Ω
+-  | d' :: Ω, d, h => by
+-    simp only [holeBound, List.foldr_cons] at *
+-    rcases List.mem_cons.1 h with rfl | h
+-    · omega
+-    · have := lt_holeBound h; simp only [holeBound] at this; omega
+-
+-theorem ΔOf_getElem? {Ω : List (HoleDecl (List Lang.Ty) Lang.Ty)} {n : Nat} {A : Lang.Ty}
+-    (h : tyOf Ω n = some A) : (ΔOf Ω)[n]? = some A := by
+-  obtain ⟨d, hd, hn, _⟩ := tyOf_some h
+-  have hlt : n < holeBound Ω := hn ▸ lt_holeBound hd
+-  simp [ΔOf, hlt, h]
+-
+-theorem ΔOf_nil : ΔOf [] = [] := rfl
+-
+-
+ /-- Every contextual hole occurrence has its named declaration. -/
+ def RefsDeclared (Ω : HoleSignature) (t : Term) : Prop :=
+-  ∀ n, Term.usesRef n t = true → (tyOf Ω n).isSome = true
++  ∀ n, Term.usesRef n t = true → (holeTy Ω n).isSome = true
+ 
+ /-- The contextual judgment uses the deployed checker signature. Ordinary imports
+ remain unavailable to standalone calculus fillings; their namespace is distinct. -/
+@@ -66,7 +50,7 @@ def LangHasTy (Ω : HoleSignature) (Γ : List Lang.Ty) (t : Term) (T : Lang.Ty)
+ theorem refsDeclared_nil {t : Term} (h : RefsDeclared [] t) (n : Nat) : Term.usesRef n t = false := by
+   cases hn : Term.usesRef n t with
+   | false => rfl
+-  | true => have := h n hn; simp [tyOf] at this
++  | true => have := h n hn; simp [holeTy] at this
+ 
+ theorem langHasTy_nil_iff {Γ : List Lang.Ty} {t : Term} {T : Lang.Ty} :
+     LangHasTy [] Γ t T ↔ HasType [] Γ t T := Iff.rfl
+@@ -76,7 +60,7 @@ theorem langHasTy_declared {Ω : HoleSignature} {Γ : List Lang.Ty} {t : Term} {
+     (h : LangHasTy Ω Γ t T) : RefsDeclared Ω t := by
+   intro n hn
+   have hd := hasType_declaresHole h n hn
+-  simpa [tyOf] using hd
++  simpa [holeTy] using hd
+ 
+ theorem langLaws : CalculusLaws langData LangHasTy where
+   msubst_lemma := by
+diff --git a/Lang/Proofs/Contextual/LangRenaming.lean b/Lang/Proofs/Contextual/LangRenaming.lean
+index 4f107c0..b8709f2 100644
+--- a/Lang/Proofs/Contextual/LangRenaming.lean
++++ b/Lang/Proofs/Contextual/LangRenaming.lean
+@@ -1,5 +1,5 @@
+ /- Binder-aware renaming and strengthening for every contextual Lang term. -/
+-import Lang.Contextual.LangCalculus
++import Lang.Subst
+ import Lang.Proofs.Check
+ import Lang.Proofs.Contextual.Core
+ 
+diff --git a/Lang/Proofs/Contextual/LangSubstitution.lean b/Lang/Proofs/Contextual/LangSubstitution.lean
+index 56357ee..ff1d8de 100644
+--- a/Lang/Proofs/Contextual/LangSubstitution.lean
++++ b/Lang/Proofs/Contextual/LangSubstitution.lean
+@@ -1,6 +1,6 @@
+ /- Ordinary substitution preserves the deployed typing judgment.
+ No new assumption is attached to a landed theorem. -/
+-import Lang.Contextual.LangSubstitution
++import Lang.Subst
+ import Lang.Proofs.Contextual.LangRenaming
+ 
+ namespace Nanodregg.Lang.Contextual
+diff --git a/Lang/Proofs/Contextual/LawMeaning.lean b/Lang/Proofs/Contextual/LawMeaning.lean
+index a59f472..c4bbe01 100644
+--- a/Lang/Proofs/Contextual/LawMeaning.lean
++++ b/Lang/Proofs/Contextual/LawMeaning.lean
+@@ -322,7 +322,7 @@ end
+ mutual
+ theorem lawTerm_fill (σ : Nat → Option Term)
+     (hs : ∀ n v, σ n = some v → ∃ A, v = .refuse A "holeUnresolved".toUTF8) :
+-    ∀ {t}, NoRef t → LawTerm t (Contextual.Term.fillRefs σ t)
++    ∀ {t}, NoRef t → LawTerm t (Term.fillRefs σ t)
+   | .var _, _ => .var
+   | .nat _, _ => .nat
+   | .bool _, _ => .bool
+@@ -342,14 +342,14 @@ theorem lawTerm_fill (σ : Nat → Option Term)
+   | .ref _, h => False.elim h
+   | .hole n ts, _ => by
+     cases hv : σ n with
+-    | none => simp only [Contextual.Term.fillRefs, hv]; exact .hole
++    | none => simp only [Term.fillRefs, hv]; exact .hole
+     | some v =>
+       obtain ⟨A, rfl⟩ := hs n v hv
+-      simp only [Contextual.Term.fillRefs, hv, Contextual.Term.substList, Contextual.Term.substVar]
++      simp only [Term.fillRefs, hv, Term.substList, Term.substVar]
+       exact .blocked
+ theorem lawTerms_fill (σ : Nat → Option Term)
+     (hs : ∀ n v, σ n = some v → ∃ A, v = .refuse A "holeUnresolved".toUTF8) :
+-    ∀ {fs}, NoRefRow fs → LawTerms fs (Contextual.Term.fillRefsRow σ fs)
++    ∀ {fs}, NoRefRow fs → LawTerms fs (Term.fillRefsRow σ fs)
+   | [], _ => .nil
+   | _ :: _, h => .cons (lawTerm_fill σ hs h.1) (lawTerms_fill σ hs h.2)
+ end
+@@ -383,11 +383,11 @@ theorem LawTerms.relocate_right {ts us} (h : LawTerms ts us) (f : Nat → Nat) :
+ end
+ 
+ theorem find_fillRefsRow (σ : Nat → Option Term) (l : Label) :
+-    ∀ fs, Row.find? l (Contextual.Term.fillRefsRow σ fs) =
+-      (Row.find? l fs).map (Contextual.Term.fillRefs σ)
++    ∀ fs, Row.find? l (Term.fillRefsRow σ fs) =
++      (Row.find? l fs).map (Term.fillRefs σ)
+   | [] => rfl
+   | (k,t)::fs => by
+-    simp only [Contextual.Term.fillRefsRow, Row.find?]
++    simp only [Term.fillRefsRow, Row.find?]
+     split <;> simp_all [find_fillRefsRow σ l fs]
+ 
+ /-- A prepared record retains each law field with only unresolved-hole refusals inserted. -/
+@@ -399,13 +399,13 @@ theorem unresolvedBody_field {p : Package} {fs : List (Label × Term)} {b : Term
+   split at hp
+   · cases hp
+     exact ⟨fs, hb, fun l t hf ht => ⟨t, hf, LawTerm.same ht⟩⟩
+-  · unfold Contextual.Term.fillBounded at hp
++  · unfold Term.fillBounded at hp
+     repeat' split at hp
+     all_goals first | (cases hp; done) | skip
+     cases hp
+     rw [hb]
+     refine ⟨_, rfl, fun l t hf ht => ?_⟩
+-    refine ⟨Contextual.Term.fillRefs (fun n =>
++    refine ⟨Term.fillRefs (fun n =>
+       ((holeSignature p.holes).find? (fun d => d.name == n)).map
+         (fun d => .refuse d.ty "holeUnresolved".toUTF8)) t, ?_, ?_⟩
+     · rw [find_fillRefsRow, hf]; rfl
+diff --git a/Lang/Proofs/Contextual/LawReceiverTeeth.lean b/Lang/Proofs/Contextual/LawReceiverTeeth.lean
+index 5003274..92799b3 100644
+--- a/Lang/Proofs/Contextual/LawReceiverTeeth.lean
++++ b/Lang/Proofs/Contextual/LawReceiverTeeth.lean
+@@ -71,7 +71,7 @@ an empty-signature or no-hole premise. -/
+ theorem contextual_law_dormant_hole :
+     ∃ (p : Package) (look : Pinned UInt8) (t : Term),
+       p.holes ≠ [] ∧ readPackage look 7 = .ok p ∧
+-      p.body = .record [("law", t)] ∧ NoRef t ∧ Contextual.Term.usesRef 0 t = true ∧
++      p.body = .record [("law", t)] ∧ NoRef t ∧ Term.usesRef 0 t = true ∧
+       (program toothEncode toothDecode).judge look (some 7) [] [] [] toothReq = .ok () ∧
+       Std.Admits [] t (reqData toothEncode toothReq) (.record []) (.record []) := by
+   have hj : judgeOneWith toothEncode toothDecode (loadContextual toothDecode)
+diff --git a/Lang/Contextual/LangCalculus.lean b/Lang/Subst.lean
+similarity index 79%
+rename from Lang/Contextual/LangCalculus.lean
+rename to Lang/Subst.lean
+index 2296832..c504afd 100644
+--- a/Lang/Contextual/LangCalculus.lean
++++ b/Lang/Subst.lean
+@@ -1,22 +1,108 @@
+ /-
+-# Lang.Contextual.LangCalculus — the DEPLOYED term language as a `CalculusData` (ACTIVITIES-2)
++# Lang.Subst — the deployed term operations over `Lang.Term`
+ 
+-The data half of CLOSURE's calculus over deployed Lang.Term. A substituted
+-hole `hole n σ` carries explicit arguments for its declared local context;
+-fillRefs applies the selected open filling to σ without capturing variables.
+-Ordinary `ref` terms remain imports. Strengthening and weakening rename ordinary
+-variables at a position using CMTT-CORE's lowerIdx/liftIdx. The signature-aware
+-laws live in Lang.Proofs.Contextual.LangInstance; deployed strengthening is
+-exercised and proved over the installed contextual ROM generator.
++Capture-avoiding renaming and substitution of ordinary variables (`renameVar`, `substVar`, `substList`), the
++contextual-hole filling `fillRefs` (a substituted hole `hole n σ` carries explicit arguments for its declared
++local context; the selected open filling is instantiated at `σ` without capture; ordinary `ref` terms remain
++imports), the occurrence tests `usesVar`/`usesRef`, decidable equality, and a hole's declared type `holeTy`.
++The Host runs these (through `Lang.HoleBudget`, `Lang.HoleROM`, `Lang.LiveHoles`); their typing facts are in
++`Lang.Proofs.Contextual.LangRenaming`/`LangSubstitution`/`LangOccurrences`/`LangFilling`, and the deployed
++language as a closure calculus is `Lang.Contextual.LangInstance`.
+ 
+ Binders: `lam` binds one variable, every `case` arm binds its payload at index 0; record and
+ extend fields bind nothing.
+ -/
+-import Lang.Contextual.LangSubstitution
+-import Lang.Contextual.Core
+-import Lang.Contextual.Closure
++import Lang.Check
++import Lang.Index
++
++namespace Nanodregg.Lang
++
++mutual
++/-- Rename the free variables (`lam` and every `case` arm bind one more). -/
++def Term.renameVar (ρ : Nat → Nat) : Term → Term
++  | .var i => .var (ρ i)
++  | .lam a b => .lam a (Term.renameVar (upR ρ) b)
++  | .app f a => .app (Term.renameVar ρ f) (Term.renameVar ρ a)
++  | .fix t => .fix (Term.renameVar ρ t)
++  | .nat n => .nat n
++  | .bool b => .bool b
++  | .bytes s => .bytes s
++  | .digest s => .digest s
++  | .prim p a b => .prim p (Term.renameVar ρ a) (Term.renameVar ρ b)
++  | .record fs => .record (Term.renameVarRow ρ fs)
++  | .get t ℓ => .get (Term.renameVar ρ t) ℓ
++  | .extend t fs => .extend (Term.renameVar ρ t) (Term.renameVarRow ρ fs)
++  | .inj a ℓ t => .inj a ℓ (Term.renameVar ρ t)
++  | .case t arms => .case (Term.renameVar ρ t) (Term.renameVarArms ρ arms)
++  | .ite c a b => .ite (Term.renameVar ρ c) (Term.renameVar ρ a) (Term.renameVar ρ b)
++  | .ref i => .ref i
++  | .hole n σ => .hole n (Term.renameVarList ρ σ)
++  | .refuse T w => .refuse T w
++def Term.renameVarList (ρ : Nat → Nat) : List Term → List Term
++  | [] => []
++  | t :: ts => Term.renameVar ρ t :: Term.renameVarList ρ ts
++/-- Fields bind nothing. -/
++def Term.renameVarRow (ρ : Nat → Nat) : List (Label × Term) → List (Label × Term)
++  | [] => []
++  | (ℓ, t) :: fs => (ℓ, Term.renameVar ρ t) :: Term.renameVarRow ρ fs
++/-- Every arm binds its payload at index 0. -/
++def Term.renameVarArms (ρ : Nat → Nat) : List (Label × Term) → List (Label × Term)
++  | [] => []
++  | (ℓ, t) :: as => (ℓ, Term.renameVar (upR ρ) t) :: Term.renameVarArms ρ as
++end
++
++
++/-- Extend a substitution under one ordinary binder: preserve its new variable,
++and shift every substituted free variable past it. -/
++def Term.upVarSubst (σ : Nat → Term) : Nat → Term
++  | 0 => .var 0
++  | i + 1 => Term.renameVar Nat.succ (σ i)
++
++mutual
++/-- Simultaneous, capture-avoiding substitution of ordinary variables.
++Package references are constants; case payloads bind exactly like lambdas. -/
++def Term.substVar (σ : Nat → Term) : Term → Term
++  | .var i => σ i
++  | .lam A b => .lam A (Term.substVar (Term.upVarSubst σ) b)
++  | .app f a => .app (Term.substVar σ f) (Term.substVar σ a)
++  | .fix t => .fix (Term.substVar σ t)
++  | .nat n => .nat n
++  | .bool b => .bool b
++  | .bytes s => .bytes s
++  | .digest s => .digest s
++  | .prim p a b => .prim p (Term.substVar σ a) (Term.substVar σ b)
++  | .record fs => .record (Term.substVarRow σ fs)
++  | .get t l => .get (Term.substVar σ t) l
++  | .extend t fs => .extend (Term.substVar σ t) (Term.substVarRow σ fs)
++  | .inj A l t => .inj A l (Term.substVar σ t)
++  | .case t arms => .case (Term.substVar σ t) (Term.substVarArms σ arms)
++  | .ite c a b => .ite (Term.substVar σ c) (Term.substVar σ a) (Term.substVar σ b)
++  | .ref n => .ref n
++  | .hole n ts => .hole n (Term.substVarList σ ts)
++  | .refuse A why => .refuse A why
++def Term.substVarList (σ : Nat → Term) : List Term → List Term
++  | [] => []
++  | t :: ts => Term.substVar σ t :: Term.substVarList σ ts
++def Term.substVarRow (σ : Nat → Term) : List (Label × Term) → List (Label × Term)
++  | [] => []
++  | (l, t) :: fs => (l, Term.substVar σ t) :: Term.substVarRow σ fs
++def Term.substVarArms (σ : Nat → Term) : List (Label × Term) → List (Label × Term)
++  | [] => []
++  | (l, t) :: arms =>
++      (l, Term.substVar (Term.upVarSubst σ) t) :: Term.substVarArms σ arms
++end
++
++/-- A list supplies the first variables; beyond the list, indices are lowered
++by its length. Thus a singleton gives ordinary beta substitution. -/
++def Term.substListFn : List Term → Nat → Term
++  | [], i => .var i
++  | t :: _, 0 => t
++  | _ :: ts, i + 1 => Term.substListFn ts i
++
++/-- Instantiate a term in its declared context by an explicit substitution. -/
++def Term.substList (σ : List Term) (t : Term) : Term :=
++  Term.substVar (Term.substListFn σ) t
+ 
+-namespace Nanodregg.Lang.Contextual
+ 
+ /-! ## Decidable equality of terms -/
+ 
+@@ -572,33 +658,7 @@ def Term.fillRefsRow (σ : Nat → Option Term) : List (Label × Term) → List
+ end
+ 
+ /-- The declared type of hole `n`: its first declaration's. -/
+-def tyOf (Ω : List (HoleDecl (List Lang.Ty) Lang.Ty)) (n : Nat) : Option Lang.Ty :=
++def holeTy (Ω : List (HoleDecl (List Lang.Ty) Lang.Ty)) (n : Nat) : Option Lang.Ty :=
+   (Ω.find? (·.name == n)).map (·.ty)
+ 
+-/-- One past the largest hole name. -/
+-def holeBound (Ω : List (HoleDecl (List Lang.Ty) Lang.Ty)) : Nat :=
+-  Ω.foldr (fun d m => max (d.name + 1) m) 0
+-
+-/-- Legacy name-indexed type projection retained for its lookup API.
+-Live LangHasTy uses HoleSignature directly; this list no longer interprets holes
+-as imported package refs. Undeclared positions use a placeholder only in this
+-projection and do not authorize a hole in the deployed checker. -/
+-def ΔOf (Ω : List (HoleDecl (List Lang.Ty) Lang.Ty)) : List Lang.Ty :=
+-  (List.range (holeBound Ω)).map fun n => (tyOf Ω n).getD .nat
+-
+-/-- `Lang.Term` as a `CalculusData`. -/
+-def langData : CalculusData where
+-  Ty := Lang.Ty
+-  Ctx := List Lang.Ty
+-  Tm := Term
+-  tmEq := Term.decEq
+-  msubst := Term.fillRefs
+-  check Ψ M A := decide (Lang.infer [] Ψ M = some A)
+-  uses M x := Term.usesVar x M
+-  drop Ψ x := Ψ.eraseIdx x
+-  strengthen x := Term.renameVar (lowerIdx x)
+-  weaken x := Term.renameVar (liftIdx x)
+-  var := Term.var
+-  lookup Ψ x := Ψ[x]?
+-
+-end Nanodregg.Lang.Contextual
++end Nanodregg.Lang

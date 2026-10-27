@@ -1,0 +1,14 @@
+# constants defined in MODS: 1871
+Nanodregg.Lang.Contextual.lang_strengthen_toy	Lang.Proofs.Contextual.LangInstance	Nanodregg.Lang.Contextual.CalculusData.Tm,Nanodregg.Lang.Contextual.CalculusData.strengthen,Nanodregg.Lang.Contextual.CalculusData.weaken
+Nanodregg.Lang.Contextual.holeModelIface._proof_1	Lang.Contextual.LangInstance	Nanodregg.Lang.Contextual.Token,Nanodregg.Lang.Contextual.CalculusData.Ty,Nanodregg.Lang.Contextual.CalculusData.lookup
+Nanodregg.Lang.Contextual.holeLive	Lang.Contextual.LangInstance	Nanodregg.Lang.Contextual.World,Nanodregg.Lang.Contextual.Token,Nanodregg.Lang.Contextual.World.live
+Nanodregg.Lang.Contextual.langLaws	Lang.Proofs.Contextual.LangInstance	Nanodregg.Lang.Contextual.CalculusLaws
+Nanodregg.Lang.Contextual.langData	Lang.Contextual.LangInstance	Nanodregg.Lang.Contextual.CalculusData,Nanodregg.Lang.Contextual.CalculusData.mk
+Nanodregg.Lang.Contextual.holeModelTemplate	Lang.Contextual.LangInstance	Nanodregg.Lang.Contextual.Party,Nanodregg.Lang.Contextual.Template,Nanodregg.Lang.Contextual.Template.mk,Nanodregg.Lang.Contextual.Iface
+Nanodregg.Lang.Contextual.lang_template_toy	Lang.Proofs.Contextual.LangInstance	Nanodregg.Lang.Contextual.CalculusData.Tm,Nanodregg.Lang.Contextual.CalculusData.msubst
+Nanodregg.Lang.Contextual.langData.eq_1	Lang.Proofs.Contextual.LangInstance	Nanodregg.Lang.Contextual.CalculusData,Nanodregg.Lang.Contextual.CalculusData.mk
+Nanodregg.Lang.Contextual.holeModelTemplate._proof_1	Lang.Contextual.LangInstance	Nanodregg.Lang.Contextual.Party,Nanodregg.Lang.Contextual.Iface.name
+Nanodregg.Lang.Contextual.holeBlocked	Lang.Contextual.LangInstance	Nanodregg.Lang.Contextual.World,Nanodregg.Lang.Contextual.Token,Nanodregg.Lang.Contextual.World.live
+Nanodregg.Lang.Contextual.holeModelIface	Lang.Contextual.LangInstance	Nanodregg.Lang.Contextual.Party,Nanodregg.Lang.Contextual.Iface,Nanodregg.Lang.Contextual.Iface.mk,Nanodregg.Lang.Contextual.Token
+Nanodregg.Lang.Contextual.holeLive.match_1	Lang.Contextual.LangInstance	Nanodregg.Lang.Contextual.Token
+Nanodregg.Lang.Contextual.holeModelCandidate	Lang.Contextual.LangInstance	Nanodregg.Lang.Contextual.Token,Nanodregg.Lang.Contextual.Party,Nanodregg.Lang.Contextual.Status,Nanodregg.Lang.Contextual.Candidate,Nanodregg.Lang.Contextual.Candidate.mk

@@ -1,0 +1,24 @@
+/tank/dregg-build/nanodregg/logs/promo/c2/T2.lean:28:0: error: Not a definitional equality: the left-hand side
+  changedHypotheses digestOf look rv self h c
+is not definitionally equal to the right-hand side
+  List.foldlM (chStep digestOf look rv self h c) [] h.hypotheses.zipIdx
+/tank/dregg-build/nanodregg/logs/promo/c2/T2.lean:30:74: error: Type mismatch
+  rfl
+has type
+  ?m.11 = ?m.11
+but is expected to have type
+  changedHypotheses digestOf look rv self h c = List.foldlM (chStep digestOf look rv self h c) [] h.hypotheses.zipIdx
+/tank/dregg-build/nanodregg/logs/promo/c2/T2.lean:185:31: warning: This simp argument is unused:
+  pure
+
+Hint: Omit it from the simp argument list.
+  simp [bind, Except.bind, p̵u̵r̵e̵,̵ ̵Except.pure, hgp p hgp', hguard]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/tank/dregg-build/nanodregg/logs/promo/c2/T2.lean:185:37: warning: This simp argument is unused:
+  Except.pure
+
+Hint: Omit it from the simp argument list.
+  simp [bind, Except.bind, pure, E̵x̵c̵e̵p̵t̵.̵p̵u̵r̵e̵,̵ ̵hgp p hgp', hguard]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

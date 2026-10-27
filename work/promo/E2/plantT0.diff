@@ -1,0 +1,6 @@
+1004,1006c1004
+<         match ownSettle X me w cb with
+<         | some (.committed _ _) => .done CommandExit.ok.code.toUInt8 out ByteArray.empty
+<         | v => attemptContradicted X "committed" v
+---
+>         .done CommandExit.ok.code.toUInt8 out ByteArray.empty

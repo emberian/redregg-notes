@@ -1,0 +1,35 @@
+{
+  "authority": "requires-current-admission",
+  "delegation": {
+    "childCapability": "12775651706407319129",
+    "domain": "8501",
+    "kind": "object",
+    "name": "tc-blind",
+    "recipient": "14624123575744617878",
+    "reservation": "2babe2a92202f4f5400cfac499473e8dab572eee0a6ed3130e7b7ac547af4c5e",
+    "target": "15441563663773007075"
+  },
+  "effect": "none",
+  "intentPath": "/run/user/1001/p4.lLiI5S/r/world/sponsor/proposals/tc-blind-grant/intent.json",
+  "intentSha256": "3a8e36bb26473ff71f23e6497d61960479b9361e82541915b116161101e4b3ad",
+  "proposalId": "tc-blind-grant",
+  "renounce": null,
+  "type": "minidregg-workspace-proposal-result-v1"
+}
+{
+  "acceptedCount": "23",
+  "confirmation": "installed",
+  "eventId": "82322373192520053625218045733987579872076316904646975182085179221230320233029",
+  "transactionId": "13025152213495838802380256605630974878234479916333837564238415062157395250746",
+  "type": "confirmed",
+  "worldRoot": "3627671898071788163879665257197233525511270207293853834192332477493493625218"
+}
+{
+  "acceptedCount": "23",
+  "confirmation": "replayed",
+  "eventId": "82322373192520053625218045733987579872076316904646975182085179221230320233029",
+  "transactionId": "13025152213495838802380256605630974878234479916333837564238415062157395250746",
+  "type": "confirmed",
+  "worldRoot": "3627671898071788163879665257197233525511270207293853834192332477493493625218"
+}
+/run/user/1001/p4.lLiI5S/r/world/sponsor/proposals/tc-blind-grant/recipient-reference.json

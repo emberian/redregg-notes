@@ -1,0 +1,1 @@
+DONE 2026-10-20 — ROOT stopped this lane; exact state and tooth evidence handed off to CX-P13. Landed hashes: none. No retry launched; the ACTIVITIES task remains open until the fixed bundle lands.

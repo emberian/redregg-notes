@@ -1,0 +1,1 @@
+DONE 2026-10-21 — landed 3070fac6dc57af1c203d99417a569336ea4b390a; Census-only scope, full judge GREEN, pushed. Excluded Lang calculus and toy-world command did not land.

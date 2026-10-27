@@ -1,0 +1,136 @@
+✔ [24/70] Built Kernel.World (2.9s)
+✔ [25/70] Built Kernel.Sim.Shadow (298ms)
+✔ [26/70] Built Kernel.Proofs.Bytes (746ms)
+✔ [27/70] Built Kernel.Receive.Call (1.9s)
+✔ [28/70] Built Codec.Kernel (1.9s)
+✔ [29/70] Built Kernel.Receive.Authority (445ms)
+✔ [30/70] Built Kernel.Proofs.Trie (3.4s)
+✔ [31/70] Built Codec.Proofs.Rows (941ms)
+✔ [32/70] Built Codec.World (1.1s)
+✔ [33/70] Built Kernel.Receive.Ledger (450ms)
+✔ [34/70] Built Kernel.Proofs.RowsOverlay (483ms)
+✔ [35/70] Built Kernel.Proofs.TrieRetain (559ms)
+✔ [36/70] Built Kernel.Proofs.TrieMap (1.3s)
+✔ [37/70] Built Codec.Deployed (552ms)
+✔ [38/70] Built Kernel.Receive.Derive (1.0s)
+✔ [39/70] Built Codec.Proofs.Kernel (3.5s)
+✔ [40/70] Built Kernel.Receive.Submit (406ms)
+✔ [41/70] Built Kernel.Receive.Follow (483ms)
+✔ [42/70] Built Kernel.Proofs.Lawful (391ms)
+✔ [43/70] Built Kernel.Receive.Audit (409ms)
+✖ [44/70] Building Kernel.Proofs.Admit (6.6s)
+trace: .> LEAN_PATH=/tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean /home/hbox/.elan/toolchains/leanprover--lean4---v4.30.0/bin/lean /tank/dregg-build/nanodregg/wt/promo/Kernel/Proofs/Admit.lean -o /tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean/Kernel/Proofs/Admit.olean -i /tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean/Kernel/Proofs/Admit.ilean -c /tank/dregg-build/nanodregg/wt/promo/.lake/build/ir/Kernel/Proofs/Admit.c --setup /tank/dregg-build/nanodregg/wt/promo/.lake/build/ir/Kernel/Proofs/Admit.setup.json --json
+error: Kernel/Proofs/Admit.lean:74:9: Tactic `cases` failed with a nested error:
+Dependent elimination failed: Failed to solve equation
+  Except.ok r =
+    match x.act, World.entry E w x.cell with
+    | Act.keep, x_1 => do
+      req (decide (pinOf E (World.entry E w x.cell) = x.seen)) (Reject.stale x.cell)
+      pure none
+    | Act.write ops, some (Entry.live cell ver) => do
+      req (decide (ver + 1 < Bounds.counterLimit)) (Reject.overBound Bound.version)
+      let post ← postWrite x.cell cell ops
+      req (decide (pinOf E (some (Entry.live post (ver + 1))) = x.seen)) (Reject.stale x.cell)
+      pure
+          (some
+            { cell := x.cell, entry := Entry.live post (ver + 1),
+              freed := cell.weight + (List.map Op.weight ops).sum - post.weight,
+              flows := flowsOf (some cell) (some post) })
+    | Act.write ops, x_1 => Except.error (Reject.missingCell x.cell)
+    | Act.retire, some (Entry.live cell ver) => do
+      req (cell.discipline != Discipline.rom) (Reject.romRetire x.cell)
+      req (decide (pinOf E (some Entry.tomb) = x.seen)) (Reject.stale x.cell)
+      pure
+          (some
+            { cell := x.cell, entry := Entry.tomb, freed := counterWeight + cell.weight,
+              flows := flowsOf (some cell) none })
+    | Act.retire, x_1 => Except.error (Reject.missingCell x.cell)
+at case `Eq.refl`
+error: Kernel/Proofs/Admit.lean:73:13: This simp argument is unused:
+  except_bind_ok
+
+Hint: Omit it from the simp argument list.
+  simp only [̵e̵x̵c̵e̵p̵t̵_̵b̵i̵n̵d̵_̵o̵k̵]̵ ̵at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+error: Kernel/Proofs/Admit.lean:162:98: unsolved goals
+D : Type
+inst✝¹ : Ord D
+inst✝ : DecidableEq D
+E : Env D
+w : World D
+x : Touch D
+hstale : pinOf E (World.entry E w x.cell) ≠ x.seen
+⊢ (match x.act, World.entry E w x.cell with
+    | Act.keep, x_1 => Except.error (Reject.stale x.cell)
+    | Act.write ops, some (Entry.live cell ver) =>
+      match if ver + 1 < Bounds.counterLimit then Except.ok () else Except.error (Reject.overBound Bound.version) with
+      | Except.error err => Except.error err
+      | Except.ok v =>
+        match postWrite x.cell cell ops with
+        | Except.error err => Except.error err
+        | Except.ok v =>
+          match
+            if pinOf E (some (Entry.live v (ver + 1))) = x.seen then Except.ok ()
+            else Except.error (Reject.stale x.cell) with
+          | Except.error err => Except.error err
+          | Except.ok v_1 =>
+            pure
+              (some
+                { cell := x.cell, entry := Entry.live v (ver + 1),
+                  freed := cell.weight + (List.map Op.weight ops).sum - v.weight,
+                  flows := flowsOf (some cell) (some v) })
+    | Act.write ops, x_1 => Except.error (Reject.missingCell x.cell)
+    | Act.retire, some (Entry.live cell ver) =>
+      match if cell.discipline = Discipline.rom then Except.error (Reject.romRetire x.cell) else Except.ok () with
+      | Except.error err => Except.error err
+      | Except.ok v =>
+        match if pinOf E (some Entry.tomb) = x.seen then Except.ok () else Except.error (Reject.stale x.cell) with
+        | Except.error err => Except.error err
+        | Except.ok v =>
+          pure
+            (some
+              { cell := x.cell, entry := Entry.tomb, freed := counterWeight + cell.weight,
+                flows := flowsOf (some cell) none })
+    | Act.retire, x_1 => Except.error (Reject.missingCell x.cell)) =
+    Except.error (Reject.stale x.cell)
+error: Kernel/Proofs/Admit.lean:459:9: Tactic `cases` failed with a nested error:
+Dependent elimination failed: Failed to solve equation
+  Except.ok (some p) =
+    match x.act, World.entry E w x.cell with
+    | Act.keep, x_1 => do
+      req (decide (pinOf E (World.entry E w x.cell) = x.seen)) (Reject.stale x.cell)
+      pure none
+    | Act.write ops, some (Entry.live cell ver) => do
+      req (decide (ver + 1 < Bounds.counterLimit)) (Reject.overBound Bound.version)
+      let post ← postWrite x.cell cell ops
+      req (decide (pinOf E (some (Entry.live post (ver + 1))) = x.seen)) (Reject.stale x.cell)
+      pure
+          (some
+            { cell := x.cell, entry := Entry.live post (ver + 1),
+              freed := cell.weight + (List.map Op.weight ops).sum - post.weight,
+              flows := flowsOf (some cell) (some post) })
+    | Act.write ops, x_1 => Except.error (Reject.missingCell x.cell)
+    | Act.retire, some (Entry.live cell ver) => do
+      req (cell.discipline != Discipline.rom) (Reject.romRetire x.cell)
+      req (decide (pinOf E (some Entry.tomb) = x.seen)) (Reject.stale x.cell)
+      pure
+          (some
+            { cell := x.cell, entry := Entry.tomb, freed := counterWeight + cell.weight,
+              flows := flowsOf (some cell) none })
+    | Act.retire, x_1 => Except.error (Reject.missingCell x.cell)
+at case `Eq.refl`
+error: Kernel/Proofs/Admit.lean:458:13: This simp argument is unused:
+  except_bind_ok
+
+Hint: Omit it from the simp argument list.
+  simp only [̵e̵x̵c̵e̵p̵t̵_̵b̵i̵n̵d̵_̵o̵k̵]̵ ̵at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+error: Lean exited with code 1
+✔ [56/70] Built Kernel.Proofs.Receive (5.9s)
+✔ [62/70] Built Kernel.Proofs.Authority (1.2s)
+✔ [64/70] Built Kernel.Proofs.Tree (1.3s)
+Some required targets logged failures:
+- Kernel.Proofs.Admit
+error: build failed

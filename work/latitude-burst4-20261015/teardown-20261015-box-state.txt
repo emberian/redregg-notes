@@ -1,0 +1,24 @@
+### ~/box-changes.md
+2026-10-15T05:07:27Z kernel.perf_event_paranoid 4 -> 1 (runtime sysctl, not persisted; undo: sudo sysctl -w kernel.perf_event_paranoid=4) — for STATE-AT-3 end-of-range bench
+2026-10-15T05:14:40Z /srv/pipeline/box.env: export MINIDREGG_LEAN_SEATS=4 appended (undo: remove the lines; box-env regen would drop it, re-add). lane/seat-count pushed to GitHub + shared remote.
+
+### /srv/pipeline/box.env
+# Written by scripts/pipeline/box-env on burst4-a at 2026-10-15T03:52:25Z. Exports only.
+export PIPELINE_SHARED_GIT=/srv/git/minidregg.git
+export PIPELINE_SLOTS=/srv/build-slot-2\ /srv/build-slot-3\ /srv/build-slot-4\ /srv/build-slot-5\ /srv/build-slot-6\ /srv/build-slot-7
+export LEAN_NUM_THREADS=6
+export PIPELINE_SMALL_SLOTS=/srv/build-slot-small-1\ /srv/build-slot-small-2
+export PIPELINE_GATE_SLOTS=/srv/build-slot-mk\ /srv/build-slot-1
+export PIPELINE_ORIGIN=ember@207.188.7.163
+. /srv/pipeline/sccache.env
+export PIPELINE_LAKE_CACHE=${PIPELINE_LAKE_CACHE:-/srv/lake-cache}
+export PATH=/srv/pipeline/scripts/lake-shim:$PATH
+export MINI_FN_LAUNCHER=/srv/fnbin/6679dae0e/fn-6679dae0e/fn-host
+export MINI_FN_CORE=/srv/fnbin/6679dae0e/fn-6679dae0e/fn-host.core
+
+# 2026-10-15T05:14:40Z ROOT: native-host seats 2->4 on this box (undo: delete these lines; hbox stays at default 2)
+export MINIDREGG_LEAN_SEATS=4
+export PIPELINE_LANES=/srv/lanes   # landing.sh at a5483db3 reads it unset-guarded (INTEGRATOR-2 10-15)
+
+### /srv/pipeline/slots.status
+{"lane_slots": ["/srv/build-slot-2", "/srv/build-slot-3", "/srv/build-slot-4", "/srv/build-slot-5", "/srv/build-slot-6", "/srv/build-slot-7"], "host": "burst4-a", "at": "06:45:48Z", "load": "8.00", "rows": [{"slot": "/srv/build-slot-1", "gate": true, "waiters": [], "state": "free"}, {"slot": "/srv/build-slot-2", "gate": false, "waiters": [], "state": "free"}, {"slot": "/srv/build-slot-3", "gate": false, "waiters": [], "state": "free"}, {"slot": "/srv/build-slot-4", "gate": false, "waiters": [], "state": "free"}, {"slot": "/srv/build-slot-5", "gate": false, "waiters": [], "state": "free"}, {"slot": "/srv/build-slot-6", "gate": false, "waiters": [], "state": "free"}, {"slot": "/srv/build-slot-7", "gate": false, "waiters": [], "state": "free"}, {"slot": "/srv/build-slot-mk", "gate": true, "waiters": [], "state": "free"}, {"slot": "/srv/build-slot-small-1", "gate": false, "waiters": [], "state": "free"}, {"slot": "/srv/build-slot-small-2", "gate": false, "waiters": [], "state": "free"}]}

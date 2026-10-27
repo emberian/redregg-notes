@@ -1,0 +1,61 @@
+n	who	what	expect	exit	verdict	note
+1	operator	box: sshd on 127.0.0.1:22424; authorized_keys = sponsor mode=shell + friend mode=proxy	-	-	ok	restrict,command="/run/user/1001/p4.uTDpCg/r/steps/JP2/box/b
+2	operator	laptop consent config: no Store, no box or build path (thin consent only)	-	-	ok	
+3	operator	authorized_keys line 2 is restrict,command="…/mini-socket-proxy …" (no pty)	-	-	ok	
+4	friend	join --key: keygen on the laptop	0	0	ok	
+5	friend	printed public key is 64 hex and the key file is on the laptop	-	-	ok	
+6	friend	join --key printed the next key's public half too (K-PREROTATE), and it is not the key	-	-	ok	
+7	friend	join --key printed the next key's co-signature as a third line (FIX-IDENTITY)	-	-	ok	
+8	sponsor	hosted shell: enroll plan friend <public key hex> <next public key hex> <co-signature hex>	0	0	ok	
+9	sponsor	hosted shell: enroll offer friend (the offer the friend receives)	0	0	ok	
+10	sponsor	offer carries the Plan, the command, config and Host digest; no secret	-	-	ok	
+11	friend	join --remote box --sponsor-plan: Host re-decodes the offer, friend signs possession	0	0	ok	
+12	sponsor	hosted shell: enroll seal friend <signature hex>	0	0	ok	
+13	sponsor	hosted shell: enroll submit friend	0	0	ok	
+14	sponsor	admitted: subject 12722756243119881344, the friend's public key, no key path	-	-	ok	
+15	sponsor	hosted shell: provision friend 12722756243119881344 1000 all[]	0	0	ok	
+16	sponsor	hosted shell: enroll welcome friend	0	0	ok	
+17	friend	join --remote box --welcome: remote workspace on the laptop	0	0	ok	
+18	friend	workspace pins socket ssh:box, no Host image, the Host digest, the laptop key	-	-	ok	
+19	friend	create notes declared all[] (remote shell)	0	1	FAIL	error: thin consent has no served target views; nothing signed | error: thin consent has no served target views; nothing signed
+20	friend	invoke first-write notes create 2 1	0	1	FAIL	error: cannot read /run/user/1001/p4.uTDpCg/r/steps/JP2/laptop/.mini/box/workspace/refs/notes.json: No such file or directory (os error 2) | error: cannot read /run/user/1001/p4.uTDpCg/r/steps/JP2/laptop/.mini/box/workspace/refs/notes.json: No such file or directory (os error 2)
+21	friend	submit first-write	0	1	FAIL	error: No such file or directory (os error 2) | error: No such file or directory (os error 2)
+22	friend	write installed	-	-	FAIL	check failed
+23	friend	read notes (CLI: mini --remote box workspace --action read)	0	1	FAIL	mini: cannot read /run/user/1001/p4.uTDpCg/r/steps/JP2/laptop/.mini/box/workspace/refs/notes.json: No such file or directory (os error 2) | mini: cannot read /run/user/1001/p4.uTDpCg/r/steps/JP2/laptop/.mini/box/workspace/refs/notes.json: No such file or directory (os error 2)
+24	friend	read back field 2 = 1	-	-	FAIL	check failed
+25	friend	delegate grant-sponsor notes 7 observe 50000	0	1	FAIL	error: cannot read /run/user/1001/p4.uTDpCg/r/steps/JP2/laptop/.mini/box/workspace/refs/notes.json: No such file or directory (os error 2) | error: cannot read /run/user/1001/p4.uTDpCg/r/steps/JP2/laptop/.mini/box/workspace/refs/notes.json: No such file or directory (os error 2)
+26	friend	submit grant-sponsor	0	1	FAIL	error: No such file or directory (os error 2) | error: No such file or directory (os error 2)
+27	friend	publish grant-sponsor	0	1	FAIL	error: cannot inspect /run/user/1001/p4.uTDpCg/r/steps/JP2/laptop/.mini/box/workspace/proposals/grant-sponsor: No such file or directory (os | error: cannot inspect /run/user/1001/p4.uTDpCg/r/steps/JP2/laptop/.mini/box/workspace/proposals/grant-sponsor: No such file or directory (os error 2)
+28	friend	export grant-sponsor	0	1	FAIL	error: cannot read /run/user/1001/p4.uTDpCg/r/steps/JP2/laptop/.mini/box/workspace/proposals/grant-sponsor/recipient-reference.json: No such | error: cannot read /run/user/1001/p4.uTDpCg/r/steps/JP2/laptop/.mini/box/workspace/proposals/grant-sponsor/recipient-reference.json: No such file or directory (os error 2) (publish the delegation firs
+29	sponsor	hosted shell: import friend-notes <reference>	0	2	FAIL	usage: import NAME REFERENCE-JSON|@FILE | import NAME KIND TARGET OBSERVE [OPERATION|- [CONTROL]] | usage: import NAME REFERENCE-JSON|@FILE | import NAME KIND TARGET OBSERVE [OPERATION|- [CONTROL]]
+30	sponsor	hosted shell: read friend-notes (the delegated grant)	0	1	FAIL	error: cannot read /run/user/1001/p4.uTDpCg/r/world/sponsor/refs/friend-notes.json: No such file or directory (os error 2) | error: cannot read /run/user/1001/p4.uTDpCg/r/world/sponsor/refs/friend-notes.json: No such file or directory (os error 2)
+31	sponsor	sponsor reads the friend's field 2 = 1 through the delegation	-	-	FAIL	check failed
+32	operator	find BOX -name '*.key' | xargs -n1 basename: checkpoint.key clock.key newcomer.key observer.key observer.key sponsor.key 	-	-	ok	
+33	operator	no friend key file on the box	-	-	ok	
+34	operator	control: hosted keys ARE listed (sponsor.key, newcomer.key)	-	-	ok	
+35	operator	seed scan of every box file: {"friendSeed":0,"sponsorSeed":1,"files":1205}	-	-	ok	
+36	operator	the friend's secret seed (raw or hex) is in no box file	-	-	ok	
+37	operator	control: the sponsor's hosted seed IS found by the same scan	-	-	ok	
+38	friend	stray bytes (an HTTP request line) on the proxy pipe	nz	1	ok	mini: proxy: not a socket frame (invalid frame length); closing
+39	friend	  no reply byte came back; the proxy said why on stderr	-	-	ok	
+40	friend	ssh box 'cat /etc/passwd' (a command on a proxy key)	64	64	ok	
+41	friend	  nothing ran: no output	-	-	ok	
+42	friend	  reply to wrong-config: no-reply bytes=0	-	-	ok	
+43	friend	  proxy refused config pin before the socket	-	-	FAIL	check failed
+44	friend	  reply to operator-op: no-reply bytes=0	-	-	ok	
+45	friend	  proxy refused an operator-socket operation	-	-	FAIL	check failed
+46	friend	  reply to wrong-host-pin: no-reply bytes=0	-	-	ok	
+47	friend	  the socket refused the Host pin (254)	-	-	FAIL	check failed
+48	friend	  reply to tampered-call: no-reply bytes=0	-	-	ok	
+49	friend	  reply to exact-call: no-reply bytes=0	-	-	ok	
+50	friend	Host decodes both outcomes (two op-8 frames, one proxy session)	0	0	ok	
+51	friend	  tampered-call outcome: 	-	-	ok	
+52	friend	  the Host refused the tampered signed call	-	-	FAIL	check failed
+53	friend	  exact-call outcome: 	-	-	ok	
+54	friend	  control: the untampered call on the same raw path is confirmed, replayed (no new effect)	-	-	FAIL	check failed
+55	friend	after the refusals: read notes still answers field 2 = 1	0	1	FAIL	error: cannot read /run/user/1001/p4.uTDpCg/r/steps/JP2/laptop/.mini/box/workspace/refs/notes.json: No such file or directory (os error 2) | error: cannot read /run/user/1001/p4.uTDpCg/r/steps/JP2/laptop/.mini/box/workspace/refs/notes.json: No such file or directory (os error 2)
+56	friend	  field 2 = 1	-	-	FAIL	check failed
+57	friend	keygen over --remote is refused (not a participant Host command)	nz	1	ok	mini: keygen is not a participant command; --remote reaches only the public socket's participant surface (workspace, enroll, join, pay-claim
+58	sponsor	hosted shell unchanged: whoami	0	0	ok	
+59	sponsor	  sponsor session is subject 7	-	-	ok	
+60	operator	stop sshd	-	-	ok	

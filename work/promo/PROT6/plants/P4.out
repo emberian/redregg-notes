@@ -1,0 +1,35 @@
+whole build exit 1
+      2 error
+error: Lang/Proofs/StdOffer.lean:998:41: Application type mismatch: The argument
+error: Lang/Proofs/StdOffer.lean:1077:96: Application type mismatch: The argument
+error: Lean exited with code 1
+error: build failed
+- Lang.Proofs.StdOffer
+journey exit 1
+800,811c800,811
+< ok   LF1 A invokes Z.fuse {deal = the bytes of {pair {a X, b Y}, theta {price 9}}, x X, y Y, viaX (A's grant), viaY (B's grant)} pinning Z, X, Y, both grants and both offer rows: admitted; read back: X's offer 0 present false, Y's offer 0 present false; session rows under X and Y true, their captured values equal true (and the forwarded deal true)
+< ok   LF2 the same call with Y's pinned offer seller [11,12] (price 9 outside it): refused program Nanodregg.Kernel.Receive.Refusal.program "take: refused notCompliant"; read back on the unchanged World: X's offer 0 and Y's offer 1 stand true
+< ok   LF2r the same call with Y's pinned offer buyer [8,12] (both buyer): refused program Nanodregg.Kernel.Receive.Refusal.program "take: refused sameRole"
+< ok   LF3 LF1's call without pinning Y's cell: refused unpinned Nanodregg.Kernel.Receive.Refusal.unpinned 11036927902987516806
+< ok   LF3r LF1's call with Y's cell pinned and Y's offer row not pinned: refused program Nanodregg.Kernel.Receive.Refusal.program "take: refused peerRowUnpinned"
+< ok   LF4 B installs P' = offerPackage [price] [buyer, seller] 63 (admitted), creates W of P' (admitted) and posts W's offer 0 seller [8,12] (admitted); LF1's call with pair {a X, b W}: refused program Nanodregg.Kernel.Receive.Refusal.program "peer: another package"
+< ok   LF5 LF1's call again on the World after LF1, pinning the now-absent offer rows: refused program Nanodregg.Kernel.Receive.Refusal.program "take: refused noOffer"; A's grant gX and B's grant gY still live true
+< ok   LF6a control: LF1's call with viaY none: refused noGrant Nanodregg.Kernel.Receive.Refusal.noGrant 11036927902987516806
+< ok   LF6b control: LF1's call with viaY B's live grant to Z of [invoke post] only: refused grantRight Nanodregg.Kernel.Receive.Refusal.grantRight 3955362801580472245
+< ok   LF6c control: LF1's call with B's take grant not pinned: refused unpinned Nanodregg.Kernel.Receive.Refusal.unpinned 8579411056453027292
+< ok   LF7 control: Z.fuse naming Z itself as x: refused revisited Nanodregg.Kernel.Receive.Refusal.revisited 3403209807821037968
+< lang-journey: GREEN
+---
+> FAIL LF1 A invokes Z.fuse {deal = the bytes of {pair {a X, b Y}, theta {price 9}}, x X, y Y, viaX (A's grant), viaY (B's grant)} pinning Z, X, Y, both grants and both offer rows: no bytes; read back: X's offer 0 present true, Y's offer 0 present true; session rows under X and Y false, their captured values equal true (and the forwarded deal false)
+> FAIL LF2 the same call with Y's pinned offer seller [11,12] (price 9 outside it): no bytes; read back on the unchanged World: X's offer 0 and Y's offer 1 stand true
+> FAIL LF2r the same call with Y's pinned offer buyer [8,12] (both buyer): no bytes
+> FAIL LF3 LF1's call without pinning Y's cell: no bytes
+> FAIL LF3r LF1's call with Y's cell pinned and Y's offer row not pinned: no bytes
+> FAIL LF4 B installs P' = offerPackage [price] [buyer, seller] 63 (admitted), creates W of P' (admitted) and posts W's offer 0 seller [8,12] (admitted); LF1's call with pair {a X, b W}: no bytes
+> FAIL LF5 LF1's call again on the World after LF1, pinning the now-absent offer rows: no bytes; A's grant gX and B's grant gY still live true
+> FAIL LF6a control: LF1's call with viaY none: no bytes
+> FAIL LF6b control: LF1's call with viaY B's live grant to Z of [invoke post] only: no bytes
+> FAIL LF6c control: LF1's call with B's take grant not pinned: no bytes
+> FAIL LF7 control: Z.fuse naming Z itself as x: no bytes
+> lang-journey: RED (11)
+restored identical

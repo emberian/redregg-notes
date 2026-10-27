@@ -1,0 +1,19 @@
+01:46:18Z burst-up: staged on burst5-a
+  [burst5-a-boot]  5210 |     kj::Maybe<kj::String> offeredExtensions;
+  [burst5-a-boot]       |                           ^~~~~~~~~~~~~~~~~
+  [burst5-a-boot] capnp: Cap'n Proto version 1.5.0 (/usr/local/bin/capnp)
+  [burst5-a-boot] == root phase DONE 2026-10-17T01:47:05+00:00: 6 lane slots x 6 threads, slice 158G
+01:47:05Z burst-up: root phase ok on burst5-a
+  [burst5-a] #=#=#                                                                          ##O#-#                                                                         ########################################                                  55.8%####################################################################      95.8%######################################################################## 100.0%
+  [burst5-a] 
+  [burst5-a] info: checking for self-update (current version: 1.29.1)
+  [burst5-a] installed-from: cfb68bf984b38ec875e8bec20de47f7f28d057b6 (staged by burst-up)
+  [burst5-a] install-sccache: sccache 0.18.0 at /srv/pipeline/bin/sccache; cache /srv/sccache (120G); snippet /srv/pipeline/sccache.env
+  [burst5-a] lean-ask-install-repl: /srv/pipeline/repl/.lake/build/bin/repl (leanprover/lean4:v4.30.0, repl dde7dd4397951755f1f6c2b4b3a83a26911d63ad)
+  [burst5-a] pipeline-sccache.service: active
+  [burst5-a] pipeline-slots.service: active
+  [burst5-a] pipeline-artifacts.service: active
+  [burst5-a] shared-remote: /srv/git/minidregg.git (timer shared-remote-sync.timer)
+  [burst5-a] briefs: 2 files in /srv/briefs
+  [burst5-a] == user phase DONE 2026-10-17T01:48:13+00:00
+01:48:14Z burst-up: user phase ok on burst5-a

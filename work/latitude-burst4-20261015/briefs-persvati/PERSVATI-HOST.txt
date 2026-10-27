@@ -1,0 +1,8 @@
+persvati = Ember's LAPTOP, a third build host for burst4 (no root used; keep <= half the cores). Be considerate.
+- Layout: . ~/mini-pipeline/activate   (box.env; the profile does NOT source it). Warm base ~/mini-pipeline/warm-base (a5483db3).
+- Lean builds: ~/mini-pipeline/pipeline/slots/with-lean-slot swarm-build lake build ...  (3 FIFO slots x THREADS=4, nice 15;
+  launch detached `setsid nohup ... & echo $! > job.pid`). swarm-build caps a build at 20G inside swarm.slice (41G for all).
+- Lanes push to burst4's shared remote: git push burst4-gate:/srv/git/minidregg.git HEAD:refs/heads/lane/<name>
+  (hbox mirrors that remote every 10 min). Commit with `git -c commit.gpgsign=false` (the laptop's global config signs).
+- Not on this host (no root): sqlite3, python3-nacl, python3-venv/ensurepip, pkg-config, age -> no journeys here.
+- PID files or nothing: never pkill -f / killall / kill -u. Every wait loop sleeps and has a deadline. No large writes outside ~/mini-pipeline.

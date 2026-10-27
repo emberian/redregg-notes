@@ -1,0 +1,105 @@
+COST journey frames 163 steps 11
+ROW journey PASS (plant Nanodregg.Protocol.Mutation.openLog caught at line 8: ok)
+COST reopen frames 85 steps 7
+ROW reopen PASS (plant Nanodregg.Protocol.Mutation.forgetJournal caught at line 9: absent)
+COST laws frames 103 steps 8
+ROW laws PASS (plant Nanodregg.Protocol.Mutation.skipJudge caught at line 9: ok)
+COST rotate frames 168 steps 9
+ROW rotate PASS (plant Nanodregg.Protocol.Mutation.advanceOnSend caught at line 11: uncertain)
+COST audit frames 117 steps 9
+ROW audit PASS (plant Nanodregg.Protocol.Mutation.followVerifyAll caught at line 13: refused chainMismatch)
+COST paging frames 1207 steps 108
+ROW paging PASS (plant Nanodregg.Protocol.Mutation.lieTip caught at line 11: refused expect)
+COST coldCatchUp frames 2425 steps 217
+ROW coldCatchUp PASS (plant Nanodregg.Protocol.Mutation.unstatedExpiry caught at line 10: refused expired)
+COST inflatedHeight frames 1300 steps 117
+ROW inflatedHeight PASS (plant Nanodregg.Protocol.Mutation.ignoreNotBefore caught at line 10: ok)
+COST forgotten frames 35441 steps 3217
+ROW forgotten PASS (plant Nanodregg.Protocol.Mutation.forgottenRefused caught at line 13: refused forgotten)
+COST refused frames 34404 steps 3136
+ROW refused PASS (plant Nanodregg.Protocol.Mutation.settleDecline caught at line 13: hostContradicted refused open)
+COST refusedFinal frames 155 steps 14
+ROW refusedFinal PASS (plant Nanodregg.Protocol.Mutation.admitsRecorded caught at line 17: refused refusedFinal)
+COST invite frames 119 steps 9
+ROW invite PASS (plant Nanodregg.Protocol.Mutation.trustFirstUse caught at line 14: ok)
+COST use frames 231 steps 20
+ROW use PASS (plant Nanodregg.Protocol.Mutation.oneMember caught at line 14: refused unshared:0)
+COST describe frames 77 steps 6
+ROW describe PASS (plant Nanodregg.Protocol.Mutation.guessMethod caught at line 7: refused grantRight)
+COST state frames 81 steps 6
+ROW state PASS (plant Nanodregg.Protocol.Mutation.rawSlots caught at line 6: refused unprinted)
+COST receipt frames 195 steps 12
+ROW receipt PASS (plant Nanodregg.Protocol.Mutation.trustReceipt caught at line 10: ok)
+COST settle frames 258 steps 13
+ROW settle PASS (plant Nanodregg.Protocol.Mutation.trustLookup caught at line 1: hostContradicted committed open)
+COST carry frames 109 steps 9
+ROW carry PASS (plant Nanodregg.Protocol.Mutation.importTrustsFile caught at line 7: ok)
+COST carriedInviteWrongWorld frames 58 steps 5
+ROW carriedInviteWrongWorld PASS (plant Nanodregg.Protocol.Mutation.importTrustsFile caught at line 7: ok)
+COST thin frames 173 steps 13
+ROW thin PASS (plant Nanodregg.Protocol.Mutation.forgeBase caught at line 17: refused baseMismatch)
+COST thinStale frames 260 steps 21
+ROW thinStale PASS (plant Nanodregg.Protocol.Mutation.unstatedExpiry caught at line 15: refused expired)
+COST seal frames 299 steps 24
+ROW seal PASS (plant Nanodregg.Protocol.Mutation.sealIgnored caught at line 19: refused notBehind)
+COST basePin frames 94 steps 7
+ROW basePin PASS (plant Nanodregg.Protocol.Mutation.lieBase caught at line 11: refused baseMismatch)
+COST pageIo frames 119 steps 8
+ROW pageIo PASS (plant Nanodregg.Protocol.Mutation.pageIoFatal caught at line 9: refused pageIo)
+COST wrongWorld frames 69 steps 6
+ROW wrongWorld PASS (plant Nanodregg.Protocol.Mutation.nonceRepeats caught at line 7: ok)
+COST wrongWorldRead frames 58 steps 5
+ROW wrongWorldRead PASS (plant Nanodregg.Protocol.Mutation.nonceRepeats caught at line 6: ok)
+COST pay frames 49 steps 5
+ROW pay PASS (plant Nanodregg.Protocol.Mutation.writerForgetsSpent caught at line 4: ok)
+COST well frames 89 steps 7
+ROW well PASS (plant Nanodregg.Protocol.Mutation.accountByAsset caught at line 3: refused idTaken)
+COST bounty frames 179 steps 15
+ROW bounty PASS (plant Nanodregg.Protocol.Mutation.skipJudge caught at line 18: refused belowFloor)
+COST grain frames 92 steps 7
+ROW grain PASS (plant Nanodregg.Protocol.Mutation.skipJudge caught at line 6: ok)
+COST hermes frames 122 steps 10
+ROW hermes PASS (plant Nanodregg.Protocol.Mutation.resendFresh caught at line 10: refused idTaken)
+COST bar frames 1449 steps 131
+LIVE write-n 129
+LIVE write-p99-ms 3.513
+LIVE reopen-ms 1.697
+LIVE load 6.78 4.22 2.89 5/2868 3788462
+WASTE rowbar frames-per-write 10.977
+WASTE rowbar steps-per-write 0.992
+WASTE rowbar reopen-bytes-per-byte-past-base 1.066
+WASTE invoke ticks-per-required-step 1.577
+WASTE invoke packages-checked-per-call 1.000
+PLANT waste-app ticks-per-required-step 1.885
+PLANT waste-extract ticks-per-required-step 2.154
+PLANT Nanodregg.Protocol.Mutation.twiceEach frames-per-write 21.871
+PLANT Nanodregg.Protocol.Mutation.twiceEach steps-per-write 1.977
+PLANT Nanodregg.Protocol.Mutation.staleBase reopen-bytes-per-byte-past-base 5.260
+ROW bar PASS (plant Nanodregg.Protocol.Mutation.zeroDeadline caught at line 0: hang)
+ROW lang-journey PASS
+COST range frames 111 steps 8
+ROW range PASS (plant Nanodregg.Protocol.Mutation.dropRow caught at line 10: refused unprinted)
+COST rangeLimit frames 66 steps 5
+ROW rangeLimit PASS (plant Nanodregg.Protocol.Mutation.noReadLimit caught at line 6: ok)
+COST bell frames 118 steps 9
+ROW bell PASS (plant Nanodregg.Protocol.Mutation.flatProgram caught at line 10: refused unprinted)
+COST bigEvent frames 80 steps 7
+ROW bigEvent PASS (plant Nanodregg.Protocol.Mutation.guessedBudget caught at line 6: uncertain)
+COST wrongFollower frames 67 steps 5
+ROW wrongFollower PASS (plant Nanodregg.Protocol.Mutation.maskIncoming caught at line 6: refused noRotation)
+COST uncertainHint frames 69 steps 6
+ROW uncertainHint PASS (plant Nanodregg.Protocol.Mutation.dropHint caught at line 6: refused unprinted)
+COST rangeInvoke frames 99 steps 8
+ROW rangeInvoke PASS (plant Nanodregg.Protocol.Mutation.staleRange caught at line 10: declined stale)
+COST rangeFlag frames 99 steps 8
+ROW rangeFlag PASS (plant Nanodregg.Protocol.Mutation.dropRange caught at line 10: refused rangeUnpinned)
+COST beforeLog frames 73 steps 6
+ROW beforeLog PASS (plant Nanodregg.Protocol.Mutation.actOnBeforeLog caught at line 9: ok)
+COST bellDoc frames 118 steps 9
+ROW bellDoc PASS (plant Nanodregg.Protocol.Mutation.dropDoc caught at line 9: refused unprinted)
+COST cancel frames 193 steps 7
+ROW cancel PASS (plant Nanodregg.Protocol.Mutation.cancelUndomained caught at line 8: refused badSignature)
+COST cancelForged frames 119 steps 6
+ROW cancelForged PASS (plant Nanodregg.Protocol.Mutation.followVerifyAll caught at line 8: refused chainMismatch)
+ALL PASS
+exit 0

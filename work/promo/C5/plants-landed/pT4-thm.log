@@ -1,0 +1,43 @@
+✔ [54/55] Built Lang.Proofs.Load (1.2s)
+✖ [55/55] Building Lang.Proofs.LiveHoles (1.1s)
+trace: .> LEAN_PATH=/tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean /home/hbox/.elan/toolchains/leanprover--lean4---v4.30.0/bin/lean /tank/dregg-build/nanodregg/wt/promo/Lang/Proofs/LiveHoles.lean -o /tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean/Lang/Proofs/LiveHoles.olean -i /tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean/Lang/Proofs/LiveHoles.ilean -c /tank/dregg-build/nanodregg/wt/promo/.lake/build/ir/Lang/Proofs/LiveHoles.c --setup /tank/dregg-build/nanodregg/wt/promo/.lake/build/ir/Lang/Proofs/LiveHoles.setup.json --json
+error: Lang/Proofs/LiveHoles.lean:292:13: unsolved goals
+case some
+D : Type
+digestOf : ByteArray → Option D
+look : Pinned D
+rv : RowView D
+self : D
+h : HoleROM
+amount ver i used : Nat
+bytes : ByteArray
+c : HoleCode
+hrow : holeRow rv self h.selectionRel h.selectionKey = Except.ok (some (RowLeaf.row amount bytes ver))
+hdec : Wire.decodeData Ty.nat bytes = Except.ok (Data.nat i)
+hc : h.code[i]? = some c
+hsup :
+  ∀ (p : SupportPin),
+    p ∈ c.supports → supportObserved digestOf look p = true ∧ supportLive digestOf look rv self p = true
+hhyp :
+  ∀ (x : Nat) (p : SupportPin),
+    h.hypotheses[x]? = some (some p) →
+      supportPinned digestOf look rv self p = Except.ok () ∧
+        (Term.usesVar x c.body = true → supportLive digestOf look rv self p = true)
+hgp : ∀ (p : SupportPin), h.guardPin = some p → supportPinned digestOf look rv self p = Except.ok ()
+removed : List Nat
+hch : changedHypotheses digestOf look rv self h c = Except.ok removed
+p : SupportPin
+hgp' : h.guardPin = some p
+hguard :
+  run [] Bounds.stackMax Bounds.holeGuardFuel 0 (State.init h.guard [Val.bool (supportLive digestOf look rv self p)]) =
+    Outcome.value (Val.bool true) used
+⊢ (if supportLive digestOf look rv self p = true then Except.error (HoleRefusal.guardBlocked h.name)
+    else
+      match pure PUnit.unit with
+      | Except.error err => Except.error err
+      | Except.ok v => Except.ok used) =
+    Except.ok used
+error: Lean exited with code 1
+Some required targets logged failures:
+- Lang.Proofs.LiveHoles
+error: build failed

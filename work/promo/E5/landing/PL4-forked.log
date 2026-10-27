@@ -1,0 +1,40 @@
+PL4-forked apply ok
+✔ [176/190] Built Lang.StdHead (568ms)
+✔ [177/190] Built Protocol.Foreign (365ms)
+✔ [178/190] Built Lang.StdHead:c.o (352ms)
+✔ [179/190] Built Protocol.Foreign:c.o (68ms)
+✔ [180/190] Built Host.Deployed (587ms)
+✔ [181/190] Built Host.Check (770ms)
+✔ [182/190] Built Host.Follow (914ms)
+✔ [185/190] Built Host.Deployed:c.o (2.0s)
+✔ [186/190] Built Host.Cli (978ms)
+✔ [188/190] Built Host.Main (303ms)
+✔ [190/190] Built host:exe (734ms)
+Build completed successfully (190 jobs).
+=== BUILD EXIT 0
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.09s
+     Running tests/foreign.rs (target/debug/build/nanodregg-client/9eb64af5e673c222/out/foreign-9eb64af5e673c222)
+
+running 1 test
+test a_receipt_from_another_world_is_accepted_once_and_forgeries_and_forks_refuse ... FAILED
+
+failures:
+
+---- a_receipt_from_another_world_is_accepted_once_and_forgeries_and_forks_refuse stdout ----
+
+thread 'a_receipt_from_another_world_is_accepted_once_and_forgeries_and_forks_refuse' (3971556) panicked at client/tests/foreign.rs:257:5:
+X3b accept: hint program: notHead
+refused program
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    a_receipt_from_another_world_is_accepted_once_and_forgeries_and_forks_refuse
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.97s
+
+error: test failed, to rerun pass `-p nanodregg-client --test foreign`
+=== TEST EXIT 101
+PL4-forked revert ok
+=== DONE

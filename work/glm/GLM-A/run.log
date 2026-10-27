@@ -1,0 +1,32 @@
+⚠ claude.ai connectors are disabled because ANTHROPIC_API_KEY or another auth source is set and takes precedence over your claude.ai login · Unset it to load your organization's connectors
+[claude-code:unrecognized_model] {"model":"glm-5.3","query_source":"sdk"}
+Status: build green, rows stage in progress. Waiting on the armed monitor — no further polling from me.
+
+Monitor re-armed. Waiting for the lander's exit event — the cargo client rows (real sockets) are what remains.
+
+Rows continue; the newer monitor covers the remainder. Waiting.
+
+That was only my old no-op watcher expiring — nothing to act on. The lander monitor remains armed; waiting.
+
+Waiting on the cargo rows and push.
+
+Launcher rows progressing (`agent_hole` ok). Holding for the monitor's exit event — no more polling.
+
+Re-armed. Waiting for the final rows and the push.
+
+All launcher rows green so far; three rows and the push remain. Waiting.
+
+Landed. ✅ `0f62f538` on `emberian/nanodregg` main — verified by fetch after the push.
+
+**What the system can do now:** a client refused on a hole's row support can tell its own mistake (row never pinned → `holeSupportUnpinned n π…`, fix by pinning) from the World's movement (row at another version or pinned absent → `holeDerivationMoved n π…`, fix by re-reading). Before, one name answered both.
+
+**The change (8 files, +66/−17):**
+- `Lang/LiveHoles.lean` — new `supportUnpinned` constructor + wire printer, new `rowSupportPinned` (row occurs in the view, via `holeRow`), `selectHole` throws it between the cell-pin and row-version checks
+- `Lang/Proofs/LiveHoles.lean` — `selectHole_live_selects` derives the new arm from its existing premise; **no theorem statement changed** (none named either refusal — verified by grep)
+- Journeys — `support-moved` / `support-unpinned` boundary rows, `selection-support-unpinned` gate row, and "LP omitted derivation pin" reading the new name through `Receive.submit`
+- `docs/spec/4-execution.md` steps 5–9 → 5–10 with the split; `6-appendix.md` index; `decisions/lang.md` entry with critique
+- `docs/reference/kernel.md`: measured that its refusal table carries only kernel codes (hole refusals travel as text inside `Refusal.program`), so nothing to edit there; the emit table is unaffected by import closure (`Emit.Main` imports nothing from `Lang`) — no extra build run, per the new METHOD
+
+**Faithful account of the rough edges:** my first LP row was RED (I omitted fact 2 while the selected candidate cited fact 3 — the journey's `r` threading); one rerun fixed it. The lander validated everything (24/24 rows ok, incl. `lang-journey` and the cargo client/launcher rows) but its push structurally conflicted on `decisions/lang.md` (two lanes appending at EOF; its three-way replay can't see one append containing the other). Resolved per METHOD rule 4: reset my worktree onto the new main (disjoint paths, verified), restored my files, committed, pushed directly — the landed tree differs from the row-validated one only by the 6 markdown lines of the decision entry itself. Also: I seeded `.lake` with `cp -a` *before* the no-copy rule arrived mid-landing; per its own carve-out I kept using that seed and copied nothing after.
+
+Report with dated measured/inferred lines, the hash, and the 5 LESSONS lines: `/Users/ember/dev/redregg/work/glm/GLM-A.report.md` ٩(◕‿◕)۶

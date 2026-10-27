@@ -1,0 +1,44 @@
+before 51739 after 51239
+vanished 500 of which outside the declared modules 42
+declared-module constants 458 all vanished: False
+new 0 type-digest changed 0 value-hash changed 0 module changed 0
+   Nanodregg.Lang.Contextual.countRun._f
+   Nanodregg.Lang.Contextual.supportCount
+   Nanodregg.Lang.Contextual.Rule.rec
+   Nanodregg.Lang.Contextual.StableUnder
+   Nanodregg.Lang.Contextual.Derives.rule
+   Nanodregg.Lang.Contextual.countRun
+   Nanodregg.Lang.Contextual.Rule._sizeOf_inst
+   Nanodregg.Lang.Contextual.ValueGuard
+   Nanodregg.Lang.Contextual.lfpIter.match_1
+   Nanodregg.Lang.Contextual.Rule.mk
+   Nanodregg.Lang.Contextual.Derives.rec
+   Nanodregg.Lang.Contextual.Rule.ctorIdx
+   Nanodregg.Lang.Contextual.countRun.match_1
+   Nanodregg.Lang.Contextual.Derives.below.casesOn
+   Nanodregg.Lang.Contextual.Rule.noConfusionType
+   Nanodregg.Lang.Contextual.Derives.below.rule
+   Nanodregg.Lang.Contextual.countRun._unsafe_rec
+   Nanodregg.Lang.Contextual.Derives.below.rec
+   Nanodregg.Lang.Contextual.lfpIter
+   Nanodregg.Lang.Contextual.Rule
+   Nanodregg.Lang.Contextual.Derives.below
+   Nanodregg.Lang.Contextual.countRun._sunfold
+   Nanodregg.Lang.Contextual.Derives.fact
+   Nanodregg.Lang.Contextual.Rule._sizeOf_1
+   Nanodregg.Lang.Contextual.Derives.casesOn
+   Nanodregg.Lang.Contextual.Rule.noConfusion
+   Nanodregg.Lang.Contextual.lfpIter._unsafe_rec
+   Nanodregg.Lang.Contextual.Rule.mk.noConfusion
+   Nanodregg.Lang.Contextual.Rule.mk.injEq
+   Nanodregg.Lang.Contextual.Rule.casesOn
+   Nanodregg.Lang.Contextual.Derives.recOn
+   Nanodregg.Lang.Contextual.Rule.head
+   Nanodregg.Lang.Contextual.Rule.mk.sizeOf_spec
+   Nanodregg.Lang.Contextual.Rule.mk._flat_ctor
+   Nanodregg.Lang.Contextual.Rule.body
+   Nanodregg.Lang.Contextual.Derives
+   Nanodregg.Lang.Contextual.Rule.recOn
+   Nanodregg.Lang.Contextual.lfpIter._f
+   Nanodregg.Lang.Contextual.Derives.brecOn
+   Nanodregg.Lang.Contextual.lfpIter._sunfold

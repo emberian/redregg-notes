@@ -1,0 +1,553 @@
+{
+  "mode": "DRY_RUN_ONLY",
+  "source_commit": "22fad151e9f118e3aa001a823e075918ffa139e8",
+  "census": "/Users/ember/dev/breadstuffs/docs/artifacts/floor-census-v2-2026-07-26/floor-census-v2.tsv",
+  "census_sha16": "11eb51001a521cc9",
+  "census_carrier_rows": 1925,
+  "coverage": "historical 14 lexical lines in three files",
+  "not_an_obligation_count": true,
+  "obligations": [
+    {
+      "id": "bread-premise/F139",
+      "subject": "globalBreak_free",
+      "source": "metatheory/Dregg2/Circuit/FirstDivergence.lean:139",
+      "source_sha16": "c07afb963e132980",
+      "line": "P ∨ ∃ p : π × π, Coll h p :=",
+      "classification": "free-witness",
+      "logical_status": "out-of-scope",
+      "supports": {
+        "elaborated_constants": "UNEXPORTED",
+        "axioms": "UNEXPORTED"
+      },
+      "census_floor_carrier_rows": [],
+      "census_consumers": "NOT_EMITTED_BY_FLOOR_CENSUS",
+      "lexical_mentions_in_three_files": [
+        "metatheory/Dregg2/Circuit/FirstDivergence.lean:53",
+        "metatheory/Dregg2/Circuit/FirstDivergence.lean:99",
+        "metatheory/Dregg2/Circuit/FirstDivergence.lean:138",
+        "metatheory/Dregg2/Circuit/FirstDivergence.lean:145",
+        "metatheory/Dregg2/Circuit/FirstDivergence.lean:491",
+        "metatheory/Dregg2/Circuit/FirstDivergence.lean:507"
+      ],
+      "audit_hits": [],
+      "blockers": [
+        "scope/semantic-review-needed"
+      ],
+      "event": {
+        "kind": "dry-run-discover",
+        "withdrawn": false,
+        "repair": null
+      }
+    },
+    {
+      "id": "bread-premise/F149",
+      "subject": "indexedBreak_not_free",
+      "source": "metatheory/Dregg2/Circuit/FirstDivergence.lean:149",
+      "source_sha16": "c07afb963e132980",
+      "line": "∀ (p : List ℤ × List ℤ) (P : Prop), P ∨ Coll h p := by",
+      "classification": "negative-control",
+      "logical_status": "out-of-scope",
+      "supports": {
+        "elaborated_constants": "UNEXPORTED",
+        "axioms": "UNEXPORTED"
+      },
+      "census_floor_carrier_rows": [],
+      "census_consumers": "NOT_EMITTED_BY_FLOOR_CENSUS",
+      "lexical_mentions_in_three_files": [
+        "metatheory/Dregg2/Circuit/FirstDivergence.lean:54",
+        "metatheory/Dregg2/Circuit/FirstDivergence.lean:107",
+        "metatheory/Dregg2/Circuit/FirstDivergence.lean:147",
+        "metatheory/Dregg2/Circuit/FirstDivergence.lean:491",
+        "metatheory/Dregg2/Circuit/FirstDivergence.lean:508"
+      ],
+      "audit_hits": [],
+      "blockers": [],
+      "event": {
+        "kind": "dry-run-discover",
+        "withdrawn": false,
+        "repair": null
+      }
+    },
+    {
+      "id": "bread-premise/F171",
+      "subject": "leafPair_binds_or_coll",
+      "source": "metatheory/Dregg2/Circuit/FirstDivergence.lean:171",
+      "source_sha16": "c07afb963e132980",
+      "line": "(a b : ρ) (heq : h (enc a) = h (enc b)) : a = b ∨ Coll h (leafPair enc a b) := by",
+      "classification": "indexed-theorem",
+      "logical_status": "unassessed",
+      "supports": {
+        "elaborated_constants": "UNEXPORTED",
+        "axioms": "UNEXPORTED"
+      },
+      "census_floor_carrier_rows": [],
+      "census_consumers": "NOT_EMITTED_BY_FLOOR_CENSUS",
+      "lexical_mentions_in_three_files": [
+        "metatheory/Dregg2/Circuit/FirstDivergence.lean:170",
+        "metatheory/Dregg2/Circuit/FirstDivergence.lean:509"
+      ],
+      "audit_hits": [],
+      "blockers": [],
+      "event": {
+        "kind": "dry-run-discover",
+        "withdrawn": false,
+        "repair": null
+      }
+    },
+    {
+      "id": "bread-premise/F230",
+      "subject": "zipFirst_binds_or_coll",
+      "source": "metatheory/Dregg2/Circuit/FirstDivergence.lean:230",
+      "source_sha16": "c07afb963e132980",
+      "line": "∨ Coll h (zipFirst enc l₁ l₂) := by",
+      "classification": "indexed-theorem",
+      "logical_status": "unassessed",
+      "supports": {
+        "elaborated_constants": "UNEXPORTED",
+        "axioms": "UNEXPORTED"
+      },
+      "census_floor_carrier_rows": [],
+      "census_consumers": "NOT_EMITTED_BY_FLOOR_CENSUS",
+      "lexical_mentions_in_three_files": [
+        "metatheory/Dregg2/Circuit/FirstDivergence.lean:226",
+        "metatheory/Dregg2/Circuit/FirstDivergence.lean:514"
+      ],
+      "audit_hits": [],
+      "blockers": [],
+      "event": {
+        "kind": "dry-run-discover",
+        "withdrawn": false,
+        "repair": null
+      }
+    },
+    {
+      "id": "bread-premise/F311",
+      "subject": "foldLast_binds_or_coll",
+      "source": "metatheory/Dregg2/Circuit/FirstDivergence.lean:311",
+      "source_sha16": "c07afb963e132980",
+      "line": "∨ Coll h (foldLast h absorb a b rs rs') := by",
+      "classification": "indexed-theorem",
+      "logical_status": "unassessed",
+      "supports": {
+        "elaborated_constants": "UNEXPORTED",
+        "axioms": "UNEXPORTED"
+      },
+      "census_floor_carrier_rows": [],
+      "census_consumers": "NOT_EMITTED_BY_FLOOR_CENSUS",
+      "lexical_mentions_in_three_files": [
+        "metatheory/Dregg2/Circuit/FirstDivergence.lean:303",
+        "metatheory/Dregg2/Circuit/FirstDivergence.lean:516"
+      ],
+      "audit_hits": [],
+      "blockers": [],
+      "event": {
+        "kind": "dry-run-discover",
+        "withdrawn": false,
+        "repair": null
+      }
+    },
+    {
+      "id": "bread-premise/F399",
+      "subject": "resolve",
+      "source": "metatheory/Dregg2/Circuit/FirstDivergence.lean:399",
+      "source_sha16": "c07afb963e132980",
+      "line": "(d : P ∨ Coll h p) (hno : ¬ Coll h p) : P := d.resolve_right hno",
+      "classification": "indexed-consumer",
+      "logical_status": "out-of-scope",
+      "supports": {
+        "elaborated_constants": "UNEXPORTED",
+        "axioms": "UNEXPORTED"
+      },
+      "census_floor_carrier_rows": [],
+      "census_consumers": "NOT_EMITTED_BY_FLOOR_CENSUS",
+      "lexical_mentions_in_three_files": [
+        "metatheory/Dregg2/Circuit/FirstDivergence.lean:398",
+        "metatheory/Dregg2/Circuit/FirstDivergence.lean:399",
+        "metatheory/Dregg2/Circuit/FirstDivergence.lean:437",
+        "metatheory/Dregg2/Circuit/FirstDivergence.lean:518",
+        "metatheory/Dregg2/Shielded/RealCrypto.lean:394"
+      ],
+      "audit_hits": [],
+      "blockers": [],
+      "event": {
+        "kind": "dry-run-discover",
+        "withdrawn": false,
+        "repair": null
+      }
+    },
+    {
+      "id": "bread-premise/F431",
+      "subject": "Site.sound",
+      "source": "metatheory/Dregg2/Circuit/FirstDivergence.lean:431",
+      "source_sha16": "c07afb963e132980",
+      "line": "sound : ∀ (h : π → α) (i : ι), Hyp h i → Good h i ∨ Coll h (find h i)",
+      "classification": "structure-field",
+      "logical_status": "unassessed",
+      "supports": {
+        "elaborated_constants": "UNEXPORTED",
+        "axioms": "UNEXPORTED"
+      },
+      "census_floor_carrier_rows": [],
+      "census_consumers": "NOT_EMITTED_BY_FLOOR_CENSUS",
+      "lexical_mentions_in_three_files": [
+        "metatheory/Dregg2/Circuit/FirstDivergence.lean:105",
+        "metatheory/Dregg2/Circuit/FirstDivergence.lean:160",
+        "metatheory/Dregg2/Circuit/FirstDivergence.lean:416",
+        "metatheory/Dregg2/Circuit/FirstDivergence.lean:420",
+        "metatheory/Dregg2/Circuit/FirstDivergence.lean:431",
+        "metatheory/Dregg2/Circuit/FirstDivergence.lean:437",
+        "metatheory/Dregg2/Circuit/FirstDivergence.lean:445",
+        "metatheory/Dregg2/Shielded/RealCrypto.lean:51",
+        "metatheory/Dregg2/Shielded/RealCrypto.lean:60",
+        "metatheory/Dregg2/Shielded/RealCrypto.lean:198",
+        "metatheory/Dregg2/Verify/FreeConclusionRatchet.lean:200",
+        "metatheory/Dregg2/Verify/FreeConclusionRatchet.lean:930"
+      ],
+      "audit_hits": [
+        {
+          "path": "docs/audit/META-REVIEW-STATEMENTS.md",
+          "line": 18
+        },
+        {
+          "path": "docs/audit/META-REVIEW-STATEMENTS.md",
+          "line": 38
+        },
+        {
+          "path": "docs/audit/META-REVIEW-STATEMENTS.md",
+          "line": 43
+        },
+        {
+          "path": "docs/audit/META-REVIEW-STATEMENTS.md",
+          "line": 61
+        },
+        {
+          "path": "docs/audit/META-REVIEW-STATEMENTS.md",
+          "line": 74
+        },
+        {
+          "path": "docs/audit/META-REVIEW-STATEMENTS.md",
+          "line": 75
+        },
+        {
+          "path": "docs/audit/META-REVIEW-STATEMENTS.md",
+          "line": 83
+        },
+        {
+          "path": "docs/audit/META-REVIEW-STATEMENTS.md",
+          "line": 92
+        },
+        {
+          "path": "docs/audit/META-REVIEW-STATEMENTS.md",
+          "line": 96
+        },
+        {
+          "path": "docs/audit/META-REVIEW-STATEMENTS.md",
+          "line": 120
+        },
+        {
+          "path": "docs/audit/META-REVIEW-STATEMENTS.md",
+          "line": 128
+        },
+        {
+          "path": "docs/audit/META-REVIEW-STATEMENTS.md",
+          "line": 136
+        },
+        {
+          "path": "docs/audit/META-REVIEW-STATEMENTS.md",
+          "line": 137
+        },
+        {
+          "path": "docs/audit/META-REVIEW-STATEMENTS.md",
+          "line": 141
+        },
+        {
+          "path": "docs/audit/META-REVIEW-STATEMENTS.md",
+          "line": 142
+        },
+        {
+          "path": "docs/audit/NON-VACUITY-MANIFEST.md",
+          "line": 50
+        },
+        {
+          "path": "docs/audit/NON-VACUITY-MANIFEST.md",
+          "line": 52
+        },
+        {
+          "path": "docs/audit/NON-VACUITY-MANIFEST.md",
+          "line": 63
+        },
+        {
+          "path": "docs/audit/NON-VACUITY-MANIFEST.md",
+          "line": 97
+        },
+        {
+          "path": "docs/audit/NON-VACUITY-MANIFEST.md",
+          "line": 104
+        },
+        {
+          "path": "docs/audit/NON-VACUITY-MANIFEST.md",
+          "line": 124
+        },
+        {
+          "path": "docs/audit/NON-VACUITY-MANIFEST.md",
+          "line": 129
+        },
+        {
+          "path": "docs/audit/NON-VACUITY-MANIFEST.md",
+          "line": 133
+        },
+        {
+          "path": "docs/audit/NON-VACUITY-MANIFEST.md",
+          "line": 134
+        },
+        {
+          "path": "docs/audit/NON-VACUITY-MANIFEST.md",
+          "line": 242
+        },
+        {
+          "path": "docs/audit/NON-VACUITY-MANIFEST.md",
+          "line": 254
+        },
+        {
+          "path": "metatheory/docs/AXIOM-HYGIENE.md",
+          "line": 7
+        },
+        {
+          "path": "metatheory/docs/AXIOM-HYGIENE.md",
+          "line": 61
+        },
+        {
+          "path": "metatheory/docs/SOUNDNESS-RESIDUAL-CENSUS.md",
+          "line": 3
+        },
+        {
+          "path": "metatheory/docs/SOUNDNESS-RESIDUAL-CENSUS.md",
+          "line": 12
+        },
+        {
+          "path": "metatheory/docs/SOUNDNESS-RESIDUAL-CENSUS.md",
+          "line": 20
+        },
+        {
+          "path": "metatheory/docs/SOUNDNESS-RESIDUAL-CENSUS.md",
+          "line": 28
+        },
+        {
+          "path": "metatheory/docs/SOUNDNESS-RESIDUAL-CENSUS.md",
+          "line": 51
+        },
+        {
+          "path": "metatheory/docs/SOUNDNESS-RESIDUAL-CENSUS.md",
+          "line": 57
+        },
+        {
+          "path": "metatheory/docs/SOUNDNESS-RESIDUAL-CENSUS.md",
+          "line": 109
+        },
+        {
+          "path": "metatheory/docs/SOUNDNESS-RESIDUAL-CENSUS.md",
+          "line": 116
+        },
+        {
+          "path": "metatheory/docs/SOUNDNESS-RESIDUAL-CENSUS.md",
+          "line": 117
+        },
+        {
+          "path": "metatheory/docs/SOUNDNESS-RESIDUAL-CENSUS.md",
+          "line": 135
+        },
+        {
+          "path": "metatheory/docs/SOUNDNESS-RESIDUAL-CENSUS.md",
+          "line": 138
+        },
+        {
+          "path": "metatheory/docs/SOUNDNESS-RESIDUAL-CENSUS.md",
+          "line": 200
+        }
+      ],
+      "blockers": [],
+      "event": {
+        "kind": "dry-run-discover",
+        "withdrawn": false,
+        "repair": null
+      }
+    },
+    {
+      "id": "bread-premise/R380",
+      "subject": "Poseidon2Tree.root_binds_or_collides",
+      "source": "metatheory/Dregg2/Shielded/RealCrypto.lean:380",
+      "source_sha16": "fb10eff6c92c4adf",
+      "line": "l₁ = l₂ ∨ SpongeColl T.sponge (Poseidon2Tree.rootCollFind l₁ l₂) := by",
+      "classification": "indexed-theorem",
+      "logical_status": "unassessed",
+      "supports": {
+        "elaborated_constants": "UNEXPORTED",
+        "axioms": "UNEXPORTED"
+      },
+      "census_floor_carrier_rows": [],
+      "census_consumers": "NOT_EMITTED_BY_FLOOR_CENSUS",
+      "lexical_mentions_in_three_files": [
+        "metatheory/Dregg2/Shielded/RealCrypto.lean:28",
+        "metatheory/Dregg2/Shielded/RealCrypto.lean:326",
+        "metatheory/Dregg2/Shielded/RealCrypto.lean:378",
+        "metatheory/Dregg2/Shielded/RealCrypto.lean:394",
+        "metatheory/Dregg2/Shielded/RealCrypto.lean:418",
+        "metatheory/Dregg2/Shielded/RealCrypto.lean:571"
+      ],
+      "audit_hits": [],
+      "blockers": [],
+      "event": {
+        "kind": "dry-run-discover",
+        "withdrawn": false,
+        "repair": null
+      }
+    },
+    {
+      "id": "bread-premise/R417",
+      "subject": "forged_set_is_honest_or_collides",
+      "source": "metatheory/Dregg2/Shielded/RealCrypto.lean:417",
+      "source_sha16": "fb10eff6c92c4adf",
+      "line": "forged = leaves ∨ SpongeColl T.sponge (Poseidon2Tree.rootCollFind forged leaves) :=",
+      "classification": "indexed-theorem",
+      "logical_status": "unassessed",
+      "supports": {
+        "elaborated_constants": "UNEXPORTED",
+        "axioms": "UNEXPORTED"
+      },
+      "census_floor_carrier_rows": [],
+      "census_consumers": "NOT_EMITTED_BY_FLOOR_CENSUS",
+      "lexical_mentions_in_three_files": [
+        "metatheory/Dregg2/Shielded/RealCrypto.lean:415",
+        "metatheory/Dregg2/Shielded/RealCrypto.lean:516",
+        "metatheory/Dregg2/Shielded/RealCrypto.lean:520",
+        "metatheory/Dregg2/Shielded/RealCrypto.lean:574",
+        "metatheory/Dregg2/Shielded/RealCrypto.lean:578"
+      ],
+      "audit_hits": [],
+      "blockers": [],
+      "event": {
+        "kind": "dry-run-discover",
+        "withdrawn": false,
+        "repair": null
+      }
+    },
+    {
+      "id": "bread-premise/R519",
+      "subject": "deployed_forged_set_is_honest_or_collides",
+      "source": "metatheory/Dregg2/Shielded/RealCrypto.lean:519",
+      "source_sha16": "fb10eff6c92c4adf",
+      "line": "∨ SpongeColl deployedPoseidon2Tree.sponge (Poseidon2Tree.rootCollFind forged leaves) :=",
+      "classification": "indexed-theorem",
+      "logical_status": "unassessed",
+      "supports": {
+        "elaborated_constants": "UNEXPORTED",
+        "axioms": "UNEXPORTED"
+      },
+      "census_floor_carrier_rows": [],
+      "census_consumers": "NOT_EMITTED_BY_FLOOR_CENSUS",
+      "lexical_mentions_in_three_files": [
+        "metatheory/Dregg2/Shielded/RealCrypto.lean:516",
+        "metatheory/Dregg2/Shielded/RealCrypto.lean:578"
+      ],
+      "audit_hits": [],
+      "blockers": [],
+      "event": {
+        "kind": "dry-run-discover",
+        "withdrawn": false,
+        "repair": null
+      }
+    },
+    {
+      "id": "bread-premise/G89",
+      "subject": "free-shape-example",
+      "source": "metatheory/Dregg2/Verify/FreeConclusionRatchet.lean:89",
+      "source_sha16": "826c6c3de48ded08",
+      "line": "xs = ys ∨ SpongeCollision hash        -- FREE: pigeonhole supplies the right disjunct",
+      "classification": "comment",
+      "logical_status": "out-of-scope",
+      "supports": {
+        "elaborated_constants": "UNEXPORTED",
+        "axioms": "UNEXPORTED"
+      },
+      "census_floor_carrier_rows": [],
+      "census_consumers": "NOT_EMITTED_BY_FLOOR_CENSUS",
+      "lexical_mentions_in_three_files": [],
+      "audit_hits": [],
+      "blockers": [],
+      "event": {
+        "kind": "dry-run-discover",
+        "withdrawn": false,
+        "repair": null
+      }
+    },
+    {
+      "id": "bread-premise/G90",
+      "subject": "indexed-shape-example",
+      "source": "metatheory/Dregg2/Verify/FreeConclusionRatchet.lean:90",
+      "source_sha16": "826c6c3de48ded08",
+      "line": "xs = ys ∨ SpongeColl hash xs ys       -- SOUND: a collision AT THE NAMED PAIR",
+      "classification": "comment",
+      "logical_status": "out-of-scope",
+      "supports": {
+        "elaborated_constants": "UNEXPORTED",
+        "axioms": "UNEXPORTED"
+      },
+      "census_floor_carrier_rows": [],
+      "census_consumers": "NOT_EMITTED_BY_FLOOR_CENSUS",
+      "lexical_mentions_in_three_files": [],
+      "audit_hits": [],
+      "blockers": [],
+      "event": {
+        "kind": "dry-run-discover",
+        "withdrawn": false,
+        "repair": null
+      }
+    },
+    {
+      "id": "bread-premise/G897",
+      "subject": "repair-example",
+      "source": "metatheory/Dregg2/Verify/FreeConclusionRatchet.lean:897",
+      "source_sha16": "826c6c3de48ded08",
+      "line": "…  →  concl ∨ Coll hash a b          -- `a`, `b` NAMED by the statement\\n\\",
+      "classification": "string-literal",
+      "logical_status": "out-of-scope",
+      "supports": {
+        "elaborated_constants": "UNEXPORTED",
+        "axioms": "UNEXPORTED"
+      },
+      "census_floor_carrier_rows": [],
+      "census_consumers": "NOT_EMITTED_BY_FLOOR_CENSUS",
+      "lexical_mentions_in_three_files": [],
+      "audit_hits": [],
+      "blockers": [],
+      "event": {
+        "kind": "dry-run-discover",
+        "withdrawn": false,
+        "repair": null
+      }
+    },
+    {
+      "id": "bread-premise/G911",
+      "subject": "quantifier-warning",
+      "source": "metatheory/Dregg2/Verify/FreeConclusionRatchet.lean:911",
+      "source_sha16": "826c6c3de48ded08",
+      "line": "`∀ a b, h a = h b → a = b ∨ Coll h a b` prices each instance. Same symbols, opposite \\",
+      "classification": "string-literal",
+      "logical_status": "out-of-scope",
+      "supports": {
+        "elaborated_constants": "UNEXPORTED",
+        "axioms": "UNEXPORTED"
+      },
+      "census_floor_carrier_rows": [],
+      "census_consumers": "NOT_EMITTED_BY_FLOOR_CENSUS",
+      "lexical_mentions_in_three_files": [],
+      "audit_hits": [],
+      "blockers": [],
+      "event": {
+        "kind": "dry-run-discover",
+        "withdrawn": false,
+        "repair": null
+      }
+    }
+  ]
+}

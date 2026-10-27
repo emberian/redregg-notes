@@ -1,0 +1,1 @@
+          ("some", .case (activityApply (offerJoint theta roles) [.var 2, .var 0, .get (.var 5) "theta"]) [

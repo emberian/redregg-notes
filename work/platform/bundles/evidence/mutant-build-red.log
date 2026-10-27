@@ -1,0 +1,986 @@
+ℹ [716/945] Replayed Compiler.Signature
+info: Compiler/Signature.lean:426:0: Minidregg.Compiler.N3_opaque_payloads_forbid_second_reading : Prop
+⚠ [1901/2588] Replayed Compiler.PredCompile
+warning: Compiler/PredCompile.lean:1232:0: automatically included section variable(s) unused in theorem `Minidregg.Compiler.lowerA_ran_eq`:
+  [DecidableEq F]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq F] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+ℹ [2971/3222] Replayed Compiler.EmitSerialize
+info: Compiler/EmitSerialize.lean:218:0: round-trip OK: 18 gates, 5 zeros, nWires = 23
+⚠ [2977/3222] Replayed Theory.AuthorizationDeclaration
+warning: Theory/AuthorizationDeclaration.lean:512:10: This simp argument is unused:
+  hlookup
+
+Hint: Omit it from the simp argument list.
+  simp ̵[̵h̵l̵o̵o̵k̵u̵p̵]̵
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [2978/3222] Replayed Compiler.SemanticManifest
+warning: Compiler/SemanticManifest.lean:138:12: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: Compiler/SemanticManifest.lean:153:12: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: Compiler/SemanticManifest.lean:168:12: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: Compiler/SemanticManifest.lean:234:15: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: Compiler/SemanticManifest.lean:531:14: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+ℹ [2988/3222] Replayed Selvage.Rbr
+info: Selvage/Rbr.lean:465:0: Minidregg.Selvage.OB2_depth_composition : Prop
+⚠ [2994/3222] Replayed Compiler.Tower256CshakeMerkleController
+warning: Compiler/Tower256CshakeMerkleController.lean:98:4: unused variable `k`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3004/3222] Replayed Compiler.SemanticArtifactBundle
+warning: Compiler/SemanticArtifactBundle.lean:456:17: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+⚠ [3018/3222] Replayed Kernel.MultiCellHyperedge
+warning: Kernel/MultiCellHyperedge.lean:463:20: unused variable `accepted`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Kernel/MultiCellHyperedge.lean:504:10: unused variable `commit`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Kernel/MultiCellHyperedge.lean:508:8: automatically included section variable(s) unused in theorem `Minidregg.Kernel.MultiCellHyperedge.Commit.post_exact`:
+  [DecidableEq Incidence]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq Incidence] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: Kernel/MultiCellHyperedge.lean:513:22: unused variable `commit`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Kernel/MultiCellHyperedge.lean:520:30: unused variable `commit`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Kernel/MultiCellHyperedge.lean:543:5: unused variable `turn`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Kernel/MultiCellHyperedge.lean:546:26: unused variable `commit`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Kernel/MultiCellHyperedge.lean:585:8: automatically included section variable(s) unused in theorem `Minidregg.Kernel.MultiCellHyperedge.Commit.hyperedge_pre_state`:
+  [DecidableEq Incidence]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq Incidence] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: Kernel/MultiCellHyperedge.lean:629:15: unused variable `accepted`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Kernel/MultiCellHyperedge.lean:632:8: automatically included section variable(s) unused in theorem `Minidregg.Kernel.MultiCellHyperedge.Admission.rejected_atomic`:
+  [DecidableEq Incidence]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq Incidence] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: Kernel/MultiCellHyperedge.lean:640:8: automatically included section variable(s) unused in theorem `Minidregg.Kernel.MultiCellHyperedge.admit_leg_rejected`:
+  [DecidableEq Incidence]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq Incidence] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: Kernel/MultiCellHyperedge.lean:678:0: automatically included section variable(s) unused in theorem `Minidregg.Kernel.MultiCellHyperedge.no_commit_of_nonzero_balance`:
+  [DecidableEq Incidence]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq Incidence] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: Kernel/MultiCellHyperedge.lean:690:0: automatically included section variable(s) unused in theorem `Minidregg.Kernel.MultiCellHyperedge.no_commit_of_conflicting_cell`:
+  [DecidableEq Incidence]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq Incidence] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [3021/3222] Replayed Theory.CredentialAuthorityFamily
+warning: Theory/CredentialAuthorityFamily.lean:382:17: unused variable `keyEpochExact`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3039/3222] Replayed Compiler.FiniteDependentMapCachedOrdering
+warning: Compiler/FiniteDependentMapCachedOrdering.lean:54:0: automatically included section variable(s) unused in theorem `Minidregg.Compiler.FiniteDependentMapCachedOrdering.sortedFinsetCached_eq`:
+  [DecidableEq K]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq K] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [3058/3222] Replayed Compiler.HyperdocumentCodec
+warning: Compiler/HyperdocumentCodec.lean:88:14: Local variable 'value' resembles constructor 'Minidregg.Theory.Hyperdocument.StoredOpeningShape.value' - write '.value' (with a dot) or 'Minidregg.Theory.Hyperdocument.StoredOpeningShape.value' to use the constructor.
+
+Note: This linter can be disabled with `set_option linter.constructorNameAsVariable false`
+⚠ [3064/3222] Replayed Compiler.CanonicalResourcePageMaterializer
+warning: Compiler/CanonicalResourcePageMaterializer.lean:307:2: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+⚠ [3069/3222] Replayed Kernel.PayEnrolClaim
+warning: Kernel/PayEnrolClaim.lean:612:7: Local variable 'unit' resembles constructor 'PUnit.unit' - write '.unit' (with a dot) or 'PUnit.unit' to use the constructor.
+
+Note: This linter can be disabled with `set_option linter.constructorNameAsVariable false`
+warning: Kernel/PayEnrolClaim.lean:649:9: Local variable 'unit' resembles constructor 'PUnit.unit' - write '.unit' (with a dot) or 'PUnit.unit' to use the constructor.
+
+Note: This linter can be disabled with `set_option linter.constructorNameAsVariable false`
+warning: Kernel/PayEnrolClaim.lean:645:22: This simp argument is unused:
+  reason
+
+Hint: Omit it from the simp argument list.
+  simp ̵[̵r̵e̵a̵s̵o̵n̵]̵
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/PayEnrolClaim.lean:708:9: Local variable 'unit' resembles constructor 'PUnit.unit' - write '.unit' (with a dot) or 'PUnit.unit' to use the constructor.
+
+Note: This linter can be disabled with `set_option linter.constructorNameAsVariable false`
+warning: Kernel/PayEnrolClaim.lean:729:9: Local variable 'unit' resembles constructor 'PUnit.unit' - write '.unit' (with a dot) or 'PUnit.unit' to use the constructor.
+
+Note: This linter can be disabled with `set_option linter.constructorNameAsVariable false`
+⚠ [3071/3222] Replayed Kernel.PayEnrolMemo
+warning: Kernel/PayEnrolMemo.lean:304:2: 'all_goals (cases memo; rfl)' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: Kernel/PayEnrolMemo.lean:304:12: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+⚠ [3073/3222] Replayed Kernel.PayEnrolMemoV2
+warning: Kernel/PayEnrolMemoV2.lean:169:21: This simp argument is unused:
+  Option.bind_some
+
+Hint: Omit it from the simp argument list.
+  simp only [unsignedParts, List.cons_append, List.nil_append,
+  ̵  ̵ ̵ ̵Mode.parse_byte,
+  ̲ O̵p̵t̵i̵o̵n̵.̵b̵i̵n̵d̵_̵s̵o̵m̵e̵,̵  ̲ ̲decodeLE_encodeLE _ _ hd,
+  ̵  ̵ ̵ ̵decodeLE_encodeLE _ _ hp, decodeLE_encodeLE _ _ he,
+      decodeLE_encodeLE _ _ hn, decodeLE_encodeLE _ _ hw,
+  ̵  ̵ ̵ ̵decodeLE_encodeLE _ _ hst,
+  ̲  ̲ ̲ ̲decodeLE_encodeLE _ _ hex,
+  ̵  ̵ ̵ ̵decodeLE_encodeLE _ _ ham]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [3081/3222] Replayed Kernel.DomainEpochLaw
+warning: Kernel/DomainEpochLaw.lean:261:25: This simp argument is unused:
+  lastRecord
+
+Hint: Omit it from the simp argument list.
+  simp [ChannelStoreLaw, l̵a̵s̵t̵R̵e̵c̵o̵r̵d̵,̵ ̵Minidregg.Compiler.StreamCell.headOf]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [3085/3222] Replayed Kernel.NockProgramCell.Sample
+warning: Kernel/NockProgramCell/Sample.lean:171:52: This simp argument is unused:
+  Nat.two_pow_pos
+
+Hint: Omit it from the simp argument list.
+  simp [Noun.ofBits,̵ ̵N̵a̵t̵.̵t̵w̵o̵_̵p̵o̵w̵_̵p̵o̵s̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [3088/3222] Replayed Kernel.NockEntry
+warning: Kernel/NockEntry.lean:352:29: This simp argument is unused:
+  if_pos rfl
+
+Hint: Omit it from the simp argument list.
+  simp only [firstStale,̵ ̵i̵f̵_̵p̵o̵s̵ ̵r̵f̵l̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [3126/3222] Replayed Kernel.World
+warning: Kernel/World.lean:813:0: automatically included section variable(s) unused in theorem `Minidregg.Kernel.World.applyCells_ok`:
+  [DecidableEq D]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq D] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: Kernel/World.lean:1166:0: automatically included section variable(s) unused in theorem `Minidregg.Kernel.World.parentRows_nodup`:
+  [DecidableEq TxId]
+  [DecidableEq D]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq TxId] [DecidableEq D] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: Kernel/World.lean:1185:0: automatically included section variable(s) unused in theorem `Minidregg.Kernel.World.mem_parentRows`:
+  [DecidableEq TxId]
+  [DecidableEq D]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq TxId] [DecidableEq D] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: Kernel/World.lean:1945:56: This simp argument is unused:
+  not_false_eq_true
+
+Hint: Omit it from the simp argument list.
+  simp only [h1, h2, h3', h4, h5', not_true_eq_false, n̵o̵t̵_̵f̵a̵l̵s̵e̵_̵e̵q̵_̵t̵r̵u̵e̵,̵ ̵and_self, if_false, ne_eq, reduceCtorEq]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/World.lean:1936:39: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+⚠ [3127/3222] Replayed Kernel.WorldRoot
+warning: Kernel/WorldRoot.lean:171:0: automatically included section variable(s) unused in theorem `Minidregg.Kernel.WorldRoot.worldSlots_slotsOf`:
+  [DecidableEq K]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq K] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: Kernel/WorldRoot.lean:190:0: automatically included section variable(s) unused in theorem `Minidregg.Kernel.WorldRoot.subRoot_empty`:
+  [DecidableEq K]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq K] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: Kernel/WorldRoot.lean:231:20: This simp argument is unused:
+  List.filter_cons
+
+Hint: Omit it from the simp argument list.
+  simp [L̵i̵s̵t̵.̵f̵i̵l̵t̵e̵r̵_̵c̵o̵n̵s̵,̵ ̵hr, ih]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/WorldRoot.lean:232:34: This simp argument is unused:
+  List.filter_cons
+
+Hint: Omit it from the simp argument list.
+  simp [L̵i̵s̵t̵.̵f̵i̵l̵t̵e̵r̵_̵c̵o̵n̵s̵,̵ ̵hc, ih]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/WorldRoot.lean:302:0: automatically included section variable(s) unused in theorem `Minidregg.Kernel.WorldRoot.empties_iterate`:
+  [DecidableEq K]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq K] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: Kernel/WorldRoot.lean:382:58: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: Kernel/WorldRoot.lean:454:0: automatically included section variable(s) unused in theorem `Minidregg.Kernel.WorldRoot.lookup_entries`:
+  [DecidableEq Dg]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq Dg] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: Kernel/WorldRoot.lean:578:0: automatically included section variable(s) unused in theorem `Minidregg.Kernel.WorldRoot.rootBinding_self`:
+  [DecidableEq Dg]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq Dg] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: Kernel/WorldRoot.lean:583:17: unused variable `a`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Kernel/WorldRoot.lean:583:19: unused variable `b`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3144/3222] Replayed Compiler.PredRangeLeaf
+warning: Compiler/PredRangeLeaf.lean:25:4: The namespace 'Pred' is duplicated in the declaration 'Minidregg.Pred.Pred.isOrderAtom'
+
+Note: This linter can be disabled with `set_option linter.dupNamespace false`
+⚠ [3160/3222] Replayed Kernel.ResourceObservationAdmission
+warning: Kernel/ResourceObservationAdmission.lean:278:31: This simp argument is unused:
+  ComposedPolicyAdmission.PreparedLaw.admit_eq
+
+Hint: Omit it from the simp argument list.
+  simp only [authorizeChecked, C̵o̵m̵p̵o̵s̵e̵d̵P̵o̵l̵i̵c̵y̵A̵d̵m̵i̵s̵s̵i̵o̵n̵.̵P̵r̵e̵p̵a̵r̵e̵d̵L̵a̵w̵.̵a̵d̵m̵i̵t̵_̵e̵q̵,̵ ̵refused]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/ResourceObservationAdmission.lean:469:0: automatically included section variable(s) unused in theorem `Minidregg.Kernel.ResourceObservationAdmission.read_law_sees_clock`:
+  [DecidableEq F]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq F] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [3177/3222] Replayed Kernel.ResourceMoneyOperationDomain
+warning: Kernel/ResourceMoneyOperationDomain.lean:50:4: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: Kernel/ResourceMoneyOperationDomain.lean:116:2: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: Kernel/ResourceMoneyOperationDomain.lean:237:28: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+⚠ [3180/3222] Replayed Kernel.ResourceTransaction
+warning: Kernel/ResourceTransaction.lean:271:49: This simp argument is unused:
+  Command.ofBody
+
+Hint: Omit it from the simp argument list.
+  simp [Command.bodyBytes, Command.body, C̵o̵m̵m̵a̵n̵d̵.̵o̵f̵B̵o̵d̵y̵,̵commandFrame, familyCommandFrame,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲List.append_assoc, take_tagged_frame, drop_tagged_frame, stream_roundtrip]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/ResourceTransaction.lean:272:26: This simp argument is unused:
+  familyCommandFrame
+
+Hint: Omit it from the simp argument list.
+  simp [Command.bodyBytes, Command.body, Command.ofBody, commandFrame, f̵a̵m̵i̵l̵y̵C̵o̵m̵m̵a̵n̵d̵F̵r̵a̵m̵e̵,̵ ̵List.append_assoc,
+              take_tagged_frame, drop_tagged_frame, stream_roundtrip]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/ResourceTransaction.lean:273:31: This simp argument is unused:
+  drop_tagged_frame
+
+Hint: Omit it from the simp argument list.
+  simp [Command.bodyBytes, Command.body, Command.ofBody, commandFrame, familyCommandFrame,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲List.append_assoc, take_tagged_frame, d̵r̵o̵p̵_̵t̵a̵g̵g̵e̵d̵_̵f̵r̵a̵m̵e̵,̵ ̵stream_roundtrip]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/ResourceTransaction.lean:275:16: This simp argument is unused:
+  Command.bodyBytes
+
+Hint: Omit it from the simp argument list.
+  simp [Command.bodyB̵y̵t̵e̵s̵, Command.b̵od̵y̵,̵ ̵C̵o̵m̵m̵a̵n̵d̵.̵o̵fBody,
+  ̵  ̵ ̵ ̵ ̵ ̵ ̵ ̵ ̵ ̵ ̵ ̵commandFrame, familyCommandFrame, List.append_assoc,
+              take_tagged_frame, drop_tagged_frame, stream_roundtrip]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/ResourceTransaction.lean:275:35: This simp argument is unused:
+  Command.body
+
+Hint: Omit it from the simp argument list.
+  simp [Command.bodyBytes, C̵o̵m̵m̵a̵n̵d̵.̵b̵o̵d̵y̵,̵ ̵Command.ofBody, commandFrame, familyCommandFrame,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲List.append_assoc, take_tagged_frame, drop_tagged_frame, stream_roundtrip]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/ResourceTransaction.lean:275:49: This simp argument is unused:
+  Command.ofBody
+
+Hint: Omit it from the simp argument list.
+  simp [Command.bodyBytes, Command.body, C̵o̵m̵m̵a̵n̵d̵.̵o̵f̵B̵o̵d̵y̵,̵commandFrame, familyCommandFrame,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲List.append_assoc, take_tagged_frame, drop_tagged_frame, stream_roundtrip]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/ResourceTransaction.lean:277:31: This simp argument is unused:
+  drop_tagged_frame
+
+Hint: Omit it from the simp argument list.
+  simp [Command.bodyBytes, Command.body, Command.ofBody, commandFrame, familyCommandFrame,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲List.append_assoc, take_tagged_frame, d̵r̵o̵p̵_̵t̵a̵g̵g̵e̵d̵_̵f̵r̵a̵m̵e̵,̵ ̵stream_roundtrip]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [3184/3222] Replayed Theory.ObjectiveBendTyping
+warning: Theory/ObjectiveBendTyping.lean:780:21: This simp argument is unused:
+  Assumptions.alias
+
+Hint: Omit it from the simp argument list.
+  simp [futureRowInstanceChecked, check, infer, inferFields, futureRowInstantiation,
+      futureRowSource, Assumptions.a̵l̵i̵a̵s̵,̵ ̵A̵s̵s̵u̵m̵p̵t̵i̵o̵n̵s̵.̵valid, overlay, zeroUses, variableUses, addUses, safeUses,
+  ̲  ̲ ̲ ̲safeQuantity,
+  ̵  ̵ ̵ ̵validContext, reusableAllowed, reusableCaptures,
+  ̵  ̵ ̵ ̵List.range_succ, List.zipWith,
+  ̲  ̲ ̲ ̲hs, ht, (Ty.isRow_mono hr (by omega) : super.isRow [] 77 = true), Ty.isComputation]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [3201/3222] Replayed Compiler.ObjectiveBendPublication
+warning: Compiler/ObjectiveBendPublication.lean:86:67: This simp argument is unused:
+  throw
+
+Hint: Omit it from the simp argument list.
+  simp [hr, hp, bind, Except.bind, Except.toOption, throwT̲h̲e̲,
+  ̲ t̵h̵r̵o̵w̵T̵h̵e̵,̵  ̲ ̲ ̲ ̲MonadExceptOf.throw] at replayed
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Compiler/ObjectiveBendPublication.lean:86:74: This simp argument is unused:
+  throwThe
+
+Hint: Omit it from the simp argument list.
+  simp [hr, hp, bind, Except.bind, Except.toOption, throw,
+  ̲ t̵h̵r̵o̵w̵T̵h̵e̵,̵  ̲ ̲ ̲ ̲MonadExceptOf.throw] at replayed
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Compiler/ObjectiveBendPublication.lean:86:84: This simp argument is unused:
+  MonadExceptOf.throw
+
+Hint: Omit it from the simp argument list.
+  simp [hr, hp, bind, Except.bind, Except.toOption, throw, throwThe,̵ ̵M̵o̵n̵a̵d̵E̵x̵c̵e̵p̵t̵O̵f̵.̵t̵h̵r̵o̵w̵] at replayed
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [3214/3222] Replayed Kernel.ObjectiveBendNativeAdmission
+warning: Kernel/ObjectiveBendNativeAdmission.lean:439:8: unused variable `selected`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3220/3222] Replayed Kernel.ConfidentialAudienceAdmission
+warning: Kernel/ConfidentialAudienceAdmission.lean:37:24: unused variable `context`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Kernel/ConfidentialAudienceAdmission.lean:93:36: Try `simp at member` instead of `simpa using member`
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+⚠ [3221/3222] Replayed Kernel.DeclaredResourceController
+warning: Kernel/DeclaredResourceController.lean:1808:18: unused variable `guard`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3222/3534] Replayed Kernel.ObjectAudienceController
+warning: Kernel/ObjectAudienceController.lean:22:9: unused variable `old`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3226/3534] Replayed Kernel.PolicyInstallReceiver
+warning: Kernel/PolicyInstallReceiver.lean:250:10: unused variable `exact`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3227/3534] Replayed Kernel.ResourceBirthPolicyController
+warning: Kernel/ResourceBirthPolicyController.lean:1784:8: unused variable `parsed`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3229/3534] Replayed Kernel.CapabilityDelegationController
+warning: Kernel/CapabilityDelegationController.lean:190:62: unused variable `command`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3233/3534] Replayed Compiler.NativeHostCodec
+warning: Compiler/NativeHostCodec.lean:119:8: `List.getLast?_eq_getLast` has been deprecated: Use `List.getLast?_eq_some_getLast` instead
+⚠ [3243/3534] Replayed Kernel.JointControlCell
+warning: Kernel/JointControlCell.lean:82:36: This simp argument is unused:
+  Option.some.injEq
+
+Hint: Omit it from the simp argument list.
+  simp only [ordinaryGate, decoded,̵ ̵O̵p̵t̵i̵o̵n̵.̵s̵o̵m̵e̵.̵i̵n̵j̵E̵q̵] at accepted
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [3252/3534] Replayed Theory.Renounce
+warning: Theory/Renounce.lean:84:67: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+⚠ [3255/3534] Replayed Kernel.NativeObservationController
+warning: Kernel/NativeObservationController.lean:214:20: unused variable `context`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Kernel/NativeObservationController.lean:224:12: unused variable `context`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Kernel/NativeObservationController.lean:420:0: automatically included section variable(s) unused in theorem `Minidregg.Kernel.NativeObservationController.headerAt_exact`:
+  [DecidableEq F]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq F] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: Kernel/NativeObservationController.lean:1854:0: automatically included section variable(s) unused in theorem `Minidregg.Kernel.NativeObservationController.challenge_absent_target_refused`:
+  [DecidableEq F]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq F] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: Kernel/NativeObservationController.lean:1872:0: automatically included section variable(s) unused in theorem `Minidregg.Kernel.NativeObservationController.challengeAt_bound`:
+  [DecidableEq F]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq F] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [3260/3534] Replayed Kernel.GrainResourceBirthAdmission
+warning: Kernel/GrainResourceBirthAdmission.lean:336:5: unused variable `pending`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Kernel/GrainResourceBirthAdmission.lean:540:8: unused variable `step`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3278/3534] Replayed Kernel.ApplicationShareIssueDelegation
+warning: Kernel/ApplicationShareIssueDelegation.lean:181:0: automatically included section variable(s) unused in theorem `Minidregg.Kernel.ApplicationShareIssueDelegation.readGuard_current`:
+  [DecidableEq F]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq F] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [3287/3534] Replayed Kernel.ApplicationDispatchAdmission
+warning: Kernel/ApplicationDispatchAdmission.lean:595:52: unused variable `selection`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3302/3534] Replayed Kernel.FnSelectiveReleaseSourceAuthority
+warning: Kernel/FnSelectiveReleaseSourceAuthority.lean:126:22: unused variable `prepared`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Kernel/FnSelectiveReleaseSourceAuthority.lean:166:25: This simp argument is unused:
+  resolved
+
+Hint: Omit it from the simp argument list.
+  simp ̵[̵r̵e̵s̵o̵l̵v̵e̵d̵]̵
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/FnSelectiveReleaseSourceAuthority.lean:204:0: automatically included section variable(s) unused in theorem `Minidregg.Kernel.FnSelectiveReleaseSourceAuthority.readGuard_current`:
+  [DecidableEq F]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq F] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [3342/3534] Replayed Kernel.FnConsumerFrontierGateway
+warning: Kernel/FnConsumerFrontierGateway.lean:159:22: unused variable `prepared`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Kernel/FnConsumerFrontierGateway.lean:200:25: This simp argument is unused:
+  resolved
+
+Hint: Omit it from the simp argument list.
+  simp ̵[̵r̵e̵s̵o̵l̵v̵e̵d̵]̵
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [3397/3534] Replayed Theory.KeyPreRotation
+warning: Theory/KeyPreRotation.lean:117:71: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+⚠ [3409/3534] Replayed Kernel.FleetTurnReceiver
+warning: Kernel/FleetTurnReceiver.lean:91:5: unused variable `shape`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3414/3534] Replayed Kernel.ClockTickReceiver
+warning: Kernel/ClockTickReceiver.lean:112:15: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+⚠ [3418/3534] Replayed Kernel.PayObservationReceiver
+warning: Kernel/PayObservationReceiver.lean:412:5: unused variable `logical`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Kernel/PayObservationReceiver.lean:631:5: unused variable `shape`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3435/3534] Replayed Kernel.PurseRefill
+warning: Kernel/PurseRefill.lean:189:41: This simp argument is unused:
+  notIssuer
+
+Hint: Omit it from the simp argument list.
+  simp [Operation.apply, Operation.posting, Operation.leaseRecord?, Book.applyPosting,
+  ̵  ̵ ̵ ̵Book.balance,
+  ̲  ̲ ̲ ̲DFinsupp.single_apply, n̵o̵t̵I̵s̵s̵u̵e̵r̵,̵ ̵Ne.symm notIssuer, sub_eq_add_neg]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/PurseRefill.lean:196:48: This simp argument is unused:
+  Ne.symm other
+
+Hint: Omit it from the simp argument list.
+  simp [Operation.apply, Operation.posting, Operation.leaseRecord?, Book.applyPosting,
+  ̵  ̵ ̵ ̵Book.balance,
+  ̲  ̲ ̲ ̲DFinsupp.single_apply, other,̵ ̵N̵e̵.̵s̵y̵m̵m̵ ̵o̵t̵h̵e̵r̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/PurseRefill.lean:235:13: `Int.ofNat_eq_coe` has been deprecated: Use `Int.ofNat_eq_natCast` instead
+warning: Kernel/PurseRefill.lean:259:13: `Int.ofNat_eq_coe` has been deprecated: Use `Int.ofNat_eq_natCast` instead
+⚠ [3439/3534] Replayed Kernel.JobMoney
+warning: Kernel/JobMoney.lean:543:49: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: Kernel/JobMoney.lean:619:41: This simp argument is unused:
+  Plan.retired
+
+Hint: Omit it from the simp argument list.
+  simp [flowIn, Operation.posting, P̵l̵a̵n̵.̵r̵e̵t̵i̵r̵e̵d̵,̵ ̵same, Ne.symm same]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/JobMoney.lean:624:41: This simp argument is unused:
+  Plan.retired
+
+Hint: Omit it from the simp argument list.
+  simp [flowIn, Operation.posting, P̵l̵a̵n̵.̵r̵e̵t̵i̵r̵e̵d̵,̵ ̵same, Ne.symm same]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/JobMoney.lean:627:52: This simp argument is unused:
+  not_not
+
+Hint: Omit it from the simp argument list.
+  simp only [Payouts.badPayee, not_or, not_and,̵ ̵n̵o̵t̵_̵n̵o̵t̵] at payees
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/JobMoney.lean:632:41: This simp argument is unused:
+  Plan.retired
+
+Hint: Omit it from the simp argument list.
+  simp [flowIn, Operation.posting, P̵l̵a̵n̵.̵r̵e̵t̵i̵r̵e̵d̵,̵ ̵same, Ne.symm same]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [3443/3534] Replayed Kernel.Inbox
+warning: Kernel/Inbox.lean:52:10: The namespace 'Inbox' is duplicated in the declaration 'Minidregg.Kernel.Inbox.Inbox.mk'
+
+Note: This linter can be disabled with `set_option linter.dupNamespace false`
+warning: Kernel/Inbox.lean:57:2: The namespace 'Inbox' is duplicated in the declaration 'Minidregg.Kernel.Inbox.Inbox.messages'
+
+Note: This linter can be disabled with `set_option linter.dupNamespace false`
+warning: Kernel/Inbox.lean:53:2: The namespace 'Inbox' is duplicated in the declaration 'Minidregg.Kernel.Inbox.Inbox.sender'
+
+Note: This linter can be disabled with `set_option linter.dupNamespace false`
+warning: Kernel/Inbox.lean:56:2: The namespace 'Inbox' is duplicated in the declaration 'Minidregg.Kernel.Inbox.Inbox.head'
+
+Note: This linter can be disabled with `set_option linter.dupNamespace false`
+warning: Kernel/Inbox.lean:52:10: The namespace 'Inbox' is duplicated in the declaration 'Minidregg.Kernel.Inbox.Inbox'
+
+Note: This linter can be disabled with `set_option linter.dupNamespace false`
+warning: Kernel/Inbox.lean:54:2: The namespace 'Inbox' is duplicated in the declaration 'Minidregg.Kernel.Inbox.Inbox.target'
+
+Note: This linter can be disabled with `set_option linter.dupNamespace false`
+warning: Kernel/Inbox.lean:63:4: The namespace 'Inbox' is duplicated in the declaration 'Minidregg.Kernel.Inbox.Inbox.empty'
+
+Note: This linter can be disabled with `set_option linter.dupNamespace false`
+warning: Kernel/Inbox.lean:66:4: The namespace 'Inbox' is duplicated in the declaration 'Minidregg.Kernel.Inbox.Inbox.tail'
+
+Note: This linter can be disabled with `set_option linter.dupNamespace false`
+warning: Kernel/Inbox.lean:69:4: The namespace 'Inbox' is duplicated in the declaration 'Minidregg.Kernel.Inbox.Inbox.push'
+
+Note: This linter can be disabled with `set_option linter.dupNamespace false`
+warning: Kernel/Inbox.lean:73:4: The namespace 'Inbox' is duplicated in the declaration 'Minidregg.Kernel.Inbox.Inbox.pop'
+
+Note: This linter can be disabled with `set_option linter.dupNamespace false`
+⚠ [3447/3534] Replayed Kernel.ObjectRecord
+warning: Kernel/ObjectRecord.lean:67:2: The namespace 'ObjectRecord' is duplicated in the declaration 'Minidregg.Kernel.ObjectRecord.ObjectRecord.upgrade'
+
+Note: This linter can be disabled with `set_option linter.dupNamespace false`
+warning: Kernel/ObjectRecord.lean:65:2: The namespace 'ObjectRecord' is duplicated in the declaration 'Minidregg.Kernel.ObjectRecord.ObjectRecord.schemaVersion'
+
+Note: This linter can be disabled with `set_option linter.dupNamespace false`
+warning: Kernel/ObjectRecord.lean:62:10: The namespace 'ObjectRecord' is duplicated in the declaration 'Minidregg.Kernel.ObjectRecord.ObjectRecord'
+
+Note: This linter can be disabled with `set_option linter.dupNamespace false`
+warning: Kernel/ObjectRecord.lean:66:2: The namespace 'ObjectRecord' is duplicated in the declaration 'Minidregg.Kernel.ObjectRecord.ObjectRecord.law'
+
+Note: This linter can be disabled with `set_option linter.dupNamespace false`
+warning: Kernel/ObjectRecord.lean:69:2: The namespace 'ObjectRecord' is duplicated in the declaration 'Minidregg.Kernel.ObjectRecord.ObjectRecord.payer'
+
+Note: This linter can be disabled with `set_option linter.dupNamespace false`
+warning: Kernel/ObjectRecord.lean:62:10: The namespace 'ObjectRecord' is duplicated in the declaration 'Minidregg.Kernel.ObjectRecord.ObjectRecord.mk'
+
+Note: This linter can be disabled with `set_option linter.dupNamespace false`
+warning: Kernel/ObjectRecord.lean:68:2: The namespace 'ObjectRecord' is duplicated in the declaration 'Minidregg.Kernel.ObjectRecord.ObjectRecord.continuity'
+
+Note: This linter can be disabled with `set_option linter.dupNamespace false`
+warning: Kernel/ObjectRecord.lean:63:2: The namespace 'ObjectRecord' is duplicated in the declaration 'Minidregg.Kernel.ObjectRecord.ObjectRecord.id'
+
+Note: This linter can be disabled with `set_option linter.dupNamespace false`
+warning: Kernel/ObjectRecord.lean:64:2: The namespace 'ObjectRecord' is duplicated in the declaration 'Minidregg.Kernel.ObjectRecord.ObjectRecord.pin'
+
+Note: This linter can be disabled with `set_option linter.dupNamespace false`
+⚠ [3448/3534] Replayed Kernel.ObjectiveActivity
+warning: Kernel/ObjectiveActivity.lean:917:45: unused variable `config`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Kernel/ObjectiveActivity.lean:4081:28: This simp argument is unused:
+  List.mem_singleton
+
+Hint: Omit it from the simp argument list.
+  simp only [List.mem_cons, L̵i̵s̵t̵.̵m̵e̵m̵_̵s̵i̵n̵g̵l̵e̵t̵o̵n̵,̵ ̵List.not_mem_nil, or_false] at member
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [3450/3534] Replayed Kernel.Seat
+warning: Kernel/Seat.lean:325:20: unused variable `rest`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Kernel/Seat.lean:399:78: This simp argument is unused:
+  Function.update_of_ne same
+
+Hint: Omit it from the simp argument list.
+  simp [Operation.apply, Operation.leaseRecord?, DFinsupp.coe_update, F̵u̵n̵c̵t̵i̵o̵n̵.̵u̵p̵d̵a̵t̵e̵_̵o̵f̵_̵n̵e̵ ̵same,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲s̵a̵m̵e̵,̵Book.applyPosting]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [3457/3534] Replayed Kernel.ObjectiveActivityReceiver
+warning: Kernel/ObjectiveActivityReceiver.lean:771:11: unused variable `kind`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3458/3534] Replayed Kernel.SeatReceiver
+warning: Kernel/SeatReceiver.lean:462:11: unused variable `kind`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3470/3534] Replayed Kernel.GenericSimplexAuditProjection
+warning: Kernel/GenericSimplexAuditProjection.lean:48:4: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: Kernel/GenericSimplexAuditProjection.lean:65:6: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: Kernel/GenericSimplexAuditProjection.lean:69:6: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+⚠ [3471/3534] Replayed Kernel.GenericSimplexStructure
+warning: Kernel/GenericSimplexStructure.lean:99:35: This simp argument is unused:
+  bind
+
+Hint: Omit it from the simp argument list.
+  simp only [progressView, Id.run, b̵i̵n̵d̵,̵ ̵pure]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/GenericSimplexStructure.lean:127:6: 'split' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: Kernel/GenericSimplexStructure.lean:127:6: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: Kernel/GenericSimplexStructure.lean:156:6: 'split' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: Kernel/GenericSimplexStructure.lean:156:6: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: Kernel/GenericSimplexStructure.lean:182:10: 'split' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: Kernel/GenericSimplexStructure.lean:182:10: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+⚠ [3472/3534] Replayed Compiler.GenericSimplexIO
+warning: Compiler/GenericSimplexIO.lean:43:20: This simp argument is unused:
+  decoded
+
+Hint: Omit it from the simp argument list.
+  simp ̵[̵d̵e̵c̵o̵d̵e̵d̵]̵
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Compiler/GenericSimplexIO.lean:46:25: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+⚠ [3484/3534] Replayed Kernel.PayClaimQuote
+warning: Kernel/PayClaimQuote.lean:90:53: This simp argument is unused:
+  next
+
+Hint: Omit it from the simp argument list.
+  simp only ̵[̵n̵e̵x̵t̵]̵
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [3485/3534] Replayed Kernel.PayClaimStatus
+warning: Kernel/PayClaimStatus.lean:400:33: This simp argument is unused:
+  if_true
+
+Hint: Omit it from the simp argument list.
+  simp only [project, malformed,̵ ̵i̵f̵_̵t̵r̵u̵e̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [3489/3534] Replayed Kernel.ProviderRoute
+warning: Kernel/ProviderRoute.lean:360:5: unused variable `held`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Kernel/ProviderRoute.lean:382:5: unused variable `held`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Kernel/ProviderRoute.lean:383:5: unused variable `settled`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Kernel/ProviderRoute.lean:393:5: unused variable `held`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Kernel/ProviderRoute.lean:394:5: unused variable `settled`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Kernel/ProviderRoute.lean:416:5: unused variable `held`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Kernel/ProviderRoute.lean:475:5: unused variable `held`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3492/3534] Replayed Kernel.ContentElementTree
+warning: Kernel/ContentElementTree.lean:203:61: unused variable `stepped`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Kernel/ContentElementTree.lean:219:23: This simp argument is unused:
+  Function.update_of_ne same
+
+Hint: Omit it from the simp argument list.
+  simp [View.parent, F̵u̵n̵c̵t̵i̵o̵n̵.̵u̵p̵d̵a̵t̵e̵_̵o̵f̵_̵n̵e̵ ̵s̵a̵m̵e̵,̵ ̵same]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/ContentElementTree.lean:227:25: This simp argument is unused:
+  Function.update_of_ne same
+
+Hint: Omit it from the simp argument list.
+  simp [View.children, F̵u̵n̵c̵t̵i̵o̵n̵.̵u̵p̵d̵a̵t̵e̵_̵o̵f̵_̵n̵e̵ ̵s̵a̵m̵e̵,̵ ̵same]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/ContentElementTree.lean:1063:8: Try this: intro first second firstIn secondIn different member inFirst inSecond
+warning: Kernel/ContentElementTree.lean:1385:4: This simp argument is unused:
+  decide_eq_true_eq
+
+Hint: Omit it from the simp argument list.
+  simp only [step, editElementStep, opened, bind, Except.bind, inRange, if_true, childFound,
+      childLocal, detached, ne_eq, not_true_eq_false, if_false, Option.isSome_none, Bool.false_or,
+      d̵e̵c̵i̵d̵e̵_̵e̵q̵_̵t̵r̵u̵e̵_̵e̵q̵,̵ ̵notRoot, unclear, decide_false]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/ContentElementTree.lean:1438:4: This simp argument is unused:
+  decide_eq_true_eq
+
+Hint: Omit it from the simp argument list.
+  simp only [step, editElementStep, opened, bind, Except.bind, inRange, if_true, childFound,
+      childLocal, detached, ne_eq, not_true_eq_false, if_false, Option.isSome_none, Bool.false_or,
+      d̵e̵c̵i̵d̵e̵_̵e̵q̵_̵t̵r̵u̵e̵_̵e̵q̵,̵ ̵notRoot, clear, decide_false, rewriteElement, found, reparent]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+✖ [7044/7052] Building Kernel.NativeThinConsent (3.0s)
+trace: .> LEAN_PATH=/srv/lanes/P4-PLAN-SCOPED-REPLAY/src/.lake/packages/Cli/.lake/build/lib/lean:/srv/lanes/P4-PLAN-SCOPED-REPLAY/src/.lake/packages/batteries/.lake/build/lib/lean:/srv/lanes/P4-PLAN-SCOPED-REPLAY/src/.lake/packages/Qq/.lake/build/lib/lean:/srv/lanes/P4-PLAN-SCOPED-REPLAY/src/.lake/packages/aesop/.lake/build/lib/lean:/srv/lanes/P4-PLAN-SCOPED-REPLAY/src/.lake/packages/proofwidgets/.lake/build/lib/lean:/srv/lanes/P4-PLAN-SCOPED-REPLAY/src/.lake/packages/importGraph/.lake/build/lib/lean:/srv/lanes/P4-PLAN-SCOPED-REPLAY/src/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/srv/lanes/P4-PLAN-SCOPED-REPLAY/src/.lake/packages/plausible/.lake/build/lib/lean:/srv/lanes/P4-PLAN-SCOPED-REPLAY/src/.lake/packages/mathlib/.lake/build/lib/lean:/srv/lanes/P4-PLAN-SCOPED-REPLAY/src/.lake/build/lib/lean /home/ember/.elan/toolchains/leanprover--lean4---v4.30.0/bin/lean /srv/lanes/P4-PLAN-SCOPED-REPLAY/src/Kernel/NativeThinConsent.lean -o /srv/lanes/P4-PLAN-SCOPED-REPLAY/src/.lake/build/lib/lean/Kernel/NativeThinConsent.olean -i /srv/lanes/P4-PLAN-SCOPED-REPLAY/src/.lake/build/lib/lean/Kernel/NativeThinConsent.ilean -c /srv/lanes/P4-PLAN-SCOPED-REPLAY/src/.lake/build/ir/Kernel/NativeThinConsent.c --setup /srv/lanes/P4-PLAN-SCOPED-REPLAY/src/.lake/build/ir/Kernel/NativeThinConsent.setup.json --json
+warning: Kernel/NativeThinConsent.lean:234:40: This simp argument is unused:
+  throw
+
+Hint: Omit it from the simp argument list.
+  simp [throw,̵ ̵t̵h̵r̵o̵w̵The, MonadExceptOf.throw, bind, Except.bind,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲Functor.map, Except.map, pure, Except.pure] at computed
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/NativeThinConsent.lean:234:47: This simp argument is unused:
+  throwThe
+
+Hint: Omit it from the simp argument list.
+  simp [throw, t̵h̵r̵o̵w̵T̵h̵e̵,̵ ̵MonadExceptOf.throw, bind, Except.bind, Functor.map,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲Except.map, pure, Except.pure] at computed
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/NativeThinConsent.lean:234:57: This simp argument is unused:
+  MonadExceptOf.throw
+
+Hint: Omit it from the simp argument list.
+  simp [throw, throwThe, M̵o̵n̵a̵d̵E̵x̵c̵e̵p̵t̵O̵f̵.̵t̵h̵r̵o̵w̵,̵ ̵bind, Except.bind, Functor.map, Except.map,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲pure, Except.pure] at computed
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/NativeThinConsent.lean:234:97: This simp argument is unused:
+  Functor.map
+
+Hint: Omit it from the simp argument list.
+  simp [throw, throwThe, MonadExceptOf.throw, bind, Except.bind,
+  ̲ F̵u̵n̵c̵t̵o̵r̵.̵m̵a̵p̵,̵  ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲Except.map, pure, Except.pure] at computed
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/NativeThinConsent.lean:234:110: This simp argument is unused:
+  Except.map
+
+Hint: Omit it from the simp argument list.
+  simp [throw, throwThe, MonadExceptOf.throw, bind, Except.bind,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲Functor.map, E̵x̵c̵e̵pt̵.̵m̵a̵p̵,̵ ̵p̵ure, Except.pure] at computed
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/NativeThinConsent.lean:239:40: This simp argument is unused:
+  throw
+
+Hint: Omit it from the simp argument list.
+  simp [throw,̵ ̵t̵h̵r̵o̵w̵The, MonadExceptOf.throw, bind, Except.bind,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲Functor.map, Except.map, pure, Except.pure] at computed
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/NativeThinConsent.lean:239:47: This simp argument is unused:
+  throwThe
+
+Hint: Omit it from the simp argument list.
+  simp [throw, t̵h̵r̵o̵w̵T̵h̵e̵,̵ ̵MonadExceptOf.throw, bind, Except.bind, Functor.map,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲Except.map, pure, Except.pure] at computed
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/NativeThinConsent.lean:239:57: This simp argument is unused:
+  MonadExceptOf.throw
+
+Hint: Omit it from the simp argument list.
+  simp [throw, throwThe, M̵o̵n̵a̵d̵E̵x̵c̵e̵p̵t̵O̵f̵.̵t̵h̵r̵o̵w̵,̵ ̵bind, Except.bind, Functor.map, Except.map,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲pure, Except.pure] at computed
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/NativeThinConsent.lean:239:97: This simp argument is unused:
+  Functor.map
+
+Hint: Omit it from the simp argument list.
+  simp [throw, throwThe, MonadExceptOf.throw, bind, Except.bind,
+  ̲ F̵u̵n̵c̵t̵o̵r̵.̵m̵a̵p̵,̵  ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲Except.map, pure, Except.pure] at computed
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/NativeThinConsent.lean:239:110: This simp argument is unused:
+  Except.map
+
+Hint: Omit it from the simp argument list.
+  simp [throw, throwThe, MonadExceptOf.throw, bind, Except.bind,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲Functor.map, E̵x̵c̵e̵pt̵.̵m̵a̵p̵,̵ ̵p̵ure, Except.pure] at computed
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/NativeThinConsent.lean:244:40: This simp argument is unused:
+  throw
+
+Hint: Omit it from the simp argument list.
+  simp [throw,̵ ̵t̵h̵r̵o̵w̵The, MonadExceptOf.throw, bind, Except.bind,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲Functor.map, Except.map, pure, Except.pure] at computed
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/NativeThinConsent.lean:244:47: This simp argument is unused:
+  throwThe
+
+Hint: Omit it from the simp argument list.
+  simp [throw, t̵h̵r̵o̵w̵T̵h̵e̵,̵ ̵MonadExceptOf.throw, bind, Except.bind, Functor.map,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲Except.map, pure, Except.pure] at computed
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/NativeThinConsent.lean:244:57: This simp argument is unused:
+  MonadExceptOf.throw
+
+Hint: Omit it from the simp argument list.
+  simp [throw, throwThe, M̵o̵n̵a̵d̵E̵x̵c̵e̵p̵t̵O̵f̵.̵t̵h̵r̵o̵w̵,̵ ̵bind, Except.bind, Functor.map, Except.map,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲pure, Except.pure] at computed
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/NativeThinConsent.lean:244:97: This simp argument is unused:
+  Functor.map
+
+Hint: Omit it from the simp argument list.
+  simp [throw, throwThe, MonadExceptOf.throw, bind, Except.bind,
+  ̲ F̵u̵n̵c̵t̵o̵r̵.̵m̵a̵p̵,̵  ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲Except.map, pure, Except.pure] at computed
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/NativeThinConsent.lean:244:110: This simp argument is unused:
+  Except.map
+
+Hint: Omit it from the simp argument list.
+  simp [throw, throwThe, MonadExceptOf.throw, bind, Except.bind,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲Functor.map, E̵x̵c̵e̵pt̵.̵m̵a̵p̵,̵ ̵p̵ure, Except.pure] at computed
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/NativeThinConsent.lean:249:40: This simp argument is unused:
+  throw
+
+Hint: Omit it from the simp argument list.
+  simp [throw,̵ ̵t̵h̵r̵o̵w̵The, MonadExceptOf.throw, bind, Except.bind,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲Functor.map, Except.map, pure, Except.pure] at computed
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/NativeThinConsent.lean:249:47: This simp argument is unused:
+  throwThe
+
+Hint: Omit it from the simp argument list.
+  simp [throw, t̵h̵r̵o̵w̵T̵h̵e̵,̵ ̵MonadExceptOf.throw, bind, Except.bind, Functor.map,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲Except.map, pure, Except.pure] at computed
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/NativeThinConsent.lean:249:57: This simp argument is unused:
+  MonadExceptOf.throw
+
+Hint: Omit it from the simp argument list.
+  simp [throw, throwThe, M̵o̵n̵a̵d̵E̵x̵c̵e̵p̵t̵O̵f̵.̵t̵h̵r̵o̵w̵,̵ ̵bind, Except.bind, Functor.map, Except.map,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲pure, Except.pure] at computed
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/NativeThinConsent.lean:249:97: This simp argument is unused:
+  Functor.map
+
+Hint: Omit it from the simp argument list.
+  simp [throw, throwThe, MonadExceptOf.throw, bind, Except.bind,
+  ̲ F̵u̵n̵c̵t̵o̵r̵.̵m̵a̵p̵,̵  ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲Except.map, pure, Except.pure] at computed
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Kernel/NativeThinConsent.lean:249:110: This simp argument is unused:
+  Except.map
+
+Hint: Omit it from the simp argument list.
+  simp [throw, throwThe, MonadExceptOf.throw, bind, Except.bind,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲ ̲Functor.map, E̵x̵c̵e̵pt̵.̵m̵a̵p̵,̵ ̵p̵ure, Except.pure] at computed
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+error: Kernel/NativeThinConsent.lean:285:85: unsolved goals
+command : Command
+target : Target
+bytes : List UInt8
+logical : Store target.layout
+decoded : target.materializer.codec.decode bytes = some logical
+mismatch : target.materializer.rootBytes bytes ≠ target.expectedTargetRoot
+⊢ (match memberPatch command target logical with
+    | Except.error refusal => Except.error refusal
+    | Except.ok patch =>
+      if Patch.ValidFrom logical patch then Except.ok (Patch.run logical patch)
+      else Except.error (Refusal.patchRefused target.target)) =
+    Except.error (Refusal.servedRootMismatch target.target)
+warning: Kernel/NativeThinConsent.lean:286:30: This simp argument is unused:
+  mismatch
+
+Hint: Omit it from the simp argument list.
+  simp [checkServed, decoded,̵ ̵m̵i̵s̵m̵a̵t̵c̵h̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+error: Kernel/NativeThinConsent.lean:327:26: Invalid rewrite argument: Expected an equality or iff proof or definition name, but `rooted` is a proof of
+  True
+error: Kernel/NativeThinConsent.lean:339:0: Minidregg.Kernel.NativeThinConsent.mismatch_refused depends on axioms outside the standard three: [sorryAx]
+Minidregg.Kernel.NativeThinConsent.thin_display_is_commit depends on axioms outside the standard three: [sorryAx]
+error: Lean exited with code 1
+Some required targets logged failures:
+- Kernel.NativeThinConsent
+error: build failed

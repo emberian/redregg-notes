@@ -1,0 +1,17 @@
+# REPAIR-2 LOG (m6grain)
+- 2026-10-09T05:17:33Z start; tip 09984242
+- 2026-10-09T05:20:14Z lane /srv/lanes/repair2 at 09984242; building mini-spk-volume-helper (log /srv/lanes/repair2/logs/helper-build.log)
+- 2026-10-09T05:23:06Z edits: package.py ROLES+RUST_ROLES spkVolumeHelper, lib.sh role list, build.sh header; row_m6grain -> two-world-journey.sh full (self-contained inputs, 98 by name; row-level cleanup fallback; root custody check). test-package PASS. shadow set /srv/lanes/repair2/art/09984242 (tip set + built helper, SHA256SUMS +1 line). Running row alone.
+- 2026-10-09T05:36:10Z run1: FAIL m6grain evidence-a/store exit 2 — REAL red unmasked: staged provision.sh copies (grain-store -> native-positive-base -> native-share-member stages) source genesis-params.sh relative to the STAGE (09984242 regression): 'provision-member.sh: 13: .: cannot open <run>/native/resource-client/journey.d/lib/genesis-params.sh'. Fix: provision.sh sources lib from ${GENESIS_PARAMS_TREE:-$REPO}; the 7 stagers export GENESIS_PARAMS_TREE=${GENESIS_PARAMS_TREE:-$REPO}. grain-store.sh standalone with CANDIDATE: rc=0, helper from candidate.
+- 2026-10-09T06:15:20Z run2 (shadow, row alone): m6grain PASS 1846s 'per-store SPK two-world lifecycle, second instances, cross-world refusal and root cleanup completed'; result.log PASS two-world + 2x RED cross-world refusal + cleanup original=0 removal_assertions=0; box root paths empty after.
+- 2026-10-09T06:17:17Z PLANT (temp copy, B's broker unit ExecStart pointed at A's /var/lib/mini-spk-worlds/<A>/broker/config.json): m6grain FAIL 88s 'm6grain driver exit 1: operator broker socket custody failed'; cleanup original=1 removal_assertions=0; root paths empty after; plant copy removed (restored).
+- 2026-10-09T06:17:48Z COMMITTED 50fe8497 (12 files +76/-13) on branch repair2, pushed lane/repair2; cv task 01a11f4f-1104. Gating.
+- 2026-10-09T06:33:03Z gate repair2 TOTAL red=0 HEAD=50fe8497; publishing to next
+- 2026-10-09T06:44:50Z publish READY /srv/artifacts/50fe8497 (419 s); waiting on standing run
+- 2026-10-09T07:10:32Z standing runner picked up 50fe8497 at 07:10
+- 2026-10-09T07:46:53Z standing run 50fe8497 DONE 2097s PASS=129 FAIL=3 UNCONF=5: m6grain PASS 1979s; NEW RED hostupgrade/HOST-UPGRADE-FG FAIL (was PASS) + EF now fails earlier: 'run.sh: manifest output identity is incomplete or differs from provenance' — the tip operator (source deploy/candidate/run.sh -> lib.sh role list, to which I added spkVolumeHelper) refuses the pinned historical candidates (7220/0ea3) that lack the role. Fix: revert the lib.sh hunk (the operator's list stays as before; package.py's drift refusal makes every new set carry the helper).
+- 2026-10-09T07:47:55Z hostupgrade row alone with the revert: FG PASS, EF FAIL (expected epoch). COMMITTED 4f50bd01 (lib.sh revert), pushed lane/repair2. Re-gating in repair2-gate2.
+- 2026-10-09T08:21:08Z gate repair2b TOTAL red=0 HEAD=4f50bd01; publishing to next
+- 2026-10-09T08:30:37Z publish READY /srv/artifacts/4f50bd01 (380 s); waiting on standing run
+- 2026-10-09T09:00:39Z standing runner picked up 4f50bd01 (~08:57)
+- 2026-10-09T09:33:05Z standing run 4f50bd01 DONE 2041s: PASS=130 FAIL=2 UNCONFIGURED=5. m6grain PASS 1935s. Non-PASS = expected only: hostupgrade/HOST-UPGRADE-EF (+ parent hostupgrade) FAIL epoch range; UNCONFIGURED objective, m7, JPAY6 (+ parent jpay), exchange. Box root paths empty. DONE.

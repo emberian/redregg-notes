@@ -1,0 +1,31 @@
+/run/user/1001/p4.lLiI5S/r/world/sponsor/sources/create-tc-one.authoring/g0001/intent.bin
+{
+  "acceptedCount": "18",
+  "confirmation": "installed",
+  "eventId": "61125555966155741029313424974250372874888236304180193559323729249752710336041",
+  "transactionId": "96730904546985971814357710095533323505683777218856471743983820985511075559358",
+  "type": "confirmed",
+  "worldRoot": "90531312262306796494483946295504966931993724430965972323756438030752499308993"
+}
+{
+  "authority": "hint-only",
+  "controlCapability": "14307138838686220611",
+  "kind": "object",
+  "name": "tc-one",
+  "observeCapability": "14534595099763905041",
+  "operationCapability": "14534595099763905041",
+  "provenance": {
+    "birthReceipt": {
+      "acceptedCount": "18",
+      "confirmation": "installed",
+      "eventId": "61125555966155741029313424974250372874888236304180193559323729249752710336041",
+      "transactionId": "96730904546985971814357710095533323505683777218856471743983820985511075559358",
+      "type": "confirmed",
+      "worldRoot": "90531312262306796494483946295504966931993724430965972323756438030752499308993"
+    },
+    "reservationDigest": "fe15abbf604ce17b4f2e07a693fe84c8fa300f57ee4c0be12e1d999fc31848fc",
+    "reservationRecord": "/run/user/1001/p4.lLiI5S/r/world/namespace/request-fe15abbf604ce17b4f2e07a693fe84c8fa300f57ee4c0be12e1d999fc31848fc.json"
+  },
+  "target": "14723357525701329169",
+  "type": "minidregg-participant-reference-v1"
+}

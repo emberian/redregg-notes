@@ -1,0 +1,299 @@
+diff -ruN Lang/Contextual/Closure.lean Lang/Contextual/Closure.lean
+--- Lang/Contextual/Closure.lean	2026-10-22 00:29:35.504616936 -0400
++++ Lang/Contextual/Closure.lean	2026-10-22 02:49:03.517353571 -0400
+@@ -231,12 +231,69 @@
+     .suspended ((effSupports I c).filter fun t => !w.live t)
+   else if c.cost ≤ I.budget then .verified else .uncovered c.cost I.budget
+ 
+-/-- The provenance polynomial of a hole at a world: one monomial (a product of tokens) per candidate
+-that passes everything but its supports; the hole is justified iff some monomial is all live. -/
+-def provenance (I : Iface D E) (env : E) (cs : List (Candidate D)) :
+-    List (List Token × List Token) :=
+-  (cs.filter fun c => D.check I.ctx c.filling I.ty && I.guard env c.filling &&
+-      decide (c.cost ≤ I.budget)).map fun c => (effSupports I c, c.blockers)
++/-! ## Provenance
++
++Finite dual-literal provenance, retaining environmental conditions: Grädel–Tannen (2024), Def4 p9, §6
++pp19–20; de Kleer (1986), pp144–145. Candidates are Doyle (1979) IN/OUT justifications, not ATMS labels. The
++computed polynomial is a label; its Boolean image forgets multiplicity, not conditions. -/
++
++/-- Grädel–Tannen §6 pp19–20: keep the verdict's input until specialization.
++The budget is a literal too, even though Iface fixes it across world edits. -/
++inductive EnvLit (D : CalculusData) where
++  | guard (filling : D.Tm)
++  | budget (cost : Nat)
++deriving DecidableEq
++
++def EnvLit.eval (I : Iface D E) (env : E) : EnvLit D → Bool
++  | .guard t => I.guard env t
++  | .budget cost => decide (cost ≤ I.budget)
++
++/-- Dual token literals plus unevaluated environmental literals (Grädel–Tannen p9, p19). -/
++structure Monomial (D : CalculusData) where
++  supports : List Token
++  blockers : List Token
++  envLits : List (EnvLit D)
++deriving DecidableEq
++
++def Monomial.envOK (I : Iface D E) (env : E) (m : Monomial D) : Bool :=
++  m.envLits.all (EnvLit.eval I env)
++
++def Monomial.eval (I : Iface D E) (w : World E) (m : Monomial D) : Bool :=
++  m.envOK I w.env && m.supports.all w.live && m.blockers.all (fun t => !w.live t)
++
++/-- A Candidate is Doyle (1979), an IN/OUT justification, not an ATMS label.
++This translation produces one label environment (de Kleer 1986, pp144–145). -/
++def monomial (I : Iface D E) (c : Candidate D) : Monomial D :=
++  ⟨effSupports I c, c.blockers, [.guard c.filling, .budget c.cost]⟩
++
++/-- THE provenance polynomial of a hole (Grädel–Tannen §6 p19): one monomial per well-typed candidate. It has
++no environment argument: the guard and the budget stay literals of the monomial (`envLits`), so the same
++polynomial answers at every world (`provenance_iff`). Only the immutable typing problem is specialized. -/
++def provenance (I : Iface D E) (cs : List (Candidate D)) : List (Monomial D) :=
++  (cs.filter fun c => D.check I.ctx c.filling I.ty).map (monomial I)
++
++/-- p·p̄ = 0: a product containing both polarities contributes nothing (Def4 p9). -/
++def Monomial.consistent (m : Monomial D) : Bool :=
++  m.supports.all fun t => !decide (t ∈ m.blockers)
++
++/-- de Kleer pp144–145: inclusion of ALL literals, including environmental obligations. -/
++def Monomial.subsumes (a b : Monomial D) : Bool :=
++  a.supports.all (fun t => decide (t ∈ b.supports)) &&
++  a.blockers.all (fun t => decide (t ∈ b.blockers)) &&
++  a.envLits.all (fun l => decide (l ∈ b.envLits))
++
++/-- Absorption a + ab = a in PosBool[X,X̄], retaining a representative of equal products.
++de Kleer p145: no surviving label environment strictly contains another. -/
++def minimal : List (Monomial D) → List (Monomial D)
++  | [] => []
++  | m :: ms =>
++    let rest := minimal ms
++    if rest.any (fun n => n.subsumes m) then rest
++    else m :: rest.filter (fun n => !m.subsumes n)
++
++/-- A complete label: erase complementary products, then absorb supersets. -/
++def label (I : Iface D E) (cs : List (Candidate D)) : List (Monomial D) :=
++  minimal ((provenance I cs).filter Monomial.consistent)
+ 
+ /-- Does the edit touch what the candidate's status reads? (Sufficient, not minimal: an
+ environment change touches every candidate.) -/
+diff -ruN Lang/Contextual/Provenance.lean Lang/Contextual/Provenance.lean
+--- Lang/Contextual/Provenance.lean	2026-10-21 20:58:06.995165647 -0400
++++ Lang/Contextual/Provenance.lean	1969-12-31 19:00:00.000000000 -0500
+@@ -1,73 +0,0 @@
+-/- P9: finite dual-literal provenance, retaining environmental conditions.
+-Grädel–Tannen (2024), Def4 p9, §6 pp19–20; de Kleer (1986), pp144–145.
+-Candidates are Doyle (1979) IN/OUT justifications, not ATMS labels. The computed
+-polynomial is a label; its Boolean image forgets multiplicity, not conditions. -/
+-import Lang.Contextual.Closure
+-
+-namespace Nanodregg.Lang.Contextual.P9
+-
+-variable {D : CalculusData} {E : Type}
+-
+-/-- Grädel–Tannen §6 pp19–20: keep the verdict's input until specialization.
+-The budget is a literal too, even though Iface fixes it across world edits. -/
+-inductive EnvLit (D : CalculusData) where
+-  | guard (filling : D.Tm)
+-  | budget (cost : Nat)
+-deriving DecidableEq
+-
+-def EnvLit.eval (I : Iface D E) (env : E) : EnvLit D → Bool
+-  | .guard t => I.guard env t
+-  | .budget cost => decide (cost ≤ I.budget)
+-
+-/-- Dual token literals plus unevaluated environmental literals (Grädel–Tannen p9, p19). -/
+-structure Monomial (D : CalculusData) where
+-  supports : List Token
+-  blockers : List Token
+-  envLits : List (EnvLit D)
+-deriving DecidableEq
+-
+-def Monomial.envOK (I : Iface D E) (env : E) (m : Monomial D) : Bool :=
+-  m.envLits.all (EnvLit.eval I env)
+-
+-def Monomial.eval (I : Iface D E) (w : World E) (m : Monomial D) : Bool :=
+-  m.envOK I w.env && m.supports.all w.live && m.blockers.all (fun t => !w.live t)
+-
+-/-- A Candidate is Doyle (1979), an IN/OUT justification, not an ATMS label.
+-This translation produces one label environment (de Kleer 1986, pp144–145). -/
+-def monomial (I : Iface D E) (c : Candidate D) : Monomial D :=
+-  ⟨effSupports I c, c.blockers, [.guard c.filling, .budget c.cost]⟩
+-
+-/-- Grädel–Tannen §6 p19: no environment argument, hence no erased guard branch.
+-Only the immutable typing problem is specialized. -/
+-def provenance (I : Iface D E) (cs : List (Candidate D)) : List (Monomial D) :=
+-  (cs.filter fun c => D.check I.ctx c.filling I.ty).map (monomial I)
+-
+-/-- The original token polynomial recovered by evaluating precisely envLits (Prop15 p20). -/
+-def specialize (I : Iface D E) (env : E) (ms : List (Monomial D)) :
+-    List (List Token × List Token) :=
+-  (ms.filter (Monomial.envOK I env)).map fun m => (m.supports, m.blockers)
+-
+-/-- p·p̄ = 0: a product containing both polarities contributes nothing (Def4 p9). -/
+-def Monomial.consistent (m : Monomial D) : Bool :=
+-  m.supports.all fun t => !decide (t ∈ m.blockers)
+-
+-/-- de Kleer pp144–145: inclusion of ALL literals, including environmental obligations. -/
+-def Monomial.subsumes (a b : Monomial D) : Bool :=
+-  a.supports.all (fun t => decide (t ∈ b.supports)) &&
+-  a.blockers.all (fun t => decide (t ∈ b.blockers)) &&
+-  a.envLits.all (fun l => decide (l ∈ b.envLits))
+-
+-/-- Absorption a + ab = a in PosBool[X,X̄], retaining a representative of equal products.
+-de Kleer p145: no surviving label environment strictly contains another. -/
+-def minimal : List (Monomial D) → List (Monomial D)
+-  | [] => []
+-  | m :: ms =>
+-    let rest := minimal ms
+-    if rest.any (fun n => n.subsumes m) then rest
+-    else m :: rest.filter (fun n => !m.subsumes n)
+-
+-/-- A complete label: erase complementary products, then absorb supersets. -/
+-def label (I : Iface D E) (cs : List (Candidate D)) : List (Monomial D) :=
+-  minimal ((provenance I cs).filter Monomial.consistent)
+-
+-end Nanodregg.Lang.Contextual.P9
+diff -ruN Lang/Proofs/Contextual/ClosureStatements.lean Lang/Proofs/Contextual/ClosureStatements.lean
+--- Lang/Proofs/Contextual/ClosureStatements.lean	2026-10-21 23:43:39.001233810 -0400
++++ Lang/Proofs/Contextual/ClosureStatements.lean	2026-10-22 02:49:03.517353571 -0400
+@@ -39,10 +39,6 @@
+     (HasTy : List (HoleDecl D.Ctx D.Ty) → D.Ctx → D.Tm → D.Ty → Prop) : Prop :=
+   HasTy (tpl.Ω.map Iface.decl) tpl.Γ tpl.P tpl.T
+ 
+-/-- A monomial holds in a world: its positive literals live, its negative literals dead. -/
+-def Monomial.holds (w : World E) (m : List Token × List Token) : Prop :=
+-  (∀ t ∈ m.1, w.live t = true) ∧ (∀ b ∈ m.2, w.live b = false)
+-
+ /-- DERIVABILITY: the template with the selected fillings types at its closed type, under the
+ meta-context of the holes still unfilled. -/
+ def Derivable (HasTy : List (HoleDecl D.Ctx D.Ty) → D.Ctx → D.Tm → D.Ty → Prop) (cl : Closure D E) :
+diff -ruN Lang/Proofs/Contextual/Core.lean Lang/Proofs/Contextual/Core.lean
+--- Lang/Proofs/Contextual/Core.lean	2026-10-22 01:14:20.799126603 -0400
++++ Lang/Proofs/Contextual/Core.lean	2026-10-22 02:49:03.517353571 -0400
+@@ -883,9 +883,8 @@
+ 
+ /-- The instance decides: two different terms, one `decide`. -/
+ theorem tm_decEq_toy :
+-    (Tm.letbox (.box [.base] (.var 0)) (.mvar 0 [.var 0]) ≠
+-      .letbox (.box [.base] (.var 0)) (.mvar 0 [.var 1])) ∧
+-    Tm.mvar 3 [.lam .base (.var 0)] = Tm.mvar 3 [.lam .base (.var 0)] := by decide
++    Tm.letbox (.box [.base] (.var 0)) (.mvar 0 [.var 0]) ≠
++      .letbox (.box [.base] (.var 0)) (.mvar 0 [.var 1]) := by decide
+ 
+ /-! ## The checker is exact -/
+ 
+diff -ruN Lang/Proofs/Contextual/Judge.lean Lang/Proofs/Contextual/Judge.lean
+--- Lang/Proofs/Contextual/Judge.lean	2026-10-21 20:58:07.000165721 -0400
++++ Lang/Proofs/Contextual/Judge.lean	2026-10-22 02:49:03.517353571 -0400
+@@ -103,26 +103,6 @@
+   cases h4 : ((effSupports I c).filter fun t => !w.live t).isEmpty <;>
+   by_cases h5 : c.cost ≤ I.budget <;> simp [h5, eq_comm]
+ 
+-/-- **The provenance bridge.** `provenance I env cs` is a polynomial over tokens computed from the
+-environment alone (it reads no liveness): one monomial per candidate that passes the checker, the
+-guard and the budget, its supports as positive literals and its blockers as negative literals. A
+-hole has a verified candidate at `w` iff some monomial holds in `w` (sum = alternatives, product =
+-joint requirements, negation = an exclusion reason). This is the bridge to `judge_verified_iff`: the
+-token part of the judgment IS the evaluation of a world-independent polynomial. -/
+-theorem provenance_iff {I : Iface D E} {w : World E} {cs : List (Candidate D)} :
+-    (∃ c ∈ cs, judge I w c = .verified) ↔
+-      ∃ m ∈ provenance I w.env cs, Monomial.holds w m := by
+-  constructor
+-  · rintro ⟨c, hc, hv⟩
+-    obtain ⟨h1, h2, h3, h4, h5⟩ := judge_verified_iff.1 hv
+-    refine ⟨(effSupports I c, c.blockers), ?_, h4, h3⟩
+-    simp only [provenance, List.mem_map, List.mem_filter]
+-    exact ⟨c, ⟨hc, by simp [h1, h2, h5]⟩, rfl⟩
+-  · rintro ⟨m, hm, hl, hb⟩
+-    simp only [provenance, List.mem_map, List.mem_filter, Bool.and_eq_true, decide_eq_true_eq] at hm
+-    obtain ⟨c, ⟨hc, ⟨⟨h1, h2⟩, h5⟩⟩, rfl⟩ := hm
+-    exact ⟨c, hc, judge_verified_iff.2 ⟨h1, h2, hb, hl, h5⟩⟩
+-
+ /-- **The obstruction is real.** For every token-backed hypothesis `(x, t)` of a hole, the bare
+ variable `x` types at the type the context gives it and cites `t`: a filling that uses `x` depends on
+ `t`, so `uses ≡ false` cannot hide the obstruction. -/
+diff -ruN Lang/Proofs/Contextual/Provenance.lean Lang/Proofs/Contextual/Provenance.lean
+--- Lang/Proofs/Contextual/Provenance.lean	2026-10-21 20:58:07.002165751 -0400
++++ Lang/Proofs/Contextual/Provenance.lean	2026-10-22 02:49:03.517353571 -0400
+@@ -1,8 +1,7 @@
+-/- P9: all-environment bridge and the ATMS label discipline. -/
+-import Lang.Contextual.Provenance
++/- Provenance: the all-environment bridge and the ATMS label discipline (P9). -/
+ import Lang.Proofs.Contextual.Judge
+ 
+-namespace Nanodregg.Lang.Contextual.P9
++namespace Nanodregg.Lang.Contextual
+ 
+ variable {D : CalculusData} {E : Type}
+ 
+@@ -13,8 +12,9 @@
+   simp [judge_verified_iff, Monomial.eval, Monomial.envOK, monomial,
+     EnvLit.eval, List.all_eq_true, and_assoc, and_comm, and_left_comm]
+ 
+-/-- Grädel–Tannen §6 pp19–20: the SAME retained polynomial works for EVERY world/environment.
+-This new namespace preserves the landed fixed-environment theorem and its name. -/
++/-- **The provenance bridge** (Grädel–Tannen §6 pp19–20): a hole has a verified candidate at `w` iff some
++monomial of its ONE retained polynomial evaluates true at `w`, for EVERY world and environment. This is the
++bridge to `judge_verified_iff`. -/
+ theorem provenance_iff {I : Iface D E} {w : World E} {cs : List (Candidate D)} :
+     (∃ c ∈ cs, judge I w c = .verified) ↔
+       ∃ m ∈ provenance I cs, m.eval I w = true := by
+@@ -26,27 +26,6 @@
+   · rintro ⟨m, ⟨c, ⟨hc, ht⟩, rfl⟩, he⟩
+     exact ⟨c, hc, monomial_verified.mpr ⟨ht, he⟩⟩
+ 
+-/-- Grädel–Tannen Prop15 p20: specializing retained env literals recovers the old polynomial,
+-including its order and multiplicity, not merely an implication of validity. -/
+-theorem specialize_eq (I : Iface D E) (env : E) (cs : List (Candidate D)) :
+-    specialize I env (provenance I cs) =
+-      Nanodregg.Lang.Contextual.provenance I env cs := by
+-  induction cs with
+-  | nil => rfl
+-  | cons c cs ih =>
+-    cases ht : D.check I.ctx c.filling I.ty <;>
+-    cases hg : I.guard env c.filling <;>
+-    by_cases hb : c.cost ≤ I.budget <;>
+-      simp [provenance, specialize, Nanodregg.Lang.Contextual.provenance,
+-        monomial, Monomial.envOK, EnvLit.eval, ht, hg, hb] at ih ⊢ <;> exact ih
+-
+-/-- Grädel–Tannen Prop15 p20, over the actual Edit.apply: no recomputation of provenance is needed. -/
+-theorem provenance_update (I : Iface D E) (w : World E) (e : Edit E)
+-    (cs : List (Candidate D)) :
+-    Nanodregg.Lang.Contextual.provenance I (e.apply w).env cs =
+-      specialize I (e.apply w).env (provenance I cs) :=
+-  (specialize_eq I (e.apply w).env cs).symm
+-
+ /-- Grädel–Tannen Def4 p9: complementary token literals cannot both evaluate to true. -/
+ theorem monomial_complementary_dead {I : Iface D E} {w : World E} {m : Monomial D}
+     {t : Token} (hp : t ∈ m.supports) (hn : t ∈ m.blockers) :
+@@ -194,4 +173,4 @@
+   · rintro ⟨m, hm, he⟩
+     exact ⟨m, (List.mem_filter.mp hm).1, he⟩
+ 
+-end Nanodregg.Lang.Contextual.P9
++end Nanodregg.Lang.Contextual
+diff -ruN Lang/Proofs/Contextual/ProvenanceTeeth.lean Lang/Proofs/Contextual/ProvenanceTeeth.lean
+--- Lang/Proofs/Contextual/ProvenanceTeeth.lean	2026-10-21 20:58:07.002165751 -0400
++++ Lang/Proofs/Contextual/ProvenanceTeeth.lean	1969-12-31 19:00:00.000000000 -0500
+@@ -1,20 +0,0 @@
+-/- P9's first tooth: fixed-environment provenance loses a future answer. -/
+-import Lang.Proofs.Contextual.Judge
+-import Lang.Contextual.CoreCalculus
+-
+-namespace Nanodregg.Lang.Contextual.P9
+-
+-private def toothIface : Iface cmttData Bool :=
+-  ⟨0, [], .arr .base .base, [], by simp, fun env _ => env, 10, 1, 2⟩
+-private def toothCandidate : Candidate cmttData :=
+-  ⟨.lam .base (.var 0), [], [], 1, 3, .verified⟩
+-private def toothWorld : World Bool := ⟨fun _ => false, false⟩
+-
+-/-- Grädel–Tannen (2024), §6 p19: specializing too early erases future answers.
+-The actual guard edit verifies a candidate absent from the old polynomial. -/
+-theorem provenance_env_specialized :
+-    Nanodregg.Lang.Contextual.provenance toothIface toothWorld.env [toothCandidate] = [] ∧
+-    judge toothIface ((Edit.setEnv true).apply toothWorld) toothCandidate = .verified := by
+-  decide
+-
+-end Nanodregg.Lang.Contextual.P9

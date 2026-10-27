@@ -1,0 +1,3 @@
+- 2026-10-27 LANDED: compositor af3248d8; controls 0ac27431; content lifecycle 2d16f58c; progress/cancellation fbe2dd82.
+- 2026-10-27 VERIFIED: page gate and Chromium checks green. Interactive 512 ms; dragging ~60 FPS; listeners 44→44 after 50 terminal cycles. Light/dark 125% layouts checked.
+- 2026-10-27 BLOCKED: publication remains unfinished. The worker contract’s low-disk rule stopped the artifact refresh at 95% NVMe usage. Disk/publication answers await ROOT; PERF’s worker integration remains pending. Worktree is clean; queued refresh stopped by its recorded PID.

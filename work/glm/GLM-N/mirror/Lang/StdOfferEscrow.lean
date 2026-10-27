@@ -1,0 +1,204 @@
+/-
+# Lang.StdOfferEscrow — an offer that moves value: the escrow instance of `Std.offer` (PROT-8)
+
+`Std.offer` (PROT-6) fuses two offers into a session and moves nothing. An offer that moves value
+needs its value to be LINEAR: it may not vanish with the row. Here an offer HOLDS its leg:
+
+* `post {give, grant, n, payTo, role, terms, want}` inserts offer `n` with value `{give, payTo, role,
+  terms, want}` and, in the same tree, ONE call: `transfer (of agent give.asset) (of self give.asset)
+  give.amount (via := some grant)`. `grant` is the poster's grant to the object of `transfer` on its
+  own account (KERNEL-60): the kernel spends it from the grant's cap. The row stands exactly when the
+  leg moved in. `want` is the leg it asks in return: at least `want.amount` of `want.asset`.
+* `take {keys, pair, theta}` judges as `Std.offer`'s take (its own pinned offer the one the deal
+  names for it, `offerNotNamed`; `offerJoint` on the two pinned offers' `{role, terms}` and θ) AND
+  the legs (LANG-82, `escrowFairT`: what the peer gives meets this offer's `want`, and what this
+  offer gives meets the peer's `want`; `unfairLegs`), and, on `ok`, retracts its own offer, inserts
+  its session row and makes ONE call: `transfer (of self give.asset) (of peer.payTo give.asset)
+  give.amount`, its own leg to the peer's `payTo`.
+* `fuse {keys, pair, theta, via}` is a take that also invokes its peer's `take` on the deal it
+  judged (LANG-77): both takes run in the fuser's one call tree, so both legs move or neither
+  (KERNEL-45).
+* `withdraw {}` reads its own pinned offer and retracts it, crediting its leg back: `transfer (of
+  self give.asset) (of payTo give.asset) give.amount`.
+* `retire {agent, notBefore}` retracts a session row from its deadline on (LANG-80); it moves nothing.
+
+So a standing offer's leg leaves the object only with its row, and only to the peer (take, fuse) or
+back to its own `payTo` (withdraw): `offer_guard` admits a retract only from `fuse`, `take` or
+`withdraw` (`notConsumer`), and each of them moves the leg in the same tree. That is the linear half
+of PROT-8 (Nomos: a contract may not terminate holding linear assets); the kernel conserves every
+denomination over the turn (`Kernel.Proofs.Value.admit_value`), so what leaves one account arrives
+in another. The guard, the role-and-box judge and the session log are `Std.offer`'s; the legs'
+judgment is the escrow's own. θ still moves nothing: the legs are fixed per offer, and θ is the
+terms both boxes accepted.
+-/
+import Lang.StdOffer
+
+namespace Nanodregg.Lang.Std
+
+/-! ## Types -/
+
+/-- An escrow offer row's value: its leg (`give`), where the counterparty's leg is paid, its role and
+box, and the leg it asks for in return (`want`, LANG-82: the least amount of one denomination). -/
+def escrowValTy (theta roles : List Label) : Ty :=
+  .record [("give", legTy), ("payTo", .digest), ("role", offerRoleTy roles), ("terms", offerTermsTy theta),
+    ("want", legTy)]
+
+def escrowDecl (theta roles : List Label) (limit : Nat) : RelDecl :=
+  { key := offerKey, val := escrowValTy theta roles, limit, sum := none, cap := 0, retract := true,
+    guard := some "offer_guard", holds := some "give" }
+
+def escrowRels (theta roles : List Label) (offerLimit sessionLimit : Nat) : List (Label × RelDecl) :=
+  [("offer", escrowDecl theta roles offerLimit), ("session", offerSessionDecl theta sessionLimit)]
+
+/-- Every escrow method's one call kind. -/
+def escrowCallTy : Ty := callOf ["transfer"]
+
+def escrowPostArg (theta roles : List Label) : Ty :=
+  .record [("give", legTy), ("grant", .digest), ("n", .nat), ("payTo", .digest),
+    ("role", offerRoleTy roles), ("terms", offerTermsTy theta), ("want", legTy)]
+
+/-- `withdraw` reads its own offer point. -/
+def escrowWithdrawRows (rels : List (Label × RelDecl)) : Ty := rowsTy rels offerRead []
+
+/-! ## Terms -/
+
+/-- The account of `owner` in denomination `asset`. -/
+def escrowAcct (owner asset : Term) : Term :=
+  .inj acctRefTy "of" (.record [("asset", asset), ("owner", owner)])
+
+/-- `transfer src dst amount (via)`, no once key: the row edit in the same tree is what moves a
+leg once. -/
+def escrowTransfer (amount src dst via : Term) : Term :=
+  .inj escrowCallTy "transfer" (.record [("amount", amount), ("dst", dst),
+    ("once", .inj (optTy .bytes) "none" (.record [])), ("src", src), ("via", via)])
+
+def escrowNoVia : Term := .inj (optTy .digest) "none" (.record [])
+
+/-- Pay leg `give` (a value of `legTy`) from the object `self` to `to`. -/
+def escrowPay (self to give : Term) : Term :=
+  escrowTransfer (.get give "amount") (escrowAcct self (.get give "asset")) (escrowAcct to (.get give "asset"))
+    escrowNoVia
+
+/-- A result with one call and the given row edits. -/
+def escrowResult (rels : List (Label × RelDecl)) (call state : Term) (edits : List Term) : Term :=
+  resultT (callsT [someCallT escrowCallTy call]) state (.record ((slotLabels "e" edits.length).zip
+    (edits.map fun t => someCallT (editTy rels) t)))
+
+/-- **The post** (var 0 req, var 1 arg, var 2 state): insert the offer; move its leg in. -/
+def escrowPostBody (rels : List (Label × RelDecl)) (od : RelDecl) : Term :=
+  let a (l : Label) := Term.get (.var 1) l
+  escrowResult rels
+    (escrowTransfer (.get (a "give") "amount") (escrowAcct (.get (.var 0) "agent") (.get (a "give") "asset"))
+      (escrowAcct (.get (.var 0) "self") (.get (a "give") "asset"))
+      (.inj (optTy .digest) "some" (a "grant")))
+    (.var 2)
+    [activityEdit rels "offer" od "insert" (.record [("n", a "n")])
+      (.record [("give", a "give"), ("payTo", a "payTo"), ("role", a "role"), ("terms", a "terms"),
+        ("want", a "want")])]
+
+/-- An escrow leg as data: `amount` of the denomination `asset` (a value of `legTy`). -/
+def escrowLegD (amount : Nat) (asset : ByteArray) : Data :=
+  .record [("amount", .nat amount), ("asset", .digest asset)]
+
+/-- `giver`'s leg meets what `want` asks: the same denomination, at least the amount. -/
+def escrowLegMeetsT (giver want : Term) : Term :=
+  andT (.prim .deq (.get giver "asset") (.get want "asset")) (.prim .le (.get want "amount") (.get giver "amount"))
+
+/-- **The escrow's own compliance** (LANG-82), under the judge's `ok` arm (peerVal 1, ownVal 3): what
+the peer gives meets what this offer wants, and what this offer gives meets what the peer wants. The
+two parties' judges each check both directions. -/
+def escrowFairT : Term :=
+  andT (escrowLegMeetsT (.get (.var 1) "give") (.get (.var 3) "want"))
+    (escrowLegMeetsT (.get (.var 3) "give") (.get (.var 1) "want"))
+
+/-- The take's success (inside the verdict's `ok` arm: peerVal 1, ownVal 3, req 5, state 7): pay
+its own leg to the peer's `payTo`; `Std.offer`'s two edits. -/
+def escrowTakeDone (theta : List Label) (rels : List (Label × RelDecl)) (od sd : RelDecl) : Term :=
+  escrowResult rels (escrowPay (.get (.var 5) "self") (.get (.var 1) "payTo") (.get (.var 3) "give"))
+    (.var 7) (offerTakeEdits theta rels od sd)
+
+/-- **The take**: `Std.offer`'s tree (`offerTakeTree`: refusals `offerUnpinned`, `noOffer`,
+`peerRowUnpinned`, `noPeerOffer`, `offerNotNamed`, `sameRole`, `notCompliant`), the judge typed at
+the escrow's value (it reads its `role` and `terms`), the leg paid to the peer on `ok`. -/
+def escrowTakeBody (theta roles : List Label) (rels : List (Label × RelDecl)) (od sd : RelDecl) : Term :=
+  offerTakeTree theta roles (escrowValTy theta roles) (some escrowFairT) true (escrowTakeDone theta rels od sd)
+
+/-- The fuse's success (inside the verdict's `ok` arm: payload 0, peerVal 1, ownVal 3, req 5, arg 6,
+state 7): the take's leg payment and edits, and the invoke of the peer's `take` on the judged deal
+(LANG-77: the deal leaves as the bytes of the value). -/
+def escrowFuseDone (theta : List Label) (rels : List (Label × RelDecl)) (od sd : RelDecl) (budget : Nat) : Term :=
+  activityResultCalls rels
+    (callsT [someCallT escrowCallTy (escrowPay (.get (.var 5) "self") (.get (.var 1) "payTo") (.get (.var 3) "give")),
+      someCallT (offerCallTy theta) (offerFuseCall theta budget (.var 5) (.var 6))])
+    (.var 7) (offerTakeEdits theta rels od sd)
+
+/-- **The fuse**: the take's tree over the escrow's values, paying its leg and invoking the peer. -/
+def escrowFuseBody (theta roles : List Label) (rels : List (Label × RelDecl)) (od sd : RelDecl) (budget : Nat) : Term :=
+  offerTakeTree theta roles (escrowValTy theta roles) (some escrowFairT) false (escrowFuseDone theta rels od sd budget)
+
+/-- The withdraw's success (inside the inner `some`: ownVal 0, ownPoint 1, req 2, state 4): pay the
+pinned offer's leg back to its `payTo`; retract the offer. -/
+def escrowWithdrawDone (rels : List (Label × RelDecl)) (od : RelDecl) : Term :=
+  escrowResult rels (escrowPay (.get (.var 2) "self") (.get (.var 0) "payTo") (.get (.var 0) "give"))
+    (.var 4) [activityEdit rels "offer" od "retract" (.get (.var 1) "key")]
+
+/-- **The withdraw** (var 0 req, var 1 arg, var 2 state, var 3 rows): retract the pinned own offer
+and credit its leg back to its `payTo`. Refusals: `offerUnpinned`, `noOffer`. -/
+def escrowWithdrawBody (rels : List (Label × RelDecl)) (od : RelDecl) : Term :=
+  let fail (why : String) := Term.refuse (resultTy offerStateTy [escrowCallTy] (editTy rels) 1) why.toUTF8
+  -- inside the inner `some`: ownVal 0, ownPoint 1, req 2, arg 3, state 4, rows 5
+  .case (.get (.get (.var 3) "offer") "p0") [
+    ("none", fail "offerUnpinned"),
+    ("some", .case (.get (.var 0) "val") [
+      ("none", fail "noOffer"),
+      ("some", escrowWithdrawDone rels od)])]
+
+/-- The escrow's declared grade (LANG-89): one run of `post`, `take`, `fuse` or `withdraw` moves at most
+this many units (a leg above it is refused `effectExceeded` at run). -/
+def escrowMovesMax : Nat := 2 ^ 32
+
+/-- The escrow's grades (LANG-89): each value-moving method may move up to `escrowMovesMax` per run. -/
+def escrowEffects : List (Label × Effect) :=
+  [("fuse", { moves := escrowMovesMax }), ("post", { moves := escrowMovesMax }), ("take", { moves := escrowMovesMax }), ("withdraw", { moves := escrowMovesMax })]
+
+/-- The package, emitted directly, with `Std.offer`'s method names and indices. -/
+def offerEscrowPackageOf (theta roles : List Label) (offerLimit sessionLimit sessionPatience budget : Nat) : Package :=
+  let rels := escrowRels theta roles offerLimit sessionLimit
+  let S := offerStateTy
+  let E := editTy rels
+  let T := escrowCallTy
+  let od := escrowDecl theta roles offerLimit
+  let sd := offerSessionDecl theta sessionLimit
+  let fields : List (Label × Ty × Term) := [
+    ("fuse", methodTy S (offerFuseArg theta) [T, offerCallTy theta] (offerTakeRows rels) E 2,
+      activityMethod S (offerFuseArg theta) (offerTakeRows rels) (escrowFuseBody theta roles rels od sd budget)),
+    ("offer_guard", guardTy S od, offerGuard theta od),
+    ("post", methodTy S (escrowPostArg theta roles) [T] (.record []) E 1,
+      activityMethod S (escrowPostArg theta roles) (.record []) (escrowPostBody rels od)),
+    ("retire", activityRetireTy S rels sd "session" none, offerRetireBody rels sd),
+    ("session_waiting", guardTy S sd, offerSessionGuard theta sd sessionPatience),
+    ("take", methodTy S (offerTakeArg theta) [T] (offerTakeRows rels) E 2,
+      activityMethod S (offerTakeArg theta) (offerTakeRows rels) (escrowTakeBody theta roles rels od sd)),
+    ("withdraw", methodTy S (.record []) [T] (escrowWithdrawRows rels) E 1,
+      activityMethod S (.record []) (escrowWithdrawRows rels) (escrowWithdrawBody rels od))]
+  { imports := [], state := S,
+    iface := .record (fields.map fun (l, T, _) => (l, T)),
+    body := .record (fields.map fun (l, _, t) => (l, t)),
+    methods := offerMethods, laws := [], rels,
+    effects := escrowEffects }
+
+/-- **`Std.offer` with a value leg**: the checked escrow package over terms `theta` and roles
+`roles` (`Std.offerPackage`'s refusals). -/
+def offerEscrowPackage (theta roles : List Label) (offerLimit : Nat := 64) (sessionLimit : Nat := 1024)
+    (sessionPatience : Nat := offerSessionPatience) (budget : Nat := 100000) : Except OfferRefusal Package := do
+  if roles.length < 2 then throw .tooFewRoles
+  if !roles.Nodup then throw .duplicateRole
+  if theta.isEmpty then throw .noTerms
+  if !theta.Nodup then throw .duplicateTerm
+  if sessionPatience = 0 then throw .zeroPatience
+  let pkg := offerEscrowPackageOf theta roles offerLimit sessionLimit sessionPatience budget
+  match pkg.checkWith [] with
+  | .error why => throw (.package why)
+  | .ok () => pure pkg
+
+end Nanodregg.Lang.Std

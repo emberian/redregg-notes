@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# scripts/worktree NAME — make <nanodregg.worktrees, default ~/dev/nanodregg-wt>/NAME, a git worktree of nanodregg at
+# origin/main (detached). One agent per worktree. Commit in it with git, land with scripts/commit (it rebases on
+# origin/main, builds what changed, runs what it touched, pushes, and leaves the worktree on the landed commit).
+set -eu
+[ $# -eq 1 ] && [ -n "$1" ] || { echo "usage: scripts/worktree NAME" >&2; exit 2; }
+primary=$(cd "$(git rev-parse --git-common-dir)/.." && pwd)
+# Where worktrees live is the clone's own setting (hbox: /tank/dregg-build/nanodregg/wt).
+dest=$(git config nanodregg.worktrees || echo "$HOME/dev/nanodregg-wt")/$1
+[ -e "$dest" ] && { echo "scripts/worktree: $dest exists" >&2; exit 1; }
+mkdir -p "$(dirname "$dest")"
+git -C "$primary" fetch -q origin main
+git -C "$primary" worktree add --detach "$dest" origin/main
+echo "worktree: $dest at $(git -C "$dest" log --oneline -1)"

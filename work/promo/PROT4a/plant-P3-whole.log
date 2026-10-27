@@ -1,0 +1,142 @@
+✔ [639/726] Built Lang.StdActivity (601ms)
+✔ [640/726] Built Lang.HoleSyntax (301ms)
+✔ [641/726] Built Lang.StdActivity:c.o (504ms)
+✔ [643/726] Built Lang.Proofs.StdActivity (783ms)
+✔ [644/726] Built Lang.StdHole (756ms)
+✔ [645/726] Built Lang.Proofs.StdActivityMethods (506ms)
+✔ [647/726] Built Lang.Journey.Hole (225ms)
+✔ [648/726] Built Lang.StdContextualHole (535ms)
+✔ [649/726] Built Lang.Proofs.StdActivityMonitor (1.4s)
+✔ [650/726] Built Lang.Surface (3.4s)
+✔ [651/726] Built Lang.Proofs.StdHoleTeeth (1.7s)
+✔ [655/726] Built Lang.StdHoleModel (392ms)
+✔ [656/726] Built Lang.Journey.HoleChecks (518ms)
+✔ [657/726] Built Lang.Journey.Contextual (638ms)
+✔ [658/726] Built Bench.WorstCutRows (559ms)
+✔ [659/726] Built Lang.Proofs.StdHoleCoverageTeeth (2.6s)
+✔ [660/726] Built Lang.Journey.Activity (360ms)
+✔ [661/726] Built Ledger.Sim.Journey (1.3s)
+✔ [662/726] Built Lang.Resident (523ms)
+✔ [663/726] Built Hosting.Sim.Journey (1.8s)
+✔ [671/726] Built Protocol.Rows (2.4s)
+✔ [672/726] Built Lang.Journey.ContextualChecks (461ms)
+✔ [673/726] Built Bench.WorstCutRowsMain (320ms)
+✔ [675/726] Built Ledger.Sim.Main (427ms)
+✔ [677/726] Built Lang.Proofs.StdHole (3.4s)
+✔ [678/726] Built Lang.Proofs.Surface (4.0s)
+✔ [679/726] Built Lang.Resident.Main (293ms)
+✔ [685/726] Built Hosting.Sim.Allowance (591ms)
+✔ [686/726] Built Protocol.Rows.Judge (405ms)
+✔ [687/726] Built Lang.Journey.ContextualWire (335ms)
+✔ [688/726] Built Protocol.Proofs.Rows (1.5s)
+✔ [689/726] Built «ledger-sim»:exe (290ms)
+✔ [690/726] Built «bench-worstcut-rows»:exe (717ms)
+✔ [691/726] Built Lang.Proofs.StdHoleLookup (619ms)
+✔ [692/726] Built Lang.Proofs.SurfaceTeeth (755ms)
+✔ [695/726] Built ob:exe (151ms)
+✔ [697/726] Built Hosting.Sim.Run (459ms)
+✔ [698/726] Built Protocol.Proofs.Judge (690ms)
+✔ [699/726] Built Lang.Proofs.StdHoleCoverage (614ms)
+✔ [700/726] Built Lang.Proofs.StdHoleCells (409ms)
+✔ [702/726] Built Hosting.Sim.Main (275ms)
+✔ [705/726] Built «hosting-sim»:exe (150ms)
+✔ [706/726] Built Lang.Journey (6.6s)
+✔ [708/726] Built Lang.Proofs.JourneyTeeth (964ms)
+✔ [709/726] Built Lang.Journey.ContextualReceive (1.1s)
+✔ [711/726] Built Lang.Journey.ContextualCycle (466ms)
+✔ [713/726] Built Protocol.Rows.Loopback (5.1s)
+✔ [715/726] Built Lang.Journey.Main (537ms)
+✔ [717/726] Built «lang-journey»:exe (253ms)
+✔ [718/726] Built Lang.Proofs.LiveJourney (3.1s)
+✔ [719/726] Built Protocol.Rows.Run (4.8s)
+✔ [721/726] Built Protocol.Rows.Main (804ms)
+✔ [724/726] Built rows:exe (141ms)
+✖ [725/726] Building Lang.Proofs.StdActivityTeeth (39s)
+trace: .> LEAN_PATH=/tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean /home/hbox/.elan/toolchains/leanprover--lean4---v4.30.0/bin/lean /tank/dregg-build/nanodregg/wt/promo/Lang/Proofs/StdActivityTeeth.lean -o /tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean/Lang/Proofs/StdActivityTeeth.olean -i /tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean/Lang/Proofs/StdActivityTeeth.ilean -c /tank/dregg-build/nanodregg/wt/promo/.lake/build/ir/Lang/Proofs/StdActivityTeeth.c --setup /tank/dregg-build/nanodregg/wt/promo/.lake/build/ir/Lang/Proofs/StdActivityTeeth.setup.json --json
+error: Lang/Proofs/StdActivityTeeth.lean:45:36: Tactic `decide` failed for proposition
+  (match actPkg.body, Row.find? "waits" actPkg.rels with
+    | Term.record fs, some d =>
+      d.guard == some "waits_waiting" &&
+            Row.find? "waits_waiting" fs ==
+              some
+                (activityWaiting actS
+                  [actPlan,
+                    let __src := actPlan;
+                    { name := "other", captured := __src.captured, response := __src.response,
+                      precondition := __src.precondition, start := __src.start, resume := __src.resume }]
+                  d actResumer) &&
+          d.val ==
+            activityLogVal
+              [actPlan,
+                let __src := actPlan;
+                { name := "other", captured := __src.captured, response := __src.response,
+                  precondition := __src.precondition, start := __src.start, resume := __src.resume }] &&
+        (activityCaptured
+            [actPlan,
+              let __src := actPlan;
+              { name := "other", captured := __src.captured, response := __src.response,
+                precondition := __src.precondition, start := __src.start, resume := __src.resume }]).wf
+    | x, x_1 => false) =
+    true
+because its `Decidable` instance
+  instDecidableEqBool
+    (match actPkg.body, Row.find? "waits" actPkg.rels with
+    | Term.record fs, some d =>
+      d.guard == some "waits_waiting" &&
+            Row.find? "waits_waiting" fs ==
+              some
+                (activityWaiting actS
+                  [actPlan,
+                    let __src := actPlan;
+                    { name := "other", captured := __src.captured, response := __src.response,
+                      precondition := __src.precondition, start := __src.start, resume := __src.resume }]
+                  d actResumer) &&
+          d.val ==
+            activityLogVal
+              [actPlan,
+                let __src := actPlan;
+                { name := "other", captured := __src.captured, response := __src.response,
+                  precondition := __src.precondition, start := __src.start, resume := __src.resume }] &&
+        (activityCaptured
+            [actPlan,
+              let __src := actPlan;
+              { name := "other", captured := __src.captured, response := __src.response,
+                precondition := __src.precondition, start := __src.start, resume := __src.resume }]).wf
+    | x, x_1 => false)
+    true
+did not reduce to `isTrue` or `isFalse`.
+
+Reduction got stuck at the `Decidable` instance
+  match
+    match actPkg.body, Row.find? "waits" actPkg.rels with
+    | Term.record fs, some d =>
+      d.guard == some "waits_waiting" &&
+            Row.find? "waits_waiting" fs ==
+              some
+                (activityWaiting actS
+                  [actPlan,
+                    let __src := actPlan;
+                    { name := "other", captured := __src.captured, response := __src.response,
+                      precondition := __src.precondition, start := __src.start, resume := __src.resume }]
+                  d actResumer) &&
+          d.val ==
+            activityLogVal
+              [actPlan,
+                let __src := actPlan;
+                { name := "other", captured := __src.captured, response := __src.response,
+                  precondition := __src.precondition, start := __src.start, resume := __src.resume }] &&
+        (activityCaptured
+            [actPlan,
+              let __src := actPlan;
+              { name := "other", captured := __src.captured, response := __src.response,
+                precondition := __src.precondition, start := __src.start, resume := __src.resume }]).wf
+    | x, x_1 => false,
+    true with
+  | false, false => isTrue ⋯
+  | false, true => isFalse ⋯
+  | true, false => isFalse ⋯
+  | true, true => isTrue ⋯
+error: Lean exited with code 1
+Some required targets logged failures:
+- Lang.Proofs.StdActivityTeeth
+error: build failed

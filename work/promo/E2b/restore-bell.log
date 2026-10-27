@@ -1,0 +1,117 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.16s
+     Running tests/resident_bell.rs (target/debug/build/nanodregg-launcher/40f4383180896fbc/out/resident_bell-40f4383180896fbc)
+
+running 1 test
+test the_resident_answers_every_ring_lowest_first_once_and_nothing_else has been running for over 60 seconds
+the late resident started 60 s after its crash loop, with no owner act
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d connect /home/hbox/.cache/nd-t/b2chz1/bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d/broker.sock
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d connect /home/hbox/.cache/nd-t/Mb2chz1/bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d/nd.sock
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d started pid 3942715
+resident: resumed nothing kept
+resident: serving bell 0888cabb1e58f086a9428a76753be38f2c1c61ec1df76269a9da8212fdd8f07f
+resident: bell answer method 0 pending limit 64
+resident: asked; answer 10 bytes
+resident: answered 18 4d7127a4fa34e3357edfb18e99f1bcb92131d6bc750ccc85dc37258906666937 10 bytes
+resident: asked; answer 10 bytes
+resident: answered 18 90e01f043cff571e9441301c7820c8802717f9e7e5e26492e2982ada44f45498 10 bytes
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d exited 9
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d connect /home/hbox/.cache/nd-t/b2chz1/bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d/broker.sock
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d connect /home/hbox/.cache/nd-t/Mb2chz1/bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d/nd.sock
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d started pid 3942929
+resident: resumed nothing kept
+resident: serving bell 0888cabb1e58f086a9428a76753be38f2c1c61ec1df76269a9da8212fdd8f07f
+resident: bell answer method 0 pending limit 64
+resident: asked; answer 10 bytes
+resident: answered 24 4d7127a4fa34e3357edfb18e99f1bcb92131d6bc750ccc85dc37258906666937 10 bytes
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d exited 9
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d connect /home/hbox/.cache/nd-t/b2chz1/bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d/broker.sock
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d connect /home/hbox/.cache/nd-t/Mb2chz1/bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d/nd.sock
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d started pid 3943019
+resident: resumed nothing kept
+resident: serving bell 0888cabb1e58f086a9428a76753be38f2c1c61ec1df76269a9da8212fdd8f07f
+resident: bell answer method 0 pending limit 64
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d exited 9
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d connect /home/hbox/.cache/nd-t/b2chz1/bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d/broker.sock
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d connect /home/hbox/.cache/nd-t/Mb2chz1/bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d/nd.sock
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d started pid 3943057
+resident: resumed the kept answer
+resident: serving bell 0888cabb1e58f086a9428a76753be38f2c1c61ec1df76269a9da8212fdd8f07f (an answer is kept)
+resident: bell answer method 0 pending limit 64
+resident: answered 29 4d7127a4fa34e3357edfb18e99f1bcb92131d6bc750ccc85dc37258906666937 20 bytes
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d exited 9
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d connect /home/hbox/.cache/nd-t/b2chz1/bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d/broker.sock
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d connect /home/hbox/.cache/nd-t/Mb2chz1/bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d/nd.sock
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d started pid 3943137
+resident: resumed nothing kept
+resident: serving bell 60a65f5014650d6fb5606b28e9b1e63f5011da060328bd4483b094cd141b9559
+resident: bell answer method 0 pending limit 64
+resident: asked; answer 10 bytes
+resident: answerRefused program (refused program)
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d exited 3584
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d connect /home/hbox/.cache/nd-t/b2chz1/bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d/broker.sock
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d connect /home/hbox/.cache/nd-t/Mb2chz1/bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d/nd.sock
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d started pid 3943172
+resident: resumed the kept answer
+resident: serving bell 60a65f5014650d6fb5606b28e9b1e63f5011da060328bd4483b094cd141b9559 (an answer is kept)
+resident: bell answer method 0 pending limit 64
+resident: answerRefused program (refused program)
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d exited 3584
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d connect /home/hbox/.cache/nd-t/b2chz1/bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d/broker.sock
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d connect /home/hbox/.cache/nd-t/Mb2chz1/bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d/nd.sock
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d started pid 3943217
+resident: resumed the kept answer
+resident: serving bell 60a65f5014650d6fb5606b28e9b1e63f5011da060328bd4483b094cd141b9559 (an answer is kept)
+resident: bell answer method 0 pending limit 64
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d exited 9
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d connect /home/hbox/.cache/nd-t/b2chz1/bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d/broker.sock
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d connect /home/hbox/.cache/nd-t/Mb2chz1/bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d/nd.sock
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d started pid 3943270
+resident: resumed nothing kept
+resident: serving bell a2ec9807474da5d62f73e5193e7f52c224507d2d6d6b2a2c143ef18e26073375
+resident: bell answer method 0 pending limit 64
+resident: asked; answer 10 bytes
+resident: answerRefused grantRight (refused grantRight)
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d exited 3584
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d connect /home/hbox/.cache/nd-t/b2chz1/bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d/broker.sock
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d connect /home/hbox/.cache/nd-t/Mb2chz1/bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d/nd.sock
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d started pid 3943301
+resident: resumed the kept answer
+resident: serving bell a2ec9807474da5d62f73e5193e7f52c224507d2d6d6b2a2c143ef18e26073375 (an answer is kept)
+resident: bell answer method 0 pending limit 64
+resident: answerRefused grantRight (refused grantRight)
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d exited 3584
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d connect /home/hbox/.cache/nd-t/b2chz1/bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d/broker.sock
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d connect /home/hbox/.cache/nd-t/Mb2chz1/bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d/nd.sock
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d started pid 3943346
+resident: resumed the kept answer
+resident: serving bell a2ec9807474da5d62f73e5193e7f52c224507d2d6d6b2a2c143ef18e26073375 (an answer is kept)
+resident: bell answer method 0 pending limit 64
+grain-launch: bd36639fe5238fe0d4ebc1a5956d1330b4f990b98fb9eb93cf255ccf8465126d exited 9
+grain-launch: 9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28 connect /home/hbox/.cache/nd-t/b2chz1/9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28/broker.sock
+grain-launch: 9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28 connect /home/hbox/.cache/nd-t/Mb2chz1/9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28/nd.sock
+grain-launch: 9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28 failed pathMissing confine: /home/hbox/.cache/nd-t/Mb2chz1/9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28: No such file or directory (os error 2)
+grain-launch: 9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28 connect /home/hbox/.cache/nd-t/b2chz1/9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28/broker.sock
+grain-launch: 9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28 connect /home/hbox/.cache/nd-t/Mb2chz1/9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28/nd.sock
+grain-launch: 9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28 failed pathMissing confine: /home/hbox/.cache/nd-t/Mb2chz1/9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28: No such file or directory (os error 2)
+grain-launch: 9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28 connect /home/hbox/.cache/nd-t/b2chz1/9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28/broker.sock
+grain-launch: 9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28 connect /home/hbox/.cache/nd-t/Mb2chz1/9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28/nd.sock
+grain-launch: 9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28 failed pathMissing confine: /home/hbox/.cache/nd-t/Mb2chz1/9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28: No such file or directory (os error 2)
+grain-launch: 9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28 connect /home/hbox/.cache/nd-t/b2chz1/9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28/broker.sock
+grain-launch: 9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28 connect /home/hbox/.cache/nd-t/Mb2chz1/9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28/nd.sock
+grain-launch: 9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28 failed pathMissing confine: /home/hbox/.cache/nd-t/Mb2chz1/9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28: No such file or directory (os error 2)
+grain-launch: 9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28 connect /home/hbox/.cache/nd-t/b2chz1/9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28/broker.sock
+grain-launch: 9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28 connect /home/hbox/.cache/nd-t/Mb2chz1/9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28/nd.sock
+grain-launch: 9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28 failed pathMissing confine: /home/hbox/.cache/nd-t/Mb2chz1/9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28: No such file or directory (os error 2)
+grain-launch: 9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28 refused crashLoop
+grain-launch: 9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28 connect /home/hbox/.cache/nd-t/b2chz1/9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28/broker.sock
+grain-launch: 9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28 connect /home/hbox/.cache/nd-t/Mb2chz1/9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28/nd.sock
+grain-launch: 9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28 started pid 3944521
+resident: resumed nothing kept
+resident: serving bell 0888cabb1e58f086a9428a76753be38f2c1c61ec1df76269a9da8212fdd8f07f
+resident: bell answer method 0 pending limit 64
+grain-launch: 9b04c6222150185053b70f154538e7e18c44631b33f424b8aad2dec365538f28 exited 9
+
+test the_resident_answers_every_ring_lowest_first_once_and_nothing_else ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 71.53s
+

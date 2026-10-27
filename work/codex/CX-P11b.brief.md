@@ -1,0 +1,5 @@
+Name: CX-P11b. Layer: LANG (gates/OWNERS: Lang/*). You are one of FOUR concurrent Lang workers on THE CONTEXTUAL PROGRAM; read
+
+YOUR CARD: CARD P11b (WAVE 4): incarnation/material for the guard (ludics Def 5.1/5.5), change-structure laws for Repair with rechecked vs internal transport evidence, first-class substitutions scoped to context morphisms, the intensional/extensional split for boundaries with typed syntax-reading guards (Mœbius). Read LITERATURE-CONTEXTUAL-20261020.md §4 items 4, 5, 8 and the cited PDFs in /Users/ember/paperbin.
+
+These cards RESTATE and EXTEND landed modules (LANG-70..73 on main: b72e5a8, 1b6cd0d, 3ff2657, 06da84f; certificates and the activities bundle are landing concurrently): a restated theorem keeps its name and gains no premise unless the card says so (then name it in the decision as the literature's price); new theorems in NEW modules; appends only on landed files; cite the paper and page in each docstring. Land nothing yourself: when built GREEN with gates/check.py run and your per-theorem disjunct read in the REPORT, write READY with the worktree path, changed paths and the drafted message path, then DONE.

@@ -1,0 +1,11 @@
+Lang/Contextual/P5.lean
+Lang/Proofs/Contextual/P5.lean
+Lang/Contextual/Games.lean
+Lang/Proofs/Contextual/Games.lean
+Lang/Contextual/NogoodGames.lean
+Lang/Proofs/Contextual/NogoodGames.lean
+Lang/Contextual/Nogoods.lean
+Lang/Proofs/Contextual/Nogoods.lean
+Lang/Contextual/Material.lean
+Lang/Proofs/Contextual/Material.lean
+Lang/Contextual/P1.lean

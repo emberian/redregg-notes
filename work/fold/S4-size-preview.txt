@@ -1,0 +1,10 @@
+-| Lean modules | 518 | — |
+-| Lean proof-modules | 280 | — |
++| Lean modules | 504 | — |
++| Lean proof-modules | 273 | — |
+-| Lean lines (Lang) | 44794 | — |
++| Lean lines (Lang) | 43047 | — |
+-| Lean lines (deployed) | 30375 | — |
++| Lean lines (deployed) | 29763 | — |
+-| theorems | 6228 | — |
++| theorems | 6126 | — |

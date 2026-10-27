@@ -1,0 +1,64 @@
+before 51151 (rows carrying a renamed-from name: 251 ) after 51151
+vanished 8 declared 0 UNDECLARED 8
+new 8 type-digest changed 0 value-hash changed 33
+module changed 243 of which from a module the step does not move 0
+   module Lang.Contextual.Certificate -> Census.CertificateReader 164
+   module Lang.Journey.Certificate -> Census.CertificateReaderTests 41
+   module Lang.Proofs.Contextual.Certificate -> Census.Proofs.CertificateReader 38
+   VANISHED _private.Census.CertificateReaderTests.0.Census.CertificateReader.Tests.instDecidableEqExcept_lang Lang.Journey.Certificate
+   VANISHED _private.Census.CertificateReaderTests.0.Census.CertificateReader.Tests.instDecidableEqExcept_lang._proof_1 Lang.Journey.Certificate
+   VANISHED _private.Census.CertificateReaderTests.0.Census.CertificateReader.Tests.instDecidableEqExcept_lang._proof_2 Lang.Journey.Certificate
+   VANISHED _private.Census.CertificateReaderTests.0.Census.CertificateReader.Tests.instDecidableEqExcept_lang._proof_3 Lang.Journey.Certificate
+   VANISHED _private.Census.CertificateReaderTests.0.Census.CertificateReader.Tests.instDecidableEqExcept_lang._proof_4 Lang.Journey.Certificate
+   VANISHED _private.Census.CertificateReaderTests.0.Census.CertificateReader.Tests.instDecidableEqExcept_lang._proof_5 Lang.Journey.Certificate
+   VANISHED _private.Census.CertificateReaderTests.0.Census.CertificateReader.Tests.instDecidableEqExcept_lang._proof_6 Lang.Journey.Certificate
+   VANISHED _private.Census.CertificateReaderTests.0.Census.CertificateReader.Tests.instDecidableEqExcept_lang.match_1 Lang.Journey.Certificate
+   UNDECLARED _private.Census.CertificateReaderTests.0.Census.CertificateReader.Tests.instDecidableEqExcept_lang Lang.Journey.Certificate
+   UNDECLARED _private.Census.CertificateReaderTests.0.Census.CertificateReader.Tests.instDecidableEqExcept_lang._proof_1 Lang.Journey.Certificate
+   UNDECLARED _private.Census.CertificateReaderTests.0.Census.CertificateReader.Tests.instDecidableEqExcept_lang._proof_2 Lang.Journey.Certificate
+   UNDECLARED _private.Census.CertificateReaderTests.0.Census.CertificateReader.Tests.instDecidableEqExcept_lang._proof_3 Lang.Journey.Certificate
+   UNDECLARED _private.Census.CertificateReaderTests.0.Census.CertificateReader.Tests.instDecidableEqExcept_lang._proof_4 Lang.Journey.Certificate
+   UNDECLARED _private.Census.CertificateReaderTests.0.Census.CertificateReader.Tests.instDecidableEqExcept_lang._proof_5 Lang.Journey.Certificate
+   UNDECLARED _private.Census.CertificateReaderTests.0.Census.CertificateReader.Tests.instDecidableEqExcept_lang._proof_6 Lang.Journey.Certificate
+   UNDECLARED _private.Census.CertificateReaderTests.0.Census.CertificateReader.Tests.instDecidableEqExcept_lang.match_1 Lang.Journey.Certificate
+   NEW _private.Census.CertificateReaderTests.0.Census.CertificateReader.Tests.instDecidableEqExcept_census Census.CertificateReaderTests
+   NEW _private.Census.CertificateReaderTests.0.Census.CertificateReader.Tests.instDecidableEqExcept_census._proof_1 Census.CertificateReaderTests
+   NEW _private.Census.CertificateReaderTests.0.Census.CertificateReader.Tests.instDecidableEqExcept_census._proof_2 Census.CertificateReaderTests
+   NEW _private.Census.CertificateReaderTests.0.Census.CertificateReader.Tests.instDecidableEqExcept_census._proof_3 Census.CertificateReaderTests
+   NEW _private.Census.CertificateReaderTests.0.Census.CertificateReader.Tests.instDecidableEqExcept_census._proof_4 Census.CertificateReaderTests
+   NEW _private.Census.CertificateReaderTests.0.Census.CertificateReader.Tests.instDecidableEqExcept_census._proof_5 Census.CertificateReaderTests
+   NEW _private.Census.CertificateReaderTests.0.Census.CertificateReader.Tests.instDecidableEqExcept_census._proof_6 Census.CertificateReaderTests
+   NEW _private.Census.CertificateReaderTests.0.Census.CertificateReader.Tests.instDecidableEqExcept_census.match_1 Census.CertificateReaderTests
+   VALUE Census.CertificateReader.Certificate.assumptions Lang.Contextual.Certificate
+   VALUE Census.CertificateReader.Certificate.checker Lang.Contextual.Certificate
+   VALUE Census.CertificateReader.Certificate.context Lang.Contextual.Certificate
+   VALUE Census.CertificateReader.Certificate.statement Lang.Contextual.Certificate
+   VALUE Census.CertificateReader.Certificate.target Lang.Contextual.Certificate
+   VALUE Census.CertificateReader.Checker.imports Lang.Contextual.Certificate
+   VALUE Census.CertificateReader.Checker.logic Lang.Contextual.Certificate
+   VALUE Census.CertificateReader.Checker.revision Lang.Contextual.Certificate
+   VALUE Census.CertificateReader.Checker.toolchain Lang.Contextual.Certificate
+   VALUE Census.CertificateReader.Entry.body Lang.Contextual.Certificate
+   VALUE Census.CertificateReader.Entry.name Lang.Contextual.Certificate
+   VALUE Census.CertificateReader.Faithful.assumptions Lang.Proofs.Contextual.Certificate
+   VALUE Census.CertificateReader.Faithful.bodies Lang.Proofs.Contextual.Certificate
+   VALUE Census.CertificateReader.Faithful.checker Lang.Proofs.Contextual.Certificate
+   VALUE Census.CertificateReader.Faithful.closed Lang.Proofs.Contextual.Certificate
+   VALUE Census.CertificateReader.Faithful.statement Lang.Proofs.Contextual.Certificate
+   VALUE Census.CertificateReader.Faithful.target Lang.Proofs.Contextual.Certificate
+   VALUE Census.CertificateReader.Reader.checker Lang.Contextual.Certificate
+   VALUE Census.CertificateReader.Reader.dependencies Lang.Contextual.Certificate
+   VALUE Census.CertificateReader.Reader.isAxiom Lang.Contextual.Certificate
+   VALUE Census.CertificateReader.Reader.isTheorem Lang.Contextual.Certificate
+   VALUE Census.CertificateReader.Reader.lookup Lang.Contextual.Certificate
+   VALUE Census.CertificateReader.Reader.references Lang.Contextual.Certificate
+   VALUE Census.CertificateReader.Reader.typeOf Lang.Contextual.Certificate
+   VALUE Census.CertificateReader.Refusal.noConfusion Lang.Contextual.Certificate
+   VALUE Census.CertificateReader.Refusal.noConfusionType Lang.Contextual.Certificate
+   VALUE Census.CertificateReader.Tests.Body.ax Lang.Journey.Certificate
+   VALUE Census.CertificateReader.Tests.Body.dependencies Lang.Journey.Certificate
+   VALUE Census.CertificateReader.Tests.Body.revision Lang.Journey.Certificate
+   VALUE Census.CertificateReader.Tests.Body.thm Lang.Journey.Certificate
+   VALUE Census.CertificateReader.Tests.Body.type Lang.Journey.Certificate
+   VALUE Census.CertificateReader.Tests.run Lang.Journey.Certificate
+   VALUE Census.CertificateReader.instReprRefusal.repr Lang.Contextual.Certificate

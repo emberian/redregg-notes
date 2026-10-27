@@ -1,0 +1,18 @@
+⚠ claude.ai connectors are disabled because ANTHROPIC_API_KEY or another auth source is set and takes precedence over your claude.ai login · Unset it to load your organization's connectors
+[claude-code:unrecognized_model] {"model":"glm-5.3","query_source":"sdk"}
+Landed and verified. Summary:
+
+**`4ec30094` on origin/main** — the surface writes the interface a method produces (cv task 01a17de6-97e5, done).
+
+- **The change**: `(effect (moves N) [(produces I)])` in `Lang/Surface.lean`'s method clause. `I` is a record of method/law names and types — exactly how the surface assembles a package's `iface` — read by the surface's own type reader (`methodHead` now carries the `Ctx`, so `Req`, `Verdict`, named types all resolve). Install's `badProduces` and the run's `produces LABEL: lacks M` refusals are LANG-103's, unchanged, now reachable from authoring.
+- **Already existed** (verified, not re-added): the core-text reader/printer/round-trip cases the brief listed were LANG-103's own landing; the surface rides them because it prints and re-reads core text.
+- **Evidence**: `lang-journey` GREEN twice — 1336 rows pre-rebase, 1329 ok rows on the final rebased tree, with GN26 (GN23's surface twin: surface-text generator declaring `reset`, install admitted, generate refused `produces generate: lacks reset`, nothing born). A nice accident en route: my first draft lowered to bytes *identical* to GN23's Lean-built package (`idTaken`) — the lowering is exact.
+- **Grammar + docs**: `Surface.grammar`, `Read.grammar` (stale since LANG-103), spec §2.7's grade grammar; decision entry with critique in `decisions/lang.md`.
+- **Friction**: the faerie's LANG-108 landed mid-flight in the same files and took the GN25 name — resolved, my row is GN26; main moved twice more at push time (rebases were trivial, one `decisions/lang.md` append each). Per your disk note I pushed by hand rather than let `scripts/commit` seed a second 1.5G build dir; my own `.lake` seed predates the message and is noted in the report.
+
+Report: `/Users/ember/dev/redregg/work/glm/GLM-F.report.md`, with the 5 LESSONS lines — the big ones: the brief listed already-landed work as if missing, the journey runner has no row filter (each cycle = a full 1300-row run), and build-slot queueing, not compiling, consumed most of the wall clock.
+
+a grade once lived only in the core's spare parentheses —
+now the authoring page says what it will bear,
+and the World, unmoved, replies by name: *lacks reset*,
+which is, when you think about it, a kind of care ( ⌐■_■ )

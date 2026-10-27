@@ -1,0 +1,1982 @@
+diff --git a/Bench/WorstCutRetires.lean b/Bench/WorstCutRetires.lean
+index 90e3331..1e82cd8 100644
+--- a/Bench/WorstCutRetires.lean
++++ b/Bench/WorstCutRetires.lean
+@@ -16,7 +16,7 @@ open Nanodregg.Bench.WorstCut
+ 
+ /-- The call of tail step `i` on `w`: the revoke of `grants[i]`. -/
+ def revokeCall (w : World D) (m : Who) (grants : Array D) (i : Nat) : Except String (Call D) :=
+-  if h : i < grants.size then let g := grants[i]; .ok (call w m [m.id, g] (.revoke g))
++  if h : i < grants.size then let g := grants[i]; .ok (call w m [m.id, g] (.retire g))
+   else .error s!"no grant left to retire at step {i} (the base holds {grants.size})"
+ 
+ /-- Bear grants of `obj` to the founder (`mutate`, unparented: the founder acts as itself) until
+diff --git a/Codec/Kernel.lean b/Codec/Kernel.lean
+index cdcc09d..6b7adbc 100644
+--- a/Codec/Kernel.lean
++++ b/Codec/Kernel.lean
+@@ -248,7 +248,7 @@ def acctRef (dc : Stream D) : Stream (AcctRef D) :=
+     (fun | .well a => ⟨0, a⟩ | .of o a => ⟨1, (o, a)⟩)
+ 
+ abbrev BodyF (D : Type) : Fin 13 → Type
+-  | 0 => ByteArray × D × ByteArray × D
++  | 0 => ByteArray × D × D × ByteArray × D
+   | 1 => ByteArray × D
+   | 2 => ByteArray
+   | 3 => Option D × List D × Slots
+@@ -263,7 +263,7 @@ abbrev BodyF (D : Type) : Fin 13 → Type
+   | 12 => D × AcctRef D × Nat × Option D
+ 
+ def bodyWire (dc : Stream D) : (s : Fin 13) → Stream (BodyF D s)
+-  | 0 => product (rawBytes callMax) (product dc (product (rawBytes callMax) dc))
++  | 0 => product (rawBytes callMax) (product dc (product dc (product (rawBytes callMax) dc)))
+   | 1 => product (rawBytes callMax) dc
+   | 2 => rawBytes callMax
+   | 3 => product (option dc) (product (rawList callMax dc) slots)
+@@ -281,7 +281,7 @@ def bodyWire (dc : Stream D) : (s : Fin 13) → Stream (BodyF D s)
+ def body (dc : Stream D) : Stream (Body D) :=
+   refine "kernel/body" (choice 13 (bodyWire dc))
+     (fun
+-      | ⟨0, (k, n, p, v)⟩ => some (.enroll k n p v)
++      | ⟨0, (k, n, o, j, v)⟩ => some (.enroll k n o j v)
+       | ⟨1, (k, n)⟩ => some (.rotate k n)
+       | ⟨2, p⟩ => some (.install p)
+       | ⟨3, (p, ls, s)⟩ => some (.create p ls s)
+@@ -289,13 +289,13 @@ def body (dc : Stream D) : Stream (Body D) :=
+       | ⟨5, (o, ls, v)⟩ => some (.law o ls v)
+       | ⟨6, (o, m, a, b, v)⟩ => some (.invoke o m a b v)
+       | ⟨7, (t, g, r, p)⟩ => some (.grant t g r p)
+-      | ⟨8, g⟩ => some (.revoke g)
++      | ⟨8, x⟩ => some (.retire x)
+       | ⟨9, cap⟩ => some (.issue cap)
+       | ⟨10, (a, o)⟩ => some (.account a o)
+       | ⟨11, (s, d, n, v, o)⟩ => some (.transfer s d n v o)
+       | ⟨12, (w, a, n, v)⟩ => some (.credit w a n v))
+     (fun
+-      | .enroll k n p v => ⟨0, (k, n, p, v)⟩
++      | .enroll k n o j v => ⟨0, (k, n, o, j, v)⟩
+       | .rotate k n => ⟨1, (k, n)⟩
+       | .install p => ⟨2, p⟩
+       | .create p ls s => ⟨3, (p, ls, s)⟩
+@@ -303,7 +303,7 @@ def body (dc : Stream D) : Stream (Body D) :=
+       | .law o ls v => ⟨5, (o, ls, v)⟩
+       | .invoke o m a b v => ⟨6, (o, m, a, b, v)⟩
+       | .grant t g r p => ⟨7, (t, g, r, p)⟩
+-      | .revoke g => ⟨8, g⟩
++      | .retire x => ⟨8, x⟩
+       | .issue cap => ⟨9, cap⟩
+       | .account a o => ⟨10, (a, o)⟩
+       | .transfer s d n v o => ⟨11, (s, d, n, v, o)⟩
+diff --git a/Codec/Proofs/Kernel.lean b/Codec/Proofs/Kernel.lean
+index 86a48e5..2ce9652 100644
+--- a/Codec/Proofs/Kernel.lean
++++ b/Codec/Proofs/Kernel.lean
+@@ -209,7 +209,7 @@ theorem acctRef_lawfulOn {PD : D → Prop} {dc : Stream D} (hd : LawfulOn PD dc)
+   · intro y h; cases y <;> exact h
+ 
+ def Body.Fits (PD : D → Prop) : Body D → Prop
+-  | .enroll k n p v => BytesFits k ∧ PD n ∧ BytesFits p ∧ PD v
++  | .enroll k n o j v => BytesFits k ∧ PD n ∧ PD o ∧ BytesFits j ∧ PD v
+   | .rotate k n => BytesFits k ∧ PD n
+   | .install p => BytesFits p
+   | .create p ls st => OptionFits PD p ∧ ListFits PD ls ∧ Slots.Fits st
+@@ -218,7 +218,7 @@ def Body.Fits (PD : D → Prop) : Body D → Prop
+   | .law o ls v => PD o ∧ ListFits PD ls ∧ OptionFits PD v
+   | .invoke o m a b v => PD o ∧ m < 2 ^ 64 ∧ BytesFits a ∧ b < 2 ^ 64 ∧ OptionFits PD v
+   | .grant t g r p => PD t ∧ PD g ∧ ListFits Right.Fits r ∧ OptionFits PD p
+-  | .revoke g => PD g
++  | .retire x => PD x
+   | .issue cap => cap < 2 ^ 64
+   | .account a o => PD a ∧ PD o
+   | .transfer s d n v o => AcctRef.Fits PD s ∧ AcctRef.Fits PD d ∧ n < 2 ^ 64 ∧ OptionFits PD v ∧
+@@ -226,7 +226,7 @@ def Body.Fits (PD : D → Prop) : Body D → Prop
+   | .credit w a n v => PD w ∧ AcctRef.Fits PD a ∧ n < 2 ^ 64 ∧ OptionFits PD v
+ 
+ abbrev BodyWireFits (PD : D → Prop) : (s : Fin 13) → BodyF D s → Prop
+-  | 0 => fun v => BytesFits v.1 ∧ PD v.2.1 ∧ BytesFits v.2.2.1 ∧ PD v.2.2.2
++  | 0 => fun v => BytesFits v.1 ∧ PD v.2.1 ∧ PD v.2.2.1 ∧ BytesFits v.2.2.2.1 ∧ PD v.2.2.2.2
+   | 1 => fun v => BytesFits v.1 ∧ PD v.2
+   | 2 => fun v => BytesFits v
+   | 3 => fun v => OptionFits PD v.1 ∧ ListFits PD v.2.1 ∧ Slots.Fits v.2.2
+@@ -245,7 +245,7 @@ abbrev BodyWireFits (PD : D → Prop) : (s : Fin 13) → BodyF D s → Prop
+ theorem bodyWire_lawfulOn {PD : D → Prop} {dc : Stream D} (hd : LawfulOn PD dc) :
+     ∀ s, LawfulOn (BodyWireFits PD s) (bodyWire dc s)
+   | 0 => product_lawfulOn (rawBytes_lawfulOn _ (by decide))
+-      (product_lawfulOn hd (product_lawfulOn (rawBytes_lawfulOn _ (by decide)) hd))
++      (product_lawfulOn hd (product_lawfulOn hd (product_lawfulOn (rawBytes_lawfulOn _ (by decide)) hd)))
+   | 1 => product_lawfulOn (rawBytes_lawfulOn _ (by decide)) hd
+   | 2 => rawBytes_lawfulOn _ (by decide)
+   | 3 => product_lawfulOn (option_lawfulOn hd) (product_lawfulOn (rawList_lawfulOn hd _ (by decide)) slots_lawfulOn)
+diff --git a/Emit/Vectors.lean b/Emit/Vectors.lean
+index 488ae46..6f9ae6d 100644
+--- a/Emit/Vectors.lean
++++ b/Emit/Vectors.lean
+@@ -160,7 +160,7 @@ def acctRef (k : Nat) : G (AcctRef Sim.D) := do
+   if k = 0 then return .well (← dig) else return .of (← dig) (← dig)
+ def body (k : Nat) : G (Body Sim.D) := do
+   match k with
+-  | 0 => return .enroll (← bytes 4) (← dig) (← bytes 4) (← dig)
++  | 0 => return .enroll (← bytes 4) (← dig) (← dig) (← bytes 4) (← dig)
+   | 1 => return .rotate (← bytes 4) (← dig)
+   | 2 => return .install (← bytes 4)
+   | 3 => return .create (← opt dig) (← list 2 dig) (← slots)
+@@ -168,7 +168,7 @@ def body (k : Nat) : G (Body Sim.D) := do
+   | 5 => return .law (← dig) (← list 2 dig) (← opt dig)
+   | 6 => return .invoke (← dig) (← nat64) (← bytes 4) (← nat64) (← opt dig)
+   | 7 => return .grant (← dig) (← dig) (← list 3 (do right (← below 6))) (← opt dig)
+-  | 8 => return .revoke (← dig)
++  | 8 => return .retire (← dig)
+   | 9 => return .issue (← nat64)
+   | 10 => return .account (← dig) (← dig)
+   | 11 => return .transfer (← acctRef (← below 2)) (← acctRef (← below 2)) (← nat64) (← opt dig) (← opt (bytes 4))
+diff --git a/Host/Sim/Run.lean b/Host/Sim/Run.lean
+index 2344263..0033ade 100644
+--- a/Host/Sim/Run.lean
++++ b/Host/Sim/Run.lean
+@@ -650,7 +650,7 @@ def forgottenPlants (failures : IO.Ref Nat) : IO Unit := do
+   let kw : World Kernel.Sim.D := World.genesis kx.env (kx.env.hash "nanodregg/host-sim/origin/v1" "lookup".toUTF8) (2 ^ 40)
+   let callUntil (v : Nat) : Receive.Call Kernel.Sim.D :=
+     { unsigned := { world := kw.origin, member := 0, key := ByteArray.empty, notBefore := 0, validUntil := v, pins := [],
+-                    maxCharge := 0, body := .revoke 0 },
++                    maxCharge := 0, body := .retire 0 },
+       signature := ByteArray.empty }
+   -- plant-lookup-forgotten (KERNEL-33): the same dead call at the World heights either side of
+   -- `journalForgets` (notBefore 0 + 2 * windowMax): `expired` just below, `uncertain forgotten` at it
+@@ -733,7 +733,7 @@ def refusalPlants (seed : Nat) (failures : IO.Ref Nat) : IO Unit := do
+   let kw : World Kernel.Sim.D := World.genesis kx.env (kx.env.hash "nanodregg/host-sim/origin/v1" "refused".toUTF8) (2 ^ 40)
+   let c : Receive.Call Kernel.Sim.D :=
+     { unsigned := { world := kw.origin, member := 7, key := ByteArray.empty, notBefore := 0, validUntil := 100, pins := [],
+-                    maxCharge := 0, body := .revoke 0 },
++                    maxCharge := 0, body := .retire 0 },
+       signature := ByteArray.empty }
+   let lookupOn (v : World Kernel.Sim.D) : String :=
+     match handle kx v ⟨0, Protocol.Op.lookup.code, kx.callBytes c⟩ with
+@@ -1579,7 +1579,7 @@ def run (args : List String) : IO UInt32 := do
+   let kw : World Kernel.Sim.D := World.genesis kx.env (kx.env.hash "nanodregg/host-sim/origin/v1" "lookup".toUTF8) (2 ^ 40)
+   let callUntil (v : Nat) : Receive.Call Kernel.Sim.D :=
+     { unsigned := { world := kw.origin, member := 0, key := ByteArray.empty, notBefore := 0, validUntil := v, pins := [],
+-                    maxCharge := 0, body := .revoke 0 },
++                    maxCharge := 0, body := .retire 0 },
+       signature := ByteArray.empty }
+   let lookupAt (v : Nat) : String :=
+     match handle kx kw ⟨0, Protocol.Op.lookup.code, kx.callBytes (callUntil v)⟩ with
+diff --git a/Kernel/Proofs/Authority.lean b/Kernel/Proofs/Authority.lean
+index 12ef88b..02c3e4f 100644
+--- a/Kernel/Proofs/Authority.lean
++++ b/Kernel/Proofs/Authority.lean
+@@ -347,12 +347,12 @@ and the Turn spends one of it: its effect appends `left - 1` to that grant's led
+ A PUBLIC ENROLMENT POOL is possible (KERNEL-26): a World grant carrying `enroll n` whose grantee is
+ the World is held by every enrolled member, so any member may sponsor through it until its count
+ is spent; it is still carved from a founder's count (`grant_carves`) and rooted (`grant_rooted`). -/
+-theorem enroll_authorized {X : Ctx D} {look : Pinned D} {c : Call D} {a : At D} {key : ByteArray}
+-    {next : D} {possession : ByteArray} {via : D} {d : Draft D}
+-    (h : enroll X look c a key next possession via = .ok d) :
++theorem enroll_authorized {X : Ctx D} {look : Pinned D} {a : At D} {key : ByteArray}
++    {next origin : D} {join : ByteArray} {via : D} {d : Draft D}
++    (h : enroll X look a key next origin join via = .ok d) :
+     (∃ p, Chain X look (worldId X) (.enroll 0) true via a.actor p) ∧
+       ∃ cell i left, readKind look via kindGrant = .ok cell ∧ enrollLeft via cell = .ok (i, left) ∧
+-        0 < left ∧ X.verify key (possessionMessage X a.actor next key) possession = true ∧
++        0 < left ∧ X.verify key (joinMessage X origin a.actor next key) join = true ∧
+         d.effects = [(via, .write [.set (enrollBase + i) (countBytes (left - 1))])] ∧ d.nullifiers = [] := by
+   unfold enroll at h
+   simp only [except_bind_ok] at h
+@@ -363,6 +363,26 @@ theorem enroll_authorized {X : Ctx D} {look : Pinned D} {c : Call D} {a : At D}
+   subst h
+   exact ⟨⟨p, walk_chain hw⟩, cell, i, left, hc, hl, hu, hv, by simp, rfl⟩
+ 
++omit [Ord D] in
++/-- **A member is its consent** (PROTOCOL-79). A derived enrolment's join verifies under the
++enrolled key over `joinMessage` of the World it names (that World is the receiving one:
++`receive_join_world`), and the one cell it bears is at `memberId`, the digest of that consent: a
++second enrolment of the same consent bears the same id, which `World.checkCreates` refuses
++`idTaken`. -/
++theorem enroll_join_bound {X : Ctx D} {look : Pinned D} {a : At D} {key : ByteArray}
++    {next origin : D} {join : ByteArray} {via : D} {d : Draft D}
++    (h : enroll X look a key next origin join via = .ok d) :
++    X.verify key (joinMessage X origin a.actor next key) join = true ∧
++      d.creates.map Prod.fst = [memberId X origin a.actor next key] := by
++  obtain ⟨_, _, _, _, _, _, _, hv, -, -⟩ := enroll_authorized h
++  refine ⟨hv, ?_⟩
++  unfold enroll at h
++  simp only [except_bind_ok] at h
++  obtain ⟨_, _, _, _, _, _, ⟨⟩, _, h⟩ := h
++  simp only [pure, Except.pure, Except.ok.injEq] at h
++  subst h
++  rfl
++
+ omit [Ord D] in
+ /-- **World rights are rooted at genesis.** A derived grant on the World, or one carrying an
+ enrolment right, has a parent: no call roots one, so every such chain ends at a root that genesis
+diff --git a/Kernel/Proofs/AuthorityOf.lean b/Kernel/Proofs/AuthorityOf.lean
+index 2eae870..2ec0d26 100644
+--- a/Kernel/Proofs/AuthorityOf.lean
++++ b/Kernel/Proofs/AuthorityOf.lean
+@@ -152,12 +152,15 @@ theorem derive_born_not_authority {X : Ctx D} {look : Pinned D} {rv : RowView D}
+   · intro sub wk actor b r hb h
+     cases b with
+     | invoke => simp [Body.isInvoke] at hb
+-    | enroll key next possession via =>
++    | enroll key next origin join via =>
+         have hd := stepped_draft h
+         simp only [enroll, except_bind_ok, pure, Except.pure, Except.ok.injEq] at hd
+         obtain ⟨_, _, _, _, _, _, ⟨⟩, _, hr⟩ := hd
+         rw [← hr]
+-        exact one _ _ (by simp [kindMember, kindAuthority])
++        intro p hp
++        simp only [List.mem_singleton] at hp
++        subst hp
++        simp [kindMember, kindAuthority]
+     | rotate key next =>
+         have hd := stepped_draft h
+         simp only [rotate, except_bind_ok, pure, Except.pure, Except.ok.injEq] at hd
+@@ -199,10 +202,10 @@ theorem derive_born_not_authority {X : Ctx D} {look : Pinned D} {rv : RowView D}
+         obtain ⟨_, _, ⟨⟩, _, _, _, hr⟩ := hd
+         rw [← hr]
+         exact one _ _ (by simp [kindGrant, kindAuthority])
+-    | revoke g =>
++    | retire x =>
+         have hd := stepped_draft h
+-        simp only [revoke, except_bind_ok, pure, Except.pure, Except.ok.injEq] at hd
+-        obtain ⟨_, _, _, _, ⟨⟩, _, hr⟩ := hd
++        simp only [retire, except_bind_ok, pure, Except.pure, Except.ok.injEq] at hd
++        obtain ⟨_, _, hr⟩ := hd
+         rw [← hr]
+         simp
+     | issue cap =>
+diff --git a/Kernel/Proofs/Carry.lean b/Kernel/Proofs/Carry.lean
+index cdcdc25..e7f5964 100644
+--- a/Kernel/Proofs/Carry.lean
++++ b/Kernel/Proofs/Carry.lean
+@@ -263,30 +263,34 @@ World's origin only in its first check (`wrongWorld`), and admission never reads
+ any new origin and chain: a call naming the new origin is derived from the OLD World's pinned
+ state (`pinned` reads only the trie), whatever the origin and chain were. -/
+ theorem receive_reorigin [DecidableEq D] {X : Ctx D} {w : World D} {c : Call D} {o ch : D}
+-    {rf : Refusals D} {st : Nat} (hc : c.unsigned.world = o) :
++    {rf : Refusals D} {st : Nat} (hc : c.unsigned.world = o)
++    (hj : c.unsigned.body.joinOrigin.all (· = o) = true) :
+     receive X { w with origin := o, chain := ch, refusals := rf, steps := st } c =
+       receiveWith X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c := by
+-  unfold receive
+-  simp only [req, decide_eq_true hc, if_true]
++  unfold receive receiveWith
++  simp only [req, decide_eq_true hc, if_true, hj]
+   rfl
+ 
+ /-- A call that names its World is derived from the World's pinned state alone. -/
+ theorem receive_named [DecidableEq D] {X : Ctx D} {w : World D} {c : Call D}
+-    (hc : c.unsigned.world = w.origin) :
++    (hc : c.unsigned.world = w.origin) (hj : c.unsigned.body.joinOrigin.all (· = w.origin) = true) :
+     receive X w c = receiveWith X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c := by
+-  unfold receive
+-  simp only [req, decide_eq_true hc, if_true]
++  unfold receive receiveWith
++  simp only [req, decide_eq_true hc, if_true, hj]
+   rfl
+ 
+ /-- **A carry changes no authority.** The carried World derives every call that names it exactly
+ as the exported World's own state does past the World check: through the same pinned view (the
+ same members, keys, grants and cells at the same ids), so the members keep their ids and their
+-rights. (On the old World the same call is `wrongWorld`: it names the new origin.) -/
++rights. (On the old World the same call is `wrongWorld`: it names the new origin.) An enrolment is the
++one call that also names the World in its body: its join must name the carried World
++(PROTOCOL-79: a carried World's join is a new join). -/
+ theorem carry_receive [DecidableEq D] {X : Ctx D} {name nonce : ByteArray} {w w' : World D}
+-    (h : carry X name nonce w.origin w.carried = .ok w') {c : Call D} (hc : c.unsigned.world = w'.origin) :
++    (h : carry X name nonce w.origin w.carried = .ok w') {c : Call D} (hc : c.unsigned.world = w'.origin)
++    (hj : c.unsigned.body.joinOrigin.all (· = w'.origin) = true) :
+     receive X w' c = receiveWith X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c := by
+   obtain ⟨_, rfl⟩ := carry_ok.mp h
+-  exact receive_reorigin (w := w) hc
++  exact receive_reorigin (w := w) hc hj
+ 
+ /-! ### The call's own world field (KERNEL-40)
+ 
+@@ -364,16 +368,19 @@ theorem rowView_world [DecidableEq D] (E : Env D) (w : World D) (u : Unsigned D)
+ World derives a call naming its new origin exactly as the exported World derives the same call
+ naming the OLD origin, with the call's two encodings fixed to the new call's own. So nothing on the
+ receive path, the pinned view and the row view included, reads the world the call names but the
+-`wrongWorld` check and the bytes. -/
++`wrongWorld` check and the bytes. Not an enrolment: its join names the World too (PROTOCOL-79), so
++the old World refuses the carried World's join `otherWorld` and the carried World the old one's. -/
+ theorem carry_receive_world [DecidableEq D] {X : Ctx D} {name nonce : ByteArray} {w w' : World D}
+-    (h : carry X name nonce w.origin w.carried = .ok w') {c : Call D} (hc : c.unsigned.world = w'.origin) :
++    (h : carry X name nonce w.origin w.carried = .ok w') {c : Call D} (hc : c.unsigned.world = w'.origin)
++    (hj : c.unsigned.body.joinOrigin = none) :
+     receive X w' c =
+       receive
+         { X with
+           callBytes := fun _ => X.callBytes c
+           unsignedBytes := fun _ => X.unsignedBytes c.unsigned }
+         w { c with unsigned := { c.unsigned with world := w.origin } } := by
+-  rw [carry_receive h hc, receiveWith_world X _ _ c w.origin, receive_named rfl, rowView_world]
++  rw [carry_receive h hc (by simp [hj]), receiveWith_world X _ _ c w.origin,
++    receive_named rfl (by simp [hj]), rowView_world]
+   rfl
+ 
+ /-! #### Tooth: a derivation that recomputes an id from the call's world
+@@ -418,7 +425,7 @@ private def wRv : RowView UInt8 := ⟨fun _ _ => [], fun _ _ => .ok []⟩
+ private def wCall : Call UInt8 :=
+   { unsigned :=
+       { world := 0, member := 9, key := ByteArray.empty, notBefore := 0, validUntil := 1, pins := [],
+-        maxCharge := 0, body := .revoke 3 }
++        maxCharge := 0, body := .retire 3 }
+     signature := ByteArray.empty }
+ 
+ private def unpinnedAt : Except (Refusal UInt8) (Turn UInt8) → Option UInt8
+diff --git a/Kernel/Proofs/InvokeTree.lean b/Kernel/Proofs/InvokeTree.lean
+index c3eb907..bc5f6bb 100644
+--- a/Kernel/Proofs/InvokeTree.lean
++++ b/Kernel/Proofs/InvokeTree.lean
+@@ -22,11 +22,11 @@ Proved here, of the same definitions:
+   of `obj` on `w'` runs on it.
+ * THE TOTALITY (KERNEL-28): `effect_at_object`: an effect of a signed call's derivation at a cell its
+   pins read as an object is the signed `write` or `law` of it, or the own write of an invoke of it the
+-  walk dispatched; every other receiver (enroll, rotate, grant, revoke, transfer, credit; install,
++  walk dispatched, or its signed `retire` (KERNEL-70); every other receiver (enroll, rotate, grant, transfer, credit; install,
+   create, issue, account have no effect) writes a cell it read as a grant, a member or an account,
+   by its own `readKind` (a cell has one kind). `object_turn_cases`: so a derived and admitted turn
+-  keeps a live object, or is its signed write or law, or dispatched an invoke of it. Tooth
+-  `effect_at_object_needs_kind`: `revoke` without its kind check retires an object.
++  keeps a live object, or is its signed write, law or retire, or dispatched an invoke of it. Tooth
++  `effect_at_object_needs_owner`: `retire` without its owner check retires another's object.
+ * THE TOTALITY AT A GRANT (KERNEL-30): `effect_at_grant`: an effect at a cell the pins read as a
+   grant is its revocation's retirement or ONE `spendAt` append to one counted ledger
+   (`LedgerSpend`); `Kernel.Proofs.LedgerNext` lifts it to the World (`grant_turn_cell`) and proves
+@@ -619,12 +619,14 @@ a credit line); births are not effects. -/
+ private theorem dispatch_other {X : Ctx D} {look : Pinned D} {rv : RowView D} {c : Call D} {sub : Sub D}
+     {wk : Walk D} {actor : D} {b : Body D} {r : Draft D × Walk D}
+     (hi : b.isInvoke = false) (hw : ∀ o e v, b ≠ .write o e v) (hl : ∀ o ls v, b ≠ .law o ls v)
++    (hr : ∀ x, b ≠ .retire x)
+     (h : dispatch X look rv c sub wk actor b = .ok r) : ∀ e ∈ r.1.effects, OtherEffect look e := by
+   cases b with
+   | invoke => simp [Body.isInvoke] at hi
+   | write o e v => exact absurd rfl (hw o e v)
+   | law o ls v => exact absurd rfl (hl o ls v)
+-  | enroll key next possession via =>
++  | retire x => exact absurd rfl (hr x)
++  | enroll key next origin join via =>
+       have hd := stepped_draft h
+       unfold enroll at hd
+       simp only [except_bind_ok] at hd
+@@ -677,17 +679,6 @@ private theorem dispatch_other {X : Ctx D} {look : Pinned D} {rv : RowView D} {c
+       intro e he
+       rw [← hd] at he
+       exact checkParent_at hcv e he
+-  | revoke g =>
+-      have hd := stepped_draft h
+-      unfold revoke at hd
+-      simp only [except_bind_ok] at hd
+-      obtain ⟨cell, hc, issuer, -, ⟨⟩, -, hd⟩ := hd
+-      simp only [pure, Except.pure, Except.ok.injEq] at hd
+-      intro e he
+-      rw [← hd] at he
+-      simp only [List.mem_singleton] at he
+-      subst he
+-      exact ⟨⟨kindGrant, cell, by decide, hc⟩, fun _ _ => .inl rfl⟩
+   | issue cap =>
+       have hd := stepped_draft h
+       unfold issue at hd
+@@ -743,12 +734,12 @@ private theorem dispatched_effects_step {X : Ctx D} {w : World D} {c : Call D} (
+         (tree X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c m) wk a b = .ok r →
+       EffectsAt X w c r.1.effects)
+     {wk : Walk D} {a : D} {b : Body D} {r : Draft D × Walk D} (hd : Dispatched X w c n wk a b)
+-    (hw : ∀ o e v, b ≠ .write o e v) (hl : ∀ o ls v, b ≠ .law o ls v)
++    (hw : ∀ o e v, b ≠ .write o e v) (hl : ∀ o ls v, b ≠ .law o ls v) (hrt : ∀ x, b ≠ .retire x)
+     (h : dispatch X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c
+         (tree X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c n) wk a b = .ok r) :
+     EffectsAt X w c r.1.effects := by
+   cases hb : b.isInvoke with
+-  | false => exact fun e he => .inl (dispatch_other hb hw hl h e he)
++  | false => exact fun e he => .inl (dispatch_other hb hw hl hrt h e he)
+   | true =>
+   cases b with
+   | invoke obj method args budget via =>
+@@ -806,25 +797,27 @@ private theorem dispatched_effects_step {X : Ctx D} {w : World D} {c : Call D} (
+ 
+ private theorem dispatched_effects {X : Ctx D} {w : World D} {c : Call D} :
+     ∀ n {wk : Walk D} {a : D} {b : Body D} {r : Draft D × Walk D}, Dispatched X w c n wk a b →
+-      (∀ o e v, b ≠ .write o e v) → (∀ o ls v, b ≠ .law o ls v) →
++      (∀ o e v, b ≠ .write o e v) → (∀ o ls v, b ≠ .law o ls v) → (∀ x, b ≠ .retire x) →
+       dispatch X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c
+         (tree X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c n) wk a b = .ok r →
+       EffectsAt X w c r.1.effects := by
+   intro n
+   induction n with
+-  | zero => exact fun hd hw hl h => dispatched_effects_step 0 (fun _ h => absurd h (by omega)) hd hw hl h
++  | zero => exact fun hd hw hl hrt h => dispatched_effects_step 0 (fun _ h => absurd h (by omega)) hd hw hl hrt h
+   | succ m ih =>
+-      exact fun hd hw hl h => dispatched_effects_step (m + 1) (fun m' hm => by
++      exact fun hd hw hl hrt h => dispatched_effects_step (m + 1) (fun m' hm => by
+         obtain rfl : m' = m := by omega
+         intro wk' a' b' r' hd' hc h'
+         exact ih hd' (fun o e v he => by subst he; simp [Body.callable] at hc)
+-          (fun o ls v he => by subst he; simp [Body.callable] at hc) h') hd hw hl h
++          (fun o ls v he => by subst he; simp [Body.callable] at hc)
++          (fun x he => by subst he; simp [Body.callable] at hc) h') hd hw hl hrt h
+ 
+-/-- **The totality: no receiver but `write`, `law` and `invoke` writes an object.** An effect of a
+-signed call's derivation on `w` at a cell that `w`'s pinned view reads as an object (`kindObject`) is
+-the signed call's own `write` or `law` of that object, or the own state write of an invoke of it
+-that the call's walk dispatched (at any depth). Every other receiver writes a cell it read as a
+-grant, a member or an account, and a cell has one kind. -/
++/-- **The totality: no receiver but `write`, `law`, `retire` and `invoke` has an effect at an
++object.** An effect of a signed call's derivation on `w` at a cell that `w`'s pinned view reads as an
++object (`kindObject`) is the signed call's own `write` or `law` of that object, its signed `retire`
++of it (KERNEL-70: the effect is the retirement), or the own state write of an invoke of it that the
++call's walk dispatched (at any depth). Every other receiver writes a cell it read as a grant, a
++member or an account, and a cell has one kind. -/
+ theorem effect_at_object {X : Ctx D} {w : World D} {c : Call D} {R : Draft D × Walk D}
+     (hR : dispatch X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c
+       (tree X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c Bounds.callDepthMax)
+@@ -833,6 +826,7 @@ theorem effect_at_object {X : Ctx D} {w : World D} {c : Call D} {R : Draft D ×
+     (hk : readKind (pinned X.env w c.unsigned.pins) e.1 kindObject = .ok cell) :
+     (∃ edits via, c.unsigned.body = .write e.1 edits via) ∨
+       (∃ laws via, c.unsigned.body = .law e.1 laws via) ∨
++      (c.unsigned.body = .retire e.1 ∧ e.2 = .retire) ∨
+       ∃ n wk a method args budget via, Dispatched X w c n wk a (.invoke e.1 method args budget via) := by
+   have hother : ¬ ReadOther (pinned X.env w c.unsigned.pins) e.1 := by
+     rintro ⟨k, cl, hne, hcl⟩
+@@ -860,13 +854,23 @@ theorem effect_at_object {X : Ctx D} {w : World D} {c : Call D} {R : Draft D ×
+       simp only [writeOf, List.mem_singleton] at he
+       subst he
+       exact .inr (.inl ⟨laws, via, rfl⟩)
++  | retire x =>
++      rw [hb] at hR
++      have hd := stepped_draft hR
++      simp only [retire, except_bind_ok, pure, Except.pure, Except.ok.injEq] at hd
++      obtain ⟨_, _, hd⟩ := hd
++      rw [← hd] at he
++      simp only [List.mem_singleton] at he
++      subst he
++      exact .inr (.inr (.inl ⟨rfl, rfl⟩))
+   | _ =>
+       have hroot := Dispatched.root (X := X) (w := w) (c := c)
+       rw [hb] at hroot hR
+-      rcases dispatched_effects _ hroot (fun _ _ _ h => by cases h) (fun _ _ _ h => by cases h) hR e he with
++      rcases dispatched_effects _ hroot (fun _ _ _ h => by cases h) (fun _ _ _ h => by cases h)
++          (fun _ h => by cases h) hR e he with
+         h | h
+       · exact absurd h.1 hother
+-      · exact .inr (.inr h.2)
++      · exact .inr (.inr (.inr h.2))
+ 
+ /-- **The totality at a grant** (KERNEL-30): an effect of a signed call's derivation on `w` at a cell
+ `w`'s pinned view reads as a grant is its revocation's retirement, or ONE append to one of its counted
+@@ -897,10 +901,20 @@ theorem effect_at_grant {X : Ctx D} {w : World D} {c : Call D} {R : Draft D × W
+       simp only [writeOf, List.mem_singleton] at he
+       subst he
+       exact (notObj cl hko).elim
++  | retire x =>
++      rw [hb] at hR
++      have hd := stepped_draft hR
++      simp only [retire, except_bind_ok, pure, Except.pure, Except.ok.injEq] at hd
++      obtain ⟨_, _, hd⟩ := hd
++      rw [← hd] at he
++      simp only [List.mem_singleton] at he
++      subst he
++      exact .inl rfl
+   | _ =>
+       have hroot := Dispatched.root (X := X) (w := w) (c := c)
+       rw [hb] at hroot hR
+-      rcases dispatched_effects _ hroot (fun _ _ _ h => by cases h) (fun _ _ _ h => by cases h) hR e he with
++      rcases dispatched_effects _ hroot (fun _ _ _ h => by cases h) (fun _ _ _ h => by cases h)
++          (fun _ h => by cases h) hR e he with
+         h | ⟨⟨cl, hko⟩, -⟩
+       · exact h.2 cell hk
+       · exact (notObj cl hko).elim
+@@ -921,9 +935,11 @@ theorem object_turn_cases {X : Ctx D} {w w' : World D} {c : Call D} {t : Turn D}
+     (hk : cell.kind = kindObject) :
+     ((∀ x ∈ t.touches, x.cell = obj → x.act = .keep) ∧ obj ∉ createdIds t ∧
+         (∀ edits via, c.unsigned.body ≠ .write obj edits via) ∧ (∀ laws via, c.unsigned.body ≠ .law obj laws via) ∧
++        c.unsigned.body ≠ .retire obj ∧
+         ∀ n wk a method args budget via, ¬ Dispatched X w c n wk a (.invoke obj method args budget via)) ∨
+       (∃ edits via, c.unsigned.body = .write obj edits via) ∨
+       (∃ laws via, c.unsigned.body = .law obj laws via) ∨
++      c.unsigned.body = .retire obj ∨
+       ∃ n wk a method args budget via, Dispatched X w c n wk a (.invoke obj method args budget via) := by
+   obtain ⟨-, hw⟩ := receive_ok_with hc
+   obtain ⟨-, d, _k, hd, hs⟩ := receiveWith_sealed hw
+@@ -945,8 +961,12 @@ theorem object_turn_cases {X : Ctx D} {w w' : World D} {c : Call D} {t : Turn D}
+       have hany : (c.unsigned.pins.any fun p => decide (p.1 = e.1)) = true :=
+         List.any_eq_true.mpr ⟨q, hq, by simpa using hqe⟩
+       simp [readKind, pinned, hany, hl, hk]
+-    exact .inr (effect_at_object hR he hrk)
+-  · refine .inl ⟨fun x hx hxc => ?_, ?_, fun edits via hb => ?_, fun laws via hb => ?_,
++    rcases effect_at_object hR he hrk with h | h | ⟨h, -⟩ | h
++    · exact .inr (.inl h)
++    · exact .inr (.inr (.inl h))
++    · exact .inr (.inr (.inr (.inl h)))
++    · exact .inr (.inr (.inr (.inr h)))
++  · refine .inl ⟨fun x hx hxc => ?_, ?_, fun edits via hb => ?_, fun laws via hb => ?_, fun hb => ?_,
+       fun n wk a method args budget via hd => ?_⟩
+     · rw [htouch] at hx
+       obtain ⟨q', -, rfl⟩ := List.mem_map.mp hx
+@@ -965,6 +985,11 @@ theorem object_turn_cases {X : Ctx D} {w w' : World D} {c : Call D} {t : Turn D}
+       have hm : ∃ a, (obj, a) ∈ R.1.effects := by rw [hef]; simp [writeOf]
+       obtain ⟨a, ham⟩ := hm
+       exact hex ⟨(obj, a), ham, rfl⟩
++    · rw [hb] at hR
++      have hd := stepped_draft hR
++      simp only [retire, except_bind_ok, pure, Except.pure, Except.ok.injEq] at hd
++      obtain ⟨_, _, hd⟩ := hd
++      exact hex ⟨(obj, .retire), by rw [← hd]; simp, rfl⟩
+     · obtain ⟨r, hr, l₁, l₂, hl₁⟩ := dispatched_ok hR hd
+       simp only [dispatch] at hr
+       obtain ⟨-, cell₀, p₀, rq₀, new₀, calls₀, rows₀, used₀, -, -, -, -, -, -, -, hdc⟩ := invoke_ok hr
+@@ -980,27 +1005,26 @@ theorem object_turn_cases {X : Ctx D} {w w' : World D} {c : Call D} {t : Turn D}
+       obtain ⟨a, ham⟩ := hm
+       exact hex ⟨(obj, a), ham, rfl⟩
+ 
+-/-! ## Tooth: the totality rests on each receiver's kind check -/
++/-! ## Tooth: a retirement rests on its owner check -/
+ 
+-/-- `revoke` with its kind check deleted: it retires whatever cell the pins hold at `g`. -/
+-private def revokeAnyKind (look : Pinned D) (g : D) : Except (Refusal D) (Draft D) :=
+-  match look g with
+-  | .ok (some _) => .ok ⟨[], [(g, .retire)], [], []⟩
+-  | _ => .error (.missingCell g)
++/-- `retire` with its checks deleted: it retires whatever cell the pins hold at `x`. -/
++private def retireAnyOwner (look : Pinned D) (x : D) : Except (Refusal D) (Draft D) :=
++  match look x with
++  | .ok (some _) => .ok ⟨[], [(x, .retire)], [], []⟩
++  | _ => .error (.missingCell x)
+ 
+ omit [Ord D] in
+-/-- **Tooth: a receiver that wrote an object cell would break the totality.** Over a view reading
+-`g` as an object, `revoke` refuses `wrongKind` (its `readKind … kindGrant`), while the same receiver
+-without that check derives the retirement of the object: an effect at a cell read as an object that
+-is no `write`, `law` or invoke of it. Every receiver `effect_at_object` admits carries such a check. -/
+-theorem effect_at_object_needs_kind (X : Ctx D) (a : At D) {look : Pinned D} {g : D} {cell : Cell}
+-    (hg : look g = .ok (some cell)) (hk : cell.kind = kindObject) :
+-    readKind look g kindObject = .ok cell ∧
+-      revoke X look a g = .error (.wrongKind g kindGrant) ∧
+-      ∃ d, revokeAnyKind look g = .ok d ∧ (g, Act.retire) ∈ d.effects := by
+-  have hne : cell.kind ≠ kindGrant := by rw [hk]; decide
+-  refine ⟨by simp [readKind, hg, hk], by simp [revoke, readKind, hg, hne, bind, Except.bind],
+-    ⟨⟨[], [(g, .retire)], [], []⟩, by simp [revokeAnyKind, hg], by simp⟩⟩
++/-- **Tooth: the owner check is what keeps a retirement the owner's** (KERNEL-70). Over a view reading
++`x` as an object whose owner slot names another than the actor, `retire` refuses `notOwner`, while the
++same receiver without its owner check derives the retirement of the object. -/
++theorem effect_at_object_needs_owner (X : Ctx D) (c : Call D) (a : At D) {look : Pinned D} {x o : D}
++    {cell : Cell} (hg : look x = .ok (some cell)) (hk : cell.kind = kindObject)
++    (ho : slotDigest X x cell slotOwner = .ok o) (hne : o ≠ a.actor) :
++    retire X look c a x = .error (.notOwner x) ∧
++      ∃ d, retireAnyOwner look x = .ok d ∧ (x, Act.retire) ∈ d.effects := by
++  have hng : cell.kind ≠ kindGrant := by rw [hk]; decide
++  refine ⟨?_, ⟨⟨[], [(x, .retire)], [], []⟩, by simp [retireAnyOwner, hg], by simp⟩⟩
++  simp [retire, retireCheck, hg, hk, hng, ho, hne, req, bind, Except.bind]
+ 
+ /-! ## Tooth: the order laws are load-bearing -/
+ 
+diff --git a/Kernel/Proofs/InvokeWitness.lean b/Kernel/Proofs/InvokeWitness.lean
+index 54916cd..542ca1e 100644
+--- a/Kernel/Proofs/InvokeWitness.lean
++++ b/Kernel/Proofs/InvokeWitness.lean
+@@ -113,8 +113,10 @@ theorem receive_of {X : Ctx D} {w : World D} {c : Call D} {obj : D} {method : Na
+   have hd : deriveWithTicks X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c =
+       .ok (d, poolOf c.unsigned.body - wk.pool) := by
+     unfold deriveWithTicks; rw [hb] at hi ⊢; simp only [dispatch, hi, Except.map]
+-  unfold receive receiveWith deriveTurn
+-  simp only [h0, hs, hk', hd, bind, Except.bind]
++  have hj : req (c.unsigned.body.joinOrigin.all (· = w.origin)) Refusal.otherWorld =
++      (Except.ok () : Except (Refusal D) Unit) := by simp [req, hb, Body.joinOrigin]
++  unfold receive deriveTurn
++  simp only [h0, hs, hj, hk', hd, bind, Except.bind]
+ 
+ end
+ 
+diff --git a/Kernel/Proofs/Journal.lean b/Kernel/Proofs/Journal.lean
+index 6ff5843..018f0ca 100644
+--- a/Kernel/Proofs/Journal.lean
++++ b/Kernel/Proofs/Journal.lean
+@@ -955,7 +955,7 @@ private def rtCall (v : Nat) : Call UInt8 :=
+       validUntil := v
+       pins := []
+       maxCharge := 0
+-      body := .revoke 0 }
++      body := .retire 0 }
+   { unsigned := u, signature := ByteArray.empty }
+ 
+ private def rtCtx : Ctx UInt8 where
+diff --git a/Kernel/Proofs/Ledger.lean b/Kernel/Proofs/Ledger.lean
+index 10ff744..c35ee38 100644
+--- a/Kernel/Proofs/Ledger.lean
++++ b/Kernel/Proofs/Ledger.lean
+@@ -626,15 +626,14 @@ theorem derive_value_born {X : Ctx D} {look : Pinned D} {rv : RowView D} {c : Ca
+       rw [hp] at hv
+       obtain ⟨_, hbal, hf⟩ := accountCell_value hv
+       exact ⟨hbal, .inl (by rw [hf])⟩
+-  | enroll key next possession via =>
++  | enroll key next origin join via =>
+       have hd := stepped_draft hr
+       simp only [enroll, except_bind_ok, pure, Except.pure, Except.ok.injEq] at hd
+       obtain ⟨_, _, _, _, _, _, ⟨⟩, _, hd⟩ := hd
+       rw [← hd]
+       intro p hp v hv
+-      have := mem_bornAt_cell hp
+-      simp only [List.mem_singleton] at this
+-      rw [this, ofCell_not_value (by simp)] at hv; cases hv
++      simp only [List.mem_singleton] at hp
++      rw [hp, ofCell_not_value (by simp)] at hv; cases hv
+   | install pkg =>
+       have hd := stepped_draft hr
+       simp only [install, except_bind_ok, pure, Except.pure, Except.ok.injEq] at hd
+@@ -682,10 +681,10 @@ theorem derive_value_born {X : Ctx D} {look : Pinned D} {rv : RowView D} {c : Ca
+       simp only [law, except_bind_ok, pure, Except.pure, Except.ok.injEq] at hd
+       obtain ⟨_, _, _, _, ⟨⟩, _, _, _, ⟨⟩, _, _, _, ⟨⟩, _, ⟨⟩, _, hd⟩ := hd
+       rw [← hd]; simp
+-  | revoke g =>
++  | retire x =>
+       have hd := stepped_draft hr
+-      simp only [revoke, except_bind_ok, pure, Except.pure, Except.ok.injEq] at hd
+-      obtain ⟨_, _, _, _, ⟨⟩, _, hd⟩ := hd
++      simp only [retire, except_bind_ok, pure, Except.pure, Except.ok.injEq] at hd
++      obtain ⟨_, _, hd⟩ := hd
+       rw [← hd]; simp
+   | transfer src dst amount via once =>
+       have hd := stepped_draft hr
+diff --git a/Kernel/Proofs/LedgerNext.lean b/Kernel/Proofs/LedgerNext.lean
+index bcc346e..672c586 100644
+--- a/Kernel/Proofs/LedgerNext.lean
++++ b/Kernel/Proofs/LedgerNext.lean
+@@ -271,12 +271,15 @@ theorem derive_born_grant {X : Ctx D} {look : Pinned D} {rv : RowView D} {c : Ca
+   · intro sub wk actor b r hb h
+     cases b with
+     | invoke => simp [Body.isInvoke] at hb
+-    | enroll key next possession via =>
++    | enroll key next origin join via =>
+         have hd := stepped_draft h
+         simp only [enroll, except_bind_ok, pure, Except.pure, Except.ok.injEq] at hd
+         obtain ⟨_, _, _, _, _, _, ⟨⟩, _, hr⟩ := hd
+         rw [← hr]
+-        exact notGrant _ _ (by simp [kindMember, kindGrant])
++        intro p hp hpk
++        simp only [List.mem_singleton] at hp
++        subst hp
++        simp [kindMember, kindGrant] at hpk
+     | rotate key next =>
+         have hd := stepped_draft h
+         simp only [rotate, except_bind_ok, pure, Except.pure, Except.ok.injEq] at hd
+@@ -329,10 +332,10 @@ theorem derive_born_grant {X : Ctx D} {look : Pinned D} {rv : RowView D} {c : Ca
+         · simp [grantIssuer]
+         · cases parent <;> simp at hq
+           subst hq; simp [grantParent]
+-    | revoke g =>
++    | retire x =>
+         have hd := stepped_draft h
+-        simp only [revoke, except_bind_ok, pure, Except.pure, Except.ok.injEq] at hd
+-        obtain ⟨_, _, _, _, ⟨⟩, _, hr⟩ := hd
++        simp only [retire, except_bind_ok, pure, Except.pure, Except.ok.injEq] at hd
++        obtain ⟨_, _, hr⟩ := hd
+         rw [← hr]
+         simp
+     | issue cap =>
+diff --git a/Kernel/Proofs/ObjectHead.lean b/Kernel/Proofs/ObjectHead.lean
+index f52ee89..1a8d474 100644
+--- a/Kernel/Proofs/ObjectHead.lean
++++ b/Kernel/Proofs/ObjectHead.lean
+@@ -30,6 +30,7 @@ born inside a log is live at the World after its creating turn, and the theorem
+ import Kernel.Proofs.InvokeTree
+ import Kernel.Proofs.Rederive
+ import Kernel.Proofs.WriteNext
++import Kernel.Proofs.Versions
+ 
+ namespace Nanodregg.Kernel.Receive
+ 
+@@ -134,17 +135,19 @@ private theorem admit_writeOf_slots {E : Env D} {w w' : World D} {t : Turn D} {o
+   · obtain ⟨hl', -⟩ := admit_live_write ha hl hex (fun x hx hxc => by rw [hall x hx hxc, if_neg he])
+     exact ⟨_, hl', rfl, fun k hk => get_applyOps_ne ops cell.slots hk⟩
+ 
+-/-- **One derived turn keeps an object's head.** A signed call derived from `w` and admitted to `w'`,
+-and an object live in `w`: the object is live in `w'`, an object, its package and owner slots (below
+-`lawBase`) read what they read, and when it has a package every slot below `stateBase` (its laws
+-too) does. -/
++/-- **One derived turn keeps an object's head, or retires it.** A signed call derived from `w` and
++admitted to `w'`, and an object live in `w`: the object is live in `w'`, an object, its package and
++owner slots (below `lawBase`) read what they read, and when it has a package every slot below
++`stateBase` (its laws too) does; or the turn was its owner's signed `retire` and its entry in `w'` is a
++tombstone (KERNEL-70). -/
+ theorem turn_object_head [Std.TransOrd D] [Std.LawfulEqOrd D] {X : Ctx D} {w w' : World D} {c : Call D}
+     {t : Turn D} {obj : D} {cell : Cell}
+     (hc : receive X w c = .ok t) (ha : World.admit X.env w t = .ok w') (hl : w.live X.env obj = some cell)
+     (hk : cell.kind = kindObject) :
+-    ∃ cell', w'.live X.env obj = some cell' ∧ cell'.kind = kindObject ∧
++    (∃ cell', w'.live X.env obj = some cell' ∧ cell'.kind = kindObject ∧
+       (∀ k, k < lawBase → cell'.slots.get k = cell.slots.get k) ∧
+-      (cell.slots.get slotPackage ≠ none → ∀ k, k < stateBase → cell'.slots.get k = cell.slots.get k) := by
++      (cell.slots.get slotPackage ≠ none → ∀ k, k < stateBase → cell'.slots.get k = cell.slots.get k)) ∨
++      w'.entry X.env obj = some .tomb := by
+   obtain ⟨-, hw⟩ := receive_ok_with hc
+   obtain ⟨-, d, _k, hd, hs⟩ := receiveWith_sealed hw
+   replace hd := derive_of_withTicks hd
+@@ -165,12 +168,27 @@ theorem turn_object_head [Std.TransOrd D] [Std.LawfulEqOrd D] {X : Ctx D} {w w'
+       have hany : (c.unsigned.pins.any fun p => decide (p.1 = e.1)) = true :=
+         List.any_eq_true.mpr ⟨q, hq, by simpa using hqe⟩
+       simp [readKind, pinned, hany, hl, hk]
++    by_cases hret : e.2 = .retire
++    · -- the owner's signed retire: the touch at the object retires it, and admission tombs it
++      right
++      have hnd : (R.1.effects.map Prod.fst).Nodup := firstDup_none (sealTurn_firstDup hs)
++      obtain ⟨q, hq, hqe⟩ := hpins e he
++      have hx : ∃ x ∈ t.touches, x.cell = e.1 ∧ x.act = .retire := by
++        rw [htouch]
++        refine ⟨_, List.mem_map.mpr ⟨q, hq, rfl⟩, hqe, ?_⟩
++        simp only
++        rw [hqe, ← hret]
++        exact actFor_of_nodup hnd he
++      obtain ⟨x, hx, hxc, hxa⟩ := hx
++      rw [← hxc]
++      exact admit_retire_tomb ha hx hxa
++    left
+     -- the act the turn's derivation leaves at the object, and the keys it can reach
+     obtain ⟨ops, hmem, hlaw, hprog⟩ : ∃ ops : List Op,
+         (e.1, if ops.isEmpty then Act.keep else .write ops) ∈ R.1.effects ∧ (∀ o ∈ ops, lawBase ≤ o.key) ∧
+           (cell.slots.get slotPackage ≠ none → ∀ o ∈ ops, stateBase ≤ o.key) := by
+       have hsl : lawBase ≤ stateBase := by simp [lawBase, stateBase]
+-      rcases effect_at_object hR he hrk with ⟨edits, via, hb⟩ | ⟨laws', via, hb⟩ |
++      rcases effect_at_object hR he hrk with ⟨edits, via, hb⟩ | ⟨laws', via, hb⟩ | ⟨-, hr⟩ |
+           ⟨n, wk, a, method, args, budget, via, hd⟩
+       · rw [hb] at hR
+         obtain ⟨cell₀, -, -, hko, -, -, -, -, hdeq⟩ := write_judged (stepped_draft hR)
+@@ -186,6 +204,7 @@ theorem turn_object_head [Std.TransOrd D] [Std.LawfulEqOrd D] {X : Ctx D} {w w'
+         refine ⟨diffOps (lawSlotsOf cell) (lawSlots X laws'), by rw [hef]; simp [writeOf],
+           diffOps_lower (fun p hp => lawSlotsOf_keys hp) (fun p hp => lawSlots_keys hp),
+           fun hne => absurd (packageOf_none hp) hne⟩
++      · exact absurd hr hret
+       · obtain ⟨r', hr', l₁, l₂, hl₁⟩ := dispatched_ok hR hd
+         simp only [dispatch] at hr'
+         obtain ⟨-, cell₀, p, rq, s, calls, rows, used, hir, -, -, -, -, hst, -, hdc⟩ := invoke_ok hr'
+@@ -227,16 +246,17 @@ theorem turn_object_head [Std.TransOrd D] [Std.LawfulEqOrd D] {X : Ctx D} {w w'
+       exact actFor_none (fun e he he' => hex ⟨e, he, he'⟩)
+     obtain ⟨posts, hk', -⟩ := admit_ok ha
+     have hframe := admit_frame ha hkeep (live_not_created hk' hl)
+-    refine ⟨cell, ?_, hk, fun _ _ => rfl, fun _ _ _ => rfl⟩
++    refine .inl ⟨cell, ?_, hk, fun _ _ => rfl, fun _ _ _ => rfl⟩
+     unfold World.live; rw [hframe]; exact hl
+ 
+ /-- **`submit` keeps an object's head**: `turn_object_head` of the Host's decision. -/
+ theorem submit_object_head [Std.TransOrd D] [Std.LawfulEqOrd D] {X : Ctx D} {w w' : World D} {c : Call D}
+     {t : Turn D} {obj : D} {cell : Cell}
+     (h : submit X w c = .ok (t, w')) (hl : w.live X.env obj = some cell) (hk : cell.kind = kindObject) :
+-    ∃ cell', w'.live X.env obj = some cell' ∧ cell'.kind = kindObject ∧
++    (∃ cell', w'.live X.env obj = some cell' ∧ cell'.kind = kindObject ∧
+       (∀ k, k < lawBase → cell'.slots.get k = cell.slots.get k) ∧
+-      (cell.slots.get slotPackage ≠ none → ∀ k, k < stateBase → cell'.slots.get k = cell.slots.get k) :=
++      (cell.slots.get slotPackage ≠ none → ∀ k, k < stateBase → cell'.slots.get k = cell.slots.get k)) ∨
++      w'.entry X.env obj = some .tomb :=
+   have hs := submit_ok h
+   turn_object_head hs.2.1 hs.2.2 hl hk
+ 
+@@ -248,37 +268,44 @@ theorem step_object_head [Std.TransOrd D] [Std.LawfulEqOrd D] {X : Ctx D} {w w'
+     {s : Step D} {obj : D} {cell : Cell}
+     (hs : World.step X.env w s = .ok w') (hh : Honest X w [s]) (hl : w.live X.env obj = some cell)
+     (hk : cell.kind = kindObject) :
+-    ∃ cell', w'.live X.env obj = some cell' ∧ cell'.kind = kindObject ∧
++    (∃ cell', w'.live X.env obj = some cell' ∧ cell'.kind = kindObject ∧
+       (∀ k, k < lawBase → cell'.slots.get k = cell.slots.get k) ∧
+-      (cell.slots.get slotPackage ≠ none → ∀ k, k < stateBase → cell'.slots.get k = cell.slots.get k) := by
++      (cell.slots.get slotPackage ≠ none → ∀ k, k < stateBase → cell'.slots.get k = cell.slots.get k)) ∨
++      w'.entry X.env obj = some .tomb := by
+   cases s with
+   | refusal r =>
+       have hrf : World.refuse X.env w r = .ok w' := hs
+-      exact ⟨cell, (refuse_live hrf obj).trans hl, hk, fun _ _ => rfl, fun _ _ _ => rfl⟩
++      exact .inl ⟨cell, (refuse_live hrf obj).trans hl, hk, fun _ _ => rfl, fun _ _ _ => rfl⟩
+   | turn t =>
+       obtain ⟨c, -, hc, -⟩ := hh
+       exact turn_object_head hc hs hl hk
+ 
+-/-- **THE FOLD: an object's head is fixed along every honest folded log.** For any log the follower
+-takes from `w` to `w'` (every Turn what `receive` derives from its own event, every refusal
+-re-judged: `Honest`), an object live in `w` is live in `w'`, an object, with the package and owner
+-slots it had in `w`; and an object that had a package in `w` has, in `w'`, every slot below
+-`stateBase` (package, owner, laws) it had. -/
++/-- **THE FOLD: an object's head is fixed along every honest folded log while it lives.** For any log
++the follower takes from `w` to `w'` (every Turn what `receive` derives from its own event, every
++refusal re-judged: `Honest`), an object live in `w` is live in `w'`, an object, with the package and
++owner slots it had in `w`, and an object that had a package in `w` has, in `w'`, every slot below
++`stateBase` (package, owner, laws) it had; or its owner retired it along the log and its entry in
++`w'` is a tombstone (KERNEL-70: a tombstone stays one, `fold_tomb_stays`). -/
+ theorem honest_object_head [Std.TransOrd D] [Std.LawfulEqOrd D] {X : Ctx D} {obj : D} :
+     ∀ {w w' : World D} {l : List (Step D)}, World.fold X.env w l = .ok w' → Honest X w l →
+       ∀ {cell : Cell}, w.live X.env obj = some cell → cell.kind = kindObject →
+-        ∃ cell', w'.live X.env obj = some cell' ∧ cell'.kind = kindObject ∧
++        (∃ cell', w'.live X.env obj = some cell' ∧ cell'.kind = kindObject ∧
+           (∀ k, k < lawBase → cell'.slots.get k = cell.slots.get k) ∧
+-          (cell.slots.get slotPackage ≠ none → ∀ k, k < stateBase → cell'.slots.get k = cell.slots.get k)
++          (cell.slots.get slotPackage ≠ none → ∀ k, k < stateBase → cell'.slots.get k = cell.slots.get k)) ∨
++          w'.entry X.env obj = some .tomb
+   | w, w', [], hf, _, cell, hl, hk => by
+       simp only [World.fold, Except.ok.injEq] at hf
+       subst hf
+-      exact ⟨cell, hl, hk, fun _ _ => rfl, fun _ _ _ => rfl⟩
++      exact .inl ⟨cell, hl, hk, fun _ _ => rfl, fun _ _ _ => rfl⟩
+   | w, w', s :: rest, hf, hh, cell, hl, hk => by
+       obtain ⟨w₁, hs, h1, hfr, hhr⟩ := fold_honest_cons hf hh
+-      obtain ⟨cell₁, hl₁, hk₁, hlo₁, hst₁⟩ := step_object_head hs h1 hl hk
+-      obtain ⟨cell₂, hl₂, hk₂, hlo₂, hst₂⟩ := honest_object_head hfr hhr hl₁ hk₁
+-      refine ⟨cell₂, hl₂, hk₂, fun k hlt => (hlo₂ k hlt).trans (hlo₁ k hlt), fun hne k hlt => ?_⟩
++      rcases step_object_head hs h1 hl hk with ⟨cell₁, hl₁, hk₁, hlo₁, hst₁⟩ | ht
++      swap
++      · exact .inr (fold_tomb_stays hfr ht)
++      rcases honest_object_head hfr hhr hl₁ hk₁ with ⟨cell₂, hl₂, hk₂, hlo₂, hst₂⟩ | ht
++      swap
++      · exact .inr ht
++      refine .inl ⟨cell₂, hl₂, hk₂, fun k hlt => (hlo₂ k hlt).trans (hlo₁ k hlt), fun hne k hlt => ?_⟩
+       have hne₁ : cell₁.slots.get slotPackage ≠ none := by
+         rw [hlo₁ slotPackage (by simp [slotPackage, lawBase])]; exact hne
+       exact (hst₂ hne₁ k hlt).trans (hst₁ hne k hlt)
+@@ -286,17 +313,20 @@ theorem honest_object_head [Std.TransOrd D] [Std.LawfulEqOrd D] {X : Ctx D} {obj
+ /-- **A live object's package is fixed under the follower's fold** (HOSTING-42's trigger (ii)): at
+ every World an honest log folds to from `w` (every log the follower takes), an object live in `w` is
+ live, with the same `slotPackage` bytes and so the same `packageOf` (the same package id, or the same
+-data object, or the same malformed-slot refusal). Over a log that is not `Honest` the fact is not
+-claimed. -/
++data object, or the same malformed-slot refusal), or retired: a tombstone (KERNEL-70). Over a log
++that is not `Honest` the fact is not claimed. -/
+ theorem fold_package_fixed [Std.TransOrd D] [Std.LawfulEqOrd D] {X : Ctx D} {obj : D} {w w' : World D}
+     {l : List (Step D)} {cell : Cell}
+     (h : World.fold X.env w l = .ok w') (hh : Honest X w l) (hl : w.live X.env obj = some cell)
+     (hk : cell.kind = kindObject) :
+-    ∃ cell', w'.live X.env obj = some cell' ∧ cell'.kind = kindObject ∧
+-      cell'.slots.get slotPackage = cell.slots.get slotPackage ∧ packageOf X obj cell' = packageOf X obj cell := by
+-  obtain ⟨cell', hl', hk', hlo, -⟩ := honest_object_head h hh hl hk
++    (∃ cell', w'.live X.env obj = some cell' ∧ cell'.kind = kindObject ∧
++      cell'.slots.get slotPackage = cell.slots.get slotPackage ∧ packageOf X obj cell' = packageOf X obj cell) ∨
++      w'.entry X.env obj = some .tomb := by
++  rcases honest_object_head h hh hl hk with ⟨cell', hl', hk', hlo, -⟩ | ht
++  swap
++  · exact .inr ht
+   have hp := hlo slotPackage (by simp [slotPackage, lawBase])
+-  refine ⟨cell', hl', hk', hp, ?_⟩
++  refine .inl ⟨cell', hl', hk', hp, ?_⟩
+   unfold packageOf
+   rw [hp]
+ 
+diff --git a/Kernel/Proofs/Receive.lean b/Kernel/Proofs/Receive.lean
+index 0ba6686..6f797af 100644
+--- a/Kernel/Proofs/Receive.lean
++++ b/Kernel/Proofs/Receive.lean
+@@ -28,9 +28,23 @@ theorem receive_ok_with {X : Ctx D} {w : World D} {c : Call D} {t : Turn D}
+       receiveWith X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c = .ok t := by
+   unfold receive at h
+   simp only [except_bind_ok] at h
+-  obtain ⟨⟨⟩, hw, h⟩ := h
++  obtain ⟨⟨⟩, hw, ⟨⟩, hs, ⟨⟩, -, ⟨⟩, hk, h⟩ := h
+   rw [req_ok, decide_eq_true_eq] at hw
+-  exact ⟨hw, h⟩
++  refine ⟨hw, ?_⟩
++  unfold receiveWith
++  rw [hs, hk]
++  exact h
++
++/-- **The join is bound to the World** (PROTOCOL-79). A call `receive` admits is an enrolment only
++if its join names this World: a consent to join another World, a carried World's old one among
++them, is `otherWorld`. -/
++theorem receive_join_world {X : Ctx D} {w : World D} {c : Call D} {t : Turn D}
++    (h : receive X w c = .ok t) : c.unsigned.body.joinOrigin.all (· = w.origin) = true := by
++  unfold receive at h
++  simp only [except_bind_ok] at h
++  obtain ⟨⟨⟩, -, ⟨⟩, -, ⟨⟩, hj, -⟩ := h
++  rw [req_ok] at hj
++  exact hj
+ 
+ /-- **Consent determinism.** A derivation depends only on the World's identity, the cells the
+ caller pinned and the rows it observed: two Worlds that agree there derive the same Turn (or the
+@@ -202,7 +216,7 @@ there is the one `deriveTurn` would give. -/
+ theorem receive_signed (X : Ctx D) (w : World D) (c : Call D) :
+     receive X w c = (do signedBy X w c false
+                         deriveTurn X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c) := by
+-  unfold receive receiveWith signedBy checkSignatureBy
++  unfold receive signedBy checkSignatureBy
+   simp only [Bool.false_eq_true, if_false, bind_assoc, keyRule_deriveTurn]
+ 
+ /-- A submission commits exactly `World.admit` of exactly what `receive` derived, for a call not
+diff --git a/Kernel/Proofs/Rederive.lean b/Kernel/Proofs/Rederive.lean
+index 4d64b48..d577ef8 100644
+--- a/Kernel/Proofs/Rederive.lean
++++ b/Kernel/Proofs/Rederive.lean
+@@ -53,7 +53,7 @@ theorem receive_checkSignature {X : Ctx D} {w : World D} {c : Call D}
+     obtain rfl := checkSignature_error hs
+     exfalso
+     by_cases hwo : c.unsigned.world = w.origin
+-    · exact hb (by simp [receive, receiveWith, req, hwo, hs, bind, Except.bind])
++    · exact hb (by simp [receive, req, hwo, hs, bind, Except.bind])
+     · exact hw (by simp [receive, req, hwo, bind, Except.bind])
+ 
+ /-- **The carried bit is the same verify**: a verdict `submit` reached with `verified` set was
+diff --git a/Kernel/Proofs/Rooted.lean b/Kernel/Proofs/Rooted.lean
+index 0d9a03e..5cf322a 100644
+--- a/Kernel/Proofs/Rooted.lean
++++ b/Kernel/Proofs/Rooted.lean
+@@ -366,12 +366,15 @@ theorem derive_born {X : Ctx D} {look : Pinned D} {rv : RowView D} {c : Call D}
+   · intro sub wk actor b r hb h
+     cases b with
+     | invoke => simp [Body.isInvoke] at hb
+-    | enroll key next possession via =>
++    | enroll key next origin join via =>
+         have hd := stepped_draft h
+         simp only [enroll, except_bind_ok, pure, Except.pure, Except.ok.injEq] at hd
+         obtain ⟨_, _, _, _, _, _, ⟨⟩, _, hr⟩ := hd
+         rw [← hr]
+-        exact notGrant _ _ (by simp [kindMember, kindGrant])
++        intro p hp hpk
++        simp only [List.mem_singleton] at hp
++        subst hp
++        simp [kindMember, kindGrant] at hpk
+     | rotate key next =>
+         have hd := stepped_draft h
+         simp only [rotate, except_bind_ok, pure, Except.pure, Except.ok.injEq] at hd
+@@ -423,10 +426,10 @@ theorem derive_born {X : Ctx D} {look : Pinned D} {rv : RowView D} {c : Call D}
+         rw [ht] at hw
+         have := hE.bytes_eq (Option.some.inj hw)
+         rw [hp]; exact hroot (.inl this)
+-    | revoke g =>
++    | retire x =>
+         have hd := stepped_draft h
+-        simp only [revoke, except_bind_ok, pure, Except.pure, Except.ok.injEq] at hd
+-        obtain ⟨_, _, _, _, ⟨⟩, _, hr⟩ := hd
++        simp only [retire, except_bind_ok, pure, Except.pure, Except.ok.injEq] at hd
++        obtain ⟨_, _, hr⟩ := hd
+         rw [← hr]
+         simp
+     | issue cap =>
+diff --git a/Kernel/Proofs/RootedDeployed.lean b/Kernel/Proofs/RootedDeployed.lean
+index 6469eee..7b2ab2d 100644
+--- a/Kernel/Proofs/RootedDeployed.lean
++++ b/Kernel/Proofs/RootedDeployed.lean
+@@ -69,9 +69,9 @@ theorem deployed_enroll_founder (program : Program Digest) (name nonce : ByteArr
+     (founders : List (ByteArray × Digest)) (auth : Authority) {w : World Digest} {l : List (Step Digest)}
+     (hf : World.fold (ctx program).env (genesisWorld (ctx program) name nonce allowance founders auth) l = .ok w)
+     (hh : Honest (ctx program) (genesisWorld (ctx program) name nonce allowance founders auth) l)
+-    {c : Call Digest} {key : ByteArray} {next : Digest} {possession : ByteArray} {via : Digest}
++    {c : Call Digest} {key : ByteArray} {next origin : Digest} {join : ByteArray} {via : Digest}
+     {base : Nat} {d : Draft Digest}
+-    (h : enroll (ctx program) (pinned (ctx program).env w c.unsigned.pins) c ⟨c.unsigned.member, base⟩ key next possession via
++    (h : enroll (ctx program) (pinned (ctx program).env w c.unsigned.pins) ⟨c.unsigned.member, base⟩ key next origin join via
+       = .ok d) :
+     ∃ p r cell, GenesisRoot (ctx program) (originOf (ctx program) name nonce allowance founders auth) r ∧ w.live (ctx program).env r = some cell ∧
+       slotDigest (ctx program) r cell grantIssuer = .ok p ∧
+diff --git a/Kernel/Proofs/Versions.lean b/Kernel/Proofs/Versions.lean
+index 63774c4..307582a 100644
+--- a/Kernel/Proofs/Versions.lean
++++ b/Kernel/Proofs/Versions.lean
+@@ -592,7 +592,7 @@ private theorem touchCheck_retire {E : Env D} {w : World D} {x : Touch D} {r : O
+   · cases h
+ 
+ /-- **Under a lawful `Ord`, a turn that retires a cell leaves its tombstone.** -/
+-private theorem admit_retire_tomb [Std.TransOrd D] [Std.LawfulEqOrd D] {E : Env D} {w w' : World D}
++theorem admit_retire_tomb [Std.TransOrd D] [Std.LawfulEqOrd D] {E : Env D} {w w' : World D}
+     {t : Turn D} (h : World.admit E w t = .ok w') {x : Touch D} (hx : x ∈ t.touches)
+     (hret : x.act = .retire) : w'.entry E x.cell = some .tomb := by
+   obtain ⟨posts, hk, rfl⟩ := admit_ok h
+@@ -725,6 +725,13 @@ private theorem rowPre_ps_ne {a b : Option RowLeaf × Nat} (ha : SFit a) (hb : S
+     simp only [rowPre, Prod.mk.injEq] at h
+     exact hl (rowLeafBytes_row_inj h1' h1 h2' h2 h3' h3 h.2).symm
+ 
++/-- **A tombstone stays one along the fold** (KERNEL-70: a retired object is never reborn). -/
++theorem fold_tomb_stays {E : Env D} {w w' : World D} {l : List (Step D)}
++    (h : World.fold E w l = .ok w') {c : D} (h0 : w.entry E c = some .tomb) : w'.entry E c = some .tomb := by
++  rcases fold_entryStep c h with he | hadv
++  · rw [← he]; exact h0
++  · rw [h0] at hadv; exact absurd hadv eAdv_tomb
++
+ /-- A tombstone at the end of a stretch of the fold was a tombstone all along from where it first
+ appears: if the end is not one, no World before it was. -/
+ private theorem not_tomb_before {E : Env D} {w w' : World D} {l : List (Step D)}
+diff --git a/Kernel/Receive/Call.lean b/Kernel/Receive/Call.lean
+index ccaa73e..5654e4e 100644
+--- a/Kernel/Receive/Call.lean
++++ b/Kernel/Receive/Call.lean
+@@ -54,9 +54,10 @@ inductive AcctRef (D : Type)
+ /-- What a call asks for, one constructor per operation kind. -/
+ inductive Body (D : Type)
+   /-- the signer sponsors a new member with `key`, precommitting the digest of its next key;
+-  `possession` is the new key's signature over the enrolment; `via` is the signer's World grant
+-  carrying `Right.enroll`, whose count the enrolment spends -/
+-  | enroll (key : ByteArray) (next : D) (possession : ByteArray) (via : D)
++  `join` is the new key's consent to join World `origin` through this sponsor (its signature over
++  `joinMessage`, PROTOCOL-79: the consent names the World, so it joins one World once); `via` is
++  the signer's World grant carrying `Right.enroll`, whose count the enrolment spends -/
++  | enroll (key : ByteArray) (next : D) (origin : D) (join : ByteArray) (via : D)
+   /-- the signer's member moves to `key`, which must be the precommitted one, and precommits
+   `next`; the call is signed by `key` -/
+   | rotate (key : ByteArray) (next : D)
+@@ -75,8 +76,12 @@ inductive Body (D : Type)
+   that grant's principal, attenuated). A grant on the World (`worldId`) is how a member may
+   follow (`observe`) and enrol (`enroll n`); it always has a parent -/
+   | grant (target : D) (grantee : D) (rights : List Right) (parent : Option D)
+-  /-- retire a grant the signer issued -/
+-  | revoke (grant : D)
++  /-- retire `cell` (KERNEL-70): a grant by its issuer (a revocation: every chain through it dies
++  with it), a data or programmed object by its owner (every law in force judging the occasion
++  `retire`, and its relations cleared first: `World.admit`'s `rowsRemain`), an account by its owner
++  once it holds nothing (balance and floor 0). Its storage comes back to the World's allowance
++  (`World.credit`, KERNEL-19); its id stays a tombstone, so nothing is born there again (`idTaken`) -/
++  | retire (cell : D)
+   /-- bear a new denomination: its WELL, a value account owned by the signer whose id is the
+   denomination and whose floor is `cap`, the most that can ever be outstanding of it (LEDGER-3) -/
+   | issue (cap : Nat)
+@@ -128,8 +133,11 @@ inductive Refusal (D : Type)
+   | unknownKey (member : D)
+   /-- a rotation to a key whose digest is not the precommitted one -/
+   | notPrecommitted (member : D)
+-  /-- the enrolled key did not sign its own enrolment -/
+-  | badPossession
++  /-- the enrolled key's join does not verify: it did not consent to this join (PROTOCOL-79) -/
++  | badJoin
++  /-- the enrolled key consented to join ANOTHER World (its join names another origin than the
++  call's, PROTOCOL-79): a consent is per World, so one carried from World A joins nothing in B -/
++  | otherWorld
+   /-- the derivation needed a cell the caller did not pin -/
+   | unpinned (cell : D)
+   | missingCell (cell : D)
+@@ -170,6 +178,12 @@ inductive Refusal (D : Type)
+   or `credit` on it (KERNEL-60: so no grant carries two ledgers, and no carve can skip one) -/
+   | rightTarget (target : D)
+   | notIssuer (grant : D)
++  /-- a retirement of an object or an account by another than its owner (KERNEL-70) -/
++  | notOwner (cell : D)
++  /-- a retirement of an account that still holds value: a nonzero balance or floor (KERNEL-70) -/
++  | valueRemains (cell : D)
++  /-- a retirement of a cell no act retires: a member, a package or the World's authority (KERNEL-70) -/
++  | notRetirable (cell : D)
+   | grantTooDeep
+   | overPrice (charge : Nat)
+   /-- a logged step is not what its own event derives on the World before it: the event does not
+@@ -229,7 +243,8 @@ def Refusal.name {D : Type} : Refusal D → String
+   | .badSignature => "badSignature"
+   | .unknownKey _ => "unknownKey"
+   | .notPrecommitted _ => "notPrecommitted"
+-  | .badPossession => "badPossession"
++  | .badJoin => "badJoin"
++  | .otherWorld => "otherWorld"
+   | .unpinned _ => "unpinned"
+   | .missingCell _ => "missingCell"
+   | .wrongKind _ _ => "wrongKind"
+@@ -250,6 +265,9 @@ def Refusal.name {D : Type} : Refusal D → String
+   | .creditSpent _ => "creditSpent"
+   | .rightTarget _ => "rightTarget"
+   | .notIssuer _ => "notIssuer"
++  | .notOwner _ => "notOwner"
++  | .valueRemains _ => "valueRemains"
++  | .notRetirable _ => "notRetirable"
+   | .grantTooDeep => "grantTooDeep"
+   | .overPrice _ => "overPrice"
+   | .eventMismatch => "eventMismatch"
+@@ -311,6 +329,9 @@ inductive Occasion (D : Type)
+   | adopt (laws : List D)
+   /-- `invoke` of method `method` -/
+   | invoke (method : Nat)
++  /-- `retire` of the object (KERNEL-70): the laws in force judge its end over its last state (`old =
++  new`); a law that refuses it makes the object permanent -/
++  | retire
+   deriving DecidableEq
+ 
+ /-- Who a call acts for, as member ids: `agent` signed; `principal` is whose authority it
+@@ -424,7 +445,11 @@ def retryPres {D : Type} (t : Turn D) (l : List (Step D)) : List (String × Byte
+ 
+ def domWorld : String := "nanodregg/kernel/world/v1"
+ def domNextKey : String := "nanodregg/kernel/next-key/v1"
+-def tagPossession : ByteArray := "nanodregg/kernel/possession/v1".toUTF8
++/-- The domain a join consent begins with (PROTOCOL-79; replaces the World-free
++`nanodregg/kernel/possession/v1`, which named the sponsor and not the World). -/
++def domJoin : ByteArray := "nanodregg/kernel/join/v1".toUTF8
++/-- The domain of a member's id: the digest of the join it consented to (PROTOCOL-79). -/
++def domMemberId : String := "nanodregg/kernel/member-id/v1"
+ 
+ variable {D : Type} [Ord D]
+ 
+@@ -467,15 +492,26 @@ def nextKeyDigest (X : Ctx D) (key : ByteArray) : D := X.env.hash domNextKey key
+ 
+ /-- The call signature's domain (KERNEL-42): every message a member key signs begins with its own
+ domain, so a call's signature is never one over another protocol's message (a read envelope, a
+-possession proof, an identity probe): `Protocol.Proofs.Domains`. -/
++join consent, an identity probe): `Protocol.Proofs.Domains`. -/
+ def domCall : ByteArray := "nanodregg/kernel/call-signature".toUTF8
+ 
+ /-- What a call's signature is over: `domCall`, then the call's canonical unsigned bytes. -/
+ def Ctx.callMessage (X : Ctx D) (u : Unsigned D) : ByteArray := domCall ++ X.unsignedBytes u
+ 
+-/-- What a new key signs to prove its holder asked to be enrolled by this sponsor. -/
+-def possessionMessage (X : Ctx D) (sponsor : D) (next : D) (key : ByteArray) : ByteArray :=
+-  tagPossession ++ X.env.bytes sponsor ++ X.env.bytes next ++ key
++/-- What a new key signs to consent to join World `origin` through `sponsor`, precommitting `next`
++(PROTOCOL-79). Possession of `key` needs no World: ANY signature `key` makes shows it, so a join
++that verifies under `key` is also its holder's possession proof. What needs the World is the
++CONSENT: a consent naming only the sponsor (the old `possession/v1` message) let that sponsor enrol
++the key again in a carried World, where its member id survives (KERNEL-40), without the holder's
++new consent. -/
++def joinMessage (X : Ctx D) (origin sponsor next : D) (key : ByteArray) : ByteArray :=
++  domJoin ++ X.env.bytes origin ++ X.env.bytes sponsor ++ X.env.bytes next ++ key
++
++/-- A member's id: the digest of the join it consented to (PROTOCOL-79). Content-addressed, so the
++same consent enrolled again in the same World names the same id, which is taken (`idTaken`): one
++consent, one member. -/
++def memberId (X : Ctx D) (origin sponsor next : D) (key : ByteArray) : D :=
++  X.env.hash domMemberId (joinMessage X origin sponsor next key)
+ 
+ /-- What `effects` do to `cell`: the act of the effect on it, `keep` when there is none
+ (`effectsPinned` has made the effect cells distinct, so "the first" is "the only"). -/
+@@ -525,6 +561,11 @@ def Body.callable : Body D → Bool
+   | .invoke .. | .transfer .. | .account .. | .credit .. | .grant .. | .install .. => true
+   | _ => false
+ 
++/-- The World an enrolment's join names (PROTOCOL-79); `none` for every other Body. -/
++def Body.joinOrigin : Body D → Option D
++  | .enroll _ _ origin _ _ => some origin
++  | _ => none
++
+ /-- The body is an invoke (the one receiver that derives calls through `sub`). -/
+ def Body.isInvoke : Body D → Bool
+   | .invoke .. => true
+@@ -534,7 +575,7 @@ def Body.isInvoke : Body D → Bool
+ def Body.kindName : Body D → String
+   | .enroll .. => "enroll" | .rotate .. => "rotate" | .install .. => "install"
+   | .create .. => "create" | .write .. => "write" | .law .. => "law" | .invoke .. => "invoke"
+-  | .grant .. => "grant" | .revoke .. => "revoke" | .issue .. => "issue"
++  | .grant .. => "grant" | .retire .. => "retire" | .issue .. => "issue"
+   | .account .. => "account" | .transfer .. => "transfer" | .credit .. => "credit"
+ 
+ /-- What row effects do to row slot `s`: `keep` when there is none. -/
+diff --git a/Kernel/Receive/Derive.lean b/Kernel/Receive/Derive.lean
+index b59fec3..7426cf2 100644
+--- a/Kernel/Receive/Derive.lean
++++ b/Kernel/Receive/Derive.lean
+@@ -82,16 +82,22 @@ def spendEnroll (g : D) (cell : Cell) (units : Nat) (short : Refusal D) :
+     Except (Refusal D) (Option (D × Act)) := spendAt enrollBase g cell units short
+ 
+ /-- Enrolment is a right (KERNEL-16): the sponsor acts through a World grant chain carrying
+-`enroll`, rooted at a founder's genesis grant, and spends one of its own grant's count. -/
+-def enroll (X : Ctx D) (look : Pinned D) (c : Call D) (a : At D) (key : ByteArray) (next : D)
+-    (possession : ByteArray) (via : D) : Except (Refusal D) (Draft D) := do
++`enroll`, rooted at a founder's genesis grant, and spends one of its own grant's count. The new key
++consented to this join (PROTOCOL-79): its join verifies under the key over `joinMessage` of the
++World it names (`badJoin`); that the World it names is the receiving one is `receive`'s check
++(`otherWorld`), so the derivation stays blind to the World's name (KERNEL-40). The member is born at
++`memberId`, the digest of that consent, so the same consent enrolled twice is `World.admit`'s
++`idTaken`. -/
++def enroll (X : Ctx D) (look : Pinned D) (a : At D) (key : ByteArray) (next : D)
++    (origin : D) (join : ByteArray) (via : D) : Except (Refusal D) (Draft D) := do
+   let _ ← walk X look (worldId X) (.enroll 0) true grantDepthMax via a.actor
+   let g ← readKind look via kindGrant
+   let spend ← spendEnroll via g 1 (.enrollSpent via)
+-  req (X.verify key (possessionMessage X a.actor next key) possession) .badPossession
++  req (X.verify key (joinMessage X origin a.actor next key) join) .badJoin
+   let slots := slotsOf [(slotKey, key), (slotNext, X.env.bytes next),
+     (slotSponsor, X.env.bytes a.actor)]
+-  pure ⟨bornAt X c a.base [{ kind := kindMember, discipline := .ram, slots }], spend.toList, [], []⟩
++  pure ⟨[(memberId X origin a.actor next key, { kind := kindMember, discipline := .ram, slots })],
++    spend.toList, [], []⟩
+ 
+ /-- Signed by the new key; the new key's digest must be the one precommitted. -/
+ def rotate (X : Ctx D) (look : Pinned D) (c : Call D) (key : ByteArray) (next : D) :
+@@ -321,12 +327,41 @@ def grant (X : Ctx D) (look : Pinned D) (c : Call D) (a : At D) (target grantee
+     (parent.map fun p => (grantParent, X.env.bytes p)).toList ++ rightSlots rights)
+   pure ⟨bornAt X c a.base [{ kind := kindGrant, discipline := .appendOnly, slots }], carve.toList, [], []⟩
+ 
+-/-- The issuer retires a grant; every chain through it dies with it. -/
+-def revoke (X : Ctx D) (look : Pinned D) (a : At D) (g : D) : Except (Refusal D) (Draft D) := do
+-  let cell ← readKind look g kindGrant
+-  let issuer ← slotDigest X g cell grantIssuer
+-  req (issuer = a.actor) (.notIssuer g)
+-  pure ⟨[], [(g, .retire)], [], []⟩
++/-- Who may retire the pinned live cell `x` (KERNEL-70), by its kind: a grant its issuer
++(`notIssuer`); an object its owner (`notOwner`), every law in force (the package's, then the extra
++laws) judging the occasion `retire` over its last state; an account its owner (`notOwner`), once
++its balance and floor are both 0 (`valueRemains`), so a retirement moves no value. Nothing retires a
++member, a package or the authority (`notRetirable`): a member roots authority (the owner of cells,
++the issuer of grants) that no cell lists, so its end would leave grants nobody can revoke. -/
++def retireCheck (X : Ctx D) (look : Pinned D) (c : Call D) (a : At D) (x : D) :
++    Except (Refusal D) Unit := do
++  let cell ← match look x with
++    | .error e => .error e
++    | .ok none => .error (.missingCell x)
++    | .ok (some cell) => .ok cell
++  if cell.kind = kindGrant then
++    let issuer ← slotDigest X x cell grantIssuer
++    req (issuer = a.actor) (.notIssuer x)
++  else if cell.kind = kindObject then
++    let owner ← slotDigest X x cell slotOwner
++    req (owner = a.actor) (.notOwner x)
++    let pkg ← packageOf X x cell
++    let laws ← lawsOf X x cell
++    X.program.judge look pkg laws (stateOf cell) (stateOf cell) (reqOf c.unsigned x a.actor .retire)
++  else if cell.kind = kindAccount then
++    let owner ← slotDigest X x cell slotOwner
++    req (owner = a.actor) (.notOwner x)
++    match Value.ofCell cell with
++    | some v => req (decide (v.balance = 0 ∧ v.floor = 0)) (.valueRemains x)
++    | none => .error (.malformedCell x Value.balanceKey)
++  else .error (.notRetirable x)
++
++/-- `retire x` (KERNEL-70): `retireCheck`, then the one effect, the retirement of `x`. The kernel
++credits its weight back to the World's allowance (KERNEL-19) and leaves a tombstone; a retired
++object's relation heads leave with it, and an object still holding rows is `rowsRemain`. -/
++def retire (X : Ctx D) (look : Pinned D) (c : Call D) (a : At D) (x : D) : Except (Refusal D) (Draft D) := do
++  retireCheck X look c a x
++  pure ⟨[], [(x, .retire)], [], []⟩
+ 
+ /-- A receiver's Draft, and the walk past its fresh births. -/
+ def stepped (wk : Walk D) (d : Except (Refusal D) (Draft D)) : Except (Refusal D) (Draft D × Walk D) :=
+@@ -335,7 +370,7 @@ def stepped (wk : Walk D) (d : Except (Refusal D) (Draft D)) : Except (Refusal D
+ /-- One receiver of a call's tree, as `actor`; `sub` derives an invoke's calls one level down. -/
+ def dispatch (X : Ctx D) (look : Pinned D) (rv : RowView D) (c : Call D) (sub : Sub D) (wk : Walk D) (actor : D) :
+     Body D → Except (Refusal D) (Draft D × Walk D)
+-  | .enroll key next possession via => stepped wk (enroll X look c ⟨actor, wk.born⟩ key next possession via)
++  | .enroll key next origin join via => stepped wk (enroll X look ⟨actor, wk.born⟩ key next origin join via)
+   | .rotate key next => stepped wk (rotate X look c key next)
+   | .install pkg => stepped wk (install X look c ⟨actor, wk.born⟩ pkg)
+   | .create pkg laws state => stepped wk (create X look c ⟨actor, wk.born⟩ pkg laws state)
+@@ -344,7 +379,7 @@ def dispatch (X : Ctx D) (look : Pinned D) (rv : RowView D) (c : Call D) (sub :
+   | .invoke obj method args budget via => invoke X look rv c sub wk actor obj method args budget via
+   | .grant target grantee rights parent =>
+       stepped wk (grant X look c ⟨actor, wk.born⟩ target grantee rights parent)
+-  | .revoke g => stepped wk (revoke X look ⟨actor, wk.born⟩ g)
++  | .retire x => stepped wk (retire X look c ⟨actor, wk.born⟩ x)
+   | .issue cap => stepped wk (issue X c ⟨actor, wk.born⟩ cap)
+   | .account asset owner => stepped wk (account X asset owner)
+   | .transfer src dst amount via once => stepped wk (transfer X look ⟨actor, wk.born⟩ src dst amount via once)
+@@ -396,9 +431,15 @@ def receiveWith (X : Ctx D) (look : Pinned D) (rv : RowView D) (c : Call D) : Ex
+ 
+ /-- THE derivation: a signed call against a World, through the caller's pins only. The FIRST
+ check is the World the call names (KERNEL-24): a call for another World is `wrongWorld`, never
+-`badSignature` or `unknownKey`, whatever else is wrong with it. -/
++`badSignature` or `unknownKey`, whatever else is wrong with it. Past the signature, the World an
++enrolment's join names (PROTOCOL-79): a consent to join another World is `otherWorld`. Then
++`receiveWith`'s key rule and tree, which read the World's name nowhere
++(`Kernel.Proofs.Carry.receiveWith_world`). -/
+ def receive (X : Ctx D) (w : World D) (c : Call D) : Except (Refusal D) (Turn D) := do
+   req (c.unsigned.world = w.origin) .wrongWorld
+-  receiveWith X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c
++  checkSignature X c
++  req (c.unsigned.body.joinOrigin.all (· = w.origin)) .otherWorld
++  keyRule (pinned X.env w c.unsigned.pins) c.unsigned
++  deriveTurn X (pinned X.env w c.unsigned.pins) (rowView X.env w c.unsigned) c
+ 
+ end Nanodregg.Kernel.Receive
+diff --git a/Kernel/Receive/Submit.lean b/Kernel/Receive/Submit.lean
+index 86b73c4..25cac4b 100644
+--- a/Kernel/Receive/Submit.lean
++++ b/Kernel/Receive/Submit.lean
+@@ -55,11 +55,13 @@ def checkSignatureBy (X : Ctx D) (c : Call D) (verified : Bool) : Except (Refusa
+ 
+ /-- Is the call signed, for THIS World, by a key the member holds (KERNEL-44's class (A))? The World it
+ names first (`wrongWorld`, KERNEL-24), then the signature (skipped when `verified` carries a passing
+-one: PERF-1), then the key (`authKey`). `submit` judges nothing else of a call until this passes
++one: PERF-1), then the World an enrolment's join names (`otherWorld`, PROTOCOL-79), then the key
++(`authKey`). `submit` judges nothing else of a call until this passes
+ (KERNEL-66), and `judge` records only a refusal of a call it passes. -/
+ def signedBy (X : Ctx D) (w : World D) (c : Call D) (verified : Bool) : Except (Refusal D) Unit := do
+   req (c.unsigned.world = w.origin) .wrongWorld
+   checkSignatureBy X c verified
++  req (c.unsigned.body.joinOrigin.all (· = w.origin)) .otherWorld
+   authKey X (pinned X.env w c.unsigned.pins) c
+ 
+ /-- Judge a signed call: journal first (an exact retry is `replayed`), then the recorded refusals (a
+@@ -91,10 +93,10 @@ def submit (X : Ctx D) (w : World D) (c : Call D) : Except (Verdict D) (Turn D 
+ /-- The wire names of the receive refusals, in constructor order (checked against `Refusal.name` by
+ `codeName_code`). -/
+ def refusalNames : List String :=
+-  ["wrongWorld", "badSignature", "unknownKey", "notPrecommitted", "badPossession", "unpinned",
++  ["wrongWorld", "badSignature", "unknownKey", "notPrecommitted", "badJoin", "otherWorld", "unpinned",
+    "missingCell", "wrongKind", "malformedCell", "lawDenied", "program", "stateKey", "tooManyLaws",
+    "hasMethods", "noMethods", "noGrant", "grantTarget", "grantRight", "grantWidens", "unrooted",
+-   "enrollSpent", "transferSpent", "creditSpent", "rightTarget", "notIssuer", "grantTooDeep", "overPrice", "eventMismatch",
++   "enrollSpent", "transferSpent", "creditSpent", "rightTarget", "notIssuer", "notOwner", "valueRemains", "notRetirable", "grantTooDeep", "overPrice", "eventMismatch",
+    "duplicateEffect", "sameAccount", "zeroAmount", "assetMismatch", "overflow", "notWell",
+    "notCallable", "callTooDeep", "revisited", "tooManyCalls", "overTicks", "rowUnpinned", "rangeUnpinned",
+    "rangeTooLong", "rowParent", "duplicateRow",
+diff --git a/Kernel/Sim/Gen.lean b/Kernel/Sim/Gen.lean
+index ab8a96d..c5dd76f 100644
+--- a/Kernel/Sim/Gen.lean
++++ b/Kernel/Sim/Gen.lean
+@@ -42,7 +42,7 @@ def methods : ByteArray := "methods".toUTF8
+ 
+ /-- The acts `freeze` refuses. -/
+ def frozenAct {D : Type} : Occasion D → Bool
+-  | .write | .invoke _ => true
++  | .write | .invoke _ | .retire => true
+   | .birth | .relaw _ | .adopt _ => false
+ 
+ /-- `b` cut into digests of `width` bytes (a short tail is dropped). -/
+@@ -1262,7 +1262,7 @@ def act (P : Params D) (st : State D) : State D :=
+       let (key, st) := freshKey st "m"
+       let (nk, st) := freshKey st "n"
+       let X := P.ctx
+-      let possession := P.sign key (possessionMessage X sp.id (nextKeyDigest X (P.pub nk)) (P.pub key))
++      let join := P.sign key (joinMessage X w.origin sp.id (nextKeyDigest X (P.pub nk)) (P.pub key))
+       let hs := holdOf st sp.id
+       let (chain, expect, st) : List D × Expect × State D := match hs.chain with
+         | _ :: _ =>
+@@ -1276,7 +1276,7 @@ def act (P : Params D) (st : State D) : State D :=
+       | [] => st
+       | via :: _ =>
+           let c := signed P st sp sp.key (S.pinsFor P.env w (sp.id :: chain))
+-            (.enroll (P.pub key) (nextKeyDigest X (P.pub nk)) possession via)
++            (.enroll (P.pub key) (nextKeyDigest X (P.pub nk)) w.origin join via)
+           let (st, t) := submit P st c expect "enroll"
+           match t with
+           | some t =>
+@@ -1433,12 +1433,12 @@ def act (P : Params D) (st : State D) : State D :=
+           let (gid, obj, ge, iss) := g
+           let issuer := (st.members.find? fun m => m.id = iss).getD (founder0 P st)
+           let st := match st.members.find? fun m => m.id ≠ iss with
+-            | some m => (submit P st (signed P st m m.key (S.pinsFor P.env w [m.id, gid]) (.revoke gid))
++            | some m => (submit P st (signed P st m m.key (S.pinsFor P.env w [m.id, gid]) (.retire gid))
+                 (.refused "notIssuer") "revoke-not-issuer").1
+             | none => st
+           let w := st.host
+           let back := ((w.entry P.env gid).map Entry.weight).getD 0
+-          let (st, t) := submit P st (signed P st issuer issuer.key (S.pinsFor P.env w [issuer.id, gid]) (.revoke gid))
++          let (st, t) := submit P st (signed P st issuer issuer.key (S.pinsFor P.env w [issuer.id, gid]) (.retire gid))
+             .ok "revoke"
+           match t with
+           | some t =>
+@@ -1814,6 +1814,108 @@ def probeStateOrder (P : Params D) (st : State D) : State D :=
+       carryExpect (planted [(stateBase, nat 0), (stateBase + 1, nat 1)]) st st.host c
+         "state-order-run-control" "ok"
+ 
++/-- The join is bound to the World (PROTOCOL-79), on the carry probe's two Worlds: a newcomer's join
++consent signed for the exported World `w` still verifies under its key in the carried World `w'`
++(possession needs no World: `join-carried:possession`), yet a founder's enrolment of it into `w'` is
++refused `otherWorld` (`join-carried:otherWorld`: the consent named the old origin, and a carry keeps
++the sponsor's member id, KERNEL-40, so before PROTOCOL-79 it enrolled there). The same key's consent
++signed over `w'`'s origin is admitted (`join-new:ok`); enrolled again by a second call carrying THE
++SAME consent, it is `idTaken` (`join-again:idTaken`: the member's id is the consent's digest, so one
++consent is one member). Nothing is committed to the Host's World. -/
++def probeJoinCarried (P : Params D) (st : State D) (w w' : World D) : State D :=
++  let X := P.ctx
++  let f := founder0 P st
++  let chain := (holdOf st f.id).chain
++  match chain with
++  | [] => st
++  | via :: _ =>
++    let (key, st) := freshKey st "jc"
++    let (nk, st) := freshKey st "jn"
++    let next := nextKeyDigest X (P.pub nk)
++    let consent := fun (o : D) => P.sign key (joinMessage X o f.id next (P.pub key))
++    -- an enrolment into `wa`, of the consent naming `o`, its pins on `wa`; `cap` tells two calls apart
++    let enrolOf := fun (wa : World D) (o : D) (cap : Nat) =>
++      let u : Unsigned D :=
++        { world := wa.origin, member := f.id, key := P.pub f.key, notBefore := 0,
++          validUntil := wa.height + 1 + 100, pins := S.pinsFor P.env wa (f.id :: chain),
++          maxCharge := cap, body := .enroll (P.pub key) next o (consent o) via }
++      ({ unsigned := u, signature := P.sign f.key (X.callMessage u) } : Call D)
++    let st := if X.verify (P.pub key) (joinMessage X w.origin f.id next (P.pub key)) (consent w.origin)
++      then meet st "join-carried:possession"
++      else failWith st "probe join-carried: the consent signed for the exported World does not verify under its key"
++    let st := carryExpect P st w' (enrolOf w' w.origin 1000000) "join-carried" "otherWorld"
++    -- the admitted join and its replay need two enrolments left on the founder's own grant
++    let hs := holdOf st f.id
++    if !(hs.enrolls && 2 ≤ hs.left) then st else
++    match Receive.submit X w' (enrolOf w' w'.origin 1000000) with
++    | .error v => failWith st s!"probe join-new: expected ok, got {vname v}"
++    | .ok (_, w'') =>
++        let st := { st with refusedAsExpected := st.refusedAsExpected + 1,
++                            seen := "join-new:ok" :: "ok" :: st.seen }
++        carryExpect P st w'' (enrolOf w'' w'.origin 999999) "join-again" "idTaken"
++
++/-- Retirement (KERNEL-70), on branches of the Host's World (nothing committed): a data object's
++retirement by a member that does not own it is `notOwner` (`retire-object:notOwner`); by its owner it
++is admitted and gives the World back exactly the object's weight with its counter
++(`retire-object:ok`, `admit_retire`); a write pinned at the object's last live entry is then `stale`
++(`retire-read:stale`: the tombstone has its own pin, KERNEL-54); an object under `freeze` is not
++retired (`retire-frozen:lawDenied`: the laws in force judge the occasion `retire`). A well still holds
++its cap as floor, so retiring it is `valueRemains` (`retire-well:valueRemains`); an empty account is
++retired by its owner (`retire-account:ok`) and its keyed id is never reborn: opening it again is
++`idTaken` (`account-reborn:idTaken`: an id is a digest of its birth's inputs, the tombstone keeps
++it). A member is `notRetirable` (`retire-member:notRetirable`). -/
++def probeRetire (P : Params D) (st : State D) : State D :=
++  let X := P.ctx
++  let f := founder0 P st
++  let w := st.host
++  let on := fun (wa : World D) (m : Member D) (ids : List D) (b : Body D) =>
++    signed P { st with host := wa } m m.key (S.pinsFor P.env wa (m.id :: ids)) b
++  let other := st.members.find? fun m => m.id ≠ f.id
++  -- a member is retired by nothing
++  let st := carryExpect P st w (on w f [] (.retire f.id)) "retire-member" "notRetirable"
++  -- a data object, born on a branch
++  match Receive.submit X w (on w f [] (.create none [] [(stateBase, nat 1)])) with
++  | .error v => failWith st s!"probe retire: the create was refused {vname v}"
++  | .ok (t, w1) =>
++    let obj := (createdIds t).headD P.zero
++    let st := match other with
++      | some m => carryExpect P st w1 (on w1 m [obj] (.retire obj)) "retire-object" "notOwner"
++      | none => st
++    let st := match Receive.submit X w1 (on w1 f [obj] (.retire obj)) with
++      | .error v => failWith st s!"probe retire-object: expected ok, got {vname v}"
++      | .ok (t2, w2) =>
++          let back := ((w1.entry P.env obj).map Entry.weight).getD 0
++          if !(w2.allowance + t2.charge = w1.allowance + back ∧ 0 < back ∧ w2.entry P.env obj = some .tomb) then
++            failWith st s!"probe retire-object: allowance {w2.allowance} + charge {t2.charge} ≠ {w1.allowance} + {back}"
++          else
++            let st := { st with refusedAsExpected := st.refusedAsExpected + 1, seen := "retire-object:ok" :: "ok" :: st.seen }
++            -- the write a member signed while the object was live, pinned at that entry
++            let late := on w1 f [obj] (.write obj [(0, some (nat 2))] none)
++            carryExpect P st w2 late "retire-read" "stale"
++    -- an object under `freeze`
++    let st := match st.freezePkg with
++      | none => st
++      | some fz => match Receive.submit X w (on w f [fz] (.create none [fz] [])) with
++        | .error v => failWith st s!"probe retire-frozen: the create was refused {vname v}"
++        | .ok (t, wf) =>
++            let o := (createdIds t).headD P.zero
++            carryExpect P st wf (on wf f [o, fz] (.retire o)) "retire-frozen" "lawDenied"
++    -- a well holds its cap as floor; an empty account is retired once, and never reborn
++    match Receive.submit X w (on w f [] (.issue 5)) with
++    | .error v => failWith st s!"probe retire: the issue was refused {vname v}"
++    | .ok (t, wi) =>
++      let well := (createdIds t).headD P.zero
++      let st := carryExpect P st wi (on wi f [well] (.retire well)) "retire-well" "valueRemains"
++      match Receive.submit X wi (on wi f [] (.account well f.id)) with
++      | .error v => failWith st s!"probe retire: the account was refused {vname v}"
++      | .ok (t, wa) =>
++        let acct := (createdIds t).headD P.zero
++        match Receive.submit X wa (on wa f [acct] (.retire acct)) with
++        | .error v => failWith st s!"probe retire-account: expected ok, got {vname v}"
++        | .ok (_, wr) =>
++          let st := { st with refusedAsExpected := st.refusedAsExpected + 1, seen := "retire-account:ok" :: "ok" :: st.seen }
++          carryExpect P st wr (on wr f [] (.account well f.id)) "account-reborn" "idTaken"
++
+ /-- The carry probe (KERNEL-29), at the end of every seed: the Host's World is carried under a new
+ nonce. The carried World holds the same trie, allowance, height and journal (`carry_carried`)
+ under a new origin; the last logged call is answered `replayed` at its height (`carry_replayed`:
+@@ -1857,7 +1959,8 @@ def probeCarry (P : Params D) (st : State D) : State D :=
+       let old := signed P st f f.key (S.pinsFor P.env w [f.id]) (.create none [] [])
+       let st := carryExpect P st w' old "carry-old-world" "wrongWorld"
+       let fresh := signed P { st with host := w' } f f.key (S.pinsFor P.env w' [f.id]) (.create none [] [])
+-      carryExpect P st w' fresh "carry-new" "ok"
++      let st := carryExpect P st w' fresh "carry-new" "ok"
++      probeJoinCarried P st w w'
+ 
+ /-! ### Refusals (KERNEL-44, KERNEL-47): recorded, final, bounded, and only when authenticated -/
+ 
+@@ -2818,6 +2921,7 @@ def run (P : Params D) (seed : Nat) (steps : Nat) : State D :=
+   let st := probeSigDomain P st
+   let st := probeStateOrder P st
+   let st := probeCarry P st
++  let st := probeRetire P st
+   let st := probeCarryBudget P st
+   let st := match ((probeRows P seed).run).run st with
+     | (.ok (), st) => st
+@@ -2887,7 +2991,10 @@ def plantedArms : List String :=
+    "journal-shadow-kept:replayed", "journal-shadow-reuse:replayed",
+    "journal-proof-height:refused", "journal-proof-admitted:refused", "journal-proof-stale:refused",
+    "journal-proof-cells-root:refused", "carry-name:nameTooLong", "carry-old-call:replayed",
+-   "carry-old-world:wrongWorld", "carry-new:ok", "sig-bare:badSignature", "hash-count:empty-per-root", "verify-count:once", "retain:canonical",
++   "carry-old-world:wrongWorld", "carry-new:ok", "join-carried:possession", "join-carried:otherWorld",
++   "join-new:ok", "join-again:idTaken", "retire-member:notRetirable", "retire-object:notOwner",
++   "retire-object:ok", "retire-read:stale", "retire-frozen:lawDenied", "retire-well:valueRemains",
++   "retire-account:ok", "account-reborn:idTaken", "sig-bare:badSignature", "hash-count:empty-per-root", "verify-count:once", "retain:canonical",
+    "retain-plant:refuted", "carry-budget:allowanceTooLarge", "carry-budget-edge:ok", "carry-budget-plant:overflow",
+    "race-loser:stale", "race-loser-declined:declined", "race-law:lawDenied",
+    "refusal-aba-stale:stale", "refusal-aba-declined:declined", "refusal-aba-plant:returned",
+diff --git a/Lang/Call.lean b/Lang/Call.lean
+index b8e8190..c2715b2 100644
+--- a/Lang/Call.lean
++++ b/Lang/Call.lean
+@@ -96,7 +96,7 @@ def callData (A : Option Ty) : Body D → Option Data
+         ("once", optData Data.bytes once), ("src", acctRefData bytesOf src),
+         ("via", optData (digestData bytesOf) via)]))
+   | .install pkg => some (.inj "install" (.record [("pkg", .bytes pkg)]))
+-  | .enroll .. | .rotate .. | .create .. | .write .. | .law .. | .revoke .. | .issue .. =>
++  | .enroll .. | .rotate .. | .create .. | .write .. | .law .. | .retire .. | .issue .. =>
+       none
+ 
+ end
+diff --git a/Lang/Journey.lean b/Lang/Journey.lean
+index 20c4378..dcf2b50 100644
+--- a/Lang/Journey.lean
++++ b/Lang/Journey.lean
+@@ -2484,7 +2484,7 @@ def p8Rows (r0 : Run) (a b : Sim.Member) (src : String := p8Text) : Run := Id.ru
+   let oldPlan := commit r 0 a.id
+   let preRevoke := r
+   let (r', vr, _) := go prog r (Sim.signed r.st a a.key (Sim.S.pinsFor r.st.host [a.id, providers[0]!])
+-    (.revoke providers[0]!))
++    (.retire providers[0]!))
+   r := note r' s!"P8.2 withdraw provider 0: {vr}" (vr == "admitted")
+   let (_, stale, _) := go prog r oldPlan
+   -- The plan signed before the revoke pins g0 at its live version, which the revoke moved: the kernel
+@@ -2511,7 +2511,7 @@ def p8Rows (r0 : Run) (a b : Sim.Member) (src : String := p8Text) : Run := Id.ru
+   -- the method's read does.
+   let (s1, vs1, _) := go prog preRevoke (invoke preRevoke "select" (hole_selectArg (Sim.dc.bytes a.id))
+       (pinC preRevoke.st.host a.id ++ pinF preRevoke.st.host g0) (Sim.S.pinsFor preRevoke.st.host [g0]))
+-  let (s2, vs2, _) := go prog s1 (Sim.signed s1.st a a.key (Sim.S.pinsFor s1.st.host [a.id, g0]) (.revoke g0))
++  let (s2, vs2, _) := go prog s1 (Sim.signed s1.st a a.key (Sim.S.pinsFor s1.st.host [a.id, g0]) (.retire g0))
+   let (_, vs3, _) := go prog s2 (invoke s2 "commit" (p8Arg asset a.id cap)
+       (pinC s2.st.host a.id ++ pinF s2.st.host g0)
+       (Sim.S.pinsFor s2.st.host [asset, accountId X a.id asset, cap, g0]))
+diff --git a/Lang/Journey/Doc.lean b/Lang/Journey/Doc.lean
+index a994a9b..f3c2604 100644
+--- a/Lang/Journey/Doc.lean
++++ b/Lang/Journey/Doc.lean
+@@ -158,7 +158,7 @@ def lifeRows (r0 : Run) (a b : Sim.Member) : Run := Id.run do
+   r := note r6 s!"DC6 A selects B's text: {v6}; selected {hole_selectedOf Sim.env r6.st.host obj == some (some cB)}; text {textOf r6.st.host cB}"
+     (v6 == "admitted" && hole_selectedOf Sim.env r6.st.host obj == some (some cB))
+   -- DC7 A revokes B's grant: the justification is withdrawn; the next judgment says so by name
+-  let (r7, v7, _) := go prog r (Sim.signed r.st a a.key (Sim.S.pinsFor r.st.host [a.id, gB]) (.revoke gB))
++  let (r7, v7, _) := go prog r (Sim.signed r.st a a.key (Sim.S.pinsFor r.st.host [a.id, gB]) (.retire gB))
+   r := note r7 s!"DC7 A revokes B's grant: {v7}" (v7 == "admitted")
+   let (r8, v8, _) := go prog r (call r a none "rejudge" (candArg cB) (pinCand r.st.host cB ++ pinFact r.st.host gBb) [gB])
+   r := note r8 s!"DC8 A rejudges B's text: {v8}; status {status r8.st.host cB}"
+diff --git a/Lang/Journey/Head.lean b/Lang/Journey/Head.lean
+index 37d83f7..1515215 100644
+--- a/Lang/Journey/Head.lean
++++ b/Lang/Journey/Head.lean
+@@ -189,7 +189,7 @@ def headRows (r0 : Run) (b : Sim.Member) (rA0 : Run) (a : Sim.Member) (acceptTex
+   let (ra4, va4, tg) := go prog ra3 (Sim.signed ra3.st b b.key (Sim.S.pinsFor ra3.st.host [b.id, Acc, HA])
+     (.grant Acc HA [.invoke 0] none))
+   let some G := tg.bind fun t => (createdIds t).head? | return note r s!"RC1 B's grant: {va4}" false
+-  let (ra5, va5, _) := go prog ra4 (Sim.signed ra4.st b b.key (Sim.S.pinsFor ra4.st.host [b.id, G]) (.revoke G))
++  let (ra5, va5, _) := go prog ra4 (Sim.signed ra4.st b b.key (Sim.S.pinsFor ra4.st.host [b.id, G]) (.retire G))
+   let cellArg (c : D) : Option ByteArray :=
+     Wire.encodeData (.record [("cell", .digest)]) (.record [("cell", .digest (hdDig c))])
+   -- acceptor methods, labels ascending: 0 accept, 1 distrust, 2 trust
+diff --git a/Lang/Journey/Inbox.lean b/Lang/Journey/Inbox.lean
+index becd6e1..ac81200 100644
+--- a/Lang/Journey/Inbox.lean
++++ b/Lang/Journey/Inbox.lean
+@@ -158,7 +158,7 @@ def lifeRows (r0 : Run) (a b : Sim.Member) (bell : String) : Run := Id.run do
+   r := note r11 s!"LI7 A selects the agent's text: {v11}; selected {hole_selectedOf Sim.env r11.st.host sec == some (some cand)}"
+     (v11 == "admitted" && hole_selectedOf Sim.env r11.st.host sec == some (some cand))
+   -- LI8 A revokes the bell's grant: the candidate's support is dead; rejudge says so by name; select refuses
+-  let (r12, v12, _) := go prog r (Sim.signed r.st a a.key (Sim.S.pinsFor r.st.host [a.id, gB]) (.revoke gB))
++  let (r12, v12, _) := go prog r (Sim.signed r.st a a.key (Sim.S.pinsFor r.st.host [a.id, gB]) (.retire gB))
+   r := note r12 s!"LI8 A revokes the bell's grant on the section: {v12}" (v12 == "admitted")
+   let (r13, v13, _) := go prog r (secCall r a "rejudge" (Doc.candArg cand) (pinCand r.st.host cand ++ pinFact r.st.host) [gB])
+   r := note r13 s!"LI8b A rejudges the agent's text: {v13}; status {status r13.st.host cand}"
+diff --git a/Lang/Proofs/Call.lean b/Lang/Proofs/Call.lean
+index 0676145..d1e775f 100644
+--- a/Lang/Proofs/Call.lean
++++ b/Lang/Proofs/Call.lean
+@@ -219,7 +219,7 @@ theorem bodyOf_callData (hdig : ∀ x, digestOf (bytesOf x) = some x) {b : Body
+   | install pkg =>
+     simp only [callData, Option.some.injEq] at h; subst h
+     simp [bodyOf, pure, Except.pure]
+-  | enroll | rotate | create | write | law | revoke | issue => simp [callData] at h
++  | enroll | rotate | create | write | law | retire | issue => simp [callData] at h
+ 
+ /-- A kind an object may not exercise has no call data. -/
+ theorem callData_not_callable {b : Body D} (h : b.callable = false) : callData bytesOf A b = none := by
+@@ -372,7 +372,7 @@ theorem callData_conforms (hb : ∀ x, (bytesOf x).size ≤ Bounds.digestBytesMa
+     simp only [callData, Option.some.injEq] at h; subst h
+     simp only [callFits, decide_eq_true_eq] at hf
+     cases A <;> exact .inj rfl (.record (.cons (.bytes hf) .nil))
+-  | enroll | rotate | create | write | law | revoke | issue => simp [callData] at h
++  | enroll | rotate | create | write | law | retire | issue => simp [callData] at h
+ 
+ end
+ 
+diff --git a/Protocol/Command/Machine.lean b/Protocol/Command/Machine.lean
+index 61b0f6f..d3362ec 100644
+--- a/Protocol/Command/Machine.lean
++++ b/Protocol/Command/Machine.lean
+@@ -307,7 +307,7 @@ def hostReply (b : ByteArray) : Option (Status × ByteArray) :=
+ 
+ /-- The phases whose result is custody's: 1 (an envelope's or init's signature, by `sign` or
+ `signIncoming`), 2 for `init`
+-only (its possession signature; every other verb's phase 2 is a `log` reply), 3 (a call's
++only (its join signature; every other verb's phase 2 is a `log` reply), 3 (a call's
+ signature, by `sign` or `signNext`), 5 (`precommit`), 6 (an adopt envelope's signature), 8 (an
+ invitation's signature). -/
+ def custodyPhase (isInit : Bool) (phase : UInt8) : Bool :=
+@@ -361,7 +361,7 @@ def invokedPackage (X : Ctx D) (w : World D) (obj : D) : Except (Refusal D) D :=
+ at its package's type: `Lang.seedOf`, `Lang.argsOf`); `s` is the key it is signed with (for
+ `rotate`: the next key, and the pending key it precommits). -/
+ def body (X : Ctx D) (me : Self D) (w : World D) (s : Signed) : Cmd D → Except (Refusal D) (Body D)
+-  | .enroll j => .ok (.enroll j.key j.next j.possession me.grant)
++  | .enroll j => .ok (.enroll j.key j.next j.origin j.join me.grant)
+   | .install p => .ok (.install p)
+   | .create none ls => .ok (.create none ls [])
+   | .create (some (p, t)) ls => match Lang.seedOf X.digestOf (worldLook X.env w) p t with
+@@ -380,7 +380,7 @@ def body (X : Ctx D) (me : Self D) (w : World D) (s : Signed) : Cmd D → Except
+         | .cell c => c
+         | .account r => r.resolve X
+       .ok (.grant target (g.getD (worldId X)) rs via)
+-  | .revoke g => .ok (.revoke g)
++  | .retire x => .ok (.retire x)
+   | .rotate => .ok (.rotate s.key (nextKeyDigest X s.next))
+   | .issue cap => .ok (.issue cap)
+   | .account a o => .ok (.account a (o.getD me.member))
+@@ -1373,19 +1373,20 @@ def step (X : Ctx D) (dc : Stream D) (B : Thin.Base (World D)) (me : Self D) (f
+       | .error r => same (custodyEnd X cmd st r)
+       | .ok result =>
+       match cmd, st.phase, st.acc with
+-      -- init: learn the key, sign the possession, print the token
++      -- init: learn the key, sign the join to follow's World (PROTOCOL-79), print the token
+       | .init sponsor, 1, [] =>
+           match Signed.ofBytes result with
+           | none => same (refused (D := D) .badResult)
+           | some s =>
+               same (again 2 [result] fun k =>
+-                .sign (possessionMessage X sponsor (nextKeyDigest X s.next) s.key) k)
++                .sign (joinMessage X w.origin sponsor (nextKeyDigest X s.next) s.key) k)
+       | .init _, 2, [first] =>
+           match Signed.ofBytes first, Signed.ofBytes result with
+           | some s0, some s1 =>
+               if s1.key = s0.key then
+                 same (printed s!"join {Text.toHex (Join.bytes X.env.bytes
+-                  { key := s0.key, next := nextKeyDigest X s0.next, possession := s1.signature })}\n")
++                  { key := s0.key, next := nextKeyDigest X s0.next, origin := w.origin,
++                    join := s1.signature })}\n")
+               else same (refused (D := D) .badResult)
+           | _, _ => same (refused (D := D) .badResult)
+       -- every other verb: the envelope, signed; ask for the log (page `pages` of this command)
+diff --git a/Protocol/Command/Stdio.lean b/Protocol/Command/Stdio.lean
+index 0a9b62b..a13cbb5 100644
+--- a/Protocol/Command/Stdio.lean
++++ b/Protocol/Command/Stdio.lean
+@@ -22,7 +22,7 @@ namespace Nanodregg.Protocol.Command
+ verb does not compile until its author decides its arm, so the surface never widens by default. -/
+ def Verb.onStdio : Verb → Bool
+   | .init | .rotate | .adopt | .invite => false
+-  | .enroll | .install | .create | .write | .law | .invoke | .grant | .revoke | .read | .sync
++  | .enroll | .install | .create | .write | .law | .invoke | .grant | .retire | .read | .sync
+   | .issue | .account | .transfer | .credit | .receipt | .cancel => true
+ 
+ /-- The verbs a resident may run through `nd --stdio`. -/
+diff --git a/Protocol/Command/Verb.lean b/Protocol/Command/Verb.lean
+index 666e3b0..37c9d53 100644
+--- a/Protocol/Command/Verb.lean
++++ b/Protocol/Command/Verb.lean
+@@ -24,7 +24,8 @@ open Nanodregg.Kernel Nanodregg.Kernel.Receive
+ 
+ /-- Every verb. -/
+ inductive Verb
+-  /-- `init SPONSOR`: a join token for SPONSOR to enroll (key, next-key digest, possession) -/
++  /-- `init SPONSOR`: a join token for SPONSOR to enroll into follow's World (key, next-key digest,
++  the World's origin, the key's join consent over them: PROTOCOL-79) -/
+   | init
+   /-- `enroll TOKEN`: sponsor a new member -/
+   | enroll
+@@ -54,8 +55,9 @@ inductive Verb
+   `observe`, `mutate`, `invoke:N`, `enroll:N`, `transfer:N`, `credit:N`, comma-separated; PARENT is the
+   grant attenuated -/
+   | grant
+-  /-- `revoke GRANT` -/
+-  | revoke
++  /-- `retire CELL`: retire a grant the signer issued, or an object or an empty account it owns
++  (KERNEL-70) -/
++  | retire
+   /-- `read OBJ [KEY=VALUE…]`: print the object's state slots; each `KEY=VALUE` must hold.
+   `read OBJ ?`: print the object's self-description, its methods with their indices and argument
+   types, its laws and its relations (`Command.Describe`, PROTOCOL-44).
+@@ -114,13 +116,13 @@ inductive Verb
+ namespace Verb
+ 
+ def all : List Verb :=
+-  [init, enroll, install, create, write, law, invoke, grant, revoke, read, rotate, adopt, sync, issue, account,
++  [init, enroll, install, create, write, law, invoke, grant, retire, read, rotate, adopt, sync, issue, account,
+    transfer, credit, invite, receipt, cancel]
+ 
+ def word : Verb → String
+   | init => "init" | enroll => "enroll" | install => "install"
+   | create => "create" | write => "write" | law => "law" | invoke => "invoke"
+-  | grant => "grant" | revoke => "revoke" | read => "read" | rotate => "rotate" | adopt => "adopt"
++  | grant => "grant" | retire => "retire" | read => "read" | rotate => "rotate" | adopt => "adopt"
+   | sync => "sync" | issue => "issue" | account => "account" | transfer => "transfer" | credit => "credit"
+   | invite => "invite" | receipt => "receipt" | cancel => "cancel"
+ 
+@@ -128,11 +130,13 @@ def ofWord? (s : String) : Option Verb := all.find? (·.word == s)
+ 
+ end Verb
+ 
+-/-- A join token: what a newcomer hands its sponsor. -/
++/-- A join token: what a newcomer hands its sponsor: its key, its next key's digest, the World it
++consents to join, and its consent (`Receive.joinMessage`, PROTOCOL-79). -/
+ structure Join (D : Type) where
+   key : ByteArray
+   next : D
+-  possession : ByteArray
++  origin : D
++  join : ByteArray
+   deriving DecidableEq
+ 
+ /-- What a grant is over: the World, an object (or any cell) by id, or a value account by its
+@@ -175,7 +179,7 @@ inductive Cmd (D : Type)
+   | invoke (obj : D) (method : Nat) (args : String) (reads : InvokeReads) (via : Option D)
+   /-- `grantee = none` is `anyone` (the World as grantee, KERNEL-26) -/
+   | grant (target : GrantTarget D) (grantee : Option D) (rights : List Right) (via : Option D)
+-  | revoke (grant : D)
++  | retire (cell : D)
+   | read (obj : D) (expect : List (Nat × ByteArray))
+   /-- `read OBJ ?` -/
+   | describe (obj : D)
+@@ -244,7 +248,7 @@ def usage : Verb → String
+   | .write => "write OBJ KEY VALUE [--via GRANT]" | .law => "law OBJ LAW... [--via GRANT]"
+   | .invoke => "invoke OBJ METHOD ARGS [--range REL K [PREFIX]] [--pin REL KEY]... [--via GRANT]"
+   | .grant => "grant TARGET|ACCOUNT|world MEMBER|anyone RIGHTS [--via PARENT]"
+-  | .revoke => "revoke GRANT" | .read => "read OBJ [KEY=VALUE...] | read OBJ ? | read OBJ REL K [PREFIX]" | .rotate => "rotate"
++  | .retire => "retire CELL" | .read => "read OBJ [KEY=VALUE...] | read OBJ ? | read OBJ REL K [PREFIX]" | .rotate => "rotate"
+   | .adopt => "adopt INVITE KEY" | .sync => "sync [--to STEPS:CHAIN | --attest | --check ATTEST | --post OBJ]"
+   | .issue => "issue CAP"
+   | .account => "account ASSET [--owner OWNER]"
+@@ -258,10 +262,10 @@ def argvSize (argv : List ByteArray) : Nat := 4 + (argv.map (4 + ·.size)).sum
+ 
+ variable {D : Type}
+ 
+-/-- The join token's bytes: `key ‖ next ‖ possession`, each `u32le len ‖ bytes`. -/
++/-- The join token's bytes: `key ‖ next ‖ origin ‖ join`, each `u32le len ‖ bytes`. -/
+ def Join.bytes (dbytes : D → ByteArray) (j : Join D) : ByteArray :=
+   let f (b : ByteArray) := Codec.Stream.u32.bytes b.size.toUInt32 ++ b
+-  f j.key ++ f (dbytes j.next) ++ f j.possession
++  f j.key ++ f (dbytes j.next) ++ f (dbytes j.origin) ++ f j.join
+ 
+ def Join.ofBytes (digestOf : ByteArray → Option D) (b : ByteArray) : Option (Join D) :=
+   let field (i : Nat) : Option (ByteArray × Nat) :=
+@@ -271,8 +275,9 @@ def Join.ofBytes (digestOf : ByteArray → Option D) (b : ByteArray) : Option (J
+   do
+     let (key, i) ← field 0
+     let (nb, i) ← field i
+-    let (possession, i) ← field i
+-    if i = b.size then some { key, next := ← digestOf nb, possession } else none
++    let (ob, i) ← field i
++    let (join, i) ← field i
++    if i = b.size then some { key, next := ← digestOf nb, origin := ← digestOf ob, join } else none
+ 
+ section
+ variable (digestOf : ByteArray → Option D)
+@@ -400,7 +405,7 @@ def parseVerb (v : Verb) (args : List String) : Except ParseRefusal (Cmd D) :=
+       let grantee ← if m = "anyone" then pure none else some <$> digestArg digestOf m
+       pure (.grant target grantee (← mapEx rightArg (rs.splitOn ","))
+         (← viaArg digestOf .grant via))
+-  | .revoke, [g] => .revoke <$> digestArg digestOf g
++  | .retire, [x] => .retire <$> digestArg digestOf x
+   | .read, [o, "?"] => .describe <$> digestArg digestOf o
+   -- a first argument with `=` is an expectation; one without is a relation's label
+   | .read, o :: r :: k :: p =>
+diff --git a/Protocol/Proofs/Domains.lean b/Protocol/Proofs/Domains.lean
+index ef936fa..edab7b9 100644
+--- a/Protocol/Proofs/Domains.lean
++++ b/Protocol/Proofs/Domains.lean
+@@ -1,8 +1,8 @@
+ /-
+ # Protocol.Proofs.Domains — every message a member key signs begins with its own domain (KERNEL-42)
+ 
+-A member key signs seven shapes, and a World's certifier an eighth (`Head.certifyMessage`, `Head.domCertify`, PROTOCOL-76, never a member's): a call (`Receive.Ctx.callMessage`, `domCall`), a possession
+-proof (`Receive.possessionMessage`, `tagPossession`), a read envelope (`Envelope.message`,
++A member key signs seven shapes, and a World's certifier an eighth (`Head.certifyMessage`, `Head.domCertify`, PROTOCOL-76, never a member's): a call (`Receive.Ctx.callMessage`, `domCall`), a join
++consent (`Receive.joinMessage`, `domJoin`, PROTOCOL-79), a read envelope (`Envelope.message`,
+ `domEnvelope`), `init`'s identity probe (`Command.whoami`, a constant), an invitation
+ (`Invite.message`, `domInvite`, PROTOCOL-42), a cancel (`Receive.Ctx.cancelMessage`,
+ `domCancel`, KERNEL-60; PROTOCOL-60) and a head attestation (`Head.message`, `Head.domHead`,
+@@ -10,8 +10,8 @@ PROTOCOL-74). Each pair of domains
+ differs at a byte both hold, so no message of one shape is a message of another, whatever follows
+ the domain: a signature made for one is never one over another, with no hash premise. An observer
+ custody that signs only messages beginning with `domEnvelope` (HOSTING-17 §7, CLIENT-22) therefore
+-never signs a call, a possession proof, a probe, an invitation, a cancel or an attestation
+-(`call_not_envelope`, `possession_not_envelope`, `whoami_not_envelope`, `invite_not_envelope`,
++never signs a call, a join consent, a probe, an invitation, a cancel or an attestation
++(`call_not_envelope`, `join_not_envelope`, `whoami_not_envelope`, `invite_not_envelope`,
+ `cancel_not_envelope`, `head_not_envelope`), and
+ a cancel signature is never a call's (`cancel_not_call`): a member's cancel of one call cannot be
+ replayed as a signed call, nor a signed call as a cancel.
+@@ -38,16 +38,16 @@ theorem append_ne_of_byte {a b r s : ByteArray} {i : Nat} (ha : i < a.size) (hb
+ theorem call_envelope_disjoint (r s : ByteArray) : domCall ++ r ≠ domEnvelope ++ s :=
+   append_ne_of_byte (i := 10) (by decide) (by decide) (by decide)
+ 
+-theorem call_possession_disjoint (r s : ByteArray) : domCall ++ r ≠ tagPossession ++ s :=
++theorem call_join_disjoint (r s : ByteArray) : domCall ++ r ≠ domJoin ++ s :=
+   append_ne_of_byte (i := 17) (by decide) (by decide) (by decide)
+ 
+ theorem call_whoami_disjoint (r s : ByteArray) : domCall ++ r ≠ Command.whoami ++ s :=
+   append_ne_of_byte (i := 10) (by decide) (by decide) (by decide)
+ 
+-theorem possession_envelope_disjoint (r s : ByteArray) : tagPossession ++ r ≠ domEnvelope ++ s :=
++theorem join_envelope_disjoint (r s : ByteArray) : domJoin ++ r ≠ domEnvelope ++ s :=
+   append_ne_of_byte (i := 10) (by decide) (by decide) (by decide)
+ 
+-theorem possession_whoami_disjoint (r s : ByteArray) : tagPossession ++ r ≠ Command.whoami ++ s :=
++theorem join_whoami_disjoint (r s : ByteArray) : domJoin ++ r ≠ Command.whoami ++ s :=
+   append_ne_of_byte (i := 10) (by decide) (by decide) (by decide)
+ 
+ theorem envelope_whoami_disjoint (r s : ByteArray) : domEnvelope ++ r ≠ Command.whoami ++ s :=
+@@ -71,22 +71,22 @@ theorem envelope_call_disjoint (X : Ctx D) (u : Unsigned D) (world member grant
+   simp only [ByteArray.append_assoc]
+   exact call_not_envelope X u _
+ 
+-theorem possession_not_envelope (X : Ctx D) (sponsor next : D) (key r : ByteArray) :
+-    domEnvelope ++ r ≠ possessionMessage X sponsor next key := by
+-  unfold possessionMessage
++theorem join_not_envelope (X : Ctx D) (origin sponsor next : D) (key r : ByteArray) :
++    domEnvelope ++ r ≠ joinMessage X origin sponsor next key := by
++  unfold joinMessage
+   simp only [ByteArray.append_assoc]
+-  exact fun h => possession_envelope_disjoint _ r h.symm
++  exact fun h => join_envelope_disjoint _ r h.symm
+ 
+ theorem whoami_not_envelope (r : ByteArray) : domEnvelope ++ r ≠ Command.whoami := by
+   intro h
+   exact envelope_whoami_disjoint r ByteArray.empty (by rw [ByteArray.append_empty]; exact h)
+ 
+-/-- A call's message is never a possession proof's. -/
+-theorem call_not_possession (X : Ctx D) (u : Unsigned D) (sponsor next : D) (key : ByteArray) :
+-    X.callMessage u ≠ possessionMessage X sponsor next key := by
+-  unfold Ctx.callMessage possessionMessage
++/-- A call's message is never a join consent's. -/
++theorem call_not_join (X : Ctx D) (u : Unsigned D) (origin sponsor next : D) (key : ByteArray) :
++    X.callMessage u ≠ joinMessage X origin sponsor next key := by
++  unfold Ctx.callMessage joinMessage
+   simp only [ByteArray.append_assoc]
+-  exact call_possession_disjoint _ _
++  exact call_join_disjoint _ _
+ 
+ /-- A call's message is never the identity probe. -/
+ theorem call_not_whoami (X : Ctx D) (u : Unsigned D) : X.callMessage u ≠ Command.whoami := by
+@@ -99,7 +99,7 @@ theorem call_not_whoami (X : Ctx D) (u : Unsigned D) : X.callMessage u ≠ Comma
+ theorem invite_call_disjoint (r s : ByteArray) : Invite.domInvite ++ r ≠ domCall ++ s :=
+   append_ne_of_byte (i := 10) (by decide) (by decide) (by decide)
+ 
+-theorem invite_possession_disjoint (r s : ByteArray) : Invite.domInvite ++ r ≠ tagPossession ++ s :=
++theorem invite_join_disjoint (r s : ByteArray) : Invite.domInvite ++ r ≠ domJoin ++ s :=
+   append_ne_of_byte (i := 10) (by decide) (by decide) (by decide)
+ 
+ theorem invite_envelope_disjoint (r s : ByteArray) : Invite.domInvite ++ r ≠ domEnvelope ++ s :=
+@@ -117,18 +117,18 @@ theorem invite_not_envelope (u r : ByteArray) : domEnvelope ++ r ≠ Invite.mess
+ theorem invite_not_call (X : Ctx D) (v : Unsigned D) (u : ByteArray) : Invite.message u ≠ X.callMessage v :=
+   invite_call_disjoint u (X.unsignedBytes v)
+ 
+-theorem invite_not_possession (X : Ctx D) (sponsor next : D) (key u : ByteArray) :
+-    Invite.message u ≠ possessionMessage X sponsor next key := by
+-  unfold possessionMessage
++theorem invite_not_join (X : Ctx D) (origin sponsor next : D) (key u : ByteArray) :
++    Invite.message u ≠ joinMessage X origin sponsor next key := by
++  unfold joinMessage
+   simp only [ByteArray.append_assoc]
+-  exact invite_possession_disjoint _ _
++  exact invite_join_disjoint _ _
+ 
+ /-! ## The cancel's domain against the other five (KERNEL-60; byte 19, 17 or 10 differs) -/
+ 
+ theorem cancel_call_disjoint (r s : ByteArray) : domCancel ++ r ≠ domCall ++ s :=
+   append_ne_of_byte (i := 19) (by decide) (by decide) (by decide)
+ 
+-theorem cancel_possession_disjoint (r s : ByteArray) : domCancel ++ r ≠ tagPossession ++ s :=
++theorem cancel_join_disjoint (r s : ByteArray) : domCancel ++ r ≠ domJoin ++ s :=
+   append_ne_of_byte (i := 17) (by decide) (by decide) (by decide)
+ 
+ theorem cancel_envelope_disjoint (r s : ByteArray) : domCancel ++ r ≠ domEnvelope ++ s :=
+@@ -152,11 +152,11 @@ theorem cancel_not_call (X : Ctx D) (c : Call D) (u : Unsigned D) : X.cancelMess
+   unfold Ctx.cancelMessage Ctx.callMessage
+   exact cancel_call_disjoint _ _
+ 
+-theorem cancel_not_possession (X : Ctx D) (c : Call D) (sponsor next : D) (key : ByteArray) :
+-    X.cancelMessage c ≠ possessionMessage X sponsor next key := by
+-  unfold Ctx.cancelMessage possessionMessage
++theorem cancel_not_join (X : Ctx D) (c : Call D) (origin sponsor next : D) (key : ByteArray) :
++    X.cancelMessage c ≠ joinMessage X origin sponsor next key := by
++  unfold Ctx.cancelMessage joinMessage
+   simp only [ByteArray.append_assoc]
+-  exact cancel_possession_disjoint _ _
++  exact cancel_join_disjoint _ _
+ 
+ theorem cancel_not_whoami (X : Ctx D) (c : Call D) : X.cancelMessage c ≠ Command.whoami := by
+   intro h
+@@ -171,7 +171,7 @@ theorem cancel_not_invite (X : Ctx D) (c : Call D) (u : ByteArray) : X.cancelMes
+ theorem head_call_disjoint (r s : ByteArray) : Head.domHead ++ r ≠ domCall ++ s :=
+   append_ne_of_byte (i := 10) (by decide) (by decide) (by decide)
+ 
+-theorem head_possession_disjoint (r s : ByteArray) : Head.domHead ++ r ≠ tagPossession ++ s :=
++theorem head_join_disjoint (r s : ByteArray) : Head.domHead ++ r ≠ domJoin ++ s :=
+   append_ne_of_byte (i := 10) (by decide) (by decide) (by decide)
+ 
+ theorem head_cancel_disjoint (r s : ByteArray) : Head.domHead ++ r ≠ domCancel ++ s :=
+@@ -195,11 +195,11 @@ theorem head_not_envelope (u r : ByteArray) : domEnvelope ++ r ≠ Head.message
+ theorem head_not_call (X : Ctx D) (v : Unsigned D) (u : ByteArray) : Head.message u ≠ X.callMessage v :=
+   head_call_disjoint u (X.unsignedBytes v)
+ 
+-theorem head_not_possession (X : Ctx D) (sponsor next : D) (key u : ByteArray) :
+-    Head.message u ≠ possessionMessage X sponsor next key := by
+-  unfold possessionMessage
++theorem head_not_join (X : Ctx D) (origin sponsor next : D) (key u : ByteArray) :
++    Head.message u ≠ joinMessage X origin sponsor next key := by
++  unfold joinMessage
+   simp only [ByteArray.append_assoc]
+-  exact head_possession_disjoint _ _
++  exact head_join_disjoint _ _
+ 
+ theorem head_not_whoami (u : ByteArray) : Head.message u ≠ Command.whoami := by
+   intro h
+@@ -217,7 +217,7 @@ theorem head_not_cancel (X : Ctx D) (c : Call D) (u : ByteArray) : Head.message
+ theorem certify_call_disjoint (r s : ByteArray) : Head.domCertify ++ r ≠ domCall ++ s :=
+   append_ne_of_byte (i := 10) (by decide) (by decide) (by decide)
+ 
+-theorem certify_possession_disjoint (r s : ByteArray) : Head.domCertify ++ r ≠ tagPossession ++ s :=
++theorem certify_join_disjoint (r s : ByteArray) : Head.domCertify ++ r ≠ domJoin ++ s :=
+   append_ne_of_byte (i := 10) (by decide) (by decide) (by decide)
+ 
+ theorem certify_cancel_disjoint (r s : ByteArray) : Head.domCertify ++ r ≠ domCancel ++ s :=
+@@ -249,11 +249,11 @@ theorem certify_not_call (X : Ctx D) (v : Unsigned D) (u : ByteArray) :
+     Head.certifyMessage u ≠ X.callMessage v :=
+   certify_call_disjoint u (X.unsignedBytes v)
+ 
+-theorem certify_not_possession (X : Ctx D) (sponsor next : D) (key u : ByteArray) :
+-    Head.certifyMessage u ≠ possessionMessage X sponsor next key := by
+-  unfold possessionMessage
++theorem certify_not_join (X : Ctx D) (origin sponsor next : D) (key u : ByteArray) :
++    Head.certifyMessage u ≠ joinMessage X origin sponsor next key := by
++  unfold joinMessage
+   simp only [ByteArray.append_assoc]
+-  exact certify_possession_disjoint _ _
++  exact certify_join_disjoint _ _
+ 
+ theorem certify_not_whoami (u : ByteArray) : Head.certifyMessage u ≠ Command.whoami := by
+   intro h
+diff --git a/Protocol/Rows.lean b/Protocol/Rows.lean
+index 793d1c9..a3bd207 100644
+--- a/Protocol/Rows.lean
++++ b/Protocol/Rows.lean
+@@ -1641,10 +1641,10 @@ def staleRefusingRow : Row where
+   name := "staleRefusing"
+   replaces := []
+   ops := settled
+-  kinds := ["enroll", "install", "create", "grant", "write", "revoke"]
++  kinds := ["enroll", "install", "create", "grant", "write", "retire"]
+   drive := .members (welcome ++ [
+     { actor := "newcomer", act := .cmd ["write", "@shared", "2", "1", "--via", "@g"],
+-      expect := .declined "stale", fault := .race "sponsor" ["revoke", "@g"] },
++      expect := .declined "stale", fault := .race "sponsor" ["retire", "@g"] },
+     { actor := "newcomer", act := .rerun, expect := .refused "stale" }])
+   plant := .measured "receive-first staleBehind: line 7 declined stale, the settlement open"
+ 
+diff --git a/Protocol/Rows/Loopback.lean b/Protocol/Rows/Loopback.lean
+index 2371206..f376943 100644
+--- a/Protocol/Rows/Loopback.lean
++++ b/Protocol/Rows/Loopback.lean
+@@ -271,7 +271,7 @@ def sawOp (op : Op) : M D Unit :=
+ def kindName : Body D → String
+   | .enroll .. => "enroll" | .rotate .. => "rotate" | .install .. => "install"
+   | .create .. => "create" | .write .. => "write" | .law .. => "law" | .invoke .. => "invoke"
+-  | .grant .. => "grant" | .revoke .. => "revoke"
++  | .grant .. => "grant" | .retire .. => "retire"
+   | .issue .. => "issue" | .account .. => "account" | .transfer .. => "transfer" | .credit .. => "credit"
+ 
+ /-- What an invoke's run costs, measured on the World the call was planned on (the actor's
+diff --git a/client/tests/doc.rs b/client/tests/doc.rs
+index 3e08aee..1bcf85e 100644
+--- a/client/tests/doc.rs
++++ b/client/tests/doc.rs
+@@ -236,7 +236,7 @@ fn a_section_repairs_across_a_revoked_contributor() {
+     assert!(state.contains(&c1), "selected: {state}");
+ 
+     // The grant revoked: the justification is withdrawn, and the next judgment says so by name.
+-    a.ok(&["revoke", &g1]);
++    a.ok(&["retire", &g1]);
+     a.ok(&[
+         "invoke",
+         &obj,
+diff --git a/client/tests/pin.rs b/client/tests/pin.rs
+index 1fdcbab..995a386 100644
+--- a/client/tests/pin.rs
++++ b/client/tests/pin.rs
+@@ -148,7 +148,7 @@ fn pinned_live_point_read_refuses_a_revoked_grant() {
+     ok(&["invoke", &obj, "1", "(record)", "--range", "facts", "4"]);
+     // The grant revoked (its cell a tombstone): the SAME command, re-planned at follow's World,
+     // pins the row and the method's live read sees the cell dead and refuses by its own name.
+-    ok(&["revoke", &gr]);
++    ok(&["retire", &gr]);
+     let (e, o) = refused(&["invoke", &obj, "2", "(record)", "--pin", "facts", &cell]);
+     assert_eq!(e, "refused program\n");
+     assert!(o.contains("grantDead"), "{o}");

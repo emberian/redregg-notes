@@ -1,0 +1,31 @@
+/run/user/1001/p4.lLiI5S/r/world/sponsor/sources/create-tc-blind.authoring/g0001/intent.bin
+{
+  "acceptedCount": "22",
+  "confirmation": "installed",
+  "eventId": "61230146125056340648349779931317710562179168424415079554230174613836525297961",
+  "transactionId": "106651922610955057590657011354798949609224308696109220237050570917584082362201",
+  "type": "confirmed",
+  "worldRoot": "99217082359253270564626482931657626575538852847841668476153807543959864731761"
+}
+{
+  "authority": "hint-only",
+  "controlCapability": "16395422698233147045",
+  "kind": "object",
+  "name": "tc-blind",
+  "observeCapability": "11101713168547460334",
+  "operationCapability": "11101713168547460334",
+  "provenance": {
+    "birthReceipt": {
+      "acceptedCount": "22",
+      "confirmation": "installed",
+      "eventId": "61230146125056340648349779931317710562179168424415079554230174613836525297961",
+      "transactionId": "106651922610955057590657011354798949609224308696109220237050570917584082362201",
+      "type": "confirmed",
+      "worldRoot": "99217082359253270564626482931657626575538852847841668476153807543959864731761"
+    },
+    "reservationDigest": "9ed7096a7b0fede8e26f011fa21b4e4cff9d4d062f20d21eccc6b4f6859d8c1c",
+    "reservationRecord": "/run/user/1001/p4.lLiI5S/r/world/namespace/request-9ed7096a7b0fede8e26f011fa21b4e4cff9d4d062f20d21eccc6b4f6859d8c1c.json"
+  },
+  "target": "15441563663773007075",
+  "type": "minidregg-participant-reference-v1"
+}

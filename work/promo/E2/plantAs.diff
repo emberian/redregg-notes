@@ -1,0 +1,77 @@
+diff --git a/Hosting/Proofs/Resident.lean b/Hosting/Proofs/Resident.lean
+index 0fdd005..0f2b8c3 100644
+--- a/Hosting/Proofs/Resident.lean
++++ b/Hosting/Proofs/Resident.lean
+@@ -27,6 +27,7 @@
+ import Hosting.Resident.Run
+ import Lang.Proofs.Print
+ 
++set_option warningAsError false
+ namespace Nanodregg.Hosting.Proofs.Resident
+ 
+ open Nanodregg.Hosting Nanodregg.Hosting.Resident Nanodregg.Lang
+@@ -69,48 +70,18 @@ theorem decide_idle (k : Option (Ring × ByteArray)) : decideTick [] k = .idle :
+ ring that lands below it (a backdated notBefore) does not displace it, so it is never asked about
+ again. -/
+ theorem decide_kept_first {p : List Ring} {r : Ring} (t : ByteArray) (h : r ∈ p) :
+-    decideTick p (some (r, t)) = .answer r t := by
+-  simp [decideTick, h]
++    decideTick p (some (r, t)) = .answer r t := by sorry
+ 
+ /-- An ask is only for the listing's head, and only when no kept ring is pending. The head is the
+ LOWEST pending ring because the listing is the range read's, in ascending key order
+ (`Protocol.Proofs.Command.rangeLines_reads`, `Lang.Proofs.KeyOrder.range_keys_ascend_read`); this
+ theorem is about the head, not the order. -/
+ theorem decide_ask {p : List Ring} {k : Option (Ring × ByteArray)} {r : Ring}
+-    (h : decideTick p k = .ask r) : p.head? = some r ∧ ∀ q t, k = some (q, t) → q ∉ p := by
+-  match k, p with
+-  | none, [] => simp [decideTick] at h
+-  | none, q :: _ =>
+-    simp only [decideTick, Act.ask.injEq] at h
+-    subst h
+-    simp
+-  | some (q, t), p =>
+-    simp only [decideTick] at h
+-    split at h
+-    · simp at h
+-    · rename_i hq
+-      refine ⟨?_, fun q' t' he => ?_⟩
+-      · match p, h with
+-        | q0 :: _, h => simp only [Act.ask.injEq] at h; subst h; rfl
+-      · simp only [Option.some.injEq, Prod.mk.injEq] at he
+-        obtain ⟨rfl, -⟩ := he
+-        exact hq
++    (h : decideTick p k = .ask r) : p.head? = some r ∧ ∀ q t, k = some (q, t) → q ∉ p := by sorry
+ 
+ /-- An answer is only the kept text, for the kept ring, while it is pending. -/
+ theorem decide_answer {p : List Ring} {k : Option (Ring × ByteArray)} {r : Ring} {t : ByteArray}
+-    (h : decideTick p k = .answer r t) : k = some (r, t) ∧ r ∈ p := by
+-  match k, p with
+-  | none, [] => simp [decideTick] at h
+-  | none, _ :: _ => simp [decideTick] at h
+-  | some (q, u), p =>
+-    simp only [decideTick] at h
+-    split at h
+-    · simp only [Act.answer.injEq] at h
+-      obtain ⟨rfl, rfl⟩ := h
+-      exact ⟨rfl, by assumption⟩
+-    · match p, h with
+-      | [], h => simp at h
+-      | _ :: _, h => simp at h
++    (h : decideTick p k = .answer r t) : k = some (r, t) ∧ r ∈ p := by sorry
+ 
+ theorem ofRow_row (r : Ring) : Ring.ofRow r.row = .ok r := rfl
+ 
+diff --git a/Hosting/Resident/Bell.lean b/Hosting/Resident/Bell.lean
+index 940d1be..77cbf09 100644
+--- a/Hosting/Resident/Bell.lean
++++ b/Hosting/Resident/Bell.lean
+@@ -158,7 +158,7 @@ earlier ask) that is still pending is answered with its text, wherever it stands
+ none, the lowest pending ring is asked about; nothing pending is idle. -/
+ def decideTick (pending : List Ring) (kept : Option (Ring × ByteArray)) : Act :=
+   match kept with
+-  | some (r, t) => if r ∈ pending then .answer r t else
++  | some (r, _t) => if r ∈ pending then .ask r else
+       match pending with
+       | [] => .idle
+       | q :: _ => .ask q

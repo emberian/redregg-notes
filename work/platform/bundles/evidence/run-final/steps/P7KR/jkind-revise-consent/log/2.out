@@ -1,0 +1,31 @@
+/run/user/1001/p4.lLiI5S/r/world/sponsor/sources/create-p7-one.authoring/g0001/intent.bin
+{
+  "acceptedCount": "14",
+  "confirmation": "installed",
+  "eventId": "92322212494323434912451429040065379297886186905438917935536135223296670689271",
+  "transactionId": "17830228450533191699806698161226448109861804990945957942976826592171957164166",
+  "type": "confirmed",
+  "worldRoot": "78130729985404456307141760174861072392765248465285612595751179182305367351864"
+}
+{
+  "authority": "hint-only",
+  "controlCapability": "10822411265054410198",
+  "kind": "object",
+  "name": "p7-one",
+  "observeCapability": "9274955556332500669",
+  "operationCapability": "9274955556332500669",
+  "provenance": {
+    "birthReceipt": {
+      "acceptedCount": "14",
+      "confirmation": "installed",
+      "eventId": "92322212494323434912451429040065379297886186905438917935536135223296670689271",
+      "transactionId": "17830228450533191699806698161226448109861804990945957942976826592171957164166",
+      "type": "confirmed",
+      "worldRoot": "78130729985404456307141760174861072392765248465285612595751179182305367351864"
+    },
+    "reservationDigest": "0a88c118022570bf1d560abda08f83bca2a6adeeb8a8b73bb8377ea08738d153",
+    "reservationRecord": "/run/user/1001/p4.lLiI5S/r/world/namespace/request-0a88c118022570bf1d560abda08f83bca2a6adeeb8a8b73bb8377ea08738d153.json"
+  },
+  "target": "13149253344159055206",
+  "type": "minidregg-participant-reference-v1"
+}

@@ -1,0 +1,108 @@
+#!/usr/bin/env bash
+# scripts/converge [--scheduled] | --install — THE CONVERGENCE: a periodic REPORT on the whole of origin/main.
+#
+# A landing builds what it changed and runs what it touched (scripts/commit). This is where the whole is looked at:
+#   1. scripts/standing.sh on origin/main in the converge worktree (wt/converge, reset to origin/main on every run;
+#      nothing else edits it), one convergence at a time box-wide (nanodregg-converge.flock): the whole build, the
+#      census, the generated files, the Rust workspace (check, clippy, fmt), every row and bench, the waste ceilings,
+#      and the source checks (gates/check.py);
+#   2. gates/converge.py record: the CONVERGENCE line over the range since the last GREEN report, each RED unit with
+#      the landings of that range it READ (by owner), each FIXED unit with its time-to-fix; appended to
+#      <common>/nanodregg-standing/convergence.log.
+# It never refuses a landing and never reverts one: a red is a task for the lane whose landing it names, fixed forward.
+# --scheduled (the timer, every 3 h): skipped when origin/main has not moved since the last report, or one is running.
+# --install: the systemd user timer nanodregg-converge.timer on this box (every 3 h).
+# The whole-tree build needs a real memory budget: SWARM_MEM_MAX (unset: swarm-build's 96G) below `gates/converge.py
+# floor` (1.25 x the largest completed build peak of the last 14 days) is refused by name (cv 01a16f6d: a 6 GB scope
+# killed lean with no error line, 84 false reds). A build that did not finish reads build=ABSENT(killed: …), never RED.
+# Run detached: nohup bash -c 'exec scripts/converge' > LOG 2>&1 & echo $! > job.pid
+set -uo pipefail
+. "$(dirname "$0")/gate-lib.sh"
+W=$(git -C "$repo" config nanodregg.convergewt || echo "$(cd "$common/../.." && pwd)/wt/converge")
+mode=now args=("$@")
+while [ $# -gt 0 ]; do
+  case $1 in
+    --scheduled) mode=scheduled ;;
+    --install) mode=install ;;
+    *) echo "usage: scripts/converge [--scheduled] | --install" >&2; exit 2 ;;
+  esac
+  shift
+done
+
+if [ $mode = install ]; then
+  d=$HOME/.config/systemd/user; mkdir -p "$d"
+  cat > "$d/nanodregg-converge.service" <<EOF
+[Unit]
+Description=nanodregg convergence: a report on origin/main, every 3 h while landings happen
+[Service]
+Type=oneshot
+WorkingDirectory=$W
+ExecStart=/bin/bash -c 'exec $W/scripts/converge --scheduled >> $common/nanodregg-standing/converge-timer.log 2>&1'
+EOF
+  cat > "$d/nanodregg-converge.timer" <<EOF
+[Unit]
+Description=nanodregg convergence every 3 h
+[Timer]
+OnCalendar=*-*-* 00/3:17:00
+Persistent=false
+[Install]
+WantedBy=timers.target
+EOF
+  git -C "$repo" fetch -q origin main || exit 2
+  [ -d "$W" ] || git -C "$repo" worktree add -q --detach "$W" origin/main || exit 2
+  systemctl --user daemon-reload && systemctl --user enable --now nanodregg-converge.timer &&
+    systemctl --user list-timers nanodregg-converge.timer --no-pager
+  exit $?
+fi
+
+# mem_floor_or_refuse: the build budget this run will have against the floor its whole-tree build needs.
+mem_floor_or_refuse() {
+  local fl cap capb
+  case " ${wrap[*]:-} " in *swarm-build*) ;; *) echo "converge: no swarm-build wrapper on this clone; no memory cap to judge"; return 0 ;; esac
+  fl=$(python3 "$repo/gates/converge.py" floor --peaks "$common/nanodregg-standing/build-peaks.log") ||
+    { echo "converge: REFUSED — gates/converge.py floor could not read the memory floor"; return 1; }
+  cap=${SWARM_MEM_MAX:-96G}
+  capb=$(python3 -c 'import sys; sys.path.insert(0, sys.argv[2]); import converge; print(converge.size_bytes(sys.argv[1]) or 0)' "$cap" "$repo/gates")
+  if [ "${capb:-0}" -lt "${fl%% *}" ]; then
+    echo "converge: REFUSED — SWARM_MEM_MAX=$cap is below the whole-tree build's memory floor ${fl#* }; a build under it is"
+    echo "  OOM-killed and reports nothing. Run with SWARM_MEM_MAX at or above the floor, or unset (96G)."
+    return 1
+  fi
+  echo "converge: memory: SWARM_MEM_MAX=$cap, floor ${fl#* }"
+}
+
+# One convergence at a time, box-wide. fd 5 is inherited by the re-exec below and by nothing it backgrounds.
+if [ -z "${ND_CONVERGE_INNER:-}" ]; then
+  flock_or_refuse || exit 2
+  exec 5> "$common/nanodregg-converge.flock"
+  if [ $mode = scheduled ]; then
+    flock -n 5 || { echo "converge: a convergence is running; this scheduled one is skipped"; exit 0; }
+  else
+    flock -w 7200 5 || { echo "converge: a convergence held the lock for 2 h; not run"; exit 76; }
+  fi
+  # The converge worktree is this script's own: reset to origin/main, then run that copy of this script.
+  git -C "$repo" fetch -q origin main || exit 2
+  [ -d "$W" ] || git -C "$repo" worktree add -q --detach "$W" origin/main || exit 2
+  git -C "$W" reset -q --hard origin/main || exit 2
+  cd "$W" || exit 2
+  ND_CONVERGE_INNER=1 exec bash "$W/scripts/converge" "${args[@]}"
+fi
+[ "$repo" = "$(cd "$W" && pwd)" ] || { echo "converge: the inner run must be the converge worktree's copy ($W)"; exit 2; }
+SD=$common/nanodregg-standing
+mkdir -p "$SD"
+mem_floor_or_refuse || exit 2
+
+sha=$(git -C "$repo" rev-parse HEAD)
+if [ $mode = scheduled ] && grep -qE "^CONVERGENCE ${sha:0:12} .* => (GREEN|RED) " "$SD/convergence.log" 2>/dev/null; then
+  echo "converge: origin/main ${sha:0:12} has not moved since the last report; skipped"; exit 0
+fi
+start=$(date +%s)
+echo "converge: origin/main ${sha:0:12}, started $(date -u +%FT%TZ)"
+bash "$W/scripts/standing.sh" "$sha" | tee "$SD/converge.standing"
+line=$(grep -m1 '^STANDING ' "$SD/converge.standing")
+[ -n "$line" ] || line="STANDING ${sha:0:12} (no verdict line: standing.sh exited before its verdict) => INCOMPLETE"
+printf '%s\n' "$line" > "$SD/converge.line"
+python3 "$W/gates/converge.py" record --repo "$repo" --sha "$sha" --line "$SD/converge.line" --dir "$SD" \
+  --tree "$SD/tree" --traces "$common/nanodregg-traces" | tee "$SD/converge.out"
+echo "converge: wall $(( ($(date +%s) - start) / 60 )) min"
+exit 0

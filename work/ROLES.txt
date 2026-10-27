@@ -1,4 +1,267 @@
+# DATE DRIFT (found 2026-10-20 08:25Z real): roster/STALL-WATCH/resume labels "10-19" = real 10-18, "10-21" = real 10-19, "10-22" = real 10-20 (git commit dates and transcript timestamps are authoritative; drift began at the 10-18 prune). Labels are kept as written; convert when a real date matters.
 ROOT	main (this session)
-SINS-LEDGER	a8e21495322a8b693	scout: software sins ledger from code → work/SINS-LEDGER-20261009.md
-REPAIR-1	retired (216K)	cd7155a1 on lane/repair1; gate red=0; publish SMOKE RED (helper path source-relative)
-REPAIR-1b	(spawned)	fix helper resolution via $CANDIDATE; land cd7155a1+ through gate → publish → standing run
+WORKLOAD	retired (234K)	lane/perf-workload d37eee80: scripts/perf/workload.py + row_perf + docs; warm-7dea0626 built on hbox (Lean 1582 s, host 899 s); smoke 364–441 s @N20 M16 K8
+PERF-FIX	retired (351K)	lane/perf-fix a16e2f1b: 5 local fixes, ~2× every phase (instr), growth row 1000 rec p99 10.9→3.0 s; priced op 212 = 42% of server time
+PERF-PRAXIS	retired (180K)	PERF-PRAXIS-20261013.md written (5 practices + Mini recipe); note: cv search index stale for cv/fn/delvetalk2, found via cv ls --cwd
+TRACE-CREATE	retired	perf-trace/CREATE.md (N1 confirmed cold-opens the Store per receipt; openings never advanced; decide ×7–8)
+TRACE-JUDGE	retired (278K)	perf-trace/JUDGE.md (22 decisions + 22 front-end replays per update)
+TRACE-READ	retired (215K)	perf-trace/READ.md (at-read = 2 cold opens via process model; checkpoints ARE kept → stateAt works)
+PERF-FIX-2	retired (cap)	lane/perf-fix 3f873592: A (−31%/−28%), E (loadDirectory gone), C (planDecision; plan p50 147→59 ms); growth verdict pending (3-run chain queued)
+PERF-CLIENT	retired (323K)	lane/perf-client 7cc040d6: G,H,I,L; Hosts 216→45; current read 444M→1M instr; 99% of remaining client cost = consent provider (Lean)
+PERF-CODEC	retired	lane/perf-codec c92e4ea1: record decode −30% instr (J + bytesEqual csimp ×4 + FnWire decodeTR); no measurable workload change (decode not material per birth); 2 orphan modules red pre-existing
+LAND-HBOX	retired (306K)	hbox landing pipeline live; 30a5009a LANDED on main; next: lane/land-hbox-next 7ffd6524 (baseline-relative judge)
+PERF-FIX-3	retired (cap)	growth verdict: load-sensitive, A/E/C clear; B wash (side ref); F landed 9bdf3a06 (full open 639→422 ms); real B = incremental validateServed; perf-stat scaling artifact found
+PERF-FIX-4	retired (328K)	lane/perf-fix 5b7cae0d: real B (refresh 103→53 ms), M extras (op 214 33→15 ms), gates commit (577 ledger lines); stray chain PIDs 2677382/2836669 for Ember
+CONTRIB-REVIEW	retired (119K)	PR #3: land ours + fold pug's anchor_binding key, explicit drop, restart test; #1 #2 are ISSUES (Lean-only floors proposal, sound; GenericSimplex Rust port needs LICENCE yes/no from Ember)
+PERF-CLIENT-2	retired	c1cc0a89 on lane/perf-client: pug PR #3 folded (anchor_binding key, drop on change, restart test; co-authored), 2 H defects fixed; PR3-REPLY.md drafted
+FLEET-RACE	retired	lane\/fleet-race 7b8cdd38 (on main 7dea0626): typed ObservationRefusal; replan on stale observation; fleetsign 4\/4 (was 1\/3); plant red by name
+INTEGRATOR	retired (540K)	next v1 0125b224, v2 a5483db3 published; ledger-meaning; parallel gate; v3 c3b667b4 chain7 running at handoff
+STORE-ROOT	retired (266K)	lane/store-root cda83ad6: Theory/AuthTrieCache.lean (world root on the compressed AuthTrie; insert ~log2 n hashes; order-independent; clash nodes); step 2 (wire + root value change + tag) → STORE-ROOT-2
+STATE-AT	retired (270K)	lane/state-at d951d57a: at-reads from kept checkpoints (30k: 30/59/165 ms vs minutes); plant PASS; rows chain running; (a) map+array → STATE-AT-2
+CONSENT-MODEL	retired	lane/consent-model b7b007db: resident provider (invoke 19.5→1.6 G, birth 18.9→4.7 G); frame 233 recheck; fork/rollback plants; FINDING: client past reads from operator-sealed base (cv 01a13bcd); DESIGN 2+(1) → successor (pause: client consent key custody)
+TURN-LOG	retired (270K)	lane/turn-log b1152e5d: R4a done (Turn codec, genesis World, follower = fold, digest guards ≤ record log 0.75–0.96×, dishonest half proved, 7/7 journeys); R4b → successor
+CODEC-SHAPES	(spawned)	canonical codecs (no re-encode), ByteArray cursor, one-source tags → lane\/codec-shapes
+FLOORS	a43abb6a98038c035	RETIRED at 610K; DONE f580e539 on next v1; continuation = FLOORS-LOG.md §CONTINUATION; follow-ups cv 01a13e34; ISSUE1-REPLY.md + issuer-cap veto await Ember
+FLOORS-2	aa89552372b4946fd	successor: rebase lane/floors onto next v3.1 03d338ee (fixture re-emit + objective pin redone at tip), umbrella+rows once on burst4 → v4
+STORE-ROOT-2	retired (cap)	lane/store-root 81269fd3 DONE: compressed world root; updates 1207→395 G, reads 695→181 G, read-at p50 7.1→1.3 s; rebase in rb; INTEGRATOR re-ratchets + folds the open at merge
+TURN-LOG-2	retired (cap)	4a coded (uncommitted; b3 build pending); SnapRepresents, DeployedRepresentsCheck, CellTableCodec, DeployedCharge clean standalone; charge patch drafted
+STATE-AT-2	retired (cap)	rows on 11c4226f PASS (growth load-noise); engine + newest-first history built green on state-at-dev; rest of (a) → STATE-AT-3
+DELVE-SCOUT	retired	DELVE-SCOUT-20261014.md: DelveTalk forked OB at dcab86da (law compiler 353→1526 lines; one clause language; resident serve; checked entries keyed by packetSha256: 0.7 ms/update); ATproto: signed repo per town, DID-bound requests checked in TRANSPORT not kernel; fn: no ATproto yet, PDS+relay fits
+PERF-MEMO	(spawned)	checked-entry memo keyed by pin in the resident Host (DelveTalk shape) → lane\/perf-memo
+CONSENT-MODEL-2	ab8555560e22961e3	RETIRED at 444K; Part A DONE 963d9818 (v4 queue); continuation = CONSENT-MODEL-LOG.md §CONTINUATION 2; Part B PAUSED on Ember (frontier MAC key)
+CONSENT-3	a9085c87ae829df13	successor: JPAY6 allowlist red (cv 01a13c42-dc55; named+used or not written, no wildcard) → jpay rows on burst4; then HOME-leak control; Part B on ruling
+FOLLIES	retired	FOLLIES-20261014.md: 10 ranked (instrument self-tests per landing 20–40 min; closure ledger; publish rebuild 8–15 min; growth row as critical path 30–70 min measuring updates; perf row self-refused; 417 token-census rows review-pending)
+BIRTHS-ROW	retired	lane/births-row c385f359: row_births (THE BAR) FAIL at main-era set: n=64 create p99 12.3 s (bar 5 s), reopen 7.7 s PASS; growth → nightly; pending-when-green-at-main
+CENSUS-REVIEW	a61874056918a7b87	DONE review (341 L1 / 21 defect / 28 not-a-token / 1 restricted); TokenCensus hang fixed b11020da on GitHub (unbuilt; INTEGRATOR-4 batch 2 builds it)
+HYP-INSTANCES	retired	lane/hyp-instances 357273ab: allowlist ratchet-only; 26 families given sat+refute instances; 1 hypothesis deleted (provable); 75→48; plants red by name
+INPUTS-HBOX	retired	lane/inputs-hbox f72dbdc5: m7 PASS, exchange PASS (local fn), JPAY6 now RUNS → real red (consent allowlist refuses jpay6 keys, cv 01a13c42-dc55); m6grain needs uid 1001 + unblocked bwrap (design, cv 01a13c42-dcb6)
+GUARDS	retired	lane/guards e22cdedc: 70 #guard → 77 named theorems (14 general, 16 kernel instances, 47 compiled); ratchet at 0; general facts stay in WorldKindChecks (move deferred: full rebuild)
+HERMES-BWRAP	retired	lane/hermes-bwrap a63c33ff: resolve-bwrap (profiled first); HERMES PASS on hbox (SIGKILL recovery, delegation); m6grain needs only uid 1001 (+ exec ACL on mini-grain-bwrap = Ember)
+TURN-LOG-3	retired (cap)	lane/turn-log 7877e6e7: 4a + CHARGE (one storage rule; ~50 receivers; append refuses charge mismatch); pole/follower VACUOUS until fresh Stores (old ones refuse on charge)
+COST-MODEL	retired	lane/cost-model d670d30a: docs/WASTE-MODEL.md + check-waste-model (ratchet; instruction rows load-safe); ratios 11×–6,700× over necessary; none forced by the design; redesign thresholds: law ≥100 M instr, >1,400 turns/s, >85 MB state
+M6GRAIN-HBOX	retired	lane/m6grain-hbox bb993cc9: m6grain RUNS on hbox as mini-operator (sudo scoped, cleanup verified) and FAILS: spk-host makes its own userns → AppArmor denies CAP_SETGID (cv 01a13d9c-8a9d)
+HP-DESIGN	retired	docs/HP-DESIGN.md 4329b99c (lane/hp-design): 5 decisions; ranges HP-1 BOUNDS → HP-3 LOOP → HP-6 SIM → HP-4 CLIENT → HP-5 ASSERT → HP-2 BYTES+DIGEST → HP-7 KECCAK; §5.1 lane map; §5.3 STOP list; §6 invariants table
+HP-1	a2567075e46c21f3f	RETIRED at 345K (DONE 4a83fdb7, rows PASS burst4); continuation = HP-1-LOG.md §CONTINUATION
+HP-1b	a32f5ad429c0df942	successor from HP-1-LOG.md §CONTINUATION: overBound wire tag (OUTCOME v5→v6) + cellBytesMax 8 MiB / turnBytesMax=frameBytesMax on lane/hp-1-bounds, then HP-5 ASSERT on lane/hp-5-assert
+HP-6	retired	lane/hp-6-sim 75887614: world-sim gate (34 s; 20 seeds PASS; 7/7 real Stores; both plants red at seed+step); FINDING: Turn.ofIntent ignores expectedPre/expectedRoot → stale intents admitted without the receiver preflight (ruled: guards from the intent)
+INTEGRATOR-2	ac9eceae0045310a1	RETIRED at 383K; next v3.1 03d338ee published (v3 gate red=5 fixed); landing running burst4; v4 assembling hbox e6e2efb8; handoff = INTEGRATOR-LOG.md §STATE AT HANDOFF (INTEGRATOR-2)
+INTEGRATOR-3	ab5e29295f12e9919	successor: v3.1 verdict → push main from burst4 + hbox standing run (hermes/m7/exchange); v4 assembly (hp-1-bounds tip, floors tip, census-review, consent-model, state-at-c2, codec-shapes)
+STATE-AT-3	(spawned)	the engine range end to end: Loaded holds the engine, Engine.step, no Θ(h) rebase rebuild, at-read prefix indices → lane\/state-at
+BURST4-UP	done	burst4-a 207.188.7.163 (DAL, $1.52/h, sv_R82A0y4Rga6mM) warm at next a5483db3, 0 DIFF, 509 lane refs seeded hbox→box direct; hbox puller pull-burst4-remote.timer; persvati: --no-root mode built (lane/burst-noroot-host) but blocked on its 15%-free disk floor (12.9% free) → Ember (cv 01a13dc4)
+SPK-NS	(resumed)	r4: maps OK; bootstrap refuses "launch executable is writable, untrusted, unexecutable after identity drop or oversized" (4 reasons in one message) → fix placement/check, r5
+TURN-LOG-4	a8ae04bc91059e86d	guards-from-intent LANDED 45aadc74 (receiver-only 395→0); ruled: delete Turn.absent; next carries → hp-1-bounds tip merge → step 2 (archive, LOG v3, recordsOf)
+
+# 10-15 06:50Z PAUSE: every lane above is PAUSED (usage wall); burst4 deleted. Resume from resume/ROOT-CONTINUATION-20261015.md §PAUSE; successors spawn from each lane's continuation file, never from this table.
+INTEGRATOR-4	ad26fbf90db3b0bff	RETIRED ~385K: batch 1 on main cfb68bf9 (first hbox verdict 136/147); batch 2 assembled 1c275180; handoff INTEGRATOR-LOG.md
+ARCH-MAP	a51b181301e023b5a	DONE (473K): ARCHITECTURE-20261016.md from main 2c27b08b (layers, interfaces, protocol map, persistence heart, todo per layer, twins)
+HISTORY-RECOVERY	a1fcf82cef879be71	10-16 scholar: RECOVERY-20261016.md via cv (timeline, what exists where, dropped promises, drift record, recover-first)
+CYCLE-FIX	a8d9cdf7b44785a06	DONE lane/cycle-fix ca6e7ac8+6b7b0c00+c38b994a (UNBUILT; verify on first burst box per CYCLE-FIX-LOG.md): was scholar: CYCLE-TIME-20261016.md (measured cycle, dominant terms, ranked fixes, one-shared-tree design, burst plan)
+BUILD-PROTOCOL	ade162e805be9dee5	DONE table+rows (08e737d); at 364K → continuation PROTOCOL-LOG.md; successor PROTOCOL-2 for row runner + Protocol/Command when Receive + loop exist
+BUILD-KERNEL	a848af5df49d1cb5e	RETIRED ~507K (7 commits: World/Turn/admit, Receive 10 call kinds, members/keys/grants, kernel-sim 64 seeds, authority theorems); continuation KERNEL-LOG.md; was: versioned modules, 51 admission ctors, twins, one-state-machine factoring → DELETE-KERNEL-20261016.md
+BUILD-CLIENT	af474cce79791ebdc	RETIRED ~360K; nd + nd-supervise built (35dc09f), roundtrip vs stand-ins; continuation CLIENT-LOG.md; successor CLIENT-2 when HOST serve/follow exist
+BUILD-CODEC	aca5ce91ec8e30814	RETIRED 880K: Stream family + canonicity, Tree/varint, Layout/tagged/oneOf, Call/World/batch codecs, Hash, Ed25519 verify+sign, Tag, Deployed Env, emitter; continuation CODEC-LOG.md; was: tags, codec twins, bytes/digests, one flag day → DELETE-CODEC-20261016.md
+BUILD-GATES	ab554f1302ac0f14d	RETIRED ~358K at 4bdf47f (gates, scripts/commit+worktree, waste ratchet); continuation GATES-LOG.md
+BUILD-HOST	acc8e79a764976231	RETIRED ~383K; loop admits via World.admit (020ee52), torn-tail theorems, HOST-12; continuation HOST-LOG.md
+BUILD-LANG	a15714275da23c175	RETIRED ~452K (core + theorems; Lang.program; lang-journey GREEN; Read.lean); continuation LANG-LOG.md
+HOST-2	aa59a5d6cd736cf26	RETIRED 264K: Open, Serve, Store + host-file-sim, WASTE rows, K1 number; blocked on CODEC; continuation HOST-LOG.md ## HOST-2; HOST-3 when CODEC lands verifier + World codec
+PROTOCOL-2	a45ff664477fefd42	RETIRED 287K: rows/run, Command (11 verbs), read envelope, chainMismatch; continuation PROTOCOL-LOG.md; PROTOCOL-3 when CODEC Call codec lands
+CLIENT-2	a1612c507f0ff2b93	RETIRED 2026-10-17 21:20Z (idle past ceiling 531K; last c6e4abf; continuation CLIENT-LOG.md ## CLIENT-2 items 1–27)
+KERNEL-2	a52155dc75a557efd	RETIRED ~310K: touches (1.0), weightMax, world-weight, rederive, names; continuation KERNEL-LOG.md ## KERNEL-2
+LANG-2	a106897dc9c97be85	RETIRED >350K: Stream.tree port, law_never_stuck, merge_ascending, BigStep reference semantics (both directions), data sums on choice; continuation LANG-LOG.md ## LANG-2; LANG-3 when HOSTING exists
+CODEC-SIG	a011ef19a380cf9f3	KILLED at spawn (duplicate of CODEC Ed25519; ROOT error)
+KERNEL-3	ac54dee13ae098eaf	RETIRED ~360K: conservation equalities, Right.enroll + one grant kind, WorldRooted proved, Sim/Gen generic; continuation KERNEL-LOG.md ## KERNEL-3
+PROTOCOL-3	aed76cbdc2d5d6b3a	RETIRED ~405K: loopback driver (8 rows PASS, 4 PENDING blockedOn), rotate verb, follow verb deleted, rulings recorded; continuation PROTOCOL-LOG.md ## PROTOCOL-3
+HOST-3	a7a089836d4fdcb8c	RETIRED: base seal (HOST-14 conditions), host genesis|serve|follow exe on deployed Ctx, log pages, names; continuation HOST-LOG.md ## HOST-3; HOST-4 when needed (thin read, cell-root flag day, K1 re-read)
+BURST5-UP	aee5b31db7d3a375c	DONE: burst5-a box A at cfb68bf9; cycle fixes verified + memory-weighted seats 0b3de7f1 (batch 3); teardown list in BURST5-UP-LOG.md
+INTEGRATOR-5	a7c7dd3c023b1dfd6	RETIRED 2026-10-17 ~16:50Z (near cap after a compaction); batch 2 on main 92b6e19d; batch 3 with C2-MERGE ad2f5e37758c91fde; continuation INTEGRATOR-LOG.md STATE AT HANDOFF (INTEGRATOR-5, final)
+SCOUT-SWARM	wf_997880a0-fd5	Workflow: 27 sonnet scouts + 6 opus evaluators → ASSEMBLY-<area>.md; builders spawned from the briefs
+PROTOCOL-4	a987d514b07b38010	RETIRED >350K: paging, thin option A (10 rows PASS), PROTOCOL-17/20/21 edited not built (WIP patch), PROTOCOL-19 defect; continuation PROTOCOL-LOG.md ## PROTOCOL-4; PROTOCOL-5 with the hbox recipe
+KERNEL-4	a18c18cfac4f4a41e	RETIRED: deployed Sim default (standing judges it), size reclassification, generic trie 87c721e, KERNEL-24/25 written; continuation KERNEL-LOG.md ## KERNEL-4; KERNEL-5 with the hbox recipe
+GATES-2	aedb775dc4517c504	RETIRED 2026-10-17 ~16:15Z ~430K; landed 84f3115 runs table, e9d06c3 markers, 23a1f31 cargo rows, 0f4a2ae fail-open + size red, f4b00a2 hex gate, cb99f02 ledger prefix, 248fcea+6460e1f workspace judge, 2ed0386 cargo:BIN; continuation GATES-LOG.md ### GATES-2 HANDOFF
+BUILD-HOSTING	a665735e10cfc4da6	RETIRED 2026-10-17 12:05Z ~455K; HOSTING-5 done (6577e82); successor HOSTING-2 from HOSTING-LOG.md "FOR HOSTING-2" when CODEC-2 lands Path/Tagged + emitter
+BUILD-LEDGER	abea0cf4c24b5023e	RETIRED 2026-10-17 10:10Z at 524K; LEDGER-4 landed; LEDGER-5 LANG half accepted (1b4135c), KERNEL half pending; successor LEDGER-2 from LEDGER-LOG.md
+BUILD-TRANSPORT	a4652a8aa8280fcef	DISSOLVED 2026-10-17 18:00Z: D1–D7 landed or handed off (TRANSPORT-LOG.md); last 3cae578 PROTOCOL-29 envelope world v3, d5d7266 row wrongWorldRead; rows 15 PASS / 3 PENDING
+BUILD-OPS	aaae7695f4b65107d	RETIRED ~350K: 28de15e D5/D6, b2b901d Ops lib (store-plants, emit-units); non-Lean tree → deploy/ (APFS case collision); continuation OPS-LOG.md; OPS-2 after GATES-2 rows
+BUILD-PERF	aa94d27502b80e789	PARKED (Ember: no wall-clock benching until near the end): sandbox-hang plant landed a53bffc; deterministic counts only; resumes near the end on burst5
+LANG-3	adc11001c5ad34e55	NANODREGG language successor: ID-1 occasion with KERNEL, Lang/Std laws with spec theorems, resident check CLI
+HOST-4	a127d18f879bdd316	RETIRED at ceiling: D4/D9/never-silent written (HOST-4-D4.patch, uncompiled); continuation HOST-LOG.md ## HOST-4; HOST-5 with the hbox recipe
+CODEC-2	a5db8dcb963c5d57d	RETIRED 2026-10-17 19:15Z ~598K; landed b9ffe57, 1d3c87d, 5e34162, 47c67b1, c16db17, 35a99a1, 66d6fea, 8c2d836; KERNEL-23 codec half staged at hbox logs/codec2-trie-r3; continuation CODEC-LOG.md ## CODEC-2 HANDOFF
+MIGRATE-HBOX	a621d34ae95a51410	DONE: cutover 04:16Z; main on hbox; recipe MIGRATE-HBOX-LOG.md; deploy key 166727747
+CENSUS-2	a1ab92d59da3fcd12	DONE 2026-10-17 15:25Z: lane/census-2 1ce5571b (census fix d540d0b3, old-rule plant 5ff346b8, decisions+pin 1ce5571b) merged into INTEGRATOR-5 batch 2; cv 01a14806-97c3 closed; log CENSUS-REVIEW-LOG.md ## CENSUS-2
+KERNEL-5	aaf0617c549722c7a	RETIRED 2026-10-17 14:25Z ~390K; landed 9d2e5df, be98647 (KERNEL-25/26), 63711ec (KERNEL-28), 9e91ede (KERNEL-24 flag day); World port NOT started; continuation KERNEL-LOG.md ## KERNEL-5
+HOST-5	a7950cd8b77873a7e	RETIRED 2026-10-17 12:55Z ~388K; landed D4 808f38e, D2 stamp ce61913, HOST-21 0689975, Host.Tail c722b05, HOST-24 648c3a4, HOST-22(a) 7797070, drainM_bytes 59486b4; continuation HOST-LOG.md ## HOST-5
+PROTOCOL-5	a4cd717157c6d458e	RETIRED 2026-10-17 13:40Z ~430K; rows 12 PASS/4 PENDING at 04c7172; continuation PROTOCOL-LOG.md ## PROTOCOL-5
+LANG-4	a2fbb4419dc4a69aa	RETIRED 2026-10-17 15:50Z ~404K; landed 6a7cacb, a533d7a (adopt flag day), 131aaf9 (inferE), 907b55d (quorum-adopt soundness fix + receiver→spec chain), c57f48f; continuation LANG-LOG.md ## LANG-4
+LEDGER-2	afd32f4b9d6e68d3e	RETIRED 2026-10-17 ~afternoon (est; was mislogged as 10-18 02:45Z) ~620K; landed D5a/b/c (5b87949, e8077f8, c3c7aa3), 5c8353f, 7229d95, 56ff26f, 0b8e417, 65ea019 (LEDGER-9 first ledger: commit), e77dfb4; continuation LEDGER-LOG.md LEDGER-2 HAND-OFF
+OPS-2	a493aca8608fbc234	RETIRED 2026-10-17 ~17:45Z; landed c835c6d, 4ae6608, fd1d4b2, e31b4ee, df033f2, 46a1189, 973dc44, add00d8, 60a12e5, f77c564, 6bfd534, 11a9c97 (+ docs); continuation OPS-LOG.md ## OPS-3 — SPAWN OPS-3 when HOST-33 lands or INTEGRATOR-6 reports batch 3 (keybroker systemd window on burst5)
+HOST-6	a59922b2afa99acbc	RETIRED 2026-10-17 22:00Z ~433K; landed 51515fa, 79f5860 (HOST-25), 2ba6746 (HOST-27), 645116a (HOST-28), Host side of the World port (HOST-29 in 7c43273); continuation HOST-LOG.md ## HOST-7 HANDOFF
+PROTOCOL-6	abd8f012f13228e0b	RETIRED 2026-10-17 ~18:05Z ~440K; landed PROTOCOL-27..36 (envelope notBefore, wrongWorld, world-first envelope, ledger verbs + well/pay, forgotten, bounty, carry, St.lineage) + f246af0; rows 20/20; continuation PROTOCOL-LOG.md ## PROTOCOL-7
+KERNEL-6	aa36c7021124d8bdb	RETIRED 2026-10-17 18:45Z ~315K; World port COMPLETE+GREEN in wt/kernel, NOT landed (3 blockers: HOST-6 per-turn roots choice, CODEC-2 v3 rebuild vs r3, vacuity read of helper restatements); continuation KERNEL-LOG.md ### KERNEL-6 HANDOFF
+HOSTING-2	a357cdb9a860f3cde	RETIRED 2026-10-17 19:45Z ~410K; landed e1c3ca4, e1bbaff, 4777611, 42bfe6d (grain-launch + isolation test); continuation HOSTING-LOG.md ## HOSTING-2
+LANG-5	a0ace030eb5525250	RETIRED 2026-10-17 19:05Z ~353K; landed 615e452 (one printer), 2a3285e (print round trip); continuation LANG-LOG.md ## LANG-5
+KERNEL-7	ac9b1fb8228590424	RETIRED 2026-10-17 21:35Z ~305K; landed 7c43273 (World port, KERNEL-30), 2618fe3 (KERNEL-31); nothing unlanded; continuation KERNEL-LOG.md ### KERNEL-7 HANDOFF
+LANG-6	a0e14827e8b076d95	RETIRED 2026-10-17 22:40Z ~430K; landed f9ccb37, 68576ec (LANG-30), 5105d8b (LANG-32); LANG-31 WIP at hbox logs/lang6-lang31-wip.patch; continuation LANG-LOG.md ## LANG-6
+CODEC-3	a5c03e9649c328e52	RETIRED 2026-10-17 21:05Z ~310K; landed c6f9a34, fc52349, ff120b8; Env.Lawful agreed with KERNEL-7 (queued behind KERNEL-31 + weights); continuation CODEC-LOG.md ## CODEC-3 HANDOFF
+HOSTING-3	a514a92b544a85557	RETIRED 2026-10-17 ~afternoon (est; was mislogged as 10-18 00:50Z) ~430K; landed ca798ba, 06edf05 (broker Lean half), e15813f, cc4f6fe+0c86537 (keybroker, first refusals, canary control); continuation HOSTING-LOG.md ### FOR HOSTING-4
+CODEC-4	aaba467e9c60e21bc	RETIRED 2026-10-17 ~afternoon (est; was mislogged as 10-18 02:00Z) at ceiling; landed c64bb52, ee49de8, b269cb7 (group law + verify_iff), 3d0cc2d (turn.size = logWeight), 23c9530 (path vectors), 807c820 (B_order), 2da0adb (L_prime); continuation CODEC-LOG.md ## CODEC-4 HANDOFF
+CLIENT-3	aae5c92a4d1999133	ENDED 2026-10-17 ~21:55Z (session prune); last landing 3e09d67 (wt/client: 12 files uncommitted = CLIENT-24 nd --stdio, waiting on the client-library ceiling 2000 -> 2150); continuation CLIENT-LOG.md ## CLIENT-3 item 33
+KERNEL-8	a3757d866eb64f133	RETIRED 2026-10-17 ~afternoon (est; was mislogged as 10-18 03:30Z) ~260K (clean handoff); landed e06f8b6 (KERNEL-32), 17e2d3f (KERNEL-33), b8e0f82 (KERNEL-29 carry), 5652aba (KERNEL-34); continuation KERNEL-LOG.md ### KERNEL-8 HANDOFF
+HOST-7	ae95b4547c42ba031	RETIRED 2026-10-17 ~afternoon (est; was mislogged as 10-18 01:10Z) at ceiling; landed 1b8ac0e (HOST-17 measured), 7149a15 (HOST-30 index.log flag day); continuation HOST-LOG.md ## HOST-7
+LANG-7	ac6dbe9957c6ff484	RETIRED 2026-10-17 ~afternoon (est; was mislogged as 10-18 02:50Z) ~402K; landed 9d217cb (post-D5 lang! day, LANG-33 declared call slots); continuation LANG-LOG.md ## LANG-7 (next LANG-31)
+HOSTING-4	a005898b332a67387	RETIRED 2026-10-17 ~afternoon (est; was mislogged as 10-18 06:30Z) ~452K; landed f6e0fe2 (HOSTING-13 allowances in the World), 659639d (HOSTING-14 stage 2 complete), 5f03823 (step_encodes); continuation HOSTING-LOG.md ### FOR HOSTING-5
+HOST-8	a7b51f5a41be70521	RETIRED 2026-10-17 ~16:00Z ~480K; landed 9dad4d2 (HOST-31), e154e9c (HOST-32 + at-size counts), 6b89d6f (HOST-28 carry verbs); HOST-33 plan in HOST-LOG.md ## HOST-9 HANDOFF
+CODEC-5	afad87333c5b8a98a	RETIRED 2026-10-17 ~15:30Z ~300K; landed da25ed5 (CODEC-23 complete: sign_verifies), 28b4a38 (CODEC-22 carried codec), 7db0597 (world_get_canon); env_lawful not owed (KERNEL-37); continuation CODEC-LOG.md ## CODEC-5 HANDOFF
+LEDGER-3	a11788b66fe43f571	ENDED 2026-10-17 ~21:55Z (session prune); last landing fa390f7; continuation LEDGER-LOG.md ### Open for LEDGER-3/successor
+LANG-8	a4b6bc659ce41e2d9	RETIRED 2026-10-17 ~afternoon (est; was mislogged as 10-18 07:20Z) near ceiling; landed b2f72e6 (LANG-31), c4e435a (CallLive); continuation LANG-LOG.md ## LANG-8
+KERNEL-9	a3c391ed385095648	RETIRED 2026-10-17 ~15:45Z ~320K (clean); landed 4720fa4 (K35), d91e720 (K36 instruments), 62ef047 (K37 Env.Lawful); refused to land a collapsing "composition of prunes" theorem; continuation KERNEL-LOG.md ### KERNEL-9 HANDOFF
+HOSTING-5	a16c2e5b494aa5e26	RETIRED 2026-10-17 ~17:50Z ~390K; landed 0eb0803 (HOSTING-15 TLS), 26b8074 (open_world_canon), 12ce0ff (HOSTING-16 exit tables); continuation HOSTING-LOG.md FOR HOSTING-6
+LANG-9	ae7c1ef24d42d1286	RETIRED 2026-10-17 ~17:15Z ~330K; landed 03f942a (LANG-34 ratio), 3ed84fc (LANG-35 install via the loader; closure must be pinned); continuation LANG-LOG.md ## LANG-9
+CODEC-6	a7dcb3be86813ca52	RETIRED 2026-10-17 ~19:10Z ~360K; landed 10fd373 (refine census), ec2db07 (codec-vectors), 9dd1e8c (World journal flag day); continuation CODEC-LOG.md ## CODEC-6 HANDOFF
+KERNEL-10	a7049ec6dbdff31cc	RETIRED 2026-10-17 ~19:50Z; landed f6b6b60 (K38), 129bb73 (K39), b5e4246 (K40), ab6974e; continuation KERNEL-LOG.md ### KERNEL-10 HANDOFF
+HOST-9	aa03e59965e1f9ec4	RETIRED 2026-10-17 ~20:10Z ~450K; landed 40fe056, ff60a08 (HOST-33), 4e95dc8 (badKey 0 for a missing key file); continuation HOST-LOG.md ## HOST-9
+GATES-3	a34016a287bafcb63	ENDED 2026-10-17 ~21:55Z (session prune); last landing d13c5b0; continuation GATES-LOG.md ## GATES-3
+INTEGRATOR-6	a55ad25cb5ddaeebc	ENDED 2026-10-17 ~21:55Z (session prune); last landing minidregg main 334316df; continuation INTEGRATOR-LOG.md ## STATE AT HANDOFF (INTEGRATOR-6) ~18:05Z
+LANG-10	a712e8c509a3bb0e0	RETIRED 2026-10-17 ~19:40Z ~290K; landed 2142651, 32b7763 (LANG-36), 2d76795 (LANG-37 required_lt_ticks); digest day not started; continuation LANG-LOG.md ## LANG-10
+HOSTING-6	a6d3ac11df77ce1c5	RETIRED 2026-10-17 ~21:05Z ~415K; landed 62b346d+bcf1d67 (HOSTING-17), 5561a3a, 45b1394 (keybroker half), fe3f83d (resident plan), 8be4026 (HOSTING-19 exit tables); continuation HOSTING-LOG.md FOR HOSTING-7
+PROTOCOL-7	ab1b7e29205360b2c	ENDED 2026-10-17 ~21:55Z (session prune); last landing 1db64e8; continuation PROTOCOL-LOG.md ### PROTOCOL-8 START HERE
+CODEC-7	a96227257cb8e3c92	ENDED 2026-10-17 ~21:55Z (session prune); last landing c0548be (codec half carried in 5eb9b30); continuation CODEC-LOG.md ## CODEC-7 HANDOFF
+OPS-3	a63176c79bbcb74dc	ENDED 2026-10-17 ~21:55Z (session prune); last landing 013f35d; continuation OPS-LOG.md ## OPS-3 / ### BURST5 RUN (OPS-4 starts here)
+LANG-11	ac74cc733b391d27a	RETIRED 2026-10-17 ~23:05Z ~250K; landed 1b831da (LANG-38 digest day), e2c1b4c (LANG-39), a9c652a (LANG-40 need completeness); continuation LANG-LOG.md ## LANG-11
+KERNEL-11	a97af574d573a9dbb	RETIRED 2026-10-17 ~21:45Z ~284K; landed a48ea4a (retainAt); KERNEL-41 ruled (a′) the journal as a second trie instance; continuation KERNEL-LOG.md ### KERNEL-11 HANDOFF — SPAWN KERNEL-12 when PROTOCOL-7 lands KERNEL-42 (the call-signature domain day); it builds the (a′) port patch for CODEC-7 / HOST-10 / PROTOCOL-7
+HOST-10	a466e00c707f4b7be	RETIRED 2026-10-17 ~18:45Z near ceiling; landed e285406 (HOST-35), 45102b2 (HOST-36), 0ca1ec1 (HOST-37); continuation HOST-LOG.md ## HOST-11 HANDOFF
+HOSTING-7	a8d9d17a1910bbe3b	ENDED 2026-10-17 ~21:55Z (session prune); last landing d7c9d95; continuation HOSTING-LOG.md ### FOR HOSTING-8
+KERNEL-12	ac263f30c5dbd8c95	ENDED 2026-10-17 ~21:55Z (session prune); last landing 5eb9b30; continuation KERNEL-LOG.md ### KERNEL-12 HANDOFF
+LANG-12	aa6fec46b5067cd28	ENDED 2026-10-17 ~21:55Z (session prune); last landing c302e25; continuation LANG-LOG.md ## LANG-12
+HOST-11	a2f74b4272ca9175d	ENDED 2026-10-17 ~21:55Z (session prune); last landing 71379a1; continuation HOST-LOG.md ## HOST-11 (wt/host: 13 files uncommitted = HOST-41 in progress)
+LANG-13	ae50e96cec584e649	RETIRED 2026-10-18 ~07:10Z ~470K clean; landed f1c5f01 (LANG-44 PROPOSED), 921d2d0 (LANG-45 tally port), 7869bbc (LANG-46 Ctx.Lawful), e40d520 (LANG-47 CoAuthor port), d52ad3d (LANG-48 PROPOSED pending slot); continuation LANG-LOG.md ## LANG-13 — SPAWN LANG-14 when KERNEL-14 has the rows signatures in code
+KERNEL-13	a5d45d89af83f2fd4	RETIRED 2026-10-18 ~07:00Z ~343K clean; landed 891e80b (K43 budget), 897911b (K44+K45 PROPOSED), 7679aac (K46 rows co-sign); continuation KERNEL-LOG.md ### KERNEL-13 HANDOFF
+CLIENT-4	a2fd0033b0fc2525f	landed 189c201 (CLIENT-24 nd --stdio); writing ## CLIENT-4; queue empty after (nd-attach sshd + macOS halves declared unrun)
+INTEGRATOR-7	a316cbdbf8fa1821c	DONE 2026-10-18 04:35Z: burst5-a torn down (server deleted 04:33:54Z; ~$40.81; collection verified on hbox; deploy key, puller, Mac files, worktree removed; left for Ember: the Latitude tag + hbox burst5-seed); log BURST5-UP-LOG.md TEARDOWN DONE
+KERNEL-14	a68e9ec488961ef27	RETIRED 2026-10-18 ~10:30Z (~564K) NOTHING landed; the refusals kernel half re-staged logs/kernel14-k44.patch (reader LAND; two post-LAND deltas unread); continuation KERNEL-LOG.md ### KERNEL-14 HANDOFF
+CODEC-8	a4fb8cf96b85a9b74	RETIRED 2026-10-18 ~12:30Z ~345K clean; CODEC-32 inside 38d94e1 (the refusals wire; 95 vectors / 35 sites; census 35/35, 0 allow rows); continuation CODEC-LOG.md ## CODEC-8 HANDOFF
+HOST-12	a28e294ce7b0dcec6	RETIRED 2026-10-19 ~845K; HOST-42/43/44/45/46 + HOST-41 landed; continuation HOST-LOG.md ## HOST-13 HANDOFF
+PROTOCOL-8	a74791bc5155933fa	RETIRED 2026-10-18 ~12:00Z ~405K clean; landed PROTOCOL-41 + the refused row inside 38d94e1; rows 22/22 on main; continuation PROTOCOL-LOG.md ### PROTOCOL-8 HANDOFF → PROTOCOL-9
+KERNEL-15	a7b82d7188d59e145	RETIRED 2026-10-18 ~13:20Z ~320K clean; LANDED 38d94e1 (the refusals day); the rows wiring staged logs/kernel15-rows-wire3.patch; continuation KERNEL-LOG.md ### KERNEL-15 HANDOFF + addendum
+PROTOCOL-9	aa5673280c5f1b5e6	RETIRED 2026-10-18 ~19:00Z (~544K); landed 70eb282 (PROTOCOL-42/43), 0a808e4 (PROTOCOL-44), 06876d1 (PROTOCOL-45 receipts); rows 26/26; continuation PROTOCOL-LOG.md ### PROTOCOL-9 HANDOFF → PROTOCOL-10
+LANG-14	afa6eabec1b239454	RETIRED 2026-10-18 ~22:50Z ~439K; the Lang half of the rows day handed to KERNEL-17 (LANG-49); continuation LANG-LOG.md ## LANG-14 — SPAWN LANG-15 after the rows day lands (LANG-50 authoring surface)
+CODEC-9	addd21abb78660a69	RETIRED 2026-10-18 ~17:00Z ~562K; CODEC-33 handed to KERNEL-17; continuation CODEC-LOG.md ## CODEC-9 HANDOFF
+KERNEL-16	af6faa58a04b76d22	RETIRED 2026-10-18 ~14:30Z ~285K; rows day NOT landed: charging + carried rows done, Kernel/Proofs/Rows.lean; blocked on Receive (LANG-14 threading); patches logs/kernel16-kernel2.patch + joint2; continuation KERNEL-LOG.md ## KERNEL-16
+KERNEL-17	abbf3542c9a52e80a	RETIRED 2026-10-19 ~00:45Z past ceiling; landed 42c261b (the rows day), 23ac379 (KERNEL-49 PROPOSED); RefusalsHead.lean green uncommitted in wt/kernel; continuation KERNEL-LOG.md ### KERNEL-17 HANDOFF
+CLIENT-5	aad374775c8c1295d	DONE 2026-10-18 ~18:30Z: landed 46c826e (CLIENT-26 nd --join over the invitation); queue empty; continuation CLIENT-LOG.md ## CLIENT-5
+CODEC-10	a7e1a6a50554d7ba0	RETIRED 2026-10-18 ~23:50Z clean (CODEC-34 inside 42c261b; wt/codec clean); open: a kernel/refusals-counted site once KERNEL lands refusalsCounted; KERNEL-49 may move the trie type (TrieOrder*, RowOrder, RowsReached, WorldTooth follow); continuation CODEC-LOG.md ## CODEC-10
+OPS-4	aed11c6f616bf7fbe	PRUNED 2026-10-20 ~22:00Z (session pruned; successor relaunched from its continuation file) — was: 2026-10-18 07:50Z (successor of OPS-3; RUNBOOK §2\/§2b join paths (TOFU → invitation); the hosted follower join unit; HOST-43 re-renders when ruled)
+PROTOCOL-10	afa6834d506757f31	RETIRED 2026-10-18 ~22:40Z ~260K clean; landed db0b43c (use=); PROTOCOL-46 PROPOSED + ruled; the four-root receipt re-cut staged; continuation PROTOCOL-LOG.md ### PROTOCOL-10 HANDOFF → PROTOCOL-11
+CLIENT-6	adc48e303a88c229c	DONE 2026-10-19 ~02:05Z: CLIENT-27 inside a38b84b (settlement from the member's own receipt; signIncoming; custody settles only on a settled file); client library 2495/2500; queue empty; continuation CLIENT-LOG.md ## CLIENT-6
+PROTOCOL-11	a0b1899e3383e7392	RETIRED 2026-10-19 ~03:00Z ~300K clean; landed a38b84b (PROTOCOL-46), 815a031 (check_refused_sound / check_absent_unrefused on KERNEL's twins); continuation PROTOCOL-LOG.md PROTOCOL-11 HANDOFF → PROTOCOL-12
+LANG-15	a334b6683ea218d5f	RETIRED 2026-10-19 ~600K; 66815ff LANG-51, 87dff6e LANG-50 THE SURFACE; continuation LANG-LOG.md CONTINUATION (for LANG-16)
+KERNEL-18	add6007f95cfdde3c	RETIRED 2026-10-19 ~09:00Z; LANDED d377d5b THE TRIE DAY + 8ad3982; continuation KERNEL-LOG.md ## KERNEL-18 … KERNEL-18 HANDOFF
+CODEC-11	a40e1943cc87d9b9f	RETIRED 2026-10-19 clean; CODEC-35 in d377d5b; 4573cce DoS fix; b040f21 CODEC-36 lang/package site; continuation CODEC-LOG.md ## CODEC-11
+GATES-5	a7d2da80c806974b6	PRUNED 2026-10-20 ~22:00Z (session pruned; successor relaunched from its continuation file) — was: 2026-10-19 09:05Z (successor of GATES-3; GATES-15 the harness-can-go-red rule as a gate; standing after the trie day; vectors/SIZE checks at that landing; the queue count)
+PROTOCOL-12	ab85c36fd01b6c4eb	RETIRED 2026-10-19 ~09:00Z ~320K; LANDED 5f9edc2 (PROTOCOL-47 + thin re-cut, rows 29); continuation PROTOCOL-LOG.md PROTOCOL-12 HANDOFF → PROTOCOL-13
+GATES-6	a55f38eda9d00894a	RETIRED 2026-10-20 ~330K; landed GATES-15 B 0e1b027, GATES-16 148ac60, GATES-17 7de131e, GATES-18 98e686d, 12cadcc; GATES-19 designed + replayed; continuation GATES-LOG.md ## GATES-6
+KERNEL-19	a734e78f4f065c5d8	RETIRED 2026-10-19; landed f82a6b0 KERNEL-50 refusalsCounted, 03943ee KERNEL-51 the frame scheme, 748b11d KERNEL-52 HeadSound; continuation KERNEL-LOG.md KERNEL-19 HANDOFF
+PROTOCOL-13	a8b9027b0e85da990	RETIRED 2026-10-19 ~350K; landed a5ce608, 7932cb3 (PROTOCOL-48); 4b built not landed (reader: true but too weak); continuation PROTOCOL-LOG.md PROTOCOL-13 HANDOFF → PROTOCOL-14
+HOSTING-8	aa823e7641b7b6082	RETIRED 2026-10-19 ~575K; landed b9cd50f HOSTING-25 (the resident reaches the World), 43ab42a HOSTING-26 (ND_RESIDENTS deleted; keybroker learns residents from the World); continuation HOSTING-LOG.md ### FOR HOSTING-9
+PERF-1	a3c76356b657f6988	RETIRED 2026-10-19 ~490K clean; landed de718bf (THE BAR in standing), 5f7c58d (PERF-3 bench-count + C6), c392f51 (bench-worstcut standing row); continuation PERF-LOG.md ## PERF-1 CONTINUATION
+HOST-13	a55e9ab90683e7922	STOPPED 2026-10-19 (resumable): landed HOST-47 8cc9df2, HOST-48 01396b7, HOST-49 b192dcf, HOST-50 a2996f7, HOST-51 996d93a; owes HOSTING-9 the sock.c read; continuation HOST-LOG.md ## HOST-13
+LANG-16	a528bfa435823b2e1	DONE 2026-10-19 ~290K: LANG-52 the Bell 00c9e20, LANG-53 9d3fb37 + b5abc63, LANG-54 119d2dc, LANG-55 b43f0e5, LANG-56 4e81a85; continuation LANG-LOG.md ## LANG-16; LANG-17 on a trigger
+OPS-5	a5d4126a74c378ee7	PRUNED 2026-10-20 ~22:00Z (session pruned; successor relaunched from its continuation file) — was: 2026-10-19 11:31Z (sonnet; RUNBOOK noBase/baseMismatch + seal paragraph; operator sentences on ask)
+SCHOLAR-PROOF	a05b3632001ac9bbb	PRUNED 2026-10-20 ~22:00Z (session pruned; successor relaunched from its continuation file) — was: 2026-10-19 11:31Z (fable, read-only: PROOF-TECHNIQUE-20261019.md — the theorem families as instances of a logic; a frame-rule worked example)
+CLIENT-7	a86d8c891032a4e36	DONE 2026-10-19: cf79591 CLIENT-28 (the leak), bbb7e5e (the plant race), c9d3b4c (no bare EOF); queue empty; library 2520/2520
+PROTOCOL-14	a393a4d69fc6f4853	RETIRED 2026-10-19 ~280K; landed 0e8e333 (4b), 85cc80e (PROTOCOL-49 pageIo 57); rows 31 on main after the refusalsCounted day; continuation PROTOCOL-LOG.md PROTOCOL-14 HANDOFF → PROTOCOL-15
+HOSTING-9	a47f3568da14bcaca	RETIRED 2026-10-19 ~480K; landed 9df02da hosting! HOSTING-29 (Lean extracts the reply) + HOSTING-28 (the SPKI pin as operator data; anchors 121 → 7); HOSTING-30 PROPOSED; continuation HOSTING-LOG.md ### FOR HOSTING-10
+KERNEL-20	a1540683a674a4140	RETIRED 2026-10-19; landed c18e028 KERNEL-53 (one verify), b9ce5a7 (the audit-path verify row); KERNEL-54 phase 1 built in wt/k20k (99 sorry); KERNEL-55 PROPOSED + ruled; continuation KERNEL-LOG.md FINAL HANDOFF → KERNEL-21
+PROTOCOL-15	a8caf1ad558b4a601	STOPPED 2026-10-19 ~255K clean; landed a130087 PROTOCOL-50 (rows at deployed parameters); co-signed KERNEL-54; continuation PROTOCOL-LOG.md ## PROTOCOL-15 (the KERNEL-54 Protocol half on phase-1 signatures; the range read sketch; the LIVE lines must be counts)
+PERF-2	a4fa91de1b873e3bf	RETIRED 2026-10-20 ~310K clean; landed 2d2189e PERF-6, a18d6ea, ce23f2e PERF-7, 35daeab PERF-8, da63f5b PERF-9; continuation PERF-LOG.md ## PERF-2 CONTINUATION (+ UPDATE): the bound from HOST-14; the first standing lines; the rowbar rows
+HOSTING-10	ac5ffc739bd9133a3	DONE 2026-10-20 (~442K): landed da0593e HOST-52 Host.Sock + 0e4d57f HOSTING-27 THE REAL RESIDENT; HOSTING-30 waits on CLIENT-8; continuation HOSTING-LOG.md ## HOSTING-10
+CLIENT-8	a4b5ab24321e18c7e	DONE 2026-10-20: landed ecb02bf CLIENT-29 nd-members (the 7th judge); queue: OPS-5 unit then members.rs on the rendered argv; findings filed (cv 01a1507c-722d bare EOF on SIGKILL; cv 01a1507c-7245 the stdio child can write its follower Store); continuation CLIENT-LOG.md ## CLIENT-8
+HOST-14	a4d3aa9099adf145c	PRUNED 2026-10-20 ~22:00Z (session pruned; successor relaunched from its continuation file) — was: 2026-10-19 15:58Z (successor of HOST-13; reads HOSTING-10's socket C (HOST-52) against the conditions; co-signs; then cv 01a14f2a-8c82 + the WEAKs)
+PROTOCOL-16	aaa9e34f332c75994	RETIRED 2026-10-20 ~485K; landed 062698c PROTOCOL-51 the range read; the K54 half staged (needs the admitsRecorded re-cut); continuation PROTOCOL-LOG.md ## PROTOCOL-16 HANDOFF
+LANG-17	a0119cd6cc7ad91f2	RETIRED 2026-10-20 ~360K; landed 3356ad0 LANG-57 (big-endian nat keys), 9a8c033 (the vacuous checkRel conjunct deleted; checkRel_key_nodup through wf; plant checkRel_refuses_dup_key_label); continuation LANG-LOG.md CONTINUATION (for LANG-18): LANG-58 the Bell as a queue with HOSTING-10's requirements recorded
+KERNEL-21	aa50360b303b89f55	RETIRED 2026-10-20 past its line; landed b48c10f KERNEL-54, 482aecc KERNEL-56, 4b9c563 KERNEL-55 part 1; R1 in lane r1 ac5c48cdca4f4b83d; continuation KERNEL-LOG.md KERNEL-21 FINAL HANDOFF → KERNEL-22
+CODEC-12	ae211cadad0f1ed00	RETIRED 2026-10-20 ~330K; CODEC-37 in b48c10f; continuation CODEC-LOG.md ## CODEC-12 HANDOFF (wt/codec holds an uncommitted build tree: save the diff, reset to main)
+GATES-7	a6da626a8f2100dcf	PRUNED 2026-10-20 ~22:00Z (session pruned; successor relaunched from its continuation file) — was: 2026-10-20 18:12Z (successor of GATES-6; BUILDS GATES-19 the judge queue: merge, readiness order + age bound, input keys, no stale verdict; standing duty; the five open verifications)
+PROTOCOL-17	a916601ac8bfc4807	RETIRED 2026-10-20 at ceiling; the K54 half landed in b48c10f; PROTOCOL-54 rebased on 96179fb NOT landed (the toy bell row red at line 6: install gets uncertain, cause unread); continuation PROTOCOL-LOG.md PROTOCOL-17 FINAL STATE
+LANG-18	aab588a19107411ac	RETIRED 2026-10-20 ~310K; landed 96179fb lang! LANG-58 the Bell queue + HOSTING-31; LANG-59 PROPOSED and ruled; continuation LANG-LOG.md (for LANG-19)
+HOSTING-11	a1cf90a9c83d50c8e	PRUNED 2026-10-20 ~22:00Z (session pruned; successor relaunched from its continuation file) — was: 2026-10-20 19:27Z (successor of HOSTING-10; HOSTING-31 the resident reads the queue (one commit with LANG-58); then HOSTING-30 on nd-members)
+LANG-19	a8bde3dc43b9b3bb2	PRUNED 2026-10-20 ~22:00Z (session pruned; successor relaunched from its continuation file) — was: 2026-10-20 20:16Z (builds LANG-59: guards see the old row; the Bell re-shaped (B); term literals big-endian; every package re-ids; after KERNEL-56)
+PROTOCOL-18	a80e8e52fab6ef755	PRUNED 2026-10-20 ~22:00Z (session pruned; successor relaunched from its continuation file) — was: 2026-10-20 20:16Z (P54 toy red diagnosed at source first; then P54; the noRotation rule; the BEHIND finality after KERNEL-56; the rowbar rows; range pins in plan)
+KERNEL-22	a44afc978aab1e66a	PRUNED 2026-10-20 ~22:00Z (session pruned; successor relaunched from its continuation file) — was: 2026-10-20 21:20Z (successor of KERNEL-21; KERNEL-55 part 2 R1 the kernel-wide refusals cap (a kernel!) via lane r1; then 7380, the cancel proposal, 7364, ca32, check_local, the injective rows leaf)
+CODEC-13	a69eab32196c48877	PRUNED 2026-10-20 ~22:00Z (session pruned; successor relaunched from its continuation file) — was: 2026-10-20 21:21Z (successor of CODEC-12; world_size_eq cv 01a150a3-2523; the R1 refusals wire for KERNEL-22; LANG-59 codec hunks review; refusals-counted follow-ups)
+KERNEL-23	a665a3462f3e7db0b	DONE (real 10-19; the rows-key kernel! 7c09186, 2263/2281, check_local landed; succeeded by KERNEL-24..30; roster line was stale until 10-20 08:25Z)
+GATES-8	a5308a6ab02a9d9a6	RETIRED 2026-10-21 ~346K; landed 1a6163b GATES-19, 6527d9f GATES-20a; GATES-20 built not landed; GATES-21 PROPOSED; continuation GATES-LOG.md ### GATES-8 continuation for GATES-9
+CODEC-14	ac7b871c8cdd71ced	DONE 2026-10-21: landing duty GREEN on 7c09186 and 1e90c0b; CODEC-20 rss recorded; continuation CODEC-LOG.md ## CODEC-14; CODEC-15 on the next tag move
+HOST-15	a3d35a74e2bb3adf5	RETIRED 2026-10-21 ~340K; landed 5fff199 HOST-60, bd39f78 HOST-61 (beforeLog 60); continuation HOST-LOG.md ## HOST-16 HANDOFF (cv 01a15180-9499 index-segment coherence; HOST-50 WEAKs on triggers)
+PROTOCOL-19	a7b300287de0afe72	RETIRED 2026-10-21 past its line; landed 285fdc2 PROTOCOL-56; PROTOCOL-57 refused by closure C3 (the stale_only macro in a proof module); continuation PROTOCOL-LOG.md ## PROTOCOL-19
+HOSTING-12	aad3fa86d321154a1	RETIRED 2026-10-21 ~470K; landed 9d5b293 HOSTING-35, da33440 HOSTING-36, a1ca640 HOSTING-37; continuation HOSTING-LOG.md ### FOR HOSTING-13 (triggers: a head-of-line marker; pathMissing (B); a deterministic race plant)
+PERF-3	a3b3e12bf96c5a2be	STOPPED 2026-10-21 (resumable): landed bfdff2d PERF-10; queue empty; continuation PERF-LOG.md ## PERF-3 CONTINUATION (standing lines; rowbar rows; THE BAR v2 times a cold reopen at the bound)
+LANG-20	addffcd49aec46f75	DONE 2026-10-21: landed 1e90c0b lang! LANG-60 (the package wire version byte + the doc line); queue = triggers only (cv 01a14ef6-598d on the first deployed layer); continuation LANG-LOG.md ## LANG-20
+CLIENT-9	a2c3f60f32d097499	DONE 2026-10-21 (~265K): landed c0cd535 CLIENT-30, cdc0e9a CLIENT-31, cefbb59 CLIENT-32; library 2528/2528; continuation CLIENT-LOG.md ## CLIENT-9
+OPS-6	ac634e64fe457225f	DEAD (pruned 2026-10-21 ~21:30Z) was live 04:16Z (sonnet; audits the six ROOT-for-OPS edits since 0debb31; corrections as one ops:; operator sentences on ask)
+LEDGER-4	ab4228d03643a267b	DONE 2026-10-21: audit clean; landed c7f455e LEDGER-12 (the Escrow doc); continuation LEDGER-LOG.md ### LEDGER-4 HAND-OFF (the escrow strengthening 200–400 lines, needs a Lang extract field lemma: ROOT ruled it lives in Lang/Proofs, LANG-21 on that trigger with LEDGER-5)
+HOSTING-13	a27964c0d499e9c33	RETIRED 2026-10-21 ~350K; landed ea52a4a HOSTING-39, d846c2d HOSTING-38; found the silent revert (GATES-20b); continuation HOSTING-LOG.md ## HOSTING-13 (triggers only; two items need a box or a second uid)
+PROTOCOL-20	aaaf1c9d178548dde	RETIRED 2026-10-21 ~417K; landed 6f28e4a PROTOCOL-57, 0856ca3 PROTOCOL-58, a08a7d0 PROTOCOL-53; continuation PROTOCOL-LOG.md ### PROTOCOL-20 HANDOFF → PROTOCOL-21
+LANG-21	aab17a0ee24b1b3a5	DONE 2026-10-21: landed c1166ce LANG-61 (the extract field lemma: Means, extract_means no premise, means_get, runMeasured_means, bigStep_relib); cv 01a14ef6-598d on its trigger; LEDGER-5 composes
+LEDGER-5	ad08711ec506b6f66	DONE 2026-10-21: landed 9ced635 LEDGER-13 (escrow_run_calls over the receiver's own run; the deployed form needs only readPackage + the run); continuation LEDGER-LOG.md ## LEDGER-5 (a kernel-checked whole run; a Lang need: runMeasured_means gives the state record; a chain theorem; means_relib belongs in Lang)
+GATES-9	aa2c78560fb5ff1a6	DEAD (pruned 2026-10-21 ~21:30Z) was live 09:55Z (successor of GATES-8; the silent-revert fix GATES-20b FIRST (+ the head-lander retry budget); then GATES-20 traced read-sets; standing duty; GATES-21 stays PROPOSED)
+LANG-22	aa142cb4f20a35e38	DONE 2026-10-21: landed 5cfd5cf LANG-62 + 220f0ed LANG-63 (the state record + readState read-back from runMeasured_means; means/unrolls/rowMeans_relib public; Means/Forces bridged both ways, the duplicate machine-walk proof deleted); cv 01a14ef6-598d on its trigger
+LEDGER-6	ae39612ab24612424	DONE 2026-10-21: landed c7f455e LEDGER-12 audit, 9ced635 LEDGER-13, ebe9d81 LEDGER-14, e86f237 LEDGER-15 (escrow_invokes_one_payout over a history of admitted turns); open cv 01a1553b-2765 after KERNEL-28
+HOST-16	ad555e63c031e0752	RETIRED 2026-10-21 ~497K; landed 35dbf99 HOST-62; HOST-63 built not landed (a WASTE ceiling red: ruled (A)); continuation HOST-LOG.md ## HOST-17 HANDOFF
+PERF-4	a6333c82ccd93eeac	DONE 2026-10-21: landed 41e041f PERF-11 (every worstcut row fell after the one-pass commit; ceilings 32.938 → 32.217; bar 365/365 = 1.000); found the waste.tsv fail-open under GATES-20; continuation PERF-LOG.md ## PERF-4
+PROTOCOL-21	ae0d672d0913e23a5	DEAD (pruned 2026-10-21 ~21:30Z) was live 14:35Z (successor of PROTOCOL-20; --range REL K [PREFIX]; the beforeLog hint; the bell doc line; the rowbar amendment)
+SCHOLAR-COMPARE	a9955aabcbb1e914d	DONE 2026-10-21: COMPARE-20261021.md (KERNEL-6 already built as (a); cancel C1 after KERNEL-54 + rotate_stales_outstanding; KERNEL-28 Right.transfer (cap) in the GRANT; wp = the run-level lift, not Admits := wp)
+SCHOLAR-DECISIONS	abdf5fdcb4f278794	DONE 2026-10-21: DECISIONS-20261021.md (eight cards)
+HOST-17	a3afcb313abd0fe0a	DEAD (pruned 2026-10-21 ~21:30Z) was live 16:06Z (successor of HOST-16; HOST-63 with the rowbar re-pin (A); the WEAKs; HOST-62's named-not-proved items)
+LANG-23	a02333931dda3e445	DEAD (pruned 2026-10-21 ~21:30Z) was live 16:10Z (ID-4: cat/beq violate the O(1) tick law, word-ticks retrofit; readState_get → Lang)
+KERNEL-24	a8945be219d62cef5	DEAD (pruned 2026-10-21 ~21:30Z) was live 16:10Z (ONE REDESIGN DAY from COMPARE: law_judged; Right.transfer (cap) in the grant; the cancel step C1 + rotate_stales_outstanding; a kernel!)
+HOSTING-14	a202fdeb618f2b5f2	DONE 2026-10-21: landed 2e84396 (one stderr writer say() for every launcher binary; 31/4000 → 0/4000); triggers only
+GATES-10	a2a3cc81d1ea89c5a	RETIRED 2026-10-21 at budget; landed fc4022d (20e fix + 20f), a108b15 (20b′); standing GREEN ×2; the slot cleanup partial (standing only, 294 MiB; gate-1..4 held 45 min straight: ~3.5 G left); continuation GATES-LOG.md "CONTINUATION for GATES-11" (GATES-11 a3be46a3a9d080699 already live on it)
+KERNEL-25	a3706ce70f3b4240b	DONE 2026-10-21: landed ececba1 (nested invoke), c15487e (e096), 6db92a7 (1daf); F4 built green, lands inside KERNEL-28's commit; continuation KERNEL-LOG.md ### KERNEL-25 HANDOFF → KERNEL-29 (dropHeads-on-U cv 01a1553a-c095)
+PROTOCOL-22	a80837a6484cd9f17	RETIRED 2026-10-22; landed cdd9d84 PROTOCOL-59 + the cancel page event inside the kernel!; continuation PROTOCOL-LOG.md ### PROTOCOL-22 → PROTOCOL-23 HANDOFF (three launch lines: the planting rows on HOST-64; the cancel op + nd cancel after the kernel!; PROTOCOL-61)
+KERNEL-26	aa21b8d4f926a4787	DONE 2026-10-22: landed 7862b65 KERNEL-57 (law_judged) + 7a1cdd7 kernel! KERNEL-60 (the redesign day: counted value rights; the cancel step; rotate_stales_outstanding)
+HOST-18	a1870f7841505a067	RETIRED 2026-10-22 at its line; landed 6f4032a HOST-63, 273adb3 HOST-65; HOST-66 built (PROTOCOL-23 lands it); continuation HOST-LOG.md ## HOST-19 HANDOFF (the six HOST-64 follow-ups; the WEAK triggers; trie binding → KERNEL cv 01a15849-3ae0)
+LANG-24	adc1824357faaa537	DONE 2026-10-21: landed 5325ab5 LANG-64 word-ticks (+ readState_get moved); the KERNEL-26 Lang arm rides in its kernel!
+PERF-6	a1dd5e06dacba643a	DONE 2026-10-22: landed 21e4470 PERF-12 + 744d00c (the 91,914,474 prose); triggers only (the LANG package-check cache; THE BAR v2; the first concurrent standing lines)
+HOST-19	aee51d5b605789aa3	RETIRED 2026-10-21 ~387K: the checkpoint mechanism WRITTEN (2187 lines, logs/host19-wip.patch on top of host18-saved) not compiled whole; continuation HOST-LOG.md ## HOST-19
+OPS-6	ac634e64fe457225f	ADOPTED 2026-10-21 19:11Z via cv adopt (full transcript; standby for operator sentences; landed 224e9fe OPS-18, 8547e9b)
+SCHOLAR-DREDGE	abe3638548e319c37	DONE (DREDGE-20261021.md written real 10-19 15:26 local; read-only scholar)
+HOSTING-15	a9a8a4e5f034b4b2f	RETIRED 2026-10-21 ~265K: the two-uid fence ran for real (checks 1+2 hold, 4 plants red; refutations R1 ACL / R3 setgid / R4 UMask); nothing landed; continuation HOSTING-LOG.md ### FOR HOSTING-16
+HOST-20	a49735f6091ae518b	DONE 2026-10-22: landed eb7028d host! HOST-64 the checkpoint mechanism (CheckpointTrusted over the recorded origin; the 14th re-genesis)
+HOSTING-16	a4976f6a42319a0a4	DONE 2026-10-22: landed 978c9cf (the members flake), 173993d (the fence HOSTING-40 with check 3); the fence row rides in GATES-12's 20j; continuation HOSTING-LOG.md ## HOSTING-16 / ### FOR HOSTING-17
+ROOT-DOCS	af09ef8e4036ea161	DONE 2026-10-22: landed 0b86cb0 (docs/ on doc-allow) + b50da06 (CHARTER §Scope; README Where-this-sits; docs/record 29 copies; LEDGER-17 credit sits); both FAST GREEN in ~1 min after GATES-22
+SCHOLAR-STUDY	a7e9ae54bc5fa316f	DONE 2026-10-21: STUDY-FINDINGS-20261021.md (19 findings: TAKE 9 / TAKE-WITH-CHANGE 9 / NANO-ONLY 1; 9 method rules)
+SCHOLAR-PROOF-ENG	ae7ca0a84c7646c5e	DONE 2026-10-21: PROOF-ENGINEERING-20261021.md (562 lines: inventory of ten proof shapes; Q1 Derived + submit_frame; Q2 host_run_folds; Q3 Chain lib law + object_history_chain; cards)
+GATES-11	a3be46a3a9d080699	RETIRED 2026-10-22 ~430K; landed e568634 GATES-22, 2a0de84 (ND_TICKET), fa8fec3 (the append rule); first convergence GREEN 46 min (rows 43 serial); continuation GATES-LOG.md ### CONTINUATION for GATES-12
+LANG-25	a4d6c461be02dc6c5	DONE 2026-10-21: landed 338f8c1 (the Lang half of the history lift; escrow's hand-rolled Chain deleted as an instance; the brief's bounded_always refuted without LawKeeps)
+KERNEL-27	a8eb80aab51d56a49	RETIRED 2026-10-21 ~290K; landed 99771b9 KERNEL-58 (Derived + CallFoot + Triple + submit_frame; receive_ok deleted as Derived); continuation KERNEL-LOG.md "KERNEL-27 continuation"
+HOST-21	a766abe38a73aaec5	DONE 2026-10-21: landed 1d542f1 (Host ⊑ Kernel as one theorem: host_step_folds over every frame code; the crash edge; four mutant-machine teeth; open: Honest not carried across a crash; no joint witness for _censor / Kept)
+KERNEL-28	ac5a6433f2fea8b56	DONE 2026-10-22: landed 4442b43 KERNEL-59 (write_judged; the totality lemma; CellsCanon proved from genesis; ObjectStep/ObjectHistory + object_history_chain; Ledger Invokes deleted as an instance; F4 inside)
+GATES-12	a80075027e1611bb5	live 2026-10-22 05:05Z (20j/20k in flight; 20g concurrent rows with per-stage/per-row times; convergence skipping by read-set with a daily floor; the slot cleanup; standing duty)
+PROTOCOL-23	a8e94a9ff437436be	live 2026-10-22 05:56Z (nd cancel + the cancel Host op + its row as one commit on HOST-18's patch; the planting rows on HOST-64; PROTOCOL-61 the origin-carrying invitation)
+LEDGER-7	a0f423b1d92da15d2	DONE 2026-10-22: landed c3efc97 LEDGER-18 (the escrow deposit on the capped right) + 704af55 LEDGER-19 (grant_moves_le_cap by Std.chain_sum over Worlds; Std.Chain generalised over its state type); open: carves not counted; no credit tooth
+KERNEL-30	a94a5cf896355bc1b	DONE 2026-10-22: landed 1fe9f93 KERNEL-61 (LedgerContiguous from genesis; spend/credit_reads_back; teeth gap_never_falls etc.); the invariant HOLDS for every receiver
+SCHOLAR-ACTIVITIES	a1358ff6c8a370ac5	RETIRED real 10-20 12:45Z at ~812K = ACTIVITIES-1 the PROTOTYPER: LANG-66 (1e94183, 56c79a0, 6bf2585) + LANG-67 (8c31ace); handoff ACTIVITIES-LOG.md; sub-lanes A a888f90ed44334d88 / B a83d9a318939a86ad / C aa81e09afb7452039 PARKED (resumable per the handoff)
+HOST-19	a2187f9785cee3133	RETIRED real 10-20 09:20Z at ~375K (HOST-67 832a815: import --origin, Segs.read theorem, rotate reuse; handoff in HOST-LOG ## HOST-19 (the second))
+HOST-22	a06b4d1af32e24ee6	RETIRED real 10-20 10:15Z at ~480K (HOST-68 80419cf, HOST-69 7473d77, HOST-70 f48965e; handoff ## HOST-22 HANDOFF in HOST-LOG.md incl. the PROTOCOL-61 Host hunks design; HOST-23 spawns on PROTOCOL-23\'s patch)
+ACTIVITIES-2	ae723b4eaff5f912a	live real 10-20 12:45Z (successor of ACTIVITIES-1: the honest-instance question first, then the Std.activity/Std.hole generators cv 01a158c0-ddbf; worktree /tank/dregg-build/claude-lanes/activities)
+HOST-23	af41efe8ffba101c4	live real 10-20 (successor of HOST-22: main's cargo:client:join red first (bracket 199e9e3 ok / 56c79a0 red; HOST-67 suspected); then PROTOCOL-61 Host hunks from HOST-LOG ## HOST-22 HANDOFF part 2; wt/host22)
+# CODEX WAVE 1 (real 10-20 19:40Z): workers run via codex/launch.sh; reports in codex/<name>.report.md; no agent ids (pids in codex/<name>/run.pid)
+CX-HOST	codex	live (the client:join red; PROTOCOL-61 whole; wt/host22)
+CX-ACT	codex	live (Std.activity/Std.hole generators (A); law-8 split; claude-lanes/activities)
+CX-KERNEL	codex	live (trie binding; dropHeads U; emptyHash cache; wt/cxkernel)
+CX-GATES	codex sol	live (GATES-20m; disjunct census; nd-t leak)
+CX-SCHOLAR	codex	live read-only (HOLES-FOR-PROOF-ENGINEERING memo)
+
+# CODEX WAVE 2 (real 10-20 20:30Z): THE CONTEXTUAL PROGRAM
+CX-P15	codex	live (cards P1+P5: guard as interactions; statuses + refinement)
+CX-P2	codex	live (card P2: the boundary declaration)
+CX-P3	codex	live (card P3: alternative worlds)
+CX-P4	codex	live (card P4: first-class repair + transport)
+CX-READER-KERNEL	codex	live read-only (second reader on cxkernel-ready.patch)
+CX-DEGG	codex sol	live read-only (DEGG-RESEARCH-STATE memo)
+SCOUT-POST	a7d90aa775daf20d7	live opus read-only (POST-HARSIMONY-DRAFT for Ember's delve post)
+SCHOLAR-LIT	a1b99ef9aa81bde60	live opus read-only (LITERATURE-CONTEXTUAL-20261020.md via scry + annas; ~/paperbin)
+# real 10-21 01:40Z: live Codex workers: CX-READER-ACT3 (the fixed activities lang!), CX-HOSTING (launcher race fix, landing), CX-HOST run 4 (PROTOCOL-61 then the adopt host!), CX-GATES (20n behind hosting), CX-P7 pending launch. Done today: CX-P2/P3/P4/P15/P9/P10/P11a/P11b/P12/P6/P8 + readers, CX-KERNEL, CX-ACT, CX-P13, CX-DEGG, CX-SCHOLAR, SCHOLAR-LIT, SCOUT-POST.
+# real 10-21 08:45Z: CX-HOST run 6 (land HOST-71), CX-P7 (the last card) live; everything else done or landed.
+# real 10-21 09:55Z: CX-HOST DONE (HOST-71 3bd8c12; the join red gone); live: CX-P7 run 2 (the last card, live contextual packages); a ROOT convergence on 3bd8c12 running.
+# real 10-21 17:25Z: CX-MINI-COLL stops at READY-PATCHES (the umbrella's pre-existing fixture red); CX-READER-PE1 holds; five decisions for Ember.

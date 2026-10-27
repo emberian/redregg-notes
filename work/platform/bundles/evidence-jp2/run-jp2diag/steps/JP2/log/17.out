@@ -1,0 +1,18 @@
+{
+  "continuity": {
+    "identity": {
+      "algorithm": "minidregg-continuity-v1",
+      "domain": "8501",
+      "expectedSeed": "739233042152864993219741528612552498321399134319259076958099012212390007479",
+      "semantics": "57621574434371209881717419650284223750536103367801519131515545423056217876633"
+    },
+    "point": {
+      "height": "1",
+      "worldRoot": "29185432896331745904674040248581269603839651019059827468450903078599506009669"
+    },
+    "status": "established",
+    "type": "minidregg-fresh-continuity-ready-v1"
+  },
+  "type": "minidregg-participant-joined-v1",
+  "workspace": "/run/user/1001/p4.QrWhKA/r/steps/JP2/laptop/.mini/box/workspace"
+}

@@ -1,0 +1,35 @@
+=== P1 20:17:35
+PLANTED Lang/Program.lean
+diff lines: 13
+whole build exit 1
+error: Lang/Proofs/Provenance.lean:1081:23: unsolved goals
+error: Lang/Proofs/Provenance.lean:1131:23: unsolved goals
+error: Lang/Proofs/Rel.lean:1019:79: Tactic `assumption` failed
+- Lang.Proofs.Rel
+- Lang.Proofs.Provenance
+error: build failed
+RESTORED Lang/Program.lean
+=== P2 20:19:13
+PLANTED Lang/StdActivity.lean
+diff lines: 28
+whole build exit 1
+error: Lang/Proofs/StdActivity.lean:144:41: Application type mismatch: The argument
+error: Lang/Proofs/StdActivityTeeth.lean:87:113: Tactic `decide` failed for proposition
+- Lang.Proofs.StdActivity
+- Lang.Proofs.StdActivityTeeth
+error: build failed
+RESTORED Lang/StdActivity.lean
+=== P3 20:20:59
+PLANTED Lang/StdActivity.lean
+diff lines: 28
+whole build exit 1
+error: Lang/Proofs/StdActivityTeeth.lean:45:36: Tactic `decide` failed for proposition
+- Lang.Proofs.StdActivityTeeth
+error: build failed
+RESTORED Lang/StdActivity.lean
+=== restore build 20:21:41
+ M Lang/Proofs/Rel.lean
+ M Lang/Proofs/StdActivityTeeth.lean
+ M Lang/StdActivity.lean
+?? Lang/Proofs/StdActivityMonitor.lean
+restore exit 0 20:22:23

@@ -1,0 +1,43 @@
+✖ [62/63] Building Lang.Proofs.LiveHoles (1.1s)
+trace: .> LEAN_PATH=/tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean /home/hbox/.elan/toolchains/leanprover--lean4---v4.30.0/bin/lean /tank/dregg-build/nanodregg/wt/promo/Lang/Proofs/LiveHoles.lean -o /tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean/Lang/Proofs/LiveHoles.olean -i /tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean/Lang/Proofs/LiveHoles.ilean -c /tank/dregg-build/nanodregg/wt/promo/.lake/build/ir/Lang/Proofs/LiveHoles.c --setup /tank/dregg-build/nanodregg/wt/promo/.lake/build/ir/Lang/Proofs/LiveHoles.setup.json --json
+error: Lang/Proofs/LiveHoles.lean:84:24: Tactic `assumption` failed
+
+D : Type
+digestOf : ByteArray → Option D
+look : Pinned D
+rv : RowView D
+self : D
+h : HoleROM
+s : HoleSelection
+hs : selectHole digestOf look rv self h = Except.ok s
+c : HoleCode
+w✝¹ : Nat
+w✝ : ByteArray
+left✝² : holeRow rv self h.selectionRel h.selectionKey = Except.ok (some (RowLeaf.row w✝¹ w✝ s.version))
+left✝¹ : Wire.decodeData Ty.nat w✝ = Except.ok (Data.nat s.index)
+hc : h.code[s.index]? = some c
+left✝ : s.original = c.body
+hall : c.supports.all (supportLive digestOf look rv self) = true
+id : ByteArray
+hid : SupportPin.cell id ∈ c.supports
+g : D
+hd : digestOf id = some g
+x✝ : Except (Refusal D) (Option Cell)
+hl : true = true
+⊢ look g = Except.ok (some ?m.183)
+error: Lang/Proofs/LiveHoles.lean:85:4: No goals to be solved
+error: Lean exited with code 1
+✖ [63/63] Building Lang.Proofs.Rel (1.7s)
+trace: .> LEAN_PATH=/tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean /home/hbox/.elan/toolchains/leanprover--lean4---v4.30.0/bin/lean /tank/dregg-build/nanodregg/wt/promo/Lang/Proofs/Rel.lean -o /tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean/Lang/Proofs/Rel.olean -i /tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean/Lang/Proofs/Rel.ilean -c /tank/dregg-build/nanodregg/wt/promo/.lake/build/ir/Lang/Proofs/Rel.c --setup /tank/dregg-build/nanodregg/wt/promo/.lake/build/ir/Lang/Proofs/Rel.setup.json --json
+error: Lang/Proofs/Rel.lean:309:59: unsolved goals
+case h_1
+D : Type
+look : Pinned D
+g : D
+x✝ : Except (Refusal D) (Option Cell)
+⊢ ∃ c, look g = Except.ok (some c)
+error: Lean exited with code 1
+Some required targets logged failures:
+- Lang.Proofs.LiveHoles
+- Lang.Proofs.Rel
+error: build failed

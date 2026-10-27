@@ -1,0 +1,12 @@
+scripts/commit: your copy of 3 file(s) recorded at 28e2d88 (base = this worktree's HEAD); every attempt lands from this record, never from the working tree
+ Hosting/Proofs/Socket.lean | 536 +++++++++++++++++++++++++++++++++++++++++++++
+ SIZE.md                    |  10 +-
+ decisions/hosting.md       |  23 ++
+ gates/tcb.tsv              |   1 +
+ 4 files changed, 565 insertions(+), 5 deletions(-)
+scripts/commit: judge: fast
+  gates: RED
+  parent-gates: RED
+PRE-PUSH RED tree d92e159708eb: gates parent-gates — the source gates, before any slot (nothing was built)
+  refusals: set_option budget: Hosting/Proofs/Socket.lean:201: set_option maxRecDepth 20000 in
+scripts/commit: REFUSED by scripts/pre-push

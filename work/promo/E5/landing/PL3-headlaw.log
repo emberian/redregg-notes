@@ -1,0 +1,44 @@
+PL3-headlaw apply ok
+✔ [73/190] Built Lang.StdHead (541ms)
+✔ [154/190] Built Protocol.Receipt (646ms)
+✔ [165/190] Built Lang.StdHead:c.o (199ms)
+✔ [167/190] Built Protocol.Receipt:c.o (301ms)
+✔ [168/190] Built Protocol.Foreign (375ms)
+✔ [172/190] Built Protocol.Settle (415ms)
+✔ [174/190] Built Host.Serve (335ms)
+✔ [176/190] Built Host.Deployed (577ms)
+✔ [177/190] Built Protocol.Command.Machine (1.8s)
+✔ [179/190] Built Host.Check (568ms)
+✔ [180/190] Built Protocol.Command.Wire (466ms)
+✔ [183/190] Built Host.Deployed:c.o (2.1s)
+✔ [184/190] Built Host.Follow (1.1s)
+✔ [186/190] Built Host.Cli (976ms)
+✔ [188/190] Built Host.Main (326ms)
+✔ [190/190] Built host:exe (724ms)
+Build completed successfully (190 jobs).
+=== BUILD EXIT 0
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.09s
+     Running tests/foreign.rs (target/debug/build/nanodregg-client/9eb64af5e673c222/out/foreign-9eb64af5e673c222)
+
+running 1 test
+test a_receipt_from_another_world_is_accepted_once_and_forgeries_and_forks_refuse ... FAILED
+
+failures:
+
+---- a_receipt_from_another_world_is_accepted_once_and_forgeries_and_forks_refuse stdout ----
+
+thread 'a_receipt_from_another_world_is_accepted_once_and_forgeries_and_forks_refuse' (3971007) panicked at client/tests/foreign.rs:85:9:
+nd ["invoke", "ab947a78002b7049f17030c19c3db144e7f1bbe8db0e0984d5c48ef33db68879", "1"] admitted: tx 77ce917a0e1919712cc7b158de682172839c30afe5163e76309d7957f3b380ee
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    a_receipt_from_another_world_is_accepted_once_and_forgeries_and_forks_refuse
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.89s
+
+error: test failed, to rerun pass `-p nanodregg-client --test foreign`
+=== TEST EXIT 101
+PL3-headlaw revert ok
+=== DONE

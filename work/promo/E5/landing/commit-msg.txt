@@ -1,0 +1,206 @@
+lang!: receipts between Worlds — a head object of another World (Std.head: forkedHead freezes it), a (receipt) read column checked by Protocol's Receipt.check through one new Lang.program parameter, foreign_receipt_sound (E5, PROTOCOL-65, LANG-75.14)
+
+Per R-0059 (RELEASE E5 TO BUILD, promo/READ-E5-grok.md: C0, C1, Q1-Q5) and R-0066
+(RELEASE TO LAND under promo/READ-E5-built-grok.md's one condition: PL1 re-planted on a
+fresh transaction, X2r), and R-0067 (RELEASE E5-LANDING, promo/READ-E5-rebased-grok.md). Built by CX-P5
+(promo/E5/full-2.patch, hbox wt/p5-r2, rebased onto 28e2d88), landed by CX-PROMO-7
+from that patch set unchanged (55 paths, byte-identical to wt/p5-r2); CX-P5 reads the
+landing. IMPACT: promo/IMPACT-E5.md. Grants: R-0051, R-0055, R-0059 C1.
+
+CROSS-LAYER: LEDGER — R-0055 (b) + R-0059 C1: the binder ripple of the new Lang.program parameter in Ledger/Proofs (EscrowAdmitted, EscrowInvokes, EscrowRun, EscrowWitness, GrantCapTooth) and Ledger/Sim/Journey; proofs and sims only, no Ledger definition changes.
+CROSS-LAYER: HOSTING — R-0055 (b) + R-0059 C1: the binder ripple in Hosting/Proofs/Deployed.lean and Hosting/Sim/Journey.lean; and world/head/Head, the emitted text of Lang.Std.headPackage (a generated Lang artifact in R-0059's patch set; ROOT for HOSTING).
+CROSS-LAYER: KERNEL — R-0051 (Kernel/Proofs/**) + R-0059 C1: Kernel/Proofs only — Journal.lean gains fold_journal_turn and the witness ripple in InvokeTreeWitness, InvokeWitness, Logic/History, Logic/HistoryWitness; no Kernel definition changes.
+CROSS-LAYER: HOST — R-0051 (Host/**) + R-0059 C1: Host/Deployed.lean passes Protocol.Foreign.check as X's receipt check (one line).
+CROSS-LAYER: PROTOCOL — R-0051 (Protocol/**) + R-0055 (a): Protocol/Foreign.lean, Protocol/Proofs/{Foreign,ReceiptWire,Receipt}.lean, Protocol/Rows/{Params,Deployed,Loopback}.lean (ripple), decisions/protocol.md PROTOCOL-65 (appended after PROTOCOL-64; it amends PROTOCOL-45's critique).
+CROSS-LAYER: CLIENT — R-0051 (client/tests/**): client/tests/foreign.rs and its fixture client/tests/fixtures/foreign/{Accept.ob,Accept}; tests only.
+
+WHAT CHANGED SHAPE.
+- Lang.program takes a third argument, receipts : ReceiptCheck (Cell -> ByteArray ->
+  Except String Seen). No default: every theorem over it quantifies over it, toy
+  contexts pass Lang.noReceipts, Host.Deployed.X passes Protocol.Foreign.check.
+- RelRead gains receipt : Bool. Install accepts a cell-keyed (receipt) read of a method
+  whose argument has receipt : bytes and refuses any other as receiptRead (a new
+  CheckError constructor). The column is on points and on signed range rows (one
+  core, receiptSeen), because nd cannot pin a point read (cv 01a166e9-a543).
+- methodReads threads the check and the method's arguments into the fuse's peer part.
+- New: Lang/StdHead.lean (Std.headPackage, text world/head/Head), Protocol/Foreign.lean,
+  Lang/Proofs/StdHead.lean, Protocol/Proofs/Foreign.lean,
+  Protocol/Proofs/ReceiptWire.lean, client/tests/foreign.rs (+ fixture Accept.ob / Accept).
+WHAT RE-EMITS / RE-GENESISES. No package, codec, call or reply byte moves:
+codec-vectors --check ok, --write byte-identical (263 vectors, 56 sites); package wire
+stays 5. Every Store re-geneses anyway: install now accepts a method type it refused, so
+an old log can re-fold differently (hence lang!). world/head/Head is new.
+WHAT NOW REFUSES. A (receipt) read on a relation that is not cell-keyed, or without a
+receipt : bytes argument (receiptRead). At run time, a receipt the check refuses, by its
+name (notHead, forkedHead, badReceipt, headMismatch, pathMismatch, forgotten,
+notCommitted, unpinned, headDead).
+
+THEOREMS (0 sorry). Lang/Proofs/Rel: receipt_column_authenticated (point slots);
+Lang/Proofs/Invoke: receiptSeen_ok, receiptRow_conforms, receiptRows_conforms;
+Lang/Proofs/Provenance: receiptRows_digests; cited_authenticated RESTATED (C0: the live record is key :: live :: col ++ val, col = []
+when receipt = false; no hypothesis added). Lang/Proofs/StdHead (over BigStep):
+head_at_at, head_forked_frozen, head_at_fork, head_world_fixed. Kernel/Proofs/Journal:
+fold_journal_turn. Protocol/Proofs/Foreign: foreign_receipt_sound (premise named: the
+held head's roots are a fold of A from its genesis; the receipt r and turn digest td
+are premises check_committed_of supplies, not chosen by the conclusion; disjunct
+CollidesAmong over check_committed's list), forged_receipt_refused, forked_head_column_refused.
+Protocol/Proofs/ReceiptWire: ofBytes_bytes (cv 01a14ef0-ffe7), receipt_member_dropped
+(+ control receipt_tooth_reads).
+SAID, NOT PROVED: no theorem concludes the RANGE row's receipt field, the arm the
+deployed fixture uses (cv 01a1671d-09bf); Lang journey rows HD/RC for headDead /
+notCommitted not built (cv 01a1671d-09d7).
+
+ROWS (client/tests/foreign.rs, two geneses, two writers, the real host): X1 admitted;
+X1b second acceptance refused; X2 stated height forged -> pathMismatch; X2r a
+never-accepted call's receipt with its cells root forged -> headMismatch; X2h a receipt
+at a later head -> headMismatch; X3 second poster's same-steps head -> lawDenied
+forkedHead; X3b fork recorded, then accept and post -> forkedHead; X5 anchor withdrawn ->
+untrusted. wrongWorld control = Protocol.Rows' wrongWorld row.
+
+PLANTS (re-run by CX-PROMO-7 on the landing worktree; whole logs hbox
+logs/promo/e5/plants/; each rebuilds host, re-emits world/head/Head, runs the X rows,
+reverts; control GREEN before and after, world/head/Head byte-identical):
+PLANT: PL1 roots comparison dropped in Receipt.check -> X2r (a never-accepted call's receipt, cells root forged) ADMITTED (foreign.rs:235, 'X2r: tx 499c06a2…'; CX-P5's run: logs/p5plants2/PL1-roots.log); without the plant X2r refuses headMismatch, NOT pathMismatch: the roots comparison stands in front of answerOf, whose inclusion refusal pathMismatch is X2's (PL2) (R-0066, R-0067)
+PLANT: PL2 journal inclusion dropped -> X2 admitted (foreign.rs:225)
+PLANT: PL3 head law compares steps only (world/head/Head re-emitted under it) -> X3's second post admitted (foreign.rs:85)
+PLANT: PL4 Foreign.check ignores forked -> X3b accept names notHead (foreign.rs:257)
+PLANT: PL5 column filled without the check -> X2 admitted (foreign.rs:225)
+PLANT: PL6 ofBytes reads a padded refused member -> ofBytes_bytes (ReceiptWire.lean:76) and receipt_member_dropped (:133) red
+FIXED FORWARD after the first full judge (tree 575dd8103878, RED: census, runs, clippy, fmt):
+the statement census refused foreign_receipt_sound's `exists r td` conclusion (a collision
+disjunct over inputs the statement chooses, GATES-20s), so r and td became premises; the
+statement_plants control was the same census red; clippy doc_lazy_continuation and cargo fmt
+on client/tests/foreign.rs; that module doc's false claim that headDead/notCommitted are
+journey rows is corrected. Then, locally: gates/census.py ok (STATEMENT-CENSUS ok, 263
+disjunctions), cargo clippy -p nanodregg-client --tests -D warnings clean, cargo fmt --check
+clean, the X rows green again. Rebased onto origin/main 360e1ed (README only).
+MEASURED ON THIS TREE (hbox wt/promo = 28e2d88 + full-2.patch + the two decision texts):
+whole tree lake build 733 GREEN; lang-journey GREEN, 811 lines, byte-identical to the
+PROT-6 integration journey; codec-vectors --check ok, --write byte-identical; gates/check.py
+all ok but size (scripts/commit writes SIZE.md); decls judge with an empty message listed
+exactly the 108 names below (= promo/E5/restates-2.txt), 0 DELETES; no added token span
+in the 108 statement diffs contains an arrow (0 hypotheses gained).
+
+SIZE: Lean modules in the Host closure: 89 -> 93, Protocol.Foreign and Lang.StdHead enter the deployed program with what they import
+SIZE: Lean modules: 479 -> 484, the five new E5 modules (Lang.StdHead, Lang.Proofs.StdHead, Protocol.Foreign, Protocol.Proofs.Foreign, Protocol.Proofs.ReceiptWire)
+SIZE: Lean proof-modules: 256 -> 259, Lang.Proofs.StdHead, Protocol.Proofs.Foreign, Protocol.Proofs.ReceiptWire
+SIZE: Lean lines (Host): 18001 -> 18005, Host.Deployed.X passes Protocol.Foreign.check (and its docstring)
+SIZE: Lean lines (Kernel): 36207 -> 36238, fold_journal_turn in Kernel/Proofs/Journal.lean
+SIZE: Lean lines (Lang): 41482 -> 42106, Std.head, the receipt column (receiptSeen, points and range rows), its theorems, the binder ripple
+SIZE: Lean lines (Protocol): 11812 -> 12156, Protocol.Foreign and its proofs (foreign_receipt_sound, forged_receipt_refused, forked_head_column_refused, ofBytes_bytes, receipt_member_dropped)
+SIZE: Lean lines (deployed): 28825 -> 29120, the head package, the receipt column and Foreign.check are on the deployed path
+SIZE: Lean lines (tooling: Sim, Rows, Journey, Census, Emit, Ops, Bench): 21607 -> 21612, Params.receipts and the Sims passing noReceipts
+SIZE: max dependents of a non-foundation module: 354 -> 359, Lang.Rel's ReceiptCheck is now read by the five new modules
+SIZE: theorems: 5999 -> 6026, the E5 theorems (head law, receipt column, foreign receipt, receipt wire)
+SIZE: Rust lines: 20757 -> 21031, client/tests/foreign.rs, the two-World rows
+
+RESTATES-MEANING: _private.Lang.Proofs.PeerRead.0.Nanodregg.Lang.readsData_record
+RESTATES-MEANING: _private.Lang.Proofs.Provenance.0.Nanodregg.Lang.runMeasured_past_extraction_of
+RESTATES-MEANING: _private.Lang.Proofs.Provenance.0.Nanodregg.Lang.runMeasuredLive_past_extraction_of
+RESTATES-MEANING: _private.Lang.Proofs.StdOffer.0.Nanodregg.Lang.Std.point_cases
+RESTATES-MEANING: _private.Lang.Proofs.StdOffer.0.Nanodregg.Lang.Std.rows_cases
+RESTATES-MEANING: _private.Lang.Proofs.StdOffer.0.Nanodregg.Lang.Std.runMeasured_inv
+RESTATES-MEANING: _private.Lang.Proofs.StdOffer.0.Nanodregg.Lang.Std.take_rowsTy
+RESTATES-MEANING: _private.Lang.Proofs.StdOfferFuse.0.Nanodregg.Lang.Std.fuse_tree
+RESTATES-MEANING: _private.Lang.Proofs.StdOfferFuse.0.Nanodregg.Lang.Std.methodReads_offer
+RESTATES-MEANING: _private.Lang.Proofs.StdOfferFuse.0.Nanodregg.Lang.Std.party
+RESTATES-MEANING: _private.Lang.Proofs.StdOfferFuse.0.Nanodregg.Lang.Std.readsData_offer
+RESTATES-MEANING: _private.Ledger.Proofs.EscrowRun.0.Nanodregg.Ledger.Proofs.runLive_of_program
+RESTATES-MEANING: _private.Ledger.Proofs.EscrowWitness.0.Nanodregg.Ledger.Proofs.judge_live
+RESTATES-MEANING: _private.Ledger.Proofs.EscrowWitness.0.Nanodregg.Ledger.Proofs.run_ok
+RESTATES-MEANING: _private.Ledger.Proofs.EscrowWitness.0.Nanodregg.Ledger.Proofs.run1
+RESTATES-MEANING: _private.Ledger.Proofs.EscrowWitness.0.Nanodregg.Ledger.Proofs.run2
+RESTATES-MEANING: _private.Ledger.Proofs.EscrowWitness.0.Nanodregg.Ledger.Proofs.run3
+RESTATES-MEANING: _private.Ledger.Proofs.EscrowWitness.0.Nanodregg.Ledger.Proofs.setup_eq
+RESTATES-MEANING: Nanodregg.Kernel.Receive.invoke_lift_witnessed
+RESTATES-MEANING: Nanodregg.Kernel.Receive.invoke_next_run_witnessed
+RESTATES-MEANING: Nanodregg.Kernel.Receive.invoke_next_slots_witnessed
+RESTATES-MEANING: Nanodregg.Kernel.Receive.invoke_tree_run_witnessed
+RESTATES-MEANING: Nanodregg.Kernel.Receive.invoke_tree_slots_witnessed
+RESTATES-MEANING: Nanodregg.Kernel.Receive.object_history_chain
+RESTATES-MEANING: Nanodregg.Kernel.Receive.object_history_chain_witnessed
+RESTATES-MEANING: Nanodregg.Kernel.Receive.object_history_needs_inForce
+RESTATES-MEANING: Nanodregg.Kernel.Receive.object_history_start
+RESTATES-MEANING: Nanodregg.Kernel.Receive.write_history_witnessed
+RESTATES-MEANING: Nanodregg.Lang.cited_authenticated
+RESTATES-MEANING: Nanodregg.Lang.contextual_law_demanded_hole
+RESTATES-MEANING: Nanodregg.Lang.contextual_law_dormant_hole
+RESTATES-MEANING: Nanodregg.Lang.deployed_program_own_codec
+RESTATES-MEANING: Nanodregg.Lang.guardEdits_never_stuck
+RESTATES-MEANING: Nanodregg.Lang.invoke_live_never_stuck
+RESTATES-MEANING: Nanodregg.Lang.invoke_never_stuck
+RESTATES-MEANING: Nanodregg.Lang.methodReads_conforms
+RESTATES-MEANING: Nanodregg.Lang.methodReads_digests
+RESTATES-MEANING: Nanodregg.Lang.methodReads_no_peer
+RESTATES-MEANING: Nanodregg.Lang.peerReads_package
+RESTATES-MEANING: Nanodregg.Lang.peerReads_parent
+RESTATES-MEANING: Nanodregg.Lang.peerReads_unpinned
+RESTATES-MEANING: Nanodregg.Lang.pointData_ok
+RESTATES-MEANING: Nanodregg.Lang.program_run_closed
+RESTATES-MEANING: Nanodregg.Lang.program_run_past_extraction
+RESTATES-MEANING: Nanodregg.Lang.program_run_past_extraction_live
+RESTATES-MEANING: Nanodregg.Lang.readsData_conforms
+RESTATES-MEANING: Nanodregg.Lang.readsData_digests
+RESTATES-MEANING: Nanodregg.Lang.relReads_conforms
+RESTATES-MEANING: Nanodregg.Lang.relReads_digests
+RESTATES-MEANING: Nanodregg.Lang.relReads_pins_past_slots
+RESTATES-MEANING: Nanodregg.Lang.relReads_points
+RESTATES-MEANING: Nanodregg.Lang.relReads_points_witness
+RESTATES-MEANING: Nanodregg.Lang.required_counts_the_run
+RESTATES-MEANING: Nanodregg.Lang.required_lt_ticks
+RESTATES-MEANING: Nanodregg.Lang.requiredLive_lt_ticks
+RESTATES-MEANING: Nanodregg.Lang.requiredOf_spec
+RESTATES-MEANING: Nanodregg.Lang.requiredOf_total
+RESTATES-MEANING: Nanodregg.Lang.requiredOfLive_spec
+RESTATES-MEANING: Nanodregg.Lang.requiredOfLive_total
+RESTATES-MEANING: Nanodregg.Lang.run_calls
+RESTATES-MEANING: Nanodregg.Lang.run_rows_under
+RESTATES-MEANING: Nanodregg.Lang.runMeasured_calls
+RESTATES-MEANING: Nanodregg.Lang.runMeasured_calls_le
+RESTATES-MEANING: Nanodregg.Lang.runMeasured_calls_slots
+RESTATES-MEANING: Nanodregg.Lang.runMeasured_kinds
+RESTATES-MEANING: Nanodregg.Lang.runMeasured_means
+RESTATES-MEANING: Nanodregg.Lang.runMeasured_no_slots
+RESTATES-MEANING: Nanodregg.Lang.runMeasured_past_extraction
+RESTATES-MEANING: Nanodregg.Lang.runMeasured_past_extraction_sim
+RESTATES-MEANING: Nanodregg.Lang.runMeasured_rows_under
+RESTATES-MEANING: Nanodregg.Lang.runMeasured_setup
+RESTATES-MEANING: Nanodregg.Lang.runMeasuredLive_closed
+RESTATES-MEANING: Nanodregg.Lang.runMeasuredLive_leaf_closed
+RESTATES-MEANING: Nanodregg.Lang.runMeasuredLive_setup
+RESTATES-MEANING: Nanodregg.Lang.runMeasuredWith_calls
+RESTATES-MEANING: Nanodregg.Lang.runMeasuredWith_calls_slots
+RESTATES-MEANING: Nanodregg.Lang.runSetup_accepted
+RESTATES-MEANING: Nanodregg.Lang.runSetup_accepted_of
+RESTATES-MEANING: Nanodregg.Lang.runSetup_sources
+RESTATES-MEANING: Nanodregg.Lang.runSetup_spec
+RESTATES-MEANING: Nanodregg.Lang.runSetupLive_accepted_of
+RESTATES-MEANING: Nanodregg.Lang.runSetupLive_leaf_closed
+RESTATES-MEANING: Nanodregg.Lang.runSetupLive_of_runSetup
+RESTATES-MEANING: Nanodregg.Lang.runSetupLive_sources
+RESTATES-MEANING: Nanodregg.Lang.runSetupWith_spec
+RESTATES-MEANING: Nanodregg.Lang.Std.activity_monitor_safe
+RESTATES-MEANING: Nanodregg.Lang.Std.activity_program_safe
+RESTATES-MEANING: Nanodregg.Lang.Std.fuse_atomic
+RESTATES-MEANING: Nanodregg.Lang.Std.fuse_calls
+RESTATES-MEANING: Nanodregg.Lang.Std.invitation_once
+RESTATES-MEANING: Nanodregg.Lang.Std.jointLaw_sound
+RESTATES-MEANING: Nanodregg.Lang.Std.take_run_sound
+RESTATES-MEANING: Nanodregg.Ledger.Proofs.escrow_deposit_spends_cap
+RESTATES-MEANING: Nanodregg.Ledger.Proofs.escrow_history_witnessed
+RESTATES-MEANING: Nanodregg.Ledger.Proofs.escrow_invokes_deployed
+RESTATES-MEANING: Nanodregg.Ledger.Proofs.escrow_invokes_one_payout
+RESTATES-MEANING: Nanodregg.Ledger.Proofs.escrow_link_bites
+RESTATES-MEANING: Nanodregg.Ledger.Proofs.escrow_program_calls
+RESTATES-MEANING: Nanodregg.Ledger.Proofs.escrow_program_one_payout
+RESTATES-MEANING: Nanodregg.Ledger.Proofs.escrow_run_calls
+RESTATES-MEANING: Nanodregg.Ledger.Proofs.escrow_run_deployed
+RESTATES-MEANING: Nanodregg.Ledger.Proofs.escrow_runs_after_payout
+RESTATES-MEANING: Nanodregg.Ledger.Proofs.escrow_runs_deployed
+RESTATES-MEANING: Nanodregg.Ledger.Proofs.escrow_runs_one_payout
+RESTATES-MEANING: Nanodregg.Ledger.Proofs.escrow_runs_witness
+RESTATES-MEANING: Nanodregg.Ledger.Proofs.escrow_second_release_refused
+RESTATES-MEANING: Nanodregg.Ledger.Proofs.runs_chain
+RESTATES-MEANING: Nanodregg.Ledger.Proofs.runs_start
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>

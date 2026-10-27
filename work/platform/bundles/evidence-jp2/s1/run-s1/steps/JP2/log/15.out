@@ -1,0 +1,47 @@
+/run/user/1001/p4.uTDpCg/r/world/sponsor/sources/create-account-friend.authoring/g0001/intent.bin
+{
+  "acceptedCount": "15",
+  "confirmation": "installed",
+  "eventId": "13607999633056581570144245848477026979768331707904000018344658995509295354798",
+  "transactionId": "48342742012003491522457415651432683093878527812383112433222637149267281333680",
+  "type": "confirmed",
+  "worldRoot": "75011676706336439521771150597022039616566799559344408474533392589041017284424"
+}
+{
+  "account": {
+    "attempt": "/run/user/1001/p4.uTDpCg/r/world/sponsor/attempts/create-account-friend",
+    "birthReceipt": {
+      "acceptedCount": "15",
+      "confirmation": "installed",
+      "eventId": "13607999633056581570144245848477026979768331707904000018344658995509295354798",
+      "transactionId": "48342742012003491522457415651432683093878527812383112433222637149267281333680",
+      "type": "confirmed",
+      "worldRoot": "75011676706336439521771150597022039616566799559344408474533392589041017284424"
+    },
+    "controlCapability": "13318762661842168204",
+    "funded": "1000",
+    "ownerCapability": "17545308121273763890",
+    "target": "11855418858877046016"
+  },
+  "authority": "hint-only; the Host checks every grant at use",
+  "birthContext": "/run/user/1001/p4.uTDpCg/r/world/sponsor/provisions/friend/birth-context.json",
+  "factoryObservation": {
+    "authority": "admitted-factory-observation",
+    "capability": "15132879253850235238",
+    "factory": "10",
+    "holder": "12722756243119881344",
+    "receipt": {
+      "acceptedCount": "14",
+      "eventId": "76540082085322636952821091878866403617896791398491837436847650581162539445601",
+      "transactionId": "30803847392357242274447983045309585822708645654248625498350411889925495121066",
+      "worldRoot": "51094667646684534164812489156031654072569363042841890339938285820681865958236"
+    },
+    "type": "minidregg-participant-factory-observation-result-v1",
+    "verbs": [
+      "observe"
+    ]
+  },
+  "holder": "12722756243119881344",
+  "name": "friend",
+  "type": "minidregg-participant-provisioning-v1"
+}

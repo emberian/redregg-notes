@@ -1,0 +1,22 @@
+03:28:49Z burst-up: staged on burst4-a
+  [ubuntu@207.188.7.163]  5210 |     kj::Maybe<kj::String> offeredExtensions;
+  [ubuntu@207.188.7.163]       |                           ^~~~~~~~~~~~~~~~~
+  [ubuntu@207.188.7.163] capnp: Cap'n Proto version 1.5.0
+  [ubuntu@207.188.7.163] == root phase DONE 2026-10-15T03:29:38+00:00: 6 lane slots x 6 threads, slice 158G
+03:29:38Z burst-up: root phase ok on burst4-a
+  [burst4-a] 
+  [burst4-a] info: checking for self-update (current version: 1.29.1)
+  [burst4-a] installed-from: a5483db36cf7aaf34378a15c90b68c2de538f16a (staged by burst-up)
+  [burst4-a] install-sccache: sccache 0.18.0 at /srv/pipeline/bin/sccache; cache /srv/sccache (120G); snippet /srv/pipeline/sccache.env
+  [burst4-a] lean-ask-install-repl: /srv/pipeline/repl/.lake/build/bin/repl (leanprover/lean4:v4.30.0, repl dde7dd4397951755f1f6c2b4b3a83a26911d63ad)
+  [burst4-a] pipeline-sccache.service: active
+  [burst4-a] pipeline-slots.service: active
+  [burst4-a] pipeline-artifacts.service: active
+  [burst4-a] pipeline-journeys.service: active
+  [burst4-a] shared-remote: /srv/git/minidregg.git (timer shared-remote-sync.timer)
+  [burst4-a] briefs: 0 files in /srv/briefs
+  [burst4-a] == user phase DONE 2026-10-15T03:30:20+00:00
+03:30:20Z burst-up: user phase ok on burst4-a
+03:30:21Z burst-up: gate accepts hbox's puller key (read-only: box-peer-gate)
+  [hbox] 3
+03:30:41Z burst-up: hbox pulls burst4's remote every 10 min

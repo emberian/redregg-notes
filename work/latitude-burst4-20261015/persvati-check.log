@@ -1,0 +1,64 @@
+== burst-check persvati 2026-10-15T04:13:51Z
+ok    pkg:fuser              
+ok    pkg:lsof               
+ok    pkg:flock              
+ok    pkg:rsync              
+ok    pkg:zstd               
+ok    pkg:jq                 
+ok    pkg:capnp              
+ok    pkg:git                
+ok    pkg:curl               
+ok    pkg:earlyoom           
+ok    pkg:rrsync             
+ok    pkg:bwrap              
+ok    pkg:rg                 
+ABSENT pkg:sqlite3           missing (no root; NO-ROOT.txt)
+ok    pkg:bc                 
+ok    pkg:xxd                
+ok    capnp-1.5.0            
+ok    earlyoom               
+ok    linger                 
+ok    sudo-nopasswd          (no-root host: never used)
+ok    srv-mount              (no-root host: /home/ember/mini-pipeline on /, 234G free)
+ok    swarm-build            repo copy (/home/ember/mini-pipeline/pipeline/bin/swarm-build)
+ok    swarm-build:named-scopes 
+ok    swarm.slice            41G of 83G (declared)
+ok    tool:elan              
+ok    tool:lake              
+ok    tool:lean              
+ok    tool:cargo             
+ok    tool:rustc             
+ok    tool:bun               
+ok    repo                   /home/ember/mini-pipeline/mini at a5483db3
+ok    repo-tip               
+ok    activate               /home/ember/mini-pipeline/activate sources box.env
+ok    profile:untouched      
+ok    profile:old-slots      
+ok    box.env                
+ok    slots-exist            3 lane, 2 small, 0 gate
+ok    slots-sized            3 x 4 threads for 12
+ok    slots-no-strays        
+ok    peer                   burst4-gate
+ok    lake-shim              
+ok    scripts                54 files, from 9066a518
+ok    candidate-builder      
+ok    mk-lane:one-copy       = the base tree's
+ok    mk-lane:probe-aware    
+ok    lean-ask-repl          
+ok    sccache-bin            
+ok    unit:pipeline-sccache  active, enabled
+ok    unit:pipeline-slots    active, enabled
+ok    peer-key               
+ok    peer-gate:alias        burst4-gate
+ok    peer-authorized        (outside gate burst4-gate: one way, host -> gate)
+ok    peer-gate:slots        /srv/build-slot-2,/srv/build-slot-3,/srv/build-slot-4,/srv/b
+DIFF  warm-base              NOT-READY: verify FAILED after relay to a5483db36cf7aaf34378a15c90b68c2de538f16a 2026-10-15
+ok    warm-base-tip          
+ok    slots-cmd              answers under a non-login shell
+ok    briefs                 2 files
+ok    SLOTS.txt              
+ok    lake-cache:clean       lake-cache-audit: 0 minidregg entries in /home/ember/mini-pipeline/lake-cache, c
+ok    warm-base:prefixed-c   
+ok    lake-shim:guard        
+== burst-check persvati: 1 DIFF, 1 ABSENT (no root: /home/ember/mini-pipeline/burst/NO-ROOT.txt)
+04:14:01Z burst-up: check: 1 DIFF in total

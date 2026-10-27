@@ -1,0 +1,3 @@
+READY-PORTS 2026-10-21 — All12 reached proof modules and all11 source gates GREEN. Retained theorem statements unchanged; added premises: none. Seventh supersession: run_of_program → runLive_of_program. Exact statements and per-theorem disjunct reads recorded above.
+
+STOP 2026-10-21 — Unlanded in hbox wt/CX-P7; CX-P7 run4 owns the second read and landing. Manifest/message/receipt: logs/CX-READER-P7-ports-{paths.txt,message.txt,ready.sha256}. No judge running; landed hashes: none.

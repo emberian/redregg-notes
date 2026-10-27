@@ -1,0 +1,10 @@
+{
+  "authority": "discovery-only",
+  "encryptionKey": "5e73b5530b24485469466946ac606d1560cccc13bfd7c9c2e0adce52c070fe63",
+  "home": "/run/user/1001/p4.uTDpCg/r/steps/JP2/box/homes/sponsor",
+  "initialized": true,
+  "socket": "/run/user/1001/jm.de6k0K/world.sock",
+  "subject": "7",
+  "type": "minidregg-shell-session-v1",
+  "workspace": "/run/user/1001/p4.uTDpCg/r/world/sponsor"
+}

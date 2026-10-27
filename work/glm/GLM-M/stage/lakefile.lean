@@ -1,0 +1,218 @@
+/-
+# nanodregg — the one build (owner: BUILD-GATES; every layer adds its own `lean_lib`).
+
+The file is a table, not a program: gates/tree.py reads it with a strict grammar and refuses any
+top-level form it does not know (closure C0). The forms are
+  * `package nanodregg where leanOptions := …` — warnings are errors, no auto-bound implicits;
+  * `@[default_target] lean_lib X where globs := #[.submodules `X]` — one per layer directory,
+    every file in X/ built, no umbrella module, no orphan (C1);
+  * `@[default_target] lean_exe «name» where root := `M` — M holds only `main` (C7);
+  * `extern_lib «ndhost»` — every Host/c/*.c, cc -Wall -Wextra -Werror, into libndhost.a. The only
+    C in the tree; built from source, never a prebuilt object (ROOT ruling 2026-10-16).
+No packages: Lean core and Std only (decisions/gates.md GATES-1). A bare `lake build` builds
+every target, so it can never succeed by building nothing.
+-/
+import Lake
+open Lake DSL System
+
+package nanodregg where
+  leanOptions := #[⟨`autoImplicit, false⟩, ⟨`relaxedAutoImplicit, false⟩, ⟨`warningAsError, true⟩]
+
+-- The axiom census command (Census.Axioms): build tooling, the only place `import Lean` is
+-- allowed; nothing outside Census may import it (gates/closure.py C2, C5).
+@[default_target] lean_lib Census where
+  globs := #[.submodules `Census]
+
+@[default_target] lean_lib Kernel where
+  globs := #[.submodules `Kernel]
+
+@[default_target] lean_lib Protocol where
+  globs := #[.submodules `Protocol]
+
+@[default_target] lean_lib Host where
+  globs := #[.submodules `Host]
+
+@[default_target] lean_lib Lang where
+  globs := #[.submodules `Lang]
+
+@[default_target] lean_lib Codec where
+  globs := #[.submodules `Codec]
+
+@[default_target] lean_lib Hosting where
+  globs := #[.submodules `Hosting]
+
+-- LEDGER: packages over the ledger receivers (the escrow), their proofs and their journey.
+@[default_target] lean_lib Ledger where
+  globs := #[.submodules `Ledger]
+
+-- SPEC: the top-level claims over the deployed entry points, their floors and their proofs.
+@[default_target] lean_lib Spec where
+  globs := #[.submodules `Spec]
+
+-- HOSTING's grain lifecycle through KERNEL's receivers, with its plants (standing's sim stage).
+@[default_target] lean_exe «hosting-sim» where
+  root := `Hosting.Sim.Main
+
+-- HOSTING's controller: follows one Store (Host.Tail), writes Hosting.Wire actions to grain-launch.
+@[default_target] lean_exe «hosting-controller» where
+  root := `Hosting.Main
+
+-- One Lean-planned launch for launcher/tests/isolation.rs (a stand-in controller without a Store).
+@[default_target] lean_exe «hosting-drive» where
+  root := `Hosting.DriveMain
+
+-- HOSTING's provider-key broker decider: keybroker's child, every ask decided by Hosting.Broker.
+@[default_target] lean_exe «hosting-broker» where
+  root := `Hosting.BrokerMain
+
+-- nd-members' decider (HOSTING-33): the World's resident grains, nothing else (no clock, no key slots).
+@[default_target] lean_exe «hosting-residents» where
+  root := `Hosting.ResidentsMain
+
+-- THE BAR's hosted Hermes (HOSTING-27): a resident grain's program; answers its bell through its
+-- member socket with what keybroker answers on its broker socket.
+@[default_target] lean_exe «resident» where
+  root := `Hosting.Resident.Main
+
+
+-- TESTGROUND: a World in a browser tab (the rows system compiled to WebAssembly; testground/ is its page).
+@[default_target] lean_lib Web where
+  globs := #[.submodules `Web]
+
+-- The Rust copy of the protocol table (client/src/generated.rs). Imports Protocol; nothing imports it.
+@[default_target] lean_lib Emit where
+  globs := #[.submodules `Emit]
+
+@[default_target] lean_exe «emit-rust» where
+  root := `Emit.Main
+
+-- The Rust copy of HOSTING frames (launcher/src/generated.rs). Imports Hosting.Wire; nothing imports it.
+@[default_target] lean_exe «emit-hosting» where
+  root := `Emit.HostingMain
+
+-- The Rust copy of the broker frames (launcher/src/broker_generated.rs). Imports Hosting.BrokerWire.
+@[default_target] lean_exe «emit-broker» where
+  root := `Emit.BrokerMain
+
+-- The provider leaf-key pins keybroker ships with (deploy/tls/pins, HOSTING-28). Imports Hosting.Pins.
+@[default_target] lean_exe «emit-pins» where
+  root := `Emit.PinsMain
+
+-- The member rows' conversations with nd (client/tests/traces/ROW.trace, DESIGN-QA Q5): what nd's own
+-- step loop and custody must send, replayed by client/tests/trace.rs. Imports Protocol.Rows.Run.
+@[default_target] lean_exe «emit-traces» where
+  root := `Emit.TracesMain
+
+-- The codec vectors (gates/codec-vectors.tsv, CODEC-28): a change of meaning under the same tag is red.
+@[default_target] lean_exe «codec-vectors» where
+  root := `Emit.VectorsMain
+
+-- KERNEL's seeded simulation: `kernel-sim SEED…` (or `--seeds N`), ends `ALL PASS` (standing.sh).
+@[default_target] lean_exe «kernel-sim» where
+  root := `Kernel.Sim.Main
+
+-- LEDGER's escrow through KERNEL's receivers, with its plants (standing's sim stage); --write-text
+-- rewrites world/escrow/Escrow.
+@[default_target] lean_exe «ledger-sim» where
+  root := `Ledger.Sim.Main
+
+-- LANG's first law end to end: install → create → invoke through KERNEL's receivers.
+@[default_target] lean_exe «lang-journey» where
+  root := `Lang.Journey.Main
+
+-- LANG's resident check: `ob FORM` reads, checks, prints bytes and id, evaluates, runs a law;
+-- no admission (Lang.Resident).
+@[default_target] lean_exe «ob» where
+  root := `Lang.Resident.Main
+
+-- PROTOCOL's conformance rows: `rows [NAME…]` (rows/run, standing's rows stage), ends `ALL PASS`.
+@[default_target] lean_exe «rows» where
+  root := `Protocol.Rows.Main
+
+-- PROTOCOL's generated adversary (DESIGN-QA Q6): `adversary --seeds N` runs the follower against generated
+-- Hosts and relays, judged by the member-level spec; a TRACE line per seed, `ALL PASS` or `FINDINGS n`.
+@[default_target] lean_exe «adversary» where
+  root := `Protocol.Rows.AdversaryMain
+
+-- Host/c/*.c: the Store's physical IO (Host.File's externs) and a Unix socket's client end (Host.Sock's). Sorted, so the archive is reproducible.
+extern_lib «ndhost» pkg := do
+  let dir := pkg.dir / "Host" / "c"
+  let srcs := (← dir.readDir).filter (·.path.extension == some "c") |>.map (·.path)
+    |>.qsort (·.toString < ·.toString)
+  let leanInc := (← getLeanIncludeDir).toString
+  let objs ← srcs.mapM fun src => do
+    let o := pkg.buildDir / "c" / ((src.withExtension "o").fileName.getD "x.o")
+    buildO o (← inputTextFile src) #["-I", leanInc] #["-fPIC", "-O2", "-Wall", "-Wextra", "-Werror"]
+      "cc" getLeanTrace
+  buildStaticLib (pkg.staticLibDir / nameToStaticLib "ndhost") objs
+
+-- The testground kernel's byte ABI (Web/c/glue.c): built here like Host/c so the one C rule holds; an
+-- archive member no native executable references, and testground/build/build.sh's wasm link uses it.
+extern_lib «webglue» pkg := do
+  let dir := pkg.dir / "Web" / "c"
+  let srcs := (← dir.readDir).filter (·.path.extension == some "c") |>.map (·.path)
+    |>.qsort (·.toString < ·.toString)
+  let leanInc := (← getLeanIncludeDir).toString
+  let objs ← srcs.mapM fun src => do
+    let o := pkg.buildDir / "c" / ((src.withExtension "o").fileName.getD "x.o")
+    buildO o (← inputTextFile src) #["-I", leanInc] #["-fPIC", "-O2", "-Wall", "-Wextra", "-Werror"]
+      "cc" getLeanTrace
+  buildStaticLib (pkg.staticLibDir / nameToStaticLib "webglue") objs
+
+-- The Host's loop end to end over the in-memory disk, with the crash plants (standing: seeds 1 2 3).
+@[default_target] lean_exe «host-sim» where
+  root := `Host.Sim.Main
+
+-- The deployed Host: `host genesis|serve|follow STORE …` (Host.Cli); the client runs the binary.
+@[default_target] lean_exe «host» where
+  root := `Host.Main
+
+-- PERF: tools over a real Store the deployed host wrote (tooling; nothing imports Bench).
+@[default_target] lean_lib Bench where
+  globs := #[.submodules `Bench]
+
+-- THE BAR's work at deployed parameters: `bench-count STORE SCRATCH [--harness-control]` (PERF-3; scripts/bar.sh runs it).
+@[default_target] lean_exe «bench-count» where
+  root := `Bench.CountMain
+
+-- THE BAR's reopen at the tailMax worst cut, one sized bench row per tail shape:
+-- `bench-worstcut-<shape> SCRATCH [--harness-control]` (PERF-5, PERF-12; the shared harness is Bench.WorstCut).
+@[default_target] lean_exe «bench-worstcut-writes» where
+  root := `Bench.WorstCutWritesMain
+
+@[default_target] lean_exe «bench-worstcut-births» where
+  root := `Bench.WorstCutBirthsMain
+
+@[default_target] lean_exe «bench-worstcut-retires» where
+  root := `Bench.WorstCutRetiresMain
+
+@[default_target] lean_exe «bench-worstcut-rows» where
+  root := `Bench.WorstCutRowsMain
+
+-- THE BAR's reopen at the worst World, the reader's bound: `bench-worstworld SCRATCH synthetic N | honest [STATE_BYTES]` (PERF-8).
+@[default_target] lean_exe «bench-worstworld» where
+  root := `Bench.WorstWorldMain
+
+-- OPS: renderers and drivers over the real `host` (nothing imports Ops).
+@[default_target] lean_lib Ops where
+  globs := #[.submodules `Ops]
+
+-- The service-manager units and EXITS.md, rendered from Host.Status and Protocol.SupervisorExit: `emit-units [--check] deploy/units`.
+@[default_target] lean_exe «emit-units» where
+  root := `Ops.Main
+
+-- Backup/restore plants against the real `host`: `store-plants HOST_EXE DIR`, ends `ALL PASS`.
+@[default_target] lean_exe «store-plants» where
+  root := `Ops.PlantsMain
+
+-- The live harness's calls (deploy/live/): `live-calls DIR N`, the test founder's genesis args and N payloads.
+@[default_target] lean_exe «live-calls» where
+  root := `Ops.LiveCallsMain
+
+-- The loop over a real Store directory (Host.Store + Host/c/file.c): lock, torn-file truncation.
+@[default_target] lean_exe «host-file-sim» where
+  root := `Host.Sim.FileMain
+
+-- Host.Sock's contracts (Host/c/sock.c), driven by launcher/tests/sock.rs, which holds the peer.
+@[default_target] lean_exe «host-sock-probe» where
+  root := `Host.Sim.SockMain

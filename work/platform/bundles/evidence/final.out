@@ -1,0 +1,61 @@
+run root /run/user/1001/p4.lLiI5S/r
+  step   hook    bytes  margin  socket (sun_path holds 107)
+  J0     world      35      72  /run/user/1001/jm.XXXXXX/world.sock
+  M3     m3         44      63  /run/user/1001/jm.XXXXXX/m3/public/mini.sock
+  M4     m4         50      57  /run/user/1001/jm.XXXXXX/m4/store/public/mini.sock
+  M5     m5         66      41  /run/user/1001/jm.XXXXXX/m5/hermes/state/mcp-0000000000000011.sock
+  M7     m7         44      63  /run/user/1001/jm.XXXXXX/m7/public/mini.sock
+  M8     m8         52      55  /run/user/1001/jm.XXXXXX/m8/fixture/public/mini.sock
+  J13    j13        51      56  /run/user/1001/jm.XXXXXX/j13/store/public/mini.sock
+  JN2    jnock2     54      53  /run/user/1001/jm.XXXXXX/jnock2/world/public/mini.sock
+  JN3    jnock3     54      53  /run/user/1001/jm.XXXXXX/jnock3/world/public/mini.sock
+  JN5    jnock5     54      53  /run/user/1001/jm.XXXXXX/jnock5/world/public/mini.sock
+  JPAY4  jpay4      58      49  /run/user/1001/jm.XXXXXX/jpay4/acceptance/public/mini.sock
+  JPAY6  jpay6      70      37  /run/user/1001/jm.XXXXXX/jpay6/runtime-state/mcp-0000000000000011.sock
+  JROTL  jrotl      37      70  /run/user/1001/jm.XXXXXX/jrotl/f.sock
+STEP J0: clean start: private single-authority service, one sponsor ...
+STEP J0 PASS 2.013s service up and a signed read answered in 1.988s
+STEP J1: enroll an independently generated newcomer key ...
+STEP J1 PASS 2.931s subject 14624123575744617878, record 1; key absent from genesis/config; lookup = same receipt
+STEP J2: sponsor creates a resource under a permissive law ...
+STEP J2 PASS 1.125s object 17167288078998946075 under all[], record 2
+STEP J3: sponsor delegates observe+mutate (no control) to newcomer ...
+STEP J3 PASS 2.168s child 16537632818898241708 verbs observe,mutate, record 3
+STEP J4: newcomer signed read, writes field to 1, reads back 1 ...
+STEP J4 PASS 2.826s read 0.655s, write 1.341s, readback field 2 = 1, record 4
+STEP BD: plans bind address footprints: disjoint plans commute, overlap refused ...
+STEP BD PASS 14.898s pairs: S,N and N,S installed without re-plan; overlap refused:   client: host returned refused; exact outcome evidence was retained
+STEP P7KR: P7: a kind-definition revision between consent and admission never commits a different effect ...
+STEP P7KR PASS 8.834s P7 verdict: SAME-EFFECT
+STEP THIN: THIN-CONSENT: what thin consent shows is what commits; lying Hosts and unobservable targets refused before signing ...
+STEP THIN PASS 56.478s JTHIN: all thin-consent rows passed
+
+step  status      wall_s  what / detail / deciding artifact
+J0   PASS         2.013  clean start: private single-authority service, one sponsor
+                          service up and a signed read answered in 1.988s
+                          -> /run/user/1001/p4.lLiI5S/r/world/handoff.json
+J1   PASS         2.931  enroll an independently generated newcomer key
+                          subject 14624123575744617878, record 1; key absent from genesis/config; lookup = same receipt
+                          -> /run/user/1001/p4.lLiI5S/r/world/attempts/newcomer/submit.json
+J2   PASS         1.125  sponsor creates a resource under a permissive law
+                          object 17167288078998946075 under all[], record 2
+                          -> /run/user/1001/p4.lLiI5S/r/world/sponsor/attempts/create-shared/outcome.json
+J3   PASS         2.168  sponsor delegates observe+mutate (no control) to newcomer
+                          child 16537632818898241708 verbs observe,mutate, record 3
+                          -> /run/user/1001/p4.lLiI5S/r/world/sponsor/attempts/grant-newcomer/outcome.json
+J4   PASS         2.826  newcomer signed read, writes field to 1, reads back 1
+                          read 0.655s, write 1.341s, readback field 2 = 1, record 4
+                          -> /run/user/1001/p4.lLiI5S/r/world/newcomer-workspace/attempts/first-action/outcome.json
+P7KR  PASS         8.834  P7: a kind-definition revision between consent and admission never commits a different effect
+                          P7 verdict: SAME-EFFECT
+                          -> /run/user/1001/p4.lLiI5S/r/steps/P7KR/jkind-revise-consent/rows.tsv
+THIN  PASS        56.478  THIN-CONSENT: what thin consent shows is what commits; lying Hosts and unobservable targets refused before signing
+                          JTHIN: all thin-consent rows passed
+                          -> /run/user/1001/p4.lLiI5S/r/steps/THIN/jthin-consent/rows.tsv
+BD   PASS        14.898  plans bind address footprints: disjoint plans commute, overlap refused
+                          pairs: S,N and N,S installed without re-plan; overlap refused:   client: host returned refused; exact outcome evidence was retained
+                          -> /run/user/1001/p4.lLiI5S/r/steps/BD/bind-result.tsv
+
+FRONTIER: END   (accepted records: 4; load average start/end: 6.19 8.45 7.31 / 7.54 8.16 7.30 on 32 CPUs; result: /run/user/1001/p4.lLiI5S/r/journey-result.json)
+JOURNEY-EXIT 0
+COPIED

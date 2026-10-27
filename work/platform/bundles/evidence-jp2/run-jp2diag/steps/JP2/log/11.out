@@ -1,0 +1,7 @@
+{
+  "next": "give possessionSignature to your sponsor; then run join --welcome with the pinned portable --verifier",
+  "possessionSignature": "bbf651b9d82a39b136ae0fefe24361348b4a26c733ed53d88fa05956ab9ba505107c48a6526d3c5fc55f04fe8c27b340c707bec3128851ac34d42859e6facd0b",
+  "publicKey": "a1414b64ed3bd4fa9f5e17b9a06c971964a93e332b590b9a0d65f82b6a29e031",
+  "subject": "11612647092073939916",
+  "type": "minidregg-participant-join-possession-v1"
+}

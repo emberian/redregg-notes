@@ -1,0 +1,56 @@
+diff --git a/Lang/Contextual/Closure.lean b/Lang/Contextual/Closure.lean
+index ba7565e..ee928f2 100644
+--- a/Lang/Contextual/Closure.lean
++++ b/Lang/Contextual/Closure.lean
+@@ -543,27 +543,6 @@ def Consumer.holds {V : Type} (k : Consumer D V) (cl : Closure D E) : Bool :=
+   | some M => k.ok (k.proj M)
+   | none => false
+ 
+-/-! ## Support closure: least fixpoint versus counting (experiment 4) -/
+-
+-structure Rule where
+-  head : Nat
+-  body : List Nat
+-
+-/-- Bounded iteration of the immediate-consequence operator from the facts. -/
+-def lfpIter (R : List Rule) (F : Nat → Bool) : Nat → Nat → Bool
+-  | 0, x => F x
+-  | n + 1, x => lfpIter R F n x || R.any fun r => r.head == x && r.body.all (lfpIter R F n)
+-
+-/-- The number of supports of `x` in the alive set `A`: its fact, plus every rule firing in `A`. -/
+-def supportCount (R : List Rule) (F : Nat → Bool) (A : Nat → Bool) (x : Nat) : Nat :=
+-  (if F x then 1 else 0) + (R.filter fun r => r.head == x && r.body.all A).length
+-
+-/-- Naive COUNTING maintenance: starting from the old alive set, an atom dies only when its count of
+-supports among the currently alive atoms reaches zero. -/
+-def countRun (R : List Rule) (F : Nat → Bool) (A : Nat → Bool) : Nat → Nat → Bool
+-  | 0 => A
+-  | n + 1 => fun x => countRun R F A n x && decide (0 < supportCount R F (countRun R F A n) x)
+-
+ end Nanodregg.Lang.Contextual
+ 
+ /-- A retained candidate filling, with its last recorded judgment.
+diff --git a/Lang/Proofs/Contextual/ClosureStatements.lean b/Lang/Proofs/Contextual/ClosureStatements.lean
+index 5185c79..bc86b23 100644
+--- a/Lang/Proofs/Contextual/ClosureStatements.lean
++++ b/Lang/Proofs/Contextual/ClosureStatements.lean
+@@ -71,19 +71,4 @@ def Available (w : World E) (cl : Closure D E) : Prop :=
+ def Coherent (w : World E) (cl : Closure D E) : Prop :=
+   ∀ I ∈ cl.tpl.Ω, ∀ c ∈ (cl.slot I.name).cands, c.status = judge I w c
+ 
+-/-- The guard is a function of the filling's VALUE only. -/
+-def ValueGuard {V : Type} (value : D.Tm → V) (g : E → D.Tm → Bool) : Prop :=
+-  ∃ g' : E → V → Bool, ∀ e t, g e t = g' e (value t)
+-
+-/-- The guard's verdict is stable under the term map `s`. -/
+-def StableUnder (g : E → D.Tm → Bool) (s : D.Tm → D.Tm) : Prop :=
+-  ∀ e t, g e (s t) = g e t
+-
+-/-- Least-fixpoint grounding: an atom holds iff a well-founded derivation from live facts exists. -/
+-inductive Derives (R : List Rule) (F : Nat → Bool) : Nat → Prop where
+-  | fact {x : Nat} : F x = true → Derives R F x
+-  | rule {r : Rule} : r ∈ R → (∀ y ∈ r.body, Derives R F y) → Derives R F r.head
+-
+-
+-
+ end Nanodregg.Lang.Contextual

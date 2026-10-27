@@ -1,0 +1,4 @@
+workspace attempt: /run/user/1001/p4.lLiI5S/r/world/sponsor/attempts/t3b
+workspace continuity: legacy; initialize with workspace --action continuity-init --name REF
+workspace read attempt: /run/user/1001/p4.lLiI5S/r/world/sponsor/attempts/a-290729110952225833730118019077419061453
+error: local consent refused before signing: thin-proxy captured this plan; nothing signed

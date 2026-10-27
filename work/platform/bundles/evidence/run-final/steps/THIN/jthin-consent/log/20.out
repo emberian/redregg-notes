@@ -1,0 +1,203 @@
+{
+  "judgedAt": {
+    "authorityRoot": "27130259823303412163064579587710262288066130674595566814420175216003445204532",
+    "clock": {
+      "day": "0",
+      "now": "0",
+      "slot": "0"
+    },
+    "domain": "8501",
+    "federation": "9",
+    "headers": [
+      "02ff4dff04ff0607ff0102ff0a07ff02ff017a1bff02ff01ff07ff20ff3741d44ca11a03d13bbbe77a226d12f103f7763ed1f2d8f325d048308d079b46ff91600fff000c0207ff02ff01070207ff02ff001f01ff7a1bff02ff01ff1aff44524547472f415554482f5349474e45442d5245515545535402acff44524547472f415554482f504c414e0211ff5621ff71545980a814f81b66f2991595d2e9b68688c6e9d1d5b786fca8352a68ced28fff09ff01ff07ff02ff3177568019c600d2ff01ffee8bbf40f38cb52ed1d890dde89e8dc1c39bd53ce7295e7077b6f35ac775590101ff4776350ffc8520c98649ca6b069d1886e2965ba685b28d6494f830f4bb3e54d9ffdd5b87d42908a488729924acf40a5fb2ffffff3177568019c600d2ffffff5affd2650f8c7f0c479cad0447c1dbdca55a61e9e8c2866d1a9e69ddc030b62a110cff"
+    ],
+    "height": "30",
+    "intent": {
+      "grants": [
+        {
+          "capability": "14534595099763905041",
+          "kind": "object",
+          "target": "14723357525701329169"
+        }
+      ],
+      "nonce": "223579064932072200831825684750961166426",
+      "purpose": {
+        "kind": "object",
+        "target": "14723357525701329169",
+        "type": "query",
+        "view": "resource"
+      },
+      "subject": "7"
+    },
+    "intentSignature": "a50e367a32b32362921a0b40052fb0ecf811c4f178e336440e2850b84747d125cc8a8133d749579b2f3084da5f23ab4bf45988c7e97ede45dea521e45bb5af0b",
+    "semantics": "57621574434371209881717419650284223750536103367801519131515545423056217876633",
+    "signing": [
+      {
+        "algorithm": "1",
+        "canonical": "02ff4dff04ff0607ff0102ff0a07ff02ff017a1bff02ff01ff07ff20ff3741d44ca11a03d13bbbe77a226d12f103f7763ed1f2d8f325d048308d079b46ff91600fff000c0207ff02ff01070207ff02ff001f01ff7a1bff02ff01ff1aff44524547472f415554482f5349474e45442d5245515545535402acff44524547472f415554482f504c414e0211ff5621ff71545980a814f81b66f2991595d2e9b68688c6e9d1d5b786fca8352a68ced28fff09ff01ff07ff02ff3177568019c600d2ff01ffee8bbf40f38cb52ed1d890dde89e8dc1c39bd53ce7295e7077b6f35ac775590101ff4776350ffc8520c98649ca6b069d1886e2965ba685b28d6494f830f4bb3e54d9ffdd5b87d42908a488729924acf40a5fb2ffffff3177568019c600d2ffffff5affd2650f8c7f0c479cad0447c1dbdca55a61e9e8c2866d1a9e69ddc030b62a110cff",
+        "codecVersion": "2",
+        "decoded": true,
+        "domain": "44524547472f415554482f5349474e45442d5245515545535402",
+        "footprint": [
+          {
+            "address": "0607ff",
+            "value": "02ff"
+          },
+          {
+            "address": "0a07ff02ff",
+            "value": "7a1bff02ff01ff07ff20ff3741d44ca11a03d13bbbe77a226d12f103f7763ed1f2d8f325d048308d079b46ff91600fff00"
+          },
+          {
+            "address": "0c0207ff02ff",
+            "value": ""
+          },
+          {
+            "address": "070207ff02ff",
+            "value": null
+          }
+        ],
+        "keyEpoch": "2",
+        "keyId": "7007",
+        "message": "44524547472f415554482f504c414e0211ff5621ff71545980a814f81b66f2991595d2e9b68688c6e9d1d5b786fca8352a68ced28fff09ff01ff07ff02ff3177568019c600d2ff01ffee8bbf40f38cb52ed1d890dde89e8dc1c39bd53ce7295e7077b6f35ac775590101ff4776350ffc8520c98649ca6b069d1886e2965ba685b28d6494f830f4bb3e54d9ffdd5b87d42908a488729924acf40a5fb2ffffff3177568019c600d2ffffff5aff",
+        "nullifier": "4834555508862138051520724918270308364724596045369140733501794599619592698215",
+        "validUntil": "286"
+      }
+    ],
+    "worldRoot": "26768355396412545284994112330269287410403938901485114342591656642479188872282"
+  },
+  "name": "tc-one",
+  "target": "14723357525701329169",
+  "value": {
+    "descriptor": {
+      "fields": [
+        {
+          "codec": "bytes",
+          "discipline": "rom",
+          "id": "1",
+          "meaning": "the poll question",
+          "name": "question"
+        },
+        {
+          "codec": "nat",
+          "discipline": "ram",
+          "id": "2",
+          "meaning": "whether the poll accepts votes",
+          "name": "open"
+        },
+        {
+          "codec": "nat",
+          "discipline": "append",
+          "id": "3",
+          "meaning": "one immutable vote keyed by member subject",
+          "name": "votes"
+        }
+      ],
+      "kind": "13101473367446075310",
+      "revision": "1"
+    },
+    "entries": [
+      {
+        "field": "2",
+        "key": "0",
+        "value": "1"
+      },
+      {
+        "field": "1",
+        "key": "0",
+        "value": "4c756e63683f"
+      }
+    ],
+    "kindRoot": "56382679819993602630654216388053564592016382185396249584715068271552558413738",
+    "methods": null,
+    "sampleSlots": [
+      [
+        "world/resource/field/1/count/before",
+        "1"
+      ],
+      [
+        "world/resource/field/2/count/before",
+        "1"
+      ],
+      [
+        "world/resource/field/3/count/before",
+        "0"
+      ],
+      [
+        "world/resource/field/2/0/before",
+        "1"
+      ],
+      [
+        "world/resource/field/1/0/before/length",
+        "6"
+      ],
+      [
+        "world/resource/field/1/0/before/bytes/0",
+        "76"
+      ],
+      [
+        "world/resource/field/1/0/before/bytes/1",
+        "117"
+      ],
+      [
+        "world/resource/field/1/0/before/bytes/2",
+        "110"
+      ],
+      [
+        "world/resource/field/1/0/before/bytes/3",
+        "99"
+      ],
+      [
+        "world/resource/field/1/0/before/bytes/4",
+        "104"
+      ],
+      [
+        "world/resource/field/1/0/before/bytes/5",
+        "63"
+      ],
+      [
+        "world/resource/field/1/count/after",
+        "1"
+      ],
+      [
+        "world/resource/field/2/count/after",
+        "1"
+      ],
+      [
+        "world/resource/field/3/count/after",
+        "0"
+      ],
+      [
+        "world/resource/field/2/0/after",
+        "1"
+      ],
+      [
+        "world/resource/field/1/0/after/length",
+        "6"
+      ],
+      [
+        "world/resource/field/1/0/after/bytes/0",
+        "76"
+      ],
+      [
+        "world/resource/field/1/0/after/bytes/1",
+        "117"
+      ],
+      [
+        "world/resource/field/1/0/after/bytes/2",
+        "110"
+      ],
+      [
+        "world/resource/field/1/0/after/bytes/3",
+        "99"
+      ],
+      [
+        "world/resource/field/1/0/after/bytes/4",
+        "104"
+      ],
+      [
+        "world/resource/field/1/0/after/bytes/5",
+        "63"
+      ]
+    ]
+  }
+}

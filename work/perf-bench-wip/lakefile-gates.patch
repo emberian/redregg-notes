@@ -1,0 +1,49 @@
+diff --git a/gates/size.py b/gates/size.py
+index 0ac69c9..8b54f17 100644
+--- a/gates/size.py
++++ b/gates/size.py
+@@ -124,7 +124,7 @@ def measure(t: tree.Tree) -> dict[str, int]:
+     # emitter: tree.Module.is_tooling) is informational, and closure C9 keeps it out of deployed
+     # imports. Proof-modules are in neither.
+     out["Lean lines (deployed)"] = sum(m.lines for m in mods if not m.is_proof and not m.is_tooling)
+-    out["Lean lines (tooling: Sim, Rows, Journey, Census, Emit)"] = sum(
++    out["Lean lines (tooling: Sim, Rows, Journey, Census, Emit, Bench)"] = sum(
+         m.lines for m in mods if not m.is_proof and m.is_tooling)
+     deps = t.dependents()
+     found = foundations(t)
+diff --git a/gates/tree.py b/gates/tree.py
+index 3968be8..67d9438 100644
+--- a/gates/tree.py
++++ b/gates/tree.py
+@@ -21,9 +21,9 @@ DEF_KINDS = {"def", "abbrev", "structure", "inductive", "class", "instance", "op
+              "infixl", "infixr", "prefix", "postfix", "initialize", "builtin_initialize",
+              "declare_syntax_cat", "register_option"}
+ THEOREM_KINDS = {"theorem", "lemma"}
+-# Test and build tooling (Module.is_tooling): what the simulations, the conformance rows, the
++# Test and build tooling (Module.is_tooling): what the simulations, the conformance rows, the benches (Bench),
+ # journeys, the census and the Rust emitter are made of. SIZE.md counts it in its own row.
+-TOOLING_LIBS = {"Census", "Emit"}
++TOOLING_LIBS = {"Census", "Emit", "Bench"}
+ TOOLING_COMPONENTS = {"Sim", "Rows", "Journey"}
+ MODIFIERS = {"private", "protected", "noncomputable", "partial", "unsafe", "nonrec", "public",
+              "meta", "scoped", "local"}
+diff --git a/lakefile.lean b/lakefile.lean
+index c13375f..5718328 100644
+--- a/lakefile.lean
++++ b/lakefile.lean
+@@ -80,3 +80,15 @@ extern_lib «ndhost» pkg := do
+ -- The loop over a real Store directory (Host.Store + Host/c/file.c): lock, torn-file truncation.
+ @[default_target] lean_exe «host-file-sim» where
+   root := `Host.Sim.FileMain
++
++-- PERF's benches of the deployed code (tooling: nothing deployed imports Bench, closure C9).
++@[default_target] lean_lib Bench where
++  globs := #[.submodules `Bench]
++
++-- `bench-host verify N | digest N | base REPS SIZE… | worstcut DIR BASE_N BIG_BYTES REPS`.
++@[default_target] lean_exe «bench-host» where
++  root := `Bench.Host.Main
++
++-- `bench-lang WIDTH CALLS DEPTH…`: an invoke behind a closure of DEPTH+1 packages (LANG's memo, ID-2).
++@[default_target] lean_exe «bench-lang» where
++  root := `Bench.Lang.Main

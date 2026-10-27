@@ -1,0 +1,30 @@
+whole build exit 1
+      1 error
+error: Lang/Proofs/StdOffer.lean:384:21: Application type mismatch: The argument
+error: Lean exited with code 1
+error: build failed
+- Lang.Proofs.StdOffer
+journey exit 1
+800c800
+< ok   LF1 A invokes Z.fuse {deal = the bytes of {pair {a X, b Y}, theta {price 9}}, x X, y Y, viaX (A's grant), viaY (B's grant)} pinning Z, X, Y, both grants and both offer rows: admitted; read back: X's offer 0 present false, Y's offer 0 present false; session rows under X and Y true, their captured values equal true (and the forwarded deal true)
+---
+> FAIL LF1 A invokes Z.fuse {deal = the bytes of {pair {a X, b Y}, theta {price 9}}, x X, y Y, viaX (A's grant), viaY (B's grant)} pinning Z, X, Y, both grants and both offer rows: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 12673817561466593332 "offer_guard: final"; read back: X's offer 0 present true, Y's offer 0 present true; session rows under X and Y false, their captured values equal true (and the forwarded deal false)
+803c803
+< ok   LF3 LF1's call without pinning Y's cell: refused unpinned Nanodregg.Kernel.Receive.Refusal.unpinned 11036927902987516806
+---
+> ok   LF3 LF1's call without pinning Y's cell: refused unpinned Nanodregg.Kernel.Receive.Refusal.unpinned 3752310345743529754
+806,811c806,811
+< ok   LF5 LF1's call again on the World after LF1, pinning the now-absent offer rows: refused program Nanodregg.Kernel.Receive.Refusal.program "take: refused noOffer"; A's grant gX and B's grant gY still live true
+< ok   LF6a control: LF1's call with viaY none: refused noGrant Nanodregg.Kernel.Receive.Refusal.noGrant 11036927902987516806
+< ok   LF6b control: LF1's call with viaY B's live grant to Z of [invoke post] only: refused grantRight Nanodregg.Kernel.Receive.Refusal.grantRight 3955362801580472245
+< ok   LF6c control: LF1's call with B's take grant not pinned: refused unpinned Nanodregg.Kernel.Receive.Refusal.unpinned 8579411056453027292
+< ok   LF7 control: Z.fuse naming Z itself as x: refused revisited Nanodregg.Kernel.Receive.Refusal.revisited 3403209807821037968
+< lang-journey: GREEN
+---
+> FAIL LF5 LF1's call again on the World after LF1, pinning the now-absent offer rows: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 12673817561466593332 "offer_guard: final"; A's grant gX and B's grant gY still live true
+> FAIL LF6a control: LF1's call with viaY none: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 12673817561466593332 "offer_guard: final"
+> FAIL LF6b control: LF1's call with viaY B's live grant to Z of [invoke post] only: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 12673817561466593332 "offer_guard: final"
+> FAIL LF6c control: LF1's call with B's take grant not pinned: refused lawDenied Nanodregg.Kernel.Receive.Refusal.lawDenied 12673817561466593332 "offer_guard: final"
+> ok   LF7 control: Z.fuse naming Z itself as x: refused revisited Nanodregg.Kernel.Receive.Refusal.revisited 9683084282922412771
+> lang-journey: RED (5)
+restored identical

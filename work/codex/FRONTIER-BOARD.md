@@ -1,0 +1,76 @@
+# The frontier board (ROOT keeps this current; every Fable reads it before a design decision that touches another axis)
+
+Real 2026-10-26. Seven axes, seven Fables, one language layer. Goal (Ember): push nano past the frontier on every axis until 10am.
+
+## Designs (promo/DESIGN-*.md) and their one-sentence verdicts
+- CTX — the meaning of an installed program is a function of the World, given by justifications (contextual modal types + ATMS + why-not provenance); five of six pieces are ONE object, the SLOT; the property named as a clause of INTEGRITY; the calculus remnant subsumed by the slot descriptor; needs Req.caller and the package-as-slot (one kernel change).
+- TRUST — agreement as a kernel object: a Head with an Authority fixed at genesis; one-writer / committee / fork-is-a-new-World are three instances of one theorem; fork consistency FIRST (cheaper than priced); the engine only the committee's liveness; offline merge honestly NOT met.
+- META — a generator is a package whose method returns `install BYTES`; the receipt is the Turn; hygiene is install's own check; needs install callable from a body.
+- PCC — re-execution makes a MONITOR the right per-step check (a law costs 30–100 ticks); claims a package CARRIES and the kernel checks at install; PCC = a carried witness; TYPES = decided from text/result without one.
+- AGENT — an LLM agent ALREADY IS a first-class member (no key; consent-before-signature; a Lean-decided broker charges the worst case first); the only gap was that a ring is the sole obligation; the inbox: a ring carries an AIM and `answer` delivers one typed call in the same Turn; the agent's reach = a human-owned grant set, withdrawn by name via Std.hole's support machinery.
+- OBS — a meter leaf in the window trie beside the refusal counter (the kernel already measures itself there); the oracle is an INSTANCE of TRUST's Head+Authority, not beside it.
+- TYPES — effect types already exist ungraded (the method type is an effect row); the GRADE (bounds on moves) is the missing half; linear value is a category error (a method never holds value); refinements in three tiers; a World as a member = headStateTy + a key.
+
+## Landed (origin/main)
+- 2630ea3 CTX: the resident runs inside the open contextual calculus (two holes; slot_repair instances; the Empty embedding gone). 48232e7 notFuser. 2efa6a5 the withdrawn list persisted. 655ff42/c17cf0f/0f86881 META: quorum attested; produces I; the claims tour step. 5fe0bff/4a3f9fb/9cf567d TRUST: no-rejoin claim deleted; the scanner fixed; uncertifiedPage; restart_extends. 62f9813 RESTORE (six reverted landings back; gates/reverts.py). e63da16…992ec05 the README for a verification researcher + docs/spec 0–6 + docs/reference.
+- 276ded8 PCC L2: claims on the wire (wire 10). 176110a CTX K1: Req.caller. ee2f790 META: createOf + the quorum-gated generator. 37bfc85 AGENT A2: the agent fills a section, hosted. b03731b TYPES LANG-90 holds; 6e177d5 LANG-89 graded effects. eb674e7 TRUST T3d certified pages; 272fd76 the seed. 79b1ffe retirement + the join. 9c8bc4c QA-Q6 the adversary. fc75be0 OBS-3 the health receipt. 5c0c205 SANDBOX CLIENT-52. 6caf3fd/d422453/e71ef5a TESTGROUND teaching windows + plain words.
+- 87a1eb1 SPEC-19: the apex restated per the outside review (an intent-indexed durable contract; an independently defined transition relation; views justified from a trusted start with checkable equivocation evidence); durability claims; receipts as accountability. 755653f nd-build; f1a2b67 the build slots + the stale-script check; 446fb59 README (the review's five edits); 9508a28 twelve rows exact; be589b7 Lang no longer imports Hosting; 262d5b4 / a03855e / a2b8926 / 9c170a8 the faeries.
+- 1e0849d QA CLIENT-51: Lean emits the traces, the Rust client replays them (45/47 rows byte-identical); ten stand-ins deleted. e16403b TESTGROUND: the recipe carries the wasm fix reproducibly; the page joins its own host.
+- 80791d0 SPEC: authority over every cell; fork consistency over the step; the grant cap; signing; reopen; the Bell slices; foreign receipts: the claims the readers said were missing. 7ec9456 SANDBOX: bwrap gone. 6faa984 GATES-28: the judge gone. 7d30fc1 the door; e71ef5a plain words; 59161d4 README; 95f4ea9 docs.
+- 0d72c07 TESTGROUND CLIENT-44..47: the hosted scenes as a gate; lies in a hosted tab; generator/meter/time-lock tour steps; a fork across two tabs; the badResult fix (a transport failure is an error, never a reply). Pages republished.
+- eb674e7 TRUST PROTOCOL-81 (T3d): every log page carries the writer's certified base head; follow compares it with its own re-executed fold (on the page and behind it, against its Store): another chain is `refused forkedCertified`, the writer's own signature the witness. Open: a relay stripping the certificate is undetectable under the current shape (design call).
+- 272fd76 TRUST THE SEED (hosting!: HOSTING-56 + HOST-80 + PROTOCOL-78): the writer's head is certified by a key only keybroker holds, signed only for heads the Lean decider's own fold reaches, never two at one step count across restarts; `host serve/seal --certify` produce base.cert per seal; `host certified` is the stranger's check. A certificate proves commitment + equivocation evidence, not lawfulness (CRIT-SPEC). T3c owes a kernel! committing `allowance` (the head does not bind it).
+- 00b4f79 TRUST PROTOCOL-77.1: certificates read and checked (the read reply carries the writer's certificate of the base's head; a thin adopt checks it; an empty certificate under Authority.none refused noAuthority). 5a0a7e4 KERNEL-69.2: no receiver creates an authority cell.
+- 914f2d7 TESTGROUND CLIENT-43: THE HOSTED WORLD (the page's writer behind a WebSocket; visitors' followers in the tab). 41af1fc CLIENT-42: THE LYING WRITER (the conformance rows' own lies, refused by name in a dialog).
+- 5527b01 QA GATES-27: the compiled exe held to the interpreter's account (kernel-sim byte-identical on a TRACE line).
+- 7e36210 + e0d6ae3 + 87bfc3d SPEC: nine claims with floors; the Spec OWNERS row.
+- 5a0a7e4 TRUST KERNEL-69.2: every World an honest fold reaches carries the genesis authority (no receiver bears a kindAuthority cell; authorityOf_honest_fold). PROTOCOL-77.1 (certificates read and checked: read reply carries the writer's base certificate; adopt requires it under a certifying authority; `certified` refuses noAuthority, an empty certificate verified under Authority.none before) LANDED 00b4f793. THE SEED designed (DESIGN-TRUST §4.4b; cv 01a17a5c-fa21), not built.
+- 36c4ea5 TESTGROUND: the kernel in the browser (WASM, 0.66 MB gz, a write in ~10 ms, byte-for-byte with native); a net-OS desktop: terminals, objects as windows, refusals as dialogs, a scrubbable wire; the page decides nothing and reads the protocol table from the kernel it loaded.
+- bcd9479 + 9a56dd5 SPEC: the Spec/ layer: seven claims, seven top theorems of the deployed system, five trivial systems refuted; the first floor caught a real defect (a forged adopt continuation) and a vacuity (an existential key).
+- 8f1e332 / 90711a5 / 202f8f4 TRUST: the authority fixed at genesis (kernel!); authorityOf_genesis; self-head posts checked at the tip (T2b').
+- 202f8f4 TRUST HOST-79 (T2b'): a live member at the tip compares every self-head post it absorbs — posts behind its position against its OWN Store's chain at that step (Host.Follow.behindOr over chainKept; the decision Head.forkedBehindPost, proved); refused forkedPost, page kept. A seed is a claim too (step 0 must be the genesis chain).
+- 90711a5 TRUST KERNEL-69.1: authorityOf_genesis — the authority cell reads back as the genesis authority on every genesis World (no hash premise); every reached World still holds the cell (fold_rom). Strong reached-World form: cv 01a179ea-85e3.
+- 8f1e332 TRUST KERNEL-69+PROTOCOL-77: THE AUTHORITY IS FIXED AT GENESIS (a genesis input committed in the origin, domOrigin v3; one ROM cell at its content id, fold_rom keeps it; the signed start carries it; host genesis --certifier/--threshold; every Store today is Authority.none). Renumbered from KERNEL-68 (the meter's). No seed (Ember's, cv 01a1769d), no consumer yet (cv 01a176f6-ac3f).
+- d280d23 OBS KERNEL-68: THE METER: a Turn names its member and its ticks; the kernel counts a member's ticks per window as a typed leaf beside the refusal window; every landed refusal theorem keeps its statement.
+- b33984e CTX LANG-84: contract pins (a hole's support may demand its cell be GOVERNED by a named law or package); wire 7.
+- 74d42e7 META: one theorem for every template generator. c327ba1 META: a generator whose output names its invoker. 1bdd5ba META LANG-87: a generator takes a parameter (three payload writers); wire 6.
+- f70a5f9 TRUST PROTOCOL-76: certified heads, the object (Authority, Certificate, certified_intersect by pigeonhole). 9ccb6b6 TRUST PROTOCOL-75: self-heads through the writer; every follow compares as it absorbs (forkedPost, page kept).
+- 18cd38b CTX LANG-83: a hole's refusal names the justification that failed.
+- 62a36ee CTX LANG-84: THE DOCUMENT: a section is a hole whose candidates are members' posts (the second consumer).
+- 5fa281d TRUST PROTOCOL-74: FORK CONSISTENCY (nd sync --to/--attest/--check; forkedWorld by name; the spec's open adversary capability closed).
+- 16d0c23 AGENT HOSTING-52: a real model answers a Bell ring under budget; the receipt in the World.
+- fab2875 OBS: an outside fact as a judged input: a time-lock on a foreign clock through E5's receipt column (the oracle as a World).
+- c82f171 META LANG-86+KERNEL-75: install callable from an object; Std.head as an INSTALLED generator (the Std library's first step off Lean-emitted constants).
+- c4800fb AGENT HOSTING-53: THE INBOX: a ring's aim delivered as one nested call in the same Turn; a candidate withdrawn by name on revoke.
+- 9: 9ccb6b6
+- f70a5f9 TRUST PROTOCOL-76: CERTIFIED HEADS, THE OBJECT (Authority, Certificate, domCertify, certified; certified_intersect = the committee row as a theorem by pigeonhole; certified_equivocation names the equivocator). No producer (the seed, Ember's cv 01a1769d) and no consumer yet (T3b).
+- 1e8a2a0 PCC LANG-92: a claim is a sentence checked beside the type (Std.keeps; control-dominance; B4 = INTEGRITY's claim clause).
+- 6e177d55 TYPES LANG-89: graded effects — a method declares `(effect (moves N))`; install refuses a value-moving arm under the zero grade (`effectExceeded ℓ`), run refuses a run whose calls move more (`effectExceeded moves M past N`); runMeasured_moves_le; package wire 8 (effects at node 4). PCC L2 takes 9.
+- b03731b6 TYPES LANG-90: a relation may HOLD a leg — `(holds f)`; a run that writes such a row must move its leg into the object, one that retracts it must move it out (`legUnfunded`/`legStranded REL`), per-asset sums; runMeasuredWith_legs; the escrow's offer holds give; package wire 9. PCC L2 takes 10.
+- b33984e CTX LANG-84 (S2): contract pins — a hole's support may demand the cell be GOVERNED by a law (`cellLaw`) or RUN a package (`cellPackage`); package wire 7.
+- f193a3e CTX (RELAND-CTX): THE JOURNEY SESSION REGISTRY — `Journey.register`, one `initialize` line per session module; Main = imports + main; every session (the contextual ones, the LP checks, S2's LG rows) in the judged default run.
+- (PCC L2 next: claims on the wire, version 7 after TYPES; TYPES LANG-89 landing as 6; OBS meter + oracle built, landing; META prototype in progress)
+
+## Shared needs (whose, and state)
+- DONE 176110a7 (RELAND-CTX, real 10-27) — `Req.caller` (CTX §2.5b; AGENT; TYPES §7): `none` for a member's signed call, `some obj` for a call obj's run returned; `reqTy` carries it, every law and method can read it.
+- RELAND-CTX: f193a3e
+  - CTX-2 (real 10-26): the hunk is in FABLE-CTX.report.md (Req/At gain `caller : Option D`; reqOf, the five arms, invokeRun/invoke/dispatch thread it; tree `some obj`, derive `none`; reqTy gains `("caller", optTy .digest)` — TYPES §7's shape) and BUILDING in wt/fable-ctx-caller by report line; no wire-format move, every package re-ids. TRUST objects in its report if at all.
+- The package wire bump 5→6: PCC (L1) AND TYPES (LANG-89) both: whoever lands second goes to 7 or they merge; warned.
+- The Store signing seed: Ember said YES (cv 01a1769d resolved 10-26); the design is DESIGN-TRUST §4.4b (keybroker custody, a head on the decider's own fold); build is cv 01a17a5c-fa21.
+- `install` callable from a method body: DONE (c82f171 KERNEL-75).
+
+- [session line: DONE f193a3e — the registry; decisions/*.md: mid-file still] Lang/Journey/Main.lean's session line and decisions/*.md appends conflict on every landing: put decision entries MID-FILE under your own number; the session line has now cost META, OBS, PCC, TYPES and CTX a landing attempt each. WHOEVER LANDS NEXT IN Lang/Journey/Main.lean makes `runAll` read its sessions from a per-session REGISTRY (one file per session under Lang/Journey/Sessions/, discovered by name, or one `register` line per session file that Main folds), so no two lanes ever edit the same line; land it as its own one-line `lang:` first, then your card. The first lane to do it writes DONE here.
+
+- CTX-3: built; landing by rule 1
+
+## Forks raised (ROOT rules within the hour)
+- THE PACKAGE WIRE: when your change bumps it, take the next number over whatever origin/main holds when you rebase; re-draw the vectors at that number; never two of one number.
+
+
+## Parked and succeeded
+- CTX → CTX-2 (reland S2 contract pins under the wire ruling; then the market / Req.caller / relink).
+- CTX-2 → CTX-3: c82f171
+- TRUST → TRUST-2 (T2: Std.head gains chain; T3 minus the seed). TYPES → TYPES-2 (land LANG-89; two named proof reds). PCC → PCC-2 (L2: claims on the wire). META → META-2 (rung 1: parametrised generators; a wire flag day in the landing-order queue). OBS → OBS-2 (the meter: two red proof modules; the premise price (+1 hypothesis on admit_refusalAt and Agree) to be removed by definition or named). AGENT → AGENT-2 (A1 LANDED c4800fb) → AGENT-3 (A1b: the ringer withdraws its own ring; then A2).
+- TRUST-4 (real 10-26, live): T2 LANDED 9ccb6b6e, T3's unsigned half LANDED f70a5f9e; T3b's FIRST landing (KERNEL-68 + PROTOCOL-77: the authority is a genesis input committed in the origin, domOrigin v3, and one ROM cell at its content id; the signed start carries it; host genesis --certifier/--threshold) BUILT green on 58 files and IN THE JUDGE (kernel! FULL; land-t3b.log in wt/fable-trust). authorityOf_genesis deferred as cv 01a177f3-2293; the consumer landing (log/read reply field, Thin.accept, head law uncertified, foreign_receipt_sound) stays cv 01a176f6-ac3f; T2b' cv 01a176ab-14f5 untouched; the seed cv 01a1769d Ember's, open.
+- TRUST-3 → TRUST-4: 01a1769d, 01a176f6, 2907901
+- TRUST-2 → TRUST-3 (real 10-26): T2 (PROTOCOL-75 + LANG-95: Std.head carries the chain; nd sync --post; every follow compares as it absorbs, forkedPost with the page kept) BUILT green on wt/fable-trust, NOT landed: the judge refuses set_option budgets and step_world needs one under the if-let; the measured fix (postOr) leaves Incoming/Command reply-shape proofs to patch; recipe in FABLE-TRUST.continuation.md. Found and tasked: a live member compares nothing purely (T2b', cv 01a176ab-14f5, HOST). T3 not started; the seed is Ember's (cv 01a1769d).

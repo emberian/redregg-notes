@@ -1,0 +1,19 @@
+✔ [54/55] Built Lang.Proofs.Load (1.5s)
+✖ [55/55] Building Lang.Proofs.LiveHoles (1.2s)
+trace: .> LEAN_PATH=/tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean /home/hbox/.elan/toolchains/leanprover--lean4---v4.30.0/bin/lean /tank/dregg-build/nanodregg/wt/promo/Lang/Proofs/LiveHoles.lean -o /tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean/Lang/Proofs/LiveHoles.olean -i /tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean/Lang/Proofs/LiveHoles.ilean -c /tank/dregg-build/nanodregg/wt/promo/.lake/build/ir/Lang/Proofs/LiveHoles.c --setup /tank/dregg-build/nanodregg/wt/promo/.lake/build/ir/Lang/Proofs/LiveHoles.setup.json --json
+error: Lang/Proofs/LiveHoles.lean:465:27: Application type mismatch: The argument
+  Eq.trans hspec.right (Eq.symm ho)
+has type
+  Term.renameVar (fun n => (s.context, s.filling, s.embedding).snd.snd.getD n n)
+      (s.context, s.filling, s.embedding).snd.fst =
+    s.original
+but is expected to have type
+  Term.renameVar (fun n => if (decide (n = 1) && s.embedding.getD 1 1 != 1) = true then 0 else s.embedding.getD n n)
+      s.filling =
+    s.original
+in the application
+  Eq.trans hb (Eq.trans hspec.right (Eq.symm ho))
+error: Lean exited with code 1
+Some required targets logged failures:
+- Lang.Proofs.LiveHoles
+error: build failed

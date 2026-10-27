@@ -1,0 +1,37 @@
+whole build exit 1
+      4 error
+error: Lang/Proofs/PeerRead.lean:101:27: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+error: Lang/Proofs/PeerRead.lean:103:16: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+error: Lean exited with code 1
+error: Lang/Proofs/Invoke.lean:506:29: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+error: Lang/Proofs/Invoke.lean:508:18: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+error: Lean exited with code 1
+error: build failed
+- Lang.Proofs.PeerRead
+- Lang.Proofs.Invoke
+journey exit 1
+800,801c800,801
+< ok   LF1 A invokes Z.fuse {deal = the bytes of {pair {a X, b Y}, theta {price 9}}, x X, y Y, viaX (A's grant), viaY (B's grant)} pinning Z, X, Y, both grants and both offer rows: admitted; read back: X's offer 0 present false, Y's offer 0 present false; session rows under X and Y true, their captured values equal true (and the forwarded deal true)
+< ok   LF2 the same call with Y's pinned offer seller [11,12] (price 9 outside it): refused program Nanodregg.Kernel.Receive.Refusal.program "take: refused notCompliant"; read back on the unchanged World: X's offer 0 and Y's offer 1 stand true
+---
+> FAIL LF1 A invokes Z.fuse {deal = the bytes of {pair {a X, b Y}, theta {price 9}}, x X, y Y, viaX (A's grant), viaY (B's grant)} pinning Z, X, Y, both grants and both offer rows: refused program Nanodregg.Kernel.Receive.Refusal.program "take: refused sameRole"; read back: X's offer 0 present true, Y's offer 0 present true; session rows under X and Y false, their captured values equal true (and the forwarded deal false)
+> FAIL LF2 the same call with Y's pinned offer seller [11,12] (price 9 outside it): refused program Nanodregg.Kernel.Receive.Refusal.program "take: refused sameRole"; read back on the unchanged World: X's offer 0 and Y's offer 1 stand true
+804c804
+< ok   LF3r LF1's call with Y's cell pinned and Y's offer row not pinned: refused program Nanodregg.Kernel.Receive.Refusal.program "take: refused peerRowUnpinned"
+---
+> FAIL LF3r LF1's call with Y's cell pinned and Y's offer row not pinned: refused program Nanodregg.Kernel.Receive.Refusal.program "take: refused sameRole"
+806,809c806,809
+< ok   LF5 LF1's call again on the World after LF1, pinning the now-absent offer rows: refused program Nanodregg.Kernel.Receive.Refusal.program "take: refused noOffer"; A's grant gX and B's grant gY still live true
+< ok   LF6a control: LF1's call with viaY none: refused noGrant Nanodregg.Kernel.Receive.Refusal.noGrant 11036927902987516806
+< ok   LF6b control: LF1's call with viaY B's live grant to Z of [invoke post] only: refused grantRight Nanodregg.Kernel.Receive.Refusal.grantRight 3955362801580472245
+< ok   LF6c control: LF1's call with B's take grant not pinned: refused unpinned Nanodregg.Kernel.Receive.Refusal.unpinned 8579411056453027292
+---
+> FAIL LF5 LF1's call again on the World after LF1, pinning the now-absent offer rows: refused program Nanodregg.Kernel.Receive.Refusal.program "take: refused sameRole"; A's grant gX and B's grant gY still live true
+> FAIL LF6a control: LF1's call with viaY none: refused program Nanodregg.Kernel.Receive.Refusal.program "take: refused sameRole"
+> FAIL LF6b control: LF1's call with viaY B's live grant to Z of [invoke post] only: refused program Nanodregg.Kernel.Receive.Refusal.program "take: refused sameRole"
+> FAIL LF6c control: LF1's call with B's take grant not pinned: refused program Nanodregg.Kernel.Receive.Refusal.program "take: refused sameRole"
+811c811
+< lang-journey: GREEN
+---
+> lang-journey: RED (7)
+restored identical

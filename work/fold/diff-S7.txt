@@ -1,0 +1,78 @@
+before 51195 (rows carrying a renamed-from name: 384 ) after 51176
+vanished 26 declared 0 UNDECLARED 26
+new 7 type-digest changed 2 value-hash changed 5
+module changed 581 of which from a module the step does not move 0
+   module Lang.Proofs.Contextual.Core -> Lang.Proofs.Index 2
+   module Lang.Proofs.Contextual.Core -> Lang.Proofs.Subst 4
+   module Lang.Proofs.Contextual.HoleBudget -> Lang.Proofs.Fill 25
+   module Lang.Proofs.Contextual.HoleBudget -> Lang.Proofs.HoleBudget 140
+   module Lang.Proofs.Contextual.LangFilling -> Lang.Proofs.Fill 63
+   module Lang.Proofs.Contextual.LangOccurrences -> Lang.Proofs.Fill 132
+   module Lang.Proofs.Contextual.LangRenaming -> Lang.Proofs.Subst 181
+   module Lang.Proofs.Contextual.LangSubstitution -> Lang.Proofs.Subst 34
+   VANISHED Nanodregg.Lang.Term.shiftAt_unshiftAt._proof_1_1 Lang.Proofs.Contextual.LangRenaming
+   VANISHED Nanodregg.Lang.Term.shiftAt_unshiftAt._proof_1_2 Lang.Proofs.Contextual.LangRenaming
+   VANISHED Nanodregg.Lang.hasType_unshiftAt_live._proof_1_1 Lang.Proofs.Contextual.LangRenaming
+   VANISHED Nanodregg.Lang.usesVar_shiftAt._proof_1_1 Lang.Proofs.Contextual.LangRenaming
+   VANISHED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_1 Lang.Proofs.Contextual.HoleBudget
+   VANISHED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_10 Lang.Proofs.Contextual.HoleBudget
+   VANISHED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_11 Lang.Proofs.Contextual.HoleBudget
+   VANISHED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_12 Lang.Proofs.Contextual.HoleBudget
+   VANISHED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_13 Lang.Proofs.Contextual.HoleBudget
+   VANISHED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_14 Lang.Proofs.Contextual.HoleBudget
+   VANISHED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_15 Lang.Proofs.Contextual.HoleBudget
+   VANISHED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_16 Lang.Proofs.Contextual.HoleBudget
+   VANISHED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_17 Lang.Proofs.Contextual.HoleBudget
+   VANISHED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_18 Lang.Proofs.Contextual.HoleBudget
+   VANISHED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_2 Lang.Proofs.Contextual.HoleBudget
+   VANISHED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_3 Lang.Proofs.Contextual.HoleBudget
+   VANISHED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_4 Lang.Proofs.Contextual.HoleBudget
+   VANISHED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_5 Lang.Proofs.Contextual.HoleBudget
+   VANISHED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_6 Lang.Proofs.Contextual.HoleBudget
+   VANISHED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_7 Lang.Proofs.Contextual.HoleBudget
+   VANISHED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_8 Lang.Proofs.Contextual.HoleBudget
+   VANISHED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_9 Lang.Proofs.Contextual.HoleBudget
+   VANISHED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.splitter Lang.Proofs.Contextual.HoleBudget
+   VANISHED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVarList.match_1.eq_1 Lang.Proofs.Contextual.HoleBudget
+   VANISHED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVarList.match_1.eq_2 Lang.Proofs.Contextual.HoleBudget
+   VANISHED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVarList.match_1.splitter Lang.Proofs.Contextual.HoleBudget
+   UNDECLARED Nanodregg.Lang.Term.shiftAt_unshiftAt._proof_1_1 Lang.Proofs.Contextual.LangRenaming
+   UNDECLARED Nanodregg.Lang.Term.shiftAt_unshiftAt._proof_1_2 Lang.Proofs.Contextual.LangRenaming
+   UNDECLARED Nanodregg.Lang.hasType_unshiftAt_live._proof_1_1 Lang.Proofs.Contextual.LangRenaming
+   UNDECLARED Nanodregg.Lang.usesVar_shiftAt._proof_1_1 Lang.Proofs.Contextual.LangRenaming
+   UNDECLARED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_1 Lang.Proofs.Contextual.HoleBudget
+   UNDECLARED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_10 Lang.Proofs.Contextual.HoleBudget
+   UNDECLARED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_11 Lang.Proofs.Contextual.HoleBudget
+   UNDECLARED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_12 Lang.Proofs.Contextual.HoleBudget
+   UNDECLARED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_13 Lang.Proofs.Contextual.HoleBudget
+   UNDECLARED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_14 Lang.Proofs.Contextual.HoleBudget
+   UNDECLARED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_15 Lang.Proofs.Contextual.HoleBudget
+   UNDECLARED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_16 Lang.Proofs.Contextual.HoleBudget
+   UNDECLARED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_17 Lang.Proofs.Contextual.HoleBudget
+   UNDECLARED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_18 Lang.Proofs.Contextual.HoleBudget
+   UNDECLARED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_2 Lang.Proofs.Contextual.HoleBudget
+   UNDECLARED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_3 Lang.Proofs.Contextual.HoleBudget
+   UNDECLARED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_4 Lang.Proofs.Contextual.HoleBudget
+   UNDECLARED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_5 Lang.Proofs.Contextual.HoleBudget
+   UNDECLARED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_6 Lang.Proofs.Contextual.HoleBudget
+   UNDECLARED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_7 Lang.Proofs.Contextual.HoleBudget
+   UNDECLARED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_8 Lang.Proofs.Contextual.HoleBudget
+   UNDECLARED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.eq_9 Lang.Proofs.Contextual.HoleBudget
+   UNDECLARED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVar.match_1.splitter Lang.Proofs.Contextual.HoleBudget
+   UNDECLARED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVarList.match_1.eq_1 Lang.Proofs.Contextual.HoleBudget
+   UNDECLARED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVarList.match_1.eq_2 Lang.Proofs.Contextual.HoleBudget
+   UNDECLARED _private.Lang.Proofs.HoleBudget.0.Nanodregg.Lang.Term.renameVarList.match_1.splitter Lang.Proofs.Contextual.HoleBudget
+   NEW Nanodregg.Lang.Term.shiftAt_unshiftAt._proof_1_3 Lang.Proofs.Subst
+   NEW Nanodregg.Lang.Term.shiftAt_unshiftAt._proof_1_4 Lang.Proofs.Subst
+   NEW Nanodregg.Lang.hasType_unshiftAt_live._proof_1_3 Lang.Proofs.Subst
+   NEW Nanodregg.Lang.usesVar_shiftAt._proof_1_3 Lang.Proofs.Subst
+   NEW _private.Lang.Proofs.Subst.0.Nanodregg.Lang.upR.match_1.eq_1 Lang.Proofs.Subst
+   NEW _private.Lang.Proofs.Subst.0.Nanodregg.Lang.upR.match_1.eq_2 Lang.Proofs.Subst
+   NEW _private.Lang.Proofs.Subst.0.Nanodregg.Lang.upR.match_1.splitter Lang.Proofs.Subst
+   TYPE Nanodregg.Lang.hasType_unshiftAt_live._proof_1_2 Lang.Proofs.Contextual.LangRenaming
+   TYPE Nanodregg.Lang.usesVar_shiftAt._proof_1_2 Lang.Proofs.Contextual.LangRenaming
+   VALUE Nanodregg.Lang.Term.shiftAt_unshiftAt Lang.Proofs.Contextual.LangRenaming
+   VALUE Nanodregg.Lang.hasType_unshiftAt_live Lang.Proofs.Contextual.LangRenaming
+   VALUE Nanodregg.Lang.hasType_unshiftAt_live._proof_1_2 Lang.Proofs.Contextual.LangRenaming
+   VALUE Nanodregg.Lang.usesVar_shiftAt Lang.Proofs.Contextual.LangRenaming
+   VALUE Nanodregg.Lang.usesVar_shiftAt._proof_1_2 Lang.Proofs.Contextual.LangRenaming

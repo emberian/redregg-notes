@@ -1,0 +1,200 @@
+✔ [27/45] Built Lang.StdHoleModel (538ms)
+✖ [43/45] Building Lang.Proofs.StdHoleTeeth (1.8s)
+trace: .> LEAN_PATH=/tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean /home/hbox/.elan/toolchains/leanprover--lean4---v4.30.0/bin/lean /tank/dregg-build/nanodregg/wt/promo/Lang/Proofs/StdHoleTeeth.lean -o /tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean/Lang/Proofs/StdHoleTeeth.olean -i /tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean/Lang/Proofs/StdHoleTeeth.ilean -c /tank/dregg-build/nanodregg/wt/promo/.lake/build/ir/Lang/Proofs/StdHoleTeeth.c --setup /tank/dregg-build/nanodregg/wt/promo/.lake/build/ir/Lang/Proofs/StdHoleTeeth.setup.json --json
+error: Lang/Proofs/StdHoleTeeth.lean:42:2: Tactic `decide` proved that the proposition
+  probe (support "cell" "v1") (rows (point "cell" (some "v1") false) noPoint noPoint) = some 3
+is false
+error: Lean exited with code 1
+✔ [44/45] Built Lang.Proofs.StdHole (1.6s)
+✖ [45/45] Building Lang.Proofs.StdHoleLookup (481ms)
+trace: .> LEAN_PATH=/tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean /home/hbox/.elan/toolchains/leanprover--lean4---v4.30.0/bin/lean /tank/dregg-build/nanodregg/wt/promo/Lang/Proofs/StdHoleLookup.lean -o /tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean/Lang/Proofs/StdHoleLookup.olean -i /tank/dregg-build/nanodregg/wt/promo/.lake/build/lib/lean/Lang/Proofs/StdHoleLookup.ilean -c /tank/dregg-build/nanodregg/wt/promo/.lake/build/ir/Lang/Proofs/StdHoleLookup.c --setup /tank/dregg-build/nanodregg/wt/promo/.lake/build/ir/Lang/Proofs/StdHoleLookup.setup.json --json
+error: Lang/Proofs/StdHoleLookup.lean:60:12: Application type mismatch: The argument
+  ite_live lib ?m.534 ?m.535 p.live ?m.536
+has type
+  BigStep lib ?m.534 (Term.ite ?m.535 (Term.nat 1) (Term.nat 3)) (Except.ok (Val.nat (if p.live = true then 1 else 3)))
+but is expected to have type
+  BigStep lib
+    ((Data.record [("by", Data.digest p.author), ("pin", Data.digest v)]).toVal ::
+      (Data.record
+            [("key", Data.record [("cell", Data.digest p.cell)]), ("live", Data.bool p.live),
+              ("val",
+                match some v with
+                | none => Data.inj "none" (Data.record [])
+                | some pin =>
+                  Data.inj "some" (Data.record [("by", Data.digest p.author), ("pin", Data.digest pin)]))]).toVal ::
+        (holePointData (some p)).toVal ::
+          (holeSupportData cell v).toVal :: (holePointData (some p)).toVal :: (holeSupportData cell v).toVal :: env)
+    (HoleSyntax.ht (HoleSyntax.hg (HoleSyntax.hv "p") "live") (HoleSyntax.hc (Term.nat 1)) (HoleSyntax.hc (Term.nat 1))
+      ["f", "p", "point", "s"])
+    (Except.ok (Val.nat (if p.live = true then 1 else 3)))
+in the application
+  BigStep.iteT
+    (Eq.mpr
+      (id
+        (congrFun'
+          (congrFun'
+            (congrArg (BigStep lib)
+              (congrArg (List.cons (Data.record [("by", Data.digest p.author), ("pin", Data.digest v)]).toVal)
+                (congr
+                  (congrArg List.cons
+                    (congrArg Data.toVal
+                      (congrArg Data.record
+                        (congrFun'
+                          (congrArg List.cons
+                            (congrArg (Prod.mk "key")
+                              (congrArg Data.record
+                                (congrFun' (congrArg List.cons (congrArg (Prod.mk "cell") (congrArg Data.digest hcell)))
+                                  []))))
+                          [("live", Data.bool p.live),
+                            ("val",
+                              Data.inj "some" (Data.record [("by", Data.digest p.author), ("pin", Data.digest v)]))]))))
+                  (congr
+                    (congrArg List.cons
+                      (congrArg Data.toVal
+                        (congrArg (Data.inj "some")
+                          (congrArg Data.record
+                            (congr
+                              (congrArg List.cons
+                                (congrArg (Prod.mk "key")
+                                  (congrArg Data.record
+                                    (congrFun'
+                                      (congrArg List.cons (congrArg (Prod.mk "cell") (congrArg Data.digest hcell)))
+                                      []))))
+                              (congrArg (List.cons ("live", Data.bool p.live))
+                                (congrFun'
+                                  (congrArg List.cons
+                                    (congrArg (Prod.mk "val")
+                                      (congrArg
+                                        (fun x =>
+                                          match x with
+                                          | none => Data.inj "none" (Data.record [])
+                                          | some pin =>
+                                            Data.inj "some"
+                                              (Data.record [("by", Data.digest p.author), ("pin", Data.digest pin)]))
+                                        hpin)))
+                                  [])))))))
+                    (congrArg (List.cons (holeSupportData cell v).toVal)
+                      (congrFun'
+                        (congrArg List.cons
+                          (congrArg Data.toVal
+                            (congrArg (Data.inj "some")
+                              (congrArg Data.record
+                                (congr
+                                  (congrArg List.cons
+                                    (congrArg (Prod.mk "key")
+                                      (congrArg Data.record
+                                        (congrFun'
+                                          (congrArg List.cons (congrArg (Prod.mk "cell") (congrArg Data.digest hcell)))
+                                          []))))
+                                  (congrArg (List.cons ("live", Data.bool p.live))
+                                    (congrFun'
+                                      (congrArg List.cons
+                                        (congrArg (Prod.mk "val")
+                                          (congrArg
+                                            (fun x =>
+                                              match x with
+                                              | none => Data.inj "none" (Data.record [])
+                                              | some pin =>
+                                                Data.inj "some"
+                                                  (Data.record
+                                                    [("by", Data.digest p.author), ("pin", Data.digest pin)]))
+                                            hpin)))
+                                      [])))))))
+                        ((holeSupportData cell v).toVal :: env)))))))
+            (HoleSyntax.hp Prim.deq (HoleSyntax.hg (HoleSyntax.hv "f") "pin") (HoleSyntax.hg (HoleSyntax.hv "s") "pin")
+              ["f", "p", "point", "s"]))
+          (Except.ok (Val.bool true))))
+      (Eq.mp
+        (congrFun'
+          (congrFun'
+            (congrArg (BigStep lib)
+              (congrArg (List.cons (Data.record [("by", Data.digest p.author), ("pin", Data.digest v)]).toVal)
+                (congr
+                  (congrArg List.cons
+                    (congrArg Data.toVal
+                      (congrArg
+                        (fun x =>
+                          match Data.inj "some" (Data.record x) with
+                          | Data.inj label d => d
+                          | x => Data.record [])
+                        (congr
+                          (congrArg List.cons
+                            (congrArg (Prod.mk "key")
+                              (congrArg Data.record
+                                (congrFun' (congrArg List.cons (congrArg (Prod.mk "cell") (congrArg Data.digest hcell)))
+                                  []))))
+                          (congrArg (List.cons ("live", Data.bool p.live))
+                            (congrFun'
+                              (congrArg List.cons
+                                (congrArg (Prod.mk "val")
+                                  (congrArg
+                                    (fun x =>
+                                      match x with
+                                      | none => Data.inj "none" (Data.record [])
+                                      | some pin =>
+                                        Data.inj "some"
+                                          (Data.record [("by", Data.digest p.author), ("pin", Data.digest pin)]))
+                                    hpin)))
+                              []))))))
+                  (congr
+                    (congrArg List.cons
+                      (congrArg Data.toVal
+                        (congrArg (Data.inj "some")
+                          (congrArg Data.record
+                            (congr
+                              (congrArg List.cons
+                                (congrArg (Prod.mk "key")
+                                  (congrArg Data.record
+                                    (congrFun'
+                                      (congrArg List.cons (congrArg (Prod.mk "cell") (congrArg Data.digest hcell)))
+                                      []))))
+                              (congrArg (List.cons ("live", Data.bool p.live))
+                                (congrFun'
+                                  (congrArg List.cons
+                                    (congrArg (Prod.mk "val")
+                                      (congrArg
+                                        (fun x =>
+                                          match x with
+                                          | none => Data.inj "none" (Data.record [])
+                                          | some pin =>
+                                            Data.inj "some"
+                                              (Data.record [("by", Data.digest p.author), ("pin", Data.digest pin)]))
+                                        hpin)))
+                                  [])))))))
+                    (congrArg (List.cons (holeSupportData cell v).toVal)
+                      (congrFun'
+                        (congrArg List.cons
+                          (congrArg Data.toVal
+                            (congrArg (Data.inj "some")
+                              (congrArg Data.record
+                                (congr
+                                  (congrArg List.cons
+                                    (congrArg (Prod.mk "key")
+                                      (congrArg Data.record
+                                        (congrFun'
+                                          (congrArg List.cons (congrArg (Prod.mk "cell") (congrArg Data.digest hcell)))
+                                          []))))
+                                  (congrArg (List.cons ("live", Data.bool p.live))
+                                    (congrFun'
+                                      (congrArg List.cons
+                                        (congrArg (Prod.mk "val")
+                                          (congrArg
+                                            (fun x =>
+                                              match x with
+                                              | none => Data.inj "none" (Data.record [])
+                                              | some pin =>
+                                                Data.inj "some"
+                                                  (Data.record
+                                                    [("by", Data.digest p.author), ("pin", Data.digest pin)]))
+                                            hpin)))
+                                      [])))))))
+                        ((holeSupportData cell v).toVal :: env)))))))
+            (Term.prim Prim.deq ((Term.var 0).get "pin") ((Term.var 3).get "pin")))
+          (Except.ok (Val.bool true)))
+        hp))
+    (ite_live lib ?m.534 ?m.535 p.live ?m.536)
+error: Lean exited with code 1
+Some required targets logged failures:
+- Lang.Proofs.StdHoleTeeth
+- Lang.Proofs.StdHoleLookup
+error: build failed

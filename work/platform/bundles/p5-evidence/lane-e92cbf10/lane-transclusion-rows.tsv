@@ -1,0 +1,28 @@
+c-transcludes-snapshot	expect=installed	got=installed	workspace attempt: /run/user/1001/p5l/world/tcarol-workspace/attempts/transclude-220299906710430099789136447516015071678
+c-transcludes-live	expect=installed installed	got=installed installed	T2=207755396556399175019410186173484998079 T3=281908979594094706424301103023001181541 workspace attempt: /run/user/1001/p5l/world/tcarol-workspace/attempts/transclude-281908979594094706424301103023001181541
+page-records	expect=3/3	got=3/3	transclusion records / links in page
+page-holds-no-bytes	expect=absent	got=absent	no wall line's bytes in page's own view; T1 opened at height 27
+r-sees-inline	expect=snapshot:77616c6c206c696e652032,77616c6c206c696e652033,77616c6c206c696e652034:	got=snapshot:77616c6c206c696e652032,77616c6c206c696e652033,77616c6c206c696e652034:	T1 over R's own read of wall
+d-sees-placeholder	expect=unavailable,unavailable,unavailable	got=unavailable,unavailable,unavailable	D holds no read of wall
+d-placeholder-text	expect=[transclusion: 3 atoms of wall, not readable by you]	got=[transclusion: 3 atoms of wall, not readable by you]	T1 as D sees it
+b-cannot-transclude	expect=refused	got=refused	 DREGG/NATIVE-HOST/OUTCOME/v4 observation: this key holds no grant covering this target and operation   client: host refused query: refused: no-grant: this key holds no grant covering this target and operation (phase observation); encoded refusal: 44524547472f4e41544956452d484f53542f4f5554434f4d452f
+c-no-read-refused	expect=refused	got=refused	 DREGG/NATIVE-HOST/OUTCOME/v4 prepare invocation preparation: Minidregg.Kernel.DeclaredResourceController.Reject.content (Minidregg.Kernel.ContentResource.Reject.sourceNotCovered)   client: host refused prepare: refused: operation-rejected: invocation preparation: Minidregg.Kernel.DeclaredResourceCo
+c-stale-opening-refused	expect=refused	got=refused	 DREGG/NATIVE-HOST/OUTCOME/v4 prepare invocation preparation: Minidregg.Kernel.DeclaredResourceController.Reject.content (Minidregg.Kernel.ContentResource.Reject.staleOpening)   client: host refused prepare: refused: operation-rejected: invocation preparation: Minidregg.Kernel.DeclaredResourceContro
+a-edits-inside	expect=installed	got=installed	workspace continuity: legacy; initialize with workspace --action continuity-init --name REF
+inside-snapshot	expect=snapshot:77616c6c206c696e652032,77616c6c206c696e652033,77616c6c206c696e652034::27	got=snapshot:77616c6c206c696e652032,77616c6c206c696e652033,77616c6c206c696e652034::27	T1, re-read at its opening height
+inside-live	expect=live:77616c6c206c696e652032,77616c6c206c696e6520332c2072657669736564,77616c6c206c696e652034:true	got=live:77616c6c206c696e652032,77616c6c206c696e6520332c2072657669736564,77616c6c206c696e652034:true	T2 after the inside edit
+late-joiner-placeholder	expect=moved:27:live	got=moved:27:live	[snapshot of wall: its lines moved since height 27, and your grant did not cover wall then]
+a-edits-outside	expect=installed	got=installed	workspace continuity: legacy; initialize with workspace --action continuity-init --name REF
+outside-unchanged	expect=unchanged	got=unchanged	T1 T2 T3 renderings before and after A's edit of w1
+a-deletes-endpoint	expect=installed	got=installed	workspace continuity: legacy; initialize with workspace --action continuity-init --name REF
+death-invalidate	expect=invalidated::	got=invalidated::	T3, finish dead under invalidate
+death-prefer-next	expect=live:77616c6c206c696e652032,77616c6c206c696e6520332c2072657669736564,77616c6c206c696e652035:true	got=live:77616c6c206c696e652032,77616c6c206c696e6520332c2072657669736564,77616c6c206c696e652035:true	T2, finish moved to w5 under preferNext
+death-snapshot-pinned	expect=snapshot:77616c6c206c696e652032,77616c6c206c696e652033,77616c6c206c696e652034:	got=snapshot:77616c6c206c696e652032,77616c6c206c696e652033,77616c6c206c696e652034:	T1 after the endpoint died
+r-follows-live	expect=live:77616c6c206c696e652032,77616c6c206c696e6520332c2072657669736564,77616c6c206c696e652035:true	got=live:77616c6c206c696e652032,77616c6c206c696e6520332c2072657669736564,77616c6c206c696e652035:true	R re-resolves T2 at the current height
+d-follow-refused	expect=refused	got=refused	  client: follow refused: no read of source 11436904216918105027: host refused query: refused: no-grant: this key holds no grant covering this target and operation (phase observation); encoded refusal
+restart-identical	expect=identical	got=identical	R's three renderings across a restart
+jwall-read-permitted	expect=installed	got=installed	C's signed read of jwall: the observe policy admits it
+jwall-transclude-admitted	expect=installed	got=installed	workspace attempt: /run/user/1001/p5l/world/tcarol-workspace/attempts/transclude-24166229201483601842406527671025679009
+jwall-lone-read-readOnlyCommand	expect=refused	got=refused	 DREGG/NATIVE-HOST/OUTCOME/v4 prepareZ invocation preparation: Minidregg.Kernel.DeclaredResourceController.Reject.readOnlyCommand   client: host refused prepare: refused: operation-rejected: invocation preparation: Minidregg.Kernel.DeclaredResourceController.Reject.readOnlyCommand (phase prepare); e
+jwall-unauthorized-read-refused	expect=refused	got=refused	 DREGG/NATIVE-HOST/OUTCOME/v4 observation: this key holds no grant covering this target and operation   client: host refused query: refused: no-grant: this key holds no grant covering this target and operation (phase observation); encoded refusal: 44524547472f4e41544956452d484f53542f4f5554434f4d452f
+audit	expect=re-admitted	got=re-admitted	audited 30 accepted records: every signed ingress re-admitted at its original prefix

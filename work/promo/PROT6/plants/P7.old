@@ -1,0 +1,1 @@
+  unless cell.slots.get slotPackage == some (bytesOf pkg) do
