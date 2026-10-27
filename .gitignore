@@ -8,3 +8,4 @@ __pycache__/
 *.pyc
 *.tgz
 *.bundle
+work/rollup/ship.tar
