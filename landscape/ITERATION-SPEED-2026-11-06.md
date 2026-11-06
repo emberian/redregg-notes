@@ -151,7 +151,14 @@ time goes. Reverted, not committed. The open item is in minidregg `board/seats/b
     Two downstream endpoint modules use its theorems, so their pins move in the same commit.
   - Compiler.StoreCodecBook (9.4 GB), Kernel.ProviderExecutionLease (7.1 GB),
     Assurance.DreggNetProviderConsumer (7.1 GB): not profiled.
-  - breadstuffs MlKemFips203FullDim (18.0 GB): profile pending.
+  - breadstuffs MlKemFips203FullDim (18.9 GB, 313 s isolated). Profiled:
+    - kernel time is in three GENERAL theorems: `sampleNTT_lt` 78 s, `sampleNTT_spec` 76 s,
+      `sampleNTT_foldl` 65 s; then `mlkemDecaps_eq` 18 s, `kpkeAcc_fold3` 15 s, `uOf_size` 11 s;
+    - each of the three `native_decide` aux definitions (`ekOfDk_realDk`, `realDk_good`,
+      `zeroDk_not_good`) spends ~27 s in kernel typechecking. That is the literal key bytes in the
+      aux term, not the evaluation.
+    General theorems stay kernel-proved under the policy, so this needs proof engineering on
+    SampleNTT. It is the owner's, with these numbers.
   - PastaCurveScheduled (11.9 GB), PastaMsmAir (9.3 GB), the MlKem/MlDsa spec modules: concrete
     KAT checks; the Mina lane's pattern applies.
 - **ResourceBirthController `authorityWrites_postLaw`** (13-15 GB). Bisected as above. The next
@@ -217,6 +224,18 @@ or clone, linked with `lean-packages link --mine`.
 ### (c) `lean_exe` for slow #guard suites: not landed (see above)
 
 ### (d) `make check-fast` / `check-full` / `check-umbrella` / `boxes`: in both repos
+
+Later the same day:
+- a 30 GB disk floor (hbox fell to 21 GB);
+- memory measured as MemAvailable plus the ZFS ARC, not summed RSS;
+- one shared packages directory per manifest key per box (two per-clone Mathlibs on hbox were
+  15 GB, deleted by the root on ember's word);
+- a cold clone seeded from the box's snapshot store;
+- the run script records its own PID (the launcher's `$!` named a wrapper);
+- check-full builds only library modules.
+
+A cold check-full on forge without a seed started a 9,500-job build and was stopped by its group
+PID.
 
 `scripts/iter-check` (python3) and a `Makefile` beside each lakefile, documented in
 `DEVELOPING.md` (minidregg root, breadstuffs `metatheory/`).
