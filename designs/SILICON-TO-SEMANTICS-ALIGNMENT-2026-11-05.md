@@ -70,7 +70,7 @@ It comes with a machine-checked exactness side condition that names the accumula
 - FP4-E2M1 base-13 balanced limbs need 9 limbs and 81 limb-products per BabyBear multiply, against
   16 for INT8.
 - So FP4 is worth it only on a SKU where TOPS(FP4)/TOPS(INT8) > 5.06. FP8-E4M3 needs > 4.00.
-- Exact block lengths for FP4 limb pairs: 116,508 under a 24-bit accumulator; 113 under a 14-bit
+- Exact block lengths for FP4 limb pairs (corrected 2026-11-06 after the Codex Astra statement audit: the encoder's largest digit is 8, not 12, so max product 64 rather than 144; the limb count 9 and break-even 5.06 are unchanged): 262,143 under a 24-bit accumulator; 255 under a 14-bit
   truncated accumulator (the precision DeepSeek-V3 reports for H800 FP8 GEMM [SOURCED]).
 - Codex's attack, accepted: this is a schoolbook operation count, not a performance threshold. It
   ignores reduction cost, layout and memory. It is a necessary condition, not a sufficient one.
@@ -115,7 +115,7 @@ refinement. The GPU probe is a day on any H100/B200. The kernel is TensorZKP-siz
 with theirs rather than rebuild it.
 
 **First experiment.** A Fasi-style accumulator probe for FP4/FP8 MMA on one Blackwell SKU (rented
-spot). It answers `m`, and therefore whether the 116,508 or the 113 column is the real one. Until
+spot). It answers `m`, and therefore whether the 262,143 or the 255 column is the real one. Until
 then, (a) is a hypothesis.
 
 ## (b) A verified in-path receipt device: commit before forward
@@ -194,7 +194,13 @@ Corrected statements:
 - **`overflow_refuses`.** Under insufficient reservable durable capacity, arrival `j` emits
   `refuse j`, creates no pending authorization for `j`, and cannot later forward `j` without a fresh
   admission. A companion theorem shows that a non-full execution does forward, so that permanent
-  refusal does not satisfy the safety claim vacuously.
+  refusal does not satisfy the safety claim vacuously. *Astra audit S06:* as an unconditional
+  liveness claim about an asynchronous device this is false, because of crashes before the ack,
+  scheduler starvation and a downstream that is never ready. It holds in the **synchronous**
+  model where persist-and-forward is one atomic step, which is the model
+  `experiments/chokepoint-step/CommitStep.lean` states (`forwards_when_capacity`). Refining that
+  model to an asynchronous device needs the fairness, store-progress and no-crash-before-completion
+  premises Astra lists.
 - **`reboot_continuity`.** Recovery reconstructs the durable prefix selected by a non-rollbackable
   epoch/counter anchor (TrInc-style), preserves every previously authorized forward, and resumes
   with fresh identifiers. Older snapshots, or an ambiguous recovery, cause refusal.
@@ -317,7 +323,9 @@ theorem rtl_refines (e : SupportedAst) (m) (h : compileBookToRtlSat (bookOf e) =
     ∀ x, wellFormed x → evalModuleOutputs m (env x) = [(o, denote e x)]
 --   combinational only; a clocked device needs sequential trace refinement under explicit reset,
 --   handshake and memory assumptions, covering output order and no spurious outputs
-theorem receipt_means (r : Receipt) (h : verifyReceipt r) : r.claim.predicate = Pred.graph f ...
+-- WITHDRAWN (Astra audit S15): AST equality is either false or a syntactic tautology, and it never
+-- connects evidence to the world. Replacement: graph_receipt_sound -- checker refinement plus a
+-- verified derivation give Pr[accepts evidence ∧ ¬ GraphHoldsForSubject f r.subject] ≤ r.budget.
 ```
 
 **Cost.** The S-box is small enough to be a one-week experiment with `bv_decide`. A Poseidon2
@@ -359,8 +367,11 @@ is. Say so on the receipt.
 
 **Theorem [PROPOSED].**
 The first sketch conflated recorded and executed (Codex round 2). Corrected:
-- **Record agreement.** Authenticated roots that bind the same session, length and canonical
-  record schema imply record-by-record agreement, except with binding failure.
+- **Record agreement.** *Corrected (Astra audit S16):* the first version omitted root
+  equality, and two honest parties can sign different one-record histories with the same session,
+  length and schema. Corrected statement: valid openings with **equal roots**, plus the same
+  session, length and schema, and different records yield a hash-collision witness. Different
+  authenticated roots are *equivocation evidence*, not an agreement premise.
 - **Execution and delivery.** Verified endpoint transitions connect records to execution and to
   acknowledged delivery. This is a separate theorem.
 - **Truncation.** Detecting it needs a previously agreed terminal obligation and a deadline. A
@@ -481,8 +492,9 @@ when ε > 0, and `verify` may accept everything. The statement is the compositio
 survives composition and `Bind` fails with probability at most `ε_b`, then `Pr[acc₁ ∧ acc₂ ∧ bind
 ∧ ¬(P₁ ∧ P₂)] ≤ min(1, ε₁+ε₂+ε_b)`.
 
-The receipt verifier must also deduplicate evidence by identity, since composing a receipt with
-itself doubles ε. The anti-vacuity witnesses are a verifier that rejects a forged binding, and a
+The receipt verifier must not double-count, but deduplicating by evidence identity is unsound
+(Astra audit G09): the same bytes can back predicates with disjoint failure events. Deduplicate
+exact repeated judgments only, or uses proved to imply one shared failure event. The anti-vacuity witnesses are a verifier that rejects a forged binding, and a
 pair whose composition is refused because the binding fails.
 
 **First experiment.** Write `Judgment` and the composition rule in Lean (an afternoon). Encode three lattice rows,
