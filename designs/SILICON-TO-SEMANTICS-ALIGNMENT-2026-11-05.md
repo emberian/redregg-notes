@@ -120,6 +120,13 @@ then, (a) is a hypothesis.
 
 ## (b) A verified in-path receipt device: commit before forward
 
+> **Update (later 2026-11-05).** The vehicle is decided: the Pancake orb is retired for this, and
+> the device is a Lean step function, compiled by Lean, in a seL4 Microkit PD
+> (`degg-research/research/CHOKEPOINT-VEHICLE-DECISION.md`). The corrected `commit_before_forward`
+> family below is now proved over that step function in
+> `degg-research/experiments/chokepoint-step/CommitStep.lean`. The Pancake "first experiment" at
+> the end of this section is superseded.
+
 **Design point.** A device on every egress path of a job or facility:
 - an Orb-style emitted loop;
 - running as a seL4 Microkit PD on a CHERI or RISC-V core, or as obend-lowered RTL on an FPGA;
